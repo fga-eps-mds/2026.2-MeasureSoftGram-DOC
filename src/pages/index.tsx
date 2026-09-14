@@ -24,7 +24,7 @@ function HomepageHeader() {
           </Link>
           <Link
             className="button button--outline button--secondary button--lg"
-            href="https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-docs-eps">
+            href="https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC">
             Ver no GitHub
           </Link>
         </div>

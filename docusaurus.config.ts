@@ -17,11 +17,11 @@ const config: Config = {
   },
 
   url: 'https://fga-eps-mds.github.io',
-  baseUrl: '/2026.2-MeasureSoftGram-docs-eps/',
+  baseUrl: '/2026.2-MeasureSoftGram-DOC/',
   trailingSlash: true,
 
   organizationName: 'fga-eps-mds',
-  projectName: '2026.2-MeasureSoftGram-docs-eps',
+  projectName: '2026.2-MeasureSoftGram-DOC',
 
   onBrokenLinks: 'throw',
 
@@ -58,7 +58,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           editUrl:
-            'https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-docs-eps/tree/main/',
+            'https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/tree/main/',
         },
         blog: false,
         theme: {
@@ -88,7 +88,7 @@ const config: Config = {
           label: 'Documentação',
         },
         {
-          href: 'https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-docs-eps',
+          href: 'https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC',
           label: 'GitHub',
           position: 'right',
         },

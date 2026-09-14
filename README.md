@@ -1,10 +1,10 @@
-# 2026.2-MeasureSoftGram-docs-eps
+# 2026.2-MeasureSoftGram-DOC
 
 Documentação da equipe de **Engenharia de Produto de Software (EPS)** do semestre
 2026.2 no projeto **MeasureSoftGram**.
 
 O site é publicado via GitHub Pages em:
-https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-docs-eps/
+https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/
 
 > A documentação **do produto** (como usar, referência da CLI, componentes) fica
 > em repositório próprio:
