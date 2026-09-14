@@ -1,0 +1,114 @@
+---
+id: politica-ia
+title: Política de uso de IA
+sidebar_position: 4
+---
+
+# Política de uso de IA generativa
+
+## Princípio orientador
+
+Ferramentas de IA generativa são tratadas como **colegas de equipe juniores**:
+úteis e produtivas, mas que precisam de supervisão, revisão e orientação. **O
+aluno é responsável pelo que a ferramenta produz.**
+
+> Usar IA para pensar melhor **≠** usar IA para não pensar.
+
+O uso de IA é **opcional**; a reflexão crítica sobre esse uso é **obrigatória**. O
+que diferencia um MD de qualidade não é ter sido gerado por IA ou não, mas a
+profundidade da análise, a clareza da fundamentação e a rastreabilidade das
+decisões.
+
+## Categorias de uso
+
+### ✅ Encorajado
+
+- Rascunhos de artefatos: visão, backlog, histórias de usuário, critérios de
+  aceitação
+- Sugestão de testes e scripts de automação
+- Interpretação preliminar de métricas
+- Configuração de pipelines CI/CD
+- Análise de riscos não mapeados
+- Código de análise de dados em notebook
+- Scaffolding e boilerplate de projeto
+- Sugestão de refactoring: code smells e duplicações
+- Documentação de código: docstrings, comentários, README
+- Sugestão de mensagens de commit e descrições de PR
+- Geração de dados de teste e mocks
+- Identificação de vulnerabilidades (SAST assistido)
+- Sugestão de queries e scripts de migração de banco
+- Avaliação da própria IA nos Memorandos de Decisão
+
+### ⚠️ Com restrição
+
+Permitido **com revisão crítica e registro obrigatório no `MD_Template.md`**:
+
+- Análises do dashboard gerencial
+- Rascunhos de relatórios
+- Sugestão de priorização do backlog
+- Geração de código funcional
+- Geração de testes unitários e de integração
+- Sugestão de decisões de arquitetura
+
+### ❌ Não permitido
+
+- Atas de reuniões com o cliente parceiro
+- Seção "Decisões gerenciais" do Relatório de Encerramento
+- Apresentação oral de defesa de decisões
+- Memorandos de Decisão gerados integralmente por IA
+- **Revisão de código-fonte**
+- **Resolução de conflitos de merge**
+- **Aprovação de pull request**
+- Geração e publicação autônoma de releases sem validação humana
+
+## Rastreabilidade obrigatória
+
+Cada aluno mantém seu próprio `MD_Template.md`, alimentado com **entradas
+semanais**. As instruções estão na subseção 5.1 do
+[template oficial](https://github.com/fga-eps-mds/A-Disciplina-MDS-EPS/blob/master/PlanosDeEnsino/MD_Template.md).
+
+| Release | Mínimo de ciclos registrados |
+| --- | --- |
+| R1 | ≥ 2 |
+| R2 | ≥ 5 |
+| R3 | ≥ 8 |
+
+:::danger
+A ausência de registro de evidências de rastreabilidade no `MD_Template.md` é
+penalizada nos critérios de avaliação correspondentes. MD gerado integralmente por
+IA, sem reflexão própria identificável, é tratado como **plágio**.
+:::
+
+## Como a equipe operacionaliza isso
+
+> Preencher com os combinados do time. Sugestões do que definir:
+
+- [ ] Onde cada pessoa mantém seu `MD_Template.md` e com que frequência atualiza.
+- [ ] Como sinalizamos em um PR que houve uso relevante de IA (label, seção no
+      template de PR, `Co-authored-by`).
+- [ ] Quem revisa código gerado por IA antes do merge — lembrando que **a revisão
+      não pode ser feita por IA**.
+- [ ] Como consolidamos os aprendizados para a seção *"Como usamos IA neste
+      semestre"* do Relatório de Encerramento (R3).
+
+## Transparência na docência
+
+O professor também declara o uso de IA generativa (Claude e GitHub Copilot) na
+elaboração de documentos, análise de dados dos projetos e revisão de materiais
+didáticos. O princípio é simétrico: **a ferramenta apoia, o julgamento é humano e
+a responsabilidade permanece com quem assina.**
+
+## Referências
+
+- [PORTARIA CNPq nº 2.664, de 6 de março de 2026 — Política de Integridade na Atividade Científica](http://memoria2.cnpq.br/web/guest/view/-/journal_content/56_INSTANCE_0oED/10157/23142775)
+- DAKHEL, A. M. et al. **GitHub Copilot AI pair programmer: Asset or liability?**
+  *Journal of Systems and Software*, v. 203, 2023.
+- BIRD, C. et al. **Taking Flight with Copilot**. *ACM Queue*, v. 20, n. 6, 2023.
+- RUSSO, D. **Navigating the Complexity of Generative AI Adoption in Software
+  Engineering**. *TOSEM*, 2024.
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 10/09/2026 | Criação a partir do plano de ensino 2026.2 | [@MilenaFRocha](https://github.com/MilenaFRocha) | |

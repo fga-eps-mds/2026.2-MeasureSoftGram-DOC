@@ -1,0 +1,223 @@
+---
+id: avaliacao
+title: Avaliação e entregas
+sidebar_position: 2
+---
+
+# Avaliação e entregas
+
+Tudo o que é avaliado no semestre, com data, peso e critério. Esta página é a
+referência de prazos da equipe.
+
+:::danger Hora de corte
+O prazo de qualquer entrega encerra às **06h00 (horário de Brasília)** do dia
+definido no cronograma. Não há prorrogação implícita.
+:::
+
+## Composição da nota
+
+| Componente | Peso |
+| --- | --- |
+| Projeto e Produto (releases) | 60% |
+| Dashboard Gerencial Analítico | 20% |
+| Avaliação Individual | 20% |
+
+```
+Releases    = (R1 × 0,3) + (R2 × 0,3) + (R3 × 0,4)
+Dashboards  = (DA-R1 × 0,3) + (DA-R2 × 0,3) + (DA-R3 × 0,4)
+Individual  = (MD-R1 × 0,2) + (MD-R2 × 0,2) + (MD-R3 × 0,3) + (PSD × 0,3)
+
+Nota Final  = (Releases × 0,60) + (Dashboards × 0,20) + (Individual × 0,20)
+```
+
+**Não há provas nem minitestes.** O aprendizado teórico é avaliado por meio dos
+Memorandos de Decisão e da participação nas sessões críticas.
+
+## Calendário de entregas
+
+| Data | Entrega | Onde |
+| --- | --- | --- |
+| **28/09** | Release Major **R1** + Dashboard **DA-R1** | Repositórios, homologação e Aprender 3 |
+| **29/09** | **MD-R1** individual | Aprender 3 |
+| **26/10** | Release Major **R2** + Dashboard **DA-R2** | Repositórios, homologação e Aprender 3 |
+| **27/10** | **MD-R2** individual | Aprender 3 |
+| **30/11** | Release Major **R3** + Dashboard **DA-R3** | Produção/homologação e Aprender 3 |
+| **07/12** | Release Final (RF) — testes de aceitação e defesas orais | Presencial |
+| **08/12** | **MD-R3** individual | Aprender 3 |
+
+Ver o detalhamento semana a semana em [Cronograma](/docs/disciplina/cronograma).
+
+## Releases major
+
+| Release | Data | Peso | Foco |
+| --- | --- | --- | --- |
+| **R1** | 28/09 | 30% | Planejamento, arquitetura, pipelines, dashboard v1, ambientes de implantação, Visão do Produto |
+| **R2** | 26/10 | 30% | Incremento funcional, qualidade, dashboard v2 |
+| **R3** | 30/11 | 40% | MVP validado pelos POs, dashboard e analytics completos |
+
+**Apresentações:** R1 = 20 min (reunião de 2h) · R2 = 20 min (reunião de 2h) ·
+R3 = 30 min (reunião de 1h30). Todos os membros participam e as apresentações são
+gravadas no Teams. **As releases devem estar implantadas em homologação na data da
+apresentação.**
+
+### Critérios da R1 — 28/09
+
+**I. Projeto-Produto**
+
+- [ ] Visão do Produto / Canvas MVP validado com o cliente
+- [ ] Backlog priorizado: histórias de usuário com critérios de aceitação
+- [ ] Documento de Arquitetura
+- [ ] Protótipos de alta fidelidade no Figma
+- [ ] Repositório configurado: licença, código de conduta, guia de contribuição,
+      templates de PR / Tarefa / Defeito / US
+- [ ] Pipeline CI/CD: lint, build, testes unitários, relatório SonarCloud
+- [ ] Coleta inicial de métricas: `.json` gerado automaticamente via pipeline
+- [ ] Cobertura de testes unitários **≥ 85%**
+- [ ] Quadro de conhecimento e pareamentos
+- [ ] `MD_Template.md`: **≥ 2 ciclos** registrados
+
+**II. Dashboard (DA-R1, 30% dos 20%)**
+
+- [ ] Primeiros indicadores técnicos e gerenciais: velocity, burndown, EVM-Ágil,
+      matriz de riscos
+- [ ] Construído em **Streamlit**, consumindo o `.json` do pipeline SonarCloud
+- [ ] Evidência de uso crítico de IA registrada no `MD_Template.md`
+- [ ] URL e PR do app submetidos no Aprender 3
+
+**III. Individual**
+
+- [ ] MD-R1 entregue com registro de evidências (seção 5 do template)
+- [ ] `MD_Template.md`: ≥ 2 entradas individuais com qualidade reflexiva
+- [ ] Contribuições rastreáveis: commits, PRs e issues com autoria identificada
+- [ ] Capacidade de explicar qualquer trecho de código em revisão síncrona
+
+### Critérios da R2 — 26/10
+
+**I. Projeto-Produto**
+
+- [ ] Incremento funcional implantado em homologação
+- [ ] Histórias aceitas pelo cliente com testes de aceitação documentados
+- [ ] Backlog atualizado e repriorizado após feedback da R1
+- [ ] Protótipos evoluídos no Figma com validação do cliente documentada
+- [ ] Pipeline evoluído: testes de integração, cobertura **≥ 85%**
+- [ ] `.json` de métricas atualizado automaticamente a cada sprint
+- [ ] Planejamento de capacidade ajustado com dados reais das sprints
+- [ ] `MD_Template.md`: **≥ 5 ciclos** acumulados
+
+**II. Dashboard (DA-R2, 30%)**
+
+- [ ] Métricas de qualidade normalizadas, ponderadas, agregadas e interpretadas
+- [ ] Comparação R1 × R2 (velocidade, cobertura, defeitos)
+- [ ] **≥ 3 decisões gerenciais** documentadas com causa + evidência + ação
+- [ ] Evidência de uso crítico de IA: o que foi aceito e o que foi rejeitado
+
+**III. Individual**
+
+- [ ] MD-R2 com log de autoavaliação de IA obrigatório
+- [ ] `MD_Template.md`: ≥ 5 entradas acumuladas
+- [ ] Contribuições rastreáveis equilibradas entre os membros
+
+### Critérios da R3 — 30/11
+
+**I. Projeto-Produto**
+
+- [ ] Produto em produção/homologação e **MVP validado com o cliente**
+- [ ] Escopo realizado × planejado (histórias aceitas × planejadas)
+- [ ] Cobertura de testes **≥ 90%**: unitários, integração, sistema e GUI
+- [ ] Testes de aceitação executados e documentados
+- [ ] Gerência de configuração: branching, merges, releases com tags
+- [ ] Manual de instalação do produto para o usuário
+- [ ] **Relatório de Encerramento**, com a seção obrigatória
+      *"Como usamos IA neste semestre"*
+- [ ] Repositório em conformidade com padrões de software livre
+- [ ] `MD_Template.md`: **≥ 8 ciclos** com progressão reflexiva
+
+**II. Dashboard (DA-R3, 40%)**
+
+- [ ] **Canvas Analytics**: síntese visual do desempenho do semestre
+- [ ] Análise planejado × realizado: custo (EVM), tempo, escopo e qualidade
+- [ ] **≥ 5 decisões gerenciais** documentadas: causa, análise, decisão, resultado
+- [ ] Retrospectiva crítica sobre uso de IA: acertos, erros e onde o julgamento
+      humano foi necessário
+- [ ] Prompts usados e outputs aceitos/descartados evidenciados
+
+**III. Individual (concluída na RF, 07/12)**
+
+- [ ] MD-R3 com log de autoavaliação de IA
+- [ ] `MD_Template.md` completo com progressão reflexiva visível
+- [ ] **Defesa oral** individual das decisões gerenciais
+- [ ] Contribuições rastreáveis ao longo de todo o semestre
+
+## Releases minor
+
+Versões parciais do produto, entregues em sprints. Evidenciam ritmo sustentável
+de entrega. **Registrar cada entrega no Aprender 3.**
+
+| Release | Data |
+| --- | --- |
+| RM1 | 13/04 |
+| RM2 | 04/05 |
+| RM3 | 11/05 |
+| RM4 | 01/06 |
+| RM5 | 15/06 |
+| RM6 | 06/07 |
+
+:::caution A conferir
+As datas de releases minor no plano de ensino 2026.2 seguem o calendário de um
+semestre anterior. **Confirmar com o professor** as datas válidas para 2026.2 e
+atualizar esta tabela.
+:::
+
+## Dashboard Gerencial e Analítico
+
+O dashboard **não é um relatório final**: é um artefato dinâmico, construído
+sprint a sprint e avaliado a cada release major, que evidencia que o time
+gerencia com base em dados e não em percepção.
+
+Requisitos fixos:
+
+- Desenvolvido em **[Streamlit](https://streamlit.io/)** e mantido no repositório
+  de documentação do projeto.
+- Consome **diretamente os arquivos `.json`** de métricas gerados automaticamente
+  pelos pipelines de CI/CD a partir do SonarCloud.
+- Além das medidas de qualidade de produto, inclui medidas de **projeto**
+  (EVM-Ágil e planilha de riscos) e de **processo** (GitHub/ZenHub), garantindo
+  rastreabilidade e reprodutibilidade.
+
+| Dashboard | Data | Peso | Foco |
+| --- | --- | --- | --- |
+| DA-R1 | 28/09 | 30% | Primeiros indicadores: velocity, burndown, EVM-Ágil, matriz de riscos |
+| DA-R2 | 26/10 | 30% | Métricas de qualidade normalizadas, ponderadas, agregadas e interpretadas |
+| DA-R3 | 30/11 | 40% | Canvas Analytics, planejado × realizado, retrospectiva do uso de IA |
+
+Ver [Métricas](/docs/metricas) para os indicadores que a equipe acompanha.
+
+## Avaliação individual — Memorandos de Decisão
+
+O MD avalia a capacidade de **fundamentar decisões técnico-gerenciais reais com
+teoria**. Cada aluno redige **3 MDs**, um por release major, documentando as
+decisões que tomou ou co-liderou naquele ciclo.
+
+| Item | Área temática | Entrega | Peso nos 20% |
+| --- | --- | --- | --- |
+| MD-R1 | Planejamento: escopo, tempo, custo e risco | 29/09 | 20% |
+| MD-R2 | Qualidade: modelos, métricas e Analytics | 27/10 | 20% |
+| MD-R3 | Encerramento: versão final do produto e desempenho do processo e do projeto | 08/12 | 30% |
+| PSD | Bilhetes de entrada + participação nas discussões | Conforme cronograma | 30% |
+
+O template, os critérios, o fluxo de submissão e o prompt de autoavaliação de IA
+estão em
+[`MD_Template.md`](https://github.com/fga-eps-mds/A-Disciplina-MDS-EPS/blob/master/PlanosDeEnsino/MD_Template.md).
+Nome do arquivo submetido: `MD_XX_Matrícula`.
+
+:::tip Rastreabilidade é individual
+O `MD_Template.md` de cada pessoa precisa de **entradas semanais**. Os mínimos de
+ciclos registrados são **≥ 2 na R1**, **≥ 5 na R2** e **≥ 8 na R3**. A ausência
+desses registros é penalizada nos critérios correspondentes.
+:::
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 10/09/2026 | Criação a partir do plano de ensino e cronograma 2026.2 | [@MilenaFRocha](https://github.com/MilenaFRocha) | |

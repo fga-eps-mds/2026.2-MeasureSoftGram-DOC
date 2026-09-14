@@ -1,0 +1,177 @@
+---
+id: disciplina
+slug: /disciplina
+title: A disciplina
+sidebar_position: 1
+---
+
+# Engenharia de Produto de Software — 2026.2
+
+Esta seção reúne as regras da disciplina que governam o trabalho da equipe: o que
+é avaliado, quando, com que peso e sob quais restrições. Ela é a tradução do
+[plano de ensino](https://github.com/fga-eps-mds/A-Disciplina-MDS-EPS/blob/master/PlanosDeEnsino/EPS_Plano_de_Ensino.md)
+e do [cronograma](https://github.com/fga-eps-mds/A-Disciplina-MDS-EPS/blob/master/PlanosDeEnsino/EPS-cronograma-hrn.md)
+oficiais para dentro da documentação do projeto.
+
+:::info Fonte da verdade
+Os documentos oficiais no repositório da disciplina prevalecem sobre esta página.
+Se algo divergir, corrija aqui e registre no histórico de versão ao final.
+:::
+
+## Identificação
+
+| Item | Valor |
+| --- | --- |
+| Instituição | Universidade de Brasília — FCTE |
+| Curso | Engenharia de Software |
+| Semestre | 2026.2 |
+| Carga horária | 60h (2 créditos teórico/prático + 2 créditos de extensão) |
+| Horário | Segundas-feiras, 10h00–13h30 |
+| Sala | MOCAP |
+| Professor | Hilmer Rodrigues Neri |
+| Primeira aula | 10/08/2026 |
+| Última aula | 14/12/2026 |
+
+## Ementa
+
+Teorias que suportam o desenvolvimento de produtos de software. Diferenças e
+semelhanças entre a produção na manufatura e no software. Gestão de escopo,
+tempo, custos, qualidade, recursos, comunicações e riscos em paradigmas
+tradicionais e ágeis. Gestão estratégica de projetos: portfólios e programas.
+Engenharia de Software Contínua. Software Analytics e tomada de decisão orientada
+a dados. Qualidade de produto de software: modelos de referência e avaliação.
+Integração de ferramentas de IA generativa no ciclo de vida do desenvolvimento.
+
+A disciplina tem **caráter extensionista**: os projetos são desenvolvidos para
+organizações públicas e representações da sociedade civil, com usuários e
+problemas reais.
+
+## Objetivos
+
+**Geral.** Formar o aluno nos níveis intermediário e avançado do gerenciamento de
+produto de software em ambiente real, capacitando-o a tomar decisões gerenciais
+fundamentadas em teoria, dados e julgamento crítico — inclusive sobre o uso
+responsável de IA generativa.
+
+**Específicos.** Ao final da disciplina, o aluno deve ser capaz de:
+
+- Planejar, monitorar e controlar produto, processo e projeto em ciclos contínuos.
+- Aplicar as áreas de conhecimento de gerenciamento de projetos (escopo, tempo,
+  custo, qualidade, risco, comunicação, pessoas) em contextos ágeis e tradicionais.
+- Avaliar qualidade interna e externa com base em modelos de referência
+  (ISO 25010, Q-Rapids, Quamoco) e dados coletados automaticamente.
+- Construir e interpretar dashboards gerenciais e analíticos.
+- Integrar IA generativa de forma crítica e rastreável.
+- Liderar e participar de times com usuários reais.
+- Documentar e comunicar decisões gerenciais com fundamentação teórica explícita.
+
+## Formato das aulas
+
+A disciplina é presencial. A exceção são as reuniões com o PO, que podem ser
+remotas.
+
+| Bloco | Duração | O que acontece |
+| --- | --- | --- |
+| **A — Sessão crítica** | 60–90 min | Discussão orientada pela leitura ou vídeo-aula feita previamente. |
+| **B — Reunião com o professor** | 30 min por time | O time apresenta resultados de planejamento e desenvolvimento; acompanhamento, revisão de entrega, retrospectiva e planning. |
+| **C — Trabalho no projeto** | 100 min | O time trabalha no projeto com suporte do professor. |
+
+### Bilhete de entrada
+
+Antes de cada sessão crítica com conteúdo novo, cada aluno registra **uma pergunta
+genuína e original** sobre a leitura no
+[Aprender 3](https://aprender3.unb.br/course/view.php?id=29294). **Sem registro,
+não há participação na discussão** — e a participação compõe 30% da nota
+individual (ver [Avaliação](/docs/disciplina/avaliacao)).
+
+## Organização do trabalho exigida
+
+Estas exigências vêm do plano de ensino e são verificadas nas releases:
+
+- Código e artefatos revisados via **pull requests**.
+- Requisitos e atividades organizados por **issues, sub-issues, sprints e
+  milestones** no GitHub + [ZenHub](https://app.zenhub.com/settings/o/fga-eps-mds/users),
+  refletindo a **EAP** e o **planejamento de releases**.
+- Requisitos, protótipos, testes e releases validados com os donos do produto.
+- Todos os repositórios mantidos na organização
+  [fga-eps-mds](https://github.com/fga-eps-mds).
+- Ambientes na mesma organização:
+  [SonarCloud](https://sonarcloud.io/organizations/fga-eps-mds-1/projects?sort=-analysis_date),
+  [Figma](https://www.figma.com/), [Discord](https://discord.com/).
+- A **divisão interna de papéis é definida pelo time** e deve estar visível na
+  documentação — é o que fazemos em [Equipe](/docs/equipe) e
+  [Squads por release](/docs/planejamento/squads).
+
+## Normas gerais
+
+### Frequência
+
+Mínimo de **75%** de presença (Resolução CEPE/UnB), computada por lista em cada
+aula.
+
+### Rotatividade das lideranças
+
+**A cada duas semanas** o time alterna as lideranças de **projeto**, **processo** e
+**produto**. O critério é habilidade de liderança, não senioridade técnica.
+
+Os líderes da quinzena devem:
+
+- conduzir a reunião com o cliente parceiro;
+- organizar planning, retrospectiva e review das sprints;
+- garantir a atualização dos artefatos de gestão (ZenHub, GitHub, SonarCloud);
+- apresentar e discutir o Dashboard Gerencial Analítico com o time e o professor,
+  abordando o balanceamento entre decisões técnicas e gerenciais.
+
+O rodízio é registrado em [Equipe](/docs/equipe).
+
+### Revisão de código
+
+O autor de qualquer PR deve ser capaz de **explicar qualquer trecho do código** em
+revisão síncrona, independentemente de quem o escreveu. PRs com código
+incompreendido pelo revisor **não devem ser aprovados**.
+
+### Integridade acadêmica
+
+- Plágio em artefato avaliado: nota 0 no componente, com registro de ocorrência.
+- MD gerado integralmente por IA sem reflexão própria identificável é tratado como
+  plágio.
+- O uso de IA é encorajado; a ausência de reflexão crítica documentada é o
+  problema. Ver [Política de IA](/docs/disciplina/politica-ia).
+
+### Comunicação com a disciplina
+
+| Canal | Uso |
+| --- | --- |
+| Moodle / Aprender 3 e Teams | Materiais, avisos e entregas acadêmicas |
+| Discord | Comunicação do time e da turma sobre o projeto |
+
+:::warning
+O professor não responde mensagens privadas no Discord. Assuntos de projeto vão
+nos canais do projeto; assuntos pessoais, no Teams.
+:::
+
+### Critério extra
+
+Até **1 ponto** na nota final, a critério do professor:
+
+- contribuições para a disciplina (conteúdo, issues no repositório da disciplina,
+  tutoriais, correções de documentação);
+- contribuições para outros repositórios open source, com evidência rastreável;
+- participação em eventos acadêmicos com trabalho relacionado ao projeto.
+
+### Reposição
+
+Tratada individualmente conforme os normativos da UnB. Motivo de saúde exige
+atestado entregue no retorno.
+
+### Dados para pesquisa
+
+Dados de processo, produto e pessoas anonimizadas gerados no semestre podem ser
+usados em investigações científicas, conforme princípios éticos da pesquisa
+acadêmica.
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 10/09/2026 | Criação da página a partir do plano de ensino 2026.2 | [@MilenaFRocha](https://github.com/MilenaFRocha) | |

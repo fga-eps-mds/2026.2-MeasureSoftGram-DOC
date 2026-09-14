@@ -6,32 +6,96 @@ sidebar_position: 2
 
 # Roadmap do semestre
 
+As datas abaixo vêm do [cronograma da disciplina](/docs/disciplina/cronograma).
+Os **marcos são fixos**; o que a equipe planeja é o escopo que entra em cada um.
+
 ## Linha do tempo
 
 ```mermaid
 gantt
-  title Roadmap EPS 2026.2
+  title Roadmap EPS 2026.2 - MeasureSoftGram
   dateFormat YYYY-MM-DD
   axisFormat %d/%m
 
-  section Início
-  Levantamento e planejamento :a1, 2026-08-31, 14d
+  section Fundação
+  Diagnóstico e organização (Sprint 1) :done, s1, 2026-08-17, 2026-09-04
+  Lean Inception e visão do produto    :active, li, 2026-08-24, 21d
+  EAP e planejamento de releases       :eap, 2026-08-31, 21d
 
-  section Desenvolvimento
-  Sprint 1 :a2, after a1, 14d
-  Sprint 2 :a3, after a2, 14d
-  Sprint 3 :a4, after a3, 14d
+  section Release 1
+  Desenvolvimento R1  :r1, 2026-09-01, 27d
+  R1 + DA-R1          :milestone, m1, 2026-09-28, 0d
 
-  section Fechamento
-  Entrega final :a5, after a4, 7d
+  section Release 2
+  Desenvolvimento R2  :r2, 2026-09-29, 27d
+  R2 + DA-R2          :milestone, m2, 2026-10-26, 0d
+
+  section Release 3
+  Desenvolvimento R3  :r3, 2026-10-27, 34d
+  R3 + DA-R3          :milestone, m3, 2026-11-30, 0d
+
+  section Encerramento
+  Aceitação e defesas :rf, 2026-12-01, 7d
+  Encerramento        :milestone, m4, 2026-12-14, 0d
 ```
-
-> Ajuste as datas conforme o calendário da disciplina.
 
 ## Marcos
 
-| Marco | Data prevista | Entrega associada |
-| --- | --- | --- |
-| Release 1 | | |
-| Release 2 | | |
-| Entrega final | | |
+| Marco | Data | Entrega associada | Escopo planejado |
+| --- | --- | --- | --- |
+| **Release 1** | 28/09/2026 | Planejamento, arquitetura, pipelines, dashboard v1, ambientes de implantação, Visão do Produto | *a definir na EAP* |
+| **MD-R1** | 29/09/2026 | Memorando de Decisão individual — planejamento | Individual |
+| **Release 2** | 26/10/2026 | Incremento funcional, qualidade, dashboard v2 | *a definir na EAP* |
+| **MD-R2** | 27/10/2026 | Memorando de Decisão individual — qualidade | Individual |
+| **Release 3** | 30/11/2026 | MVP validado pelos POs, dashboard e analytics completos | *a definir na EAP* |
+| **Release Final** | 07/12/2026 | Testes de aceitação com o cliente e defesas orais | Time |
+| **MD-R3** | 08/12/2026 | Memorando de Decisão individual — encerramento | Individual |
+
+Critérios detalhados de cada release em
+[Avaliação e entregas](/docs/disciplina/avaliacao).
+
+## Ondas de escopo
+
+O escopo de cada release é organizado em **ondas** na Estrutura Analítica do
+Projeto (EAP), e são essas ondas que definem os
+[squads da release](/docs/planejamento/squads).
+
+:::caution EAP pendente
+A EAP de 2026.2 ainda não foi construída. Ela depende da Lean Inception e do
+sequenciador de funcionalidades validados com o PO. Enquanto isso, a tabela
+abaixo fica em aberto.
+:::
+
+### Onda 1 — Release 1
+
+| Código | Pacote de trabalho | Descrição | Squad |
+| --- | --- | --- | --- |
+| | | | |
+
+### Onda 2 — Release 2
+
+| Código | Pacote de trabalho | Descrição | Squad |
+| --- | --- | --- | --- |
+| | | | |
+
+### Onda 3 — Release 3
+
+| Código | Pacote de trabalho | Descrição | Squad |
+| --- | --- | --- | --- |
+| | | | |
+
+## Releases minor
+
+Além dos três marcos major, a disciplina espera **releases minor** — versões
+parciais entregues ao longo das sprints, como evidência de ritmo sustentável.
+Registrar cada uma no Aprender 3 e na página de [Sprints](/docs/sprints).
+
+| Release minor | Sprint | Data | O que foi entregue |
+| --- | --- | --- | --- |
+| | | | |
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 10/09/2026 | Datas reais do cronograma 2026.2 e estrutura de ondas | [@MilenaFRocha](https://github.com/MilenaFRocha) | |
