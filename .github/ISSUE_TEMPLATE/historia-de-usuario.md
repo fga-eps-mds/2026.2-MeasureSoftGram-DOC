@@ -6,29 +6,64 @@ labels: US
 assignees: ''
 
 ---
+Descrição
 
-## Descrição
+Como [perfil/persona do usuário],
+quero [funcionalidade, ação ou resultado esperado],
+para [objetivo/benefício esperado].
 
-**Como** <!-- persona -->
-**quero** <!-- ação -->
-**para** <!-- benefício -->
+Tarefas
 
-## Tarefas
+ [Tarefa 1]
 
-- [ ]
-- [ ]
-- [ ]
+ [Tarefa 2]
 
-## Protótipo
+ [Tarefa 3]
 
-<!-- Link do frame no Figma. -->
+ [Tarefa 4]
 
-## Critérios de aceitação
+Restrições e Dependências
+Restrições
 
-- [ ]
-- [ ]
-- [ ]
+[Restrição 1]
 
-## Rastreabilidade
+[Restrição 2]
 
-<!-- Pacote de trabalho da EAP, onda/release e squad responsável. -->
+Dependências
+
+[Dependência 1]
+
+[Dependência 2]
+
+BDD
+Cenário: [Nome do cenário]
+
+Dado que [contexto inicial],
+quando [ação realizada],
+então [resultado esperado].
+
+Cenário: [Nome do cenário adicional]
+
+Dado que [contexto inicial],
+quando [ação realizada],
+então [resultado esperado].
+
+Protótipo
+
+[Link para protótipo ou "não aplicável"]
+
+Critérios de Aceitação
+
+ [Critério de aceitação 1]
+
+ [Critério de aceitação 2]
+
+ [Critério de aceitação 3]
+
+Rastreabilidade
+
+[Release / Épico / Feature / Requisito relacionado]
+
+[Documento, tese ou referência relacionada]
+
+[Issue/Story relacionada]
