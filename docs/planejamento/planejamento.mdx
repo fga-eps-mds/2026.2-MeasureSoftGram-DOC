@@ -54,11 +54,29 @@ As sprints acompanham o calendário da disciplina. A **Sprint 1** foi de
 | Documentação | Docusaurus (este site) |
 | CI/CD | GitHub Actions |
 
-## Definição de pronto (DoD)
+## Definição de Preparado (DoR)
 
-Uma tarefa só e considerada concluída quando:
+Uma tarefa só é considerada pronta para entrar na sprint e ser desenvolvida quando:
 
-- [ ] O código passa nos testes automatizados.
-- [ ] Foi revisado por ao menos um outro integrante.
-- [ ] A documentação afetada foi atualizada.
-- [ ] Foi integrado a branch principal.
+- [ ] Definição do objetivo da tarefa OU descrição da História de Usuário
+- [ ] Critérios de Aceitação definidos
+- [ ] Definição das regras de negócio por meio de cenários BDD
+- [ ] Definição das atividades técnicas a serem desenvolvidas, restrições e dependências
+- [ ] Protótipo de alta fidelidade no Figma criado e linkado (quando aplicável)
+- [ ] Escopo e protótipos validados e refinados com o PO
+- [ ] Estimativa da história/tarefa preenchida
+- [ ] Definição da equipe que desenvolverá a tarefa
+- [ ] Issue configurada no ZenHub (Labels, Epic, Sprint, Milestone e Parent associado à Entrega/Release)
+
+## Definição de Pronto (DoD)
+
+Uma tarefa só é considerada concluída quando:
+
+- [ ] Cenários de BDD (Testes de Aceitação) executados e documentados
+- [ ] A documentação afetada pela tarefa foi atualizada
+- [ ] Está associado a pelo menos um Pull Request
+- [ ] Pipeline de CI/CD passando com Quality Gate do SonarCloud aprovado (Cobertura de testes atingida)
+- [ ] PR revisado e aprovado de forma síncrona por ao menos um outro integrante (garantindo o entendimento do código)
+- [ ] Código integrado à branch principal (main/master)
+- [ ] História de Usuário/Tarefa validada e aprovada pelo PO em ambiente de homologação
+
