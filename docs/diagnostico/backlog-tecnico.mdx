@@ -19,7 +19,7 @@ No início do ciclo de **2026.2**, a equipe de Engenharia de Produto de Software
    - Os débitos técnicos foram convertidos em **Tarefas Técnicas (Tasks)** com critérios de aceitação objetivos, vinculados aos repositórios correspondentes.
    - Itens de impacto funcional direto na experiência do usuário foram acoplados a **Histórias de Usuário (US)**, como a revisão de consultas e performance no fluxo de carregamento da aplicação.
    - Itens transversais de esteira, empacotamento e qualidade foram agregados sob o **Épico de Infraestrutura, CI/CD e Deploys** e na **Task de Atualização Automática de Dependências**.
-   - Fragilidades de autenticação e proteção de credenciais foram mapeadas para compor o backlog da funcionalidade planejada de **Adequação à LGPD e Governança de Dados**.
+   - Fragilidades críticas de autenticação e proteção de credenciais foram convertidas na **Task de Falhas de Segurança** sob o Épico de Estabilização e Correções de Bugs para resolução imediata na Release 1.
 3. **Resolução Contínua e Rastreabilidade**: À medida que as tarefas de migração de repositórios e modernização de dependências foram executadas, os respectivos itens foram validados contra seus critérios de aceite e baixados com evidências anexadas nas issues do projeto.
 
 :::info[Documento completo original]
@@ -28,25 +28,19 @@ O levantamento analítico inicial com a íntegra dos trechos de código e formul
 :::
 
 <div className="row margin-bottom--md">
-  <div className="col col--2">
+  <div className="col col--3">
     <div className="card padding--sm text--center">
       <strong style={{fontSize: '1.8rem'}}>3</strong>
       <div>Não mapeados</div>
     </div>
   </div>
-  <div className="col col--2">
-    <div className="card padding--sm text--center">
-      <strong style={{fontSize: '1.8rem'}}>3</strong>
-      <div>Sem issue</div>
-    </div>
-  </div>
   <div className="col col--3">
     <div className="card padding--sm text--center">
-      <strong style={{fontSize: '1.8rem'}}>21</strong>
+      <strong style={{fontSize: '1.8rem'}}>24</strong>
       <div>Com issue ZenHub</div>
     </div>
   </div>
-  <div className="col col--2">
+  <div className="col col--3">
     <div className="card padding--sm text--center">
       <strong style={{fontSize: '1.8rem'}}>5</strong>
       <div>Descartados</div>
@@ -94,41 +88,21 @@ Itens do diagnóstico que ainda não foram convertidos em tarefas ou épicos esp
 
 ---
 
-## 2. Itens Mapeados Sem Issue no ZenHub (Backlog de Funcionalidades)
-
-Itens que foram alocados conceitualmente para a frente de trabalho de **Adequação à LGPD e Governança de Dados / Segurança**. As issues formais no ZenHub serão geradas durante o planejamento detalhado dessa entrega.
-
-| ID | Item | Repositório | Gravidade | Esforço Estimado |
-| :--- | :--- | :--- | :--- | :--- |
-| **MSG-03** | `GET /users/` expõe e-mail de todos os usuários sem autenticação | Service | Crítico | 2 h |
-| **MSG-12** | Token OAuth do GitHub armazenado em texto plano | Service | Alto | 1 dia |
-| **MSG-13** | Produção sem TLS: tokens de autenticação trafegam em claro | Service | Alto | 1 dia |
-
-### Detalhamento dos Itens
-
-#### MSG-03 - `GET /users/` expõe e-mail de todos os usuários sem autenticação
-* **Repositório:** `MeasureSoftGram-Service`
-* **Gravidade:** Crítico | **Esforço:** 2 h | **Alvo:** `src/config/settings/base.py:205` e `src/accounts/views.py:95`
-* **Contexto:** A configuração `REST_FRAMEWORK` define `DEFAULT_AUTHENTICATION_CLASSES`, mas omite `DEFAULT_PERMISSION_CLASSES`. No Django REST Framework (DRF), a ausência dessa chave aplica o padrão `AllowAny`, tornando público qualquer viewset sem permissão declarada expressamente. O caso mais grave é o `UserListViewSet` (`GET /users/`), que serializa `id`, `username`, `first_name`, `last_name` e o endereço de e-mail de todos os usuários cadastrados.
-* > **Critério de aceite:** `DEFAULT_PERMISSION_CLASSES = (IsAuthenticated,)` configurado por padrão; endpoints públicos de badge liberados explicitamente com `AllowAny`; teste de regressão automatizado assegurando retorno HTTP 401 para requisições não autenticadas em `GET /users/`.
-
-#### MSG-12 - Token OAuth do GitHub armazenado em texto plano
-* **Repositório:** `MeasureSoftGram-Service`
-* **Gravidade:** Alto | **Esforço:** 1 dia | **Alvo:** `src/accounts/models.py`
-* **Contexto:** O campo `github_access_token` é definido como um `CharField(max_length=255)` ordinário na tabela de usuários. Por ser uma credencial delegada de terceiro armazenada sem qualquer cifragem em repouso, qualquer leitura indevida, backup exposto ou acesso administrativo ao Django Admin compromete os tokens de acesso de todos os membros.
-* > **Critério de aceite:** Campo cifrado em repouso no banco de dados via chave simétrica, ocultado da interface padrão do Django Admin, acompanhado de migration de dados para cifrar registros existentes.
-
-#### MSG-13 - Produção sem TLS: tokens de autenticação trafegam em claro
-* **Repositório:** `MeasureSoftGram-Service`
-* **Gravidade:** Alto | **Esforço:** 1 dia | **Alvo:** `src/config/settings/production.py` e infraestrutura
-* **Contexto:** A configuração em `production.py` define `SECURE_SSL_REDIRECT = False`, `SESSION_COOKIE_SECURE = False`, `CSRF_COOKIE_SECURE = False` e `SECURE_HSTS_SECONDS = 0`, pois a aplicação foi hospedada atrás de proxy HTTP simples sem terminação segura de TLS. Como a autenticação utiliza cabeçalho `TokenAuthentication`, as credenciais trafegam desprotegidas pela rede.
-* > **Critério de aceite:** Certificado TLS configurado e terminado na borda/proxy, e as quatro flags de segurança ativadas em produção com HSTS configurado para vigência mínima de um ano.
-
----
-
-## 3. Itens Mapeados com Issues no ZenHub
+## 2. Itens Mapeados com Issues no ZenHub
 
 Itens com issues ativas no ZenHub, rastreadas em épicos, histórias de usuário ou tarefas do backlog da equipe.
+
+### [TASK #52](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/52) - Falhas de Segurança (MSG-03, MSG-12, MSG-13)
+* **Repositório da Issue:** `2026.2-MeasureSoftGram-DOC` | **Épico Pai:** [[EPIC #37] Estabilização e Correções de Bugs](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/37)
+* **Objetivo:** Mitigar vulnerabilidades críticas no MeasureSoftGram-Service através de proteção de endpoints contra acessos anônimos, cifragem de credenciais OAuth em repouso e ativação de políticas estritas de TLS.
+
+| ID | Repositório | Descrição do Item |
+| :--- | :--- | :--- |
+| **MSG-03** | Service | `GET /users/` expõe e-mail de todos os usuários sem autenticação |
+| **MSG-12** | Service | Token OAuth do GitHub armazenado em texto plano |
+| **MSG-13** | Service | Produção sem TLS: tokens de autenticação trafegam em claro |
+
+---
 
 ### [TASK #50](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/50) - Padronização e Atualização do msgram-core (1.5.4) no Service e CLI
 * **Repositório da Issue:** `2026.2-MeasureSoftGram-DOC` | **Épico Pai:** [[EPIC #37] Estabilização e Correções de Bugs](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/37)
@@ -190,7 +164,7 @@ Itens com issues ativas no ZenHub, rastreadas em épicos, histórias de usuário
 
 ---
 
-## 4. Itens Descartados / Fora de Escopo
+## 3. Itens Descartados / Fora de Escopo
 
 Itens identificados no levantamento original que, após deliberação técnica da equipe de EPS, foram retirados do escopo de desenvolvimento do ciclo 2026.2.
 
@@ -204,7 +178,7 @@ Itens identificados no levantamento original que, após deliberação técnica d
 
 ---
 
-## 5. Itens Já Resolvidos
+## 4. Itens Já Resolvidos
 
 Itens cuja correção já foi integrada aos repositórios e validada no ciclo 2026.2.
 
@@ -225,3 +199,4 @@ Itens cuja correção já foi integrada aos repositórios e validada no ciclo 20
 | :--- | :--- | :--- | :--- | :--- |
 | `1.0` | 25/08/2026 | Levantamento inicial de dívida técnica, defeitos ativos e gargalos a partir do diagnóstico | Luiza Maluf | Milena Fernandes Rocha |
 | `1.1` | 23/09/2026 | Reestruturação do artefato, categorização por status de mapeamento, rastreabilidade completa no ZenHub/GitHub e justificativas de descarte | Luciano Freitas | Equipe EPS/MDS |
+| `1.2` | 23/09/2026 | Conversão dos itens de segurança (MSG-03, MSG-12, MSG-13) na TASK #52 do Épico #37, remoção da categoria sem issue e renumeração do artefato | Luciano Freitas | Equipe EPS/MDS |
