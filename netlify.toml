@@ -1,0 +1,57 @@
+# ==============================================================================
+# CONFIGURAÇÃO DE DEPLOY PREVIEW - NETLIFY
+# ==============================================================================
+#
+# JUSTIFICATIVA DA ESCOLHA (Netlify via GitHub App vs GitHub Actions):
+# 1. Sem gestão de credenciais: Dispensa criação, rotação e manutenção de tokens
+#    de autenticação (NETLIFY_AUTH_TOKEN e NETLIFY_SITE_ID) no GitHub Secrets.
+# 2. Economia de recursos: Não consome os minutos de runner da organização no
+#    GitHub Actions nem ocupa a fila de execução de CI/CD.
+# 3. Integração nativa e automática: O bot oficial do GitHub App cria e atualiza
+#    o comentário com a URL do preview a cada novo commit no Pull Request, além
+#    de integrar status checks visíveis na interface do GitHub.
+# 4. Menor esforço de manutenção: Elimina a necessidade de manter workflows
+#    complexos em .github/workflows/ e dependências de actions de terceiros.
+# 5. Configuration-as-Code (IaC): Todas as definições de build e comportamento
+#    ficam declaradas e versionadas neste arquivo (netlify.toml).
+#
+# PASSO A PASSO DE CONFIGURAÇÃO NA INTERFACE DO NETLIFY:
+# 1. Acesse https://app.netlify.com e realize login com sua conta do GitHub.
+# 2. No painel inicial, clique em "Add new site" > "Import an existing project".
+# 3. Selecione o provedor "GitHub" e autorize o Netlify GitHub App a acessar a
+#    organização "fga-eps-mds" (ou configure o acesso apenas a este repositório).
+# 4. Selecione o repositório "2026.2-MeasureSoftGram-docs-eps".
+# 5. Nas configurações de build:
+#    - Branch to deploy: 'main'.
+#    - Base directory: deixar em branco (pois o projeto está na raiz do repositório).
+#    - Build command: 'npm run build' (já lido automaticamente deste netlify.toml).
+#    - Publish directory: 'build' (já lido automaticamente deste netlify.toml).
+# 6. Clique em "Deploy site".
+# 7. Em "Site configuration" > "Build & deploy" > "Deploy contexts", confirme que
+#    "Deploy Previews" está ativo para Pull Requests.
+# 8. Não é necessário configurar variáveis manuais, pois este netlify.toml gerencia
+#    o contexto de preview e suprime builds na branch 'main'.
+# ==============================================================================
+
+[build]
+  command = "npm run build"
+  publish = "build"
+
+# ------------------------------------------------------------------------------
+# Contexto: Deploy Previews (Pull Requests para a branch main)
+# ------------------------------------------------------------------------------
+# Ao abrir ou atualizar um PR, o Netlify define DEPLOY_PREVIEW=true para que o
+# Docusaurus utilize baseUrl="/" (servido na raiz do subdomínio do preview).
+[context.deploy-preview]
+  command = "npm run build"
+  [context.deploy-preview.environment]
+    DEPLOY_PREVIEW = "true"
+
+# ------------------------------------------------------------------------------
+# Contexto: Branch de Produção (main)
+# ------------------------------------------------------------------------------
+# A documentação oficial é publicada pelo GitHub Pages via .github/workflows/deploy.yml.
+# O comando abaixo instrui o Netlify a ignorar qualquer push na branch 'main',
+# economizando tempo de build e evitando duplicidade com a produção oficial.
+[context.production]
+  ignore = "exit 0"

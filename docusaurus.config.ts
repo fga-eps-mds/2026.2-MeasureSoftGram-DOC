@@ -2,6 +2,15 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+// Em Deploy Previews (Netlify), o site é servido na raiz do subdomínio ('/').
+// Na publicação oficial (GitHub Pages), é servido sob o subdiretório do repositório ('/2026.2-MeasureSoftGram-DOC/').
+const isDeployPreview =
+  process.env.NETLIFY === 'true' ||
+  process.env.DEPLOY_PREVIEW === 'true' ||
+  process.env.BASE_URL === '/';
+
+const baseUrl = isDeployPreview ? '/' : '/2026.2-MeasureSoftGram-DOC/';
+
 const config: Config = {
   title: 'MeasureSoftGram - EPS 2026.2',
   tagline: 'Documentação da equipe na disciplina de Engenharia de Produto de Software',
@@ -17,7 +26,7 @@ const config: Config = {
   },
 
   url: 'https://fga-eps-mds.github.io',
-  baseUrl: '/2026.2-MeasureSoftGram-DOC/',
+  baseUrl,
   trailingSlash: true,
 
   organizationName: 'fga-eps-mds',
