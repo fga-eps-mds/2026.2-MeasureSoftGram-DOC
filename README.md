@@ -40,18 +40,31 @@ npm run build    # gera o site estático em build/
 npm run serve    # serve o build localmente
 ```
 
-## Publicação
+## Publicação e Deploy Previews
+
+### Documentação Oficial (Produção)
 
 Todo push na branch `main` dispara o workflow
 [`deploy.yml`](.github/workflows/deploy.yml), que faz o build e publica no
-GitHub Pages. Não é necessário rodar deploy manualmente.
+GitHub Pages em:
+https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/
+
+Não é necessário rodar deploy manualmente.
+
+### Deploy Previews em Pull Requests (Netlify)
+
+Para cada Pull Request aberto com destino à branch `main`, um **Deploy Preview** é gerado automaticamente via **Netlify** (integrado via GitHub App):
+- O bot do Netlify comenta diretamente no Pull Request com a URL exclusiva do preview.
+- Permite que autores e revisores inspecionem visualmente as alterações na documentação antes do merge.
+- As configurações de build, diretórios e contextos estão versionadas como código em [`netlify.toml`](netlify.toml).
 
 ## Como contribuir
 
 1. Crie uma branch a partir de `main` (`docs/<assunto>`).
 2. Edite os arquivos `.mdx` em `docs/`.
 3. Rode `npm run build` para garantir que não há links quebrados.
-4. Abra um Pull Request.
+4. Abra um Pull Request para a branch `main`.
+5. Valide as alterações através do link de **Deploy Preview** publicado pelo bot do Netlify nos comentários do PR.
 
 Cada página publicada tem um link **Edit this page** no rodapé que leva direto ao
 arquivo correspondente no GitHub.
