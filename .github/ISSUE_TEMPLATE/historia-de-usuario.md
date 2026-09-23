@@ -1,69 +1,56 @@
----
-name: História de Usuário
-about: Template para Histórias de Usuário
-title: '[US] '
-labels: US
-assignees: ''
+# História de Usuário
 
----
-Descrição
+## Descrição
 
-Como [perfil/persona do usuário],
-quero [funcionalidade, ação ou resultado esperado],
-para [objetivo/benefício esperado].
+**Como** [perfil/persona do usuário],
+**quero** [funcionalidade, ação ou resultado esperado],
+**para** [objetivo/benefício esperado].
 
-Tarefas
+## Tarefas
 
- [Tarefa 1]
+- [ ] [Tarefa 1]
+- [ ] [Tarefa 2]
+- [ ] [Tarefa 3]
+- [ ] [Tarefa 4]
 
- [Tarefa 2]
+## Restrições e Dependências
 
- [Tarefa 3]
+### Restrições
 
- [Tarefa 4]
+- [Restrição 1]
+- [Restrição 2]
 
-Restrições e Dependências
-Restrições
+### Dependências
 
-[Restrição 1]
+- [Dependência 1]
+- [Dependência 2]
 
-[Restrição 2]
+## BDD
 
-Dependências
+### Cenário: [Nome do cenário]
 
-[Dependência 1]
+**Dado que** [contexto inicial]
+**quando** [ação realizada]
+**então** [resultado esperado]
 
-[Dependência 2]
+### Cenário: [Nome do cenário adicional]
 
-BDD
-Cenário: [Nome do cenário]
+**Dado que** [contexto inicial]
+**quando** [ação realizada]
+**então** [resultado esperado]
 
-Dado que [contexto inicial],
-quando [ação realizada],
-então [resultado esperado].
-
-Cenário: [Nome do cenário adicional]
-
-Dado que [contexto inicial],
-quando [ação realizada],
-então [resultado esperado].
-
-Protótipo
+## Protótipo
 
 [Link para protótipo ou "não aplicável"]
 
-Critérios de Aceitação
+## Critérios de Aceitação
 
- [Critério de aceitação 1]
+- [ ] [Critério de aceitação 1]
+- [ ] [Critério de aceitação 2]
+- [ ] [Critério de aceitação 3]
 
- [Critério de aceitação 2]
+## Rastreabilidade
 
- [Critério de aceitação 3]
-
-Rastreabilidade
-
-[Release / Épico / Feature / Requisito relacionado]
-
-[Documento, tese ou referência relacionada]
-
-[Issue/Story relacionada]
+- [Release / Épico / Feature / Requisito relacionado]
+- [Documento, tese ou referência relacionada]
+- [Issue/Story relacionada]
