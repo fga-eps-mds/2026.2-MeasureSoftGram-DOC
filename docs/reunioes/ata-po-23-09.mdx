@@ -1,0 +1,117 @@
+---
+id: ata-po-23-09
+title: Ata - Reunião com o PO (23/09/2026)
+sidebar_position: 4
+---
+
+# Ata - Reunião Semanal com o Product Owner
+
+**Data:** 23/09/2026 · **Duração:** 1h 16m 56s  
+**Tipo:** Reunião de validação de escopo, decisões técnicas e acordos de entrega  
+
+:::tip[Resultado]
+O Product Owner alinhou com a equipe as diretrizes para o épico de **Dívida Técnica**, validou a estratégia de entrega do gráfico pioneiro de **TSQMI** na Release 1, aprovou a criação do repositório **Plataforma** com Git Flow e definiu o adiamento da migração do frontend para Vite em favor de correções pontuais no ecossistema atual de Next.js. Além disso, foram reforçados os conceitos de **Critérios de Aceitação vs. DoD** e organização dos desenvolvedores no board.
+:::
+
+---
+
+## 1. Dívida Técnica (Épico) - Ação Prioritária para o Dia Seguinte
+
+Houve um longo debate focado no épico de **"Operacionalizar a medição de dívida técnica"**, considerado a demanda bloqueante primordial para o time de desenvolvimento prosseguir nas atividades.
+
+### Estruturação das Tarefas
+
+- O PO orientou expressamente que as funcionalidades de dívida técnica **não sejam agrupadas em uma única História de Usuário (US) massiva**.
+- O épico será desmembrado em USs menores e independentes, separando:
+  - A integração e consumo via **CLI**;
+  - A visualização e interação via **Interface Web (Front)**.
+- **Desenvolvedores alocados:** Lucas Bottino, Gabriel Moura e Alisson.
+
+### Lógica do Cálculo e Extração de Métricas
+
+- A equipe sanou dúvidas sobre a fonte dos dados e o modelo de cálculo (se seria via SonarCloud direto ou a fórmula matemática da disciplina).
+- **Diretriz definida pelo PO:** A funcionalidade deve seguir estritamente o **modelo Squale**, cuja base de cálculo já se encontra implementada no `msgram-core`.
+- As métricas brutas serão extraídas do **SonarQube**, e o cálculo normalizará esses dados respeitando a hierarquia do modelo:
+  1. Métricas brutas;
+  2. Subcaracterística;
+  3. Característica;
+  4. Índice geral consolidado (**TSQMI**).
+
+### Acordos e Prazos Definidos
+
+| Responsável | Ação / Compromisso | Prazo |
+| --- | --- | --- |
+| **Product Owner (Hilmer)** | Formalizar os Critérios de Aceitação dependentes de negócio (métricas exatas do SonarQube a serem coletadas e a hierarquia do cálculo) diretamente como comentário na issue no repositório. | Até o fim da manhã de 24/09 (~11h30, após término de reuniões entre 10h e 11h30) |
+| **Equipe Técnica** | Revisar as issues, redigir os cenários BDD independentes do cálculo de negócio, desmembrar as histórias e estruturar os protótipos de interface (telas do Front e esboços de saída na CLI) para validação do usuário. | Manhã de 24/09 |
+
+---
+
+## 2. Validação de Escopo e Decisões Técnicas
+
+### 2.1. Estratégia de Gráficos e Remoção do Grafana
+
+- A equipe apresentou a proposta de entregar a plotagem de **apenas um gráfico nativo na Release 1**: o histórico do índice **TSQMI** (*Total Software Quality Measure Index*), refletindo a qualidade total consolidada dos repositórios.
+- **Justificativa técnica:** A remoção dos *iframes* do Grafana obriga o time a reconstruir o fluxo completo de consumo de dados do zero — criando novos contratos e endpoints no `MeasureSoftGram-Service` e codificando os componentes visuais nativos em React no `MeasureSoftGram-Front`.
+- **Estratégia aprovada:** A entrega do gráfico pioneiro de TSQMI atuará como uma **"prova de fogo" arquitetural**. A partir dela, será gerado um **documento de governança e guia técnico**, padronizando a implementação dos gráficos restantes (como saúde da qualidade, pulso MSG e radar) a partir da Release 2.
+- **Parecer do PO:** Acatou e validou integralmente a estratégia.
+
+### 2.2. Infraestrutura, Plataforma e Pipeline de Deploy
+
+- A equipe relatou os atritos e gargalos na gestão de atualizações assíncronas entre os múltiplos repositórios do ecossistema (por exemplo, lançamento de nova versão do pacote `Core` sem que `Service` e `CLI` sincronizem as dependências simultaneamente).
+- **Criação do Repositório Plataforma:** Validada a criação de um repositório centralizador (`MeasureSoftGram-Platform`) para orquestrar o ambiente de desenvolvimento local via Docker Compose unificado.
+- **Estratégia de Branching (Git Flow):**
+  - Pull Requests vindos dos forks serão direcionados à branch `develop` (ambiente de integração/homologação).
+  - Após estabilização e validação, o pacote é promovido para a branch principal (`main`).
+- **Atualização Automatizada de Dependências:** A funcionalidade de atualização em cascata via Dependabot foi postergada para a **Release 2**, mitigando riscos de instabilidade durante o fechamento da sprint atual.
+
+### 2.3. Diagnóstico e Gargalos do Frontend (Next.js)
+
+- Alexandre apresentou diagnóstico detalhado dos problemas de carregamento no frontend:
+  - Utilização de compilador legado do Next.js;
+  - Biblioteca SWR defasada e com chamadas desordenadas;
+  - Encadeamento excessivo de requisições HTTP redundantes e em cascata à API.
+- **Avaliação de Migração para Vite:** Foi debatida a proposta de migração da arquitetura para Vite (geração de SPA estática mais leve e econômica de hospedar no Nginx).
+- **Decisão:** Tendo em vista o risco e o cronograma enxuto da Release 1, o PO e a equipe acordaram em **manter o Next.js no momento**, focando estritamente em **correções e otimizações paliativas** (remoção de requisições em cascata, correção de chaves SWR e limpeza de chamadas redundantes). A migração estrutural de framework será reavaliada em ciclo futuro.
+
+---
+
+## 3. Governança e Metodologia de Produto
+
+### Critérios de Aceitação vs. Definition of Done (DoD)
+
+O PO realizou um alinhamento conceitual importante sobre boas práticas ágeis:
+- **Critérios de Aceitação (BDD):** Devem se restringir estritamente ao comportamento esperado da aplicação sob a perspectiva do **usuário final** (regras de negócio e fluxos funcionais).
+- **Definition of Done (DoD):** Itens de qualidade técnica interna e deveres do desenvolvedor — tais como *"possuir cobertura de testes unitários"*, *"atualizar documentação técnica"* ou *"passar no lint da pipeline"* — pertencem à **Definição de Pronto (DoD)** e não aos critérios de aceitação da história.
+
+### Tratamento de Bugs vs. Histórias de Usuário
+
+- Problemas visuais ou comportamentais na interface (como telas ou botões "piscando" durante a navegação pelo menu lateral) devem ser mapeados e tratados como **Bugs**, e não como Histórias de Usuário (US).
+- Histórias de usuário agregam novas capacidades de negócio e demandam validação do PO; correções de interface são ajustes de defeito técnico com validação interna.
+
+### Visibilidade de Gestão e Alocação dos Desenvolvedores
+
+- O PO solicitou maior clareza visual no board de trabalho para evidenciar a distribuição e o esforço de todos os **20 desenvolvedores** do time.
+- Luciano esclareceu que a reestruturação do board está em andamento, organizando a equipe em **subequipes macro** para facilitar o acompanhamento, melhorar a comunicação interna e descentralizar as frentes técnicas.
+
+---
+
+## 4. Encaminhamentos e Próximos Passos
+
+### Pendências do Product Owner
+
+| Item | Descrição | Previsão |
+| --- | --- | --- |
+| Detalhamento de Dívida Técnica | Registrar em comentário na issue os critérios de negócio, métricas do SonarQube necessárias e regras de hierarquia de cálculo | 24/09 (até ~11h30) |
+
+### Ações da Equipe
+
+| Ação | Responsável | Prazo |
+| --- | --- | --- |
+| Desmembrar o épico de Dívida Técnica em USs menores (CLI e Web) | Lucas, Gabriel Moura, Alisson | 24/09 |
+| Estruturar cenários BDD independentes e esboços de interface/CLI para Dívida Técnica | Lucas, Gabriel Moura, Alisson | 24/09 |
+| Implementar o endpoint de TSQMI histórico por Release no Service | Equipe Backend | Sprint R1 |
+| Desenvolver o componente nativo de gráfico de TSQMI em React no Front | Equipe Frontend | Sprint R1 |
+| Redigir o Guia de Governança Técnica para replicação dos gráficos na R2 | Equipe EPS | Sprint R1 |
+| Aplicar correções paliativas no carregamento do Front (SWR e requisições em cascata) | Equipe Frontend | Sprint R1 |
+| Consolidar o repositório central `MeasureSoftGram-Platform` e fluxo Git Flow | Equipe EPS / Infra | Sprint R1 |
+| Finalizar a reorganização do board do Zenhub com visão das subequipes macro | Luciano | 24/09 |
