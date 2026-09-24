@@ -10,7 +10,7 @@ sidebar_position: 4
 **Tipo:** Reunião de validação de escopo, decisões técnicas e acordos de entrega  
 
 :::tip[Resultado]
-O Product Owner alinhou com a equipe as diretrizes para o épico de **Dívida Técnica**, validou a estratégia de entrega do gráfico pioneiro de **TSQMI** na Release 1, aprovou a criação do repositório **Plataforma** com Git Flow e definiu o adiamento da migração do frontend para Vite em favor de correções pontuais no ecossistema atual de Next.js. Além disso, foram reforçados os conceitos de **Critérios de Aceitação vs. DoD** e organização dos desenvolvedores no board.
+O Product Owner alinhou com a equipe as diretrizes para o épico de **Dívida Técnica**, validou a estratégia de entrega do gráfico pioneiro de **TSQMI** na Release 1, aprovou a utilização do Git Flow nos repositórios centrais e definiu o adiamento da migração do frontend para Vite em favor de correções pontuais no ecossistema atual de Next.js. Foram reforçados os conceitos de **Critérios de Aceitação vs. DoD** e organização dos desenvolvedores no board.
 :::
 
 ---
@@ -48,23 +48,21 @@ Houve um longo debate focado no épico de **"Operacionalizar a medição de dív
 
 ## 2. Validação de Escopo e Decisões Técnicas
 
-### 2.1. Estratégia de Gráficos e Remoção do Grafana
+### Estratégia de Gráficos e Remoção do Grafana
 
 - A equipe apresentou a proposta de entregar a plotagem de **apenas um gráfico nativo na Release 1**: o histórico do índice **TSQMI** (*Total Software Quality Measure Index*), refletindo a qualidade total consolidada dos repositórios.
 - **Justificativa técnica:** A remoção dos *iframes* do Grafana obriga o time a reconstruir o fluxo completo de consumo de dados do zero — criando novos contratos e endpoints no `MeasureSoftGram-Service` e codificando os componentes visuais nativos em React no `MeasureSoftGram-Front`.
 - **Estratégia aprovada:** A entrega do gráfico pioneiro de TSQMI atuará como uma **"prova de fogo" arquitetural**. A partir dela, será gerado um **documento de governança e guia técnico**, padronizando a implementação dos gráficos restantes (como saúde da qualidade, pulso MSG e radar) a partir da Release 2.
 - **Parecer do PO:** Acatou e validou integralmente a estratégia.
 
-### 2.2. Infraestrutura, Plataforma e Pipeline de Deploy
+### Organização do Desenvolvimento e Pipeline de Deploy
+* **Gestão de Repositórios (Forks vs. Central):** A equipe relatou o elevado custo operacional e o retrabalho envolvido em configurar e gerenciar deploys e secrets nos repositórios forks a cada novo semestre. O PO validou a proposta de alterar a metodologia de entrega para um formato mais próximo do ecossistema open source.
+* **Fluxo de Pull Requests:** O time de desenvolvimento continuará clonando e desenvolvendo o código em seus respectivos forks, porém toda a infraestrutura de CI/CD e os deploys ficarão centralizados nos repositórios centrais. Consequentemente, os Pull Requests (PRs) sairão das branches dos forks apontando diretamente para os repositórios oficiais centrais do projeto.
+* **Ambientes e Git Flow:** Para sustentar esse fluxo contínuo, os repositórios centrais passarão a adotar o modelo Git Flow, estabelecendo as branches `develop` e `main` para separar os estágios do ciclo de vida da aplicação.
+    * **Homologação (`develop`):** Todos os PRs enviados pelos desenvolvedores terão como destino obrigatório a branch `develop` do central, que passa a operar oficialmente como o ambiente de homologação.
+    * **Produção (`main`):** Apenas após o código ser integrado, estabilizado e rigorosamente testado através de pré-releases e validações na `develop`, ele será promovido para a branch `main`, que funcionará como o ambiente de produção oficial do produto final.
 
-- A equipe relatou os atritos e gargalos na gestão de atualizações assíncronas entre os múltiplos repositórios do ecossistema (por exemplo, lançamento de nova versão do pacote `Core` sem que `Service` e `CLI` sincronizem as dependências simultaneamente).
-- **Criação do Repositório Plataforma:** Validada a criação de um repositório centralizador (`MeasureSoftGram-Platform`) para orquestrar o ambiente de desenvolvimento local via Docker Compose unificado.
-- **Estratégia de Branching (Git Flow):**
-  - Pull Requests vindos dos forks serão direcionados à branch `develop` (ambiente de integração/homologação).
-  - Após estabilização e validação, o pacote é promovido para a branch principal (`main`).
-- **Atualização Automatizada de Dependências:** A funcionalidade de atualização em cascata via Dependabot foi postergada para a **Release 2**, mitigando riscos de instabilidade durante o fechamento da sprint atual.
-
-### 2.3. Diagnóstico e Gargalos do Frontend (Next.js)
+### Diagnóstico e Gargalos do Frontend (Next.js)
 
 - Alexandre apresentou diagnóstico detalhado dos problemas de carregamento no frontend:
   - Utilização de compilador legado do Next.js;
@@ -77,21 +75,15 @@ Houve um longo debate focado no épico de **"Operacionalizar a medição de dív
 
 ## 3. Governança e Metodologia de Produto
 
-### Critérios de Aceitação vs. Definition of Done (DoD)
+### Desacoplamento de Conceitos (Critérios de Aceitação, Critérios Técnicos e DoD)
+O PO identificou que a equipe estava cometendo uma falha conceitual ao documentar as *issues*, misturando regras de negócio com tarefas de engenharia de software. Para alinhar o processo ao framework ágil, foi firmada a separação estrita dos seguintes conceitos:
+- **Critérios de Aceitação:** Devem ser escritos **exclusivamente sob a perspectiva do usuário final** (neste caso, o PO). Eles servem para que o PO valide a implementação da funcionalidade em si no produto. A equipe percebeu que havia criado uma redundância com o BDD e acordou que utilizará a estrutura de cenários (BDD) como o método oficial para redigir esses critérios funcionais de forma clara para o negócio.
+- **Critérios Técnicos:** Englobam atividades puramente arquiteturais, de configuração ou estruturação interna (ex: criar *endpoints*, gerar contratos de *service*) que são necessárias para o desenvolvimento, mas que não representam um comportamento funcional validável pelo usuário. Estes podem ser controlados internamente pela equipe sem a burocracia da autorização do PO.
+- **Definition of Done (DoD - Definição de Pronto):** Refere-se à checklist de qualidade e governança que a equipe utiliza para considerar uma *issue* finalizada. O PO exemplificou que obrigações como "a cobertura de testes não diminui" ou "a documentação foi atualizada" não são Critérios de Aceitação de usuário, devendo ser remanejadas obrigatoriamente para o escopo do DoD da equipe.
 
-O PO realizou um alinhamento conceitual importante sobre boas práticas ágeis:
-- **Critérios de Aceitação (BDD):** Devem se restringir estritamente ao comportamento esperado da aplicação sob a perspectiva do **usuário final** (regras de negócio e fluxos funcionais).
-- **Definition of Done (DoD):** Itens de qualidade técnica interna e deveres do desenvolvedor — tais como *"possuir cobertura de testes unitários"*, *"atualizar documentação técnica"* ou *"passar no lint da pipeline"* — pertencem à **Definição de Pronto (DoD)** e não aos critérios de aceitação da história.
+### Mapeamento Correto de Tipos de Tarefas (Histórias de Usuário vs. Bugs)
 
-### Tratamento de Bugs vs. Histórias de Usuário
-
-- Problemas visuais ou comportamentais na interface (como telas ou botões "piscando" durante a navegação pelo menu lateral) devem ser mapeados e tratados como **Bugs**, e não como Histórias de Usuário (US).
-- Histórias de usuário agregam novas capacidades de negócio e demandam validação do PO; correções de interface são ajustes de defeito técnico com validação interna.
-
-### Visibilidade de Gestão e Alocação dos Desenvolvedores
-
-- O PO solicitou maior clareza visual no board de trabalho para evidenciar a distribuição e o esforço de todos os **20 desenvolvedores** do time.
-- Luciano esclareceu que a reestruturação do board está em andamento, organizando a equipe em **subequipes macro** para facilitar o acompanhamento, melhorar a comunicação interna e descentralizar as frentes técnicas.
+O PO esclareceu que correções e melhorias de defeitos pré-existentes (como corrigir o recarregamento excessivo ("piscar") da tela ao abrir o menu lateral) não configuram novas Histórias de Usuário (US). Tais demandas devem ser catalogadas no *board* simplesmente como *Bugs* ou *Melhorias* técnicas. O objetivo dessa separação é dar visibilidade ao esforço técnico e ao trabalho da equipe, sem exigir que o PO valide esses itens como se fossem a entrega de um novo valor ou recurso de negócio.
 
 ---
 
@@ -107,11 +99,8 @@ O PO realizou um alinhamento conceitual importante sobre boas práticas ágeis:
 
 | Ação | Responsável | Prazo |
 | --- | --- | --- |
-| Desmembrar o épico de Dívida Técnica em USs menores (CLI e Web) | Lucas, Gabriel Moura, Alisson | 24/09 |
-| Estruturar cenários BDD independentes e esboços de interface/CLI para Dívida Técnica | Lucas, Gabriel Moura, Alisson | 24/09 |
-| Implementar o endpoint de TSQMI histórico por Release no Service | Equipe Backend | Sprint R1 |
-| Desenvolver o componente nativo de gráfico de TSQMI em React no Front | Equipe Frontend | Sprint R1 |
-| Redigir o Guia de Governança Técnica para replicação dos gráficos na R2 | Equipe EPS | Sprint R1 |
-| Aplicar correções paliativas no carregamento do Front (SWR e requisições em cascata) | Equipe Frontend | Sprint R1 |
-| Consolidar o repositório central `MeasureSoftGram-Platform` e fluxo Git Flow | Equipe EPS / Infra | Sprint R1 |
-| Finalizar a reorganização do board do Zenhub com visão das subequipes macro | Luciano | 24/09 |
+| Desmembrar o épico de Dívida Técnica em USs menores (CLI e Web) | Time do MSG-01 | 24/09 |
+| Estruturar cenários BDD independentes e esboços de interface/CLI para Dívida Técnica | Time do MSG-01 | 24/09 |
+| Revisão do DoR e do DoD | Luciano | 24/09 |
+| Revisão dos Épicos e tarefas para adequação aos acordos feitos com o PO | Cada time (subequipes) | 24/09 |
+| Alteração do escopo do MSG-02 | Time do MSG-02 | 24/09 |
