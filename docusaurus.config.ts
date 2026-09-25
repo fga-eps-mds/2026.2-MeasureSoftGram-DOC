@@ -117,7 +117,7 @@ const config: Config = {
         {
           title: 'Processo',
           items: [
-            {label: 'Planejamento', to: '/docs/planejamento'},
+            {label: 'Metodologia', to: '/docs/planejamento/metodologia'},
             {label: 'Sprints', to: '/docs/sprints'},
             {label: 'Métricas', to: '/docs/metricas'},
           ],
