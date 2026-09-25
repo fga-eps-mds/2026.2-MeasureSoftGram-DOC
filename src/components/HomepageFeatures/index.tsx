@@ -26,7 +26,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: 'O processo',
     Svg: require('@site/static/img/feature-modular.svg').default,
-    to: '/docs/planejamento',
+    to: '/docs/planejamento/metodologia',
     description: (
       <>
         Metodologia adotada pela equipe, roadmap do semestre, gestão de riscos e o

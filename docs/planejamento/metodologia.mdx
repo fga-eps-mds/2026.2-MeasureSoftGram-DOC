@@ -1,0 +1,70 @@
+---
+id: metodologia
+title: Metodologia
+sidebar_position: 1
+---
+
+# Metodologia
+
+A equipe adota um processo ágil híbrido, combinando cerimônias e práticas do **Scrum** (iterações planejadas, papéis e cerimônias) com a flexibilidade de fluxo contínuo do **Kanban** no ZenHub, adaptados às particularidades e restrições da disciplina.
+
+## Cerimônias
+
+| Cerimônia | Quando | Formato e canal | Participantes | Quem conduz |
+| --- | --- | --- | --- | --- |
+| **Planning geral** | Semanal, segundas, 11h00–13h00 | Presencial, durante a aula semanal (sala MOCAP) | Equipe | Líderes da quinzena |
+| **Daily** | Diária | Assíncrona, via Telegram | Equipe | Cada integrante reporta |
+| **Review + Retrospectiva** | Ao fim de cada sprint, no horário da planning (segunda, 11h00–13h00) | Presencial, na mesma sessão | Equipe | Líderes da quinzena |
+| **Reunião com o PO** | Semanal, quartas, 19h30 | Remota, via Discord | Equipe e PO | Líderes da quinzena |
+
+O rodízio dos líderes da quinzena e o que cada um entrega estão em [Equipe](/docs/equipe#liderança-das-quinzenas).
+
+Duas escolhas fogem do padrão do Scrum e merecem registro:
+
+- **A daily é assíncrona:** Com 20 integrantes e horários de aula distintos, uma daily síncrona diária não se sustenta: não há um horário comum a todos, e uma reunião de 20 pessoas não cabe em 15 minutos. Cada pessoa reporta no canal do Telegram o que realizou, o que planeja realizar e eventuais bloqueios (*impedimentos*), que são levados para a planning de segunda.
+- **Review e retrospectiva acontecem juntas:** Ao término de cada sprint, no horário da aula presencial de segunda (único momento em que a equipe inteira está reunida). Avaliar o que foi entregue e como a equipe trabalhou na mesma sessão aproveita esse tempo e mantém as duas discussões conectadas: o que não foi entregue na review vira insumo direto para a retrospectiva.
+
+### Duração da sprint
+
+As sprints acompanham o calendário da disciplina e os marcos fixos de entrega. A **Sprint 1** foi de **17/08 a 04/09/2026**. Veja o histórico e o detalhamento de cada uma em [Sprints](/docs/sprints).
+
+## Ferramentas
+
+| Finalidade | Ferramenta |
+| --- | --- |
+| Controle de versão | GitHub |
+| Gestão de tarefas e backlog | ZenHub |
+| Comunicação com o PO | Discord |
+| Comunicação da equipe | Telegram |
+| Prototipação e design | Figma |
+| Documentação oficial | Docusaurus (este portal) |
+| Integração e Entrega Contínua (CI/CD) | GitHub Actions |
+| Análise de Qualidade de Código | SonarCloud |
+
+---
+
+## Acordos de Qualidade: DoR e DoD
+
+Para assegurar consistência, previsibilidade e alto padrão técnico nas entregas, o processo de engenharia estabelece duas portas de qualidade (*quality gates*):
+
+1. **Definição de Preparado (DoR - Definition of Ready):** Critérios que um item de trabalho deve cumprir antes de ingressar no sprint backlog para desenvolvimento.
+2. **Definição de Pronto (DoD - Definition of Done):** Checklist de qualidade, testes, revisão e integração obrigatório para que qualquer tarefa seja considerada concluída.
+
+:::tip[Detalhamento e DoR Especializado por Tipo de Item]
+
+Em alinhamento com o Product Owner, a equipe estabeleceu a **especialização do DoR para cada tipo de item (Épico de Feature, Épico de Dívida Técnica, História de Usuário, Task Técnica e Bug)**, evitando a sobreposição de regras de negócio com requisitos de engenharia, além de formalizar a integração com o Git Flow na branch `develop`.
+
+Para consultar a taxonomia completa dos itens, a regra de validação com o PO, o desacoplamento entre Critérios de Aceitação e Técnicos e os checklists completos de DoR e DoD, acesse:
+
+👉 **[Governança e Gestão do Backlog](/docs/planejamento/backlog)**
+:::
+
+---
+
+## Histórico de Versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| :---: | :---: | :--- | :--- | :--- |
+| 1.0 | 10/09/2026 | Estrutura inicial da página de metodologia e cerimônias | Equipe EPS | - |
+| 1.1 | 23/09/2026 | Detalhamento de papéis, lideranças da quinzena e cerimônias presenciais | Luiza Maluf | Luciano |
+| 1.2 | 24/09/2026 | Atualização de canais (Discord), ferramentas (SonarCloud) e introdução formal dos acordos de DoR/DoD vinculados ao Backlog | Luciano |  |
