@@ -1,0 +1,106 @@
+---
+id: ata-po-23-09
+title: Ata - Reunião com o PO (23/09/2026)
+sidebar_position: 4
+---
+
+# Ata - Reunião Semanal com o Product Owner
+
+**Data:** 23/09/2026 · **Duração:** 1h 16m 56s  
+**Tipo:** Reunião de validação de escopo, decisões técnicas e acordos de entrega  
+
+:::tip[Resultado]
+O Product Owner alinhou com a equipe as diretrizes para o épico de **Dívida Técnica**, validou a estratégia de entrega do gráfico pioneiro de **TSQMI** na Release 1, aprovou a utilização do Git Flow nos repositórios centrais e definiu o adiamento da migração do frontend para Vite em favor de correções pontuais no ecossistema atual de Next.js. Foram reforçados os conceitos de **Critérios de Aceitação vs. DoD** e organização dos desenvolvedores no board.
+:::
+
+---
+
+## 1. Dívida Técnica (Épico) - Ação Prioritária para o Dia Seguinte
+
+Houve um longo debate focado no épico de **"Operacionalizar a medição de dívida técnica"**, considerado a demanda bloqueante primordial para o time de desenvolvimento prosseguir nas atividades.
+
+### Estruturação das Tarefas
+
+- O PO orientou expressamente que as funcionalidades de dívida técnica **não sejam agrupadas em uma única História de Usuário (US) massiva**.
+- O épico será desmembrado em USs menores e independentes, separando:
+  - A integração e consumo via **CLI**;
+  - A visualização e interação via **Interface Web (Front)**.
+- **Desenvolvedores alocados:** Lucas Bottino, Gabriel Moura e Alisson.
+
+### Lógica do Cálculo e Extração de Métricas
+
+- A equipe sanou dúvidas sobre a fonte dos dados e o modelo de cálculo (se seria via SonarCloud direto ou a fórmula matemática da disciplina).
+- **Diretriz definida pelo PO:** A funcionalidade deve seguir estritamente o **modelo Squale**, cuja base de cálculo já se encontra implementada no `msgram-core`.
+- As métricas brutas serão extraídas do **SonarQube**, e o cálculo normalizará esses dados respeitando a hierarquia do modelo:
+  1. Métricas brutas;
+  2. Subcaracterística;
+  3. Característica;
+  4. Índice geral consolidado (**TSQMI**).
+
+### Acordos e Prazos Definidos
+
+| Responsável | Ação / Compromisso | Prazo |
+| --- | --- | --- |
+| **Product Owner (Hilmer)** | Formalizar os Critérios de Aceitação dependentes de negócio (métricas exatas do SonarQube a serem coletadas e a hierarquia do cálculo) diretamente como comentário na issue no repositório. | Até o fim da manhã de 24/09 (~11h30, após término de reuniões entre 10h e 11h30) |
+| **Equipe Técnica** | Revisar as issues, redigir os cenários BDD independentes do cálculo de negócio, desmembrar as histórias e estruturar os protótipos de interface (telas do Front e esboços de saída na CLI) para validação do usuário. | Manhã de 24/09 |
+
+---
+
+## 2. Validação de Escopo e Decisões Técnicas
+
+### Estratégia de Gráficos e Remoção do Grafana
+
+- A equipe apresentou a proposta de entregar a plotagem de **apenas um gráfico nativo na Release 1**: o histórico do índice **TSQMI** (*Total Software Quality Measure Index*), refletindo a qualidade total consolidada dos repositórios.
+- **Justificativa técnica:** A remoção dos *iframes* do Grafana obriga o time a reconstruir o fluxo completo de consumo de dados do zero — criando novos contratos e endpoints no `MeasureSoftGram-Service` e codificando os componentes visuais nativos em React no `MeasureSoftGram-Front`.
+- **Estratégia aprovada:** A entrega do gráfico pioneiro de TSQMI atuará como uma **"prova de fogo" arquitetural**. A partir dela, será gerado um **documento de governança e guia técnico**, padronizando a implementação dos gráficos restantes (como saúde da qualidade, pulso MSG e radar) a partir da Release 2.
+- **Parecer do PO:** Acatou e validou integralmente a estratégia.
+
+### Organização do Desenvolvimento e Pipeline de Deploy
+* **Gestão de Repositórios (Forks vs. Central):** A equipe relatou o elevado custo operacional e o retrabalho envolvido em configurar e gerenciar deploys e secrets nos repositórios forks a cada novo semestre. O PO validou a proposta de alterar a metodologia de entrega para um formato mais próximo do ecossistema open source.
+* **Fluxo de Pull Requests:** O time de desenvolvimento continuará clonando e desenvolvendo o código em seus respectivos forks, porém toda a infraestrutura de CI/CD e os deploys ficarão centralizados nos repositórios centrais. Consequentemente, os Pull Requests (PRs) sairão das branches dos forks apontando diretamente para os repositórios oficiais centrais do projeto.
+* **Ambientes e Git Flow:** Para sustentar esse fluxo contínuo, os repositórios centrais passarão a adotar o modelo Git Flow, estabelecendo as branches `develop` e `main` para separar os estágios do ciclo de vida da aplicação.
+    * **Homologação (`develop`):** Todos os PRs enviados pelos desenvolvedores terão como destino obrigatório a branch `develop` do central, que passa a operar oficialmente como o ambiente de homologação.
+    * **Produção (`main`):** Apenas após o código ser integrado, estabilizado e rigorosamente testado através de pré-releases e validações na `develop`, ele será promovido para a branch `main`, que funcionará como o ambiente de produção oficial do produto final.
+
+### Diagnóstico e Gargalos do Frontend (Next.js)
+
+- Alexandre apresentou diagnóstico detalhado dos problemas de carregamento no frontend:
+  - Utilização de compilador legado do Next.js;
+  - Biblioteca SWR defasada e com chamadas desordenadas;
+  - Encadeamento excessivo de requisições HTTP redundantes e em cascata à API.
+- **Avaliação de Migração para Vite:** Foi debatida a proposta de migração da arquitetura para Vite (geração de SPA estática mais leve e econômica de hospedar no Nginx).
+- **Decisão:** Tendo em vista o risco e o cronograma enxuto da Release 1, o PO e a equipe acordaram em **manter o Next.js no momento**, focando estritamente em **correções e otimizações paliativas** (remoção de requisições em cascata, correção de chaves SWR e limpeza de chamadas redundantes). A migração estrutural de framework será reavaliada em ciclo futuro.
+
+---
+
+## 3. Governança e Metodologia de Produto
+
+### Desacoplamento de Conceitos (Critérios de Aceitação, Critérios Técnicos e DoD)
+O PO identificou que a equipe estava cometendo uma falha conceitual ao documentar as *issues*, misturando regras de negócio com tarefas de engenharia de software. Para alinhar o processo ao framework ágil, foi firmada a separação estrita dos seguintes conceitos:
+- **Critérios de Aceitação:** Devem ser escritos **exclusivamente sob a perspectiva do usuário final** (neste caso, o PO). Eles servem para que o PO valide a implementação da funcionalidade em si no produto. A equipe percebeu que havia criado uma redundância com o BDD e acordou que utilizará a estrutura de cenários (BDD) como o método oficial para redigir esses critérios funcionais de forma clara para o negócio.
+- **Critérios Técnicos:** Englobam atividades puramente arquiteturais, de configuração ou estruturação interna (ex: criar *endpoints*, gerar contratos de *service*) que são necessárias para o desenvolvimento, mas que não representam um comportamento funcional validável pelo usuário. Estes podem ser controlados internamente pela equipe sem a burocracia da autorização do PO.
+- **Definition of Done (DoD - Definição de Pronto):** Refere-se à checklist de qualidade e governança que a equipe utiliza para considerar uma *issue* finalizada. O PO exemplificou que obrigações como "a cobertura de testes não diminui" ou "a documentação foi atualizada" não são Critérios de Aceitação de usuário, devendo ser remanejadas obrigatoriamente para o escopo do DoD da equipe.
+
+### Mapeamento Correto de Tipos de Tarefas (Histórias de Usuário vs. Bugs)
+
+O PO esclareceu que correções e melhorias de defeitos pré-existentes (como corrigir o recarregamento excessivo ("piscar") da tela ao abrir o menu lateral) não configuram novas Histórias de Usuário (US). Tais demandas devem ser catalogadas no *board* simplesmente como *Bugs* ou *Melhorias* técnicas. O objetivo dessa separação é dar visibilidade ao esforço técnico e ao trabalho da equipe, sem exigir que o PO valide esses itens como se fossem a entrega de um novo valor ou recurso de negócio.
+
+---
+
+## 4. Encaminhamentos e Próximos Passos
+
+### Pendências do Product Owner
+
+| Item | Descrição | Previsão |
+| --- | --- | --- |
+| Detalhamento de Dívida Técnica | Registrar em comentário na issue os critérios de negócio, métricas do SonarQube necessárias e regras de hierarquia de cálculo | 24/09 (até ~11h30) |
+
+### Ações da Equipe
+
+| Ação | Responsável | Prazo |
+| --- | --- | --- |
+| Desmembrar o épico de Dívida Técnica em USs menores (CLI e Web) | Time do MSG-01 | 24/09 |
+| Estruturar cenários BDD independentes e esboços de interface/CLI para Dívida Técnica | Time do MSG-01 | 24/09 |
+| Revisão do DoR e do DoD | Luciano | 24/09 |
+| Revisão dos Épicos e tarefas para adequação aos acordos feitos com o PO | Cada time (subequipes) | 24/09 |
+| Alteração do escopo do MSG-02 | Time do MSG-02 | 24/09 |
