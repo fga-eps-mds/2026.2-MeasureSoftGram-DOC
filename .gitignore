@@ -25,3 +25,6 @@ yarn-error.log*
 .x
 .netlify
 
+
+# Impede versionamento acidental do lockfile do yarn
+yarn.lock
