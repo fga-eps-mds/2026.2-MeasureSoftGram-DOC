@@ -12,7 +12,7 @@ A partir das necessidades identificadas para as personas e das jornadas de usuá
 
 O brainstorming busca transformar as necessidades e etapas identificadas anteriormente em funcionalidades concretas, contribuindo para a construção de uma visão mais clara do escopo do produto e dos recursos que poderão compor sua versão enxuta. Dessa forma, chegou-se nesta reunião ao seguinte resultado:
 
-
+![Lean Inception - Brainstorming](@site/static/img/LeanDia4.png)
 
 ## Referências 
 
