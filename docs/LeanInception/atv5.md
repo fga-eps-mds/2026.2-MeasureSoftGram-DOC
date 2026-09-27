@@ -26,3 +26,4 @@ Lean Inception: Como alinhar pessoas e construir o produto certo. Caroli, Paulo.
 | Alteração | Data | Autor | 
 | - | - | - |
 | Criação do documento | 26/09/2026 | [Guilherme Storch](https://github.com/storch7) |
+| Adição das Jornadas após organização do board | 27/09/2026 | [Guilherme Storch](https://github.com/storch7) |
