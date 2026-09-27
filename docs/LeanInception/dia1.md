@@ -23,3 +23,14 @@ Nesta etapa da Lean Inception, busca-se construir colaborativamente uma visão i
 
 Durante esta etapa, foi realizada, junto ao Product Owner (PO), uma análise da construção desenvolvida no semestre anterior. A partir dessa avaliação, identificou-se que parte da estrutura existente permanecia adequada aos objetivos atuais do produto, sendo, portanto, mantida e utilizada como base para a continuidade do projeto. Como resultado, conseguimos o seguinte quadro de Visão do Produto:
 
+![Visão do Produto - Lean Inception Dia 1](@site/static/img/LeanDia1.png)
+
+## Referências 
+
+Lean Inception: Como alinhar pessoas e construir o produto certo. Caroli, Paulo.
+
+## Histórico de Versao
+
+| Alteração | Data | Autor | 
+| - | - | - |
+| Criação do documento | 26/09/2026 | [Guilherme Storch](https://github.com/storch7) |
