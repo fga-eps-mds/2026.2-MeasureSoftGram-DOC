@@ -70,7 +70,13 @@ Custo estimado        = esforço até o MVP × custo por dupla·dia
 
 Seguindo as etapas e os procedimentos descritos anteriormente, o grupo realizou as atividades de forma colaborativa, considerando os critérios e orientações estabelecidos ao longo do processo. Como resultado da aplicação dessas etapas, foram obtidos os seguintes resultados para as funcionalidades analisadas:
 
-# INSERIR O IFRAME
+<iframe
+  style={{ border: '1px solid rgba(0, 0, 0, 0.1)' }}
+  width="950"
+  height="450"
+  src="https://embed.figma.com/board/F7d09c84mBgpa5dtCIceVQ/Vis%C3%A3o-do-Produto-MeasureSoftgram-2026-2?node-id=17579-2294&embed-host=share"
+  allowFullScreen
+></iframe>
 
 ## Referência
 
