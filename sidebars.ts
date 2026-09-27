@@ -39,7 +39,8 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Planejamento',
       items: [
-        'planejamento/planejamento',
+        'planejamento/metodologia',
+        'planejamento/backlog',
         'planejamento/eap',
         'planejamento/roadmap',
         'planejamento/riscos',
