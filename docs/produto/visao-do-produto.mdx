@@ -8,36 +8,86 @@ sidebar_position: 1
 
 ## Problema
 
-> Descreva o problema que o MeasureSoftGram resolve, para quem, e por que ele
-> importa no contexto da disciplina.
+Times de desenvolvimento e pesquisadores não têm como enxergar a qualidade de um produto de software de forma **multidimensional**. As ferramentas de mercado (SonarQube, Codeclimate, ESLint, Findbugs) analisam a qualidade de forma unidimensional: medem o código, mas não explicam as **mútuas e múltiplas relações entre as características de qualidade** nem ajudam a **planejar e aferir os objetivos de qualidade de uma release**. Sem isso, a decisão de aceitar uma release acaba sendo tomada com base em impressões, e não em dados.
+
+O MeasureSoftGram (MSG) é um software livre que resolve esse problema: ele agrega métricas de diferentes ferramentas de análise estática e dinâmica em um modelo algébrico multilinear, validado academicamente, e compara a qualidade **planejada** com a qualidade **desenvolvida** em cada release.
+
+No contexto da disciplina de Engenharia de Produto de Software (UnB/FGA), o produto é mantido por equipes sucessivas. Hoje, a experiência de uso sofre com lentidão e travamentos no carregamento dos dashboards (dependentes de iframes do Grafana), com a falta de visibilidade sobre a degradação das métricas e com lacunas de integração (somente GitHub), o que dificulta a adoção por líderes técnicos, desenvolvedores e pesquisadores.
 
 ## Objetivo do semestre
 
-> O que a equipe se propoe a entregar em 2026.2. Seja específico o suficiente
-> para que o objetivo possa ser considerado cumprido ou não ao final.
+Entregar, até **07/12/2026** e com esforço estimado de **252 horas**, o MVP definido na Lean Inception com o PO:
+
+> Melhorar a experiência dos usuários com o uso do MeasureSoftGram por meio da resolução de problemas existentes e da entrega de funcionalidades novas.
+
+O MVP será entregue em três releases:
+
+| Release | Entregas |
+| --- | --- |
+| **Release 01** | Operacionalizar a medida de Dívida Técnica · Revisar o fluxo de carregamento (loading) do frontend · Adequar o produto à LGPD (proteção de rotas) · Autenticar usuários pelo GitLab |
+| **Release 02** | Criar novos gráficos no dashboard, nativos e sem Grafana, na identidade visual do produto · Importar repositórios hospedados no GitLab · Visualizar o gráfico Planejado x Realizado sobre o equalizador da qualidade · Manter a rastreabilidade entre arquivos de código-fonte, métricas e medidas |
+| **Release 03 (MVP)** | Definir pesos das entidades de qualidade de forma qualitativa (AHP) · Criar o fluxo de GitLab CI/CD (análogo às Actions) · Emitir alerta sobre o decaimento da qualidade antes do merge · Operacionalizar a característica de segurança |
+
+O objetivo é considerado cumprido quando as três releases estiverem integradas à branch `develop`, demonstradas e homologadas pelo PO, e os critérios de sucesso abaixo forem atingidos.
 
 ## Público-alvo
 
 | Perfil | Necessidade | Como o produto atende |
 | --- | --- | --- |
-| | | |
+| **Líder técnica** (Valéria) | Acompanhar o histórico de qualidade de diferentes produtos, tomar decisões com a equipe e apresentar resultados à diretoria técnica. | Planejamento de metas de qualidade por release, comparação Planejado x Realizado, histórico de qualidade por release e gráficos nativos que fundamentam a aceitação de releases. |
+| **Desenvolvedor** (Miguel) | Receber feedback de qualidade antes do merge, saber quais arquivos ou métricas derrubaram a nota e ter gráficos simples e rápidos, sem dashboards pesados. | Alerta de decaimento da qualidade antes do merge, rastreabilidade entre arquivos de código-fonte e métricas, e dashboard com carregamento otimizado. |
+| **Coordenadora de desenvolvimento** (Helena) | Garantir níveis de qualidade durante o desenvolvimento, gerar relatórios de qualidade e entender rapidamente a saúde do software. | Novos gráficos e indicadores que mostram a saúde do produto sem depender de relatórios manuais, e integração com IA via MCP para consultar o histórico em linguagem natural. |
+| **Engenheira DevOps** (Amanda) | Manter pipelines de qualidade contínua, associar medidas do SonarQube às releases e executar pipelines localmente. | Geração de pipeline pelo MeasureSoftGram-CLI e suporte ao GitLab CI/CD, além do GitHub Actions. |
+| **Pesquisador** (Paulo) | Quantificar e qualificar atributos de qualidade, comparar modelos de qualidade e publicar resultados científicos. | Modelo algébrico multilinear validado academicamente, ponderação qualitativa de pesos (AHP) e exportação dos vetores e dados calculados via API ou CLI. |
 
 ## Proposta de valor
 
-> Uma ou duas frases: o que o produto entrega que alternativas não entregam.
+Diferentemente de ferramentas como SonarQube, Codeclimate, Findbugs e ESLint, o MeasureSoftGram **observa a qualidade do produto de forma multidimensional** e **compara os objetivos de qualidade planejados para uma release com o que foi desenvolvido**. Ele faz isso integrando-se ao fluxo de trabalho do time via web, CLI, plugins e IA.
 
 ## Escopo
 
 ### Dentro do escopo
 
--
+- Operacionalização da medida de Dívida Técnica.
+- Operacionalização da característica de segurança.
+- Revisão do fluxo de carregamento do frontend (desempenho e tempo de resposta), incluindo a substituição dos gráficos do Grafana por gráficos nativos em React na identidade visual.
+- Histórico de qualidade (TSQMI) organizado por release, com tooltip contextual e tratamento de produto sem releases.
+- Visualização Planejado x Realizado sobre o equalizador da qualidade.
+- Rastreabilidade entre arquivos de código-fonte, métricas e medidas.
+- Alerta sobre o decaimento da qualidade antes do merge.
+- Definição de pesos das entidades de qualidade de forma qualitativa (AHP).
+- Integração com o GitLab: autenticação de usuários, importação de repositórios e GitLab CI/CD.
+- Proteção de rotas e adequação à LGPD.
 
 ### Fora do escopo
 
--
+**Planejado para depois do MVP:**
 
-## Critérios de sucesso
+- Gráficos de pulso.
+- Geração de relatório de release e publicação do relatório de qualidade como nota de release.
+- Operacionalização da visão de qualidade em uso.
+- Identificação do Pull Request e da causa raiz da degradação de uma métrica entre dois períodos.
+- Diferença dos dados de indicadores de qualidade entre releases.
+- Configuração de release via LLM.
 
-> Como a equipe vai saber, ao final do semestre, que a visão foi atingida.
+**Descartado na priorização:**
 
--
+- Execução de Action de obtenção de métricas via LLM.
+- Análise multimodelo: operacionalizar e comparar métricas de diferentes modelos de qualidade de referência.
+
+**Fora da natureza do produto:**
+
+- O MSG não faz deploy nem gerencia projeto ou backlog.
+- O MSG não coleta métricas por conta própria. Ele depende de ferramentas de análise estática e dinâmica.
+- O MSG não sugere melhorias, não corrige código automaticamente e não substitui code review.
+- O MSG não faz predições ou automação de qualidade e não substitui a interpretação dos desenvolvedores.
+- O MSG não é ferramenta de monitoramento de desenvolvedores nem ferramenta de nota (score) de qualidade.
+- O MSG não certifica conformidade formal com normas e não é uma solução plug-and-play sem configuração.
+- O MSG não é IA generativa, mobile ou software educacional.
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | 
+| --- | --- | --- | --- | 
+| 1.0 | 10/09/2026 | Criação da página a partir do plano de ensino 2026.2 | [@MilenaFRocha](https://github.com/MilenaFRocha) | 
+| 1.0 | 27/09/2026 | Revisão do conteúdo para Release 1 | [Guilherme Storch](https://github.com/storch7) | 
