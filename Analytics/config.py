@@ -1,29 +1,25 @@
 """Configuração do dashboard: o único arquivo que o time precisa editar.
 
-Produto e Processo vêm sozinhos dos .json que o `metrics.yml` publica em `data/`.
+Tudo o que é ponto, sprint, velocity, AgileEVM e burndown vem do Zenhub
+(``scripts/coleta_velocity.py``). Da planilha "MeasureSoftGram" vêm só as abas
+que o Zenhub não tem:
 
-Custos, AgileEVM, Velocity, Riscos e Decisões vêm de duas planilhas do Google:
-
-* "MeasureSoftGram 2026.2 · Custos e AgileEVM"
-  (abas Custos, Planejamento, Horas, Sumário EVM, EVM - Valor Agregado, EVM - Velocity)
-* "MeasureSoftGram 2026.2 · Riscos e Decisões"
-  (abas Riscos, Monitoramento, Decisões)
+    custos         -> aba "Custos"
+    planejamento   -> aba "Planejamento"  (quem está no time em cada semana)
+    horas          -> aba "Horas"
+    riscos         -> aba "Riscos"
+    monitoramento  -> aba "Monitoramento"
+    decisoes       -> aba "Decisões"
 
 Para cada aba: Arquivo > Compartilhar > Publicar na Web > escolher a aba >
-"Valores separados por vírgula (.csv)" > Publicar, e colar o link na chave abaixo.
-Enquanto a URL estiver vazia, o app lê o CSV de mesmo nome em `planilhas/`
-(cópia exportada da planilha) e diz isso na tela.
+"Valores separados por vírgula (.csv)" > Publicar, e colar o link na chave.
+Enquanto a URL estiver vazia, o app lê o CSV de mesmo nome em ``planilhas/``.
 """
 
 PLANILHAS = {
-    # Custos e AgileEVM
     "custos": "",
     "planejamento": "",
     "horas": "",
-    "sumario_evm": "",
-    "valor_agregado": "",
-    "velocity": "",
-    # Riscos e Decisões
     "riscos": "",
     "monitoramento": "",
     "decisoes": "",

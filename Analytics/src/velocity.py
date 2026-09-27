@@ -194,8 +194,15 @@ def congelar_linhas_de_base(snapshot: dict, linhas: dict, agora: datetime, regra
 
 # ───────────────────────── release ─────────────────────────
 
-def associar_release(sprint: dict, ids: set, releases: list[dict], calendario: dict | None = None) -> tuple:
-    """(release_id, release_name, fonte). Ordem: issues da sprint -> datas da release -> calendário do time."""
+# Datas de entrega do plano de ensino (EPS 2026.2). Só valem quando o Zenhub
+# não tem Release para a sprint: a sprint entra na primeira release cuja
+# entrega é igual ou posterior ao último dia dela (horário de Brasília).
+ENTREGAS_PLANO = [("R1", "2026-09-28"), ("R2", "2026-10-26"), ("R3", "2026-11-30")]
+BRT = timezone(timedelta(hours=-3))
+
+
+def associar_release(sprint: dict, ids: set, releases: list[dict]) -> tuple:
+    """(release_id, release_name, fonte). Ordem: issues da sprint -> datas da release no Zenhub -> plano de ensino."""
     if releases and ids:
         votos = Counter()
         for r in releases:
@@ -212,18 +219,26 @@ def associar_release(sprint: dict, ids: set, releases: list[dict], calendario: d
             ini, fim_r = r.get("start_on"), r.get("end_on")
             if ini and fim_r and _dt(ini + "T00:00:00+00:00") <= fim <= _dt(fim_r + "T23:59:59+00:00") + timedelta(days=1):
                 return r["release_id"], r["release_name"], "Zenhub (datas da release)"
-    if calendario and sprint["sprint_id"] in calendario:
-        nome = calendario[sprint["sprint_id"]]
-        return None, nome, "calendário do time (planilhas/sprints.csv)"
+    if fim is not None:
+        ultimo_dia = (fim - timedelta(seconds=1)).astimezone(BRT).date().isoformat()
+        for nome, entrega in ENTREGAS_PLANO:
+            if ultimo_dia <= entrega:
+                return None, nome, "plano de ensino (datas de entrega)"
     return None, None, "sem release"
 
 
 # ───────────────────────── cálculo ─────────────────────────
 
 def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: datetime | None = None,
-                       linhas_de_base: dict | None = None, calendario: dict | None = None,
-                       rotulos: dict | None = None) -> pd.DataFrame:
-    """Uma linha por sprint (sem as futuras), no formato pedido para o gráfico e a tabela."""
+                       linhas_de_base: dict | None = None, incluir_futuras: bool = False) -> pd.DataFrame:
+    """Uma linha por sprint, no formato pedido para o gráfico e a tabela.
+
+    ``sprint_label`` é S1, S2... na ordem de início (a mesma numeração do time).
+    Com ``incluir_futuras``, as sprints ainda não iniciadas entram com os
+    números vazios — o AgileEVM precisa delas para saber o tamanho da release.
+    As colunas ``planned_ids``, ``completed_ids`` e ``scope_ids`` guardam as
+    issues de cada conjunto, para o AgileEVM somar escopo sem contar duas vezes.
+    """
     regras = regras or Regras()
     agora = agora or datetime.now(timezone.utc)
     linhas_de_base = linhas_de_base or {}
@@ -235,9 +250,15 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
     ordem = sorted(snapshot.get("sprints", []), key=lambda s: s.get("start_at") or "")
     for n, s in enumerate(ordem, start=1):
         status = status_da_sprint(s, agora, regras)
-        if status == STATUS_FUTURA:
-            continue
         inicio, fim = _dt(s["start_at"]), _dt(s["end_at"])
+        if status == STATUS_FUTURA:
+            if incluir_futuras:
+                rel_id, rel_nome, rel_fonte = associar_release(s, set(s.get("issue_ids", [])), releases)
+                saida.append({"sprint_id": s["sprint_id"], "sprint_label": f"S{n}", "sprint_name": s["sprint_name"],
+                              "start_date": inicio, "end_date": fim, "status": status, "release_id": rel_id,
+                              "release_name": rel_nome, "release_source": rel_fonte, "planned_ids": None,
+                              "completed_ids": [], "scope_ids": [], "notes": "Sprint futura."})
+            continue
         eventos = s.get("scope_changes") or []
         atuais = [i for i in dict.fromkeys(s.get("issue_ids", [])) if pontuavel(issues.get(i), regras, pais)]
         notas = []
@@ -282,14 +303,21 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
             notas.append(f"{len(set(sem_detalhe))} issue(s) do histórico sem detalhe (ignoradas).")
 
         ids_rel = set(s.get("issue_ids", [])) | set(planejadas or {})
-        rel_id, rel_nome, rel_fonte = associar_release(s, ids_rel, releases, calendario)
+        rel_id, rel_nome, rel_fonte = associar_release(s, ids_rel, releases)
 
         planned_sp = sum(_sp(v) for v in planejadas.values()) if planejadas is not None else None
         completed_sp = sum(_sp(v) for v in concluidas.values())
         fora_do_plano = {k: v for k, v in concluidas.items() if planejadas is None or k not in planejadas}
+        if eventos:
+            passaram = set(membros_em(eventos, inicio)) | {
+                e["issue_id"] for e in eventos if e.get("action") == "ISSUE_ADDED" and e.get("issue_id")
+                and inicio <= (_dt(e.get("effective_at")) or inicio) <= limite}
+        else:
+            passaram = set(s.get("issue_ids", []))
+        escopo = sorted(i for i in passaram if pontuavel(issues.get(i), regras, pais))
         saida.append({
             "sprint_id": s["sprint_id"],
-            "sprint_label": (rotulos or {}).get(s["sprint_id"], f"S{n}"),
+            "sprint_label": f"S{n}",
             "sprint_name": s["sprint_name"],
             "start_date": inicio,
             "end_date": fim,
@@ -310,6 +338,9 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
             "velocity": completed_sp,
             "completion_rate": calculate_completion_rate(planned_sp, completed_sp),
             "zenhub_completed_points": s.get("zenhub_completed_points"),
+            "planned_ids": sorted(planejadas) if planejadas is not None else None,
+            "completed_ids": sorted(concluidas),
+            "scope_ids": sorted(set(escopo) | set(planejadas or {}) | set(concluidas)),
             "notes": " ".join(notas),
         })
     return pd.DataFrame(saida)

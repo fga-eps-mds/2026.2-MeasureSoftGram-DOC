@@ -20,6 +20,7 @@ Publicado no GitHub Pages via stlite (Streamlit no navegador): ver stlite/build.
 from __future__ import annotations
 
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 # No navegador (stlite, GitHub Pages) o diretório do app nem sempre está no path.
@@ -30,7 +31,7 @@ import pandas as pd
 import streamlit as st
 
 import config
-from src import gestao, planilhas, qualidade, resumo, theme, velocity_dashboard
+from src import evm, gestao, planilhas, qualidade, resumo, theme, velocity, velocity_dashboard
 from src.loader import (
     carregar_issues,
     carregar_runs,
@@ -130,49 +131,46 @@ def carregar_tudo(pastas: tuple[str, ...]):
 
 @st.cache_data(ttl=config.CACHE_PLANILHAS_S, show_spinner="Lendo as planilhas do time...")
 def carregar_planilhas(urls: dict):
+    """Só o que o Zenhub não tem: custos, quem está no time, horas, riscos e decisões."""
     P = PLANILHAS_LOCAIS
     ler = lambda chave, **kw: planilhas.ler(chave, urls, P, **kw)
     c_df = ler("custos")
     plano = planilhas.planejamento_semanal(ler("planejamento"))
-    horas = planilhas.converter(ler("horas"), numericas=["sprint", "horas"])
-    sumario = planilhas.converter(
-        ler("sumario_evm", siglas=True),
-        numericas=["L", "semanas", "prp_linha_de_base", "prp_atual", "RPC", "BAC", "pv", "ev", "ac", "spi", "cpi"],
-        datas=["entrega", "inicio", "fim", "RD"])
-    if not sumario.empty:
-        sumario = sumario[sumario["release"].astype(str).str.match(r"^R\d")]
-    va = planilhas.converter(
-        ler("valor_agregado", siglas=True),
-        numericas=["n", "semanas", "PP", "PC", "PA", "PRP", "RPC", "APC", "PPC", "BAC", "SC", "PV", "horas_reais",
-                   "custo_da_sprint", "AC", "EV", "CV", "SV", "CPI", "SPI", "ETC", "EAC"],
-        datas=["inicio_da_sprint", "fim_da_sprint", "RD"])
-    vel = planilhas.converter(ler("velocity", siglas=True),
-                              numericas=["sprint", "semanas", "PP", "PC", "velocity", "pontos_por_semana",
-                                         "velocity_media", "taxa_de_conclusao"])
+    horas = planilhas.converter(ler("horas"), numericas=["sprint", "horas"],
+                                datas=["inicio_da_sprint", "fim_da_sprint"])
     riscos = planilhas.converter(ler("riscos"), numericas=["ultima_sprint_avaliada", "probabilidade_atual",
                                                            "impacto_atual", "exposicao_atual"],
                                  datas=["identificado_em"])
     mon = planilhas.converter(ler("monitoramento"), numericas=["sprint", "probabilidade", "impacto", "exposicao"],
                               datas=["data_da_revisao"])
     dec = ler("decisoes")
-    return (c_df, planilhas.custos(c_df), plano, horas, sumario, va, vel, riscos, mon, dec,
-            dict(planilhas.ORIGEM))
+    return c_df, planilhas.custos(c_df), plano, horas, riscos, mon, dec, dict(planilhas.ORIGEM)
 
 
 agregado, componentes, issues, runs, erros_sonar = carregar_tudo(tuple(str(p) for p in DADOS_BRUTOS))
-(custos_df, custo, plano, horas, sumario, va, vel, riscos, monit, decisoes,
- ORIGEM) = carregar_planilhas(dict(config.PLANILHAS))
+custos_df, custo, plano, horas, riscos, monit, decisoes, ORIGEM = carregar_planilhas(dict(config.PLANILHAS))
 origem = lambda chave: ORIGEM.get(chave, "—")
 
-# Zenhub (só para a conferência dos pontos digitados na planilha)
 try:
     HOJE = pd.Timestamp.now(tz="America/Sao_Paulo").tz_localize(None).normalize()
 except Exception:  # noqa: BLE001 — no navegador (stlite) pode faltar a base de fusos
     HOJE = (pd.Timestamp.utcnow().tz_localize(None) - pd.Timedelta(hours=3)).normalize()
+
+# Zenhub: sprints, pontos, velocity e escopo (tudo o que é ponto vem daqui)
 params = gestao.carregar_parametros(PLANILHAS_LOCAIS)
-cal_sprints, _ = gestao.carregar_calendario(PLANILHAS_LOCAIS)
-zh_issues, _, zh_arquivo = gestao.carregar_zenhub(RAIZ / "data" / "zenhub")
-zh_pontos = gestao.pontos_para_planilha(cal_sprints, zh_issues, params, HOJE)
+regras = velocity.Regras.dos_parametros(params)
+AGORA = datetime.now(timezone.utc)
+zh_todas, zh_snap, zh_arquivo = velocity_dashboard.carregar_velocity(regras, AGORA)
+zh_vel = zh_todas[zh_todas["status"] != velocity.STATUS_FUTURA] if not zh_todas.empty else zh_todas
+evm_df = (evm.agile_evm(zh_todas, zh_snap.get("issues", {}), plano, horas, custo.get("custo_hora"))
+          if zh_snap else pd.DataFrame())
+sumario = evm.sumario(evm_df)
+if not zh_todas.empty:
+    cal_sprints = pd.DataFrame({"sprint": zh_todas["sprint_label"], "release": zh_todas["release_name"],
+                                "inicio": evm._data_local(zh_todas["start_date"]),
+                                "fim": evm._data_local(zh_todas["end_date"])})
+else:
+    cal_sprints = pd.DataFrame(columns=["sprint", "release", "inicio", "fim"])
 
 # ───────────────────────── cabeçalho ─────────────────────────
 
@@ -193,8 +191,9 @@ with st.sidebar:
     st.divider()
     if not agregado.empty:
         st.caption(f"Última coleta do SonarCloud: **{agregado['coleta'].max():%d/%m/%Y %H:%M}**")
-    st.caption(f"Snapshot do Zenhub: `{zh_arquivo or 'nenhum'}`")
-    st.caption("Planilhas: " + ("publicadas no Google" if any(config.PLANILHAS.values()) else "CSVs locais em `planilhas/`"))
+    st.caption(f"Snapshot do Zenhub: `{zh_arquivo or 'nenhum — rode scripts/coleta_velocity.py'}`")
+    st.caption("Planilha (custos, time, horas, riscos, decisões): "
+               + ("publicada no Google" if any(config.PLANILHAS.values()) else "CSVs locais em `planilhas/`"))
 
 if not agregado.empty:
     filtro = agregado[(agregado["repositorio"].isin(repos_sel)) & (agregado["branch"] == branch_sel)]
@@ -205,8 +204,7 @@ if not agregado.empty:
 (aba_geral, aba_produto, aba_processo, aba_projeto, aba_gestao) = st.tabs(
     ["🧭 Visão geral", "🧪 Produto", "⚙️ Processo", "📈 Projeto", "🛡️ Riscos e decisões"])
 with aba_projeto:
-    aba_evm, aba_vel_zh, aba_velocity, aba_custos = st.tabs(
-        ["AgileEVM", "Velocity (Zenhub)", "Velocity e burndown (planilha)", "Custos"])
+    aba_vel_zh, aba_evm, aba_custos = st.tabs(["Velocity", "AgileEVM e burndown", "Custos"])
 with aba_gestao:
     aba_riscos, aba_decisoes = st.tabs(["Riscos", "Decisões"])
 
@@ -231,7 +229,7 @@ with aba_geral:
     runs_geral = runs[runs["repositorio"].isin(repos_sel)] if not runs.empty and repos_sel else runs
     issues_geral = issues[issues["repositorio"].isin(repos_sel)] if not issues.empty and repos_sel else issues
     painel = resumo.tudo(ultimo=ultimo_geral, erros=erros_sonar, runs=runs_geral, issues=issues_geral,
-                         va=va, vel=vel, horas=horas, sumario=sumario, riscos=riscos, decisoes=decisoes,
+                         evm_df=evm_df, vel=zh_vel, horas=horas, sumario=sumario, riscos=riscos, decisoes=decisoes,
                          release=release)
     alertas = resumo.atencao(painel)
     sprint_hoje = resumo.sprint_atual(cal_sprints, HOJE)
@@ -247,7 +245,7 @@ with aba_geral:
                                                      else f"entregue há {-dias} dia(s)"),
               delta_color="off")
     if sprint_hoje is not None:
-        c2.metric("Sprint atual", f"Sprint {int(sprint_hoje['sprint'])}",
+        c2.metric("Sprint atual", str(sprint_hoje['sprint']),
                   f"{sprint_hoje['inicio']:%d/%m} a {sprint_hoje['fim']:%d/%m}", delta_color="off")
     else:
         c2.metric("Sprint atual", "—", "fora do calendário", delta_color="off")
@@ -260,7 +258,7 @@ with aba_geral:
     # Linha do tempo do semestre: onde estamos entre as três entregas.
     if not cal_sprints.empty:
         cal = cal_sprints.assign(fim_barra=cal_sprints["fim"] + pd.Timedelta(days=1),
-                                 rotulo="S" + cal_sprints["sprint"].astype(str),
+                                 rotulo=cal_sprints["sprint"],
                                  encerrada=cal_sprints["fim"] < HOJE)
         cal["meio"] = cal["inicio"] + (cal["fim_barra"] - cal["inicio"]) / 2
         barras_t = (alt.Chart(cal).mark_bar(cornerRadius=4, height=26, stroke="#fcfcfb", strokeWidth=2)
@@ -279,7 +277,7 @@ with aba_geral:
                  .encode(x="d:T", text="t:N"))
         st.altair_chart(finalizar((barras_t + rot_t + regra_h + txt_h).properties(height=90)),
                         use_container_width=True)
-        st.caption("Sprints do calendário oficial (Zenhub), coloridas por release; as já encerradas ficam claras. "
+        st.caption("Sprints do Zenhub, coloridas por release; as já encerradas ficam claras. "
                    "Entregas: R1 28/09 · R2 26/10 · R3 30/11.")
 
     st.markdown("### Pontos de atenção")
@@ -644,7 +642,7 @@ with aba_custos:
         ("Custo por hora", "Aba **Custos**", "custo de um integrante por semana ÷ horas por semana (4 presenciais + 10 remotas)"),
         ("Custo planejado da semana", "Aba **Planejamento** (quem está no time em cada semana: 1 ou 0)",
          "integrantes ativos × custo de um integrante por semana + infraestrutura"),
-        ("Orçamento da release (BAC)", "Abas **Planejamento** e **Sumário EVM**", "soma do custo planejado das semanas da release"),
+        ("Orçamento da release (BAC)", "Aba **Planejamento** + datas das sprints no Zenhub", "soma do custo planejado das semanas da release"),
     ])
     if not custo:
         aviso_sem_dado("Aba Custos não encontrada", f"Fonte lida: {origem('custos')}.",
@@ -686,12 +684,17 @@ with aba_custos:
 
     if not plano.empty:
         st.markdown("#### Custo planejado por semana")
-        p = plano.dropna(subset=["custo"])
+        p = plano.dropna(subset=["custo"]).copy()
+        if not cal_sprints.empty:  # release e sprint de cada semana pelo calendário do Zenhub
+            def _sprint_da_semana(semana):
+                c = cal_sprints[(cal_sprints["inicio"] <= semana) & (cal_sprints["fim"] >= semana)]
+                return (c["release"].iloc[0], c["sprint"].iloc[0]) if not c.empty else ("", "")
+            p[["release", "sprint"]] = pd.DataFrame(p["semana"].map(_sprint_da_semana).tolist(), index=p.index)
         barras = (alt.Chart(p).mark_bar(cornerRadiusEnd=3)
                   .encode(x=alt.X("semana:T", title="Semana", axis=alt.Axis(format="%d/%m")),
                           y=alt.Y("custo:Q", title="R$"),
                           color=alt.Color("release:N", title="Release", scale=COR_RELEASE),
-                          tooltip=[alt.Tooltip("semana:T", format="%d/%m"), "release:N", "sprint:Q",
+                          tooltip=[alt.Tooltip("semana:T", format="%d/%m"), "release:N", "sprint:N",
                                    "integrantes:Q", alt.Tooltip("custo:Q", format=",.2f")]))
         st.altair_chart(finalizar(barras.properties(height=240)), use_container_width=True)
         st.caption("Se alguém sair do time, troque o 1 por 0 na aba Planejamento a partir da semana de saída: "
@@ -713,197 +716,138 @@ with aba_custos:
         por_sprint = h.groupby("sprint", as_index=False)["horas"].sum()
         st.dataframe(por_sprint, hide_index=True)
 
-# ───────────────────────── AgileEVM ─────────────────────────
+# ───────────────────────── AgileEVM e burndown ─────────────────────────
 
 with aba_evm:
     st.subheader("AgileEVM — valor agregado por release")
-    st.caption(f"Fonte: {origem('valor_agregado')} e {origem('sumario_evm')}. "
-               "Método: Sulaiman, Barton & Blackburn (2006), o mesmo da planilha de 2026.1.")
+    st.caption(f"Pontos: Zenhub (`{zh_arquivo or 'sem snapshot'}`). Custos: {origem('planejamento')}. "
+               f"Horas: {origem('horas')}. Método: Sulaiman, Barton & Blackburn (2006).")
     fonte_e_calculo([
-        ("PP, PC, PA", "Zenhub, copiados ao fim de cada sprint para a aba **EVM - Valor Agregado** (colunas amarelas)",
-         "PP = pontos planejados na sprint · PC = pontos de issues fechadas ou em Done · PA = pontos novos que entraram na release"),
-        ("PRP (Planned Release Points)", "Aba **Sumário EVM** (linha de base) + PA", "linha de base da release + soma do PA até a sprint"),
-        ("RPC (pontos concluídos)", "Aba **EVM - Valor Agregado**", "soma do PC da release até a sprint"),
-        ("APC (% realizado)", "idem", "RPC ÷ PRP"),
-        ("PPC (% planejado)", "idem", "semanas decorridas da release ÷ semanas da release"),
-        ("BAC (orçamento)", "Aba **Planejamento**", "soma do custo planejado das semanas da release"),
-        ("PV (valor planejado)", "idem", "PPC × BAC"),
-        ("EV (valor agregado)", "idem", "APC × BAC"),
-        ("AC (custo real)", "Aba **Horas**; sem horas, o custo planejado da sprint",
-         "soma do custo das sprints da release (horas × custo por hora, ou custo planejado)"),
-        ("SPI · CPI", "idem", "SPI = EV ÷ PV (prazo) · CPI = EV ÷ AC (custo). 1,0 = no plano; abaixo de 1 = pior que o plano"),
-        ("ETC · EAC", "idem", "ETC = (BAC − EV) ÷ CPI · EAC = AC + ETC"),
-        ("Término estimado (RD)", "idem", "início da release + duração ÷ SPI"),
+        ("Sprints e releases", "Zenhub (datas das sprints; Release do Zenhub ou, sem ela, as entregas do plano de ensino)",
+         "cada sprint entra na release cuja entrega vem logo depois do último dia dela"),
+        ("PP · PC", "Zenhub (aba Velocity)", "planejado no início da sprint · concluído dentro da sprint"),
+        ("PRP (escopo da release)", "Zenhub", "pontos das issues pontuáveis que passaram pelas sprints da release até agora, "
+                                              "cada issue uma vez; linha de base = planejado da 1ª sprint"),
+        ("PA (pontos adicionados)", "Zenhub", "quanto o PRP cresceu na sprint"),
+        ("RPC · APC", "Zenhub", "pontos do escopo já concluídos · RPC ÷ PRP"),
+        ("PPC (% planejado)", "datas das sprints no Zenhub", "semanas decorridas da release ÷ semanas da release"),
+        ("BAC (orçamento)", "Planilha: abas **Custos** e **Planejamento**", "custo planejado das semanas da release"),
+        ("PV · EV", "cálculo", "PV = PPC × BAC · EV = APC × BAC"),
+        ("AC (custo real)", "Planilha: aba **Horas** × custo/hora (aba Custos)", "sprint sem horas registradas usa o custo planejado"),
+        ("SPI · CPI", "cálculo", "SPI = EV ÷ PV = APC ÷ PPC (prazo) · CPI = EV ÷ AC (custo). 1,0 = no plano"),
+        ("ETC · EAC · RD", "cálculo", "ETC = (BAC − EV) ÷ CPI · EAC = AC + ETC · término = início + duração ÷ SPI"),
     ])
-    if va.empty:
-        aviso_sem_dado("Aba EVM - Valor Agregado não encontrada", f"Fonte lida: {origem('valor_agregado')}.",
-                       "Publicar a aba em CSV e colar o link em `config.py` (chave `valor_agregado`).")
+    if evm_df.empty:
+        aviso_sem_dado("Sem dados do Zenhub para o AgileEVM",
+                       "Ainda não há snapshot em `data/zenhub/velocity/`.",
+                       "Rodar `python scripts/coleta_velocity.py` (ver a aba Velocity).")
     else:
-        preenchidas = va.dropna(subset=["PP"])
-        rels = [r for r in ["R1", "R2", "R3"] if r in set(va["release"])]
-        padrao = preenchidas["release"].iloc[-1] if not preenchidas.empty else rels[0]
+        iniciadas = evm_df.dropna(subset=["PRP"])
+        rels = list(dict.fromkeys(evm_df["release"]))
+        padrao = iniciadas["release"].iloc[-1] if not iniciadas.empty else rels[0]
         rel_sel = st.radio("Release", rels, index=rels.index(padrao), horizontal=True, key="evm_rel")
-        d = va[va["release"] == rel_sel]
-        feitas = d.dropna(subset=["PP"])
-        linha_sum = sumario[sumario["release"] == rel_sel].iloc[0] if not sumario.empty and rel_sel in set(sumario["release"]) else None
+        d = evm_df[evm_df["release"] == rel_sel]
+        feitas = d.dropna(subset=["PRP"])
         if feitas.empty:
-            st.info(f"A {rel_sel} ainda não tem sprint preenchida. Ao fim de cada sprint, copiar PP, PC e PA do Zenhub "
-                    "(ver a aba Velocity e Burndown → Conferência com o Zenhub).", icon="📝")
+            st.info(f"A {rel_sel} ainda não começou.", icon="🗓️")
         else:
             u = feitas.iloc[-1]
+            parcial = u["status"] == velocity.STATUS_ANDAMENTO
             c1, c2, c3, c4, c5 = st.columns(5)
-            c1.metric("Sprint", f"{int(u['n'])} (fim {u['fim_da_sprint']:%d/%m})",
-                      f"{len(feitas)} de {len(d)} da release", delta_color="off")
+            c1.metric("Sprint", f"{u['sprint']} (fim {u['fim_da_sprint']:%d/%m})",
+                      f"{len(feitas)} de {len(d)} da release" + (" · em andamento" if parcial else ""),
+                      delta_color="off")
             c2.metric("Planejado (PPC)", pct(u["PPC"]))
-            c3.metric("Realizado (APC)", pct(u["APC"]), f"{num(u['RPC'], 0)} de {num(u['PRP'], 0)} pontos", delta_color="off")
-            c4.metric("SPI (prazo)", num(u["SPI"]), "no prazo" if u["SPI"] >= 0.95 else "atrasado",
-                      delta_color="normal" if u["SPI"] >= 0.95 else "inverse")
-            c5.metric("CPI (custo)", num(u["CPI"]), "AC estimado" if str(u.get("origem_do_ac", "")).startswith("estim") else "AC com horas reais",
+            c3.metric("Realizado (APC)", pct(u["APC"]), f"{num(u['RPC'], 0)} de {num(u['PRP'], 0)} pontos",
                       delta_color="off")
             if pd.notna(u["SPI"]):
-                fim_est = u["RD"]
+                c4.metric("SPI (prazo)", num(u["SPI"]), "no prazo" if u["SPI"] >= 0.95 else "atrasado",
+                          delta_color="normal" if u["SPI"] >= 0.95 else "inverse")
+            else:
+                c4.metric("SPI (prazo)", "—")
+            c5.metric("CPI (custo)", num(u["CPI"]),
+                      "AC estimado" if str(u["origem_do_ac"]).startswith("estim") else "AC com horas reais",
+                      delta_color="off")
+            if pd.notna(u["SPI"]):
                 st.markdown(
-                    f"**Leitura:** até a sprint {int(u['n'])}, a {rel_sel} deveria ter entregue **{pct(u['PPC'])}** do escopo "
+                    f"**Leitura:** até a {u['sprint']}, a {rel_sel} deveria ter entregue **{pct(u['PPC'])}** do escopo "
                     f"e entregou **{pct(u['APC'])}** ({num(u['RPC'], 0)} de {num(u['PRP'], 0)} pontos). "
-                    f"SPI {num(u['SPI'])} quer dizer que, a cada R$ 1,00 de trabalho planejado, "
-                    f"R$ {num(u['SPI'])} viraram entrega. "
-                    + (f"No ritmo atual, a release terminaria em **{fim_est:%d/%m/%Y}**. " if pd.notna(fim_est) else ""))
-                if str(u.get("origem_do_ac", "")).startswith("estim"):
-                    st.caption("Sem horas registradas, AC = custo planejado; por isso o CPI fica igual ao SPI. "
-                               "Registrar horas na aba Horas faz o CPI medir custo de verdade.")
-                if linha_sum is not None and pd.notna(linha_sum.get("prp_linha_de_base")) and u["PRP"] > linha_sum["prp_linha_de_base"] * 1.5:
-                    st.warning(f"**O escopo da {rel_sel} cresceu de {num(linha_sum['prp_linha_de_base'], 0)} para "
-                               f"{num(u['PRP'], 0)} pontos durante a release (PA).** O SPI baixo vem principalmente daí: "
-                               "entrou muito escopo que não cabia na release. Na planning, mover para a próxima release o que "
-                               "não termina nesta e congelar a linha de base da próxima.", icon="⚠️")
+                    + (f"No ritmo atual, terminaria em **{u['RD']:%d/%m/%Y}**. " if pd.notna(u["RD"]) else "")
+                    + ("Valores da sprint em andamento são parciais." if parcial else ""))
+            if str(u["origem_do_ac"]).startswith("estim"):
+                st.caption("Sem horas registradas, AC = custo planejado e o CPI fica igual ao SPI. "
+                           "Registrar horas na aba Horas faz o CPI medir custo de verdade.")
+            base = u["prp_linha_de_base"]
+            if pd.notna(base) and base > 0 and u["PRP"] > base * 1.5:
+                st.warning(f"**O escopo da {rel_sel} cresceu de {num(base, 0)} para {num(u['PRP'], 0)} pontos** "
+                           "durante a release (PA). Na planning, mover para a próxima release o que não termina nesta.",
+                           icon="⚠️")
 
-            st.markdown("#### Valor planejado (PV), valor agregado (EV) e custo real (AC)")
-            longo = feitas.melt(id_vars=["n"], value_vars=["PV", "EV", "AC"], var_name="serie", value_name="valor")
-            nomes = {"PV": "PV — planejado", "EV": "EV — entregue", "AC": "AC — gasto"}
-            longo["serie"] = longo["serie"].map(nomes)
-            linha = (alt.Chart(longo).mark_line(point=alt.OverlayMarkDef(size=80, filled=True), strokeWidth=2.5)
-                     .encode(x=alt.X("n:O", title="Sprint"), y=alt.Y("valor:Q", title="R$ acumulado na release"),
-                             color=alt.Color("serie:N", title=None,
-                                             scale=alt.Scale(domain=list(nomes.values()),
-                                                             range=[theme.INK["muted"], theme.SERIES[0], theme.STATUS["serious"]])),
-                             tooltip=["n:O", "serie:N", alt.Tooltip("valor:Q", format=",.2f")]))
-            camadas = linha
-            if linha_sum is not None and pd.notna(linha_sum.get("BAC")):
-                bac = pd.DataFrame({"y": [linha_sum["BAC"]], "t": [f"BAC {brl(linha_sum['BAC'])}"]})
-                camadas = camadas + alt.Chart(bac).mark_rule(strokeDash=[6, 4], color=theme.INK["axis"]).encode(y="y:Q") \
-                    + alt.Chart(bac).mark_text(align="left", dy=-7, fontSize=11, color=theme.INK["secondary"]).encode(y="y:Q", text="t:N", x=alt.value(0))
-            st.altair_chart(finalizar(camadas.properties(height=300)), use_container_width=True)
-            st.caption("EV abaixo de PV = atraso (entregou menos do que o tempo gasto previa). "
-                       "AC acima de EV = custou mais do que entregou.")
+            if feitas["BAC"].notna().any():
+                st.markdown("#### Valor planejado (PV), valor agregado (EV) e custo real (AC)")
+                longo = feitas.melt(id_vars=["sprint"], value_vars=["PV", "EV", "AC"], var_name="serie",
+                                    value_name="valor").dropna()
+                nomes = {"PV": "PV — planejado", "EV": "EV — entregue", "AC": "AC — gasto"}
+                longo["serie"] = longo["serie"].map(nomes)
+                linha = (alt.Chart(longo).mark_line(point=alt.OverlayMarkDef(size=80, filled=True), strokeWidth=2.5)
+                         .encode(x=alt.X("sprint:O", title="Sprint"), y=alt.Y("valor:Q", title="R$ acumulado na release"),
+                                 color=alt.Color("serie:N", title=None,
+                                                 scale=alt.Scale(domain=list(nomes.values()),
+                                                                 range=[theme.INK["muted"], theme.SERIES[0],
+                                                                        theme.STATUS["serious"]])),
+                                 tooltip=["sprint:O", "serie:N", alt.Tooltip("valor:Q", format=",.2f")]))
+                bac = pd.DataFrame({"y": [u["BAC"]], "t": [f"BAC {brl(u['BAC'])}"]})
+                camadas = (linha + alt.Chart(bac).mark_rule(strokeDash=[6, 4], color=theme.INK["axis"]).encode(y="y:Q")
+                           + alt.Chart(bac).mark_text(align="left", dy=-7, fontSize=11, color=theme.INK["secondary"])
+                           .encode(y="y:Q", text="t:N", x=alt.value(0)))
+                st.altair_chart(finalizar(camadas.properties(height=300)), use_container_width=True)
+                st.caption("EV abaixo de PV = atraso. AC acima de EV = custou mais do que entregou.")
 
             st.markdown("#### Índices de desempenho (SPI e CPI)")
-            idx = feitas.melt(id_vars=["n"], value_vars=["SPI", "CPI"], var_name="indice", value_name="valor").dropna()
-            graf = (alt.Chart(idx).mark_line(point=alt.OverlayMarkDef(size=80, filled=True), strokeWidth=2.5)
-                    .encode(x=alt.X("n:O", title="Sprint"),
-                            y=alt.Y("valor:Q", title="Índice", scale=alt.Scale(domain=[0, max(1.2, idx["valor"].max() + 0.1)])),
-                            color=alt.Color("indice:N", title=None, scale=alt.Scale(domain=["SPI", "CPI"], range=theme.SERIES[:2])),
-                            strokeDash=alt.StrokeDash("indice:N", legend=None,
-                                                      scale=alt.Scale(domain=["SPI", "CPI"], range=[[1, 0], [5, 3]])),
-                            tooltip=["n:O", "indice:N", alt.Tooltip("valor:Q", format=".2f")]))
-            st.altair_chart(finalizar((graf + regra_um()).properties(height=260)), use_container_width=True)
+            idx = feitas.melt(id_vars=["sprint"], value_vars=["SPI", "CPI"], var_name="indice",
+                              value_name="valor").dropna()
+            if not idx.empty:
+                graf = (alt.Chart(idx).mark_line(point=alt.OverlayMarkDef(size=80, filled=True), strokeWidth=2.5)
+                        .encode(x=alt.X("sprint:O", title="Sprint"),
+                                y=alt.Y("valor:Q", title="Índice",
+                                        scale=alt.Scale(domain=[0, max(1.2, idx["valor"].max() + 0.1)])),
+                                color=alt.Color("indice:N", title=None,
+                                                scale=alt.Scale(domain=["SPI", "CPI"], range=theme.SERIES[:2])),
+                                strokeDash=alt.StrokeDash("indice:N", legend=None,
+                                                          scale=alt.Scale(domain=["SPI", "CPI"], range=[[1, 0], [5, 3]])),
+                                tooltip=["sprint:O", "indice:N", alt.Tooltip("valor:Q", format=".2f")]))
+                st.altair_chart(finalizar((graf + regra_um()).properties(height=260)), use_container_width=True)
 
-        with st.expander("Ver a aba EVM - Valor Agregado completa", expanded=False):
-            st.dataframe(va, use_container_width=True, hide_index=True)
+            st.markdown("#### Burndown da release")
+            b = feitas.assign(restante=feitas["PRP"] - feitas["RPC"], ideal=feitas["PRP"] * (1 - feitas["PPC"]))
+            longo_b = b.melt(id_vars=["sprint"], value_vars=["restante", "ideal", "PRP"], var_name="serie",
+                             value_name="pontos")
+            nomes_b = {"restante": "Restante (real)", "ideal": "Restante ideal", "PRP": "Escopo da release (PRP)"}
+            longo_b["serie"] = longo_b["serie"].map(nomes_b)
+            graf_b = (alt.Chart(longo_b).mark_line(point=alt.OverlayMarkDef(size=70, filled=True), strokeWidth=2.5)
+                      .encode(x=alt.X("sprint:O", title="Sprint"), y=alt.Y("pontos:Q", title="Story points"),
+                              color=alt.Color("serie:N", title=None,
+                                              scale=alt.Scale(domain=list(nomes_b.values()),
+                                                              range=[theme.SERIES[0], theme.INK["muted"],
+                                                                     theme.STATUS["warning"]])),
+                              strokeDash=alt.StrokeDash("serie:N", legend=None,
+                                                        scale=alt.Scale(domain=list(nomes_b.values()),
+                                                                        range=[[1, 0], [6, 4], [2, 2]])),
+                              tooltip=["sprint:O", "serie:N", alt.Tooltip("pontos:Q", format=".0f")]))
+            st.altair_chart(finalizar(graf_b.properties(height=300)), use_container_width=True)
+            st.caption("Quando a linha do escopo (PRP) sobe, entrou trabalho novo na release — o restante sobe junto "
+                       "mesmo que o time esteja entregando.")
+
+        with st.expander("Ver o AgileEVM completo da release"):
+            st.dataframe(d.drop(columns=["L"], errors="ignore"), use_container_width=True, hide_index=True)
         if not sumario.empty:
-            with st.expander("Ver a aba Sumário EVM"):
+            with st.expander("Ver o sumário por release"):
                 st.dataframe(sumario, use_container_width=True, hide_index=True)
 
 # ───────────────────────── velocity (API do Zenhub) ─────────────────────────
 
 with aba_vel_zh:
-    velocity_dashboard.render(params, cal_sprints, finalizar)
-
-# ───────────────────────── velocity e burndown ─────────────────────────
-
-with aba_velocity:
-    st.subheader("Velocity e burndown")
-    st.caption(f"Fonte: {origem('velocity')} e {origem('valor_agregado')}. Conferência: snapshot do Zenhub `{zh_arquivo or 'nenhum'}`.")
-    fonte_e_calculo([
-        ("Pontos planejados (PP)", "Zenhub → aba **EVM - Valor Agregado**",
-         "soma das estimativas das US (Feature), Tasks e Bugs da sprint; Épicos, Sub-tasks, PRs e Task com Task filha não contam"),
-        ("Pontos concluídos (PC)", "idem",
-         "pontos das issues fechadas (Closed) ou no pipeline Done; issue que atravessa sprints conta só na sprint em que fechou"),
-        ("Velocity", "Aba **EVM - Velocity**", "PC da sprint"),
-        ("Pontos por semana", "idem", "PC ÷ semanas da sprint (as sprints 1 e 2 têm 2 semanas)"),
-        ("Velocity média", "idem", "média dos pontos por semana das sprints preenchidas"),
-        ("Taxa de conclusão", "idem", "PC ÷ PP (meta ≥ 80%)"),
-        ("Burndown", "Aba **EVM - Valor Agregado**", "restante = PRP − RPC · ideal = PRP × (1 − PPC)"),
-        ("Conferência com o Zenhub", f"arquivo `data/zenhub/{zh_arquivo}` gerado por `scripts/coleta_zenhub.mjs`",
-         "mesmas regras de PP/PC/PA aplicadas direto no quadro, para comparar com o que foi digitado na planilha"),
-    ])
-    v = vel.dropna(subset=["PP"]) if not vel.empty else vel
-    if v.empty:
-        aviso_sem_dado("Sem sprints preenchidas", f"Fonte lida: {origem('velocity')}.",
-                       "Preencher PP e PC na aba EVM - Valor Agregado ao fim de cada sprint.")
-    else:
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Velocity média", f"{num(v['velocity_media'].iloc[-1], 1)} pts/semana")
-        c2.metric("Última sprint", f"{num(v['PC'].iloc[-1], 0)} de {num(v['PP'].iloc[-1], 0)} pontos",
-                  f"sprint {int(v['sprint'].iloc[-1])}", delta_color="off")
-        taxa = v["PC"].sum() / v["PP"].sum() if v["PP"].sum() else float("nan")
-        c3.metric("Taxa de conclusão acumulada", pct(taxa), "meta ≥ 80%", delta_color="off")
-
-        st.markdown("#### Planejado × concluído por sprint")
-        longo = v.melt(id_vars=["sprint"], value_vars=["PP", "PC"], var_name="serie", value_name="pontos")
-        longo["serie"] = longo["serie"].map({"PP": "Planejado (PP)", "PC": "Concluído (PC)"})
-        barras = (alt.Chart(longo).mark_bar(cornerRadiusEnd=3)
-                  .encode(x=alt.X("sprint:O", title="Sprint"), y=alt.Y("pontos:Q", title="Story points"),
-                          xOffset=alt.XOffset("serie:N"),
-                          color=alt.Color("serie:N", title=None,
-                                          scale=alt.Scale(domain=["Planejado (PP)", "Concluído (PC)"], range=theme.SERIES[:2])),
-                          tooltip=["sprint:O", "serie:N", "pontos:Q"]))
-        st.altair_chart(finalizar(barras.properties(height=280)), use_container_width=True)
-        if taxa < 0.8:
-            st.caption(f"Só {pct(taxa)} do que foi planejado foi concluído. Planejar menos pontos por sprint "
-                       "(perto da velocity média) deixa o PP realista e o burndown útil.")
-        tabela(v, "Ver a aba EVM - Velocity")
-
-    if not va.empty and not va.dropna(subset=["PP"]).empty:
-        st.markdown("#### Burndown da release")
-        rels = [r for r in ["R1", "R2", "R3"] if r in set(va.dropna(subset=["PP"])["release"])]
-        rel_b = st.radio("Release", rels, index=len(rels) - 1, horizontal=True, key="bd_rel")
-        b = va[(va["release"] == rel_b)].dropna(subset=["PP"]).assign(
-            restante=lambda d: d["PRP"] - d["RPC"], ideal=lambda d: d["PRP"] * (1 - d["PPC"]))
-        longo_b = b.melt(id_vars=["n"], value_vars=["restante", "ideal", "PRP"], var_name="serie", value_name="pontos")
-        nomes = {"restante": "Restante (real)", "ideal": "Restante ideal", "PRP": "Escopo da release (PRP)"}
-        longo_b["serie"] = longo_b["serie"].map(nomes)
-        graf = (alt.Chart(longo_b).mark_line(point=alt.OverlayMarkDef(size=70, filled=True), strokeWidth=2.5)
-                .encode(x=alt.X("n:O", title="Sprint"), y=alt.Y("pontos:Q", title="Story points"),
-                        color=alt.Color("serie:N", title=None, scale=alt.Scale(domain=list(nomes.values()),
-                                                                               range=[theme.SERIES[0], theme.INK["muted"], theme.STATUS["warning"]])),
-                        strokeDash=alt.StrokeDash("serie:N", legend=None, scale=alt.Scale(domain=list(nomes.values()),
-                                                                                          range=[[1, 0], [6, 4], [2, 2]])),
-                        tooltip=["n:O", "serie:N", alt.Tooltip("pontos:Q", format=".0f")]))
-        st.altair_chart(finalizar(graf.properties(height=300)), use_container_width=True)
-        st.caption("Quando a linha do escopo (PRP) sobe, entrou trabalho novo na release — o restante sobe junto "
-                   "mesmo que o time esteja entregando.")
-
-    st.divider()
-    st.markdown("#### Conferência com o Zenhub")
-    st.caption("Valores calculados direto do quadro do Zenhub, com as mesmas regras da planilha. "
-               "Use esta tabela para preencher PP, PC e PA na aba EVM - Valor Agregado ao fim de cada sprint.")
-    if zh_pontos.empty:
-        st.caption("Sem snapshot do Zenhub. Rodar `node scripts/coleta_zenhub.mjs`.")
-    else:
-        conf = zh_pontos.rename(columns={"PP": "PP Zenhub", "PC": "PC Zenhub", "PA": "PA Zenhub"})
-        if not va.empty:
-            conf = conf.merge(va[["n", "PP", "PC", "PA"]].rename(columns={"n": "sprint", "PP": "PP planilha",
-                                                                          "PC": "PC planilha", "PA": "PA planilha"}),
-                              on="sprint", how="left")
-            iguais = ((conf["PP Zenhub"] == conf["PP planilha"]) & (conf["PC Zenhub"] == conf["PC planilha"])
-                      & (conf["PA Zenhub"] == conf["PA planilha"]))
-            conf["situação"] = iguais.map({True: "✅ igual", False: "⚠️ atualizar a planilha"})
-        st.dataframe(conf, use_container_width=True, hide_index=True)
-        problemas = gestao.qualidade_do_quadro(zh_issues, params)
-        if not problemas.empty:
-            with st.expander(f"⚠️ {len(problemas)} pendência(s) no quadro que afetam os pontos"):
-                st.dataframe(problemas, use_container_width=True, hide_index=True,
-                             column_config={"url": st.column_config.LinkColumn("link")})
+    velocity_dashboard.render(regras, zh_vel, zh_snap, zh_arquivo, finalizar)
 
 # ───────────────────────── riscos ─────────────────────────
 
@@ -1005,5 +949,6 @@ with aba_decisoes:
                 st.markdown(f"**Resultado:** {d.get('resultado', '') or '_em observação_'}")
 
 st.divider()
-st.caption("Produto e Processo: arquivos gerados pelo pipeline de CI/CD. Custos, AgileEVM, Velocity, Riscos e Decisões: "
-           "planilhas do time, com as fórmulas na própria planilha. Nenhum número é digitado no código.")
+st.caption("Produto e Processo: arquivos gerados pelo pipeline de CI/CD. Sprints, pontos, velocity, AgileEVM e "
+           "burndown: API do Zenhub. Custos, time por semana, horas, riscos e decisões: planilha do time. "
+           "Nenhum número é digitado no código.")

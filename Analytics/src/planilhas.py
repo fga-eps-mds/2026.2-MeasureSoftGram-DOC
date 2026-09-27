@@ -1,19 +1,19 @@
 """Leitura das duas planilhas de gestão do time (Google Sheets publicadas em CSV).
 
-Planilha "Custos e AgileEVM"  -> abas Custos, Planejamento, Horas, Sumário EVM,
-                                 EVM - Valor Agregado, EVM - Velocity
-Planilha "Riscos e Decisões"  -> abas Riscos, Monitoramento, Decisões
+Só o que o Zenhub não tem vem da planilha: Custos, Planejamento (quem está no
+time em cada semana), Horas, Riscos, Monitoramento e Decisões. Pontos, sprints,
+velocity, AgileEVM e burndown vêm do Zenhub (``src/velocity.py``, ``src/evm.py``).
 
-Todos os cálculos de custo e de AgileEVM são feitos por fórmula **na planilha**
-(igual a 2026.1). O dashboard só lê o resultado e desenha; assim o número do
-painel é sempre o mesmo da planilha. Sem URL publicada, lê o CSV de mesmo nome
-em ``planilhas/`` (exportado da planilha) e diz isso na tela.
+Sem URL publicada, lê o CSV de mesmo nome em ``planilhas/`` e diz isso na tela.
+No navegador (GitHub Pages) lê sempre o CSV empacotado no deploy, que o
+``stlite/build.py`` baixa das URLs publicadas.
 """
 
 from __future__ import annotations
 
 import io
 import re
+import sys
 import unicodedata
 from pathlib import Path
 
@@ -24,9 +24,6 @@ ABAS = {
     "custos": ("Custos e AgileEVM", "Custos"),
     "planejamento": ("Custos e AgileEVM", "Planejamento"),
     "horas": ("Custos e AgileEVM", "Horas"),
-    "sumario_evm": ("Custos e AgileEVM", "Sumário EVM"),
-    "valor_agregado": ("Custos e AgileEVM", "EVM - Valor Agregado"),
-    "velocity": ("Custos e AgileEVM", "EVM - Velocity"),
     "riscos": ("Riscos e Decisões", "Riscos"),
     "monitoramento": ("Riscos e Decisões", "Monitoramento"),
     "decisoes": ("Riscos e Decisões", "Decisões"),
@@ -82,6 +79,8 @@ def ler(chave: str, urls: dict, pasta: Path, siglas: bool = False) -> pd.DataFra
     """Lê a aba publicada (URL em config.PLANILHAS) ou o CSV local ``planilhas/<chave>.csv``."""
     planilha, aba = ABAS.get(chave, ("?", chave))
     url = (urls or {}).get(chave, "")
+    if sys.platform == "emscripten":
+        url = ""  # no navegador: o CSV empacotado no deploy já é a cópia da planilha publicada
     bruto = None
     if url:
         try:

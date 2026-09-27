@@ -52,33 +52,39 @@ flowchart TB
 
 ### Parâmetros (`planilhas/parametros.csv`)
 
-A linha de base de custo, segundo a área de custos do PMBOK (estimar custos →
-determinar orçamento).
+Regras do time lidas pelo dashboard (não é aba da planilha: muda só por decisão).
 
 | Campo | Significado |
 | --- | --- |
-| `pessoas` | Integrantes que dedicam horas ao projeto. |
-| `horas_semana_pessoa` | Capacidade planejada por integrante. Multiplicada por pessoas e semanas, dá as **horas planejadas da release**. |
-| `custo_hora` | Salário mensal de referência de dev júnior ÷ 160 h. A fonte e a data precisam ser citadas. |
-| `criterio_feito`, `niveis_pontuados` | As regras da seção 2, lidas pelo dashboard. |
+| `criterio_feito`, `niveis_pontuados` | As regras da seção 2. |
+| `janela_planning_horas` | O planejado de cada sprint é o escopo ao fim deste prazo após o início (a planning). |
+| `min_sprints_media_velocity` | Sprints concluídas necessárias para mostrar a velocity média. |
+| `sprints_canceladas` | Ids de sprints do Zenhub que ficam fora da média. |
 
-### Calendário (`sprints.csv`, `releases.csv`)
+### Calendário (Zenhub)
 
-| Campo | Significado |
-| --- | --- |
-| `sprint`, `release`, `inicio`, `fim` | Calendário oficial. `n` é a posição da sprint dentro da release, e `L` é o total de sprints dela. |
-| `prp_linha_de_base` | **Planned Release Points**: soma dos pontos das US/Tasks comprometidas para a release, **congelada na planning de abertura**. Tudo o que entra depois é PA. |
+Datas e situação das sprints vêm do Zenhub. A release de cada sprint é a Release
+do Zenhub que contém as issues dela; sem Release cadastrada, vale a data de
+entrega do plano de ensino (R1 28/09, R2 26/10, R3 30/11). `n` é a posição da
+sprint na release e `L` o total de sprints dela.
 
-### Zenhub (`data/zenhub/*.json`)
+### Zenhub (`data/zenhub/velocity/*.json`)
 
-Snapshot do quadro, gerado por `scripts/coleta_zenhub.py`. Dele saem:
+Snapshot gerado por `scripts/coleta_velocity.py` (regras em
+[Velocity pela API do Zenhub](/docs/metricas/velocity-zenhub)). Dele saem:
 
 | Sigla | Nome | Definição |
 | --- | --- | --- |
-| PP | Pontos planejados | Pontos das US/Tasks na sprint. |
-| PC | Points Completed | Pontos das issues no pipeline Done. |
-| PA | Points Added | Pontos que entraram na release além da linha de base. |
-| RPC | Release Points Completed | PC acumulado na release, sem contar a mesma issue duas vezes. |
+| PP | Pontos planejados | Pontos das issues pontuáveis na sprint ao fim da planning. |
+| PC | Points Completed | Pontos das issues concluídas dentro da sprint. |
+| PRP | Planned Release Points | Pontos das issues que passaram pelas sprints da release, cada uma uma vez. Linha de base = PP da 1ª sprint, **congelado** na coleta seguinte à planning. |
+| PA | Points Added | Quanto o PRP cresceu na sprint. |
+| RPC | Release Points Completed | Pontos do PRP já concluídos. |
+
+### Planilha (só o que o Zenhub não tem)
+
+Abas **Custos** (custo/hora), **Planejamento** (quem está ativo em cada semana),
+**Horas**, **Riscos**, **Monitoramento** e **Decisões**.
 
 ### AgileEVM
 
@@ -88,17 +94,17 @@ Sulaiman, Barton e Blackburn (2006), calculado por release:
 | --- | --- | --- |
 | PPC | n / L | Quanto da release *deveria* estar pronto. |
 | APC | RPC / PRP | Quanto da release *está* pronto. |
-| BAC | horas planejadas da release × custo/hora | Orçamento da release. |
+| BAC | custo planejado das semanas da release (aba Planejamento) | Orçamento da release. |
 | PV | PPC × BAC | Valor planejado até aqui. |
 | EV | APC × BAC | Valor agregado até aqui. |
-| AC | Σ horas reais × custo/hora | Custo real até aqui. |
+| AC | Σ horas reais × custo/hora (sem horas: custo planejado da sprint) | Custo real até aqui. |
 | SPI | EV / PV = APC / PPC | Abaixo de 1 significa atraso. |
 | CPI | EV / AC | Abaixo de 1 significa gastar mais do que se entrega. |
 | SV, CV | EV − PV, EV − AC | Variâncias em valor. |
 | ETC, EAC | (BAC − EV) / CPI, AC + ETC | Projeção de custo final. |
-| RD | L / SPI | Em quantas sprints a release fecha, no ritmo atual. |
+| RD | início + duração / SPI | Quando a release fecha, no ritmo atual. |
 
-### Riscos (`riscos.csv`)
+### Riscos (aba Riscos)
 
 Registro de riscos do PMBOK. Os campos são: **categoria**, **risco**, **gatilho**
 (o sinal observável de que ele está ocorrendo), **probabilidade** e **impacto**
@@ -107,7 +113,7 @@ Transferir ou Aceitar), **plano de resposta**, **responsável**, **status** e
 **última revisão**. Um risco sem responsável não tem resposta. O registro é
 revisado em toda retrospectiva.
 
-### Decisões (`decisoes.csv`)
+### Decisões (aba Decisões)
 
 Fecha o ciclo: *métrica → causa → decisão → resultado*. É a evidência de gestão
 baseada em dados, e a R2 cobra ≥ 3 registros, a R3 ≥ 5.
@@ -117,7 +123,7 @@ baseada em dados, e a R2 cobra ≥ 3 registros, a R3 ≥ 5.
 A R1 **não tem linha de base declarada**. As sprints 1 e 2 foram de diagnóstico,
 migração de repositórios e Lean Inception, sem pontos. O sequenciador não fechou,
 um risco já materializado (R10). Por isso o dashboard **reconstitui** o PRP da R1
-a partir do que entrou no Zenhub e declara isso na tela.
+a partir do histórico de escopo do Zenhub e declara isso na tela.
 
 A contribuição da DA-R1 é estabelecer o modelo, expor a qualidade do dado do
 quadro e congelar a linha de base da R2 na planning de 28/09.
@@ -126,9 +132,9 @@ quadro e congelar a linha de base da R2 na planning de 28/09.
 
 | Quando | O quê | Quem |
 | --- | --- | --- |
-| Planning de abertura da release | Congelar `prp_linha_de_base` | Líderes da quinzena |
+| Planning de abertura da release | Garantir as issues da release no Zenhub (a linha de base congela sozinha) | Líderes da quinzena |
 | Toda segunda (planning) | Lançar as horas da semana na aba Horas | Cada integrante |
-| Fim de cada sprint | Rodar `coleta_zenhub.py` e mover issues entregues para Done | Líderes da quinzena |
+| Fim de cada sprint | Fechar as issues entregues (a coleta diária do workflow atualiza o painel) | Líderes da quinzena |
 | Toda retrospectiva | Revisar riscos e registrar decisões | Equipe |
 
 ## Referências

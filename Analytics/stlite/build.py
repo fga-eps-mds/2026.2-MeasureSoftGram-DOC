@@ -119,6 +119,33 @@ PAGINA = """<!doctype html>
 """
 
 
+def _baixar_planilhas(saida: Path) -> None:
+    """Troca os CSVs empacotados pelas abas publicadas no Google (URLs de config.py).
+
+    No navegador o app lê só o CSV empacotado; por isso o deploy baixa a versão
+    publicada aqui. Se o download falhar, fica o CSV do repositório e o log diz.
+    """
+    import importlib.util
+    import urllib.request
+
+    spec = importlib.util.spec_from_file_location("config_dash", ANALYTICS / "config.py")
+    cfg = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cfg)
+    for chave, url in (getattr(cfg, "PLANILHAS", {}) or {}).items():
+        if not url:
+            continue
+        destino = saida / "Analytics" / "planilhas" / f"{chave}.csv"
+        try:
+            with urllib.request.urlopen(url, timeout=30) as r:
+                conteudo = r.read()
+            conteudo.decode("utf-8")  # garante texto antes de gravar
+            destino.parent.mkdir(parents=True, exist_ok=True)
+            destino.write_bytes(conteudo)
+            print(f"planilha: {chave} baixada da versão publicada")
+        except Exception as erro:  # noqa: BLE001
+            print(f"planilha: {chave} NÃO baixada ({erro.__class__.__name__}); ficou o CSV do repositório")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--saida", type=Path, default=RAIZ / "static" / "dashboard",
@@ -135,6 +162,7 @@ def main() -> None:
         destino = saida / rel
         destino.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(RAIZ / rel, destino)
+    _baixar_planilhas(saida)
 
     from datetime import datetime, timedelta, timezone
     gerado = datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y %H:%M")

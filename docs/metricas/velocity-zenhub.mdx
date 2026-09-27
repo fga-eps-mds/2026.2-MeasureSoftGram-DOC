@@ -62,9 +62,9 @@ chave (HTTP 429 → espera `Retry-After` ou backoff exponencial), timeout e 5xx
 repetidos entre páginas (descartados pelo `id`).
 
 :::note Achado ao conferir o schema
-`issueType { name }` — usado no antigo `scripts/coleta_zenhub.py` — **não é válido**
-no schema atual: `issueType` é uma união e exige fragmentos
-(`... on GithubIssueType { name }`). O script foi corrigido junto.
+`issueType { name }` — usado no antigo `scripts/coleta_zenhub.py` (removido,
+substituído por `coleta_velocity.py`) — **não é válido** no schema atual:
+`issueType` é uma união e exige fragmentos (`... on GithubIssueType { name }`).
 :::
 
 ## Regras de cálculo
@@ -96,8 +96,8 @@ canceladas ficam fora. Só aparece com pelo menos 2 sprints concluídas
 → vazio, sem divisão.
 
 **Release.** A release do Zenhub que contém mais issues da sprint; sem isso, a
-release cujas datas cobrem o fim da sprint; sem isso, a release do calendário do
-time (`planilhas/sprints.csv`). A coluna "Fonte da release" diz qual regra valeu.
+release cujas datas cobrem o fim da sprint; sem isso, a data de entrega do plano
+de ensino (R1 28/09, R2 26/10, R3 30/11). A coluna "Fonte da release" diz qual regra valeu.
 
 ## Limitações (e o que foi feito para não inventar número)
 
@@ -130,7 +130,7 @@ time (`planilhas/sprints.csv`). A coluna "Fonte da release" diz qual regra valeu
 
 Em algumas máquinas o antivírus ou o firewall corta a conexão TLS do Python com
 `api.zenhub.com` (`SSL: UNEXPECTED_EOF_WHILE_READING`), enquanto o Node conecta
-normalmente — foi por isso que o time já tinha um `coleta_zenhub.mjs`. O cliente
+normalmente (o time já tinha um coletor antigo em Node por isso). O cliente
 detecta esse erro e passa a fazer as requisições pelo Node
 (`scripts/zenhub_post.mjs`, Node 18+), sem mudar nada no resto da coleta. Para
 forçar: `ZENHUB_TRANSPORTE=node`. Para investigar:

@@ -23,10 +23,12 @@ Não precisa configurar nada para ver produto e processo: se houver `.json` em
 | --- | --- | --- |
 | **Produto** | SonarCloud | `metrics.yml` de cada repositório → `Analytics/data/` |
 | **Processo** | API do GitHub | o mesmo workflow → `GitHub_API-Issues-*` e `GitHub_API-Runs-*` |
-| **Projeto** | Planilhas do time | Google Sheets publicado como CSV, ou `planilhas/*.csv` |
+| **Projeto — pontos** (sprints, velocity, AgileEVM, burndown) | API do Zenhub | `scripts/coleta_velocity.py` → `data/zenhub/velocity/` |
+| **Projeto — custos e horas**, **riscos e decisões** | Planilha do time | abas publicadas como CSV (`config.py`), ou `planilhas/*.csv` |
 
-Produto e processo são **100% automáticos**. Projeto é manual por natureza:
-horas trabalhadas e julgamento de risco não se coletam de repositório.
+A planilha só guarda o que o Zenhub não tem: **Custos**, **Planejamento** (quem
+está no time em cada semana), **Horas**, **Riscos**, **Monitoramento** e
+**Decisões**. Nenhum ponto é digitado na planilha.
 
 > **A regra que governa este app:** todo número exibido vem de um arquivo. Quando
 > um dado não existe, o painel diz que não existe e explica por quê. Um indicador
@@ -37,52 +39,43 @@ horas trabalhadas e julgamento de risco não se coletam de repositório.
 
 ```
 Analytics/
-├── app.py              # entrada do Streamlit (visão geral + quatro dimensões)
-├── config.py           # ÚNICO arquivo que o time edita: URLs das planilhas
+├── app.py                  # entrada do Streamlit (visão geral + quatro dimensões)
+├── config.py               # ÚNICO arquivo que o time edita: URLs das abas publicadas
 ├── src/
-│   ├── loader.py       # descoberta e parse dos .json e das planilhas
-│   ├── resumo.py       # indicadores e status da Visão geral
-│   └── theme.py        # paleta validada, metas por release
-├── planilhas/          # CSVs de apoio, usados quando não há planilha publicada
-│   ├── evm.csv
-│   ├── velocity.csv
-│   ├── riscos.csv
-│   └── decisoes.csv
-├── data/               # ← o pipeline escreve aqui. Não editar à mão.
-├── stlite/build.py     # empacota o app para o GitHub Pages
-├── .streamlit/
-│   └── config.toml
+│   ├── loader.py           # .json do SonarCloud e do GitHub
+│   ├── zenhub/             # cliente, queries, normalização e coleta do Zenhub
+│   ├── velocity.py         # planejado, concluído, velocity, média
+│   ├── evm.py              # AgileEVM e burndown (pontos do Zenhub + custos da planilha)
+│   ├── velocity_dashboard.py
+│   ├── planilhas.py        # leitura das abas da planilha
+│   ├── gestao.py           # parâmetros (planilhas/parametros.csv)
+│   ├── resumo.py           # indicadores e status da Visão geral
+│   ├── qualidade.py        # modelo de qualidade (prévia da R2)
+│   └── theme.py            # paleta validada, metas por release
+├── planilhas/              # cópia local das 6 abas + parametros.csv (regras do time)
+├── data/                   # ← o pipeline e a coleta do Zenhub escrevem aqui
+├── scripts/                # coleta_velocity.py, diagnostico_zenhub.py, zenhub_post.mjs
+├── tests/                  # python -m unittest discover -s tests -v
+├── stlite/build.py         # empacota o app para o GitHub Pages
 └── requirements.txt
 ```
 
-`data/` é território do pipeline: os workflows dos oito repositórios commitam os
-`.json` ali. Por isso as planilhas do time ficam em `planilhas/`, separadas — o
-que é gerado nunca se mistura com o que é escrito.
-
-O app também lê `../analytics-raw-data/` na raiz do repositório, porque dois
-workflows ainda publicam lá.
-
 ## Modelo de gestão (DA-R1)
 
-A aba **Projeto** calcula velocity, burndown e AgileEVM em `src/gestao.py`, a
-partir de:
+A aba **Projeto** tem três partes: **Velocity** (`src/velocity.py`), **AgileEVM e
+burndown** (`src/evm.py`) e **Custos**. Pontos e sprints vêm do Zenhub; o custo
+planejado de cada semana, as horas reais e o custo/hora vêm da planilha.
+`planilhas/parametros.csv` guarda as regras do time (critério de feito, níveis
+pontuados, janela de planning, sprints canceladas).
 
-| Arquivo | O que é |
-| --- | --- |
-| `planilhas/sprints.csv` | Calendário oficial (o do Zenhub) e release de cada sprint |
-| `planilhas/releases.csv` | Entrega e PRP de linha de base de cada release |
-| `planilhas/parametros.csv` | Capacidade, custo/hora, critério de feito, níveis pontuados |
-| `planilhas/horas.csv` | Horas reais por integrante e sprint (AC) |
-| `data/zenhub/zenhub-sprints-*.json` | Snapshot do quadro (`scripts/coleta_zenhub.py`) |
-
-Atualizar o Zenhub:
+Atualizar o Zenhub (na pasta `Analytics/`):
 
 ```bash
-export ZENHUB_TOKEN=...   # Zenhub > Settings > API
-python scripts/coleta_zenhub.py
+python scripts/coleta_velocity.py          # ZENHUB_API_KEY no .env
 ```
 
-O dicionário de cada indicador está em `docs/metricas/modelo-de-gestao.mdx`.
+O dicionário de cada indicador está em `docs/metricas/modelo-de-gestao.mdx` e
+`docs/metricas/velocity-zenhub.mdx`.
 
 ## Publicação (URL exigida no Aprender 3)
 
@@ -124,7 +117,7 @@ constante `STLITE` de `stlite/build.py`.
 | **Visão geral** | Como estamos? Release e sprint atuais, linha do tempo do semestre, pontos de atenção em ordem de gravidade, situação de cada dimensão e placar por repositório (`src/resumo.py`) |
 | **Produto** | A qualidade do código está na meta? (SonarCloud) |
 | **Processo** | A CI é confiável e as issues fluem? (GitHub) |
-| **Projeto** | AgileEVM, velocity/burndown e custos (planilha Custos e AgileEVM) |
+| **Projeto** | Velocity, AgileEVM e burndown (Zenhub) e custos (planilha) |
 | **Riscos e decisões** | Matriz de riscos e registro de decisões (planilha Riscos e Decisões) |
 
 A visão geral não calcula nada novo: lê os mesmos dados das outras abas e aplica
@@ -133,57 +126,24 @@ as mesmas metas (`theme.METAS`, SPI ≥ 0,95, CI ≥ 80%, conclusão ≥ 80%). O
 
 ## Planilhas do time
 
-Editar CSV e commitar a cada atualização não funciona na prática: ninguém faz. A
-equipe de 2026.1 resolveu lendo planilhas do Google direto, e mantivemos a
-abordagem.
+Da planilha "MeasureSoftGram" o painel lê seis abas. Publique cada uma em
+**Arquivo → Compartilhar → Publicar na web**, escolhendo a aba e o formato
+**CSV**, e cole a URL na chave correspondente de `config.py`:
 
-Publique a aba em **Arquivo → Compartilhar → Publicar na web**, formato CSV, e
-cole a URL em `config.py`. O painel passa a refletir a planilha em até 5 minutos,
-sem commit nenhum. Enquanto a URL estiver vazia, ele usa o CSV local — e mostra
-na tela qual das duas fontes foi lida.
+| Chave em `config.py` | Aba | Para quê |
+| --- | --- | --- |
+| `custos` | Custos | custo/hora e custo de um integrante por semana |
+| `planejamento` | Planejamento | quem está ativo em cada semana → BAC e PV |
+| `horas` | Horas | horas reais → AC e CPI |
+| `riscos` | Riscos | plano de riscos |
+| `monitoramento` | Monitoramento | evolução da exposição por sprint |
+| `decisoes` | Decisões | decisões baseadas em dados (R2 ≥ 3, R3 ≥ 5) |
 
-### Formato esperado
-
-`evm` — layout **AgileEVM**, o mesmo da equipe de 2026.1: três linhas de
-cabeçalho (a linha 3 é a dos nomes de coluna), uma linha por sprint, moeda em
-formato brasileiro (`R$ 5.282,36`). O leitor procura as colunas pelo nome, então
-acrescentar coluna no meio não quebra nada; renomear, sim. As colunas que o
-painel usa:
-
-```
-Sprint (n) · Início da Sprint · Fim da sprint · Pontos planejados (PP)
-Points Completed (PC) · Planned Value (PV) · Earned Value (EV) · Actual Cost (AC)
-```
-
-CPI, SPI e EAC são recalculados aqui a partir de PV/EV/AC — as colunas de índice
-da planilha servem de conferência, não de fonte.
-
-**O EVM exige horas reais individuais**: sem registro semanal não há linha de
-base, e preencher retroativamente por estimativa descaracteriza o indicador.
-
-`velocity` — cabeçalho na linha 2, uma linha por sprint:
-
-```csv
-Sprint,Pontos planejados (PP),Points Completed (PC),Velocity,Velocity mean
-1,21,18,18,18
-```
-
-Se a aba não existir, o painel deriva a velocity de PP/PC do próprio EVM e diz
-na tela que derivou.
-
-`riscos` — probabilidade e impacto em `Baixa` / `Média` / `Alta`:
-
-```csv
-id,risco,probabilidade,impacto,resposta,responsavel,status
-R01,Motor de calculo nao reproduzivel,Alta,Alto,Mitigar,,Aberto
-```
-
-`decisoes` — o registro que a R2 (≥3) e a R3 (≥5) cobram:
-
-```csv
-data,metrica,causa,decisao,resultado
-2026-09-24,coverage,Cobertura em 82.7% contra meta de 85%,Priorizar testes em X,
-```
+Com a URL preenchida, o painel local reflete a planilha em até 5 minutos. No
+GitHub Pages, o deploy baixa as abas publicadas e empacota junto do app (o
+navegador não lê a planilha direto). Sem URL, vale o CSV local e a tela diz isso.
+As abas EVM - Velocity, EVM - Valor Agregado, EVM - Índices e Burndown, Sumário
+EVM e Matriz **não são mais lidas**: o painel calcula tudo com os pontos do Zenhub.
 
 ## Formato dos arquivos do pipeline
 

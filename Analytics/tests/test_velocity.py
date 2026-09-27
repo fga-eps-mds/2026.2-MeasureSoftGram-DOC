@@ -187,6 +187,8 @@ class StatusEMediaTest(unittest.TestCase):
     def test_status(self):
         df = v.calculate_velocity(self.snap(), agora=S2_INI + timedelta(days=2))
         self.assertEqual(list(df["status"]), [v.STATUS_CONCLUIDA, v.STATUS_ANDAMENTO])  # S3 futura some
+        todas = v.calculate_velocity(self.snap(), agora=S2_INI + timedelta(days=2), incluir_futuras=True)
+        self.assertEqual(list(todas["status"])[-1], v.STATUS_FUTURA)
 
     def test_media_exclui_andamento_e_exige_historico(self):
         df = v.calculate_velocity(self.snap(), agora=S2_INI + timedelta(days=2))
@@ -223,8 +225,12 @@ class ReleaseTest(unittest.TestCase):
                  "issue_ids": []}]
         self.assertEqual(v.associar_release(s, {"A", "B"}, rels)[:2], ("r1", "R1"))
         self.assertEqual(v.associar_release(s, {"Z"}, rels)[:2], ("r2", "R2"))
-        self.assertEqual(v.associar_release(s, set(), [], {"S1": "R1"})[1:], ("R1", "calendário do time (planilhas/sprints.csv)"))
-        self.assertEqual(v.associar_release(s, set(), [])[:2], (None, None))
+        # sem release no Zenhub: datas de entrega do plano de ensino (S1 termina 20/09 -> R1)
+        self.assertEqual(v.associar_release(s, set(), [])[1:], ("R1", "plano de ensino (datas de entrega)"))
+        s4 = sprint("S4", datetime(2026, 9, 28, 3, 59, tzinfo=UTC), datetime(2026, 10, 5, 2, 59, tzinfo=UTC), [], [])
+        self.assertEqual(v.associar_release(s4, set(), [])[1], "R2")
+        tarde = sprint("SX", datetime(2027, 1, 1, tzinfo=UTC), datetime(2027, 1, 8, tzinfo=UTC), [], [])
+        self.assertEqual(v.associar_release(tarde, set(), [])[:2], (None, None))
 
 
 if __name__ == "__main__":

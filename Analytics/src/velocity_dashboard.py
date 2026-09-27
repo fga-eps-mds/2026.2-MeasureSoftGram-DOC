@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 
 import altair as alt
@@ -41,19 +41,13 @@ def _marca(pasta: Path) -> tuple:
     return tuple(sorted((p.name, p.stat().st_mtime) for p in pasta.glob("*.json"))) if pasta.exists() else ()
 
 
-def carregar_velocity(regras: vel.Regras, calendario_df: pd.DataFrame, agora: datetime):
+def carregar_velocity(regras: vel.Regras, agora: datetime):
+    """(todas as sprints, inclusive futuras; snapshot; nome do arquivo). Vazio sem snapshot."""
     pasta = coleta.PASTA
     snap, nome, linhas = _carregar(str(pasta), _marca(pasta))
     if not snap:
         return pd.DataFrame(), None, ""
-    calendario, rotulos = {}, {}
-    if calendario_df is not None and not calendario_df.empty and "zenhub_sprint_id" in calendario_df:
-        for _, c in calendario_df.iterrows():
-            if str(c["zenhub_sprint_id"]).strip():
-                calendario[c["zenhub_sprint_id"]] = c["release"]
-                rotulos[c["zenhub_sprint_id"]] = f"S{int(c['sprint'])}"
-    df = vel.calculate_velocity(snap, regras, agora, linhas, calendario, rotulos)
-    return df, snap, nome
+    return vel.calculate_velocity(snap, regras, agora, linhas, incluir_futuras=True), snap, nome
 
 
 def _pode_atualizar() -> tuple[bool, str]:
@@ -253,11 +247,10 @@ def render_table(df: pd.DataFrame) -> None:
 
 # ───────────────────────── aba ─────────────────────────
 
-def render(params: dict, calendario_df: pd.DataFrame, finalizar) -> None:
+def render(regras: vel.Regras, df: pd.DataFrame, snap: dict | None, nome: str, finalizar) -> None:
+    """``df``: sprints já iniciadas (saída de ``carregar_velocity`` sem as futuras)."""
     st.subheader("Velocity por sprint (API do Zenhub)")
-    regras = vel.Regras.dos_parametros(params)
-    agora = datetime.now(timezone.utc)
-    df, snap, nome = carregar_velocity(regras, calendario_df, agora)
+    df = df.copy()
 
     topo_e, topo_d = st.columns([3, 1])
     with topo_d:
@@ -290,7 +283,7 @@ def render(params: dict, calendario_df: pd.DataFrame, finalizar) -> None:
             f"canceladas ficam fora); só com ≥ {regras.min_sprints_media} sprints. |\n"
             "| **Completion rate** | Completed ÷ Planned × 100; vazio quando o planejado é zero ou indisponível. |\n"
             "| **Release** | Release do Zenhub que contém mais issues da sprint; sem isso, a que cobre a data; sem isso, "
-            "o calendário do time (`planilhas/sprints.csv`). |")
+            "as entregas do plano de ensino (R1 28/09 · R2 26/10 · R3 30/11). |")
 
     if df.empty:
         st.warning("**Ainda não há snapshot de velocity do Zenhub.** Rode `python scripts/coleta_velocity.py` "

@@ -116,35 +116,36 @@ def processo(runs: pd.DataFrame, issues: pd.DataFrame) -> list[dict]:
     return out
 
 
-def projeto(va: pd.DataFrame, vel: pd.DataFrame, horas: pd.DataFrame, sumario: pd.DataFrame) -> list[dict]:
+def projeto(evm_df: pd.DataFrame, vel: pd.DataFrame, horas: pd.DataFrame, sumario: pd.DataFrame) -> list[dict]:
+    """AgileEVM e velocity com os pontos do Zenhub (src/evm.py, src/velocity.py)."""
     aba = "Projeto"
     out = []
-    feitas = va.dropna(subset=["PP"]) if va is not None and not va.empty and "PP" in va else pd.DataFrame()
+    feitas = evm_df.dropna(subset=["PRP"]) if evm_df is not None and not evm_df.empty else pd.DataFrame()
     if feitas.empty:
-        out.append(_item("Projeto", "AgileEVM", "sem sprint preenchida", "—", "warning",
-                         "Preencher PP, PC e PA ao fim de cada sprint.", aba))
+        out.append(_item("Projeto", "AgileEVM", "sem dados do Zenhub", "—", "warning",
+                         "Rodar scripts/coleta_velocity.py para trazer sprints e pontos.", aba))
     else:
         u = feitas.iloc[-1]
         spi = u.get("SPI")
         if pd.notna(spi):
             st_ = "good" if spi >= 0.95 else ("warning" if spi >= 0.8 else "critical")
             out.append(_item("Projeto", f"SPI da {u['release']} (prazo)", _br(spi, 2), "≥ 0,95", st_,
-                             f"sprint {int(u['n'])}: entregou {u['APC']:.0%} do escopo, o plano previa {u['PPC']:.0%}",
+                             f"{u['sprint']}: entregou {u['APC']:.0%} do escopo, o plano previa {u['PPC']:.0%}",
                              aba))
-        base = None
-        if sumario is not None and not sumario.empty and u["release"] in set(sumario["release"]):
-            base = sumario[sumario["release"] == u["release"]].iloc[0].get("prp_linha_de_base")
-        if base is not None and pd.notna(base) and pd.notna(u.get("PRP")) and base > 0:
+        base = u.get("prp_linha_de_base")
+        if pd.notna(base) and base > 0 and pd.notna(u.get("PRP")):
             cresc = u["PRP"] / base
             st_ = "good" if cresc <= 1.2 else ("warning" if cresc <= 1.5 else "critical")
             out.append(_item("Projeto", "Escopo da release (PRP)", f"{_br(base, 0)} → {_br(u['PRP'], 0)} pts",
                              "≤ +20% da linha de base", st_, "pontos que entraram depois da linha de base (PA)", aba))
-    v = vel.dropna(subset=["PP"]) if vel is not None and not vel.empty and "PP" in vel else pd.DataFrame()
-    if not v.empty and v["PP"].sum():
-        taxa = v["PC"].sum() / v["PP"].sum()
+    v = vel[vel["status"] == "concluída"] if vel is not None and not vel.empty else pd.DataFrame()
+    v = v.dropna(subset=["planned_story_points"]) if not v.empty else v
+    if not v.empty and v["planned_story_points"].sum():
+        taxa = v["completed_story_points"].sum() / v["planned_story_points"].sum()
         st_ = "good" if taxa >= 0.8 else ("warning" if taxa >= 0.6 else "critical")
-        out.append(_item("Projeto", "Taxa de conclusão (PC ÷ PP)", f"{taxa:.0%}", "≥ 80%", st_,
-                         f"velocity média {_br(v['velocity_media'].iloc[-1])} pts/semana", aba))
+        media = v["velocity"].mean()
+        out.append(_item("Projeto", "Taxa de conclusão (concluído ÷ planejado)", f"{taxa:.0%}", "≥ 80%", st_,
+                         f"velocity média {_br(media)} SP por sprint ({len(v)} concluídas)", aba))
     h = horas.dropna(subset=["horas"]) if horas is not None and not horas.empty and "horas" in horas else pd.DataFrame()
     total_h = h["horas"].sum() if not h.empty else 0
     out.append(_item("Projeto", "Horas registradas", f"{_br(total_h, 0)} h", "todas as sprints",
@@ -187,9 +188,9 @@ def gestao(riscos: pd.DataFrame, decisoes: pd.DataFrame, release: str) -> list[d
     return out
 
 
-def tudo(*, ultimo, erros, runs, issues, va, vel, horas, sumario, riscos, decisoes, release) -> pd.DataFrame:
+def tudo(*, ultimo, erros, runs, issues, evm_df, vel, horas, sumario, riscos, decisoes, release) -> pd.DataFrame:
     linhas = (produto(ultimo, erros, release) + processo(runs, issues)
-              + projeto(va, vel, horas, sumario) + gestao(riscos, decisoes, release))
+              + projeto(evm_df, vel, horas, sumario) + gestao(riscos, decisoes, release))
     return pd.DataFrame(linhas)
 
 
