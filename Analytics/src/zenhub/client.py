@@ -67,24 +67,62 @@ class Resposta:
 Transporte = Callable[[str, dict, dict, float], Resposta]
 
 
-def _transporte_requests(url: str, corpo: dict, headers: dict, timeout: float) -> Resposta:
-    """Transporte padrão. Importa requests aqui para o módulo carregar sem ele."""
+_SESSOES: dict = {}
+
+
+def _sessao(direta: bool):
+    """Sessão HTTP reaproveitada (keep-alive). ``direta`` ignora o proxy do sistema."""
     import requests
 
-    sessao = requests.Session()
-    # ZENHUB_IGNORAR_PROXY=1 ignora o proxy do sistema (no Windows ele costuma derrubar o TLS).
-    sessao.trust_env = os.environ.get("ZENHUB_IGNORAR_PROXY", "").lower() not in {"1", "true", "sim"}
+    if direta not in _SESSOES:
+        sessao = requests.Session()
+        sessao.trust_env = not direta
+        _SESSOES[direta] = sessao
+    return _SESSOES[direta]
+
+
+def _ignorar_proxy() -> bool:
+    return os.environ.get("ZENHUB_IGNORAR_PROXY", "").lower() in {"1", "true", "sim"}
+
+
+def _transporte_requests(url: str, corpo: dict, headers: dict, timeout: float) -> Resposta:
+    """Transporte padrão. Importa requests aqui para o módulo carregar sem ele.
+
+    Se o TLS falhar pelo proxy do sistema (comum no Windows), refaz a mesma
+    requisição em conexão direta e mantém a conexão direta daí em diante —
+    o mesmo comportamento do ``coleta_zenhub.py``.
+    """
+    import requests
+
+    def enviar(direta: bool):
+        return _sessao(direta).post(url, json=corpo, headers=headers, timeout=timeout)
+
     try:
-        r = sessao.post(url, json=corpo, headers=headers, timeout=timeout)
+        try:
+            r = enviar(_ignorar_proxy())
+        except requests.exceptions.SSLError:
+            if _ignorar_proxy():
+                raise
+            os.environ["ZENHUB_IGNORAR_PROXY"] = "1"
+            r = enviar(True)
     except requests.Timeout as erro:
-        raise TimeoutError(str(erro)) from None
+        raise TimeoutError(_resumo(erro)) from None
     except requests.ConnectionError as erro:
-        raise ConnectionError(str(erro)) from None
+        raise ConnectionError(_resumo(erro)) from None
     try:
         dado = r.json()
     except ValueError:
         dado = r.text
     return Resposta(r.status_code, {k.lower(): v for k, v in r.headers.items()}, dado)
+
+
+def _resumo(erro: Exception) -> str:
+    """Mensagem curta da exceção de rede (sem cabeçalhos, portanto sem a chave)."""
+    texto = str(erro)
+    for marca in ("Caused by ", "Max retries exceeded"):
+        if marca in texto:
+            texto = texto.split(marca, 1)[-1]
+    return (erro.__class__.__name__ + ": " + texto.strip(" ():'\"")[:180]).strip()
 
 
 def carregar_env(caminho) -> None:
@@ -115,12 +153,13 @@ class ZenhubClient:
     api_key: str = field(repr=False)
     workspace_id: str = WORKSPACE_PADRAO
     transporte: Transporte = _transporte_requests
-    timeout: float = 30.0
+    timeout: float = 60.0
     max_tentativas: int = 5
     espera_base: float = 2.0
     dormir: Callable[[float], None] = time.sleep
     url: str = API_URL
     requisicoes: int = 0  # contador, para o log de coleta
+    log: Callable[[str], None] = lambda _msg: None  # avisos de nova tentativa
 
     def __post_init__(self):
         if not self.api_key:
@@ -153,8 +192,11 @@ class ZenhubClient:
             try:
                 r = self.transporte(self.url, {"query": query, "variables": variaveis}, headers, self.timeout)
             except (TimeoutError, ConnectionError, OSError) as erro:
-                ultimo = f"{erro.__class__.__name__}"
-                self.dormir(self._espera(tentativa))
+                ultimo = str(erro) or erro.__class__.__name__
+                espera = self._espera(tentativa)
+                self.log(f"    rede: {ultimo} — nova tentativa em {espera:.0f} s "
+                         f"({tentativa + 1}/{self.max_tentativas})")
+                self.dormir(espera)
                 continue
 
             if r.status in (401, 403):
@@ -162,11 +204,15 @@ class ZenhubClient:
                                       "Zenhub > Settings > API e atualize ZENHUB_API_KEY.")
             if r.status == 429:
                 ultimo = "HTTP 429 (rate limit)"
-                self.dormir(self._espera(tentativa, r.headers.get("retry-after")))
+                espera = self._espera(tentativa, r.headers.get("retry-after"))
+                self.log(f"    rate limit do Zenhub — aguardando {espera:.0f} s")
+                self.dormir(espera)
                 continue
             if r.status >= 500:
                 ultimo = f"HTTP {r.status}"
-                self.dormir(self._espera(tentativa))
+                espera = self._espera(tentativa)
+                self.log(f"    Zenhub respondeu {ultimo} — nova tentativa em {espera:.0f} s")
+                self.dormir(espera)
                 continue
             if not isinstance(r.corpo, dict):
                 raise ZenhubError(f"Resposta inesperada do Zenhub (HTTP {r.status}).")
@@ -211,6 +257,7 @@ class ZenhubClient:
                 if tamanho <= 1:
                     raise ZenhubError("Query acima do limite de complexidade do Zenhub mesmo com 1 item por página.")
                 tamanho = max(1, tamanho // 2)
+                self.log(f"    query acima do limite de complexidade — página reduzida para {tamanho}")
                 continue
             conexao = data
             for chave in caminho:

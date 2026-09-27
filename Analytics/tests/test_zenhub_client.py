@@ -92,6 +92,32 @@ class ClienteTest(unittest.TestCase):
         self.assertEqual(cliente(f).get_sprint_issues("x"), [])
 
 
+class ColetaFalhaTest(unittest.TestCase):
+    def test_falha_de_rede_numa_sprint_nao_derruba_a_coleta(self):
+        from datetime import datetime, timezone
+        from src.zenhub import coleta
+
+        class C:
+            workspace_id, requisicoes = "ws", 0
+
+            def get_sprints(self):
+                return [{"id": "s1", "name": "S1", "state": "CLOSED",
+                         "startAt": "2026-09-07T03:59:00Z", "endAt": "2026-09-21T02:59:00Z"}]
+
+            def get_sprint_issues(self, sid):
+                return []
+
+            def get_sprint_scope_changes(self, sid):
+                raise zc.ZenhubUnavailableError("rede")
+
+            def get_releases(self):
+                return []
+
+        snap = coleta.coletar(C(), datetime(2026, 9, 27, tzinfo=timezone.utc), log=lambda *_: None)
+        self.assertEqual(snap["sprints"][0]["falhas"], ["scope"])
+        self.assertTrue(snap["avisos"])
+
+
 class ColetaTest(unittest.TestCase):
     def test_coleta_normaliza_e_pula_futuras(self):
         from datetime import datetime, timezone

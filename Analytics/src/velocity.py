@@ -151,8 +151,8 @@ def linha_de_base(sprint: dict, issues: dict, regras: Regras) -> dict | None:
     """Planejado no fim da janela de planning, ou None se não há como saber."""
     eventos = sprint.get("scope_changes") or []
     inicio = _dt(sprint.get("start_at"))
-    if inicio is None:
-        return None
+    if inicio is None or set(sprint.get("falhas") or []) & {"scope", "issues"}:
+        return None  # coleta incompleta desta sprint: não congela nem estima
     if not eventos:
         if not sprint.get("issue_ids"):
             return {"issues": {}, "fonte": "sprint sem issues"}
@@ -251,8 +251,10 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
             base = linha_de_base(s, issues, regras)
             planejadas = base["issues"] if base else None
             fonte_base = base["fonte"] if base else "indisponível (sem histórico de escopo)"
+        if s.get("falhas"):
+            notas.append("Coleta incompleta desta sprint (" + ", ".join(s["falhas"]) + "): rode a coleta de novo.")
         if planejadas is None:
-            notas.append("Planejado indisponível: o Zenhub não devolveu histórico de escopo para esta sprint.")
+            notas.append("Planejado indisponível: sem histórico de escopo desta sprint.")
 
         # concluído
         candidatas = set(s.get("issue_ids", [])) | {e["issue_id"] for e in eventos if e.get("issue_id")}

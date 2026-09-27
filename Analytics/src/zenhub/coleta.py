@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from src.zenhub import normalizacao as norm
-from src.zenhub.client import ZenhubClient, ZenhubError
+from src.zenhub.client import ZenhubAuthError, ZenhubClient, ZenhubError
 
 PASTA = Path(__file__).resolve().parents[2] / "data" / "zenhub" / "velocity"
 ARQ_LINHAS_DE_BASE = "linhas-de-base.json"
@@ -34,6 +34,8 @@ def _dt(texto: str | None) -> datetime | None:
 def coletar(cliente: ZenhubClient, agora: datetime | None = None, log=print) -> dict:
     agora = agora or datetime.now(timezone.utc)
     avisos: list[str] = []
+    if hasattr(cliente, "log"):
+        cliente.log = log
 
     sprints = [norm.sprint(s) for s in cliente.get_sprints()]
     sprints.sort(key=lambda s: s["start_at"] or "")
@@ -47,18 +49,36 @@ def coletar(cliente: ZenhubClient, agora: datetime | None = None, log=print) -> 
             s["coletada"] = False  # sprint futura: nada a medir ainda
             continue
         s["coletada"] = True
-        for no in cliente.get_sprint_issues(s["sprint_id"]):
-            i = norm.issue(no)
-            issues[i["issue_id"]] = i
-            if i["issue_id"] not in s["issue_ids"]:
-                s["issue_ids"].append(i["issue_id"])
-        eventos, total = cliente.get_sprint_scope_changes(s["sprint_id"])
-        s["scope_changes"] = sorted((norm.scope_change(e) for e in eventos), key=lambda e: e["effective_at"] or "")
-        s["scope_total"] = total if total is not None else len(eventos)
-        if total is not None and total != len(eventos):
-            avisos.append(f"{s['sprint_name']}: o Zenhub informou {total} eventos de escopo e vieram "
-                          f"{len(eventos)} (duplicatas descartadas ou paginação incompleta).")
-        log(f"  {s['sprint_name']}: {len(s['issue_ids'])} issues, {len(s['scope_changes'])} eventos de escopo")
+        log(f"  {s['sprint_name']}: lendo issues e histórico de escopo...")
+        s["falhas"] = []
+        try:
+            for no in cliente.get_sprint_issues(s["sprint_id"]):
+                i = norm.issue(no)
+                issues[i["issue_id"]] = i
+                if i["issue_id"] not in s["issue_ids"]:
+                    s["issue_ids"].append(i["issue_id"])
+        except ZenhubAuthError:
+            raise
+        except ZenhubError as erro:
+            s["falhas"].append("issues")
+            avisos.append(f"{s['sprint_name']}: issues não coletadas ({erro}).")
+            log(f"    falhou ao ler as issues: {erro}")
+        try:
+            eventos, total = cliente.get_sprint_scope_changes(s["sprint_id"])
+            s["scope_changes"] = sorted((norm.scope_change(e) for e in eventos),
+                                        key=lambda e: e["effective_at"] or "")
+            s["scope_total"] = total if total is not None else len(eventos)
+            if total is not None and total != len(eventos):
+                avisos.append(f"{s['sprint_name']}: o Zenhub informou {total} eventos de escopo e vieram "
+                              f"{len(eventos)} (duplicatas descartadas ou paginação incompleta).")
+        except ZenhubAuthError:
+            raise
+        except ZenhubError as erro:
+            # Sem histórico o planejado fica "indisponível" (e não é congelado).
+            s["falhas"].append("scope")
+            avisos.append(f"{s['sprint_name']}: histórico de escopo não coletado ({erro}).")
+            log(f"    falhou ao ler o histórico de escopo: {erro}")
+        log(f"    {len(s['issue_ids'])} issues, {len(s['scope_changes'])} eventos de escopo")
 
     # Issues que passaram pela sprint mas saíram dela: detalhe individual.
     faltam = sorted({e["issue_id"] for s in sprints for e in s["scope_changes"]
@@ -66,6 +86,8 @@ def coletar(cliente: ZenhubClient, agora: datetime | None = None, log=print) -> 
     if len(faltam) > MAX_ISSUES_AVULSAS:
         avisos.append(f"{len(faltam)} issues só aparecem no histórico de escopo; detalhadas as "
                       f"{MAX_ISSUES_AVULSAS} primeiras.")
+    if faltam:
+        log(f"Detalhando {min(len(faltam), MAX_ISSUES_AVULSAS)} issues que saíram das sprints...")
     for issue_id in faltam[:MAX_ISSUES_AVULSAS]:
         try:
             no = cliente.get_issue(issue_id)

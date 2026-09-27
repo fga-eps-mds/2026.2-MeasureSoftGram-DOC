@@ -87,6 +87,14 @@ class PlanejadoTest(unittest.TestCase):
         self.assertEqual(r["planned_story_points"], 16)
         self.assertTrue(r["baseline_source"].startswith("linha de base congelada"))
 
+    def test_coleta_incompleta_nao_congela(self):
+        self.snap["sprints"][0]["falhas"] = ["scope"]
+        linhas, congeladas = v.congelar_linhas_de_base(self.snap, {}, self.agora, v.Regras())
+        self.assertEqual(congeladas, [])
+        r = linha(v.calculate_velocity(self.snap, agora=self.agora), "S1")
+        self.assertIsNone(r["planned_story_points"])
+        self.assertIn("Coleta incompleta", r["notes"])
+
     def test_nao_congela_antes_do_fim_da_janela(self):
         linhas, congeladas = v.congelar_linhas_de_base(self.snap, {}, S1_INI + timedelta(hours=5), v.Regras())
         self.assertEqual((linhas, congeladas), ({}, []))

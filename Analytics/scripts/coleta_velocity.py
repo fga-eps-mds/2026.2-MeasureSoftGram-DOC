@@ -29,7 +29,11 @@ from src.zenhub import coleta  # noqa: E402
 from src.zenhub.client import ZenhubAuthError, ZenhubClient, ZenhubError, carregar_env  # noqa: E402
 
 
-def executar(pasta: Path = coleta.PASTA, log=print) -> Path:
+def _log(msg: str) -> None:
+    print(msg, flush=True)  # flush: o Git Bash do Windows segura a saída sem isso
+
+
+def executar(pasta: Path = coleta.PASTA, log=_log) -> Path:
     """Coleta completa. Usada pelo script e pelo botão "Atualizar dados" do dashboard."""
     carregar_env(RAIZ / ".env")
     cliente = ZenhubClient.do_ambiente()
@@ -55,6 +59,8 @@ def main() -> int:
         return 2
     except ZenhubError as erro:
         print(f"Erro ao consultar o Zenhub: {erro}", file=sys.stderr)
+        print("Se for erro de rede/TLS, tente: ZENHUB_IGNORAR_PROXY=1 python scripts/coleta_velocity.py",
+              file=sys.stderr)
         return 1
     return 0
 
