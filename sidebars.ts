@@ -40,7 +40,7 @@ const sidebars: SidebarsConfig = {
         'LeanInception/atv4',
         'LeanInception/atv5',
         'LeanInception/atv6',
-        'LeanInception/dia5',
+        'LeanInception/atv7',
         'LeanInception/dia6',
         'LeanInception/dia7',
       ],
