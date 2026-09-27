@@ -1,0 +1,98 @@
+---
+id: custos
+title: Custos
+sidebar_position: 4
+---
+
+# Custos do projeto
+
+O custo do projeto é estimado a partir do **custo do aluno para a universidade**,
+somado ao custo do trabalho remoto e à depreciação do equipamento. O modelo é o
+mesmo da equipe de 2026.1, atualizado para o calendário e o tamanho da equipe de
+2026.2. Todos os valores estão na aba **Custos** da
+[planilha de gestão](https://docs.google.com/spreadsheets/d/1W_Z-u_tUhLymgUIJFh2h2b1T5RjmBKli4s_ricDaXxA/edit),
+com a fonte de cada premissa ao lado.
+
+## 1. Premissas
+
+### Custo do aluno para a UnB
+
+| Item | Valor | Fonte |
+| --- | --- | --- |
+| Custo anual por aluno de universidade federal | R$ 52.533,00 | Planilha de custos MeasureSoftGram 2026.1 |
+| Créditos por ano | 40 | Planilha de custos 2026.1 |
+| Custo por crédito | R$ 1.313,33 | 52.533 ÷ 40 |
+| Créditos de EPS | 4 (60 h) | Plano de ensino |
+| Custo de cursar EPS | R$ 5.253,30 | 1.313,33 × 4 |
+| Semanas do semestre | 18 | Cronograma 2026.2 (10/08 a 14/12) |
+| **Custo de EPS por semana** | **R$ 291,85** | 5.253,30 ÷ 18 |
+
+### Trabalho remoto
+
+| Item | Valor | Fonte |
+| --- | --- | --- |
+| Tarifa de energia | R$ 0,83/kWh | Neoenergia Brasília (planilha 2026.1) |
+| Consumo do notebook e do modem | 40 W + 12 W | Planilha 2026.1 |
+| Horas remotas por semana | 10 h | Premissa de 2026.1, a confirmar com o time |
+| Energia por semana | R$ 0,43 | (0,052 kW × 10 h) × 0,83 |
+| Internet (600 Mb) | R$ 99,90/mês → R$ 23,05/semana | Planilha 2026.1 |
+
+### Equipamento
+
+| Item | Valor | Fonte |
+| --- | --- | --- |
+| Notebook de referência | R$ 3.665,56 | Acer Aspire 5, Ryzen 5, 16 GB (planilha 2026.1) |
+| Vida útil | 60 meses | Planilha 2026.1 |
+| **Depreciação por semana** | **R$ 14,10** | 3.665,56 ÷ 260 semanas |
+
+### Infraestrutura
+
+Deploy no LAPPIS, documentação no GitHub Pages e imagens no Docker Hub: **sem
+custo**. Se o time contratar domínio ou serviço pago, o valor entra na linha
+`infraestrutura_semana` da planilha.
+
+## 2. Custo por integrante e custo/hora
+
+| Componente | R$/semana |
+| --- | --- |
+| EPS | 291,85 |
+| Energia | 0,43 |
+| Internet | 23,05 |
+| Depreciação | 14,10 |
+| **Total por integrante** | **329,43** |
+
+Com **14 horas semanais** por integrante (4 h de aula e 10 h remotas):
+
+```
+custo/hora = 329,43 ÷ 14 = R$ 23,53
+```
+
+## 3. Orçamento por release (BAC)
+
+```
+BAC da release = integrantes × horas/semana × semanas da release × custo/hora
+```
+
+| Release | Semanas | Horas planejadas | BAC |
+| --- | --- | --- | --- |
+| R1 (24/08 a 27/09) | 5 | 1.400 | R$ 32.942,00 |
+| R2 (28/09 a 25/10) | 4 | 1.120 | R$ 26.353,60 |
+| R3 (26/10 a 29/11) | 5 | 1.400 | R$ 32.942,00 |
+| **Total** | 14 | 3.920 | **R$ 92.237,60** |
+
+Os valores da tabela são calculados na planilha e mudam se uma premissa mudar.
+O dashboard lê o custo/hora e a capacidade direto dela.
+
+## 4. Diferença em relação a 2026.1
+
+Em 2026.1 o custo real (AC) de cada sprint era igual ao custo planejado, porque
+não havia registro de horas. Por isso o CPI deles sempre repetia o SPI. Em 2026.2
+o **AC vem das horas reais** registradas por cada integrante na aba **Horas**,
+como exige a disciplina ("EVM exige dados reais de horas"). O custo/hora só
+converte horas em reais: CPI e SPI não dependem dele.
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 27/09/2026 | Modelo de custo adaptado de 2026.1, custo/hora e BAC por release | [@MilenaFRocha](https://github.com/MilenaFRocha) | |

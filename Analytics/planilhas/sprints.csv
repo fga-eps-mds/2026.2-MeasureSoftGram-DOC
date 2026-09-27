@@ -1,0 +1,13 @@
+sprint,release,inicio,fim,zenhub_sprint_id,observacao
+1,R1,2026-08-24,2026-09-06,Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTU4,Quinzenal - diagnostico e Lean Inception
+2,R1,2026-09-07,2026-09-20,Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTU5,Quinzenal - migracao dos repositorios e EAP
+3,R1,2026-09-21,2026-09-27,Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTYw,Semanal a partir daqui
+4,R2,2026-09-28,2026-10-04,Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTYx,
+5,R2,2026-10-05,2026-10-11,Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTYy,
+6,R2,2026-10-12,2026-10-18,Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTYz,Feriado 12/10
+7,R2,2026-10-19,2026-10-25,Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTY0,
+8,R3,2026-10-26,2026-11-01,Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTY1,
+9,R3,2026-11-02,2026-11-08,Z2lkOi8vcmFwdG9yL1NwcmludC81Mjg3ODAw,Feriado 02/11
+10,R3,2026-11-09,2026-11-15,Z2lkOi8vcmFwdG9yL1NwcmludC81MzA5OTI3,
+11,R3,2026-11-16,2026-11-22,,Criar no Zenhub
+12,R3,2026-11-23,2026-11-29,,Criar no Zenhub

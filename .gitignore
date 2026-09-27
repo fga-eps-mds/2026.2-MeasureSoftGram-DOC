@@ -23,8 +23,13 @@ yarn-error.log*
 .cursor
 .codex
 .x
-.netlify
+.netlify    
 
 
 # Impede versionamento acidental do lockfile do yarn
 yarn.lock
+
+# Dashboard Analytics
+Analytics/.env
+__pycache__/    
+Analytics/_sync.tgz

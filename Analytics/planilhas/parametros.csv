@@ -1,0 +1,6 @@
+parametro,valor,unidade,fonte
+pessoas,20,integrantes,Contagem da aba Integrantes
+horas_semana_pessoa,14,horas/semana,Da aba Custos (horas presenciais + remotas)
+custo_hora,23.53,R$/hora,"Da aba Custos (modelo de custo do aluno, adaptado de 2026.1)"
+criterio_feito,Done,pipeline do Zenhub,"Decisão do time, 27/09/2026"
+niveis_pontuados,Feature;Task;Bug,tipo de issue,"Decisão do time, 27/09/2026: US (Feature no Zenhub) e Task; Bug como Task de correção. US com Tasks filhas não pontua."

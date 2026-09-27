@@ -1,27 +1,110 @@
 ---
 id: riscos
-title: Riscos
+title: Plano de Riscos
 sidebar_position: 3
 ---
 
-# Gestão de riscos
+# Plano de gestão de riscos
 
-Riscos identificados pela equipe, com plano de resposta. A tabela deve ser
-revisada a cada sprint.
+Risco é um evento incerto que, se ocorrer, afeta um objetivo do projeto (escopo,
+tempo, custo ou qualidade). Este plano define como a equipe identifica, avalia,
+responde e monitora os riscos. O registro vivo fica na aba **Riscos** da
+[planilha de gestão](https://docs.google.com/spreadsheets/d/1W_Z-u_tUhLymgUIJFh2h2b1T5RjmBKli4s_ricDaXxA/edit)
+e aparece no dashboard como matriz de exposição.
 
-## Matriz de riscos
+## 1. Escalas
 
-| ID | Risco | Probabilidade | Impacto | Resposta | Responsável | Status |
+### Probabilidade
+
+| Nível | Descrição | Chance de ocorrer |
+| --- | --- | --- |
+| 1 | Muito baixa | 0% a 19% |
+| 2 | Baixa | 20% a 39% |
+| 3 | Média | 40% a 59% |
+| 4 | Alta | 60% a 79% |
+| 5 | Muito alta | 80% a 100% |
+
+### Impacto
+
+| Nível | Descrição | Efeito no projeto |
+| --- | --- | --- |
+| 1 | Muito baixo | Absorvido sem mudar o plano |
+| 2 | Baixo | Atraso ou retrabalho dentro da sprint |
+| 3 | Médio | Afeta a entrega da sprint ou de uma US |
+| 4 | Alto | Compromete o escopo ou a data da release |
+| 5 | Muito alto | Compromete o MVP ou a avaliação da disciplina |
+
+### Exposição
+
+```
+exposição = probabilidade × impacto   (1 a 25)
+```
+
+| Faixa | Nível | Tratamento |
+| --- | --- | --- |
+| 1 a 5 | Baixo | Monitorar na retrospectiva |
+| 6 a 12 | Médio | Plano de resposta e responsável definidos |
+| 15 a 25 | Elevado | Resposta ativa na sprint corrente, levada à reunião com o PO |
+
+## 2. Categorias (EAR)
+
+| Categoria | Exemplos |
+| --- | --- |
+| Técnico | Ecossistema herdado instável, CI com falhas, cobertura abaixo da meta |
+| Gerencial | Escopo não fechado com o PO, cronograma, estimativas |
+| Organizacional | Coordenação entre squads, rodízio de lideranças, distribuição de carga |
+| Externo | Disponibilidade do PO, infraestrutura do LAPPIS, serviços de terceiros |
+
+## 3. Estratégias de resposta
+
+| Estratégia | Quando usar |
+| --- | --- |
+| Evitar | Mudar o plano para eliminar a causa |
+| Mitigar | Reduzir probabilidade ou impacto |
+| Transferir | Passar o tratamento a quem tem mais controle sobre a causa |
+| Aceitar | Custo de resposta maior que o impacto; monitorar |
+| Escalar | O risco está fora da alçada da equipe (PO, professor) |
+
+## 4. Registro de riscos
+
+Cada risco tem: **causa → evento → consequência**, **gatilho** (o sinal observável de
+que está ocorrendo), **prevenção** (o que se faz antes) e **contingência** (o que se
+faz se ocorrer), **responsável** e **data da última revisão**.
+
+A lista inicial, com probabilidade e impacto convertidos da escala anterior
+(Média = 3, Alta = 4) e a recalibrar pelo time:
+
+| ID | Categoria | Risco | P | I | Exposição | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| R01 | | Média | Alto | Mitigar | | Aberto |
+| R01 | Técnico | Motor de cálculo publicado não corresponde ao código versionado | 4 | 4 | 16 | Aberto |
+| R02 | Técnico | Endpoint público expõe e-mail de todos os usuários | 4 | 4 | 16 | Aberto |
+| R03 | Técnico | Nenhum portão de qualidade bloqueante nos repositórios | 4 | 3 | 12 | Aberto |
+| R04 | Organizacional | Coordenação técnica entre squads que atravessam repositórios | 3 | 3 | 9 | Aberto |
+| R05 | Gerencial | Objetivo do semestre ainda não fechado com o PO | 3 | 4 | 12 | Aberto |
+| R06 | Organizacional | Desbalanceamento de contribuições num time de 20 pessoas | 3 | 3 | 9 | Em monitoramento |
+| R07 | Técnico | Métricas de repositórios publicadas em repos de semestres anteriores | 4 | 4 | 16 | Aberto |
+| R08 | Técnico | Cobertura de testes em 82,7% contra meta de 85% da R1 | 4 | 3 | 12 | Aberto |
+| R09 | Técnico | Taxa de falha da CI próxima de 50% | 4 | 3 | 12 | Aberto |
+| R10 | Gerencial | Sequenciador da Lean Inception atrasado frente ao cronograma | 4 | 4 | 16 | Materializado |
 
-### Legenda
+A tabela acima é o retrato de 27/09/2026. A versão atual é sempre a da planilha.
 
-- **Probabilidade / Impacto:** Baixo, Médio, Alto.
-- **Resposta:** Evitar, Mitigar, Transferir, Aceitar.
-- **Status:** Aberto, Em monitoramento, Materializado, Encerrado.
+## 5. Monitoramento
 
-## Histórico de riscos materializados
+- **Toda retrospectiva:** revisar status e exposição de cada risco, atualizar
+  `ultima_revisao` e incluir riscos novos.
+- **Risco elevado:** entra na pauta da reunião com o PO da semana.
+- **Risco materializado:** registrar abaixo o que aconteceu, o que foi feito e o
+  que a equipe aprendeu, e criar uma entrada em [Decisões](/docs/planejamento/decisoes).
 
-> Registre aqui os riscos que de fato ocorreram, o que foi feito e o que a
-> equipe aprendeu.
+## 6. Histórico de riscos materializados
+
+| ID | Quando | O que aconteceu | Resposta | Aprendizado |
+| --- | --- | --- | --- | --- |
+| R10 | Set/2026 | O sequenciador previsto para 24/08 não fechou antes da R1 | EAP com pacotes de planejamento e linha de base da R1 reconstituída | *a preencher pelo time* |
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 27/09/2026 | Plano de riscos com escalas de 1 a 5, EAR, estratégias e registro inicial | [@MilenaFRocha](https://github.com/MilenaFRocha) | |

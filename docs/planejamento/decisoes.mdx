@@ -1,0 +1,88 @@
+---
+id: decisoes
+title: Decisões baseadas em dados
+sidebar_position: 6
+---
+
+# Decisões baseadas em dados
+
+Registro das decisões técnicas e gerenciais tomadas a partir de um dado: uma
+métrica, um gráfico do dashboard ou um evento observável. A disciplina exige
+**≥ 3 decisões na R2** e **≥ 5 na R3**. Cada decisão também entra na aba
+**Decisoes** da planilha e aparece na aba Decisões do dashboard.
+
+## Formato
+
+Cada decisão tem:
+
+1. **Contexto e dado que motivou:** o número ou evento observado.
+2. **Decisão:** o que foi decidido e por quê.
+3. **Evidência:** PR, commit ou documento onde a decisão está aplicada.
+4. **Critério de sucesso:** a métrica que dirá se funcionou.
+5. **Resultado:** o que a métrica mostrou depois (preenchido na sprint seguinte).
+
+| # | Sprint | Tipo | Decisão | Status |
+| --- | --- | --- | --- | --- |
+| D1 | 3 | Gerencial | Calendário oficial de sprints: o do Zenhub | Vigente |
+| D2 | 3 | Gerencial | Critério de "feito" e níveis que recebem story points | Vigente |
+| D3 | 3 | Gerencial | Modelo de custo e registro de horas reais | Planejada |
+
+:::caution Rascunho para revisão
+As decisões abaixo foram tomadas em 27/09/2026 durante a construção do DA-R1 e
+precisam ser revisadas e assinadas pelos líderes da quinzena.
+:::
+
+## D1: Calendário oficial de sprints
+
+**Contexto e dado.** Havia três calendários em uso: a planilha antiga (sprints
+quinzenais, com a R1 terminando em 04/10), o Zenhub (duas quinzenais e depois
+semanais a partir de 21/09) e a página de Planejamento (Sprint 1 de 17/08 a 04/09).
+Só o do Zenhub fecha nas datas das releases (27/09, 25/10 e 29/11).
+
+**Decisão.** Adotar o calendário do Zenhub como linha de base: R1 com 3 sprints, R2
+com 4 e R3 com 5.
+
+**Evidência.** `Analytics/planilhas/sprints.csv`, aba Sprints da planilha,
+[Modelo de gestão](/docs/metricas/modelo-de-gestao).
+
+**Critério de sucesso.** Todas as sprints até 29/11 criadas no Zenhub e com as
+mesmas datas na planilha.
+
+## D2: Critério de feito e níveis pontuados
+
+**Contexto e dado.** No snapshot do Zenhub de 27/09, **nenhuma issue da R1 estava
+no pipeline Done**: 13 issues fechadas estavam em Review/QA, Sprint Backlog ou In
+Progress, e 22 US/Tasks estavam sem estimativa. Havia pontos em Sub-tasks (DOC#71 e
+DOC#74), o que somaria o mesmo trabalho duas vezes.
+
+**Decisão.** Uma issue só conta como entregue no pipeline **Done**, que vem depois
+da aprovação do PO (DoD). Story points ficam em **US e Task**; US decomposta em
+Tasks não pontua, e Épicos e Sub-tasks não pontuam.
+
+**Evidência.** `Analytics/planilhas/parametros.csv` (`criterio_feito`,
+`niveis_pontuados`), `Analytics/src/gestao.py`, painel "Confiabilidade do dado do
+Zenhub" no dashboard.
+
+**Critério de sucesso.** Zero pendências no painel de confiabilidade na planning de
+abertura da R2.
+
+## D3: Modelo de custo e horas reais
+
+**Contexto e dado.** O EVM precisa de orçamento (BAC) e custo real (AC). Não havia
+custo/hora definido nem registro de horas, e a disciplina exige "dados reais de
+horas".
+
+**Decisão.** Usar o modelo de custo do aluno de 2026.1, atualizado para 2026.2
+(R$ 23,53/hora; ver [Custos](/docs/planejamento/custos)), e registrar as horas de
+cada integrante na aba Horas, toda segunda, a partir de 28/09.
+
+**Evidência.** Abas Custos, Parametros e Horas da planilha de gestão.
+
+**Critério de sucesso.** 20 de 20 integrantes com horas registradas na sprint 4, e
+CPI calculado no dashboard.
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 27/09/2026 | Formato e três primeiras decisões (rascunho) | [@MilenaFRocha](https://github.com/MilenaFRocha) | |

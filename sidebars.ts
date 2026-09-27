@@ -43,6 +43,9 @@ const sidebars: SidebarsConfig = {
         'planejamento/eap',
         'planejamento/roadmap',
         'planejamento/riscos',
+        'planejamento/custos',
+        'planejamento/agile-evm',
+        'planejamento/decisoes',
         'planejamento/squads',
       ],
     },
@@ -63,7 +66,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Métricas',
-      items: ['metricas/metricas'],
+      items: ['metricas/metricas', 'metricas/modelo-de-gestao'],
     },
     {
       type: 'category',

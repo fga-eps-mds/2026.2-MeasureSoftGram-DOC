@@ -1,0 +1,69 @@
+---
+id: agile-evm
+title: AgileEVM
+sidebar_position: 5
+---
+
+# AgileEVM
+
+O **Earned Value Management** integra escopo, custo e tempo em um único
+acompanhamento: quanto do trabalho planejado foi entregue, quanto custou e se o
+ritmo está de acordo com o cronograma. O **AgileEVM** (Sulaiman, Barton e
+Blackburn, 2006) adapta a técnica ao Scrum, medindo o escopo em story points e o
+tempo em sprints.
+
+## Como calculamos
+
+Cada release tem sua própria linha de base: `L` sprints, `PRP` pontos planejados
+e um orçamento `BAC` (ver [Custos](/docs/planejamento/custos)). A cada sprint `n`:
+
+| Sigla | Fórmula | O que responde |
+| --- | --- | --- |
+| PPC | n ÷ L | Quanto da release deveria estar pronto |
+| APC | pontos em Done ÷ PRP | Quanto da release está pronto |
+| PV | PPC × BAC | Valor planejado até aqui |
+| EV | APC × BAC | Valor agregado até aqui |
+| AC | horas reais × custo/hora | Custo real até aqui |
+| SPI | EV ÷ PV | Abaixo de 1: atraso |
+| CPI | EV ÷ AC | Abaixo de 1: gasto maior que o entregue |
+| SV, CV | EV − PV, EV − AC | Variâncias em reais |
+| ETC, EAC | (BAC − EV) ÷ CPI, AC + ETC | Projeção do custo final |
+| RD | L ÷ SPI | Em quantas sprints a release fecha no ritmo atual |
+
+## De onde vem cada número
+
+| Dado | Fonte |
+| --- | --- |
+| Pontos comprometidos, pontos em Done, pontos adicionados | Zenhub, coletado por `Analytics/scripts/coleta_zenhub.mjs` |
+| Calendário de sprints e linha de base (PRP) | Abas **Sprints** e **Releases** da planilha |
+| Capacidade e custo/hora | Aba **Custos** |
+| Horas reais | Aba **Horas** (uma linha por integrante por sprint) |
+
+O cálculo é feito pelo dashboard em `Analytics/src/gestao.py`, e não por digitação
+na planilha. Assim o mesmo dado do Zenhub alimenta velocity, burndown e EVM.
+
+## Regras
+
+- **Feito é o pipeline Done.** Issue fechada em outro pipeline não conta como entregue.
+- **Pontos só em US e Task.** US decomposta em Tasks não recebe pontos, para não contar duas vezes.
+- **PRP congelado na abertura da release.** Escopo que entra depois aparece como PA
+  (Points Added) e aumenta o PRP, mostrando a mudança de escopo em vez de escondê-la.
+- **Sem horas reais não há CPI.** O período sem registro fica declarado como sem dado.
+
+## Situação na R1
+
+A R1 não tem linha de base: o sequenciador da Lean Inception não fechou (risco
+R10, materializado). O dashboard reconstitui o PRP da R1 com os pontos que
+entraram nas sprints e mostra isso na tela. A linha de base da R2 é congelada na
+planning de 28/09.
+
+## Referências
+
+- SULAIMAN, T.; BARTON, B.; BLACKBURN, T. **AgileEVM: Earned Value Management in Scrum Projects**. Agile Conference, 2006.
+- PMI. *PMBOK Guide*: gerenciamento de custos.
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 27/09/2026 | Método, fórmulas, fontes e situação da R1 | [@MilenaFRocha](https://github.com/MilenaFRocha) | |
