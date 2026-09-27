@@ -37,10 +37,11 @@ horas trabalhadas e julgamento de risco não se coletam de repositório.
 
 ```
 Analytics/
-├── app.py              # entrada do Streamlit, as quatro abas
+├── app.py              # entrada do Streamlit (visão geral + quatro dimensões)
 ├── config.py           # ÚNICO arquivo que o time edita: URLs das planilhas
 ├── src/
 │   ├── loader.py       # descoberta e parse dos .json e das planilhas
+│   ├── resumo.py       # indicadores e status da Visão geral
 │   └── theme.py        # paleta validada, metas por release
 ├── planilhas/          # CSVs de apoio, usados quando não há planilha publicada
 │   ├── evm.csv
@@ -48,6 +49,7 @@ Analytics/
 │   ├── riscos.csv
 │   └── decisoes.csv
 ├── data/               # ← o pipeline escreve aqui. Não editar à mão.
+├── stlite/build.py     # empacota o app para o GitHub Pages
 ├── .streamlit/
 │   └── config.toml
 └── requirements.txt
@@ -84,9 +86,50 @@ O dicionário de cada indicador está em `docs/metricas/modelo-de-gestao.mdx`.
 
 ## Publicação (URL exigida no Aprender 3)
 
-Streamlit Community Cloud → *New app* → repositório
-`fga-eps-mds/2026.2-MeasureSoftGram-docs-eps`, branch `main`, arquivo
-`Analytics/app.py`. A URL gerada vai no Aprender 3 e na página de Métricas.
+O dashboard é publicado **no GitHub Pages, junto com a documentação**, em
+`<site da doc>/dashboard/` (link **Dashboard** na barra do topo). Como o Pages só
+serve arquivos estáticos, usamos o [stlite](https://github.com/whitphx/stlite): o
+próprio Streamlit roda dentro do navegador, com Python em WebAssembly (Pyodide).
+É o mesmo `app.py` — não existe uma segunda versão do painel.
+
+Como funciona:
+
+1. o workflow `.github/workflows/deploy.yml` roda `python Analytics/stlite/build.py`
+   antes do build do Docusaurus;
+2. o script copia `app.py`, `config.py`, `src/`, `planilhas/*.csv`, `data/**/*.json`
+   e `../analytics-raw-data/*.json` para `static/dashboard/` e gera um `index.html`
+   que monta esses arquivos no navegador e executa `Analytics/app.py`;
+3. o Docusaurus publica `static/dashboard/` em `/dashboard/`.
+
+Cada push na `main` — inclusive os commits que o pipeline de métricas faz em
+`data/` — republica o painel com os dados novos. `.env`, `scripts/` e `*.xlsx`
+nunca entram no pacote.
+
+Testar localmente a versão do Pages:
+
+```bash
+python Analytics/stlite/build.py        # gera static/dashboard/ (ignorado pelo git)
+cd static/dashboard && python -m http.server 8000
+# abrir http://localhost:8000
+```
+
+A primeira abertura leva de 20 a 40 s (o navegador baixa o Pyodide e os pacotes);
+depois fica em cache. Se uma versão nova do stlite quebrar algo, fixe a versão na
+constante `STLITE` de `stlite/build.py`.
+
+## Organização das abas
+
+| Aba | Pergunta que responde |
+| --- | --- |
+| **Visão geral** | Como estamos? Release e sprint atuais, linha do tempo do semestre, pontos de atenção em ordem de gravidade, situação de cada dimensão e placar por repositório (`src/resumo.py`) |
+| **Produto** | A qualidade do código está na meta? (SonarCloud) |
+| **Processo** | A CI é confiável e as issues fluem? (GitHub) |
+| **Projeto** | AgileEVM, velocity/burndown e custos (planilha Custos e AgileEVM) |
+| **Riscos e decisões** | Matriz de riscos e registro de decisões (planilha Riscos e Decisões) |
+
+A visão geral não calcula nada novo: lê os mesmos dados das outras abas e aplica
+as mesmas metas (`theme.METAS`, SPI ≥ 0,95, CI ≥ 80%, conclusão ≥ 80%). O seletor
+**Metas da release** na barra lateral começa na release em andamento.
 
 ## Planilhas do time
 

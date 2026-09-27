@@ -173,6 +173,16 @@ def pontuaveis(issues: pd.DataFrame, params: dict) -> pd.DataFrame:
 
 # ───────────────────────── processo ─────────────────────────
 
+
+def _feito(d: pd.DataFrame, feito: str) -> pd.Series:
+    """Feito = pipeline Done OU issue fechada (pipeline Closed do Zenhub).
+
+    Tirar uma issue fechada do Closed para o Done faz o Zenhub REABRI-LA;
+    por isso as fechadas contam como feitas onde estiverem.
+    """
+    return (d["pipeline"] == feito) | (d["estado"] == "CLOSED")
+
+
 def qualidade_do_quadro(issues: pd.DataFrame, params: dict) -> pd.DataFrame:
     """Problemas de higiene do Zenhub que distorcem velocity e EVM."""
     if issues.empty:
@@ -198,9 +208,6 @@ def qualidade_do_quadro(issues: pd.DataFrame, params: dict) -> pd.DataFrame:
             tipo_txt = r["tipo"] if isinstance(r["tipo"], str) and r["tipo"] else "sem tipo"
             problemas.append((r, f"Estimativa em nível não pontuado ({tipo_txt})",
                               "Mover os pontos para a US/Task ou remover"))
-        if r["estado"] == "CLOSED" and r["pipeline"] != feito:
-            problemas.append((r, f"Fechada, mas no pipeline '{r['pipeline']}'",
-                              f"Mover para {feito} se cumpriu o DoD, ou reabrir"))
         if r["tipo"] in (None, "") or pd.isna(r["tipo"]):
             problemas.append((r, "Sem tipo de issue (PR ou issue solta)",
                               "Tipar e ligar a um pai, ou remover da sprint"))
@@ -225,7 +232,7 @@ def velocity_por_sprint(sprints: pd.DataFrame, issues: pd.DataFrame,
         d = issues[(issues.get("zenhub_sprint_id") == s["zenhub_sprint_id"])] if not issues.empty else issues
         d = pontuaveis(d, params) if not d.empty else d
         pp = d["estimativa"].fillna(0).sum() if not d.empty else 0
-        pc = d.loc[d["pipeline"] == feito, "estimativa"].fillna(0).sum() if not d.empty else 0
+        pc = d.loc[_feito(d, feito), "estimativa"].fillna(0).sum() if not d.empty else 0
         linhas.append({"sprint": int(s["sprint"]), "release": s["release"],
                        "inicio": s["inicio"].date(), "fim": s["fim"].date(),
                        "pp": float(pp), "pc": float(pc),
@@ -265,7 +272,7 @@ def agile_evm(sprints: pd.DataFrame, releases: pd.DataFrame, issues: pd.DataFram
                 for _, r in d.iterrows():
                     chave = (r["repositorio"], r["numero"])
                     vistos[chave] = 0.0 if pd.isna(r["estimativa"]) else float(r["estimativa"])
-                    if r["pipeline"] == feito:
+                    if r["pipeline"] == feito or r["estado"] == "CLOSED":
                         feitos.add(chave)
             escopo = sum(vistos.values())
             # Com linha de base, só o que passa dela é escopo adicionado (PA).
@@ -314,3 +321,44 @@ def burndown_release(evm: pd.DataFrame, release: str) -> pd.DataFrame:
     d["restante"] = d["PRP"] - d["RPC"]
     d["ideal"] = d["PRP"] * (1 - d["n"] / d["L"])
     return d[["sprint", "n", "PRP", "RPC", "restante", "ideal", "iniciada"]]
+
+
+# ───────────────────────── Zenhub -> planilha ─────────────────────────
+
+def pontos_para_planilha(sprints: pd.DataFrame, issues: pd.DataFrame, params: dict,
+                         hoje: pd.Timestamp) -> pd.DataFrame:
+    """PP, PC e PA de cada sprint iniciada, prontos para copiar na aba EVM - Valor Agregado.
+
+    * PP = pontos das US/Tasks/Bugs da sprint (sem Épico, Sub-task, PR nem Task com Task filha).
+    * PC = pontos das issues feitas (fechadas ou em Done) creditados **só na última sprint**
+      em que a issue aparece — issue que atravessa sprints não conta duas vezes.
+    * PA = pontos das issues que aparecem pela primeira vez na release nesta sprint
+      (na primeira sprint da release é 0: esses pontos são a linha de base).
+    """
+    if sprints.empty or issues.empty:
+        return pd.DataFrame()
+    feito = params["criterio_feito"]
+    cal = sprints.sort_values("sprint")
+    d = issues.merge(cal[["zenhub_sprint_id", "sprint", "release"]], on="zenhub_sprint_id")
+    d = pontuaveis(d, params)
+    if d.empty:
+        return pd.DataFrame()
+    d["chave"] = d["repositorio"] + "#" + d["numero"].astype(str)
+    d["pts"] = d["estimativa"].fillna(0).astype(float)
+    ultima = d.groupby("chave")["sprint"].max()
+    feitas = set(d.loc[(d["pipeline"] == feito) | (d["estado"] == "CLOSED"), "chave"])
+    primeira_rel = d.groupby(["release", "chave"])["sprint"].min()
+    linhas = []
+    for _, s in cal.iterrows():
+        if s["inicio"] > hoje:
+            continue
+        ds = d[d["sprint"] == s["sprint"]].drop_duplicates("chave")
+        pp = ds["pts"].sum()
+        pc = ds.loc[ds["chave"].isin(feitas) & (ds["chave"].map(ultima) == s["sprint"]), "pts"].sum()
+        primeira_sprint_rel = cal.loc[cal["release"] == s["release"], "sprint"].min()
+        novas = [k for k in ds["chave"] if primeira_rel.get((s["release"], k)) == s["sprint"]]
+        pa = 0.0 if s["sprint"] == primeira_sprint_rel else ds.loc[ds["chave"].isin(novas), "pts"].sum()
+        sem_est = int(ds["estimativa"].isna().sum())
+        linhas.append({"sprint": int(s["sprint"]), "release": s["release"], "PP": pp, "PC": pc, "PA": pa,
+                       "issues": len(ds), "sem_estimativa": sem_est})
+    return pd.DataFrame(linhas)

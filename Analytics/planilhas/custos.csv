@@ -1,0 +1,27 @@
+chave,grupo,item,valor,unidade,fonte,cálculo
+custo_anual_aluno,Disciplina (UnB),Custo anual de um aluno de universidade federal,52533,R$/ano,Valor de referência da planilha de custos do MeasureSoftGram 2026.1 (custo médio anual por aluno de universidade federal).,premissa
+creditos_ano,Disciplina (UnB),Créditos cursados por ano,40,créditos,Planilha de custos 2026.1.,premissa
+custo_credito,Disciplina (UnB),Custo de um crédito,1313.325,R$,,custo_anual_aluno ÷ creditos_ano
+creditos_eps,Disciplina (UnB),Créditos de EPS,4,créditos,"Plano de ensino EPS 2026.2: 60 h, 4 créditos.",premissa
+custo_eps,Disciplina (UnB),Custo de cursar EPS no semestre,5253.3,R$,,custo_credito × creditos_eps
+semanas_semestre,Disciplina (UnB),Semanas do semestre,18,semanas,Cronograma EPS 2026.2 (10/08 a 14/12).,premissa
+custo_eps_semana,Disciplina (UnB),Custo de EPS por semana,291.85,R$/semana,,custo_eps ÷ semanas_semestre
+horas_remotas_semana,Trabalho remoto,Horas de trabalho remoto por semana,10,h/semana,Premissa de 2026.1 (10 h remotas). Confirmar com o time.,premissa
+tarifa_kwh,Trabalho remoto,Tarifa de energia,0.83,R$/kWh,Neoenergia Brasília (planilha de custos 2026.1).,premissa
+potencia_computador,Trabalho remoto,Consumo do computador,40,W,Notebook: 35 a 40 W (planilha de custos 2026.1).,premissa
+potencia_modem,Trabalho remoto,Consumo do modem,12,W,Modem: 8 a 12 W (planilha de custos 2026.1).,premissa
+energia_semana,Trabalho remoto,Energia por semana,0.4316,R$/semana,,(W computador + W modem) ÷ 1000 × tarifa × horas remotas
+internet_mes,Trabalho remoto,Internet por mês,99.9,R$/mês,Plano Claro 600 Mb (planilha de custos 2026.1).,premissa
+internet_semana,Trabalho remoto,Internet por semana,23.053846,R$/semana,,internet_mes × 12 ÷ 52
+valor_notebook,Equipamento,Notebook de referência,3665.56,R$,"Acer Aspire 5, Ryzen 5, 16 GB (planilha de custos 2026.1).",premissa
+vida_util_meses,Equipamento,Vida útil,60,meses,5 anos (planilha de custos 2026.1).,premissa
+depreciacao_semana,Equipamento,Depreciação por semana,14.098308,R$/semana,,valor_notebook ÷ vida útil em semanas
+deploy_semana,Infraestrutura,Deploy (servidor),0,R$/semana,"Deploy no LAPPIS, sem custo (planilha de custos 2026.1). Atualizar se contratar serviço.",premissa
+dominio_ano,Infraestrutura,Domínio,0,R$/ano,"Sem domínio próprio em 2026.2 (docs no GitHub Pages). Em 2026.1: R$ 49,99/ano.",premissa
+infra_semana,Infraestrutura,Infraestrutura por semana,0,R$/semana,,deploy_semana + dominio_ano ÷ 52
+horas_presenciais_semana,Resultado,Horas presenciais por semana,4,h/semana,Aula de segunda (plano de ensino).,premissa
+horas_semana_total,Resultado,Horas por integrante por semana,14,h/semana,,horas remotas + presenciais
+custo_membro_semana,Resultado,Custo de um integrante por semana,329.433754,R$/semana,,EPS + energia + internet + depreciação
+custo_hora,Resultado,Custo por hora de trabalho,23.530982,R$/h,,custo_membro_semana ÷ horas por semana. Converte horas reais (aba Horas) em R$.
+integrantes,Resultado,Integrantes no time,20,pessoas,Aba Planejamento.,contagem de nomes na aba Planejamento
+bac_total,Resultado,Orçamento total do projeto (BAC),92241.451077,R$,Aba Planejamento.,soma do custo planejado de todas as semanas

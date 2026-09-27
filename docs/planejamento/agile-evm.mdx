@@ -14,16 +14,16 @@ tempo em sprints.
 
 ## Como calculamos
 
-Cada release tem sua própria linha de base: `L` sprints, `PRP` pontos planejados
+O cálculo é feito por fórmula nas abas **Sumário EVM**, **EVM - Valor Agregado**, **EVM - Velocity** e **EVM - Índices e Burndown** da planilha **MeasureSoftGram 2026.2 · Custos e AgileEVM**; o dashboard lê o resultado (abas **AgileEVM** e **Velocity e Burndown**). Cada release tem sua própria linha de base: `L` sprints, `PRP` pontos planejados
 e um orçamento `BAC` (ver [Custos](/docs/planejamento/custos)). A cada sprint `n`:
 
 | Sigla | Fórmula | O que responde |
 | --- | --- | --- |
-| PPC | n ÷ L | Quanto da release deveria estar pronto |
-| APC | pontos em Done ÷ PRP | Quanto da release está pronto |
+| PPC | semanas decorridas ÷ semanas da release (o n ÷ L do artigo, ponderado porque as sprints 1 e 2 têm 2 semanas) | Quanto da release deveria estar pronto |
+| APC | RPC ÷ PRP (pontos de issues fechadas ou em Done ÷ pontos da release) | Quanto da release está pronto |
 | PV | PPC × BAC | Valor planejado até aqui |
 | EV | APC × BAC | Valor agregado até aqui |
-| AC | horas reais × custo/hora | Custo real até aqui |
+| AC | horas reais × custo/hora; sem horas registradas, custo planejado da sprint (como em 2026.1) | Custo real até aqui |
 | SPI | EV ÷ PV | Abaixo de 1: atraso |
 | CPI | EV ÷ AC | Abaixo de 1: gasto maior que o entregue |
 | SV, CV | EV − PV, EV − AC | Variâncias em reais |

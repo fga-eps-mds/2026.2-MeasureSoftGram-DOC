@@ -1,6 +1,6 @@
 {
- "fonte": "Zenhub GraphQL, workspace 6a8326e265e211000ef9379a",
- "coletado_em": "2026-09-27T13:16:11.147-03:00",
+ "fonte": "Zenhub GraphQL, workspace 6a8326e265e211000ef9379a | atualizado com a leitura do Zenhub de 27/09 16:30 (estimativas e pipelines)",
+ "coletado_em": "2026-09-27T16:30:00-03:00",
  "sprints": [
   {
    "id": "Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTU4",
@@ -219,7 +219,7 @@
      "repositorio": "2026.2-MeasureSoftGram-DOC",
      "titulo": "[TAREFA] Seleção do projeto",
      "tipo": "Task",
-     "estimativa": null,
+     "estimativa": 1,
      "estado": "CLOSED",
      "pipeline": "Product Backlog",
      "pai": 4,

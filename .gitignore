@@ -33,3 +33,6 @@ yarn.lock
 Analytics/.env
 __pycache__/    
 Analytics/_sync.tgz
+
+# Gerado no deploy por Analytics/stlite/build.py
+/static/dashboard

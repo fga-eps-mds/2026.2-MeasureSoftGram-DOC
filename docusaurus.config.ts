@@ -97,6 +97,13 @@ const config: Config = {
           label: 'Documentação',
         },
         {
+          // Dashboard Streamlit rodando no navegador (stlite), gerado no deploy
+          // por Analytics/stlite/build.py em static/dashboard/.
+          to: 'pathname:///dashboard/',
+          label: 'Dashboard',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC',
           label: 'GitHub',
           position: 'right',
@@ -120,6 +127,7 @@ const config: Config = {
             {label: 'Metodologia', to: '/docs/planejamento/metodologia'},
             {label: 'Sprints', to: '/docs/sprints'},
             {label: 'Métricas', to: '/docs/metricas'},
+            {label: 'Dashboard analítico', to: 'pathname:///dashboard/'},
           ],
         },
         {
