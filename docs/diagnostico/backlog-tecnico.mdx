@@ -4,231 +4,234 @@ title: Backlog técnico
 sidebar_position: 2
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 # Backlog técnico
 
-Levantamento de gargalos, defeitos ativos e dívida técnica nos sete
-repositórios, derivado do [diagnóstico do ecossistema](/docs/diagnostico).
-Cada item está redigido **para virar issue**: tem escopo fechado, caminho do
-arquivo e critério de aceite.
+O levantamento do backlog técnico derivou diretamente do [diagnóstico do ecossistema](/docs/diagnostico), consolidando **41 apontamentos** de gargalos arquiteturais, vulnerabilidades de segurança, defeitos ativos e dívida técnica acumulada nos sete repositórios do MeasureSoftGram herdados de semestres anteriores.
+
+## Como o backlog entrou no desenvolvimento do projeto
+
+No início do ciclo de **2026.2**, a equipe de Engenharia de Produto de Software (EPS) realizou a triagem e o refinamento estruturado de cada um dos 41 itens identificados. Para que o backlog não permanecesse como um documento estático, ele foi **incorporado ativamente ao ciclo de desenvolvimento e ao gerenciamento do projeto** por meio do GitHub e do ZenHub:
+
+1. **Triagem por Risco e Criticidade**: Itens críticos que inviabilizavam a execução local ou bloqueavam as esteiras de integração contínua (como defeitos de CI e inconsistências nas versões do motor de cálculo) foram priorizados imediatamente para a fase de iniciação e estabilização.
+2. **Desdobramento em Épicos e Tarefas no ZenHub**:
+   - Os débitos técnicos prioritários para o MVP foram convertidos em **Tarefas Técnicas (Tasks)** e **Épicos** no ZenHub com critérios de aceitação objetivos, vinculados aos repositórios correspondentes.
+   - Itens de impacto funcional direto na experiência do usuário foram integrados a **Épicos e Histórias de Usuário**, como a revisão de consultas e performance no fluxo de carregamento da aplicação (`[MSG02] / EPIC #42`).
+   - Débitos de modernização ampla do frontend e testes de ponta a ponta foram mapeados para épicos de releases posteriores (Release 02 e Release 03), configurando **itens mapeados sem issue ainda**.
+   - Itens transversais de esteira, empacotamento e qualidade foram agregados sob o **Épico [MSG03] Deploys e Saneamento dos Repositórios** e na tarefa **[TASK05.02] Atualização automática de dependências nos repositórios**.
+   - Fragilidades críticas de autenticação e proteção de credenciais foram convertidas na tarefa **[BUG05.01] Falhas de Segurança** sob o **Épico [MSG05] Estabilização e Correções de Bugs** para resolução imediata na Release 1.
+3. **Resolução Contínua e Rastreabilidade**: À medida que as tarefas de migração de repositórios e modernização de dependências foram executadas, os respectivos itens foram validados contra seus critérios de aceite e baixados com evidências anexadas nas issues do projeto.
+
+:::info[Documento completo original]
+O levantamento analítico inicial com a íntegra dos trechos de código e formulações originais está disponível em:  
+<a href={useBaseUrl('/docs/Backlog-Tecnico-MeasureSoftGram.pdf')} target="_blank" rel="noopener noreferrer">**Backlog técnico (PDF)**</a>
+:::
 
 <div className="row margin-bottom--md">
   <div className="col col--3">
-    <div className="card padding--md">
-      <strong style={{fontSize: '2rem'}}>6</strong>
-      <div>críticos</div>
+    <div className="card padding--sm text--center">
+      <strong style={{fontSize: '1.8rem'}}>4</strong>
+      <div>Mapeados sem issue</div>
     </div>
   </div>
   <div className="col col--3">
-    <div className="card padding--md">
-      <strong style={{fontSize: '2rem'}}>14</strong>
-      <div>altos</div>
+    <div className="card padding--sm text--center">
+      <strong style={{fontSize: '1.8rem'}}>25</strong>
+      <div>Com issue ZenHub</div>
     </div>
   </div>
   <div className="col col--3">
-    <div className="card padding--md">
-      <strong style={{fontSize: '2rem'}}>14</strong>
-      <div>medios</div>
+    <div className="card padding--sm text--center">
+      <strong style={{fontSize: '1.8rem'}}>6</strong>
+      <div>Descartados</div>
     </div>
   </div>
   <div className="col col--3">
-    <div className="card padding--md">
-      <strong style={{fontSize: '2rem'}}>7</strong>
-      <div>baixos</div>
+    <div className="card padding--sm text--center">
+      <strong style={{fontSize: '1.8rem'}}>6</strong>
+      <div>Resolvidos</div>
     </div>
   </div>
 </div>
 
-**41 itens no total**, dos quais **3 estão quebrados agora**.
+---
 
-:::info[Documento completo]
-[Backlog técnico (PDF)](/docs/Backlog-Tecnico-MeasureSoftGram.pdf) - com o
-detalhamento integral de cada item, trechos de código e critérios de aceite.
+## 1. Itens Mapeados Sem Issue Ainda
+
+Itens do diagnóstico técnico que já foram mapeados e alocados estrategicamente em épicos para releases futuras (Release 02 e Release 03), mas que ainda não possuem issues abertas no ZenHub, aguardando o momento oportuno de detalhamento e execução pela equipe.
+
+| ID | Item | Repositório | Gravidade | Esforço Estimado | Épico Alvo / Release |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **MSG-33** | Next.js 12.2.2 sem suporte com stack defasada de 2022 | Front | Alto | 2 semanas | Refatoração do Frontend (Release 02) |
+| **MSG-34** | Um terço do código de testes do Front é snapshot | Front | Alto | 2 semanas | Refatoração do Frontend (Release 02) |
+| **MSG-35** | 96 usos de `any` e 58 supressões de lint no Front | Front | Médio | 1 semana | Refatoração do Frontend (Release 02) |
+| **MSG-07** | Sem teste de contrato entre Core, Service e CLI | Transversal | Alto | 1 semana | Testes de Integração E2E (Release 03) |
+
+:::note[Início da mitigação do MSG-33 no Épico MSG02 (Release 01)]
+O item **MSG-33** teve seu tratamento preliminar iniciado no épico **[[MSG02] Revisar o fluxo de carregamento (frontend)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/42)** através da tarefa **[[TASK02.05] Front: atualização de dependências de baixo risco (#16 no Service)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/16)**, com foco em ações de baixo risco (*quick wins*: remoção de dependências mortas como `material-ui@0.20` e `next-auth`, atualização pontual do SWR para 2.x e ativação do compilador SWC). Contudo, a migração arquitetural completa da stack para Next.js 14+ e TypeScript 5 foi planejada para o épico de **Refatoração do Frontend (Release 02)**.
 :::
 
-## E1 - Quebrado agora
+### Detalhamento dos Itens
 
-Três itens que já falham hoje. Antes de qualquer feature nova, isto precisa estar
-verde - todo o resto do backlog e construído em cima de um CI confiável.
+#### MSG-33 - Next.js 12.2.2 sem suporte com stack defasada de 2022
+* **Repositório:** `MeasureSoftGram-Front`
+* **Gravidade:** Alto | **Esforço:** 2 semanas | **Alvo:** `package.json`, migração para Next.js 14+ / TypeScript 5
+* **Épico Alvo:** Refatoração do Frontend (Release 02)
+* **Contexto:** A versão 12.2.2 do Next.js foi lançada em 2022 e atingiu o fim de vida (EOL), convivendo com bibliotecas legadas e incompatíveis (como a coexistência de `material-ui@0.20` com MUI v5). A migração completa de versão de framework exige reestruturação de rotas, adaptação de componentes visuais e atualização de tipagens, demandando um esforço isolado que foi planejado para o épico de Refatoração do Frontend na Release 02.
+* > **Critério de aceite:** Atualização da stack para Next.js 14+ com suporte ativo, TypeScript 5, adoção definitiva de uma única biblioteca de componentes de UI e eliminação de dependências legadas.
 
-| ID | Item | Repo | Gravidade | Esforco |
-| --- | --- | --- | --- | --- |
-| MSG-01 | Fixture desatualizada derruba dois testes no `develop` do Parser | Parser | Crítico | 15 min |
-| MSG-02 | Restrição frouxa de dependência quebra o CLI em instalação limpa | CLI | Crítico | 1 h |
-| MSG-03 | `GET /users/` expõe e-mail de todos os usuários sem autenticação | Service | Crítico | 2 h |
+#### MSG-34 - Um terço do código de testes do Front é snapshot
+* **Repositório:** `MeasureSoftGram-Front`
+* **Gravidade:** Alto | **Esforço:** 2 semanas | **Alvo:** `src/**/tests/__snapshots__/` (8.887 linhas em 37 arquivos `.snap`)
+* **Épico Alvo:** Refatoração do Frontend (Release 02)
+* **Contexto:** Dos 290 `expect()` da suíte de testes do frontend, 61 são asserções `toMatchSnapshot()`. Testes de snapshot apenas detectam que a saída textual mudou, não que uma regra de negócio quebrou. Na prática de desenvolvimento, desenvolvedores tendem a atualizar snapshots automaticamente sem inspecionar o diff, inflando a cobertura sem fornecer proteção real contra regressões.
+* > **Critério de aceite:** Snapshots substituídos por asserções de comportamento reais nos componentes críticos da aplicação, iniciando pelo fluxo de criação e configuração de releases.
 
-### MSG-01 - Fixture desatualizada no Parser
+#### MSG-35 - 96 usos de any e 58 supressões de lint no Front
+* **Repositório:** `MeasureSoftGram-Front`
+* **Gravidade:** Médio | **Esforço:** 1 semana | **Alvo:** `src/` e `tsconfig.json`
+* **Épico Alvo:** Refatoração do Frontend (Release 02)
+* **Contexto:** Embora o arquivo `tsconfig.json` defina `strict: true`, a segurança de tipos do TypeScript é desativada por 96 ocorrências explícitas de `any` e 58 diretivas de supressão (`@ts-ignore` ou `eslint-disable`). Cada uma dessas anotações representa um ponto cego no código onde bugs em tempo de execução deixam de ser capturados pelo compilador.
+* > **Critério de aceite:** Configuração de regras estritas de linter impedindo novas supressões, e plano de redução progressiva das supressões existentes iniciando pela camada de serviços e chamadas HTTP.
 
-O commit `f9bc01c` (24/08/2026) removeu o prefixo de semestre dos mocks, mas
-**não atualizou a fixture**. As linhas 16 e 34 de `expected_return_values.py`
-ainda carregam o nome antigo.
-
-O sintoma de fundo é mais grave que o defeito: **o resultado do CI não está sendo
-verificado antes do merge**.
-
-> **Critério de aceite:** `pytest` passa integralmente no `develop`, e o branch
-> fica protegido exigindo CI verde para merge.
-
-### MSG-02 - Dependência frouxa no CLI
-
-O CLI declara `msgram-core~=1.5.3`, que resolve para 1.5.4. Nessa versão, três
-testes falham. Verificado por execução: fixando `msgram-core==1.5.3`, os **127
-testes unitários passam**.
-
-> **Critério de aceite:** versão do Core fixada com `==` e suíte verde em
-> ambiente limpo. Depende da decisão tomada em MSG-05.
-
-### MSG-03 - Endpoint público expondo dados pessoais
-
-`REST_FRAMEWORK` define `DEFAULT_AUTHENTICATION_CLASSES` mas **não define
-`DEFAULT_PERMISSION_CLASSES`**. O padrão do DRF nesse caso e `AllowAny`.
-
-`UserListViewSet`, roteado em `GET /users/`, serializa `id`, `username`,
-`first_name`, `last_name` e **`email` de todos os cadastrados**.
-
-> **Critério de aceite:** `DEFAULT_PERMISSION_CLASSES = (IsAuthenticated,)`
-> configurado; endpoints de badge marcados explicitamente com `AllowAny`; teste
-> automatizado garantindo `401` em `GET /users/` sem token.
-
-## E2 - Integridade do modelo de qualidade
-
-O problema mais grave do projeto. O motor de cálculo publicado não corresponde ao
-código versionado.
-
-| ID | Item | Repo | Gravidade | Esforco |
-| --- | --- | --- | --- | --- |
-| MSG-04 | Código do `msgram-core 1.5.4` publicado no PyPI não está versionado | Core | Crítico | 1 dia |
-| MSG-05 | Três versões do Core em circulação simultanea | Transversal | Crítico | 3 dias |
-| MSG-06 | Testes do CLI codificam a semântica antiga de `ci_feedback_time` | CLI | Alto | 3 h |
-| MSG-07 | Sem teste de contrato entre Core, Service e CLI | Transversal | Alto | 1 semana |
-
-MSG-04, MSG-05 e MSG-06 são sintomas da mesma lacuna apontada em **MSG-07**: não
-existe verificação de que os dois caminhos de cálculo concordam.
-
-> **Critério de aceite (MSG-07):** suíte que roda o mesmo conjunto de métricas
-> pelo Service e pelo CLI e falha se as notas divergirem além da tolerância de
-> ponto flutuante.
-
-## E3 - Gargalos de performance
-
-O cálculo do TSQMI é o caminho quente do sistema. Hoje faz uma consulta ao banco
-por item, em quatro níveis aninhados, sobre uma tabela sem índice.
-
-| ID | Item | Repo | Gravidade | Esforco |
-| --- | --- | --- | --- | --- |
-| MSG-08 | N+1 em cascata de quatro níveis no cálculo do modelo | Service | Alto | 1 semana |
-| MSG-09 | `CollectedMetric` sem índice, com ordenação global no Meta | Service | Alto | 4 h |
-| MSG-10 | `parser.py` grava JSON inválido em silencio quando o Sonar falha | Transversal | Médio | 2 h |
-
-O próprio código já reconhece o problema de MSG-08:
-
-```python
-# src/measures/models.py:44
-TODO: - Melhorar a query para o banco de dados.
-      - Desconfio que aqui esteja rolando varios inner joins
-
-for supported_metric in self.metrics.all():
-    value = supported_metric.get_latest_metric_value(repository)  # 1 query cada
-```
-
-## E4 - Segurança
-
-Além de MSG-03, cinco itens no Service e no Front. Dois são risco presente; três
-são risco latente.
-
-| ID | Item | Repo | Gravidade | Esforco |
-| --- | --- | --- | --- | --- |
-| MSG-11 | Django 4.0.6 sem suporte desde abril de 2023 | Service | Crítico | 1 semana |
-| MSG-12 | Token OAuth do GitHub armazenado em texto plano | Service | Alto | 1 dia |
-| MSG-13 | Produção sem TLS: tokens de autenticação trafegam em claro | Service | Alto | 1 dia |
-| MSG-14 | `.gitignore` do Front não cobre o diretório `.envs/` | Front | Médio | 15 min |
-| MSG-15 | `debug_toolbar` em `INSTALLED_APPS` base e nas dependências de produção | Service | Médio | 2 h |
-| MSG-16 | CORS e CSRF com padrões apontando para infraestrutura desativada | Service | Baixo | 1 h |
-
-Em MSG-13, as flags de segurança **já estão prontas e parametrizadas por
-variável de ambiente** - falta apenas o certificado na borda.
-
-## E5 - Integração contínua
-
-O Service foi modernizado em 2026.1 e virou o padrão de referência. Os outros
-seis repositórios ficaram em 2024, com ferramental descontinuado e nenhum portão
-bloqueante.
-
-| ID | Item | Repo | Gravidade | Esforco |
-| --- | --- | --- | --- | --- |
-| MSG-17 | Nenhum portão de qualidade bloqueia merge | Transversal | Alto | 4 h |
-| MSG-18 | Action declara runtime `node16`, já removido pelo GitHub | Action | Alto | 3 h |
-| MSG-19 | Workflow do Core referência repositório renomeado | Core | Alto | 30 min |
-| MSG-20 | Actions descontinuadas em cinco repositórios | Transversal | Médio | 1 dia |
-| MSG-21 | Action do SonarCloud arquivada e fixada em `@master` | Transversal | Médio | 4 h |
-| MSG-22 | Chaves do Sonar divergem em três padrões diferentes | Transversal | Médio | 1 dia |
-| MSG-23 | Nenhum repositório tem Dependabot ou Renovate | Transversal | Médio | 4 h |
-| MSG-24 | Parser removeu a análise estática do CI | Parser | Médio | 2 h |
-| MSG-25 | Sem `CODEOWNERS` em nenhum repositório | Transversal | Baixo | 2 h |
-| MSG-26 | Action sem templates de issue e sem `CONTRIBUTING` | Action | Baixo | 2 h |
-
-MSG-23 é a **razão estrutural** pela qual MSG-11, MSG-18, MSG-20 e MSG-21
-puderam envelhecer até virarem trabalho de semanas: sem automação, atualizar
-dependência depende de alguém lembrar.
-
-MSG-25 merece atenção especial numa equipe que rotaciona a cada semestre: sem
-`CODEOWNERS`, o conhecimento de cada módulo se perde na virada.
-
-## E6 - Duplicação e reprodutibilidade
-
-| ID | Item | Repo | Gravidade | Esforco |
-| --- | --- | --- | --- | --- |
-| MSG-27 | `parser.py` copiado em seis repositórios, em quatro variantes divergentes | Transversal | Alto | 3 dias |
-| MSG-28 | Front e Docs versionam `yarn.lock` e `package-lock.json` ao mesmo tempo | Front | Médio | 3 h |
-| MSG-29 | Dockerfile do Front constrói para produção e roda o servidor de desenvolvimento | Front | Médio | 1 dia |
-| MSG-30 | `dist/` versionado e defasado em quase dois anos | Action | Médio | 4 h |
-| MSG-31 | Dependências de teste declaradas como dependências de produção | Action | Baixo | 1 h |
-| MSG-32 | Arquivos gerados e de sistema versionados no Service | Service | Baixo | 30 min |
-
-Em MSG-27, a versão da Action coleta `test_success_density` e
-`reliability_rating`, que as outras não coletam: **repositórios diferentes do
-mesmo projeto são medidos com conjuntos de métricas diferentes**, comprometendo a
-comparabilidade entre eles.
-
-## E7 - Qualidade de código e testes
-
-O Python do projeto está limpo - zero apontamentos de flake8. A divida se
-concentra no Front, que é a maior superfície e a menos tocada.
-
-| ID | Item | Repo | Gravidade | Esforco |
-| --- | --- | --- | --- | --- |
-| MSG-33 | Next.js 12.2.2 fora de suporte, com dependências de 2022 | Front | Alto | 2 semanas |
-| MSG-34 | Um terço do código de testes do Front e snapshot | Front | Alto | 2 semanas |
-| MSG-35 | 96 usos de `any` e 58 supressões de lint no Front | Front | Médio | 1 semana |
-| MSG-36 | Suíte do Service exige Postgres e não roda localmente sem Docker | Service | Médio | 1 dia |
-| MSG-37 | `pytest.ini` do Core se contradiz | Core | Baixo | 1 h |
-| MSG-38 | Notebook de 63 KB versionado na raiz do Core | Core | Baixo | 2 h |
-
-Sobre MSG-34: teste de snapshot detecta que algo mudou, não que algo *quebrou*.
-Na prática, **a cobertura reportada é maior do que a proteção real** - e o que
-faz o número do Front não ser comparável ao do Core.
-
-## E8 - Governanca e identidade do projeto
-
-Itens que não são código, mas que produzem código ruim. E aqui que está a causa
-de boa parte do backlog acima.
-
-| ID | Item | Repo | Gravidade | Esforco |
-| --- | --- | --- | --- | --- |
-| MSG-39 | Duas identidades concorrentes: repositórios centrais versus de semestre | Transversal | Alto | 1 semana |
-| MSG-40 | O Front em produção não corresponde ao código versionado | Front | Alto | 3 dias |
-| MSG-41 | Squash de fim de semestre apaga a autoria do trabalho | Transversal | Médio | 1 semana |
-
-**MSG-39 é a causa-raiz** de MSG-22 (chaves do Sonar divergentes), de MSG-04
-(código publicado fora do repositório central) e da confusão de qualquer pessoa
-que chegue ao projeto.
-
-> **Critério de aceite (MSG-39):** decisão registrada em ADR sobre qual conjunto
-> é canônico, repositórios não canônicos arquivados e documentação alinhada.
-
-Em MSG-41, os branches divergiram a ponto de **não haver um branch que represente
-o estado do projeto**: `main` tem 13 commits que não estão em `develop` no CLI, e
-o `develop` do Front está 1.000 commits a frente do `main`.
+#### MSG-07 - Sem teste de contrato entre Core, Service e CLI
+* **Repositório:** Transversal (Core, Service, CLI)
+* **Gravidade:** Alto | **Esforço:** 1 semana | **Alvo:** Novo módulo de integração
+* **Épico Alvo:** Testes de Integração E2E (Release 03)
+* **Contexto:** Nada no CI detecta se os consumidores do Core divergiram em relação à biblioteca central. MSG-04, MSG-05 e MSG-06 foram sintomas da mesma lacuna: não existe verificação automatizada garantindo que os dois caminhos de cálculo (CLI offline e Service hospedado) concordem no resultado.
+* > **Critério de aceite:** Suíte automatizada que roda o mesmo conjunto de métricas pelo Service e pelo CLI e falha se as notas divergirem além da tolerância aceitável de ponto flutuante.
 
 ---
 
-*Backlog técnico - MeasureSoftGram - 41 itens - UnB/FGA, 25 de agosto de 2026.*
+## 2. Itens Mapeados com Issues no ZenHub
+
+Itens com issues ativas no ZenHub, rastreadas em épicos, histórias de usuário ou tarefas do backlog da equipe.
+
+### [[BUG05.01] Falhas de Segurança (MSG-03, MSG-12, MSG-13)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/52)
+* **Issue no ZenHub/GitHub:** [#52](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/52) | **Repositório:** `2026.2-MeasureSoftGram-DOC` | **Épico Pai:** [[MSG05] Estabilização e Correções de Bugs (#37)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/37)
+* **Tipo no ZenHub:** Bug / Task
+* **Objetivo:** Mitigar vulnerabilidades críticas no MeasureSoftGram-Service através de proteção de endpoints contra acessos anônimos, cifragem de credenciais OAuth em repouso e ativação de políticas estritas de TLS.
+
+| ID | Repositório | Descrição do Item |
+| :--- | :--- | :--- |
+| **MSG-03** | Service | `GET /users/` expõe e-mail de todos os usuários sem autenticação |
+| **MSG-12** | Service | Token OAuth do GitHub armazenado em texto plano |
+| **MSG-13** | Service | Produção sem TLS: tokens de autenticação trafegam em claro |
+
+---
+
+### [[TASK05.03] Padronização e Atualização do msgram-core (1.5.4) no Service e CLI](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/50)
+* **Issue no ZenHub/GitHub:** [#50](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/50) | **Repositório:** `2026.2-MeasureSoftGram-DOC` | **Épico Pai:** [[MSG05] Estabilização e Correções de Bugs (#37)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/37)
+* **Tipo no ZenHub:** Task
+* **Objetivo:** Unificar o uso da versão canônica do motor de cálculo (`msgram-core 1.5.4`), versionar o código ausente e atualizar os testes dependentes.
+
+| ID | Repositório | Descrição do Item |
+| :--- | :--- | :--- |
+| **MSG-02** | CLI | Restrição frouxa de dependência quebra o CLI em instalação limpa (`msgram-core~=1.5.3` resolvendo para 1.5.4) |
+| **MSG-04** | Core | Código do `msgram-core 1.5.4` publicado no PyPI não estava versionado no repositório central |
+| **MSG-05** | Transversal | Três versões distintas do Core em circulação simultânea entre Service (1.4.9), CLI (1.5.4) e Core (1.5.3) |
+| **MSG-06** | CLI | Testes unitários do CLI codificando a semântica invertida antiga da métrica `ci_feedback_time` |
+
+---
+
+### [[MSG02] Revisar o fluxo de carregamento (frontend)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/42)
+* **Issue no ZenHub/GitHub:** [#42](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/42) | **Repositório:** `2026.2-MeasureSoftGram-DOC` | **Épico Pai:** [[US] Release 01 (#31)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/31)
+* **Tipo no ZenHub:** Épico
+* **Objetivo:** Otimizar a performance da aplicação através de refinamentos na interface e resolução de gargalos críticos de banco de dados e consultas N+1 no cálculo de métricas do backend.
+* **Tarefas Técnicas no ZenHub:** Contém as tarefas `#12`, `#13`, `#14`, `#15` e `#16` no repositório `2026.2-MeasureSoftGram-Service`, sendo os débitos de backend endereçados na [[TASK02.04] Service: consultas ao banco e chamadas ao GitHub e ao Grafana (#15)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/15).
+
+| ID | Repositório | Descrição do Item |
+| :--- | :--- | :--- |
+| **MSG-08** | Service | Consulta N+1 em cascata de quatro níveis no cálculo do modelo (`measures/models.py`) |
+| **MSG-09** | Service | Tabela `CollectedMetric` sem índices adequados e com ordenação global obrigatória no Meta |
+
+---
+
+### [[TASK05.02] Atualização automática de dependências nos repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/40)
+* **Issue no ZenHub/GitHub:** [#40](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/40) | **Repositório:** `2026.2-MeasureSoftGram-DOC` | **Épico Pai:** [[MSG05] Estabilização e Correções de Bugs (#37)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/37)
+* **Tipo no ZenHub:** Task / DevOps
+* **Objetivo:** Implementar `.github/dependabot.yml` em todos os repositórios do ecossistema, automatizar checagens de vulnerabilidades e fixar Actions por SHA para mitigar ataques de cadeia de suprimentos.
+
+| ID | Repositório | Descrição do Item |
+| :--- | :--- | :--- |
+| **MSG-20** | Transversal | GitHub Actions descontinuadas (`actions/checkout@v3`, `setup-node@v3`, `setup-python@v4`) em cinco repositórios |
+| **MSG-21** | Transversal | Action legada do SonarCloud arquivada pela SonarSource e fixada inseguramente em `@master` |
+| **MSG-23** | Transversal | Ausência de Dependabot ou Renovate configurado nos repositórios do ecossistema |
+
+---
+
+### [[MSG03] Deploys e Saneamento dos Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/35)
+* **Issue no ZenHub/GitHub:** [#35](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/35) | **Repositório:** `2026.2-MeasureSoftGram-DOC` | **Épico Pai:** [[US] Release 01 (#31)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/31)
+* **Tipo no ZenHub:** Épico
+* **Objetivo:** Estabelecer uma infraestrutura confiável, reproduzível e automatizada para builds, deploys e portões de qualidade de código, alinhando saneamento de repositórios legados.
+* **Tarefas Técnicas no ZenHub:** Dividido nas tarefas [[TASK03.01] Configuração de Deploys, Ambientes de Homologação, Proteção de Branches e Trusted Publishers (#51)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/51) e [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios (#57)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57).
+
+#### [[TASK03.01] Configuração de Deploys, Ambientes de Homologação, Proteção de Branches e Trusted Publishers](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/51)
+* **Issue no ZenHub/GitHub:** [#51](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/51) | **Repositório:** `2026.2-MeasureSoftGram-DOC` | **Tipo no ZenHub:** Task
+* **Objetivo:** Padronização e automação das esteiras de CD, criação dos ambientes de homologação, regras de proteção de branch e Trusted Publishers no PyPI.
+
+| ID | Repositório | Descrição do Item |
+| :--- | :--- | :--- |
+| **MSG-17** | Transversal | Ausência de portões bloqueantes de cobertura de testes em pull requests no Codecov (migrado para SonarCloud e branch protection) |
+| **MSG-29** | Front | Dockerfile do frontend construindo bundle de produção mas executando servidor de desenvolvimento |
+
+#### [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57)
+* **Issue no ZenHub/GitHub:** [#57](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57) | **Repositório:** `2026.2-MeasureSoftGram-DOC` | **Tipo no ZenHub:** Task
+* **Objetivo:** Sanear os itens estruturais de higiene de código, arquivos de ambiente, ajustes de CI/CD e expurgo de artefatos legados nos repositórios.
+
+| ID | Repositório | Descrição do Item |
+| :--- | :--- | :--- |
+| **MSG-14** | Front | `.gitignore` do frontend não cobre o diretório `.envs/` contendo arquivos de ambiente |
+| **MSG-15** | Service | `debug_toolbar` incluído em `INSTALLED_APPS` base e nas dependências de produção |
+| **MSG-16** | Service | CORS e CSRF com domínios padrão apontando para infraestruturas inativas de semestres anteriores |
+| **MSG-18** | Action | Manifesto `action.yml` declarando runtime `node16`, já removido pelo GitHub Actions |
+| **MSG-27** | Transversal | Script `parser.py` duplicado em 6 repositórios com quatro variantes divergentes de métricas |
+| **MSG-28** | Front / Docs | Convivência simultânea de `yarn.lock` e `package-lock.json` nos mesmos repositórios |
+| **MSG-31** | Action | Dependências exclusivas de teste declaradas em `dependencies` de produção no `package.json` |
+| **MSG-32** | Service | Arquivos gerados e de sistema (`.DS_Store`, `output_sonar.json`, `test.json`) rastreados pelo git |
+| **MSG-36** | Service | Suíte de testes do Service exigindo Postgres externo e sem execução local documentada sem Docker |
+| **MSG-37** | Core | Arquivo `pytest.ini` contraditório (`--ignore=./tests` juntamente com `testpaths = tests`) |
+| **MSG-38** | Core | Notebook Jupyter de 63 KB versionado na raiz do repositório Core gerando diffs ilegíveis |
+
+---
+
+## 3. Itens Descartados / Fora de Escopo
+
+Itens identificados no levantamento original que, após deliberação técnica da equipe de EPS, foram retirados do escopo de desenvolvimento do ciclo 2026.2.
+
+| ID | Item Original | Módulo | Justificativa Técnica do Descarte |
+| :--- | :--- | :--- | :--- |
+| **MSG-10** | `parser.py` grava JSON inválido em silêncio quando o Sonar falha | Transversal | O script `parser.py` é utilizado exclusivamente para coleta interna de métricas da equipe de desenvolvimento nas esteiras de CI e não influencia no produto MeasureSoftGram nem na experiência do usuário final, logo não é necessária a sua correção. |
+| **MSG-19** | Workflow do Core referencia repositório renomeado | Core | O workflow de auto-análise em questão não vai ser utilizado na esteira atual de 2026.2. |
+| **MSG-25** | Sem `CODEOWNERS` em nenhum repositório | Transversal | Por conta do modelo de desenvolvimento ser distribuído durante os semestres letivos da disciplina, a imposição estrita de revisores por módulo torna o processo inviável e gera gargalos operacionais. |
+| **MSG-26** | Action sem templates de issue e sem `CONTRIBUTING` | Action | Não há necessidade de criar template de issue e guia de contribuição isolado para este componente, uma vez que a Action é mantida internamente e os padrões organizacionais gerais já cobrem as contribuições. |
+| **MSG-40** | O Front em produção não corresponde ao código versionado | Front | O deploy em questão e o runner órfão estavam associados ao repositório do semestre anterior (2026.1). A infraestrutura de 2026.2 utiliza os novos repositórios e esteiras canônicas. |
+| **MSG-41** | Squash de fim de semestre apaga a autoria do trabalho | Transversal | O modelo adotado de fork de repositórios diminui a necessidade de alterações retroativas e squashes semestrais em massa, preservando o fluxo contínuo de PRs no ciclo atual. |
+
+---
+
+## 4. Itens Já Resolvidos
+
+Itens cuja correção já foi integrada aos repositórios e validada no ciclo 2026.2.
+
+| ID | Repositório | Descrição do Item | Resolução / Issue Vinculada |
+| :--- | :--- | :--- | :--- |
+| **MSG-01** | Parser | Fixture desatualizada derrubando testes unitários no `develop` | Resolvido na [[TAREFA] Migrar Parser: 2026.1 → central → fork 2026.2 (#9)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/9) |
+| **MSG-24** | Parser | Parser sem análise estática no CI após remoção indevida do SonarCloud | Resolvido na [[TAREFA] Migrar Parser: 2026.1 → central → fork 2026.2 (#9)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/9) |
+| **MSG-30** | Action | Pasta `dist/` compilada da Action versionada e defasada em quase 2 anos | Resolvido na [[TAREFA] Migrar Action: 2026.1 → central → fork 2026.2 (#10)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/10) |
+| **MSG-22** | Transversal | Chaves do SonarCloud divergindo em 3 padrões diferentes de organização | Resolvido na padronização canônica da organização `fga-eps-mds` via [[TAREFA] Organização dos repositórios (#14)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/14) |
+| **MSG-39** | Transversal | Duas identidades concorrentes (repositórios centrais vs. semestrais) | Resolvido pela definição formal dos forks canônicos 2026.2 e arquivamento de legados via [[TAREFA] Organização dos repositórios (#14)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/14) |
+| **MSG-11** | Service | Django 4.0.6 sem suporte de segurança desde abril de 2023 | Resolvido no repositório `MeasureSoftGram-Service` com a migração para Django 5.2 LTS na [[BACKEND] Atualizar Django para a versão 5.2 LTS (#3 no Service)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/3) |
+
+---
+
+## Histórico de Versão
+
+| Versão | Data | Descrição | Autor(es) | Revisor(es) |
+| :--- | :--- | :--- | :--- | :--- |
+| `1.0` | 25/08/2026 | Levantamento inicial de dívida técnica, defeitos ativos e gargalos a partir do diagnóstico | Luiza Maluf | Milena Fernandes Rocha |
+| `1.1` | 23/09/2026 | Reestruturação do artefato, categorização por status de mapeamento, rastreabilidade completa no ZenHub/GitHub e justificativas de descarte | Luciano Freitas | Equipe EPS/MDS |
+| `1.2` | 23/09/2026 | Conversão dos itens de segurança (MSG-03, MSG-12, MSG-13) na TASK #52 do Épico #37, remoção da categoria sem issue e renumeração do artefato | Luciano Freitas | Equipe EPS/MDS |
+| `1.3` | 25/09/2026 | Descarte do MSG-10 (coleta interna de métricas sem impacto no produto), reestruturação da Seção 1 para "Itens Mapeados Sem Issue Ainda" com alocação do MSG-33/34/35 na Release 02 e MSG-07 na Release 03, e alinhamento do Épico #42 com o ZenHub | Luciano Freitas | Equipe EPS/MDS |
+| `1.4` | 25/09/2026 | Sincronização fidedigna dos títulos das issues com o ZenHub (Épico MSG03 e tarefas desdobradas TASK03.01/03.02) e inserção de note/detalhes sobre o início do MSG-33 no Épico MSG02 | Luciano Freitas | Equipe EPS/MDS |

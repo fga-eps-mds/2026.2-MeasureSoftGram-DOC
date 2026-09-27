@@ -31,6 +31,24 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Lean Inception',
+      collapsed: false,
+      items: [
+        'LeanInception/atv1',
+        'LeanInception/atv2',
+        'LeanInception/atv3',
+        'LeanInception/atv4',
+        'LeanInception/atv5',
+        'LeanInception/atv6',
+        'LeanInception/atv7',
+        'LeanInception/atv8',
+        'LeanInception/atv9',
+        'LeanInception/atv10',
+        'LeanInception/board',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Diagnóstico',
       collapsed: false,
       items: ['diagnostico/diagnostico', 'diagnostico/backlog-tecnico'],
@@ -39,7 +57,8 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Planejamento',
       items: [
-        'planejamento/planejamento',
+        'planejamento/metodologia',
+        'planejamento/backlog',
         'planejamento/eap',
         'planejamento/roadmap',
         'planejamento/riscos',
@@ -61,6 +80,7 @@ const sidebars: SidebarsConfig = {
         'reunioes/reunioes',
         'reunioes/pauta-po-02-09',
         'reunioes/ata-po-02-09',
+        'reunioes/ata-po-23-09',
       ],
     },
     {
