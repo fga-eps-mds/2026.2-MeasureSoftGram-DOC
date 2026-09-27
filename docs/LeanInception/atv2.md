@@ -1,4 +1,4 @@
-# Dia 2
+# Atividade 2
 
 ## É/Não É - Faz/Não Faz (ENFN)
 
