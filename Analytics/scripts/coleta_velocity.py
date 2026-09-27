@@ -59,8 +59,8 @@ def main() -> int:
         return 2
     except ZenhubError as erro:
         print(f"Erro ao consultar o Zenhub: {erro}", file=sys.stderr)
-        print("Se for erro de rede/TLS, tente: ZENHUB_IGNORAR_PROXY=1 python scripts/coleta_velocity.py",
-              file=sys.stderr)
+        print("Se for erro de TLS (SSLEOFError), instale o Node 18+ ou force: "
+              "ZENHUB_TRANSPORTE=node python scripts/coleta_velocity.py", file=sys.stderr)
         return 1
     return 0
 

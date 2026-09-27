@@ -117,6 +117,64 @@ def _transporte_requests(url: str, corpo: dict, headers: dict, timeout: float) -
     raise ConnectionError(_resumo(erro_final) + " (falhou pelo proxy e em conexão direta)") from None
 
 
+_NODE = {"ativo": None}  # None = ainda não decidido; True/False depois
+SCRIPT_NODE = __import__("pathlib").Path(__file__).resolve().parents[2] / "scripts" / "zenhub_post.mjs"
+
+
+def _transporte_node(url: str, corpo: dict, headers: dict, timeout: float) -> Resposta:
+    """Mesmo contrato do transporte requests, feito pelo Node (scripts/zenhub_post.mjs).
+
+    A chave vai por variável de ambiente do processo filho, não por argumento
+    (argumentos aparecem na lista de processos).
+    """
+    import json
+    import subprocess
+
+    env = {**os.environ, "ZENHUB_AUTH": headers.get("Authorization", "")}
+    entrada = json.dumps({"url": url, "body": corpo, "timeoutMs": int(timeout * 1000)})
+    try:
+        p = subprocess.run(["node", str(SCRIPT_NODE)], input=entrada, capture_output=True, text=True,
+                           encoding="utf-8", env=env, timeout=timeout + 15)
+    except subprocess.TimeoutExpired:
+        raise TimeoutError("node: tempo esgotado") from None
+    except FileNotFoundError:
+        raise ConnectionError("node não encontrado no PATH") from None
+    try:
+        saida = json.loads(p.stdout or "{}")
+    except ValueError:
+        raise ConnectionError(f"node: saída inválida ({(p.stderr or '')[:120]})") from None
+    if "erro" in saida:
+        if saida["erro"].startswith("timeout"):
+            raise TimeoutError("node " + saida["erro"][:180])
+        raise ConnectionError("node " + saida["erro"][:180])
+    texto = saida.get("body", "")
+    try:
+        dado = json.loads(texto)
+    except ValueError:
+        dado = texto
+    return Resposta(int(saida.get("status", 0)), saida.get("headers") or {}, dado)
+
+
+def _transporte_padrao(url: str, corpo: dict, headers: dict, timeout: float) -> Resposta:
+    """Python (requests) por padrão; Node quando o TLS do Python falha e há Node no PATH.
+
+    ``ZENHUB_TRANSPORTE=node`` força o Node; ``=python`` desliga a troca automática.
+    """
+    import shutil
+
+    escolha = os.environ.get("ZENHUB_TRANSPORTE", "auto").lower()
+    if escolha == "node" or _NODE["ativo"]:
+        return _transporte_node(url, corpo, headers, timeout)
+    try:
+        return _transporte_requests(url, corpo, headers, timeout)
+    except ConnectionError as erro:
+        tls = "SSL" in str(erro) or "EOF" in str(erro)
+        if escolha == "python" or not tls or not shutil.which("node") or not SCRIPT_NODE.exists():
+            raise
+        _NODE["ativo"] = True
+        return _transporte_node(url, corpo, headers, timeout)
+
+
 def _resumo(erro: Exception) -> str:
     """Mensagem curta da exceção de rede (sem cabeçalhos, portanto sem a chave)."""
     texto = str(erro)
@@ -153,7 +211,7 @@ def workspace_do_ambiente() -> str:
 class ZenhubClient:
     api_key: str = field(repr=False)
     workspace_id: str = WORKSPACE_PADRAO
-    transporte: Transporte = _transporte_requests
+    transporte: Transporte = _transporte_padrao
     timeout: float = 60.0
     max_tentativas: int = 5
     espera_base: float = 2.0
@@ -191,7 +249,10 @@ class ZenhubClient:
         for tentativa in range(self.max_tentativas):
             self.requisicoes += 1
             try:
+                antes = _NODE["ativo"]
                 r = self.transporte(self.url, {"query": query, "variables": variaveis}, headers, self.timeout)
+                if _NODE["ativo"] and not antes:
+                    self.log("    o TLS do Python foi cortado; usando o Node (scripts/zenhub_post.mjs) daqui em diante")
             except (TimeoutError, ConnectionError, OSError) as erro:
                 ultimo = str(erro) or erro.__class__.__name__
                 espera = self._espera(tentativa)

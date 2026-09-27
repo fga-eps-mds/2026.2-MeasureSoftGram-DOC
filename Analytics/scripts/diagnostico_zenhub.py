@@ -23,7 +23,8 @@ sys.path.insert(0, str(RAIZ))
 import requests  # noqa: E402
 
 from src.zenhub import queries  # noqa: E402
-from src.zenhub.client import API_URL, _resumo, carregar_env, chave_do_ambiente, workspace_do_ambiente  # noqa: E402
+from src.zenhub.client import (API_URL, _resumo, _transporte_node, carregar_env, chave_do_ambiente,  # noqa: E402
+                               workspace_do_ambiente)
 
 
 def host(url):
@@ -79,6 +80,24 @@ def main():
             teste("scopeChange (1)", direta, queries.SPRINT_SCOPE_CHANGES,
                   {"sprintId": sid, "first": 1, "after": None}, chave)
             teste("releases (1)", direta, queries.RELEASES, {"workspaceId": ws, "first": 1, "after": None}, chave)
+    teste_node(chave, ws)
+
+
+def teste_node(chave, ws):
+    import shutil
+    if not shutil.which("node"):
+        print("[node  ] node não encontrado no PATH (instale o Node 18+)")
+        return
+    for nome, q, v in (("sem chave (espera 401)", "{__typename}", {}),
+                       ("sprints (1)", queries.SPRINTS, {"workspaceId": ws, "first": 1, "after": None})):
+        ini = time.time()
+        try:
+            h = {"Authorization": f"Bearer {chave}"} if chave and nome != "sem chave (espera 401)" else {}
+            r = _transporte_node(API_URL, {"query": q, "variables": v}, h, 60)
+            res = f"HTTP {r.status} · {str(r.corpo)[:120]}"
+        except Exception as erro:  # noqa: BLE001
+            res = str(erro)[:200]
+        print(f"[node  ] {nome:<22} {time.time() - ini:5.1f}s  {res}", flush=True)
 
 
 if __name__ == "__main__":

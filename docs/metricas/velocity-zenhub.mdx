@@ -126,6 +126,16 @@ time (`planilhas/sprints.csv`). A coluna "Fonte da release" diz qual regra valeu
 7. O `completedPoints` do Zenhub aparece na tabela só como conferência: ele usa o
    estado atual das issues, não a data em que foram concluídas.
 
+## Erro de TLS no Windows (`SSLEOFError`)
+
+Em algumas máquinas o antivírus ou o firewall corta a conexão TLS do Python com
+`api.zenhub.com` (`SSL: UNEXPECTED_EOF_WHILE_READING`), enquanto o Node conecta
+normalmente — foi por isso que o time já tinha um `coleta_zenhub.mjs`. O cliente
+detecta esse erro e passa a fazer as requisições pelo Node
+(`scripts/zenhub_post.mjs`, Node 18+), sem mudar nada no resto da coleta. Para
+forçar: `ZENHUB_TRANSPORTE=node`. Para investigar:
+`python scripts/diagnostico_zenhub.py` (não imprime a chave).
+
 ## Como rodar
 
 ```bash

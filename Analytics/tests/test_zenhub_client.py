@@ -92,6 +92,47 @@ class ClienteTest(unittest.TestCase):
         self.assertEqual(cliente(f).get_sprint_issues("x"), [])
 
 
+@unittest.skipUnless(__import__("shutil").which("node"), "node não instalado")
+class TransporteNodeTest(unittest.TestCase):
+    """O transporte em Node (fallback do TLS do Python) contra um servidor HTTP local."""
+
+    def test_post_status_headers_e_chave_por_ambiente(self):
+        import json
+        import threading
+        from http.server import BaseHTTPRequestHandler, HTTPServer
+
+        recebido = {}
+
+        class H(BaseHTTPRequestHandler):
+            def do_POST(self):
+                recebido["auth"] = self.headers.get("Authorization")
+                recebido["corpo"] = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+                self.send_response(429)
+                self.send_header("Retry-After", "3")
+                self.end_headers()
+                self.wfile.write(b'{"errors": []}')
+
+            def log_message(self, *a):
+                pass
+
+        srv = HTTPServer(("127.0.0.1", 0), H)
+        threading.Thread(target=srv.handle_request, daemon=True).start()
+        r = zc._transporte_node(f"http://127.0.0.1:{srv.server_port}/", {"query": "{x}"},
+                                {"Authorization": "Bearer k"}, 10)
+        srv.server_close()
+        self.assertEqual((r.status, r.headers.get("retry-after"), r.corpo), (429, "3", {"errors": []}))
+        self.assertEqual(recebido, {"auth": "Bearer k", "corpo": {"query": "{x}"}})
+
+    def test_erro_de_rede_vira_connection_error(self):
+        import socket
+        s = socket.socket()
+        s.bind(("127.0.0.1", 0))
+        porta = s.getsockname()[1]
+        s.close()
+        with self.assertRaises(ConnectionError):
+            zc._transporte_node(f"http://127.0.0.1:{porta}/", {}, {}, 5)
+
+
 class ColetaFalhaTest(unittest.TestCase):
     def test_falha_de_rede_numa_sprint_nao_derruba_a_coleta(self):
         from datetime import datetime, timezone
