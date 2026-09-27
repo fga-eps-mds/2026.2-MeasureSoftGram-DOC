@@ -12,20 +12,6 @@ Também foram adicionados novos cards relacionados às funcionalidades de Inteli
 
 ![Visão do Produto - Lean Inception Atividade 4](@site/static/img/LeanDia3.png)
 
-Em seguida, foram revisadas as personas definidas no semestre anterior, considerando que o projeto representa a continuidade do produto já desenvolvido. Após a avaliação conjunta, foi identificado que os perfis e características estabelecidos anteriormente permaneciam adequados ao contexto atual do produto.
-
-Dessa forma, o mesmo padrão de avaliação e caracterização das personas foi mantido, preservando as definições já estabelecidas e garantindo a continuidade da compreensão dos diferentes perfis de usuários atendidos pela solução. Dessa forma, chegou-se nesta reunião ao seguinte resultado:
-
-![Lean Inception - Persona 1](@site/static/img/Persona1.png)
-
-![Lean Inception - Persona 2](@site/static/img/Persona2.png)
-
-![Lean Inception - Persona 3](@site/static/img/Persona3.png)
-
-![Lean Inception - Persona 4](@site/static/img/Persona4.png)
-
-![Lean Inception - Persona 5](@site/static/img/Persona5.png)
-
 ## Referências 
 
 Lean Inception: Como alinhar pessoas e construir o produto certo. Caroli, Paulo.
