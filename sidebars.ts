@@ -36,7 +36,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'LeanInception/atv1',
         'LeanInception/atv2',
-        'LeanInception/dia3',
+        'LeanInception/atv3',
         'LeanInception/dia4',
         'LeanInception/dia5',
         'LeanInception/dia6',

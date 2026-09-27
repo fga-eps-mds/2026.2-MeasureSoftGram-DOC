@@ -1,4 +1,4 @@
-# Dia 3
+# Atividade 3
 
 ## Objetivos do Produto
 
