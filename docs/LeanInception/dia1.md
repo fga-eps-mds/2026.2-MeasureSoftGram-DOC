@@ -29,7 +29,7 @@ Durante esta etapa, foi realizada, junto ao Product Owner (PO), uma análise da 
 
 Lean Inception: Como alinhar pessoas e construir o produto certo. Caroli, Paulo.
 
-## Histórico de Versao
+## Histórico de Versão
 
 | Alteração | Data | Autor | 
 | - | - | - |
