@@ -39,7 +39,7 @@ query($ws: ID!, $depois: String) {
           nodes {
             number title state htmlUrl
             repository { name }
-            issueType { name }
+            issueType { ... on GithubIssueType { name } ... on ZenhubIssueType { name } }
             estimate { value }
             parentIssue { number repository { name } }
             pipelineIssue(workspaceId: $ws) { pipeline { name } }
@@ -107,9 +107,9 @@ def carregar_env() -> None:
 
 def main() -> int:
     carregar_env()
-    token = os.environ.get("ZENHUB_TOKEN")
+    token = os.environ.get("ZENHUB_API_KEY") or os.environ.get("ZENHUB_TOKEN")
     if not token:
-        print("Defina ZENHUB_TOKEN.", file=sys.stderr)
+        print("Defina ZENHUB_API_KEY no Analytics/.env.", file=sys.stderr)
         return 1
     sprints = []
     for s in consultar(token):

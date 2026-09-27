@@ -44,7 +44,8 @@ STLITE = "0"
 REQUISITOS = ["altair", "requests", "tzdata"]
 
 INCLUIR = [
-    ("Analytics", ["app.py", "config.py", "src/*.py", "planilhas/*.csv", "data/*.json", "data/zenhub/*.json"]),
+    ("Analytics", ["app.py", "config.py", "src/*.py", "src/zenhub/*.py", "planilhas/*.csv", "data/*.json",
+                   "data/zenhub/*.json", "data/zenhub/velocity/*.json"]),
     ("analytics-raw-data", ["*.json"]),
 ]
 

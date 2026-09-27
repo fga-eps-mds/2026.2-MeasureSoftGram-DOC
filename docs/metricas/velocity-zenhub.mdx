@@ -1,0 +1,141 @@
+---
+id: velocity-zenhub
+title: Velocity pela API do Zenhub
+sidebar_position: 3
+---
+
+# Velocity pela API do Zenhub
+
+A aba **Projeto → Velocity (Zenhub)** do [dashboard](pathname:///dashboard/) mostra,
+por sprint, os story points **planejados** e **concluídos**, a quantidade de
+issues, a release e a **Average Velocity** das sprints concluídas. Tudo vem da
+API GraphQL pública do Zenhub; nenhum número é digitado ou simulado.
+
+## Como os dados chegam
+
+```mermaid
+flowchart LR
+  API["Zenhub GraphQL<br/>api.zenhub.com/public/graphql"] --> CLI["src/zenhub/client.py<br/>paginação, retries, rate limit"]
+  CLI --> NORM["src/zenhub/normalizacao.py"]
+  NORM --> SNAP["data/zenhub/velocity/<br/>zenhub-velocity-*.json<br/>linhas-de-base.json"]
+  SNAP --> CALC["src/velocity.py<br/>planejado, concluído, média"]
+  CALC --> DASH["src/velocity_dashboard.py<br/>cards, gráfico, filtros, tabela"]
+```
+
+| Onde roda | Quem chama a API | Chave |
+| --- | --- | --- |
+| GitHub Actions (`zenhub-velocity.yml`, diário) | `scripts/coleta_velocity.py` | secret `ZENHUB_API_KEY` |
+| Máquina do time (`streamlit run app.py`) | botão **Atualizar dados** ou o script | `Analytics/.env` |
+| GitHub Pages (stlite, no navegador) | ninguém: só lê o último snapshot | nenhuma |
+
+O dashboard publicado não tem backend, então **a chave nunca vai para o
+navegador**: ele lê o snapshot que o workflow gravou. O botão **Atualizar dados**
+fica desabilitado lá e funciona na execução local.
+
+## Campos da API utilizados
+
+Conferidos no schema público do Zenhub
+(`developers.zenhub.com/schema/zenhub-public-api.graphql`, lido em 27/09/2026) e
+validados com `graphql.validate` antes de escrever o código. As queries estão em
+`Analytics/src/zenhub/queries.py`.
+
+| Tipo.campo | Para que serve |
+| --- | --- |
+| `Workspace.sprints(orderBy: START_AT)` | lista de sprints |
+| `Sprint.id`, `name`, `generatedName`, `startAt`, `endAt`, `state` (`OPEN`/`CLOSED`) | identificação, período e situação |
+| `Sprint.issues` | escopo **atual** da sprint |
+| `Sprint.scopeChange` → `ScopeChange.action` (`ISSUE_ADDED`/`ISSUE_REMOVED`), `effectiveAt`, `estimateValue`, `issue` | histórico de escopo: base do **planejado** |
+| `Sprint.totalPoints`, `completedPoints`, `closedIssuesCount` | números do próprio Zenhub, só para conferência |
+| `Issue.id`, `number`, `title`, `repository.name`, `htmlUrl` | identificação |
+| `Issue.estimate.value` | story points |
+| `Issue.state` (`OPEN`/`CLOSED`), `Issue.closedAt` | conclusão e data de conclusão |
+| `Issue.pipelineIssue(workspaceId).pipeline.name`, `.latestTransferTime` | issue aberta no pipeline `Done` e quando foi movida |
+| `Issue.issueType` (união `GithubIssueType`/`ZenhubIssueType`, campo `name`) | só Feature, Task e Bug pontuam |
+| `Issue.parentIssue.id`, `Issue.pullRequest` | não somar pai e filha; ignorar PR |
+| `Workspace.releases` → `Release.id`, `title`, `startOn`, `endOn`, `state`, `closedAt`, `issues` | release de cada sprint |
+
+Limites da API que o cliente trata: paginação Relay (`first`/`after`, máximo 100),
+**complexidade máxima de 200 pontos por query** (o cliente usa páginas pequenas e
+reduz pela metade se o Zenhub recusar), 90 s de processamento por minuto por
+chave (HTTP 429 → espera `Retry-After` ou backoff exponencial), timeout e 5xx
+(até 5 tentativas), 401/403 (erro de autenticação, sem nova tentativa) e nós
+repetidos entre páginas (descartados pelo `id`).
+
+:::note Achado ao conferir o schema
+`issueType { name }` — usado no antigo `scripts/coleta_zenhub.py` — **não é válido**
+no schema atual: `issueType` é uma união e exige fragmentos
+(`... on GithubIssueType { name }`). O script foi corrigido junto.
+:::
+
+## Regras de cálculo
+
+**Issue pontuável.** US (`Feature`), `Task` e `Bug` sem filhas, conforme
+`planilhas/parametros.csv` (`niveis_pontuados`, decisão D2). PR, Épico e Sub-task
+não pontuam. Issue pontuável **sem estimativa** conta como issue, com **0 SP**,
+e é sinalizada na coluna de observações — o painel nunca estima por ela.
+
+**Planned SP.** Issues pontuáveis que estavam na sprint ao fim da **janela de
+planning** (início + 24 h, parâmetro `janela_planning_horas`, porque a planning
+acontece no primeiro dia). O conjunto é reconstituído pelo `scopeChange`, e a
+estimativa de cada issue é a do evento de entrada (`estimateValue`). Uma issue
+que entra depois não altera o planejado; se for concluída, aparece em
+"Adicionado depois".
+
+**Completed SP = Velocity.** Issues pontuáveis concluídas **entre o início e o
+fim** da sprint e que estavam na sprint naquele momento. Conclusão = `closedAt`;
+para issue aberta no `Done`, `latestTransferTime`. Issue fechada depois do fim
+não conta naquela sprint; issue movida para outra sprint conta onde estava ao
+fechar.
+
+**Average Velocity.** Média da velocity das sprints **concluídas** que estão no
+filtro. A sprint em andamento (mostrada à parte, com valores parciais) e as
+canceladas ficam fora. Só aparece com pelo menos 2 sprints concluídas
+(`min_sprints_media_velocity`).
+
+**Completion rate** = Completed ÷ Planned × 100. Planejado zero ou indisponível
+→ vazio, sem divisão.
+
+**Release.** A release do Zenhub que contém mais issues da sprint; sem isso, a
+release cujas datas cobrem o fim da sprint; sem isso, a release do calendário do
+time (`planilhas/sprints.csv`). A coluna "Fonte da release" diz qual regra valeu.
+
+## Limitações (e o que foi feito para não inventar número)
+
+1. **O Zenhub não guarda um snapshot do início da sprint.** O que existe é o
+   histórico de entradas e saídas (`scopeChange`). Ele permite saber *quais*
+   issues estavam na sprint no início, e com que estimativa **entraram** — mas
+   não registra mudanças de estimativa feitas *depois* da entrada. Se uma issue
+   entrou com 3 SP antes da sprint e foi re-estimada para 5 SP antes da
+   planning, o planejado usa 3.
+2. **Por isso o planejado é congelado.** Na primeira coleta após a janela de
+   planning, o planejado de cada sprint é gravado em
+   `data/zenhub/velocity/linhas-de-base.json` e não muda mais. Com a coleta
+   diária do workflow, a linha de base das próximas sprints fica exata.
+3. **Sem histórico, não há planejado.** Se o Zenhub não devolver `scopeChange`
+   para uma sprint que tem issues, o planejado aparece como *indisponível*. O
+   escopo atual é mostrado separado ("Escopo atual SP") e nunca substitui o
+   planejado.
+4. **Estimativa do concluído é a atual.** A API não expõe o histórico de
+   estimativas; os pontos concluídos usam `estimate.value` no momento da coleta.
+5. **Issue aberta no `Done`:** `latestTransferTime` é a *última* movimentação de
+   pipeline. Se alguém mexer na issue depois, a data muda. Fechar a issue ao
+   concluir (critério D2) evita o problema; issue no `Done` sem data não conta.
+6. **Sprint cancelada** não existe no Zenhub. Para tirar uma sprint da média,
+   liste o id dela em `sprints_canceladas` (separado por `;`) em
+   `planilhas/parametros.csv`.
+7. O `completedPoints` do Zenhub aparece na tabela só como conferência: ele usa o
+   estado atual das issues, não a data em que foram concluídas.
+
+## Como rodar
+
+```bash
+cd Analytics
+cp .env.example .env          # preencher ZENHUB_API_KEY (nunca commitar)
+python scripts/coleta_velocity.py
+streamlit run app.py          # aba Projeto → Velocity (Zenhub)
+python -m unittest discover -s tests -v
+```
+
+No GitHub: criar o secret `ZENHUB_API_KEY` em *Settings → Secrets and variables →
+Actions*. O workflow `zenhub-velocity.yml` roda todo dia, commita o snapshot e
+dispara o deploy.

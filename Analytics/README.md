@@ -219,3 +219,23 @@ tem visão em tabela no expansor logo abaixo.
 O dashboard de 2026.1 (`2026.1-MeasureSoftGram-DOC/Analytics/dashboard.py`) é a
 referência anterior: 1272 linhas com Gantt, velocity e o modelo **Q-Rapids**. Vale
 consultar para os gráficos de processo que ainda faltam aqui.
+
+## Velocity pela API do Zenhub
+
+A aba **Projeto → Velocity (Zenhub)** usa dados reais da API GraphQL do Zenhub,
+em camadas separadas:
+
+```
+src/zenhub/client.py        # única camada que fala com a API (paginação, retries, rate limit)
+src/zenhub/queries.py       # queries, validadas contra o schema público
+src/zenhub/normalizacao.py  # nós GraphQL -> registros planos
+src/zenhub/coleta.py        # snapshot em data/zenhub/velocity/
+src/velocity.py             # calculate_velocity / calculate_average_velocity / calculate_completion_rate
+src/velocity_dashboard.py   # render_filters / render_metrics / render_velocity_chart / render_table
+scripts/coleta_velocity.py  # coleta pela linha de comando (e pelo botão "Atualizar dados")
+tests/                      # python -m unittest discover -s tests -v
+```
+
+Chave em `Analytics/.env` (`ZENHUB_API_KEY`, ver `.env.example`) ou no secret do
+GitHub; nunca no código nem no site publicado. Regras, campos usados e limitações
+do planejado: `docs/metricas/velocity-zenhub.mdx`.

@@ -30,7 +30,7 @@ import pandas as pd
 import streamlit as st
 
 import config
-from src import gestao, planilhas, qualidade, resumo, theme
+from src import gestao, planilhas, qualidade, resumo, theme, velocity_dashboard
 from src.loader import (
     carregar_issues,
     carregar_runs,
@@ -205,7 +205,8 @@ if not agregado.empty:
 (aba_geral, aba_produto, aba_processo, aba_projeto, aba_gestao) = st.tabs(
     ["🧭 Visão geral", "🧪 Produto", "⚙️ Processo", "📈 Projeto", "🛡️ Riscos e decisões"])
 with aba_projeto:
-    aba_evm, aba_velocity, aba_custos = st.tabs(["AgileEVM", "Velocity e burndown", "Custos"])
+    aba_evm, aba_vel_zh, aba_velocity, aba_custos = st.tabs(
+        ["AgileEVM", "Velocity (Zenhub)", "Velocity e burndown (planilha)", "Custos"])
 with aba_gestao:
     aba_riscos, aba_decisoes = st.tabs(["Riscos", "Decisões"])
 
@@ -811,6 +812,11 @@ with aba_evm:
         if not sumario.empty:
             with st.expander("Ver a aba Sumário EVM"):
                 st.dataframe(sumario, use_container_width=True, hide_index=True)
+
+# ───────────────────────── velocity (API do Zenhub) ─────────────────────────
+
+with aba_vel_zh:
+    velocity_dashboard.render(params, cal_sprints, finalizar)
 
 # ───────────────────────── velocity e burndown ─────────────────────────
 
