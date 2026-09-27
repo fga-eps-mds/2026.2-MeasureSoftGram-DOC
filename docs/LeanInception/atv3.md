@@ -10,7 +10,7 @@ Nesta atividade, foi realizada a construção e revisão dos objetivos do produt
 
 Também foram adicionados novos cards relacionados às funcionalidades de Inteligência Artificial (IA) previstas para esta etapa do projeto. Após a revisão e inclusão das novas contribuições, os cards foram novamente **clusterizados**, agrupando funcionalidades relacionadas em objetivos comuns. Essa reorganização permitiu consolidar as contribuições dos diferentes semestres e estruturar uma visão atualizada dos principais objetivos do produto. Dessa forma, chegou-se nesta reunião ao seguinte resultado:
 
-![Visão do Produto - Lean Inception Atividade 4](@site/static/img/LeanDia3.png)
+![Visão do Produto - Lean Inception Atividade 4](@site/static/img/Atv3.png)
 
 ## Referências 
 
