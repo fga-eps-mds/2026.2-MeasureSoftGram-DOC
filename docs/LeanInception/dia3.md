@@ -22,15 +22,15 @@ Em seguida, foram revisadas as personas definidas no semestre anterior, consider
 
 Dessa forma, o mesmo padrão de avaliação e caracterização das personas foi mantido, preservando as definições já estabelecidas e garantindo a continuidade da compreensão dos diferentes perfis de usuários atendidos pela solução. Dessa forma, chegou-se nesta reunião ao seguinte resultado:
 
-![Visão do Produto - Lean Inception Dia 1](@site/static/img/Persona1.png)
+![Lean Inception - Persona 1](@site/static/img/Persona1.png)
 
-![Visão do Produto - Lean Inception Dia 1](@site/static/img/Persona2.png)
+![Lean Inception - Persona 2](@site/static/img/Persona2.png)
 
-![Visão do Produto - Lean Inception Dia 1](@site/static/img/Persona3.png)
+![Lean Inception - Persona 3](@site/static/img/Persona3.png)
 
-![Visão do Produto - Lean Inception Dia 1](@site/static/img/Persona4.png)
+![Lean Inception - Persona 4](@site/static/img/Persona4.png)
 
-![Visão do Produto - Lean Inception Dia 1](@site/static/img/Persona5.png)
+![Lean Inception - Persona 5](@site/static/img/Persona5.png)
 
 ## Referências 
 
