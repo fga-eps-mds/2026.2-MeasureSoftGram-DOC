@@ -68,10 +68,11 @@ Transporte = Callable[[str, dict, dict, float], Resposta]
 
 
 _SESSOES: dict = {}
+_MODO: dict = {"direta": None}  # modo de conexão que funcionou por último (None = ainda não sabemos)
 
 
 def _sessao(direta: bool):
-    """Sessão HTTP reaproveitada (keep-alive). ``direta`` ignora o proxy do sistema."""
+    """Sessão HTTP por modo. ``direta`` ignora o proxy do sistema/variáveis HTTPS_PROXY."""
     import requests
 
     if direta not in _SESSOES:
@@ -88,32 +89,32 @@ def _ignorar_proxy() -> bool:
 def _transporte_requests(url: str, corpo: dict, headers: dict, timeout: float) -> Resposta:
     """Transporte padrão. Importa requests aqui para o módulo carregar sem ele.
 
-    Se o TLS falhar pelo proxy do sistema (comum no Windows), refaz a mesma
-    requisição em conexão direta e mantém a conexão direta daí em diante —
-    o mesmo comportamento do ``coleta_zenhub.py``.
+    Tenta primeiro o modo que funcionou por último (no início: pelo proxy do
+    sistema, ou direto se ``ZENHUB_IGNORAR_PROXY=1``). Se o TLS ou a conexão
+    falharem, tenta o outro modo na mesma hora; o que funcionar passa a ser o
+    preferido. ``Connection: close`` evita reaproveitar conexão que o servidor
+    ou o proxy já fechou (causa comum de ``SSLEOFError``).
     """
     import requests
 
-    def enviar(direta: bool):
-        return _sessao(direta).post(url, json=corpo, headers=headers, timeout=timeout)
-
-    try:
+    preferida = _MODO["direta"] if _MODO["direta"] is not None else _ignorar_proxy()
+    headers = {**headers, "Connection": "close"}
+    erro_final = None
+    for direta in (preferida, not preferida):
         try:
-            r = enviar(_ignorar_proxy())
-        except requests.exceptions.SSLError:
-            if _ignorar_proxy():
-                raise
-            os.environ["ZENHUB_IGNORAR_PROXY"] = "1"
-            r = enviar(True)
-    except requests.Timeout as erro:
-        raise TimeoutError(_resumo(erro)) from None
-    except requests.ConnectionError as erro:
-        raise ConnectionError(_resumo(erro)) from None
-    try:
-        dado = r.json()
-    except ValueError:
-        dado = r.text
-    return Resposta(r.status_code, {k.lower(): v for k, v in r.headers.items()}, dado)
+            r = _sessao(direta).post(url, json=corpo, headers=headers, timeout=timeout)
+        except requests.Timeout as erro:
+            raise TimeoutError(_resumo(erro)) from None
+        except requests.ConnectionError as erro:  # inclui SSLError
+            erro_final = erro
+            continue
+        _MODO["direta"] = direta
+        try:
+            dado = r.json()
+        except ValueError:
+            dado = r.text
+        return Resposta(r.status_code, {k.lower(): v for k, v in r.headers.items()}, dado)
+    raise ConnectionError(_resumo(erro_final) + " (falhou pelo proxy e em conexão direta)") from None
 
 
 def _resumo(erro: Exception) -> str:
