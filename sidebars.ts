@@ -31,6 +31,20 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Lean Inception',
+      collapsed: false,
+      items: [
+        'LeanInception/dia1',
+        'LeanInception/dia2',
+        'LeanInception/dia3',
+        'LeanInception/dia4',
+        'LeanInception/dia5',
+        'LeanInception/dia6',
+        'LeanInception/dia7',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Diagnóstico',
       collapsed: false,
       items: ['diagnostico/diagnostico', 'diagnostico/backlog-tecnico'],
