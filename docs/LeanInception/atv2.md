@@ -14,7 +14,7 @@ Além disso, foram incorporados novos cards relacionados às funcionalidades de 
 
 Como resultado dessa reunião, chegou-se ao seguinte quadro ENFN:
 
-![Visão do Produto - Lean Inception Dia 1](@site/static/img/LeanDia2.png)
+![Visão do Produto - Lean Inception Dia 1](@site/static/img/Atv2.png)
 
 ## Referências 
 
