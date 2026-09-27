@@ -34,7 +34,7 @@ const sidebars: SidebarsConfig = {
       label: 'Lean Inception',
       collapsed: false,
       items: [
-        'LeanInception/dia1',
+        'LeanInception/atv1',
         'LeanInception/dia2',
         'LeanInception/dia3',
         'LeanInception/dia4',
