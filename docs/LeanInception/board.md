@@ -6,7 +6,10 @@ Nesta página, está disponibilizado o Canvas consolidado da Lean Inception, reu
 
 O Canvas completo pode ser consultado abaixo, por meio do conteúdo incorporado diretamente do Figma.
 
-# INSERIR O IFRAME
+<iframe style={{ border: '1px solid rgba(0, 0, 0, 0.1)'}} 
+width="950" 
+height="450" 
+src="https://embed.figma.com/board/F7d09c84mBgpa5dtCIceVQ/Vis%C3%A3o-do-Produto-MeasureSoftgram-2026-2?node-id=0-1&embed-host=share" allowfullscreen></iframe>
 
 ## Histórico de Versão
 
