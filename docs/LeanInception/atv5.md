@@ -8,9 +8,14 @@ As Jornadas de Usuário representam o conjunto de etapas e ações realizadas po
 
 Nesta atividade, foi realizada a construção das Jornadas de Usuário a partir das personas e dos objetivos previamente definidos. Diferentemente de outras etapas do projeto, as jornadas foram desenvolvidas integralmente neste semestre, uma vez que a estrutura elaborada no semestre anterior havia sido sinalizada pelo professor da disciplina como inadequada.
 
-Dessa forma, as jornadas foram reconstruídas considerando o contexto atual do produto, as características das personas e os objetivos estabelecidos para esta etapa do projeto. A nova construção serviu como base para o levantamento e a definição das funcionalidades do produto.
+Dessa forma, as jornadas foram reconstruídas considerando o contexto atual do produto, as características das personas e os objetivos estabelecidos para esta etapa do projeto. A nova construção serviu como base para o levantamento e a definição das funcionalidades do produto. Sendo assim, foram construídas as seguintes Jornadas de uuário.
 
-# INSERIR JORNADAS
+![Lean Inception - Jornada 1](@site/static/img/Jornada1.png)
+![Lean Inception - Jornada 2](@site/static/img/Jornada2.png)
+![Lean Inception - Jornada 3](@site/static/img/Jornada3.png)
+![Lean Inception - Jornada 4](@site/static/img/Jornada4.png)
+![Lean Inception - Jornada 5](@site/static/img/Jornada5.png)
+![Lean Inception - Jornada 6](@site/static/img/Jornada6.png)
 
 ## Referências 
 
