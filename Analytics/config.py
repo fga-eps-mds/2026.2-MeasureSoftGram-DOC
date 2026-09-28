@@ -32,6 +32,10 @@ PLANILHAS = {
     "decisoes": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTv3UZwvn0vVDrRZj1Pa6woJwnFZdJtE1MtR5tn-yrrO7AYBcCs--Zcw89nv66QKNVqIoy3EQHT7UZo/pub?gid=2101696466&single=true&output=csv",
 }
 
+# Planilha original (edição) — só para os links "ver na planilha"; o painel lê a versão publicada acima.
+# Quem abre o link precisa ter acesso à planilha no Google (as permissões são as do Google).
+PLANILHA_ID_EDICAO = "1iucrFAgDsj8adfkzzcUfnMIkJwoAVVHPLkpdJ8lDSHc"
+
 CACHE_PLANILHAS_S = 300  # a planilha publicada é relida a cada 5 minutos
 
 # Regras do time usadas no cálculo da velocity (antes em planilhas/parametros.csv).

@@ -11,7 +11,7 @@ from src.components.layout import etiqueta
 
 
 def kpi(rotulo: str, valor: str | None, fonte: str, *, status: str | None = None, delta: dict | None = None,
-        nota: str | None = None, ajuda: str | None = None) -> None:
+        nota: str | None = None, ajuda: str | None = None, origem: list | None = None) -> None:
     """``valor=None`` = indisponível (mostra 'Indisponível' e a ``nota`` explica o motivo).
 
     ``delta``: saída de ``calculations.variacao`` — o texto ganha a cor do sentido
@@ -29,6 +29,10 @@ def kpi(rotulo: str, valor: str | None, fonte: str, *, status: str | None = None
         d = (f"<div class='msg-kpi-delta'><span style='color:{cor_d};font-weight:600'>{html.escape(delta['texto'])}"
              f"</span>{palavra} vs. coleta anterior</div>")
     n = f"<div class='msg-kpi-nota'>{html.escape(nota)}</div>" if nota else ""
+    if origem:   # [(texto, url)] — de onde vem o dado, com link embutido
+        itens = " · ".join(f"<a href='{html.escape(u)}' target='_blank' rel='noopener'>{html.escape(t)}</a>" if u
+                           else html.escape(t) for t, u in origem)
+        n += f"<div class='msg-kpi-nota'>Fonte: {itens}</div>"
     t = f" title='{html.escape(ajuda)}'" if ajuda else ""
     st.markdown(f"""<div class='msg-kpi' style='--kpi-cor:{cor}'{t}>
   <div class='msg-kpi-topo'><span class='msg-kpi-rotulo'>{html.escape(rotulo)}</span>{etiqueta(fonte)}</div>

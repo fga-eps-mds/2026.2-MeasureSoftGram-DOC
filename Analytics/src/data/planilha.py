@@ -209,3 +209,19 @@ def custo_por_recurso(plano_bruto: pd.DataFrame, custo_membro_semana: float | No
             linhas.append({"integrante": nome, "semana": data(titulos.get(c, c)), "ativo": ativo,
                            "custo": ativo * float(custo_membro_semana)})
     return pd.DataFrame(linhas)
+
+
+def link_aba(chave: str) -> str | None:
+    """Link para a aba na planilha original (mesmo ``gid`` da URL publicada em ``config.PLANILHAS``)."""
+    import re
+
+    import config
+    url = config.PLANILHAS.get(chave, "")
+    m = re.search(r"[?&]gid=(\d+)", url)
+    if not m or not getattr(config, "PLANILHA_ID_EDICAO", ""):
+        return None
+    return f"https://docs.google.com/spreadsheets/d/{config.PLANILHA_ID_EDICAO}/edit#gid={m.group(1)}"
+
+
+def nome_aba(chave: str) -> str:
+    return ABAS.get(chave, ("", chave))[1]

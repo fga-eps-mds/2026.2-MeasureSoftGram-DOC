@@ -27,7 +27,7 @@ ensino. Cada link abre a tela certa do dashboard.
 | --- | --- | --- |
 | **Velocity** | [Gestão ágil (ZenHub)](https://20262-measuresoftgram-doc.streamlit.app/zenhub) → bloco **Velocity** (planejado × realizado por sprint, velocity, média e tendência; clique numa sprint da tabela para ver as stories que a compõem) | Zenhub |
 | **Burndown** | [Gestão ágil (ZenHub)](https://20262-measuresoftgram-doc.streamlit.app/zenhub) → bloco **Burndown** (por sprint, dia a dia) e [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm) → **Burndown da release** | Zenhub |
-| **EVM-Ágil** | [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm) → cartões **BAC, PV, EV, AC, SPI, CPI, SV, CV, EAC, ETC** e gráficos **Planejado × Realizado × Valor Agregado** e **Índices de desempenho** | Zenhub + Planilha |
+| **EVM-Ágil** | [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm) → leitura em linguagem simples, cartões de **prazo** (SPI, SV, PPC × APC, término) e de **custo** (BAC, AC, CPI, EAC), **Legenda** das siglas com link para a aba da planilha e **De onde vem cada número** (stories, horas e orçamento por semana) | Zenhub + Planilha |
 | **Matriz de riscos** | [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha) → aba **Riscos** → **Matriz de probabilidade × impacto** e tabela **Matriz de riscos** (resposta, responsável, mitigação e contingência) | Planilha |
 | **Custos** | [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha) → aba **Custos** (orçamento, custo planejado × realizado, por semana, por categoria e por integrante) | Planilha |
 | **Decisões baseadas em dados** | [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha) → aba **Decisões** (contexto e dado, decisão, evidência, critério de sucesso e resultado) | Planilha |
@@ -46,13 +46,13 @@ atenção** em ordem de gravidade.
 
 | Bloco | O que mostra |
 | --- | --- |
-| Dados usados no cálculo | de onde veio cada insumo (sprints, pontos, orçamento, custo/hora, horas) |
-| Situação da release | BAC, PV, EV, AC, SPI, CPI, SV, CV, EAC, ETC e término estimado |
-| Planejado × Realizado × Valor Agregado | PV, EV e AC acumulados por sprint |
-| Progresso planejado × realizado · Índices de desempenho | PPC × APC e SPI/CPI com a linha 1,0 |
-| **Burndown da release** | restante real, restante ideal e escopo (PRP) |
+| Situação da release | leitura de prazo, custo e projeção em frases, cartões de prazo (SPI, SV, PPC × APC, término estimado) e de custo (BAC, AC, CPI, EAC), cada um com a fórmula e o link da fonte |
+| Legenda | o que significa cada sigla, como é calculada e de onde vem (link para a aba da planilha ou para a Gestão ágil) |
+| Evolução da release | planejado × entregue × gasto (PV, EV, AC), prazo decorrido × escopo entregue, índices de prazo e custo e burndown da release |
+| **De onde vem cada número** | as stories que formam o escopo (PRP) e o entregue (RPC), com link; horas e custo real por sprint; orçamento por semana |
+| Tabela completa | todas as colunas do Agile EVM, com download em CSV |
 
-Seletor **Release** no topo da tela. Fórmulas em [AgileEVM](/docs/planejamento/agile-evm).
+Seletores **Release** e **Situação ao fim da sprint** no topo. Fórmulas em [AgileEVM](/docs/planejamento/agile-evm).
 
 ### [Gestão ágil (ZenHub)](https://20262-measuresoftgram-doc.streamlit.app/zenhub)
 
