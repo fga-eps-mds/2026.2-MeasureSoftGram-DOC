@@ -86,7 +86,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Métricas',
-      items: ['metricas/metricas', 'metricas/modelo-de-gestao', 'metricas/velocity-zenhub'],
+      items: ['metricas/guia-dashboard', 'metricas/metricas', 'metricas/modelo-de-gestao', 'metricas/velocity-zenhub'],
     },
     {
       type: 'category',

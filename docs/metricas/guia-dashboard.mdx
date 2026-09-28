@@ -1,0 +1,104 @@
+---
+id: guia-dashboard
+slug: /dashboard
+title: Guia do Dashboard
+sidebar_position: 0
+---
+
+# Guia do Dashboard — onde está cada gráfico
+
+O **Dashboard de Gestão de Projeto** está publicado em
+**[20262-measuresoftgram-doc.streamlit.app](https://20262-measuresoftgram-doc.streamlit.app/)**.
+Esta página diz em qual tela e em qual bloco está cada indicador pedido no plano de
+ensino. Cada link abre a tela certa do dashboard.
+
+:::tip Como ler
+- Cada bloco tem uma **etiqueta de fonte**: `SONAR`, `ZENHUB`, `PLANILHA`, `GITHUB` ou `CALCULADO`.
+- Cada tela tem um expansor **Metodologia desta página** com a fórmula de cada número, e
+  cada gráfico tem **Ver os dados em tabela** logo abaixo.
+- Na barra lateral, o filtro **Release** muda o período e as metas usadas nos status.
+- Dado que não existe aparece como **Indisponível**, com o motivo — nenhum valor é estimado.
+- Se o app estiver dormindo (dias sem acesso), clique em *Yes, get this app back up* e aguarde uns 30 segundos.
+:::
+
+## Exigências do DA-R1
+
+| O que o plano pede | Onde está no dashboard | Fonte |
+| --- | --- | --- |
+| **Velocity** | [Gestão ágil (ZenHub)](https://20262-measuresoftgram-doc.streamlit.app/zenhub) → bloco **Velocity por sprint** (planejado × concluído por sprint, velocity média e média móvel) | Zenhub |
+| **Burndown** | [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm) → bloco **Burndown da release** (restante real × ideal e escopo da release) | Zenhub |
+| **EVM-Ágil** | [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm) → cartões **BAC, PV, EV, AC, SPI, CPI, SV, CV, EAC, ETC** e gráficos **Planejado × Realizado × Valor Agregado** e **Índices de desempenho** | Zenhub + Planilha |
+| **Matriz de riscos** | [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha) → aba **Riscos** → **Matriz de probabilidade × impacto** e tabela **Matriz de riscos** (resposta, responsável, mitigação e contingência) | Planilha |
+| **Custos** | [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha) → aba **Custos** (orçamento, custo planejado × realizado, por semana, por categoria e por integrante) | Planilha |
+| **Decisões baseadas em dados** | [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha) → aba **Decisões** (contexto e dado, decisão, evidência, critério de sucesso e resultado) | Planilha |
+| **Indicadores técnicos** (.json do pipeline de CI/CD) | [Qualidade técnica (Sonar)](https://20262-measuresoftgram-doc.streamlit.app/sonar) → **Indicadores atuais** e **Evolução das métricas** | SonarCloud |
+
+## Mapa completo
+
+### [Visão Executiva](https://20262-measuresoftgram-doc.streamlit.app/visao-executiva)
+
+Primeira tela. Status geral do projeto, release e sprint atuais, principais indicadores
+(itens concluídos, velocity média, SPI, CPI, cobertura, riscos elevados), situação por
+dimensão, **planejado × realizado** da release, calendário de sprints e **pontos de
+atenção** em ordem de gravidade.
+
+### [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm)
+
+| Bloco | O que mostra |
+| --- | --- |
+| Dados usados no cálculo | de onde veio cada insumo (sprints, pontos, orçamento, custo/hora, horas) |
+| Situação da release | BAC, PV, EV, AC, SPI, CPI, SV, CV, EAC, ETC e término estimado |
+| Planejado × Realizado × Valor Agregado | PV, EV e AC acumulados por sprint |
+| Progresso planejado × realizado · Índices de desempenho | PPC × APC e SPI/CPI com a linha 1,0 |
+| **Burndown da release** | restante real, restante ideal e escopo (PRP) |
+
+Seletor **Release** no topo da tela. Fórmulas em [AgileEVM](/docs/planejamento/agile-evm).
+
+### [Gestão ágil (ZenHub)](https://20262-measuresoftgram-doc.streamlit.app/zenhub)
+
+| Bloco | O que mostra |
+| --- | --- |
+| Indicadores | itens planejados, em andamento e concluídos, velocity média, taxa de conclusão, throughput |
+| Backlog | issues por pipeline, épico, release, tipo e prioridade |
+| **Velocity por sprint** | story points planejados × concluídos, média e média móvel |
+| Evolução das entregas | throughput semanal e entregas acumuladas |
+| Releases e épicos | progresso de cada release e de cada épico |
+| Consistência do cadastro no Zenhub | issues sem tipo, sem estimativa ou com estimativa indevida |
+
+Regras de cálculo em [Velocity pela API do Zenhub](/docs/metricas/velocity-zenhub).
+
+### [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha)
+
+Três abas no topo da tela:
+
+- **Custos** — orçamento do semestre, custo planejado no período e até hoje, custo
+  realizado, custo por semana, custo acumulado planejado × realizado, custo por
+  categoria e por integrante. Premissas em [Custos](/docs/planejamento/custos).
+- **Riscos** — riscos abertos, mitigados, elevados e sem responsável; **matriz de
+  probabilidade × impacto**; riscos por severidade e por categoria; evolução por
+  revisão; tabela completa da matriz de riscos. Critérios em [Plano de Riscos](/docs/planejamento/riscos).
+- **Decisões** — cada decisão registrada, com evidência e resultado. Registro em
+  [Decisões baseadas em dados](/docs/planejamento/decisoes).
+
+### [Qualidade técnica (Sonar)](https://20262-measuresoftgram-doc.streamlit.app/sonar)
+
+Cobertura, bugs, vulnerabilidades, code smells, security hotspots, dívida técnica,
+duplicação, linhas de código, Quality Gate e ratings (atual → variação), evolução no
+tempo, problemas por severidade, situação por repositório, cobertura por componente e
+o modelo de qualidade agregado (prévia do DA-R2).
+
+### [Integração contínua (GitHub)](https://20262-measuresoftgram-doc.streamlit.app/processo)
+
+Taxa de sucesso da CI, falhas, tempo de feedback e resultado por repositório.
+
+### [Metodologia e Fontes](https://20262-measuresoftgram-doc.streamlit.app/metodologia)
+
+Última atualização de cada fonte, fórmulas, metas, tratamento de dados ausentes e
+limitações conhecidas.
+
+## De onde vêm os dados
+
+Os dados são coletados automaticamente pelo workflow `coleta-dados.yml` (a cada push
+na `main` e às 08h, 14h e 20h) e pelo `metrics.yml` de cada repositório; custos,
+riscos e decisões vêm da planilha publicada do time. Detalhes em
+[Modelo de gestão](/docs/metricas/modelo-de-gestao).
