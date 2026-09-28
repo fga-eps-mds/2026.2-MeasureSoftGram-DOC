@@ -99,14 +99,36 @@ class PlanejadoTest(unittest.TestCase):
         linhas, congeladas = v.congelar_linhas_de_base(self.snap, {}, S1_INI + timedelta(hours=5), v.Regras())
         self.assertEqual((linhas, congeladas), ({}, []))
 
-    def test_sem_historico_nao_inventa_planejado(self):
+    def test_sem_eventos_issues_ja_estavam_na_sprint(self):
+        # O Zenhub só registra mudanças depois do início: sem eventos, quem está na sprint estava desde o início.
         self.snap["sprints"][0]["scope_changes"] = []
         r = linha(v.calculate_velocity(self.snap, agora=self.agora), "S1")
+        self.assertEqual(r["planned_story_points"], 24)        # estimativa atual das issues iniciais
+        self.assertIn("já estavam na sprint", r["baseline_source"])
+        self.assertEqual(r["completed_story_points"], 21)
+
+    def test_coleta_do_historico_falhou_fica_indisponivel(self):
+        self.snap["sprints"][0]["scope_changes"] = []
+        self.snap["sprints"][0]["falhas"] = ["scope"]
+        r = linha(v.calculate_velocity(self.snap, agora=self.agora), "S1")
         self.assertIsNone(r["planned_story_points"])
-        self.assertIsNone(r["completion_rate"])
         self.assertIn("indisponível", r["baseline_source"])
-        self.assertEqual(r["current_story_points"], 24)
-        self.assertEqual(r["completed_story_points"], 21)     # sem histórico: vale quem está na sprint
+
+    def test_primeiro_evento_de_saida_estava_desde_o_inicio(self):
+        s = {"issue_ids": ["A"], "scope_changes": [ev("B", "ISSUE_REMOVED", t(S1_INI, 3))]}
+        ini = v.membros_iniciais(s, {"A": {"estimate": 2}, "B": {"estimate": 5}})
+        self.assertEqual(ini, {"A": 2, "B": 5})
+        self.assertEqual(v.membros_em(s["scope_changes"], datetime.fromisoformat(t(S1_INI, 1)), ini), {"A": 2, "B": 5})
+        self.assertEqual(v.membros_em(s["scope_changes"], datetime.fromisoformat(t(S1_INI, 4)), ini), {"A": 2})
+
+    def test_linha_de_base_de_regra_antiga_e_recalculada(self):
+        antiga = {"S1": {"issues": {}, "planned_story_points": 0, "congelado_em": "2026-09-27"}}
+        self.snap["sprints"][0]["scope_changes"] = []
+        r = linha(v.calculate_velocity(self.snap, agora=self.agora, linhas_de_base=antiga), "S1")
+        self.assertEqual(r["planned_story_points"], 24)
+        novas, congeladas = v.congelar_linhas_de_base(self.snap, antiga, self.agora, v.Regras())
+        self.assertEqual(novas["S1"]["regra"], v.REGRA_LINHA_DE_BASE)
+        self.assertIn("S1", congeladas)
 
 
 class ConcluidoTest(unittest.TestCase):

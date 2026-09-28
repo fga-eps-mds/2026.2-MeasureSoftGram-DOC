@@ -12,6 +12,12 @@ Sub-task não. Issue pontuável sem estimativa conta como issue (planejada ou
 concluída) com **0 SP** e aparece na coluna "sem estimativa" — nunca recebe um
 valor estimado pelo painel.
 
+**Issues que já estavam na sprint no início.** O Zenhub só registra no
+``scopeChange`` o que muda depois que a sprint começa. Issue que está na sprint
+sem nenhum evento (ou cujo primeiro evento é uma saída) já estava lá desde o
+início: entra no planejado e no concluído, com a estimativa atual (o Zenhub não
+guarda a da época). Ver ``membros_iniciais``.
+
 **Planejado (linha de base).** Issues pontuáveis que estavam na sprint no fim da
 janela de planning (``inicio + janela_planning``, 24 h por padrão, porque a
 planning acontece no primeiro dia da sprint), reconstituídas pelo histórico
@@ -19,9 +25,9 @@ planning acontece no primeiro dia da sprint), reconstituídas pelo histórico
 estimativa é a registrada no evento de entrada (``estimateValue``). Issue que
 entra depois disso não altera o planejado: aparece como "adicionado depois".
 Na primeira coleta após a janela, o planejado é **congelado** em
-``linhas-de-base.json`` e, daí em diante, vale o congelado. Sem histórico de
-escopo para a sprint, o planejado fica **indisponível** (nunca é trocado pelo
-escopo atual, que aparece separado como ``current_story_points``).
+``linhas-de-base.json`` e, daí em diante, vale o congelado (linha de base de
+uma regra anterior, sem as issues iniciais, é recalculada). Se a coleta do
+histórico **falhou**, o planejado fica **indisponível**.
 
 **Concluído.** Issue pontuável cuja conclusão aconteceu entre o início e o fim da
 sprint **e** que estava na sprint naquele momento (pelo histórico; issue que está
@@ -108,13 +114,36 @@ def pontuavel(issue: dict | None, regras: Regras, pais: set) -> bool:
     return issue["issue_id"] not in pais
 
 
-def membros_em(eventos: list[dict], momento: datetime) -> dict:
-    """Issues na sprint em ``momento`` -> estimativa registrada no evento de entrada.
+REGRA_LINHA_DE_BASE = 2  # versão da regra do planejado; linha de base de versão anterior é recalculada
 
-    Os eventos são aplicados em ordem de ``effective_at``; ``ISSUE_REMOVED`` tira
-    a issue, um novo ``ISSUE_ADDED`` a traz de volta (issue movida e devolvida).
+
+def membros_iniciais(sprint: dict, issues: dict) -> dict:
+    """Issues que já estavam na sprint no início -> estimativa atual.
+
+    O Zenhub só registra no ``scopeChange`` o que muda **depois** que a sprint
+    começa. Então estavam na sprint desde o início: (a) as issues que estão nela
+    agora e não têm nenhum evento, e (b) as que têm como primeiro evento um
+    ``ISSUE_REMOVED`` (saíram sem nunca terem "entrado" no histórico). Para elas
+    o Zenhub não guarda a estimativa da época: vale a estimativa atual.
     """
-    membros: dict = {}
+    eventos = sorted(sprint.get("scope_changes") or [], key=lambda e: e.get("effective_at") or "")
+    primeiro: dict = {}
+    for e in eventos:
+        if e.get("issue_id") and e["issue_id"] not in primeiro:
+            primeiro[e["issue_id"]] = e.get("action")
+    iniciais = {i for i in sprint.get("issue_ids", []) if i not in primeiro}
+    iniciais |= {i for i, acao in primeiro.items() if acao == "ISSUE_REMOVED"}
+    return {i: (issues.get(i) or {}).get("estimate") for i in iniciais}
+
+
+def membros_em(eventos: list[dict], momento: datetime, iniciais: dict | None = None) -> dict:
+    """Issues na sprint em ``momento`` -> estimativa (a do evento de entrada, ou a atual para as iniciais).
+
+    Parte de ``iniciais`` (quem já estava na sprint no início) e aplica os eventos
+    em ordem de ``effective_at``; ``ISSUE_REMOVED`` tira a issue, um novo
+    ``ISSUE_ADDED`` a traz de volta (issue movida e devolvida).
+    """
+    membros: dict = dict(iniciais or {})
     for e in sorted(eventos, key=lambda e: e.get("effective_at") or ""):
         quando = _dt(e.get("effective_at"))
         if quando is None or quando > momento or not e.get("issue_id"):
@@ -152,16 +181,19 @@ def linha_de_base(sprint: dict, issues: dict, regras: Regras) -> dict | None:
     inicio = _dt(sprint.get("start_at"))
     if inicio is None or set(sprint.get("falhas") or []) & {"scope", "issues"}:
         return None  # coleta incompleta desta sprint: não congela nem estima
-    if not eventos:
-        if not sprint.get("issue_ids"):
-            return {"issues": {}, "fonte": "sprint sem issues"}
-        return None  # tem issues mas o Zenhub não devolveu histórico: não inventar
+    if not eventos and not sprint.get("issue_ids"):
+        return {"issues": {}, "fonte": "sprint sem issues", "regra": REGRA_LINHA_DE_BASE}
     corte = inicio + regras.janela_planning
     pais = ids_com_filhas(issues, regras)
-    membros = membros_em(eventos, corte)
+    iniciais = membros_iniciais(sprint, issues)
+    membros = membros_em(eventos, corte, iniciais)
     planejadas = {iid: est for iid, est in membros.items() if pontuavel(issues.get(iid), regras, pais)}
-    return {"issues": planejadas, "fonte": "histórico do Zenhub (scopeChange)",
-            "corte": corte.isoformat(timespec="seconds")}
+    n_iniciais = sum(1 for i in planejadas if i in iniciais)
+    fonte = "histórico do Zenhub (scopeChange)"
+    if n_iniciais:
+        fonte += f" + {n_iniciais} issue(s) que já estavam na sprint no início (estimativa atual)"
+    return {"issues": planejadas, "fonte": fonte, "corte": corte.isoformat(timespec="seconds"),
+            "regra": REGRA_LINHA_DE_BASE}
 
 
 def congelar_linhas_de_base(snapshot: dict, linhas: dict, agora: datetime, regras: Regras) -> tuple[dict, list[str]]:
@@ -172,8 +204,10 @@ def congelar_linhas_de_base(snapshot: dict, linhas: dict, agora: datetime, regra
         inicio = _dt(s.get("start_at"))
         if not s.get("coletada") or inicio is None or agora < inicio + regras.janela_planning:
             continue
-        if s["sprint_id"] in novas or s["sprint_id"] in regras.sprints_canceladas:
+        if s["sprint_id"] in regras.sprints_canceladas:
             continue
+        if (novas.get(s["sprint_id"]) or {}).get("regra") == REGRA_LINHA_DE_BASE:
+            continue  # já congelada com a regra atual; de regra antiga, recalcula
         base = linha_de_base(s, snapshot.get("issues", {}), regras)
         if base is None:
             continue
@@ -185,6 +219,7 @@ def congelar_linhas_de_base(snapshot: dict, linhas: dict, agora: datetime, regra
             "issues": base["issues"],
             "fonte": base["fonte"],
             "corte": base.get("corte"),
+            "regra": REGRA_LINHA_DE_BASE,
             "congelado_em": agora.astimezone(timezone.utc).isoformat(timespec="seconds"),
         }
         congeladas.append(s["sprint_name"])
@@ -264,6 +299,8 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
 
         # planejado
         congelada = linhas_de_base.get(s["sprint_id"])
+        if congelada and congelada.get("regra") != REGRA_LINHA_DE_BASE:
+            congelada = None  # congelada com a regra antiga (sem as issues iniciais): recalcula
         if congelada:
             planejadas = congelada.get("issues", {})
             fonte_base = f"linha de base congelada em {congelada.get('congelado_em', '')[:10]}"
@@ -279,7 +316,7 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
         # concluído
         candidatas = set(s.get("issue_ids", [])) | {e["issue_id"] for e in eventos if e.get("issue_id")}
         limite = min(fim, agora) if fim else agora
-        com_evento = {e["issue_id"] for e in eventos if e.get("issue_id")}
+        iniciais = membros_iniciais(s, issues)
         concluidas = {}
         for iid in candidatas:
             i = issues.get(iid)
@@ -288,13 +325,7 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
             quando = momento_conclusao(i, regras)
             if quando is None or not (inicio <= quando <= limite):
                 continue
-            if iid in com_evento:
-                na_sprint = iid in membros_em(eventos, quando)
-            else:
-                # sem nenhum evento no histórico: o Zenhub só registra mudanças depois do início, então a
-                # issue que está na sprint e nunca teve evento entrou antes do início e ficou até agora
-                na_sprint = iid in s.get("issue_ids", [])
-            if na_sprint:
+            if iid in membros_em(eventos, quando, iniciais):
                 concluidas[iid] = i.get("estimate")
         if status == STATUS_ANDAMENTO:
             notas.append("Sprint em andamento: valores parciais, fora da média.")
@@ -314,7 +345,7 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
         completed_sp = sum(_sp(v) for v in concluidas.values())
         fora_do_plano = {k: v for k, v in concluidas.items() if planejadas is None or k not in planejadas}
         if eventos:
-            passaram = set(membros_em(eventos, inicio)) | {
+            passaram = set(membros_em(eventos, inicio, iniciais)) | {
                 e["issue_id"] for e in eventos if e.get("action") == "ISSUE_ADDED" and e.get("issue_id")
                 and inicio <= (_dt(e.get("effective_at")) or inicio) <= limite}
         else:

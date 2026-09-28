@@ -93,7 +93,8 @@ def pagina():
          "aberta no Done = Em andamento; pipeline fora do mapa = Não classificado)"),
         ("Story Points planejados", "ZENHUB — `Sprint.scopeChange`", "issues pontuáveis na sprint ao fim da janela de "
          f"planning ({ctx.zh_regras.janela_planning.total_seconds() / 3600:.0f} h), com a estimativa do momento da "
-         "entrada; congelado em `linhas-de-base.json`"),
+         "entrada; issues que já estavam na sprint no início (sem evento no histórico, que só registra mudanças "
+         "depois do início) entram com a estimativa atual; congelado em `linhas-de-base.json`"),
         ("Velocity", "ZENHUB", "Story Points de issues pontuáveis fechadas dentro da sprint (issue sem estimativa "
          "conta 0 SP e aparece nas observações)"),
         ("Velocity média", "cálculo", f"média das sprints concluídas (≥ {ctx.zh_regras.min_sprints_media}); "

@@ -81,6 +81,12 @@ estimativa de cada issue é a do evento de entrada (`estimateValue`). Uma issue
 que entra depois não altera o planejado; se for concluída, aparece em
 "Adicionado depois".
 
+O `scopeChange` só registra o que muda **depois** que a sprint começa. Por isso,
+as issues que já estavam na sprint no início (sem nenhum evento no histórico, ou
+cujo primeiro evento é uma saída) também entram no planejado, com a estimativa
+**atual** — o Zenhub não guarda a estimativa da época para elas. A coluna
+"Linha de base" diz quantas issues entraram por essa regra.
+
 **Completed SP = Velocity.** Issues pontuáveis concluídas **entre o início e o
 fim** da sprint e que estavam na sprint naquele momento. **Critério de
 feito: a issue só precisa estar fechada** (conclusão = `closedAt`); issue aberta não
