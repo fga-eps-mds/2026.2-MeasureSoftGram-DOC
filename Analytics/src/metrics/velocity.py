@@ -414,6 +414,9 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
             "completion_rate": calculate_completion_rate(planned_sp, completed_sp),
             "zenhub_completed_points": s.get("zenhub_completed_points"),
             "planned_ids": sorted(planejadas) if planejadas is not None else None,
+            "planned_estimates": dict(planejadas) if planejadas is not None else None,
+            "planning_cutoff": inicio + regras.janela_planning if inicio else None,
+            "count_until": regras.fim_da_contagem(fim),
             "completed_ids": sorted(concluidas),
             "scope_ids": sorted(set(escopo) | set(planejadas or {}) | set(concluidas)),
             "notes": " ".join(notas),
@@ -532,6 +535,6 @@ def frase_comparacao(resumo: pd.DataFrame, difs: pd.DataFrame) -> list[str]:
         if d.empty:
             frases.append(base + " · sem diferença.")
             continue
-        partes = "; ".join(f"{x.efeito}{f(x.sp)} {x.issue.split('-')[-1]} ({x.motivo.split(':')[0]})" for x in d.itertuples())
+        partes = "; ".join(f"{x.efeito}{f(x.sp)} {x.issue.split('-')[-1]} ({x.motivo.split(': ')[0]})" for x in d.itertuples())
         frases.append(f"{base} · {partes}.")
     return frases

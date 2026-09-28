@@ -25,8 +25,8 @@ ensino. Cada link abre a tela certa do dashboard.
 
 | O que o plano pede | Onde está no dashboard | Fonte |
 | --- | --- | --- |
-| **Velocity** | [Gestão ágil (ZenHub)](https://20262-measuresoftgram-doc.streamlit.app/zenhub) → bloco **Velocity por sprint** (planejado × concluído por sprint, velocity média e média móvel) | Zenhub |
-| **Burndown** | [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm) → bloco **Burndown da release** (restante real × ideal e escopo da release) | Zenhub |
+| **Velocity** | [Gestão ágil (ZenHub)](https://20262-measuresoftgram-doc.streamlit.app/zenhub) → bloco **Velocity** (planejado × realizado por sprint, velocity, média e tendência; clique numa sprint da tabela para ver as stories que a compõem) | Zenhub |
+| **Burndown** | [Gestão ágil (ZenHub)](https://20262-measuresoftgram-doc.streamlit.app/zenhub) → bloco **Burndown** (por sprint, dia a dia) e [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm) → **Burndown da release** | Zenhub |
 | **EVM-Ágil** | [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm) → cartões **BAC, PV, EV, AC, SPI, CPI, SV, CV, EAC, ETC** e gráficos **Planejado × Realizado × Valor Agregado** e **Índices de desempenho** | Zenhub + Planilha |
 | **Matriz de riscos** | [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha) → aba **Riscos** → **Matriz de probabilidade × impacto** e tabela **Matriz de riscos** (resposta, responsável, mitigação e contingência) | Planilha |
 | **Custos** | [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha) → aba **Custos** (orçamento, custo planejado × realizado, por semana, por categoria e por integrante) | Planilha |
@@ -56,14 +56,21 @@ Seletor **Release** no topo da tela. Fórmulas em [AgileEVM](/docs/planejamento/
 
 ### [Gestão ágil (ZenHub)](https://20262-measuresoftgram-doc.streamlit.app/zenhub)
 
+A página segue a ordem da análise, e **todos os blocos usam o mesmo recorte** dos filtros.
+Qualquer total pode ser aberto até as issues (link direto) e baixado em CSV.
+
 | Bloco | O que mostra |
 | --- | --- |
-| Indicadores | itens planejados, em andamento e concluídos, velocity média, taxa de conclusão, throughput |
-| Backlog | issues por pipeline, épico, release, tipo e prioridade |
-| **Velocity por sprint** | story points planejados × concluídos, média e média móvel |
-| Evolução das entregas | throughput semanal e entregas acumuladas |
-| Releases e épicos | progresso de cada release e de cada épico |
-| Consistência do cadastro no Zenhub | issues sem tipo, sem estimativa ou com estimativa indevida |
+| Filtros | release, sprint, período, épico e issue/story, combináveis, com a contagem do que foi encontrado |
+| Resumo | SP planejados e realizados, stories planejadas e concluídas, % de conclusão, compromisso médio, capacidade registrada (horas), variação, velocity média e tendência, mudança de escopo |
+| Planejamento | SP planejados por sprint e por release e a lista das stories que compõem cada total |
+| Realizado | SP realizados por sprint (do plano × adicionados), por release, evolução diária e a lista das stories concluídas |
+| Planejado × realizado | por sprint, por release, por período (acumulado) e por story, com o resultado de cada uma |
+| **Velocity** | planejado, realizado e velocity por sprint, média e tendência; tabela clicável até as stories |
+| **Burndown** | trabalho restante dia a dia da sprint, linha ideal e escopo, só com dados do histórico |
+| Análises qualitativas | fato observado × interpretação: diferenças, overcommitment, stories levadas, variação de velocity, concentração, mudança de escopo, não conclusão recorrente |
+| Detalhamento das issues | Release → Sprint → Épico → Story, com todas as colunas e download |
+| Confiabilidade dos dados | comparação com o Zenhub, conferência dos SP, consistência do cadastro e backlog atual |
 
 Regras de cálculo em [Velocity pela API do Zenhub](/docs/metricas/velocity-zenhub).
 

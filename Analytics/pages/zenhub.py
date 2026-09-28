@@ -1,4 +1,11 @@
-"""Gestão ágil — fonte ZENHUB (backlog, sprints, velocity, throughput, épicos e releases)."""
+"""Gestão ágil — planejado × realizado em Story Points, com rastreabilidade até a issue (fonte ZENHUB).
+
+Ordem da página: filtros → KPIs → planejamento → realizado → planejado × realizado →
+velocity → burndown → análises qualitativas → detalhamento das issues → confiabilidade
+dos dados. Todo número sai de ``gestao_agil.stories_por_sprint`` (uma linha por Story
+em cada sprint) depois dos filtros, então os blocos ficam sincronizados e cada total
+pode ser aberto até as issues.
+"""
 
 from __future__ import annotations
 
@@ -9,22 +16,38 @@ import pandas as pd
 import streamlit as st
 
 import config
-
+from pages import zenhub_dados as apoio
 from src import theme
 from src.components import charts, filters, layout
 from src.components.kpi import kpi
 from src.data.sonar import nome_curto
-from src.metrics import agile
+from src.metrics import gestao_agil as ga
 from src.metrics import velocity as vel
 from src.metrics.calculations import data_br, num, pct, status_taxa
 
-SIT = [agile.CONCLUIDO, agile.ANDAMENTO, agile.PLANEJADO]
-COR_SIT = alt.Scale(domain=SIT + [agile.NAO_CLASSIFICADO],
-                    range=[theme.SERIES[0], theme.SERIES[1], theme.SERIES[2], theme.NEUTRO_CLARO])
+COR_PLAN, COR_REAL, COR_EXTRA = theme.SERIES[2], theme.SERIES[0], theme.SERIES[1]
+SERIES_PR = ["Planejado", "Realizado"]
+ESCALA_PR = alt.Scale(domain=SERIES_PR, range=[COR_PLAN, COR_REAL])
+COR_RESULTADO = alt.Scale(domain=ga.RESULTADOS + [ga.EM_ANDAMENTO],
+                          range=[COR_REAL, theme.STATUS["critical"], COR_EXTRA, theme.STATUS["warning"],
+                                 theme.NEUTRO_CLARO, theme.INK["muted"]])
+
+COLUNAS_STORY = {
+    "release": "Release", "sprint": "Sprint", "epico": "Épico", "issue": "Issue", "titulo": "Título", "url": "Link",
+    "tipo": "Tipo", "sp_planejado": "SP planejado", "sp_realizado": "SP realizado", "sp_atual": "SP atual",
+    "resultado": "Resultado na sprint", "status_atual": "Status atual", "pipeline": "Pipeline",
+    "levada_para": "Levada para", "criada_em": "Criada em", "entrou_em": "Entrou na sprint",
+    "saiu_em": "Saiu da sprint", "concluida_em": "Concluída em", "responsavel": "Responsável",
+}
 
 
 def _sp(v) -> str:
     return "—" if v is None or pd.isna(v) else f"{num(v)} SP"
+
+
+def _brt(serie: pd.Series) -> pd.Series:
+    s = pd.to_datetime(serie, utc=True, errors="coerce")
+    return s.dt.tz_convert("America/Sao_Paulo").dt.tz_localize(None)
 
 
 def _botao_atualizar(ctx) -> None:
@@ -51,37 +74,451 @@ def _botao_atualizar(ctx) -> None:
         st.rerun()
 
 
-def _filtros(ctx, f, df: pd.DataFrame) -> pd.DataFrame:
-    """Filtros da página. Prioridade e responsável só aparecem se o snapshot tiver esses campos."""
-    d = filters.por_repo(df, f["repos"])
-    tem_prioridade = (d["prioridade"] != "Sem prioridade").any()
-    tem_resp = (d["responsavel"] != "Sem responsável").any()
-    campos = [("sprints", "Sprint"), ("release", "Release"), ("epico", "Épico"), ("situacao", "Situação"),
-              ("tipo", "Tipo")]
-    if tem_prioridade:
-        campos.append(("prioridade", "Prioridade"))
-    if tem_resp:
-        campos.append(("responsavel", "Responsável"))
-    cols = st.columns(len(campos))
-    for col, (campo, rotulo) in zip(cols, campos):
-        lista = campo == "sprints"   # a issue pode ter passado por várias sprints
-        brutos = {v for vs in d[campo] for v in vs} if lista else set(d[campo].dropna().unique())
-        valores = sorted(brutos, key=lambda v: (str(v).startswith("Sem "), len(str(v)), str(v)))
-        sel = col.multiselect(rotulo, valores, key=f"zh_f_{campo}", placeholder="Todos",
-                              help="issues que passaram pela sprint (situação atual de cada uma)" if lista else None)
-        if sel:
-            d = d[d[campo].map(lambda vs: bool(set(vs) & set(sel)))] if lista else d[d[campo].isin(sel)]
-    if not tem_prioridade or not tem_resp:
-        faltam = [n for n, t in (("prioridade", tem_prioridade), ("responsável", tem_resp)) if not t]
-        st.caption(f"Filtros de {' e '.join(faltam)} não exibidos: o snapshot atual não tem esse campo "
-                   "(ele vem da coleta do backlog completo).")
-    return d
+def tabela_stories(df: pd.DataFrame, chave: str, arquivo: str, colunas: list[str] | None = None) -> None:
+    """Tabela de stories com link para a issue e download do CSV (o mesmo recorte da tela)."""
+    if df is None or df.empty:
+        st.caption("Nenhuma story neste recorte.")
+        return
+    cols = colunas or list(COLUNAS_STORY)
+    t = df[[c for c in cols if c in df]].copy()
+    for c in ("criada_em", "entrou_em", "saiu_em", "concluida_em"):
+        if c in t:
+            t[c] = _brt(t[c])
+    if "issue" in t:
+        t["issue"] = t["issue"].map(nome_curto)
+    t = t.rename(columns=COLUNAS_STORY)
+    datas = {v: st.column_config.DatetimeColumn(v, format="DD/MM/YYYY HH:mm") for k, v in COLUNAS_STORY.items()
+             if k in ("criada_em", "entrou_em", "saiu_em", "concluida_em")}
+    st.dataframe(t, use_container_width=True, hide_index=True, key=f"tab_{chave}", column_config={
+        "Link": st.column_config.LinkColumn("Link", display_text="abrir issue"),
+        "Título": st.column_config.TextColumn("Título", width="large"),
+        "SP planejado": st.column_config.NumberColumn(format="%.0f"),
+        "SP realizado": st.column_config.NumberColumn(format="%.0f"),
+        "SP atual": st.column_config.NumberColumn(format="%.0f"), **datas})
+    st.download_button(f"Baixar CSV ({len(t)} linhas)", t.to_csv(index=False).encode("utf-8-sig"),
+                       file_name=arquivo, mime="text/csv", key=f"csv_{chave}")
 
+
+# ───────────────────────── 1. filtros ─────────────────────────
+
+def _filtros(ctx, f, linhas: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
+    """(sprints do recorte, linhas do recorte, descrição). Os filtros se combinam (E)."""
+    sprints = ctx.zh_iniciadas.sort_values("start_date").copy()
+    sprints["release_name"] = sprints["release_name"].fillna("Sem release")
+    sprints["ultimo_dia"] = _brt(sprints["end_date"] - pd.Timedelta(seconds=1)).dt.normalize()
+    sprints["primeiro_dia"] = _brt(sprints["start_date"]).dt.normalize()
+    rotulo = {r.sprint_label: f"{r.sprint_label} · {data_br(r.primeiro_dia)} a {data_br(r.ultimo_dia)} · "
+                              f"{r.release_name}" for r in sprints.itertuples()}
+    c = st.columns([1.1, 1.8, 1.4, 1.8, 1.5])
+    rels = list(dict.fromkeys(sprints["release_name"]))
+    rel_sel = c[0].multiselect("Release", rels, key="ga_release", placeholder="Todas")
+    opc = sprints[sprints["release_name"].isin(rel_sel)] if rel_sel else sprints
+    spr_sel = c[1].multiselect("Sprint", list(opc["sprint_label"]), format_func=rotulo.get, key="ga_sprint",
+                               placeholder="Todas as da release" if rel_sel else "Todas")
+    per = c[2].date_input("Período (último dia da sprint)", value=(f["periodo"][0].date(), f["periodo"][1].date()),
+                          format="DD/MM/YYYY", key="ga_periodo",
+                          help="Entram as sprints cujo último dia cai no período; as entregas no tempo usam a data "
+                               "de conclusão. Começa no período da barra lateral.")
+    ini, fim = (pd.Timestamp(per[0]), pd.Timestamp(per[1])) if isinstance(per, (tuple, list)) and len(per) == 2 \
+        else f["periodo"]
+    s = opc[opc["sprint_label"].isin(spr_sel)] if spr_sel else opc
+    no_periodo = (s["ultimo_dia"] >= ini) & (s["ultimo_dia"] <= fim)
+    fora = list(s.loc[~no_periodo, "sprint_label"]) if spr_sel else []
+    s = s[no_periodo]
+    base = filters.por_repo(linhas[linhas["sprint_id"].isin(s["sprint_id"])], f["repos"])
+    epicos = sorted(base["epico"].dropna().unique(), key=lambda e: (e == "Sem épico", e))
+    ep_sel = c[3].multiselect("Épico", epicos, key="ga_epico", placeholder="Todos")
+    busca = c[4].text_input("Issue / Story", key="ga_issue", placeholder="número ou parte do título")
+    d = base[base["epico"].isin(ep_sel)] if ep_sel else base
+    if busca.strip():
+        b = busca.strip().lstrip("#").lower()
+        d = d[d["issue"].str.lower().str.endswith("#" + b)
+              | d["titulo"].fillna("").str.lower().str.contains(b, regex=False)]
+    desc = {"sprints": s, "fora": fora, "parcial": bool(ep_sel or busca.strip()), "periodo": (ini, fim),
+            "texto": (f"**{len(s)} sprint(s)** · **{d['issue_id'].nunique()} stories** "
+                      f"({len(d)} registros story × sprint) · sprints terminando de {data_br(ini)} a {data_br(fim)}"
+                      + (f" · repositórios: {', '.join(f['repos'])}" if f["repos"] else ""))}
+    return s, d, desc
+
+
+# ───────────────────────── 2. KPIs ─────────────────────────
+
+def _horas_por_sprint(ctx, concl: pd.DataFrame) -> dict:
+    h = ctx.horas
+    if h is None or h.empty or "horas" not in h or concl.empty:
+        return {"media": None, "nota": "Indisponível: sem horas na aba Horas para as sprints concluídas do recorte."}
+    numeros = [int(x.lstrip("S")) for x in concl["sprint"] if x.lstrip("S").isdigit()]
+    por = h[h["sprint"].isin(numeros)].groupby("sprint")["horas"].sum()
+    por = por[por > 0]
+    if por.empty:
+        return {"media": None, "nota": "Indisponível: nenhuma hora registrada nessas sprints (aba Horas)."}
+    return {"media": float(por.mean()), "nota": f"horas registradas (aba Horas) em {len(por)} sprint(s); a planilha "
+                                                "não tem capacidade em SP"}
+
+
+def _kpis(ctx, R: pd.DataFrame, d: pd.DataFrame, desc: dict) -> None:
+    concl = R[R["sprint_status"] == vel.STATUS_CONCLUIDA]
+    plan_c = concl["sp_planejado"].sum(min_count=1)
+    real_c = concl["sp_realizado"].sum()
+    taxa = vel.calculate_completion_rate(plan_c, real_c) if not concl.empty else None
+    media = concl["sp_realizado"].mean() if len(concl) >= ctx.zh_regras.min_sprints_media else None
+    tend = ga.tendencia(R)
+    planejadas = d[d["planejada"]]
+    feitas = d[d["concluida"]]
+    k1 = st.columns(5)
+    with k1[0]:
+        kpi("SP planejados", _sp(R["sp_planejado"].sum(min_count=1)), "ZENHUB",
+            nota=f"soma dos compromissos de {len(R)} sprint(s); story levada conta em cada planning")
+    with k1[1]:
+        kpi("SP realizados", _sp(R["sp_realizado"].sum()), "ZENHUB",
+            nota="stories fechadas dentro da sprint em que estavam")
+    with k1[2]:
+        kpi("Stories planejadas", num(len(planejadas)), "ZENHUB",
+            nota=f"{planejadas['issue_id'].nunique()} distintas")
+    with k1[3]:
+        kpi("Stories concluídas", num(len(feitas)), "ZENHUB",
+            nota=f"{len(feitas[feitas['planejada']])} do plano · {len(feitas[~feitas['planejada']])} fora do plano")
+    with k1[4]:
+        if taxa is None:
+            kpi("Conclusão (sprints concluídas)", None, "CALCULADO",
+                nota="Indisponível: nenhuma sprint concluída com planejado > 0 no recorte.")
+        else:
+            kpi("Conclusão (sprints concluídas)", f"{num(taxa)}%", "CALCULADO",
+                status=status_taxa(taxa, config.META_TAXA_CONCLUSAO, config.LIMITE_TAXA_CRITICO),
+                nota=f"{num(real_c)} de {num(plan_c)} SP · meta ≥ {num(config.META_TAXA_CONCLUSAO)}%")
+    k2 = st.columns(5)
+    with k2[0]:
+        kpi("Compromisso médio por sprint", _sp(concl["sp_planejado"].mean()) if not concl.empty else None,
+            "CALCULADO", nota="SP planejados por sprint concluída" if not concl.empty else
+            "Indisponível: nenhuma sprint concluída no recorte.")
+    with k2[1]:
+        horas = _horas_por_sprint(ctx, concl)
+        kpi("Capacidade registrada por sprint", f"{num(horas['media'])} h" if horas["media"] else None, "PLANILHA",
+            nota=horas["nota"])
+    with k2[2]:
+        dif = (real_c - plan_c) if not concl.empty and not pd.isna(plan_c) else None
+        kpi("Variação realizado − planejado", f"{dif:+.0f} SP" if dif is not None else None, "CALCULADO",
+            status=None if dif is None else ("good" if dif >= 0 else "warning"),
+            nota="sprints concluídas do recorte" if dif is not None else "Indisponível: nenhuma sprint concluída.")
+    with k2[3]:
+        if media is None:
+            kpi("Velocity média", None, "CALCULADO",
+                nota=f"Indisponível: exige {ctx.zh_regras.min_sprints_media} sprints concluídas no recorte.")
+        else:
+            t = (f"tendência {tend['sentido']} ({'+' if tend['valor'] >= 0 else '−'}{num(abs(tend['valor']), 1)} SP/sprint)" if tend["valor"] is not None
+                 else f"tendência indisponível: {tend['motivo']}")
+            kpi("Velocity média", _sp(media), "CALCULADO", nota=f"{len(concl)} sprint(s) concluída(s) · {t}")
+    with k2[4]:
+        kpi("Mudança de escopo após a planning", f"+{int(R['stories_adicionadas'].sum())} / "
+            f"−{int(R['stories_removidas'].sum())}", "ZENHUB",
+            nota=f"stories adicionadas / removidas · +{num(R['sp_adicionado'].sum())} SP / "
+                 f"−{num(R['sp_removido'].sum())} SP (histórico scopeChange)")
+    if desc["parcial"]:
+        st.caption("Com filtro de épico ou issue, os totais são só das stories filtradas, não da sprint inteira.")
+
+
+# ───────────────────────── 3–5. planejado, realizado, comparação ─────────────────────────
+
+def _barras_sprint(R, campo, cor, titulo, sub):
+    b = (alt.Chart(R).mark_bar(size=24, cornerRadiusTopLeft=3, cornerRadiusTopRight=3, color=cor)
+         .encode(x=alt.X("sprint:N", sort=list(R["sprint"]), title="Sprint", axis=alt.Axis(labelAngle=0)),
+                 y=alt.Y(f"{campo}:Q", title="Story Points"),
+                 tooltip=[alt.Tooltip("sprint_nome:N", title="Sprint"), alt.Tooltip("release:N", title="Release"),
+                          alt.Tooltip(f"{campo}:Q", title="SP", format=".0f")]))
+    rot = b.mark_text(dy=-7, fontSize=11, color=theme.INK["secondary"]).encode(
+        text=alt.Text(f"{campo}:Q", format=".0f"))
+    charts.mostrar(b + rot, titulo, sub, altura=220)
+
+
+def _planejamento(R, d, rel):
+    layout.secao("Planejamento", "O que o time se comprometeu a entregar em cada sprint?", ["ZENHUB"])
+    e, dd = st.columns([1.3, 1])
+    with e:
+        _barras_sprint(R, "sp_planejado", COR_PLAN, "SP planejados por sprint",
+                       "estimativa ao fim da janela de planning · sprints em ordem de tempo")
+    with dd:
+        st.markdown("**Por release**")
+        st.dataframe(rel[["release", "sprints", "stories_planejadas", "sp_planejado"]], hide_index=True,
+                     use_container_width=True, column_config={
+                         "release": "Release", "sprints": "Sprints", "stories_planejadas": "Stories planejadas",
+                         "sp_planejado": st.column_config.NumberColumn("SP planejados", format="%.0f")})
+        sem = int(R["sem_estimativa_na_planning"].sum())
+        if sem:
+            st.caption(f"{sem} story(ies) planejada(s) sem estimativa na planning contam 0 SP no planejado.")
+    alvo = st.selectbox("Stories planejadas de", ["Todas as sprints do recorte", *R["sprint"]], key="ga_plan_sprint")
+    x = d[d["planejada"]]
+    if alvo != "Todas as sprints do recorte":
+        x = x[x["sprint"] == alvo]
+    st.caption(f"{len(x)} story(ies) · {num(x['sp_planejado'].sum())} SP planejados"
+               + ("" if alvo.startswith("Todas") else f" = barra da {alvo} no gráfico"))
+    tabela_stories(x.sort_values(["ordem_sprint", "sp_planejado"], ascending=[True, False]), "plan",
+                   "stories_planejadas.csv",
+                   ["release", "sprint", "epico", "issue", "titulo", "url", "sp_planejado", "resultado",
+                    "status_atual", "levada_para", "criada_em", "entrou_em", "concluida_em", "responsavel"])
+
+
+def _realizado(R, d, rel, desc):
+    layout.secao("Realizado", "O que foi efetivamente concluído, e quando?", ["ZENHUB"])
+    e, dd = st.columns([1.3, 1])
+    with e:
+        ordem_o = ["Do plano", "Fora do plano (adicionada)"]
+        longo = pd.concat(ignore_index=True, objs=[
+            R.assign(origem=ordem_o[0], sp=R["sp_realizado_do_plano"]),
+            R.assign(origem=ordem_o[1], sp=R["sp_realizado_fora_do_plano"])])
+        b = (alt.Chart(longo).mark_bar(size=24, stroke=theme.INK["surface"], strokeWidth=1)
+             .encode(x=alt.X("sprint:N", sort=list(R["sprint"]), title="Sprint", axis=alt.Axis(labelAngle=0)),
+                     y=alt.Y("sp:Q", title="Story Points", stack=True),
+                     color=alt.Color("origem:N", title=None, sort=ordem_o,
+                                     scale=alt.Scale(domain=ordem_o, range=[COR_REAL, COR_EXTRA])),
+                     tooltip=[alt.Tooltip("sprint:N"), alt.Tooltip("origem:N", title="Origem"),
+                              alt.Tooltip("sp:Q", title="SP", format=".0f")]))
+        charts.mostrar(b, "SP realizados por sprint", "stories fechadas dentro da sprint · do plano ou adicionadas",
+                       altura=220)
+    with dd:
+        st.markdown("**Por release**")
+        st.dataframe(rel[["release", "sprints", "stories_concluidas", "sp_realizado"]], hide_index=True,
+                     use_container_width=True, column_config={
+                         "release": "Release", "sprints": "Sprints", "stories_concluidas": "Stories concluídas",
+                         "sp_realizado": st.column_config.NumberColumn("SP realizados", format="%.0f")})
+    ent = ga.entregas_no_tempo(d)
+    ini, fim = desc["periodo"]
+    if not ent.empty:
+        ent = ent[(ent["dia"] >= ini) & (ent["dia"] <= fim + pd.Timedelta(days=1))]
+    if ent.empty:
+        layout.indisponivel("Sem entregas no período", "nenhuma story do recorte foi concluída entre as datas.")
+    else:
+        ent = ent.assign(acumulado=ent["sp"].cumsum())
+        barras = (alt.Chart(ent).mark_bar(size=10, color=COR_REAL, opacity=0.55)
+                  .encode(x=alt.X("dia:T", title="Data de conclusão", axis=alt.Axis(format="%d/%m")),
+                          y=alt.Y("sp:Q", title="SP no dia"),
+                          tooltip=[alt.Tooltip("dia:T", title="Dia", format="%d/%m/%Y"),
+                                   alt.Tooltip("sp:Q", title="SP", format=".0f"), alt.Tooltip("stories:Q")]))
+        linha = (alt.Chart(ent).mark_line(color=theme.INK["primary"], interpolate="step-after", point=True)
+                 .encode(x="dia:T", y=alt.Y("acumulado:Q", title="SP acumulados"),
+                         tooltip=[alt.Tooltip("dia:T", format="%d/%m/%Y"), alt.Tooltip("acumulado:Q", format=".0f")]))
+        charts.mostrar(alt.layer(barras, linha).resolve_scale(y="independent"), "Evolução das entregas",
+                       "barras = SP concluídos no dia · linha = acumulado (horário de Brasília)", altura=220)
+    alvo = st.selectbox("Stories concluídas de", ["Todas as sprints do recorte", *R["sprint"]], key="ga_real_sprint")
+    x = d[d["concluida"]]
+    if alvo != "Todas as sprints do recorte":
+        x = x[x["sprint"] == alvo]
+    st.caption(f"{len(x)} story(ies) · {num(x['sp_realizado'].sum())} SP realizados")
+    tabela_stories(x.sort_values(["ordem_sprint", "concluida_em"]), "real", "stories_concluidas.csv",
+                   ["release", "sprint", "epico", "issue", "titulo", "url", "sp_planejado", "sp_realizado",
+                    "resultado", "concluida_em", "criada_em", "entrou_em", "responsavel"])
+
+
+def _comparacao(R, d, rel):
+    layout.secao("Planejado × realizado", "Onde a execução se afastou do planejamento?", ["ZENHUB", "CALCULADO"])
+    longo = pd.concat(ignore_index=True, objs=[R.assign(serie="Planejado", sp=R["sp_planejado"]),
+                                               R.assign(serie="Realizado", sp=R["sp_realizado"])])
+    e, dd = st.columns(2)
+    with e:
+        b = (alt.Chart(longo).mark_bar(size=16, cornerRadiusTopLeft=3, cornerRadiusTopRight=3)
+             .encode(x=alt.X("sprint:N", sort=list(R["sprint"]), title="Sprint", axis=alt.Axis(labelAngle=0)),
+                     xOffset=alt.XOffset("serie:N", sort=SERIES_PR), y=alt.Y("sp:Q", title="Story Points"),
+                     color=alt.Color("serie:N", title=None, scale=ESCALA_PR, sort=SERIES_PR),
+                     tooltip=[alt.Tooltip("sprint:N"), alt.Tooltip("serie:N"), alt.Tooltip("sp:Q", format=".0f")]))
+        charts.mostrar(b, "Por sprint", "SP planejados × realizados", altura=220)
+    with dd:
+        comp = d.assign(sp=d["sp_atual"].map(lambda v: 0 if v is None or pd.isna(v) else v))
+        g = comp.groupby(["sprint", "resultado"], as_index=False).agg(sp=("sp", "sum"), stories=("issue", "count"))
+        b = (alt.Chart(g).mark_bar(size=24, stroke=theme.INK["surface"], strokeWidth=1)
+             .encode(x=alt.X("sprint:N", sort=list(R["sprint"]), title="Sprint", axis=alt.Axis(labelAngle=0)),
+                     y=alt.Y("sp:Q", title="Story Points (estimativa atual)", stack=True),
+                     color=alt.Color("resultado:N", title="Resultado", scale=COR_RESULTADO,
+                                     sort=ga.RESULTADOS + [ga.EM_ANDAMENTO]),
+                     tooltip=[alt.Tooltip("sprint:N"), alt.Tooltip("resultado:N"), alt.Tooltip("stories:Q"),
+                              alt.Tooltip("sp:Q", title="SP", format=".0f")]))
+        charts.mostrar(b, "O que aconteceu com cada story", "SP por resultado na sprint", altura=220)
+    st.markdown("**Por release**")
+    st.dataframe(rel, hide_index=True, use_container_width=True, column_config={
+        "release": "Release", "sprints": "Sprints", "stories_planejadas": "Stories planejadas",
+        "stories_concluidas": "Stories concluídas",
+        "sp_planejado": st.column_config.NumberColumn("SP planejados", format="%.0f"),
+        "sp_realizado": st.column_config.NumberColumn("SP realizados", format="%.0f"),
+        "diferenca": st.column_config.NumberColumn("Diferença", format="%+.0f"),
+        "taxa": st.column_config.NumberColumn("Conclusão", format="%.0f%%")})
+    # por período: planejado acumulado (na data de início de cada sprint) × realizado acumulado (dia a dia)
+    p = ga.planejado_no_tempo(R)
+    ent = ga.entregas_no_tempo(d)
+    partes = [p.assign(dia=p["inicio"], serie="Planejado", valor=p["sp_planejado"].fillna(0).cumsum())
+              [["dia", "serie", "valor"]]]
+    if not ent.empty:
+        partes.append(ent.assign(serie="Realizado", valor=ent["acumulado"])[["dia", "serie", "valor"]])
+    acum = pd.concat(partes, ignore_index=True)
+    linha = (alt.Chart(acum).mark_line(interpolate="step-after", point=True)
+             .encode(x=alt.X("dia:T", title="Data", axis=alt.Axis(format="%d/%m")),
+                     y=alt.Y("valor:Q", title="SP acumulados"),
+                     color=alt.Color("serie:N", title=None, scale=ESCALA_PR, sort=SERIES_PR),
+                     tooltip=[alt.Tooltip("dia:T", format="%d/%m/%Y"), alt.Tooltip("serie:N"),
+                              alt.Tooltip("valor:Q", format=".0f")]))
+    charts.mostrar(linha, "Por período", "planejado acumulado (sobe no início de cada sprint) × realizado acumulado "
+                                         "(sobe na data de conclusão)", altura=220)
+    st.markdown("**Por story**")
+    x = d.assign(diferenca=d["sp_realizado"].fillna(0) - d["sp_planejado"].fillna(0))
+    tabela_stories(x.sort_values(["ordem_sprint", "diferenca"]), "comp", "planejado_x_realizado_por_story.csv",
+                   ["sprint", "epico", "issue", "titulo", "url", "sp_planejado", "sp_realizado", "resultado",
+                    "levada_para", "status_atual"])
+
+
+# ───────────────────────── 6. velocity ─────────────────────────
+
+def _velocity(ctx, R, d):
+    layout.secao("Velocity", "Quanto foi planejado e entregue em cada sprint, e como o ritmo variou?", ["ZENHUB"])
+    concl = R[R["sprint_status"] == vel.STATUS_CONCLUIDA]
+    media = concl["sp_realizado"].mean() if len(concl) >= ctx.zh_regras.min_sprints_media else None
+    v = R.assign(eixo=R["sprint"] + R["sprint_status"].map({vel.STATUS_ANDAMENTO: " (parcial)"}).fillna(""))
+    ordem = list(v["eixo"])
+    longo = pd.concat(ignore_index=True, objs=[v.assign(serie="Planejado", sp=v["sp_planejado"]),
+                                               v.assign(serie="Realizado", sp=v["sp_realizado"])])
+    longo["parcial"] = longo["sprint_status"] != vel.STATUS_CONCLUIDA
+    barras = (alt.Chart(longo).mark_bar(size=18, cornerRadiusTopLeft=3, cornerRadiusTopRight=3)
+              .encode(x=alt.X("eixo:N", sort=ordem, title="Sprint", axis=alt.Axis(labelAngle=0)),
+                      xOffset=alt.XOffset("serie:N", sort=SERIES_PR), y=alt.Y("sp:Q", title="Story Points"),
+                      color=alt.Color("serie:N", title=None, scale=ESCALA_PR, sort=SERIES_PR),
+                      opacity=alt.condition("datum.parcial", alt.value(0.45), alt.value(1)),
+                      tooltip=[alt.Tooltip("sprint_nome:N", title="Sprint"), alt.Tooltip("serie:N"),
+                               alt.Tooltip("sp:Q", title="SP", format=".0f")]))
+    rot = barras.mark_text(dy=-7, fontSize=11).encode(text=alt.Text("sp:Q", format=".0f"),
+                                                      color=alt.value(theme.INK["secondary"]), opacity=alt.value(1))
+    linha = (alt.Chart(v).mark_line(color=theme.INK["primary"], strokeWidth=2, point=True)
+             .encode(x=alt.X("eixo:N", sort=ordem), y="sp_realizado:Q",
+                     tooltip=[alt.Tooltip("eixo:N", title="Sprint"),
+                              alt.Tooltip("sp_realizado:Q", title="Velocity", format=".0f")]))
+    camadas = barras + rot + linha
+    if media is not None:
+        camadas = camadas + charts.regra_horizontal(media, f"média {num(media)} SP", theme.INK["muted"])
+    tend = ga.tendencia(R)
+    nota = ("Linha = velocity (SP realizados). Barras claras = sprint em andamento, fora da média. "
+            + (f"Média das {len(concl)} sprints concluídas: {num(media)} SP. " if media is not None else
+               f"Média indisponível: exige {ctx.zh_regras.min_sprints_media} sprints concluídas. ")
+            + (f"Tendência {tend['sentido']} ({'+' if tend['valor'] >= 0 else '−'}{num(abs(tend['valor']), 1)} SP por sprint, {tend['n']} sprints)."
+               if tend["valor"] is not None else f"Tendência indisponível: {tend['motivo']}."))
+    charts.mostrar(camadas, "Planejado, realizado e velocity por sprint", "Story Points", nota=nota, altura=260)
+    t = R[["sprint", "sprint_nome", "release", "sprint_status", "sp_planejado", "sp_realizado", "diferenca", "taxa",
+           "stories_planejadas", "stories_concluidas", "stories_adicionadas", "stories_removidas",
+           "stories_levadas"]]
+    st.caption("Clique numa sprint da tabela para ver as stories que compõem a velocity dela.")
+    ev = st.dataframe(t, hide_index=True, use_container_width=True, key="ga_vel_tab", on_select="rerun",
+                      selection_mode="single-row", column_config={
+                          "sprint": "Sprint", "sprint_nome": "Nome", "release": "Release", "sprint_status": "Situação",
+                          "sp_planejado": st.column_config.NumberColumn("Planejado", format="%.0f"),
+                          "sp_realizado": st.column_config.NumberColumn("Realizado", format="%.0f"),
+                          "diferenca": st.column_config.NumberColumn("Diferença", format="%+.0f"),
+                          "taxa": st.column_config.NumberColumn("Conclusão", format="%.0f%%"),
+                          "stories_planejadas": "Planejadas", "stories_concluidas": "Concluídas",
+                          "stories_adicionadas": "Adicionadas", "stories_removidas": "Removidas",
+                          "stories_levadas": "Levadas"})
+    try:
+        linhas_sel = list(ev.selection.rows)
+    except AttributeError:
+        linhas_sel = []
+    alvo = t.iloc[linhas_sel[0]]["sprint"] if linhas_sel else (concl["sprint"].iloc[-1] if not concl.empty
+                                                               else t["sprint"].iloc[-1])
+    x = d[(d["sprint"] == alvo) & d["concluida"]]
+    st.markdown(f"**Velocity da {alvo}: {_sp(x['sp_realizado'].sum())} em {len(x)} story(ies)**"
+                + ("" if linhas_sel else " · última sprint concluída; clique em outra linha para trocar"))
+    tabela_stories(x.sort_values("sp_realizado", ascending=False), "vel", f"velocity_{alvo}.csv",
+                   ["epico", "issue", "titulo", "url", "sp_realizado", "sp_planejado", "resultado", "concluida_em",
+                    "responsavel"])
+
+
+# ───────────────────────── 7. burndown ─────────────────────────
+
+def _burndown(ctx, sprints_rec: pd.DataFrame):
+    layout.secao("Burndown", "Como o trabalho restante evoluiu ao longo da sprint?", ["ZENHUB", "CALCULADO"])
+    if sprints_rec.empty:
+        layout.indisponivel("Burndown indisponível", "nenhuma sprint no recorte.")
+        return
+    padrao = sprints_rec[sprints_rec["status"] == vel.STATUS_ANDAMENTO]
+    opcoes = list(sprints_rec["sprint_label"])
+    idx = opcoes.index(padrao["sprint_label"].iloc[0]) if not padrao.empty else len(opcoes) - 1
+    alvo = st.selectbox("Sprint do burndown", opcoes, index=idx, key="ga_burn")
+    s = sprints_rec[sprints_rec["sprint_label"] == alvo].iloc[0]
+    b = ga.burndown(ctx.zh_snap, s, ctx.zh_regras, ctx.agora_utc)
+    dados = b["dados"]
+    if dados.empty:
+        layout.indisponivel("Burndown indisponível", b["motivo"] or "sem dados")
+        return
+    series = ["Ideal (a partir do planejado)", "Restante real", "Escopo total"]
+    longo = pd.concat(ignore_index=True, objs=[
+        dados.assign(serie=series[0], valor=dados["ideal"]),
+        dados.assign(serie=series[1], valor=dados["restante"]),
+        dados.assign(serie=series[2], valor=dados["escopo"])]).dropna(subset=["valor"])
+    linha = (alt.Chart(longo).mark_line(point=True)
+             .encode(x=alt.X("dia:T", title="Dia da sprint", axis=alt.Axis(format="%d/%m")),
+                     y=alt.Y("valor:Q", title="Story Points"),
+                     color=alt.Color("serie:N", title=None, sort=series,
+                                     scale=alt.Scale(domain=series, range=[COR_PLAN, COR_REAL, theme.INK["muted"]])),
+                     strokeDash=alt.StrokeDash("serie:N", sort=series, legend=None,
+                                               scale=alt.Scale(domain=series, range=[[6, 4], [1, 0], [2, 3]])),
+                     tooltip=[alt.Tooltip("dia:T", title="Fim do dia", format="%d/%m/%Y"), alt.Tooltip("serie:N"),
+                              alt.Tooltip("valor:Q", title="SP", format=".0f")]))
+    marcos = pd.DataFrame({"dia": [b["inicio"], b["fim"]], "t": ["início", "fim"]})
+    regra = alt.Chart(marcos).mark_rule(color=theme.INK["muted"], strokeDash=[2, 3]).encode(x="dia:T")
+    texto = alt.Chart(marcos).mark_text(align="left", dx=3, y=4, baseline="top", fontSize=10,
+                                        color=theme.INK["muted"]).encode(x="dia:T", text="t:N")
+    ultimo = dados.dropna(subset=["restante"]).tail(1)
+    sub = (f"{s['sprint_name']} · {data_br(b['inicio'])} a {data_br(b['fim'])}"
+           + (f" · contagem até {b['prazo']:%d/%m %H:%M}" if b.get("prazo") is not None else "")
+           + (f" · restante no último dia com dado: {num(ultimo['restante'].iloc[0])} SP" if not ultimo.empty else ""))
+    charts.mostrar(linha + regra + texto, f"Burndown da {alvo}", sub, dados, altura=260, nota=(
+        "Dados verificáveis usados: planejado da planning, entradas e saídas do histórico scopeChange (com data e "
+        "hora) e a data de fechamento de cada issue. Restante = escopo no fim do dia − SP das stories fechadas até "
+        "ali. Fora do cálculo: mudança de estimativa no meio da sprint (o Zenhub não guarda esse histórico) — quem "
+        "já estava na sprint no início usa a estimativa atual. Dias futuros ficam sem ponto."))
+
+
+# ───────────────────────── 8. análises qualitativas ─────────────────────────
+
+def _analises(R, d):
+    layout.secao("Análises qualitativas", "O que explica as diferenças entre planejamento e execução?",
+                 ["CALCULADO"])
+    a = ga.analises(R, d)
+    if a.empty:
+        layout.alerta("good", "Nenhum padrão relevante encontrado no recorte com os limites atuais.")
+        return
+    st.caption("**Fato observado** = número tirado das stories do recorte. **Interpretação** = leitura possível "
+               "desse fato, a confirmar com o time; não substitui o dado. Limites em `src/metrics/gestao_agil.py`: "
+               f"diferença ≥ {ga.LIMITE_DIFERENCA:.0%}, overcommitment ≥ {ga.LIMITE_OVERCOMMIT:.1f}× a média "
+               f"anterior, variação de velocity ≥ {ga.LIMITE_VARIACAO_VELOCITY:.0%}, escopo adicionado ≥ "
+               f"{ga.LIMITE_ESCOPO:.0%}, concentração ≥ {ga.LIMITE_CONCENTRACAO:.0%} nas 20% maiores stories.")
+    st.dataframe(a, hide_index=True, use_container_width=True, column_config={
+        "tema": "Tema", "sprint": "Sprint", "fato": st.column_config.TextColumn("Fato observado", width="large"),
+        "interpretacao": st.column_config.TextColumn("Interpretação", width="large"),
+        "issues": st.column_config.TextColumn("Issues envolvidas", width="medium")})
+
+
+# ───────────────────────── 9. detalhamento ─────────────────────────
+
+def _detalhamento(d):
+    layout.secao("Detalhamento das issues", "De quais issues vem cada número?", ["ZENHUB"])
+    h = ga.hierarquia(d)
+    st.markdown("**Release → Sprint → Épico**")
+    st.dataframe(h, hide_index=True, use_container_width=True, column_config={
+        "release": "Release", "sprint": "Sprint", "epico": st.column_config.TextColumn("Épico", width="large"),
+        "stories": "Stories", "sp_planejado": st.column_config.NumberColumn("SP planejados", format="%.0f"),
+        "sp_realizado": st.column_config.NumberColumn("SP realizados", format="%.0f"),
+        "issues": st.column_config.TextColumn("Issues", width="large")})
+    st.markdown("**Todas as stories do recorte** (uma linha por story em cada sprint)")
+    tabela_stories(d.sort_values(["ordem_sprint", "epico", "issue"]), "todas", "stories_do_recorte.csv")
+    ausentes = []
+    if d["criada_em"].isna().any():
+        ausentes.append(f"data de criação ausente em {int(d['criada_em'].isna().sum())} registro(s): ela só vem da "
+                        "coleta do backlog completo")
+    if (d["responsavel"] == "Não coletado").any():
+        ausentes.append("responsável 'Não coletado' = issue fora do backlog coletado")
+    ausentes.append("data de início da issue (start date do Zenhub) não é coletada; 'Entrou na sprint' é a data do "
+                    "histórico de escopo")
+    st.caption("Dados ausentes: " + "; ".join(ausentes) + ".")
+
+
+# ───────────────────────── página ─────────────────────────
 
 def pagina():
     ctx, f = layout.estado()
-    layout.titulo_pagina("Gestão ágil", "Backlog, sprints, velocity e entregas a partir do quadro do Zenhub.",
-                         ["ZENHUB"])
+    layout.titulo_pagina("Gestão ágil", "Planejado × realizado em Story Points, do resumo até cada issue.", ["ZENHUB"])
     snap = ctx.zh_snap
     topo_e, topo_d = st.columns([3, 1])
     with topo_d:
@@ -90,28 +527,26 @@ def pagina():
         if snap:
             fonte = ctx.fonte("ZENHUB")[0]
             st.caption(f"Snapshot `{ctx.zh_arquivo}` · coletado em **{data_br(fonte.ultima_atualizacao, True)}** · "
-                       f"{snap.get('requisicoes', '?')} requisições · feito = issue fechada "
-                       f"(em qualquer pipeline) · pontuam: {', '.join(sorted(ctx.zh_regras.tipos_pontuados))}.")
+                       f"pontuam: {', '.join(sorted(ctx.zh_regras.tipos_pontuados))} sem filhas pontuáveis · "
+                       "feito = issue fechada.")
+    r = ctx.zh_regras
     layout.metodologia([
-        ("Planejado / Em andamento / Concluído", "ZENHUB — pipeline da issue",
-         "issue fechada = Concluído (só ela conta pontos); aberta = pela pipeline (mapa em `src/metrics/agile.py`; "
-         "aberta no Done = Em andamento; pipeline fora do mapa = Não classificado)"),
-        ("Story Points planejados", "ZENHUB — `Sprint.scopeChange`", "issues pontuáveis na sprint ao fim da janela de "
-         f"planning ({ctx.zh_regras.janela_planning.total_seconds() / 3600:.0f} h), com a estimativa do momento da "
-         "entrada; issues que já estavam na sprint no início (sem evento no histórico, que só registra mudanças "
-         "depois do início) entram com a estimativa atual; congelado em `linhas-de-base.json`"),
-        ("Velocity", "ZENHUB", "Story Points de issues pontuáveis fechadas dentro da sprint"
-         + (f" ou até {ctx.zh_regras.prazo_fechamento} (Brasília) do dia seguinte ao último dia"
-            if ctx.zh_regras.prazo_fechamento else "")
-         + " (issue sem estimativa conta 0 SP e aparece nas observações)"),
-        ("Velocity média", "cálculo", f"média das sprints concluídas (≥ {ctx.zh_regras.min_sprints_media}); "
-         "a sprint em andamento fica de fora"),
-        ("Média móvel", "cálculo", "média das 3 últimas sprints concluídas; só existe a partir da 3ª"),
-        ("Taxa de conclusão", "cálculo", "SP concluídos ÷ SP planejados; indisponível quando o planejado é 0"),
-        ("Throughput", "ZENHUB", "issues pontuáveis concluídas por semana (segunda a domingo, horário de Brasília)"),
-        ("Progresso do épico / release", "ZENHUB", "issues concluídas ÷ issues (filhas do épico ou ligadas à release)"),
-        ("Conferência dos SP", "cálculo", "SP fechados = sprints concluídas + sprint em andamento + fora de sprint "
-         "= com épico + sem épico (se não fechar, o painel lista as issues)"),
+        ("Story", "ZENHUB", f"issue {', '.join(sorted(r.tipos_pontuados))} sem filhas pontuáveis (PR, Épico, "
+         "Sub-task e pai de Tasks não pontuam, para não contar o mesmo trabalho duas vezes)"),
+        ("SP planejados", "ZENHUB — `Sprint.scopeChange`", "stories na sprint ao fim da janela de planning "
+         f"({r.janela_planning.total_seconds() / 3600:.0f} h), com a estimativa daquele momento; quem já estava na "
+         "sprint no início entra com a estimativa atual; congelado em `linhas-de-base.json`"),
+        ("SP realizados / velocity", "ZENHUB", "estimativa atual das stories fechadas dentro da sprint em que estavam"
+         + (f", até {r.prazo_fechamento} (Brasília) do dia seguinte ao último dia" if r.prazo_fechamento else "")),
+        ("Adicionada / removida / levada", "ZENHUB — `scopeChange`", "entrou depois da planning / saiu antes do fim "
+         "sem concluir / não concluída e presente na sprint seguinte"),
+        ("Conclusão", "cálculo", "SP realizados ÷ SP planejados das sprints concluídas do recorte"),
+        ("Velocity média e tendência", "cálculo", f"média das sprints concluídas (≥ {r.min_sprints_media}); "
+         "tendência = inclinação da reta de mínimos quadrados (≥ 3 sprints)"),
+        ("Capacidade registrada", "PLANILHA — aba Horas", "média das horas registradas por sprint concluída"),
+        ("Burndown", "cálculo", "escopo no fim de cada dia (histórico) − SP fechados até ali; ideal = planejado → 0"),
+        ("Filtros", "—", "release, sprint, período (último dia da sprint), épico e issue se combinam; todos os "
+         "blocos usam o mesmo recorte"),
     ])
     if not snap:
         layout.indisponivel("Sem dados do Zenhub", "ainda não há snapshot em `data/zenhub/velocity/`.",
@@ -119,315 +554,49 @@ def pagina():
         return
     for aviso in snap.get("avisos") or []:
         st.caption(f"Aviso da coleta: {aviso}")
-    if not ctx.zh_backlog_completo:
-        layout.indisponivel(
-            "Backlog completo não coletado",
-            "este snapshot só tem as issues que passaram por alguma sprint; itens que estão apenas no Product "
-            "Backlog, Icebox ou New Issues não aparecem nas contagens abaixo.",
-            "rodar a coleta novamente (`scripts/coleta_velocity.py`): a versão atual também percorre todos os "
-            "pipelines do quadro.")
+    if ctx.zh_iniciadas.empty:
+        layout.indisponivel("Nenhuma sprint iniciada", "o snapshot não tem sprints com data de início passada.")
+        return
 
-    todas = ctx.zh_issues
-    d = _filtros(ctx, f, todas)
+    linhas = ga.stories_por_sprint(snap, ctx.zh_iniciadas, ctx.zh_issues, ctx.zh_regras)
 
-    # ── KPIs ──
-    layout.secao("Indicadores", "Quanto foi planejado, quanto está em andamento e quanto foi entregue?", ["ZENHUB"])
-    cont = d["situacao"].value_counts()
-    total = len(d)
-    sprints = filters.por_periodo(ctx.zh_iniciadas, "start_date", f["periodo"], "end_date")
-    media = vel.calculate_average_velocity(sprints, ctx.zh_regras.min_sprints_media)
-    concl = sprints[sprints["status"] == vel.STATUS_CONCLUIDA] if not sprints.empty else sprints
-    planejado = concl["planned_story_points"].sum(min_count=1) if not concl.empty else None
-    concluido = concl["completed_story_points"].sum(min_count=1) if not concl.empty else None
-    taxa = vel.calculate_completion_rate(planejado, concluido)
-    layout_kpis = st.columns(4)
-    with layout_kpis[0]:
-        kpi("Itens no filtro", num(total), "ZENHUB",
-            nota=f"{int((d['pontos'].isna() & d['issue_type'].isin(ctx.zh_regras.tipos_pontuados)).sum())} "
-                 "pontuáveis sem estimativa")
-    with layout_kpis[1]:
-        kpi("Planejados", num(cont.get(agile.PLANEJADO, 0)), "ZENHUB", nota="New Issues, Backlogs, DoR")
-    with layout_kpis[2]:
-        kpi("Em andamento", num(cont.get(agile.ANDAMENTO, 0)), "ZENHUB", nota="In Progress, Review/QA, DoD e Done ainda abertas")
-    with layout_kpis[3]:
-        feitas = d[d["situacao"] == agile.CONCLUIDO]
-        kpi("Itens concluídos", num(len(feitas)), "ZENHUB",
-            nota=f"{pct(len(feitas) / total) if total else '—'} dos itens · {num(int(feitas['pontuavel'].sum()))} "
-                 f"pontuáveis = {_sp(feitas['sp'].sum())} (conta issues, não SP)")
-    k2 = st.columns(4)
-    with k2[0]:
-        if media["valor"] is None:
-            kpi("Velocity média", None, "ZENHUB", nota=f"Indisponível: {media['motivo']}.")
-        else:
-            kpi("Velocity média", _sp(media["valor"]), "ZENHUB", nota=f"{media['n']} sprints concluídas")
-    with k2[1]:
-        kpi("SP concluídos (sprints concluídas)", _sp(concluido) if concluido is not None else None, "ZENHUB",
-            nota="nenhuma sprint concluída no período" if concluido is None else f"{len(concl)} sprint(s)")
-    with k2[2]:
-        if taxa is None:
-            kpi("Taxa de conclusão", None, "ZENHUB",
-                nota="Indisponível: o planejado das sprints concluídas é 0 SP ou não existe (issues sem estimativa "
-                     "na planning).")
-        else:
-            kpi("Taxa de conclusão", f"{num(taxa)}%", "ZENHUB",
-                status=status_taxa(taxa, config.META_TAXA_CONCLUSAO, config.LIMITE_TAXA_CRITICO),
-                nota=f"SP concluídos ÷ SP planejados · meta ≥ {num(config.META_TAXA_CONCLUSAO)}%")
-    tp = agile.throughput_semanal(filters.por_periodo(d, "concluida_em", f["periodo"]), ctx.zh_regras.tipos_pontuados)
-    with k2[3]:
-        if tp.empty:
-            kpi("Throughput médio", None, "ZENHUB", nota="Indisponível: nenhuma issue pontuável concluída no período.")
-        else:
-            kpi("Throughput médio", f"{num(tp['itens'].mean(), 1)} itens/sem.", "ZENHUB",
-                nota=f"{len(tp)} semana(s) com entrega")
+    layout.secao("Filtros", "Qual recorte analisar?", ["ZENHUB"])          # 1
+    sprints_rec, d, desc = _filtros(ctx, f, linhas)
+    st.markdown(f"Encontrados: {desc['texto']}")
+    if desc["fora"]:
+        st.caption(f"Sprint(s) {', '.join(desc['fora'])} fora do período escolhido: amplie o período para incluí-la(s).")
+    R = ga.resumo_por_sprint(d)
+    if R.empty:
+        layout.indisponivel("Nenhuma story no recorte", "os filtros escolhidos não deixaram nenhuma story.",
+                            "limpar algum filtro ou ampliar o período.")
+        return
+    rel = ga.resumo_por_release(R)
 
-    # ── backlog ──
-    layout.secao("Backlog", "Como está distribuído o trabalho no quadro?", ["ZENHUB"])
-    conhecidos = list(agile.SITUACAO_PIPELINE)
-    ordem_pipe = sorted(todas["pipeline"].dropna().unique(),
-                        key=lambda p: (conhecidos.index(p) if p in conhecidos else len(conhecidos), p))
-    por_pipe = agile.distribuicao(d, "pipeline")
-    if por_pipe.empty:
-        st.caption("Sem issues para os filtros selecionados.")
-    else:
-        barras = (alt.Chart(por_pipe).mark_bar(cornerRadiusEnd=3, stroke=theme.INK["surface"], strokeWidth=1)
-                  .encode(y=alt.Y("pipeline:N", sort=ordem_pipe, title=None),
-                          x=alt.X("itens:Q", title="Issues"),
-                          color=alt.Color("situacao:N", title="Situação", scale=COR_SIT,
-                                          sort=SIT + [agile.NAO_CLASSIFICADO]),
-                          tooltip=[alt.Tooltip("pipeline:N", title="Pipeline"), alt.Tooltip("situacao:N", title="Situação"),
-                                   alt.Tooltip("itens:Q", title="Issues"), alt.Tooltip("pontos:Q", title="SP", format=".0f")]))
-        charts.mostrar(barras, "Issues por pipeline", "quantidade de issues · situação atual no quadro",
-                       por_pipe, altura=charts.altura_categorias(por_pipe["pipeline"].nunique()))
-        e, dd = st.columns(2)
-        for alvo, campo, titulo in ((e, "epico", "Issues por épico"), (dd, "release", "Issues por release")):
-            with alvo:
-                dist = agile.distribuicao(d, campo)
-                ordem = (dist.groupby(campo)["itens"].sum().sort_values(ascending=False).index.tolist())
-                b = (alt.Chart(dist).mark_bar(stroke=theme.INK["surface"], strokeWidth=1)
-                     .encode(y=alt.Y(f"{campo}:N", sort=ordem, title=None,
-                                     axis=alt.Axis(labelLimit=260)),
-                             x=alt.X("itens:Q", title="Issues"),
-                             color=alt.Color("situacao:N", title="Situação", scale=COR_SIT,
-                                             sort=SIT + [agile.NAO_CLASSIFICADO]),
-                             tooltip=[alt.Tooltip(f"{campo}:N", title=titulo.split()[-1].capitalize()),
-                                      alt.Tooltip("situacao:N", title="Situação"), alt.Tooltip("itens:Q", title="Issues")]))
-                charts.mostrar(b, titulo, "quantidade de issues por situação", dist,
-                               altura=charts.altura_categorias(dist[campo].nunique()))
-        e, dd = st.columns(2)
-        campos_extra = [("tipo", "Issues por tipo")]
-        if (d["prioridade"] != "Sem prioridade").any():
-            campos_extra.append(("prioridade", "Issues por prioridade"))
-        for alvo, (campo, titulo) in zip((e, dd), campos_extra):
-            with alvo:
-                dist = agile.distribuicao(d, campo)
-                b = (alt.Chart(dist).mark_bar(stroke=theme.INK["surface"], strokeWidth=1)
-                     .encode(y=alt.Y(f"{campo}:N", sort="-x", title=None), x=alt.X("itens:Q", title="Issues"),
-                             color=alt.Color("situacao:N", title="Situação", scale=COR_SIT,
-                                             sort=SIT + [agile.NAO_CLASSIFICADO]),
-                             tooltip=[alt.Tooltip(f"{campo}:N"), alt.Tooltip("situacao:N"), alt.Tooltip("itens:Q")]))
-                charts.mostrar(b, titulo, "quantidade de issues por situação", dist,
-                               altura=charts.altura_categorias(dist[campo].nunique()))
-        if len(campos_extra) == 1:
-            with dd:
-                layout.indisponivel("Distribuição por prioridade indisponível",
-                                    "o snapshot atual não traz a prioridade das issues.",
-                                    "coletar o backlog completo (campo `pipelineIssue.priority`).")
-
-    # ── velocity ──
-    layout.secao("Velocity por sprint", "Quanto o time planeja e quanto entrega a cada sprint?", ["ZENHUB"])
-    if sprints.empty:
-        layout.indisponivel("Sem sprints no período", "nenhuma sprint iniciada no período selecionado.")
-    else:
-        v = sprints.sort_values("start_date").copy()
-        v["eixo"] = v["sprint_label"] + v["status"].map({vel.STATUS_ANDAMENTO: " (parcial)",
-                                                          vel.STATUS_CANCELADA: " (cancelada)"}).fillna("")
-        concl_v = v[v["status"] == vel.STATUS_CONCLUIDA]
-        v["media_movel"] = agile.media_movel(concl_v["velocity"]).reindex(v.index)
-        longo = pd.concat(ignore_index=True, objs=[v.assign(serie="Planejado", pontos=v["planned_story_points"]),
-                           v.assign(serie="Concluído (velocity)", pontos=v["completed_story_points"])])
-        longo = longo.dropna(subset=["pontos"])
-        longo["parcial"] = longo["status"] != vel.STATUS_CONCLUIDA
-        series = ["Planejado", "Concluído (velocity)"]
-        ordem = list(v["eixo"])
-        barras = (alt.Chart(longo).mark_bar(size=18, cornerRadiusTopLeft=3, cornerRadiusTopRight=3,
-                                            stroke=theme.INK["surface"], strokeWidth=2)
-                  .encode(x=alt.X("eixo:N", sort=ordem, title="Sprint", axis=alt.Axis(labelAngle=0)),
-                          xOffset=alt.XOffset("serie:N", sort=series),
-                          y=alt.Y("pontos:Q", title="Story Points"),
-                          color=alt.Color("serie:N", title=None, sort=series,
-                                          scale=alt.Scale(domain=series, range=[theme.SERIES[2], theme.SERIES[0]])),
-                          opacity=alt.condition("datum.parcial", alt.value(0.45), alt.value(1)),
-                          tooltip=[alt.Tooltip("sprint_name:N", title="Sprint"), alt.Tooltip("status:N", title="Situação"),
-                                   alt.Tooltip("serie:N", title="Série"), alt.Tooltip("pontos:Q", title="SP", format=".0f")]))
-        rot = barras.mark_text(dy=-7, fontSize=11).encode(text=alt.Text("pontos:Q", format=".0f"),
-                                                          color=alt.value(theme.INK["secondary"]),
-                                                          opacity=alt.value(1))
-        camadas = barras + rot
-        mm = v.dropna(subset=["media_movel"])
-        if not mm.empty:
-            camadas = camadas + (alt.Chart(mm).mark_line(color=theme.SERIES[1], strokeDash=[4, 3], strokeWidth=2,
-                                                         point=alt.OverlayMarkDef(size=50, color=theme.SERIES[1]))
-                                 .encode(x=alt.X("eixo:N", sort=ordem), y="media_movel:Q",
-                                         tooltip=[alt.Tooltip("eixo:N", title="Sprint"),
-                                                  alt.Tooltip("media_movel:Q", title="Média móvel (3)", format=".1f")]))
-        if media["valor"] is not None:
-            camadas = camadas + charts.regra_horizontal(media["valor"], f"velocity média {num(media['valor'])} SP",
-                                                        theme.INK["primary"])
-        notas = ["Barras claras = sprint em andamento (parcial) ou cancelada, fora da média."]
-        notas.append("Média móvel (3 sprints) tracejada." if not mm.empty else
-                     "Média móvel não exibida: exige 3 sprints concluídas.")
-        if media["valor"] is None:
-            notas.append(f"Velocity média não exibida: {media['motivo']}.")
-        if (v["planned_story_points"].fillna(0) == 0).any():
-            notas.append("Planejado = 0 SP significa que as issues da sprint não tinham estimativa ao fim da planning "
-                         "(o painel não estima pontos).")
-        tabela_v = v[["sprint_label", "sprint_name", "status", "release_name", "planned_story_points",
-                      "completed_story_points", "completion_rate", "planned_issues", "completed_issues",
-                      "completed_unplanned_story_points", "baseline_source", "notes"]].rename(columns={
-            "sprint_label": "sprint", "sprint_name": "nome", "status": "situação", "release_name": "release",
-            "planned_story_points": "SP planejados", "completed_story_points": "SP concluídos",
-            "completion_rate": "taxa de conclusão (%)", "planned_issues": "issues planejadas",
-            "completed_issues": "issues concluídas", "completed_unplanned_story_points": "SP fora do plano",
-            "baseline_source": "linha de base", "notes": "observações"})
-        charts.mostrar(camadas, "Story Points planejados × concluídos por sprint",
-                       f"Story Points · sprints de {data_br(f['periodo'][0])} a {data_br(f['periodo'][1])}",
-                       tabela_v, nota=" ".join(notas), altura=320)
-
-    # ── throughput e evolução ──
-    layout.secao("Evolução das entregas", "O time está entregando de forma contínua?", ["ZENHUB"])
-    e, dd = st.columns(2)
-    with e:
-        if tp.empty:
-            layout.indisponivel("Throughput indisponível", "nenhuma issue pontuável concluída no período.")
-        else:
-            b = (alt.Chart(tp).mark_bar(size=22, cornerRadiusTopLeft=3, cornerRadiusTopRight=3, color=theme.SERIES[0])
-                 .encode(x=alt.X("semana:T", title="Semana (início)", axis=alt.Axis(format="%d/%m")),
-                         y=alt.Y("itens:Q", title="Issues concluídas"),
-                         tooltip=[alt.Tooltip("semana:T", title="Semana de", format="%d/%m/%Y"),
-                                  alt.Tooltip("itens:Q", title="Issues"), alt.Tooltip("pontos:Q", title="SP", format=".0f"),
-                                  alt.Tooltip("sem_estimativa:Q", title="Sem estimativa")]))
-            charts.mostrar(b, "Throughput semanal", "issues pontuáveis concluídas por semana", tp, altura=240)
-    with dd:
-        c = d[d["concluida_em"].notna()].sort_values("concluida_em")
-        c = filters.por_periodo(c, "concluida_em", f["periodo"])
-        if c.empty:
-            layout.indisponivel("Evolução acumulada indisponível", "nenhuma issue concluída no período.")
-        else:
-            c = c.assign(dia=c["concluida_em"].dt.tz_convert("America/Sao_Paulo").dt.tz_localize(None).dt.normalize())
-            acum = c.groupby("dia").size().cumsum().reset_index(name="acumulado")
-            area = (alt.Chart(acum).mark_area(color=theme.SERIES[0], opacity=0.18, line={"color": theme.SERIES[0]},
-                                              interpolate="step-after")
-                    .encode(x=alt.X("dia:T", title="Data", axis=alt.Axis(format="%d/%m")),
-                            y=alt.Y("acumulado:Q", title="Issues concluídas (acumulado)"),
-                            tooltip=[alt.Tooltip("dia:T", title="Data", format="%d/%m/%Y"),
-                                     alt.Tooltip("acumulado:Q", title="Acumulado")]))
-            charts.mostrar(area + charts.marcos_release(acum["dia"].min(), acum["dia"].max()),
-                           "Entregas acumuladas", "issues concluídas (todas as do filtro) · acumulado no período",
-                           acum, altura=240)
-
-    # ── releases e épicos ──
-    layout.secao("Releases e épicos", "Quanto de cada entrega planejada já foi concluído?", ["ZENHUB"])
-    rel = agile.progresso_releases(snap, filters.por_repo(todas, f["repos"]))
-    if rel.empty:
-        layout.indisponivel("Sem releases no Zenhub", "o workspace não tem Release Reports com issues.")
-    else:
-        rel = rel.assign(progresso=rel["progresso"] * 100)
-        st.dataframe(rel, use_container_width=True, hide_index=True, column_config={
-            "release": "Release", "estado": "Estado", "inicio": "Início", "fim": "Fim", "issues": "Issues",
-            "concluidas": "Concluídas", "pontos": st.column_config.NumberColumn("SP", format="%.0f"),
-            "pontos_concluidos": st.column_config.NumberColumn("SP concluídos", format="%.0f"),
-            "progresso": st.column_config.ProgressColumn("Progresso", min_value=0, max_value=100, format="%.0f%%"),
-            "issues_no_zenhub": st.column_config.NumberColumn("Issues segundo o Zenhub", format="%d")})
-        st.caption("'Issues segundo o Zenhub' inclui pull requests e issues fora do snapshot; o progresso usa só as "
-                   "issues presentes no snapshot, sem PRs.")
-    ep = agile.progresso_epicos(filters.por_repo(todas, f["repos"]))
-    if not ep.empty:
-        ep = ep.assign(progresso=ep["progresso"] * 100)
-        for col in ("pontos", "pontos_concluidos"):
-            ep[col] = ep[col].map(lambda v: "—" if pd.isna(v) else num(v))
-        st.dataframe(ep, use_container_width=True, hide_index=True, column_config={
-            "epico": st.column_config.TextColumn("Épico", width="large"), "numero": "Nº", "repositorio": "Repositório",
-            "situacao": "Situação", "filhas": "Filhas", "concluidas": "Concluídas", "em_andamento": "Em andamento",
-            "pontos": "SP", "pontos_concluidos": "SP concluídos",
-            "progresso": st.column_config.ProgressColumn("Progresso", min_value=0, max_value=100, format="%.0f%%")})
-        st.caption("— = nenhuma filha pontuável com estimativa. Épico sem filhas aparece sem progresso (não é 0%). SP = só Features, Tasks e Bugs sem filhas "
-                   "(a mesma regra da velocity: uma US com Tasks não soma junto com as Tasks). Aqui entram todas as "
-                   "issues fechadas do épico, inclusive as da sprint em andamento; a velocity só soma as fechadas "
-                   "dentro de sprints concluídas. Releases e épicos usam todas as issues (só o filtro de repositório vale aqui).")
-
-    # ── conferência dos story points ──
-    layout.secao("Conferência dos story points", "Os SP fechados batem entre velocity, sprint atual e épicos?",
+    layout.secao("Resumo", "Quanto foi planejado, quanto foi entregue e como está o ritmo?",   # 2
                  ["ZENHUB", "CALCULADO"])
-    conc = agile.conciliacao_sp(filters.por_repo(todas, f["repos"]), ctx.zh_iniciadas)
-    if conc["total"] is None:
-        layout.indisponivel("Conferência indisponível", "não há issues no snapshot.")
-    else:
-        layout.alerta("good" if conc["fecha"] else "critical", agile.frase_conciliacao(conc))
-        tab = pd.concat([conc["linhas"].drop(columns="curto"), conc["epicos"]], ignore_index=True)
-        tab.insert(0, "visao", ["Por sprint"] * len(conc["linhas"]) + ["Por épico"] * len(conc["epicos"]))
-        st.dataframe(tab, use_container_width=True, hide_index=True, column_config={
-            "visao": "Visão", "parcela": st.column_config.TextColumn("Parcela", width="large"),
-            "sp": st.column_config.NumberColumn("SP", format="%.0f"), "issues": "Issues pontuáveis"})
-        if not conc["fora"].empty:
-            st.dataframe(conc["fora"], use_container_width=True, hide_index=True, column_config={
-                "url": st.column_config.LinkColumn("Link", display_text="abrir")})
-        st.caption("Calculado a cada carga (`agile.conciliacao_sp`): total = issues Feature/Task/Bug sem filhas "
-                   "pontuáveis e fechadas. 'Itens concluídos' nos indicadores conta issues de todos os tipos, por "
-                   "isso não é comparável com SP. Fechada entre o fim de uma sprint e o início da próxima conta na "
-                   "próxima. Só o filtro de repositório vale aqui.")
+    _kpis(ctx, R, d, desc)
+    _planejamento(R, d, rel)          # 3
+    _realizado(R, d, rel, desc)       # 4
+    _comparacao(R, d, rel)            # 5
+    _velocity(ctx, R, d)              # 6
+    _burndown(ctx, sprints_rec)       # 7
+    _analises(R, d)                   # 8
+    _detalhamento(d)                  # 9
 
-    # ── comparação com o relatório do Zenhub ──
-    layout.secao("Comparação com o Zenhub", "Por que o concluído do painel difere do Zenhub?", ["ZENHUB", "CALCULADO"])
-    comp, difs = vel.comparar_com_zenhub(snap, ctx.zh_iniciadas, ctx.zh_regras, ctx.agora_utc)
-    if comp.empty:
-        layout.indisponivel("Comparação indisponível", "nenhuma sprint iniciada no snapshot.")
-    else:
-        for frase, r in zip(vel.frase_comparacao(comp, difs), comp.itertuples()):
-            layout.alerta("good" if r.reproduz else "critical", frase)
-        st.dataframe(comp, use_container_width=True, hide_index=True, column_config={
-            "sprint": "Sprint", "status": "Situação",
-            "zenhub_api": st.column_config.NumberColumn("Zenhub (API)", format="%.0f"),
-            "zenhub_reproduzido": st.column_config.NumberColumn("Zenhub reproduzido", format="%.0f"),
-            "reproduz": st.column_config.CheckboxColumn("Bate?"),
-            "painel": st.column_config.NumberColumn("Painel", format="%.0f"),
-            "diferenca": st.column_config.NumberColumn("Painel − Zenhub", format="%+.0f")})
-        if not difs.empty:
-            st.dataframe(difs.drop(columns=["fechada_em"]), use_container_width=True, hide_index=True, column_config={
-                "sprint": "Sprint", "issue": "Issue", "titulo": st.column_config.TextColumn("Título", width="large"),
-                "sp": st.column_config.NumberColumn("SP", format="%.0f"), "efeito": "No painel",
-                "motivo": st.column_config.TextColumn("Motivo", width="large"),
-                "url": st.column_config.LinkColumn("Link", display_text="abrir")})
-        st.caption("'Zenhub (API)' é o `completedPoints` de cada sprint, só com estimativas reais. 'Zenhub reproduzido' "
-                   "recalcula esse número a partir das issues do snapshot com a regra do Zenhub (issue ou PR na sprint, "
-                   "fechada entre o início e o fim, com estimativa): se não bater, o painel avisa em vermelho. "
-                   "O relatório Team Velocity com 'assumed estimates' soma estimativas presumidas para issues sem "
-                   "estimativa, que o painel não usa: por isso ele não é comparável. Regras que diferem de propósito: "
-                   "página Metodologia.")
-
-    # ── qualidade do cadastro no Zenhub ──
-    alertas = agile.alertas_de_dados(filters.por_repo(todas, f["repos"]), ctx.zh_regras.tipos_pontuados)
-    layout.secao("Consistência do cadastro no Zenhub", "Há issues cadastradas de um jeito que distorce os números?",
+    layout.secao("Confiabilidade dos dados", "Os números batem com o Zenhub e o cadastro está consistente?",
                  ["ZENHUB"])
-    if alertas.empty:
-        layout.alerta("good", "Nenhuma inconsistência de tipo ou estimativa encontrada.")
-    else:
-        graves = alertas[~alertas["problema"].str.startswith("sem estimativa")]
-        for g in graves.itertuples():
-            layout.alerta("warning", f"#{g.numero} {g.titulo} — {g.problema}", str(g.repositorio))
-        st.dataframe(alertas, use_container_width=True, hide_index=True, column_config={
-            "numero": "Nº", "titulo": st.column_config.TextColumn("Issue", width="large"), "repositorio": "Repositório",
-            "tipo": "Tipo", "problema": st.column_config.TextColumn("O que corrigir", width="large"),
-            "url": st.column_config.LinkColumn("Link", display_text="abrir")})
-        st.caption("O painel não corrige o cadastro: o número só muda quando a issue for ajustada no Zenhub e a "
-                   "próxima coleta rodar.")
-
-    with st.expander(f"Ver as {len(d)} issues do filtro"):
-        cols = {"number": "Nº", "title": "Título", "repositorio": "Repositório", "tipo": "Tipo", "pipeline": "Pipeline",
-                "situacao": "Situação", "pontos": "SP", "sprint": "Sprint atual", "sprints_txt": "Passou pelas sprints", "epico": "Épico", "release": "Release",
-                "prioridade": "Prioridade", "responsavel": "Responsável", "url": "Link"}
-        d = d.assign(sprints_txt=d["sprints"].map(", ".join))
-        t = d[[c for c in cols if c in d]].rename(columns=cols)
-        t["Repositório"] = t["Repositório"].map(nome_curto)
-        st.dataframe(t, use_container_width=True, hide_index=True,
-                     column_config={"Link": st.column_config.LinkColumn("Link", display_text="abrir"),
-                                    "SP": st.column_config.NumberColumn(format="%.0f")})
+    todas = ctx.zh_issues
+    # abas (e não expansores): os blocos têm tabelas em expansores, e o Streamlit não aninha expansores
+    t1, t2, t3 = st.tabs(["Comparação com o Zenhub", "Consistência do cadastro",
+                          "Backlog atual, releases e épicos"])
+    with t1:
+        apoio.comparacao_zenhub(ctx, f, snap, todas, todas)
+        apoio.conferencia(ctx, f, snap, todas, todas)
+    with t2:
+        apoio.consistencia(ctx, f, snap, todas, todas)
+    with t3:
+        base = filters.por_repo(todas, f["repos"])
+        apoio.backlog(ctx, f, snap, todas, base)
+        apoio.releases_e_epicos(ctx, f, snap, todas, base)
+    st.caption(f"Base: {len(linhas)} registros story × sprint de {ctx.zh_iniciadas['sprint_label'].nunique()} "
+               f"sprints iniciadas · {pct(len(d) / len(linhas)) if len(linhas) else '—'} no recorte atual.")

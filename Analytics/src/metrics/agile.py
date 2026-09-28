@@ -77,7 +77,9 @@ def universo_issues(snap: dict | None, tipos_pontuados: set | None = None) -> tu
     df["concluida_em"] = _para_data(df["closed_at"]).where(df["state"] == "CLOSED")
     df["tipo"] = df["issue_type"].fillna("Sem tipo")
     df["prioridade"] = df["priority"].fillna("Sem prioridade")
-    df["responsavel"] = df["assignees"].map(lambda a: ", ".join(a) if isinstance(a, list) and a else "Sem responsável")
+    # lista vazia = ninguém atribuído; ausente = a coleta não trouxe o campo para essa issue
+    df["responsavel"] = df["assignees"].map(lambda a: (", ".join(a) or "Sem responsável") if isinstance(a, list)
+                                            else "Não coletado")
     df["repositorio"] = df["repository"].fillna("—")
     df["pipeline"] = df["pipeline"].where(df["pipeline"].notna(),
                                           df["state"].map(lambda e: "Fechada" if e == "CLOSED" else "Sem pipeline"))
