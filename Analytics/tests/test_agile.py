@@ -135,3 +135,18 @@ class ColetaBacklogTest(unittest.TestCase):
         avisos = []
         self.assertIsNone(coleta.coletar_backlog(Falso(), avisos, log=lambda m: None))
         self.assertTrue(avisos)
+
+
+class AlertasTest(unittest.TestCase):
+    def test_epico_sem_tipo_e_estimativa_indevida(self):
+        snap = {"issues": {"E": issue("E", tipo=None, est=8, titulo="[MSG02] Épico"),
+                           "F": issue("F", "Feature", pai="E"),
+                           "G": issue("G", "Epic", est=3)},
+                "sprints": [], "releases": []}
+        df, _ = agile.universo_issues(snap)
+        a = agile.alertas_de_dados(df, {"Feature", "Task", "Bug"})
+        problemas = set(a["problema"].str.split(":").str[0])
+        self.assertIn("sem tipo, mas tem filhas", problemas)
+        self.assertTrue(any(p.startswith("tem estimativa (8 SP) mas não tem tipo") for p in a["problema"]))
+        self.assertTrue(any(p.startswith("épico com estimativa (3 SP)") for p in a["problema"]))
+        self.assertIn("sem estimativa", problemas)                   # F é Feature sem estimativa

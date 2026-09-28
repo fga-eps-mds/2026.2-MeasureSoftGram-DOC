@@ -340,6 +340,23 @@ def pagina():
             "progresso": st.column_config.ProgressColumn("Progresso", min_value=0, max_value=100, format="%.0f%%")})
         st.caption("Épico sem filhas no snapshot aparece sem progresso (não é 0%).")
 
+    # ── qualidade do cadastro no Zenhub ──
+    alertas = agile.alertas_de_dados(filters.por_repo(todas, f["repos"]), ctx.zh_regras.tipos_pontuados)
+    layout.secao("Consistência do cadastro no Zenhub", "Há issues cadastradas de um jeito que distorce os números?",
+                 ["ZENHUB"])
+    if alertas.empty:
+        layout.alerta("good", "Nenhuma inconsistência de tipo ou estimativa encontrada.")
+    else:
+        graves = alertas[~alertas["problema"].str.startswith("sem estimativa")]
+        for g in graves.itertuples():
+            layout.alerta("warning", f"#{g.numero} {g.titulo} — {g.problema}", str(g.repositorio))
+        st.dataframe(alertas, use_container_width=True, hide_index=True, column_config={
+            "numero": "Nº", "titulo": st.column_config.TextColumn("Issue", width="large"), "repositorio": "Repositório",
+            "tipo": "Tipo", "problema": st.column_config.TextColumn("O que corrigir", width="large"),
+            "url": st.column_config.LinkColumn("Link", display_text="abrir")})
+        st.caption("O painel não corrige o cadastro: o número só muda quando a issue for ajustada no Zenhub e a "
+                   "próxima coleta rodar.")
+
     with st.expander(f"Ver as {len(d)} issues do filtro"):
         cols = {"number": "Nº", "title": "Título", "repositorio": "Repositório", "tipo": "Tipo", "pipeline": "Pipeline",
                 "situacao": "Situação", "pontos": "SP", "sprint": "Sprint", "epico": "Épico", "release": "Release",

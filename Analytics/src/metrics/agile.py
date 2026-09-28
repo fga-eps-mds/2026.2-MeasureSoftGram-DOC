@@ -178,3 +178,33 @@ def progresso_releases(snap: dict | None, df: pd.DataFrame) -> pd.DataFrame:
 def media_movel(valores: pd.Series, janela: int = 3) -> pd.Series:
     """Média móvel simples; só existe quando há ``janela`` valores (não completa com zero)."""
     return valores.rolling(janela, min_periods=janela).mean()
+
+
+def alertas_de_dados(df: pd.DataFrame, tipos_pontuados: set) -> pd.DataFrame:
+    """Issues cujo cadastro no Zenhub distorce os números (o painel não corrige: aponta).
+
+    * sem tipo, mas com filhas — se for épico, some da lista de épicos e as filhas
+      ficam "Sem épico";
+    * sem tipo, com estimativa — os pontos não contam (só Feature, Task e Bug pontuam);
+    * épico com estimativa — épico não pontua, a estimativa é ignorada;
+    * pontuável sem estimativa — conta como 0 SP no planejado e no concluído.
+    """
+    if df is None or df.empty:
+        return pd.DataFrame(columns=["numero", "titulo", "repositorio", "tipo", "problema", "url"])
+    pais = set(df["parent_id"].dropna())
+    linhas = []
+    for r in df.itertuples():
+        tipo, est = r.issue_type, r.pontos
+        problemas = []
+        if not tipo and r.issue_id in pais:
+            problemas.append("sem tipo, mas tem filhas: se for épico, marque o tipo Epic no Zenhub")
+        if not tipo and pd.notna(est):
+            problemas.append(f"tem estimativa ({est:g} SP) mas não tem tipo: os pontos não contam")
+        if tipo == "Epic" and pd.notna(est):
+            problemas.append(f"épico com estimativa ({est:g} SP): épico não pontua, a estimativa é ignorada")
+        if tipo in tipos_pontuados and pd.isna(est) and r.issue_id not in pais:
+            problemas.append("sem estimativa: conta 0 SP")
+        for pr in problemas:
+            linhas.append({"numero": r.number, "titulo": r.title, "repositorio": r.repositorio,
+                           "tipo": tipo or "Sem tipo", "problema": pr, "url": getattr(r, "url", None)})
+    return pd.DataFrame(linhas)
