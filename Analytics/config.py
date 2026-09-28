@@ -41,6 +41,9 @@ PARAMETROS = {
     "janela_planning_horas": "24",             # planejado = escopo da sprint ao fim do 1º dia (planning)
     "min_sprints_media_velocity": "2",         # velocity média só com pelo menos 2 sprints concluídas
     "sprints_canceladas": "",                  # ids de sprint separados por ";"
+    # Prazo de fechamento: issue fechada até esta hora (Brasília) do dia seguinte ao último dia da
+    # sprint ainda conta nela (e na release dela). Vazio = só até o fim da sprint no Zenhub.
+    "prazo_fechamento_dia_seguinte": "08:00",
 }
 
 # ───────────────────────── SonarCloud ─────────────────────────
@@ -75,5 +78,9 @@ METAS = {
     "coverage": {"R1": 85.0, "R2": 85.0, "R3": 90.0},
     "duplicated_lines_density": {"R1": 5.0, "R2": 5.0, "R3": 3.0},
 }
-META_INDICE_EVM = 0.95   # SPI/CPI abaixo disso = atenção; abaixo de 0,80 = crítico
+META_INDICE_EVM = 0.95   # SPI/CPI abaixo disso = atenção
+LIMITE_INDICE_CRITICO = 0.80   # SPI/CPI abaixo disso = crítico
+META_TAXA_CONCLUSAO = 80.0     # % de SP concluídos ÷ planejados nas sprints concluídas
+LIMITE_TAXA_CRITICO = 60.0     # abaixo disso = crítico
 META_CI_SUCESSO = 80.0   # % de execuções da CI com sucesso
+LIMITE_CI_CRITICO = 60.0 # abaixo disso = crítico

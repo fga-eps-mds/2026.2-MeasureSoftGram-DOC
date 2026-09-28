@@ -85,11 +85,14 @@ Confiabilidade (`src/metrics/qualidade.py`).
         {"Indicador": "Duplicação", "Conforme": " / ".join(f"{k} ≤ {num(v)}%" for k, v in
                                                           config.METAS["duplicated_lines_density"].items()),
          "Atenção": "até 1,5 × a meta", "Crítico": "acima de 1,5 × a meta"},
-        {"Indicador": "SPI e CPI", "Conforme": f"≥ {num(config.META_INDICE_EVM, 2)}", "Atenção": "0,80 a 0,95",
-         "Crítico": "< 0,80"},
-        {"Indicador": "Taxa de conclusão das sprints", "Conforme": "≥ 80%", "Atenção": "60% a 80%", "Crítico": "< 60%"},
-        {"Indicador": "Sucesso da CI", "Conforme": f"≥ {num(config.META_CI_SUCESSO)}%", "Atenção": "60% a 80%",
-         "Crítico": "< 60%"},
+        {"Indicador": "SPI e CPI", "Conforme": f"≥ {num(config.META_INDICE_EVM, 2)}", "Atenção": f"{num(config.LIMITE_INDICE_CRITICO, 2)} a {num(config.META_INDICE_EVM, 2)}",
+         "Crítico": f"< {num(config.LIMITE_INDICE_CRITICO, 2)}"},
+        {"Indicador": "Taxa de conclusão das sprints", "Conforme": f"≥ {num(config.META_TAXA_CONCLUSAO)}%",
+         "Atenção": f"{num(config.LIMITE_TAXA_CRITICO)}% a {num(config.META_TAXA_CONCLUSAO)}%",
+         "Crítico": f"< {num(config.LIMITE_TAXA_CRITICO)}%"},
+        {"Indicador": "Sucesso da CI", "Conforme": f"≥ {num(config.META_CI_SUCESSO)}%",
+         "Atenção": f"{num(config.LIMITE_CI_CRITICO)}% a {num(config.META_CI_SUCESSO)}%",
+         "Crítico": f"< {num(config.LIMITE_CI_CRITICO)}%"},
         {"Indicador": "Riscos elevados abertos", "Conforme": "0", "Atenção": "1 ou 2", "Crítico": "3 ou mais"},
     ])
     st.dataframe(metas, use_container_width=True, hide_index=True)

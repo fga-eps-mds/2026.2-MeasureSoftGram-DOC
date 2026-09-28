@@ -8,13 +8,15 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+import config
+
 from src import theme
 from src.components import charts, filters, layout
 from src.components.kpi import kpi
 from src.data.sonar import nome_curto
 from src.metrics import agile
 from src.metrics import velocity as vel
-from src.metrics.calculations import data_br, num, pct
+from src.metrics.calculations import data_br, num, pct, status_taxa
 
 SIT = [agile.CONCLUIDO, agile.ANDAMENTO, agile.PLANEJADO]
 COR_SIT = alt.Scale(domain=SIT + [agile.NAO_CLASSIFICADO],
@@ -95,14 +97,18 @@ def pagina():
          f"planning ({ctx.zh_regras.janela_planning.total_seconds() / 3600:.0f} h), com a estimativa do momento da "
          "entrada; issues que já estavam na sprint no início (sem evento no histórico, que só registra mudanças "
          "depois do início) entram com a estimativa atual; congelado em `linhas-de-base.json`"),
-        ("Velocity", "ZENHUB", "Story Points de issues pontuáveis fechadas dentro da sprint (issue sem estimativa "
-         "conta 0 SP e aparece nas observações)"),
+        ("Velocity", "ZENHUB", "Story Points de issues pontuáveis fechadas dentro da sprint"
+         + (f" ou até {ctx.zh_regras.prazo_fechamento} (Brasília) do dia seguinte ao último dia"
+            if ctx.zh_regras.prazo_fechamento else "")
+         + " (issue sem estimativa conta 0 SP e aparece nas observações)"),
         ("Velocity média", "cálculo", f"média das sprints concluídas (≥ {ctx.zh_regras.min_sprints_media}); "
          "a sprint em andamento fica de fora"),
         ("Média móvel", "cálculo", "média das 3 últimas sprints concluídas; só existe a partir da 3ª"),
         ("Taxa de conclusão", "cálculo", "SP concluídos ÷ SP planejados; indisponível quando o planejado é 0"),
         ("Throughput", "ZENHUB", "issues pontuáveis concluídas por semana (segunda a domingo, horário de Brasília)"),
         ("Progresso do épico / release", "ZENHUB", "issues concluídas ÷ issues (filhas do épico ou ligadas à release)"),
+        ("Conferência dos SP", "cálculo", "SP fechados = sprints concluídas + sprint em andamento + fora de sprint "
+         "= com épico + sem épico (se não fechar, o painel lista as issues)"),
     ])
     if not snap:
         layout.indisponivel("Sem dados do Zenhub", "ainda não há snapshot em `data/zenhub/velocity/`.",
@@ -141,8 +147,10 @@ def pagina():
     with layout_kpis[2]:
         kpi("Em andamento", num(cont.get(agile.ANDAMENTO, 0)), "ZENHUB", nota="In Progress, Review/QA, DoD e Done ainda abertas")
     with layout_kpis[3]:
-        kpi("Concluídos", num(cont.get(agile.CONCLUIDO, 0)), "ZENHUB",
-            nota=f"{pct(cont.get(agile.CONCLUIDO, 0) / total) if total else '—'} dos itens do filtro")
+        feitas = d[d["situacao"] == agile.CONCLUIDO]
+        kpi("Itens concluídos", num(len(feitas)), "ZENHUB",
+            nota=f"{pct(len(feitas) / total) if total else '—'} dos itens · {num(int(feitas['pontuavel'].sum()))} "
+                 f"pontuáveis = {_sp(feitas['sp'].sum())} (conta issues, não SP)")
     k2 = st.columns(4)
     with k2[0]:
         if media["valor"] is None:
@@ -159,8 +167,8 @@ def pagina():
                      "na planning).")
         else:
             kpi("Taxa de conclusão", f"{num(taxa)}%", "ZENHUB",
-                status="good" if taxa >= 80 else ("warning" if taxa >= 60 else "critical"),
-                nota="SP concluídos ÷ SP planejados · meta ≥ 80%")
+                status=status_taxa(taxa, config.META_TAXA_CONCLUSAO, config.LIMITE_TAXA_CRITICO),
+                nota=f"SP concluídos ÷ SP planejados · meta ≥ {num(config.META_TAXA_CONCLUSAO)}%")
     tp = agile.throughput_semanal(filters.por_periodo(d, "concluida_em", f["periodo"]), ctx.zh_regras.tipos_pontuados)
     with k2[3]:
         if tp.empty:
@@ -332,16 +340,38 @@ def pagina():
     ep = agile.progresso_epicos(filters.por_repo(todas, f["repos"]))
     if not ep.empty:
         ep = ep.assign(progresso=ep["progresso"] * 100)
+        for col in ("pontos", "pontos_concluidos"):
+            ep[col] = ep[col].map(lambda v: "—" if pd.isna(v) else num(v))
         st.dataframe(ep, use_container_width=True, hide_index=True, column_config={
             "epico": st.column_config.TextColumn("Épico", width="large"), "numero": "Nº", "repositorio": "Repositório",
             "situacao": "Situação", "filhas": "Filhas", "concluidas": "Concluídas", "em_andamento": "Em andamento",
-            "pontos": st.column_config.NumberColumn("SP", format="%.0f"),
-            "pontos_concluidos": st.column_config.NumberColumn("SP concluídos", format="%.0f"),
+            "pontos": "SP", "pontos_concluidos": "SP concluídos",
             "progresso": st.column_config.ProgressColumn("Progresso", min_value=0, max_value=100, format="%.0f%%")})
-        st.caption("Épico sem filhas aparece sem progresso (não é 0%). SP = só Features, Tasks e Bugs sem filhas "
+        st.caption("— = nenhuma filha pontuável com estimativa. Épico sem filhas aparece sem progresso (não é 0%). SP = só Features, Tasks e Bugs sem filhas "
                    "(a mesma regra da velocity: uma US com Tasks não soma junto com as Tasks). Aqui entram todas as "
                    "issues fechadas do épico, inclusive as da sprint em andamento; a velocity só soma as fechadas "
                    "dentro de sprints concluídas. Releases e épicos usam todas as issues (só o filtro de repositório vale aqui).")
+
+    # ── conferência dos story points ──
+    layout.secao("Conferência dos story points", "Os SP fechados batem entre velocity, sprint atual e épicos?",
+                 ["ZENHUB", "CALCULADO"])
+    conc = agile.conciliacao_sp(filters.por_repo(todas, f["repos"]), ctx.zh_iniciadas)
+    if conc["total"] is None:
+        layout.indisponivel("Conferência indisponível", "não há issues no snapshot.")
+    else:
+        layout.alerta("good" if conc["fecha"] else "critical", agile.frase_conciliacao(conc))
+        tab = pd.concat([conc["linhas"].drop(columns="curto"), conc["epicos"]], ignore_index=True)
+        tab.insert(0, "visao", ["Por sprint"] * len(conc["linhas"]) + ["Por épico"] * len(conc["epicos"]))
+        st.dataframe(tab, use_container_width=True, hide_index=True, column_config={
+            "visao": "Visão", "parcela": st.column_config.TextColumn("Parcela", width="large"),
+            "sp": st.column_config.NumberColumn("SP", format="%.0f"), "issues": "Issues pontuáveis"})
+        if not conc["fora"].empty:
+            st.dataframe(conc["fora"], use_container_width=True, hide_index=True, column_config={
+                "url": st.column_config.LinkColumn("Link", display_text="abrir")})
+        st.caption("Calculado a cada carga (`agile.conciliacao_sp`): total = issues Feature/Task/Bug sem filhas "
+                   "pontuáveis e fechadas. 'Itens concluídos' nos indicadores conta issues de todos os tipos, por "
+                   "isso não é comparável com SP. Fechada entre o fim de uma sprint e o início da próxima conta na "
+                   "próxima. Só o filtro de repositório vale aqui.")
 
     # ── qualidade do cadastro no Zenhub ──
     alertas = agile.alertas_de_dados(filters.por_repo(todas, f["repos"]), ctx.zh_regras.tipos_pontuados)

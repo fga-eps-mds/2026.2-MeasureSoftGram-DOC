@@ -163,3 +163,23 @@ class PontuavelTest(unittest.TestCase):
         self.assertEqual(ep["pontos_concluidos"], 3)          # só a Task; a US com filha não soma
         a = agile.alertas_de_dados(df, {"Feature", "Task", "Bug"})
         self.assertTrue(any("quem pontua são as filhas" in p for p in a["problema"]))
+
+
+class ConciliacaoTest(unittest.TestCase):
+    def test_parcelas_somam_o_total(self):
+        snap = {"issues": {"E": issue("E", "Epic"),
+                           "A": issue("A", est=5, pai="E", estado="CLOSED", fechada="2026-09-20T10:00:00Z"),
+                           "B": issue("B", est=3, estado="CLOSED", fechada="2026-09-28T10:00:00Z"),
+                           "C": issue("C", est=2, estado="CLOSED", fechada="2026-08-01T10:00:00Z")},
+                "sprints": [], "releases": []}
+        df, _ = agile.universo_issues(snap)
+        sprints = pd.DataFrame([{"sprint_label": "S1", "status": "concluída", "completed_ids": ["A"]},
+                                {"sprint_label": "S2", "status": "em andamento", "completed_ids": ["B"]}])
+        c = agile.conciliacao_sp(df, sprints)
+        self.assertEqual(c["total"], 10)
+        self.assertEqual(c["linhas"]["sp"].tolist(), [5, 3, 2])      # C fechou fora de sprint
+        self.assertEqual(c["epicos"]["sp"].tolist(), [5, 5])
+        self.assertTrue(c["fecha"])
+        self.assertEqual(len(c["fora"]), 1)
+        self.assertIn("10 SP fechados = 5 nas sprints concluídas + 3 na sprint em andamento + 2 fora de sprint",
+                      agile.frase_conciliacao(c))

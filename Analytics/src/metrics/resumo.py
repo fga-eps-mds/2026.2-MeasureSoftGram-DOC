@@ -105,7 +105,7 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
                          status_indice(u["SPI"]), f"planejado até a {u['sprint']}: {pct(u['PPC'])}", "Agile EVM",
                          "ZENHUB"))
         out.append(_item("Entrega", f"SPI da {alvo}", num(u["SPI"], 2) if not vazio(u["SPI"]) else None,
-                         status_indice(u["SPI"]), "EV ÷ PV · meta ≥ 0,95", "Agile EVM", "CALCULADO"))
+                         status_indice(u["SPI"]), f"EV ÷ PV · meta ≥ {num(config.META_INDICE_EVM, 2)}", "Agile EVM", "CALCULADO"))
         base = u["prp_linha_de_base"]
         if not vazio(base) and not vazio(u["PRP"]):
             cresc = (u["PRP"] / base) if base else None
@@ -120,8 +120,8 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
         plan, feito = concl["planned_story_points"].sum(min_count=1), concl["completed_story_points"].sum(min_count=1)
         taxa = vel.calculate_completion_rate(plan, feito)
         out.append(_item("Entrega", "Taxa de conclusão das sprints", f"{num(taxa)}%" if taxa is not None else None,
-                         status_taxa(taxa, 80, 60),
-                         "SP concluídos ÷ planejados · meta ≥ 80%" if taxa is not None
+                         status_taxa(taxa, config.META_TAXA_CONCLUSAO, config.LIMITE_TAXA_CRITICO),
+                         f"SP concluídos ÷ planejados · meta ≥ {num(config.META_TAXA_CONCLUSAO)}%" if taxa is not None
                          else "planejado das sprints concluídas = 0 SP (issues sem estimativa na planning)",
                          "Gestão ágil", "ZENHUB"))
     iss = ctx.zh_issues
@@ -145,7 +145,7 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
                              "PLANILHA"))
         else:
             out.append(_item("Custo", "CPI (custo)", num(u["CPI"], 2), status_indice(u["CPI"]),
-                             "EV ÷ AC · meta ≥ 0,95", "Agile EVM", "CALCULADO"))
+                             f"EV ÷ AC · meta ≥ {num(config.META_INDICE_EVM, 2)}", "Agile EVM", "CALCULADO"))
 
     # ── Riscos (PLANILHA) ──
     r = ctx.riscos
@@ -174,7 +174,7 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
             c = c[c["repositorio"].map(sn.nome_curto).isin(filtros["repos"])]
         if not c.empty:
             t = (c["conclusao"] == "success").mean() * 100
-            out.append(_item("Processo", "Sucesso da CI", f"{num(t)}%", status_taxa(t, config.META_CI_SUCESSO, 60),
+            out.append(_item("Processo", "Sucesso da CI", f"{num(t)}%", status_taxa(t, config.META_CI_SUCESSO, config.LIMITE_CI_CRITICO),
                              f"{int((c['conclusao'] == 'failure').sum())} falhas em {len(c)} execuções · meta ≥ 80%",
                              "Integração contínua", "GITHUB"))
     df = pd.DataFrame(out)

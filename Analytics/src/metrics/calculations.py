@@ -80,18 +80,23 @@ def status_meta(metrica: str, valor, release: str, maior_melhor: bool | None) ->
 
 
 def status_indice(valor) -> str:
-    """SPI/CPI: ≥ meta conforme; ≥ 0,80 atenção; abaixo, crítico."""
+    """SPI/CPI: ≥ META_INDICE_EVM conforme; ≥ LIMITE_INDICE_CRITICO atenção; abaixo, crítico."""
     if vazio(valor):
         return "unavailable"
     if valor >= config.META_INDICE_EVM:
         return "good"
-    return "warning" if valor >= 0.80 else "critical"
+    return "warning" if valor >= config.LIMITE_INDICE_CRITICO else "critical"
 
 
 def status_taxa(valor, meta: float, atencao: float) -> str:
     if vazio(valor):
         return "unavailable"
     return "good" if valor >= meta else ("warning" if valor >= atencao else "critical")
+
+
+def data_limite(texto: str) -> str:
+    """'2026-12-07' → '07/12' (para textos que citam um prazo do config)."""
+    return pd.Timestamp(texto).strftime("%d/%m")
 
 
 def release_atual(hoje: pd.Timestamp) -> tuple[str, pd.Timestamp]:

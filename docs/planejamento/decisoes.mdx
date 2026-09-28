@@ -60,16 +60,20 @@ no pipeline Done**: 13 issues fechadas estavam em Review/QA, Sprint Backlog ou I
 Progress, e 22 US/Tasks estavam sem estimativa. Havia pontos em Sub-tasks (DOC#71 e
 DOC#74), o que somaria o mesmo trabalho duas vezes.
 
-**Decisão.** Uma issue só conta como entregue no pipeline **Done**, que vem depois
-da aprovação do PO (DoD). Story points ficam em **US e Task**; US decomposta em
-Tasks não pontua, e Épicos e Sub-tasks não pontuam.
+**Decisão.** Um story point conta quando a **issue está fechada** (data `closedAt`),
+em qualquer pipeline, até as 08:00 do dia seguinte ao último dia da sprint
+(`prazo_fechamento_dia_seguinte` em `Analytics/config.py`). Só pontuam **Feature, Task e Bug sem filhas pontuáveis**; Épicos,
+Sub-tasks e pais com filhas pontuáveis não pontuam. O planejado da sprint inclui as
+issues que já estavam nela no início. Se o PO reprovar uma entrega, a issue é reaberta
+e o ponto sai da conta. A regra anterior (só pipeline Done) foi descartada porque em
+27/09 o Done tinha 0 issues da R1.
 
-**Evidência.** `Analytics/config.py` (`PARAMETROS`) (`criterio_feito`,
-`niveis_pontuados`), `Analytics/src/data/planilha.py`, painel "Confiabilidade do dado do
-Zenhub" no dashboard.
+**Evidência.** `Analytics/src/metrics/velocity.py` e `Analytics/src/metrics/agile.py`
+(com testes em `Analytics/tests/`), `Analytics/config.py` (`niveis_pontuados`), bloco
+"Consistência do cadastro no Zenhub" na página ZenHub do dashboard.
 
-**Critério de sucesso.** Zero pendências no painel de confiabilidade na planning de
-abertura da R2.
+**Critério de sucesso.** Na planning da S4, planejado > 0 SP e bloco de consistência
+sem pendências; taxa de conclusão ≥ 60% na S4 (S3: 39 de 100 SP).
 
 ## D3: Modelo de custo e horas reais
 

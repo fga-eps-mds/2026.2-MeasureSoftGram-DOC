@@ -30,7 +30,10 @@ uma regra anterior, sem as issues iniciais, é recalculada). Se a coleta do
 histórico **falhou**, o planejado fica **indisponível**.
 
 **Concluído.** Issue pontuável cuja conclusão aconteceu entre o início e o fim da
-sprint **e** que estava na sprint naquele momento (pelo histórico; issue que está
+sprint — o fim se estende até ``prazo_fechamento_dia_seguinte`` (08:00 de Brasília do
+dia seguinte ao último dia, em config.PARAMETROS), valendo quem estava na sprint no fim;
+o que fecha nesse prazo não conta na próxima (issue fechada no intervalo entre o fim da sprint anterior e o início desta
+conta nesta, se estava nela no início) **e** que estava na sprint naquele momento (pelo histórico; issue que está
 na sprint e não tem nenhum evento no histórico entrou antes do início — o Zenhub
 só registra mudanças de escopo feitas depois que a sprint começa). **Critério de feito:
 a issue só precisa estar fechada** — conclusão = ``closedAt``. Issue aberta não
@@ -63,6 +66,7 @@ class Regras:
     janela_planning: timedelta = timedelta(hours=24)
     min_sprints_media: int = 2
     sprints_canceladas: set = field(default_factory=set)
+    prazo_fechamento: str = ""   # "HH:MM" do dia seguinte ao último dia da sprint (Brasília); "" = fim da sprint
 
     @classmethod
     def dos_parametros(cls, params: dict) -> "Regras":
@@ -80,7 +84,21 @@ class Regras:
         return cls(tipos_pontuados=set(params.get("tipos_pontuados") or cls().tipos_pontuados),
                    janela_planning=timedelta(hours=num("janela_planning_horas", 24.0)),
                    min_sprints_media=int(num("min_sprints_media_velocity", 2)),
-                   sprints_canceladas=canceladas)
+                   sprints_canceladas=canceladas,
+                   prazo_fechamento=str(brutos.get("prazo_fechamento_dia_seguinte", "") or "").strip())
+
+    def fim_da_contagem(self, fim: datetime | None) -> datetime | None:
+        """Até quando uma issue fechada conta na sprint que termina em ``fim``."""
+        if fim is None or not self.prazo_fechamento:
+            return fim
+        try:
+            hora, minuto = (int(x) for x in self.prazo_fechamento.split(":"))
+        except ValueError:
+            return fim
+        brt = timezone(timedelta(hours=-3))
+        ultimo_dia = (fim - timedelta(seconds=1)).astimezone(brt).date()
+        prazo = datetime(ultimo_dia.year, ultimo_dia.month, ultimo_dia.day, hora, minuto, tzinfo=brt) + timedelta(days=1)
+        return max(prazo, fim)
 
 
 # ───────────────────────── utilidades ─────────────────────────
@@ -282,9 +300,18 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
     saida = []
 
     ordem = sorted(snapshot.get("sprints", []), key=lambda s: s.get("start_at") or "")
+    fim_anterior = None
     for n, s in enumerate(ordem, start=1):
         status = status_da_sprint(s, agora, regras)
         inicio, fim = _dt(s["start_at"]), _dt(s["end_at"])
+        # Intervalo entre o fim da sprint anterior e o início desta (no Zenhub, 1 h): o que fecha
+        # nesse intervalo conta nesta sprint, senão não entraria em nenhuma.
+        # O prazo de fechamento (config.PARAMETROS) estende a contagem da sprint anterior até a manhã
+        # seguinte; aqui a contagem começa depois dele.
+        abertura = fim_anterior + timedelta(microseconds=1) \
+            if fim_anterior is not None and inicio is not None and fim_anterior != inicio else inicio
+        prazo = regras.fim_da_contagem(fim)
+        fim_anterior = prazo if prazo is not None else fim_anterior
         if status == STATUS_FUTURA:
             if incluir_futuras:
                 rel_id, rel_nome, rel_fonte = associar_release(s, set(s.get("issue_ids", [])), releases)
@@ -315,7 +342,7 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
 
         # concluído
         candidatas = set(s.get("issue_ids", [])) | {e["issue_id"] for e in eventos if e.get("issue_id")}
-        limite = min(fim, agora) if fim else agora
+        limite = min(prazo, agora) if prazo else agora
         iniciais = membros_iniciais(s, issues)
         concluidas = {}
         for iid in candidatas:
@@ -323,10 +350,13 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
             if not pontuavel(i, regras, pais):
                 continue
             quando = momento_conclusao(i, regras)
-            if quando is None or not (inicio <= quando <= limite):
+            if quando is None or not (abertura <= quando <= limite):
                 continue
-            if iid in membros_em(eventos, quando, iniciais):
+            if iid in membros_em(eventos, min(max(quando, inicio), fim) if fim else max(quando, inicio), iniciais):
                 concluidas[iid] = i.get("estimate")
+        if status == STATUS_CONCLUIDA and prazo and fim and prazo > fim and agora <= prazo:
+            notas.append(f"Prazo de fechamento até {prazo.astimezone(timezone(timedelta(hours=-3))):%d/%m %H:%M}: "
+                         "valores ainda podem subir.")
         if status == STATUS_ANDAMENTO:
             notas.append("Sprint em andamento: valores parciais, fora da média.")
         if status == STATUS_CANCELADA:

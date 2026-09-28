@@ -229,3 +229,63 @@ def alertas_de_dados(df: pd.DataFrame, tipos_pontuados: set) -> pd.DataFrame:
             linhas.append({"numero": r.number, "titulo": r.title, "repositorio": r.repositorio,
                            "tipo": tipo or "Sem tipo", "problema": pr, "url": getattr(r, "url", None)})
     return pd.DataFrame(linhas)
+
+
+def conciliacao_sp(df: pd.DataFrame, sprints: pd.DataFrame) -> dict:
+    """Confere se os story points fechados batem entre velocity, sprint em andamento e épicos.
+
+    Tudo sai dos mesmos dados (``sp`` do universo e ``completed_ids`` da velocity), então
+    a tela nunca depende de um número digitado. Devolve ``linhas`` (parcela, SP, issues),
+    ``epicos`` (com épico / sem épico), ``fora`` (issues fechadas que não entraram em
+    nenhuma sprint) e ``fecha`` (True quando as parcelas somam o total).
+    """
+    vazio = {"linhas": pd.DataFrame(), "epicos": pd.DataFrame(), "fora": pd.DataFrame(), "total": None,
+             "fecha": None}
+    if df is None or df.empty or "sp" not in df:
+        return vazio
+    fechadas = df[(df["situacao"] == CONCLUIDO) & df["pontuavel"]]
+    sp = dict(zip(fechadas["issue_id"], fechadas["sp"].fillna(0)))
+    total = float(sum(sp.values()))
+
+    def soma(ids):
+        ids = [i for i in ids if i in sp]
+        return float(sum(sp[i] for i in ids)), len(ids)
+
+    contadas, linhas = set(), []
+    if sprints is not None and not sprints.empty:
+        for rotulo, curto, status in (("Sprints concluídas (velocity)", "nas sprints concluídas", "concluída"),
+                                      ("Sprint em andamento", "na sprint em andamento", "em andamento")):
+            parte = sprints[sprints["status"] == status]
+            ids = {i for lst in parte["completed_ids"] for i in (lst or [])} - contadas
+            contadas |= ids
+            valor, n = soma(ids)
+            nomes = ", ".join(parte["sprint_label"]) if not parte.empty else "nenhuma"
+            linhas.append({"parcela": f"{rotulo}: {nomes}", "curto": curto, "sp": valor, "issues": n})
+    fora_ids = [i for i in sp if i not in contadas]
+    valor, n = soma(fora_ids)
+    linhas.append({"parcela": "Fechadas fora da janela de qualquer sprint", "curto": "fora de sprint",
+                   "sp": valor, "issues": n})
+    tabela = pd.DataFrame(linhas)
+    cols = [c for c in ("number", "title", "repositorio", "sp", "sprint", "concluida_em", "url") if c in fechadas]
+    fora = fechadas[fechadas["issue_id"].isin(fora_ids)][cols]
+    com_epico = fechadas["epico_id"].notna()
+    epicos = pd.DataFrame([
+        {"parcela": "Com épico (soma da coluna 'SP concluídos' da tabela de épicos)",
+         "sp": float(fechadas.loc[com_epico, "sp"].fillna(0).sum()), "issues": int(com_epico.sum())},
+        {"parcela": "Sem épico", "sp": float(fechadas.loc[~com_epico, "sp"].fillna(0).sum()),
+         "issues": int((~com_epico).sum())},
+    ])
+    return {"linhas": tabela, "epicos": epicos, "fora": fora, "total": total,
+            "fecha": abs(tabela["sp"].sum() - total) < 1e-9 and abs(epicos["sp"].sum() - total) < 1e-9}
+
+
+def frase_conciliacao(c: dict) -> str:
+    """Texto gerado a partir de ``conciliacao_sp`` (nenhum número escrito à mão)."""
+    if c.get("total") is None:
+        return "Sem issues para conferir."
+    def f(v):
+        return f"{v:.0f}" if float(v).is_integer() else f"{v:.1f}".replace(".", ",")
+    partes = " + ".join(f"{f(r.sp)} {r.curto}" for r in c["linhas"].itertuples())
+    ep = c["epicos"]["sp"].tolist()
+    return (f"{f(c['total'])} SP fechados = {partes}. Pelos épicos: {f(ep[0])} com épico + {f(ep[1])} sem épico. "
+            + ("As contas fecham." if c["fecha"] else "As parcelas NÃO somam o total: ver a lista abaixo."))

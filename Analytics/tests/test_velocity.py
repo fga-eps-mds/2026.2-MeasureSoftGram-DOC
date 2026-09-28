@@ -146,6 +146,33 @@ class ConcluidoTest(unittest.TestCase):
         self.assertEqual(linha(df, "S1")["completed_story_points"], 0)
         self.assertEqual(linha(df, "S2")["completed_story_points"], 0)  # não estava na S2
 
+    def test_fechada_no_intervalo_entre_sprints_conta_na_seguinte(self):
+        # S1 termina 02:59 e S2 começa 03:59 (como no Zenhub): fechar às 03:30 conta na S2
+        issues = {"A": issue("A", 3, estado="CLOSED", fechada=(S1_FIM + timedelta(minutes=30)).isoformat())}
+        df = self.calc(issues, [], [], ["A"], [])
+        self.assertEqual(linha(df, "S1")["completed_story_points"], 0)
+        self.assertEqual(linha(df, "S2")["completed_story_points"], 3)
+
+    def calc_prazo(self, fechada):
+        issues = {"A": issue("A", 3, estado="CLOSED", fechada=fechada.isoformat())}
+        s1 = [ev("A", "ISSUE_REMOVED", t(S1_FIM, 0, 0.2))]        # Zenhub leva a aberta para a próxima
+        s2 = [ev("A", "ISSUE_ADDED", t(S1_FIM, 0, 0.2), 3)]
+        snap = {"sprints": [sprint("S1", S1_INI, S1_FIM, [], s1), sprint("S2", S2_INI, S2_FIM, ["A"], s2)],
+                "issues": issues, "releases": []}
+        snap["sprints"][0]["issue_ids"] = []
+        # A estava na S1 desde o início (primeiro evento é a remoção)
+        return v.calculate_velocity(snap, v.Regras(prazo_fechamento="08:00"), agora=self.agora)
+
+    def test_prazo_de_fechamento_conta_na_sprint_que_terminou(self):
+        df = self.calc_prazo(S1_FIM + timedelta(hours=5))           # 07:59 de Brasília do dia seguinte
+        self.assertEqual(linha(df, "S1")["completed_story_points"], 3)
+        self.assertEqual(linha(df, "S2")["completed_story_points"], 0)
+
+    def test_depois_do_prazo_conta_na_sprint_seguinte(self):
+        df = self.calc_prazo(S1_FIM + timedelta(hours=9))           # 11:59 de Brasília
+        self.assertEqual(linha(df, "S1")["completed_story_points"], 0)
+        self.assertEqual(linha(df, "S2")["completed_story_points"], 3)
+
     def test_concluida_antes_do_inicio_nao_conta(self):
         issues = {"A": issue("A", 5, estado="CLOSED", fechada=t(S1_INI, -3))}
         df = self.calc(issues, ["A"], [ev("A", "ISSUE_ADDED", t(S1_INI, -1), 5)])

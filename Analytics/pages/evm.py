@@ -13,7 +13,7 @@ from src.components import charts, layout
 from src.components.kpi import kpi
 from src.metrics import resumo
 from src.metrics import velocity as vel
-from src.metrics.calculations import brl, data_br, num, pct, status_indice, vazio
+from src.metrics.calculations import brl, data_br, data_limite, num, pct, status_indice, vazio
 
 NOMES = {"PV": "PV — valor planejado", "EV": "EV — valor agregado", "AC": "AC — custo real"}
 
@@ -38,10 +38,10 @@ def pagina():
         ("AC — custo real", "PLANILHA (aba Horas × custo/hora da aba Custos)", "acumulado das sprints da release; "
          "sprint sem horas registradas deixa o AC indisponível (nunca é trocado pelo custo planejado)"),
         ("SV · CV", "cálculo", "SV = EV − PV · CV = EV − AC"),
-        ("SPI · CPI", "cálculo", "SPI = EV ÷ PV · CPI = EV ÷ AC · 1,0 = no plano; meta ≥ 0,95"),
+        ("SPI · CPI", "cálculo", f"SPI = EV ÷ PV · CPI = EV ÷ AC · 1,0 = no plano; meta ≥ {num(config.META_INDICE_EVM, 2)}"),
         ("ETC · EAC", "cálculo", "ETC = (BAC − EV) ÷ CPI · EAC = AC + ETC"),
         ("Término estimado", "cálculo", "início da release + duração ÷ SPI (projeção no ritmo atual); se passar da "
-         "Release Final (07/12) aparece como \"após 07/12\" — o prazo não se estende, a projeção mostra o atraso"),
+         f"Release Final ({data_limite(config.RELEASE_FINAL)}) aparece como \"após {data_limite(config.RELEASE_FINAL)}\" — o prazo não se estende, a projeção mostra o atraso"),
     ])
     e = ctx.evm
     if e is None or e.empty:
@@ -105,11 +105,11 @@ def pagina():
     linha2 = st.columns(4)
     with linha2[0]:
         kpi("Schedule Performance Index (SPI)", num(u["SPI"], 2) if not vazio(u["SPI"]) else None, "CALCULADO",
-            status=status_indice(u["SPI"]), nota="EV ÷ PV · meta ≥ 0,95" if not vazio(u["SPI"]) else
+            status=status_indice(u["SPI"]), nota=f"EV ÷ PV · meta ≥ {num(config.META_INDICE_EVM, 2)}" if not vazio(u["SPI"]) else
             "Indisponível: PV é zero ou não existe.")
     with linha2[1]:
         kpi("Cost Performance Index (CPI)", num(u["CPI"], 2) if not vazio(u["CPI"]) else None, "CALCULADO",
-            status=status_indice(u["CPI"]), nota="EV ÷ AC · meta ≥ 0,95" if not vazio(u["CPI"]) else
+            status=status_indice(u["CPI"]), nota=f"EV ÷ AC · meta ≥ {num(config.META_INDICE_EVM, 2)}" if not vazio(u["CPI"]) else
             "CPI indisponível: Actual Cost não foi fornecido.")
     with linha2[2]:
         kpi("Schedule Variance (SV)", brl(u["SV"]) if not vazio(u["SV"]) else None, "CALCULADO",
