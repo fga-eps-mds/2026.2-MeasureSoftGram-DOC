@@ -3,7 +3,7 @@ name: Coleta de qualidade (SonarCloud)
 # Consulta a Web API do SonarCloud e commita o snapshot em Analytics/data/sonar/.
 # Traz o que o metrics.yml não coleta: bugs, vulnerabilidades, code smells,
 # security hotspots, dívida técnica, Quality Gate, ratings e o histórico.
-# O push na main dispara o deploy.yml, que republica o dashboard.
+# O Streamlit Community Cloud republica o dashboard sozinho a cada push na main.
 #
 # Os projetos da organização são públicos: SONAR_TOKEN é opcional
 # (Settings > Secrets and variables > Actions), só para projetos privados.
@@ -15,7 +15,6 @@ on:
 
 permissions:
   contents: write
-  actions: write
 
 concurrency:
   group: sonar-coleta
@@ -49,7 +48,3 @@ jobs:
           git commit -m "chore(dados): snapshot do SonarCloud"
           git push
 
-      - name: Republicar o dashboard
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run deploy.yml --ref "${{ github.ref_name }}"

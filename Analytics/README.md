@@ -39,7 +39,7 @@ da fonte (`SONAR`, `ZENHUB`, `PLANILHA`, `GITHUB`, `CALCULADO`).
 
 A planilha **não repete** nada que o Sonar ou o Zenhub têm, e não há cópia local em CSV:
 aba sem URL ou que não responde aparece como indisponível. As regras do cálculo da velocity
-(critério de feito, níveis pontuados, janela de planning) ficam em `config.PARAMETROS`. **Nenhum valor é
+(níveis pontuados, janela de planning) ficam em `config.PARAMETROS`; o critério de feito é fixo: **a issue só precisa estar fechada** para os story points contarem. **Nenhum valor é
 inventado:** métrica sem insumo aparece como *Indisponível*, com o motivo e o que
 falta para calculá-la (ex.: *CPI indisponível: Actual Cost não foi fornecido*).
 
@@ -86,8 +86,7 @@ Analytics/
 ├── planilhas/              # planilhas-fonte (.xlsx); os CSVs são lidos direto da versão publicada
 ├── data/                   # ← TODOS os .json: pipeline (metrics.yml), sonar/ e zenhub/velocity/
 ├── scripts/                # coleta_velocity.py, coleta_sonar.py, diagnostico_zenhub.py
-├── tests/                  # python -m unittest discover -s tests -v
-└── stlite/build.py         # empacota o app para o GitHub Pages
+└── tests/                  # python -m unittest discover -s tests -v
 ```
 
 ## Identidade visual
@@ -101,17 +100,19 @@ com tracejado como segunda codificação; no máximo três séries por gráfico 
 categorias, o gráfico vira pequenos múltiplos ou tabela). Todo gráfico tem título,
 unidade, período, tooltip e a tabela dos dados logo abaixo.
 
-## Publicação (GitHub Pages)
+## Publicação (Streamlit Community Cloud)
 
-O `deploy.yml` roda `python Analytics/stlite/build.py`, que copia `app.py`,
-`config.py`, `pages/`, `src/` e `data/**/*.json` (e baixa as abas publicadas da planilha) para
-`static/dashboard/` e gera um `index.html` com o [stlite](https://github.com/whitphx/stlite)
-(Streamlit no navegador). É o mesmo `app.py`. `.env`, `scripts/` e `*.xlsx` nunca
-entram no pacote. Testar localmente:
+O app publicado está em **https://20262-measuresoftgram-doc-fchaemxpepymufmckz9yyy.streamlit.app/** — é o link **Dashboard** do topo da documentação.
+O Streamlit Community Cloud roda `Analytics/app.py` da branch `main` e se atualiza
+sozinho a cada push (inclusive os commits das coletas). Os dados vêm dos arquivos
+de `Analytics/data/` e das abas publicadas da planilha, lidas ao vivo.
 
-```bash
-python Analytics/stlite/build.py && cd static/dashboard && python -m http.server 8000
-```
+- Nenhum secret é configurado lá: o botão "Atualizar dados" do Zenhub fica
+  desligado e as coletas continuam nos workflows do GitHub.
+- Sem acesso por alguns dias o app dorme; ao abrir, clique em
+  *Yes, get this app back up* e aguarde ~30 s.
+- O endereço antigo `<site da doc>/dashboard/` redireciona para o app
+  (`static/dashboard/index.html`).
 
 ## Limitações conhecidas
 

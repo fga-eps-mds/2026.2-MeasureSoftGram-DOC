@@ -43,7 +43,7 @@ flowchart TB
 | --- | --- | --- |
 | Calendário oficial | O do **Zenhub**: S1 24/08–06/09, S2 07/09–20/09, semanais a partir de 21/09 | É o único que fecha exatamente nas datas das releases (27/09, 25/10, 29/11). A planilha quinzenal anterior terminava a R1 em 04/10. |
 | Sprints por release (L) | R1 = 3 · R2 = 4 · R3 = 5 | Consequência do calendário. |
-| Critério de "feito" | Issue no pipeline **Done** | Só chega ao Done o que passou pela aprovação do PO (DoD). Issue fechada em outro pipeline não conta como entregue. |
+| Critério de "feito" | Issue **fechada** | Para os story points serem contabilizados a issue só precisa estar fechada, em qualquer pipeline. Issue aberta (inclusive no Done) não conta. |
 | O que recebe story points | **US (Feature) e Task.** Bug entra como Task de correção. | Épicos e Initiatives agregam, e Sub-tasks decompõem. Estimar em mais de um nível conta o mesmo trabalho duas vezes. |
 | Custo | Horas reais × custo/hora de dev júnior | O custo/hora só converte horas em R$. CPI e SPI não dependem dele. |
 | Horas reais | Aba **Horas**, lançada por cada integrante na planning de segunda | Sem horas reais não existe AC. Não se preenche o passado por estimativa. |
@@ -56,7 +56,7 @@ Regras do time lidas pelo dashboard (não é aba da planilha: muda só por decis
 
 | Campo | Significado |
 | --- | --- |
-| `criterio_feito`, `niveis_pontuados` | As regras da seção 2. |
+| `niveis_pontuados` (feito = issue fechada, fixo no código) | As regras da seção 2. |
 | `janela_planning_horas` | O planejado de cada sprint é o escopo ao fim deste prazo após o início (a planning). |
 | `min_sprints_media_velocity` | Sprints concluídas necessárias para mostrar a velocity média. |
 | `sprints_canceladas` | Ids de sprints do Zenhub que ficam fora da média. |

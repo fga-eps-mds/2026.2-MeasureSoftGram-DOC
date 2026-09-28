@@ -35,16 +35,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Dashboard Streamlit (stlite): gera static/dashboard/ com o app e os dados
-      # atuais do pipeline; o Docusaurus publica em <site>/dashboard/.
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Build dashboard (stlite)
-        run: python Analytics/stlite/build.py
-
+      # O dashboard Streamlit roda no Streamlit Community Cloud (atualiza sozinho a
+      # cada push na main). Aqui só fica static/dashboard/index.html, que redireciona
+      # o endereço antigo <site>/dashboard/ para o app.
       - name: Build website
         run: npm run build
 

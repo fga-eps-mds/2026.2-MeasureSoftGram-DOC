@@ -7,8 +7,6 @@ As regras do time usadas no cálculo da velocity ficam em ``config.PARAMETROS``.
 
 Não há cópia local: sem URL publicada, ou se a planilha não responder, a aba
 fica indisponível e a tela diz isso.
-No navegador (GitHub Pages) lê sempre o CSV empacotado no deploy, que o
-``stlite/build.py`` baixa das URLs publicadas.
 """
 
 from __future__ import annotations
@@ -171,12 +169,11 @@ TIPOS_PONTUADOS_PADRAO = {"Feature", "Task", "Bug"}
 
 
 def carregar_parametros(pasta: Path | None = None) -> dict:
-    """Regras do time (``config.PARAMETROS``): critério de feito, níveis pontuados, janela de planning."""
+    """Regras do time (``config.PARAMETROS``): níveis pontuados, janela de planning, sprints canceladas."""
     import config
     brutos = dict(getattr(config, "PARAMETROS", {}) or {})
     tipos = str(brutos.get("niveis_pontuados", "")).strip()
-    return {"criterio_feito": brutos.get("criterio_feito", "Done") or "Done",
-            "tipos_pontuados": set(tipos.split(";")) if tipos else TIPOS_PONTUADOS_PADRAO,
+    return {"tipos_pontuados": set(tipos.split(";")) if tipos else TIPOS_PONTUADOS_PADRAO,
             "tabela": pd.DataFrame({"parametro": list(brutos), "valor": [str(v) for v in brutos.values()]})}
 
 

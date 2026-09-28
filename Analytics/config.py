@@ -36,7 +36,7 @@ CACHE_PLANILHAS_S = 300  # a planilha publicada é relida a cada 5 minutos
 
 # Regras do time usadas no cálculo da velocity (antes em planilhas/parametros.csv).
 PARAMETROS = {
-    "criterio_feito": "Done",                  # pipeline do Zenhub que conta como feito (além de fechada)
+    # Critério de feito: a issue só precisa estar FECHADA (closedAt) — fixo no código, sem pipeline.
     "niveis_pontuados": "Feature;Task;Bug",    # US (Feature), Task e Bug; US com Tasks filhas não pontua
     "janela_planning_horas": "24",             # planejado = escopo da sprint ao fim do 1º dia (planning)
     "min_sprints_media_velocity": "2",         # velocity média só com pelo menos 2 sprints concluídas

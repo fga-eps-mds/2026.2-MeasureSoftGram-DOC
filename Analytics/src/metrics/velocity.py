@@ -26,9 +26,9 @@ escopo atual, que aparece separado como ``current_story_points``).
 **Concluído.** Issue pontuável cuja conclusão aconteceu entre o início e o fim da
 sprint **e** que estava na sprint naquele momento (pelo histórico; issue que está
 na sprint e não tem nenhum evento no histórico entrou antes do início — o Zenhub
-só registra mudanças de escopo feitas depois que a sprint começa). Conclusão = ``closedAt``
-quando a issue está fechada; se está aberta no pipeline de feito (``Done``),
-``pipelineIssue.latestTransferTime`` (a última movimentação de pipeline). Issue
+só registra mudanças de escopo feitas depois que a sprint começa). **Critério de feito:
+a issue só precisa estar fechada** — conclusão = ``closedAt``. Issue aberta não
+conta, em qualquer pipeline (inclusive ``Done``). Issue
 fechada depois do fim conta na sprint em que estava quando fechou (ou em
 nenhuma). Os pontos são a estimativa atual da issue.
 
@@ -54,7 +54,6 @@ STATUS_CANCELADA = "cancelada"
 @dataclass
 class Regras:
     tipos_pontuados: set = field(default_factory=lambda: {"Feature", "Task", "Bug"})
-    pipeline_feito: str = "Done"
     janela_planning: timedelta = timedelta(hours=24)
     min_sprints_media: int = 2
     sprints_canceladas: set = field(default_factory=set)
@@ -73,7 +72,6 @@ class Regras:
 
         canceladas = {s.strip() for s in str(brutos.get("sprints_canceladas", "")).split(";") if s.strip()}
         return cls(tipos_pontuados=set(params.get("tipos_pontuados") or cls().tipos_pontuados),
-                   pipeline_feito=params.get("criterio_feito") or "Done",
                    janela_planning=timedelta(hours=num("janela_planning_horas", 24.0)),
                    min_sprints_media=int(num("min_sprints_media_velocity", 2)),
                    sprints_canceladas=canceladas)
@@ -128,11 +126,10 @@ def membros_em(eventos: list[dict], momento: datetime) -> dict:
     return membros
 
 
-def momento_conclusao(issue: dict, regras: Regras) -> datetime | None:
+def momento_conclusao(issue: dict, regras: Regras | None = None) -> datetime | None:
+    """Feito = issue fechada. Aberta (em qualquer pipeline, inclusive Done) não conta."""
     if issue.get("state") == "CLOSED":
         return _dt(issue.get("closed_at"))
-    if issue.get("pipeline") == regras.pipeline_feito:
-        return _dt(issue.get("pipeline_moved_at"))
     return None
 
 

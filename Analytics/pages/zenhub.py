@@ -85,16 +85,16 @@ def pagina():
         if snap:
             fonte = ctx.fonte("ZENHUB")[0]
             st.caption(f"Snapshot `{ctx.zh_arquivo}` · coletado em **{data_br(fonte.ultima_atualizacao, True)}** · "
-                       f"{snap.get('requisicoes', '?')} requisições · feito = issue fechada ou no pipeline "
-                       f"`{ctx.zh_regras.pipeline_feito}` · pontuam: {', '.join(sorted(ctx.zh_regras.tipos_pontuados))}.")
+                       f"{snap.get('requisicoes', '?')} requisições · feito = issue fechada "
+                       f"(em qualquer pipeline) · pontuam: {', '.join(sorted(ctx.zh_regras.tipos_pontuados))}.")
     layout.metodologia([
         ("Planejado / Em andamento / Concluído", "ZENHUB — pipeline da issue",
-         "mapa pipeline → situação em `src/metrics/agile.py` (issue fechada = Concluído; pipeline fora do mapa = "
-         "Não classificado)"),
+         "issue fechada = Concluído (só ela conta pontos); aberta = pela pipeline (mapa em `src/metrics/agile.py`; "
+         "aberta no Done = Em andamento; pipeline fora do mapa = Não classificado)"),
         ("Story Points planejados", "ZENHUB — `Sprint.scopeChange`", "issues pontuáveis na sprint ao fim da janela de "
          f"planning ({ctx.zh_regras.janela_planning.total_seconds() / 3600:.0f} h), com a estimativa do momento da "
          "entrada; congelado em `linhas-de-base.json`"),
-        ("Velocity", "ZENHUB", "Story Points de issues pontuáveis concluídas dentro da sprint (issue sem estimativa "
+        ("Velocity", "ZENHUB", "Story Points de issues pontuáveis fechadas dentro da sprint (issue sem estimativa "
          "conta 0 SP e aparece nas observações)"),
         ("Velocity média", "cálculo", f"média das sprints concluídas (≥ {ctx.zh_regras.min_sprints_media}); "
          "a sprint em andamento fica de fora"),
@@ -138,7 +138,7 @@ def pagina():
     with layout_kpis[1]:
         kpi("Planejados", num(cont.get(agile.PLANEJADO, 0)), "ZENHUB", nota="New Issues, Backlogs, DoR")
     with layout_kpis[2]:
-        kpi("Em andamento", num(cont.get(agile.ANDAMENTO, 0)), "ZENHUB", nota="In Progress, Review/QA, DoD")
+        kpi("Em andamento", num(cont.get(agile.ANDAMENTO, 0)), "ZENHUB", nota="In Progress, Review/QA, DoD e Done ainda abertas")
     with layout_kpis[3]:
         kpi("Concluídos", num(cont.get(agile.CONCLUIDO, 0)), "ZENHUB",
             nota=f"{pct(cont.get(agile.CONCLUIDO, 0) / total) if total else '—'} dos itens do filtro")

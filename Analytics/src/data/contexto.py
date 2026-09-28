@@ -32,7 +32,7 @@ NO_NAVEGADOR = sys.platform == "emscripten"
 def _agora_brt() -> pd.Timestamp:
     try:
         return pd.Timestamp.now(tz="America/Sao_Paulo").tz_localize(None)
-    except Exception:  # noqa: BLE001 — no navegador (stlite) pode faltar a base de fusos
+    except Exception:  # noqa: BLE001 — ambiente sem base de fusos
         return pd.Timestamp.utcnow().tz_localize(None) - pd.Timedelta(hours=3)
 
 
@@ -241,7 +241,7 @@ def carregar() -> Contexto:
         else:
             ctx.zh_sprints = velocity.calculate_velocity(snap, ctx.zh_regras, ctx.agora_utc, linhas,
                                                          incluir_futuras=True)
-            ctx.zh_issues, ctx.zh_backlog_completo = agile.universo_issues(snap, ctx.zh_regras.pipeline_feito)
+            ctx.zh_issues, ctx.zh_backlog_completo = agile.universo_issues(snap)
             s = ctx.zh_sprints
             periodo = (_para_brt(s["start_date"].min()), _para_brt(s["end_date"].max())) if not s.empty else None
             avisos = snap.get("avisos") or []

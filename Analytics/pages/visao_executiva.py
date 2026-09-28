@@ -91,12 +91,12 @@ def pagina():
 
     k = st.columns(4)
     with k[0]:
-        kpi("Itens concluídos", num(cont.get(agile.CONCLUIDO, 0)) if not cont.empty else None, "ZENHUB",
+        kpi("Itens concluídos (fechados)", num(cont.get(agile.CONCLUIDO, 0)) if not cont.empty else None, "ZENHUB",
             nota=f"de {num(len(iss))} itens" + ("" if ctx.zh_backlog_completo else " (só os que passaram por sprints)")
             if not cont.empty else "sem snapshot do Zenhub")
     with k[1]:
         kpi("Itens em andamento", num(cont.get(agile.ANDAMENTO, 0)) if not cont.empty else None, "ZENHUB",
-            nota="In Progress, Review/QA, DoD")
+            nota="abertas em In Progress, Review/QA, DoD ou Done")
     with k[2]:
         kpi("Itens planejados", num(cont.get(agile.PLANEJADO, 0)) if not cont.empty else None, "ZENHUB",
             nota="Backlogs e DoR")

@@ -1,8 +1,8 @@
 name: Coleta de velocity (Zenhub)
 
 # Consulta a API GraphQL do Zenhub e commita o snapshot em
-# Analytics/data/zenhub/velocity/. O push na main dispara o deploy.yml, que
-# republica o dashboard no GitHub Pages com os dados novos.
+# Analytics/data/zenhub/velocity/. O Streamlit Community Cloud republica o
+# dashboard sozinho a cada push na main.
 #
 # Pré-requisito: secret do repositório ZENHUB_API_KEY
 # (Settings > Secrets and variables > Actions > New repository secret).
@@ -15,7 +15,6 @@ on:
 
 permissions:
   contents: write
-  actions: write   # para disparar o deploy (push feito com GITHUB_TOKEN não dispara workflows)
 
 concurrency:
   group: zenhub-velocity
@@ -54,7 +53,3 @@ jobs:
           git commit -m "chore(dados): snapshot de velocity do Zenhub"
           git push
 
-      - name: Republicar o dashboard
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run deploy.yml --ref "${{ github.ref_name }}"

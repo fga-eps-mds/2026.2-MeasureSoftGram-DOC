@@ -150,11 +150,12 @@ class ConcluidoTest(unittest.TestCase):
         s1 = [ev("A", "ISSUE_ADDED", t(S1_INI, -1), 5), ev("A", "ISSUE_REMOVED", t(S1_INI, 2))]
         self.assertEqual(linha(self.calc(issues, [], s1), "S1")["completed_story_points"], 0)
 
-    def test_done_aberta_usa_data_da_movimentacao(self):
+    def test_so_issue_fechada_conta(self):
+        # Critério de feito: a issue só precisa estar fechada. Aberta no Done não conta; fechada fora do Done conta.
         issues = {"A": issue("A", 3, pipeline="Done", movida=t(S1_INI, 4)),
-                  "B": issue("B", 2, pipeline="Done", movida=None)}   # sem data: não dá para datar
+                  "B": issue("B", 2, estado="CLOSED", fechada=t(S1_INI, 5), pipeline="In Progress")}
         eventos = [ev("A", "ISSUE_ADDED", t(S1_INI, -1), 3), ev("B", "ISSUE_ADDED", t(S1_INI, -1), 2)]
-        self.assertEqual(linha(self.calc(issues, ["A", "B"], eventos), "S1")["completed_story_points"], 3)
+        self.assertEqual(linha(self.calc(issues, ["A", "B"], eventos), "S1")["completed_story_points"], 2)
 
     def test_sem_estimativa_conta_issue_com_zero_pontos(self):
         issues = {"A": issue("A", None, estado="CLOSED", fechada=t(S1_INI, 2)), "B": issue("B", 5)}

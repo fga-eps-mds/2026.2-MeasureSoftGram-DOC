@@ -10,7 +10,7 @@ Rodar:
     pip install -r requirements.txt
     streamlit run app.py
 
-Publicado no GitHub Pages via stlite (Streamlit no navegador): ver stlite/build.py.
+Publicado no Streamlit Community Cloud: https://20262-measuresoftgram-doc-fchaemxpepymufmckz9yyy.streamlit.app/
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-# No navegador (stlite, GitHub Pages) o diretório do app nem sempre está no path.
+# Garante os imports de pages/ e src/ quando o app é iniciado de outra pasta (ex.: Streamlit Cloud).
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import streamlit as st  # noqa: E402

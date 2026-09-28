@@ -10,7 +10,9 @@ página diga isso em vez de apresentar como backlog inteiro.
 
 **Situação.** Cada pipeline do Zenhub cai em uma de três situações
 (``SITUACAO_PIPELINE``): *Planejado*, *Em andamento* ou *Concluído*. Issue
-fechada é sempre *Concluído*. Pipeline que não está no mapa aparece como
+fechada é sempre *Concluído* — e só ela: o critério de feito é a issue estar
+fechada. Issue aberta no pipeline Done aparece como *Em andamento* (aguardando
+fechamento). Pipeline que não está no mapa aparece como
 *Não classificado* — nunca é encaixado à força.
 
 **Throughput** = itens pontuáveis concluídos por semana (contagem) e os pontos
@@ -35,7 +37,7 @@ SITUACAO_PIPELINE = {
     "Review/QA": ANDAMENTO,
     "Aguardando aprovação do PO (DoD)": ANDAMENTO,
     "Migração de repositório": ANDAMENTO,
-    "Done": CONCLUIDO,
+    "Done": ANDAMENTO,          # aberta no Done: ainda não fechada, não conta como feita
 }
 
 
@@ -43,7 +45,7 @@ def _para_data(serie: pd.Series) -> pd.Series:
     return pd.to_datetime(serie, utc=True, errors="coerce")
 
 
-def universo_issues(snap: dict | None, pipeline_feito: str = "Done") -> tuple[pd.DataFrame, bool]:
+def universo_issues(snap: dict | None) -> tuple[pd.DataFrame, bool]:
     """(uma linha por issue, backlog completo?). Pull requests ficam de fora."""
     if not snap:
         return pd.DataFrame(), False
@@ -69,9 +71,7 @@ def universo_issues(snap: dict | None, pipeline_feito: str = "Done") -> tuple[pd
         return SITUACAO_PIPELINE.get(r["pipeline"], NAO_CLASSIFICADO)
 
     df["situacao"] = df.apply(situacao, axis=1)
-    feito_aberto = (df["state"] != "CLOSED") & (df["pipeline"] == pipeline_feito)
-    df["concluida_em"] = _para_data(df["closed_at"]).where(df["state"] == "CLOSED",
-                                                           _para_data(df["pipeline_moved_at"]).where(feito_aberto))
+    df["concluida_em"] = _para_data(df["closed_at"]).where(df["state"] == "CLOSED")
     df["tipo"] = df["issue_type"].fillna("Sem tipo")
     df["prioridade"] = df["priority"].fillna("Sem prioridade")
     df["responsavel"] = df["assignees"].map(lambda a: ", ".join(a) if isinstance(a, list) and a else "Sem responsável")

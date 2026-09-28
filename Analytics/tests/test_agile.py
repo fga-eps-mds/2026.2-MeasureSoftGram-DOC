@@ -47,6 +47,12 @@ class UniversoTest(unittest.TestCase):
         self.assertEqual(d.loc["T1", "sprint"], "S1")
         self.assertEqual(d.loc["X1", "release"], "Sem release")
 
+    def test_aberta_no_done_nao_e_concluida(self):
+        self.snap["issues"]["D1"] = issue("D1", est=2, pipeline="Done")
+        d = agile.universo_issues(self.snap)[0].set_index("issue_id")
+        self.assertEqual(d.loc["D1", "situacao"], agile.ANDAMENTO)
+        self.assertTrue(pd.isna(d.loc["D1", "concluida_em"]))
+
     def test_backlog_completo_mescla(self):
         self.snap["backlog"] = {"pipelines": [], "pipelines_com_falha": [], "issues": [
             {**issue("B1", pipeline="Product Backlog", est=2), "priority": "High priority", "assignees": ["ana"]}]}

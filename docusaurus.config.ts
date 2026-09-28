@@ -97,9 +97,8 @@ const config: Config = {
           label: 'Documentação',
         },
         {
-          // Dashboard Streamlit rodando no navegador (stlite), gerado no deploy
-          // por Analytics/stlite/build.py em static/dashboard/.
-          to: 'pathname:///dashboard/',
+          // Dashboard Streamlit no Streamlit Community Cloud (Analytics/app.py).
+          href: 'https://20262-measuresoftgram-doc-fchaemxpepymufmckz9yyy.streamlit.app/',
           label: 'Dashboard',
           position: 'left',
         },
@@ -127,7 +126,7 @@ const config: Config = {
             {label: 'Metodologia', to: '/docs/planejamento/metodologia'},
             {label: 'Sprints', to: '/docs/sprints'},
             {label: 'Métricas', to: '/docs/metricas'},
-            {label: 'Dashboard analítico', to: 'pathname:///dashboard/'},
+            {label: 'Dashboard analítico', href: 'https://20262-measuresoftgram-doc-fchaemxpepymufmckz9yyy.streamlit.app/'},
           ],
         },
         {

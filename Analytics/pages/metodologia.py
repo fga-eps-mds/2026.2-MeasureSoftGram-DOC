@@ -65,7 +65,7 @@ def pagina():
 | ETC | (BAC − EV) ÷ CPI | |
 | EAC | AC + ETC | |
 
-**Gestão ágil:** velocity = SP das issues pontuáveis ({', '.join(sorted(ctx.zh_regras.tipos_pontuados))}) concluídas
+**Gestão ágil:** critério de feito = issue **fechada** (em qualquer pipeline; aberta não conta) · velocity = SP das issues pontuáveis ({', '.join(sorted(ctx.zh_regras.tipos_pontuados))}) fechadas
 dentro da sprint · velocity média = média das sprints concluídas (≥ {ctx.zh_regras.min_sprints_media}) · média móvel
 = média das 3 últimas sprints concluídas · taxa de conclusão = SP concluídos ÷ SP planejados · throughput = issues
 pontuáveis concluídas por semana.
