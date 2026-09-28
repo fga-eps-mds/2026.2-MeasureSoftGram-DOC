@@ -617,7 +617,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -645,8 +645,8 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-09-26T17:47:27Z",
-        "updated_at": "2026-09-27T16:30:19Z",
-        "closed_at": null,
+        "updated_at": "2026-09-28T04:11:47Z",
+        "closed_at": "2026-09-28T04:11:47Z",
         "assignee": {
             "login": "nateejpg",
             "id": 91135190,
@@ -678,10 +678,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/19",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/19.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/19.patch",
-            "merged_at": null
+            "merged_at": "2026-09-28T04:11:47Z"
         },
-        "body": "## Objetivo\r\n\r\nAdequar o Service ao `msgram-core==1.5.4` e corrigir a diverg\u00eancia\r\nde c\u00e1lculo em rela\u00e7\u00e3o \u00e0 CLI quando faltam m\u00e9tricas na entrada.\r\n\r\nRelacionado a fga-eps-mds/2026.2-MeasureSoftGram-DOC#50.\r\n\r\n## Altera\u00e7\u00f5es\r\n\r\n- Depend\u00eancia fixada em `msgram-core==1.5.4` e `uv.lock` atualizado.\r\n- Cadastro das quatro m\u00e9tricas de runtime exigidas pelo cat\u00e1logo do Core.\r\n- Exclus\u00e3o das medidas de runtime do c\u00e1lculo atual e dos dados fict\u00edcios,\r\n  pois exigem compara\u00e7\u00e3o entre releases e dados de APM.\r\n- Medidas sem todas as m\u00e9tricas necess\u00e1rias s\u00e3o omitidas do c\u00e1lculo.\r\n- Valores presentes iguais a zero continuam v\u00e1lidos, incluindo\r\n  zero builds com pontua\u00e7\u00e3o neutra.\r\n- As agrega\u00e7\u00f5es consideram somente resultados dispon\u00edveis,\r\n  mantendo os pesos da configura\u00e7\u00e3o.\r\n- Entradas sem nenhuma caracter\u00edstica calcul\u00e1vel retornam HTTP 400,\r\n  sem persistir resultados.\r\n- Inclus\u00e3o de testes de regress\u00e3o e fixtures de compara\u00e7\u00e3o com a CLI.\r\n\r\nA adapta\u00e7\u00e3o de runtime considerou o problema descrito em:\r\nhttps://github.com/fga-eps-mds/2026.1-MeasureSoftGram-Service/pull/57.\r\n\r\n## Diverg\u00eancia corrigida\r\n\r\nPara uma entrada contendo apenas m\u00e9tricas de GitHub, a CLI omitia\r\nmedidas sem dados de Sonar, enquanto o Service atribu\u00eda zero a elas\r\ne as inclu\u00eda nas agrega\u00e7\u00f5es.\r\n\r\nCom as mesmas m\u00e9tricas e configura\u00e7\u00e3o, isso gerava TSQMI\r\n0.6944329273822416 na CLI e 0.4029402785735526 no Service.\r\n\r\nAp\u00f3s a corre\u00e7\u00e3o, os resultados coincidiram em todas as camadas\r\nnos dois cen\u00e1rios verificados:\r\n\r\n| Entrada | TSQMI CLI e Service |\r\n| --- | --- |\r\n| GitHub | 0.6944329273822416 |\r\n| Sonar + GitHub | 0.7527099982081088 |\r\n\r\n## Valida\u00e7\u00e3o\r\n\r\n- 293 testes passando localmente.\r\n- Flake8 e `git diff --check` sem erros.\r\n- Compara\u00e7\u00f5es de medidas, subcaracter\u00edsticas, caracter\u00edsticas e TSQMI,\r\n  com toler\u00e2ncia relativa de 1e-9 e absoluta de 1e-12.\r\n- Testes de m\u00e9tricas ausentes, zero builds e entrada vazia.\r\n- Refer\u00eancias geradas pelo comando real `msgram calculate`.\r\n  Na CI do Service, o endpoint \u00e9 comparado com essas refer\u00eancias;\r\n  a CLI n\u00e3o \u00e9 executada durante esses testes.\r\n\r\nA CI deve ser conferida novamente no commit mais recente.\r\n\r\n## Observa\u00e7\u00f5es\r\n\r\n- O tratamento de entradas incompletas muda: aus\u00eancia de m\u00e9trica\r\n  deixa de ser convertida em nota zero. Esse comportamento est\u00e1\r\n  alinhado \u00e0 CLI e precisa ser considerado na revis\u00e3o.\r\n- As medidas de runtime permanecem cadastradas, mas n\u00e3o s\u00e3o\r\n  calculadas por este fluxo. N\u00e3o foi implementada coleta de APM.\r\n- No Core 1.5.4 instalado, os limites padr\u00e3o de `ci_feedback_time`\r\n  s\u00e3o 1 e 900 segundos. O limite 0.66 mencionado na issue pertence\r\n  \u00e0s medidas de runtime.\r\n- `load_initial_data.py` teve normaliza\u00e7\u00e3o dos finais de linha para LF.\r\n  No primeiro commit, desconsiderando essas diferen\u00e7as, o arquivo\r\n  apresentava 18 inser\u00e7\u00f5es e 1 exclus\u00e3o.\r\n- Este PR cobre a parte do Service e n\u00e3o encerra a issue #50 da DOC.\r\n  A entrega da CLI segue em PR separado.",
-        "closed_by": null,
+        "body": "## Objetivo\r\n\r\nAdequar o Service ao `msgram-core==1.5.4` e corrigir a diverg\u00eancia\r\nde c\u00e1lculo em rela\u00e7\u00e3o \u00e0 CLI quando faltam m\u00e9tricas na entrada.\r\n\r\nRelacionado a [fga-eps-mds/2026.2-MeasureSoftGram-DOC#50](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/50).\r\n\r\n## Altera\u00e7\u00f5es\r\n\r\n- Depend\u00eancia fixada em `msgram-core==1.5.4` e `uv.lock` atualizado.\r\n- Cadastro das quatro m\u00e9tricas de runtime exigidas pelo cat\u00e1logo do Core.\r\n- Exclus\u00e3o das medidas de runtime do c\u00e1lculo atual e dos dados fict\u00edcios,\r\n  pois exigem compara\u00e7\u00e3o entre releases e dados de APM.\r\n- Omiss\u00e3o de medidas sem todas as m\u00e9tricas necess\u00e1rias ao c\u00e1lculo.\r\n- Preserva\u00e7\u00e3o de valores iguais a zero, incluindo zero builds com\r\n  pontua\u00e7\u00e3o neutra.\r\n- Agrega\u00e7\u00f5es com os resultados dispon\u00edveis e os pesos da configura\u00e7\u00e3o.\r\n- Retorno HTTP 400 para entradas sem nenhuma caracter\u00edstica calcul\u00e1vel,\r\n  sem persistir resultados.\r\n- Inclus\u00e3o de testes de regress\u00e3o e fixtures de compara\u00e7\u00e3o com a CLI.\r\n\r\nA adapta\u00e7\u00e3o de runtime considerou o problema descrito no\r\n[PR #57 do Service de 2026.1](https://github.com/fga-eps-mds/2026.1-MeasureSoftGram-Service/pull/57).\r\n\r\n## Atualiza\u00e7\u00e3o ap\u00f3s revis\u00e3o\r\n\r\n- Integra\u00e7\u00e3o das altera\u00e7\u00f5es da `develop` relacionadas a\r\n  `technical_debt_ratio`, preservando a compatibilidade incorporada\r\n  pelo PR #21.\r\n- Atualiza\u00e7\u00e3o das duas configura\u00e7\u00f5es de refer\u00eancia de paridade,\r\n  incluindo a configura\u00e7\u00e3o de `modifiability` com quatro medidas\r\n  de peso 25%.\r\n- Regenera\u00e7\u00e3o dos resultados esperados pelo comando real\r\n  `msgram calculate`, utilizando as configura\u00e7\u00f5es atualizadas.\r\n- Atualiza\u00e7\u00e3o do teste de dados fict\u00edcios para incluir\r\n  `technical_debt_ratio`, mantendo a exclus\u00e3o das medidas de runtime.\r\n\r\n## Diverg\u00eancia corrigida\r\n\r\nPara entradas contendo apenas m\u00e9tricas de GitHub, a CLI omitia medidas\r\nsem dados de Sonar, enquanto o Service atribu\u00eda zero a elas e as inclu\u00eda\r\nnas agrega\u00e7\u00f5es. Isso produzia resultados diferentes com as mesmas\r\nentradas e configura\u00e7\u00e3o.\r\n\r\nOs testes de paridade verificam os cen\u00e1rios GitHub e Sonar + GitHub,\r\ncomparando as chaves e os valores de medidas, subcaracter\u00edsticas,\r\ncaracter\u00edsticas e TSQMI.\r\n\r\nAs refer\u00eancias foram regeneradas ap\u00f3s a integra\u00e7\u00e3o da `develop`.\r\nEsses testes comprovam a paridade nos cen\u00e1rios cobertos, sem garantir\r\nequival\u00eancia para todas as entradas poss\u00edveis.\r\n\r\n## Valida\u00e7\u00e3o\r\n\r\n- 299 testes passando localmente ap\u00f3s a integra\u00e7\u00e3o.\r\n- Flake8 e `git diff --check` sem erros.\r\n- Compara\u00e7\u00f5es com toler\u00e2ncia relativa de `1e-9` e absoluta de `1e-12`.\r\n- Testes de m\u00e9tricas ausentes, zero builds e entrada vazia.\r\n- Refer\u00eancias produzidas pela execu\u00e7\u00e3o real da CLI.\r\n\r\nNa CI do Service, o endpoint \u00e9 comparado com as refer\u00eancias versionadas;\r\na CLI n\u00e3o \u00e9 executada durante esses testes.\r\n\r\nA CI deve ser conferida no commit mais recente, seguida de nova revis\u00e3o\r\nhumana.\r\n\r\n## Observa\u00e7\u00f5es\r\n\r\n- A aus\u00eancia de m\u00e9tricas deixa de ser convertida em nota zero.\r\n  Essa mudan\u00e7a de comportamento deve ser considerada na revis\u00e3o.\r\n- As medidas de runtime permanecem cadastradas, mas n\u00e3o s\u00e3o calculadas\r\n  por este fluxo. N\u00e3o foi implementada coleta de APM.\r\n- No Core 1.5.4 instalado, os limites padr\u00e3o de `ci_feedback_time`\r\n  s\u00e3o 1 e 900 segundos. O limite `0.66` mencionado na issue pertence\r\n  \u00e0s medidas de runtime.\r\n- Houve normaliza\u00e7\u00e3o de finais de linha para LF em arquivos editados.\r\n- O Service permanece em `msgram-core==1.5.4`. A CLI utiliza\r\n  provisoriamente uma refer\u00eancia fixa do Core no GitHub para preservar\r\n  o suporte a `technical_debt_ratio`, conforme orienta\u00e7\u00e3o de Lucas\r\n  Bottino em 27/09/2026.\r\n- A padroniza\u00e7\u00e3o definitiva da depend\u00eancia entre CLI e Service permanece\r\n  pendente de discuss\u00e3o e valida\u00e7\u00e3o pela equipe.\r\n- Este PR n\u00e3o encerra a\r\n  [issue #50 da DOC](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/50).\r\n  A entrega da CLI segue em PR separado.",
+        "closed_by": {
+            "login": "nateejpg",
+            "id": 91135190,
+            "node_id": "MDQ6VXNlcjkxMTM1MTkw",
+            "avatar_url": "https://avatars.githubusercontent.com/u/91135190?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/nateejpg",
+            "html_url": "https://github.com/nateejpg",
+            "followers_url": "https://api.github.com/users/nateejpg/followers",
+            "following_url": "https://api.github.com/users/nateejpg/following{/other_user}",
+            "gists_url": "https://api.github.com/users/nateejpg/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/nateejpg/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/nateejpg/subscriptions",
+            "organizations_url": "https://api.github.com/users/nateejpg/orgs",
+            "repos_url": "https://api.github.com/users/nateejpg/repos",
+            "events_url": "https://api.github.com/users/nateejpg/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/nateejpg/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/19/reactions",
             "total_count": 0,
