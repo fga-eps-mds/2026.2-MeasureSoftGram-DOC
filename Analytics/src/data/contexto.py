@@ -246,7 +246,7 @@ def carregar() -> Contexto:
         else:
             ctx.zh_sprints = velocity.calculate_velocity(snap, ctx.zh_regras, ctx.agora_utc, linhas,
                                                          incluir_futuras=True)
-            ctx.zh_issues, ctx.zh_backlog_completo = agile.universo_issues(snap)
+            ctx.zh_issues, ctx.zh_backlog_completo = agile.universo_issues(snap, ctx.zh_regras.tipos_pontuados)
             s = ctx.zh_sprints
             periodo = (_para_brt(s["start_date"].min()), _para_brt(s["end_date"].max())) if not s.empty else None
             avisos = snap.get("avisos") or []

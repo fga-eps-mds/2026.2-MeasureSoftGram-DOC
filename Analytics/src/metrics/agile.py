@@ -45,7 +45,10 @@ def _para_data(serie: pd.Series) -> pd.Series:
     return pd.to_datetime(serie, utc=True, errors="coerce")
 
 
-def universo_issues(snap: dict | None) -> tuple[pd.DataFrame, bool]:
+TIPOS_PONTUADOS = {"Feature", "Task", "Bug"}
+
+
+def universo_issues(snap: dict | None, tipos_pontuados: set | None = None) -> tuple[pd.DataFrame, bool]:
     """(uma linha por issue, backlog completo?). Pull requests ficam de fora."""
     if not snap:
         return pd.DataFrame(), False
@@ -79,6 +82,13 @@ def universo_issues(snap: dict | None) -> tuple[pd.DataFrame, bool]:
     df["pipeline"] = df["pipeline"].where(df["pipeline"].notna(),
                                           df["state"].map(lambda e: "Fechada" if e == "CLOSED" else "Sem pipeline"))
     df["pontos"] = pd.to_numeric(df["estimate"], errors="coerce")
+    # Mesma regra da velocity: pontua Feature/Task/Bug sem filhas pontuáveis (quem pontua são as filhas).
+    # ``sp`` é o que entra em qualquer soma de story points; ``pontos`` é só a estimativa cadastrada.
+    tipos = tipos_pontuados or TIPOS_PONTUADOS
+    tipo_de = dict(zip(df["issue_id"], df["issue_type"]))
+    pais_pontuaveis = {r.parent_id for r in df.itertuples() if r.parent_id and tipo_de.get(r.issue_id) in tipos}
+    df["pontuavel"] = df["issue_type"].isin(tipos) & ~df["issue_id"].isin(pais_pontuaveis)
+    df["sp"] = df["pontos"].where(df["pontuavel"])
 
     # épico de cada issue: sobe pela cadeia de pais até achar um Epic (no máximo 4 níveis)
     tipo = dict(zip(df["issue_id"], df["issue_type"]))
@@ -119,7 +129,7 @@ def distribuicao(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
     if df is None or df.empty or coluna not in df:
         return pd.DataFrame(columns=[coluna, "situacao", "itens", "pontos"])
     g = (df.groupby([coluna, "situacao"], dropna=False)
-         .agg(itens=("issue_id", "count"), pontos=("pontos", "sum")).reset_index())
+         .agg(itens=("issue_id", "count"), pontos=("sp", "sum")).reset_index())
     return g
 
 
@@ -127,18 +137,23 @@ def throughput_semanal(df: pd.DataFrame, tipos_pontuados: set) -> pd.DataFrame:
     """Itens pontuáveis concluídos por semana (segunda a domingo, horário de Brasília)."""
     if df is None or df.empty:
         return pd.DataFrame(columns=["semana", "itens", "pontos", "sem_estimativa"])
-    d = df[df["concluida_em"].notna() & df["issue_type"].isin(tipos_pontuados)].copy()
+    pont = df["pontuavel"] if "pontuavel" in df else df["issue_type"].isin(tipos_pontuados)
+    d = df[df["concluida_em"].notna() & pont].copy()
     if d.empty:
         return pd.DataFrame(columns=["semana", "itens", "pontos", "sem_estimativa"])
     local = d["concluida_em"].dt.tz_convert("America/Sao_Paulo").dt.tz_localize(None)
     d["semana"] = (local - pd.to_timedelta(local.dt.weekday, unit="D")).dt.normalize()
-    return (d.groupby("semana").agg(itens=("issue_id", "count"), pontos=("pontos", "sum"),
-                                    sem_estimativa=("pontos", lambda s: int(s.isna().sum())))
+    return (d.groupby("semana").agg(itens=("issue_id", "count"), pontos=("sp", "sum"),
+                                    sem_estimativa=("sp", lambda s: int(s.isna().sum())))
             .reset_index().sort_values("semana"))
 
 
 def progresso_epicos(df: pd.DataFrame) -> pd.DataFrame:
-    """Uma linha por épico: filhas, concluídas, pontos e % concluído (por contagem)."""
+    """Uma linha por épico: filhas (todas as descendentes), concluídas, SP e % concluído (por contagem).
+
+    SP = só as descendentes pontuáveis (mesma regra da velocity), para não contar
+    duas vezes uma US e as Tasks dela.
+    """
     if df is None or df.empty:
         return pd.DataFrame()
     epicos = df[df["issue_type"] == "Epic"][["issue_id", "title", "number", "repositorio", "situacao"]]
@@ -149,8 +164,8 @@ def progresso_epicos(df: pd.DataFrame) -> pd.DataFrame:
         total, feitas = len(f), int((f["situacao"] == CONCLUIDO).sum())
         linhas.append({"epico": e.title, "numero": e.number, "repositorio": e.repositorio, "situacao": e.situacao,
                        "filhas": total, "concluidas": feitas, "em_andamento": int((f["situacao"] == ANDAMENTO).sum()),
-                       "pontos": f["pontos"].sum(min_count=1),
-                       "pontos_concluidos": f.loc[f["situacao"] == CONCLUIDO, "pontos"].sum(min_count=1),
+                       "pontos": f["sp"].sum(min_count=1),
+                       "pontos_concluidos": f.loc[f["situacao"] == CONCLUIDO, "sp"].sum(min_count=1),
                        "progresso": feitas / total if total else None})
     return pd.DataFrame(linhas).sort_values(["progresso", "filhas"], ascending=[True, False], na_position="last")
 
@@ -167,8 +182,8 @@ def progresso_releases(snap: dict | None, df: pd.DataFrame) -> pd.DataFrame:
         total, feitas = len(sub), int((sub["situacao"] == CONCLUIDO).sum()) if len(sub) else 0
         linhas.append({"release": r.get("release_name"), "estado": r.get("state"), "inicio": r.get("start_on"),
                        "fim": r.get("end_on"), "issues": total, "concluidas": feitas,
-                       "pontos": sub["pontos"].sum(min_count=1) if len(sub) else None,
-                       "pontos_concluidos": sub.loc[sub["situacao"] == CONCLUIDO, "pontos"].sum(min_count=1)
+                       "pontos": sub["sp"].sum(min_count=1) if len(sub) else None,
+                       "pontos_concluidos": sub.loc[sub["situacao"] == CONCLUIDO, "sp"].sum(min_count=1)
                        if len(sub) else None,
                        "progresso": feitas / total if total else None,
                        "issues_no_zenhub": r.get("issues_count")})
@@ -187,6 +202,7 @@ def alertas_de_dados(df: pd.DataFrame, tipos_pontuados: set) -> pd.DataFrame:
       ficam "Sem épico";
     * sem tipo, com estimativa — os pontos não contam (só Feature, Task e Bug pontuam);
     * épico com estimativa — épico não pontua, a estimativa é ignorada;
+    * US/Task com filhas pontuáveis e estimativa — quem pontua são as filhas;
     * pontuável sem estimativa — conta como 0 SP no planejado e no concluído.
     """
     if df is None or df.empty:
@@ -204,6 +220,9 @@ def alertas_de_dados(df: pd.DataFrame, tipos_pontuados: set) -> pd.DataFrame:
             problemas.append(f"tem estimativa ({est:g} SP) mas não tem tipo: os pontos não contam")
         if tipo == "Epic" and pd.notna(est):
             problemas.append(f"épico com estimativa ({est:g} SP): épico não pontua, a estimativa é ignorada")
+        if tipo in tipos_pontuados and pd.notna(est) and not getattr(r, "pontuavel", True):
+            problemas.append(f"tem filhas pontuáveis e estimativa ({est:g} SP): quem pontua são as filhas, "
+                             "esta estimativa é ignorada")
         if tipo in tipos_pontuados and pd.isna(est) and r.issue_id not in pais:
             problemas.append("sem estimativa: conta 0 SP")
         for pr in problemas:

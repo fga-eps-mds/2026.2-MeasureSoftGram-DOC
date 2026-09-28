@@ -150,3 +150,16 @@ class AlertasTest(unittest.TestCase):
         self.assertTrue(any(p.startswith("tem estimativa (8 SP) mas não tem tipo") for p in a["problema"]))
         self.assertTrue(any(p.startswith("épico com estimativa (3 SP)") for p in a["problema"]))
         self.assertIn("sem estimativa", problemas)                   # F é Feature sem estimativa
+
+
+class PontuavelTest(unittest.TestCase):
+    def test_pai_com_filhas_nao_soma_junto(self):
+        snap = {"issues": {"E": issue("E", "Epic"),
+                           "US": issue("US", "Feature", est=13, pai="E", estado="CLOSED", fechada="2026-09-27T10:00:00Z"),
+                           "T": issue("T", "Task", est=3, pai="US", estado="CLOSED", fechada="2026-09-27T10:00:00Z")},
+                "sprints": [], "releases": []}
+        df, _ = agile.universo_issues(snap)
+        ep = agile.progresso_epicos(df).iloc[0]
+        self.assertEqual(ep["pontos_concluidos"], 3)          # só a Task; a US com filha não soma
+        a = agile.alertas_de_dados(df, {"Feature", "Task", "Bug"})
+        self.assertTrue(any("quem pontua são as filhas" in p for p in a["problema"]))

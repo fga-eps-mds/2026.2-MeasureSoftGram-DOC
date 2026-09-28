@@ -338,7 +338,10 @@ def pagina():
             "pontos": st.column_config.NumberColumn("SP", format="%.0f"),
             "pontos_concluidos": st.column_config.NumberColumn("SP concluídos", format="%.0f"),
             "progresso": st.column_config.ProgressColumn("Progresso", min_value=0, max_value=100, format="%.0f%%")})
-        st.caption("Épico sem filhas no snapshot aparece sem progresso (não é 0%).")
+        st.caption("Épico sem filhas aparece sem progresso (não é 0%). SP = só Features, Tasks e Bugs sem filhas "
+                   "(a mesma regra da velocity: uma US com Tasks não soma junto com as Tasks). Aqui entram todas as "
+                   "issues fechadas do épico, inclusive as da sprint em andamento; a velocity só soma as fechadas "
+                   "dentro de sprints concluídas. Releases e épicos usam todas as issues (só o filtro de repositório vale aqui).")
 
     # ── qualidade do cadastro no Zenhub ──
     alertas = agile.alertas_de_dados(filters.por_repo(todas, f["repos"]), ctx.zh_regras.tipos_pontuados)
