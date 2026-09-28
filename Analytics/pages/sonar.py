@@ -147,7 +147,8 @@ def pagina():
                 kpi(f"Rating de {rot.lower()}", letra, "SONAR",
                     status="good" if letra == "A" else ("warning" if letra in "BC" else "critical"),
                     delta=variacao(a["atual"], a["anterior"], "", False),
-                    nota=f"pior entre {a['n_repos']} repositório(s) (A melhor, E pior)")
+                    nota=f"é o pior entre {a['n_repos']} repositório(s), não a média (A melhor, E pior) · "
+                         f"{sn.resumo_rating(ctx.sonar_atual, m, repos)}")
 
     # ── evolução ──
     layout.secao("Evolução das métricas", "A qualidade do código está melhorando ao longo do tempo?", ["SONAR"])

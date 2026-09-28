@@ -297,3 +297,23 @@ def formatar(metrica: str, valor) -> str:
     if unidade == "ms":
         return f"{valor / 1000:.1f} s".replace(".", ",")
     return f"{valor:,.0f}".replace(",", ".")
+
+
+def resumo_rating(atual: pd.DataFrame, metrica: str, repos: list | None) -> str:
+    """'pior: Front (C) · 6 em A, 1 em B, 1 em C' — gerado do valor atual de cada repositório."""
+    if atual is None or atual.empty:
+        return ""
+    d = atual[atual["metrica"] == metrica]
+    if repos:
+        d = d[d["repositorio"].isin(repos)]
+    d = d.dropna(subset=["valor"])
+    if d.empty:
+        return ""
+    letras = d.assign(letra=d["valor"].map(lambda v: formatar(metrica, v)))
+    pior = letras["valor"].max()
+    nomes = sorted(nome_curto(r) for r in letras.loc[letras["valor"] == pior, "repositorio"])
+    cont = letras["letra"].value_counts().sort_index()
+    if len(cont) == 1:
+        return f"todos os {len(letras)} em {cont.index[0]}"
+    return (f"pior: {', '.join(nomes)} ({formatar(metrica, pior)}) · "
+            + ", ".join(f"{n} em {letra}" for letra, n in cont.items()))
