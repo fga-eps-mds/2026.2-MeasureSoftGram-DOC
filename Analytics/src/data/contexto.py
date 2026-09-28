@@ -49,6 +49,11 @@ def _para_brt(ts) -> pd.Timestamp | None:
 
 
 def _marca(pastas: list[Path], padrao: str = "*.json") -> tuple:
+    """Nomes e datas dos arquivos: entra na chave do cache, então arquivo novo = releitura.
+
+    Atenção: no ``st.cache_data`` parâmetro que começa com ``_`` NÃO entra na chave.
+    Por isso o parâmetro dos carregadores se chama ``marca_arquivos`` (sem ``_``).
+    """
     return tuple(sorted((str(p), p.stat().st_mtime) for pasta in pastas if pasta.exists()
                         for p in pasta.glob(padrao)))
 
@@ -116,7 +121,7 @@ class Contexto:
 # ───────────────────────── carregadores com cache ─────────────────────────
 
 @st.cache_data(show_spinner="Lendo as métricas do SonarCloud...")
-def _sonar(pastas: tuple[str, ...], _marca_arquivos: tuple):
+def _sonar(pastas: tuple[str, ...], marca_arquivos: tuple):
     p = [Path(x) for x in pastas]
     agregado, componentes = sonar.carregar_sonar(p)
     snap, nome = sonar.ultimo_snapshot()
@@ -124,13 +129,13 @@ def _sonar(pastas: tuple[str, ...], _marca_arquivos: tuple):
 
 
 @st.cache_data(show_spinner="Lendo os dados do GitHub...")
-def _github(pastas: tuple[str, ...], _marca_arquivos: tuple):
+def _github(pastas: tuple[str, ...], marca_arquivos: tuple):
     p = [Path(x) for x in pastas]
     return github.carregar_issues(p), github.carregar_runs(p)
 
 
 @st.cache_data(show_spinner="Lendo o snapshot do Zenhub...")
-def _zenhub(pasta: str, _marca_arquivos: tuple):
+def _zenhub(pasta: str, marca_arquivos: tuple):
     snap, nome = zh_coleta.ultimo_snapshot(Path(pasta))
     return snap, nome, zh_coleta.ler_linhas_de_base(Path(pasta))
 
