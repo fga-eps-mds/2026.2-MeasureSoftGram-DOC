@@ -3,9 +3,10 @@
 Só o que nem o SonarCloud nem o Zenhub têm vem da planilha: Custos,
 Planejamento (quem está no time em cada semana), Horas, Riscos, Monitoramento e
 Decisões. Nenhum ponto, sprint ou métrica de código é digitado aqui.
-``parametros.csv`` guarda as regras do time usadas no cálculo da velocity.
+As regras do time usadas no cálculo da velocity ficam em ``config.PARAMETROS``.
 
-Sem URL publicada, lê o CSV de mesmo nome em ``planilhas/`` e diz isso na tela.
+Não há cópia local: sem URL publicada, ou se a planilha não responder, a aba
+fica indisponível e a tela diz isso.
 No navegador (GitHub Pages) lê sempre o CSV empacotado no deploy, que o
 ``stlite/build.py`` baixa das URLs publicadas.
 """
@@ -76,31 +77,40 @@ def data(valor):
     return pd.to_datetime(str(valor).strip(), dayfirst="/" in str(valor), errors="coerce")
 
 
-def ler(chave: str, urls: dict, pasta: Path, siglas: bool = False) -> pd.DataFrame:
-    """Lê a aba publicada (URL em config.PLANILHAS) ou o CSV local ``planilhas/<chave>.csv``."""
+def ler(chave: str, urls: dict, pasta: Path | None = None, siglas: bool = False) -> pd.DataFrame:
+    """Lê a aba publicada (URL em ``config.PLANILHAS``).
+
+    No navegador (GitHub Pages) lê o CSV que o deploy baixou da versão publicada
+    e empacotou em ``pasta``. Sem URL ou com falha, devolve vazio e registra o
+    motivo em ``ORIGEM`` — nunca usa dado de outra origem.
+    """
     planilha, aba = ABAS.get(chave, ("?", chave))
     url = (urls or {}).get(chave, "")
-    if sys.platform == "emscripten":
-        url = ""  # no navegador: o CSV empacotado no deploy já é a cópia da planilha publicada
     bruto = None
-    if url:
+    if sys.platform == "emscripten":
+        try:
+            bruto = pd.read_csv(Path(pasta) / f"{chave}.csv", dtype=str, header=None)
+            ORIGEM[chave] = f"planilha **{planilha}**, aba **{aba}** (versão publicada, baixada no deploy)"
+        except (OSError, TypeError, pd.errors.EmptyDataError):
+            ORIGEM[chave] = f"indisponível: a aba **{aba}** não foi baixada no deploy"
+            return pd.DataFrame()
+    elif not url:
+        ORIGEM[chave] = f"indisponível: a aba **{aba}** não tem URL publicada em `config.PLANILHAS`"
+        return pd.DataFrame()
+    else:
         try:
             import requests
             r = requests.get(url, timeout=15)
             r.raise_for_status()
             bruto = pd.read_csv(io.StringIO(r.content.decode("utf-8")), dtype=str, header=None)
             ORIGEM[chave] = f"planilha **{planilha}**, aba **{aba}** (Google Sheets)"
-        except Exception as erro:  # noqa: BLE001 — qualquer falha cai para o CSV local
-            ORIGEM[chave] = f"CSV local `planilhas/{chave}.csv` (a planilha publicada falhou: {erro.__class__.__name__})"
-    if bruto is None:
-        caminho = Path(pasta) / f"{chave}.csv"
-        if not url:
-            ORIGEM[chave] = f"CSV local `planilhas/{chave}.csv` (cópia da aba **{aba}** da planilha **{planilha}**)"
-        try:
-            bruto = pd.read_csv(caminho, dtype=str, header=None)
-        except (OSError, pd.errors.EmptyDataError):
-            ORIGEM[chave] = f"não encontrado (`planilhas/{chave}.csv`)"
+        except Exception as erro:  # noqa: BLE001 — a aba fica indisponível, o painel segue
+            ORIGEM[chave] = (f"indisponível: a planilha publicada não respondeu ({erro.__class__.__name__}); "
+                             "confira a conexão ou a URL em `config.PLANILHAS`")
             return pd.DataFrame()
+    if bruto is None or bruto.empty:
+        ORIGEM[chave] = f"indisponível: a aba **{aba}** está vazia"
+        return pd.DataFrame()
     bruto = bruto.fillna("")
     cab = [str(x).strip() for x in bruto.iloc[0]]
     df = bruto.iloc[1:].copy()
@@ -160,17 +170,14 @@ def converter(df: pd.DataFrame, numericas=(), datas=()) -> pd.DataFrame:
 TIPOS_PONTUADOS_PADRAO = {"Feature", "Task", "Bug"}
 
 
-def carregar_parametros(pasta: Path) -> dict:
-    """``planilhas/parametros.csv``: critério de feito, níveis pontuados, janela de planning."""
-    try:
-        df = pd.read_csv(Path(pasta) / "parametros.csv", dtype=str).fillna("")
-    except (OSError, pd.errors.EmptyDataError):
-        df = pd.DataFrame(columns=["parametro", "valor"])
-    brutos = dict(zip(df.get("parametro", []), df.get("valor", [])))
+def carregar_parametros(pasta: Path | None = None) -> dict:
+    """Regras do time (``config.PARAMETROS``): critério de feito, níveis pontuados, janela de planning."""
+    import config
+    brutos = dict(getattr(config, "PARAMETROS", {}) or {})
     tipos = str(brutos.get("niveis_pontuados", "")).strip()
     return {"criterio_feito": brutos.get("criterio_feito", "Done") or "Done",
             "tipos_pontuados": set(tipos.split(";")) if tipos else TIPOS_PONTUADOS_PADRAO,
-            "tabela": df}
+            "tabela": pd.DataFrame({"parametro": list(brutos), "valor": [str(v) for v in brutos.values()]})}
 
 
 # ───────────────────────── custos ─────────────────────────

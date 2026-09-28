@@ -70,7 +70,7 @@ substituído por `coleta_velocity.py`) — **não é válido** no schema atual:
 ## Regras de cálculo
 
 **Issue pontuável.** US (`Feature`), `Task` e `Bug` sem filhas, conforme
-`planilhas/parametros.csv` (`niveis_pontuados`, decisão D2). PR, Épico e Sub-task
+`config.PARAMETROS` (Analytics/config.py) (`niveis_pontuados`, decisão D2). PR, Épico e Sub-task
 não pontuam. Issue pontuável **sem estimativa** conta como issue, com **0 SP**,
 e é sinalizada na coluna de observações — o painel nunca estima por ela.
 
@@ -122,7 +122,7 @@ de ensino (R1 28/09, R2 26/10, R3 30/11). A coluna "Fonte da release" diz qual r
    concluir (critério D2) evita o problema; issue no `Done` sem data não conta.
 6. **Sprint cancelada** não existe no Zenhub. Para tirar uma sprint da média,
    liste o id dela em `sprints_canceladas` (separado por `;`) em
-   `planilhas/parametros.csv`.
+   `config.PARAMETROS` (Analytics/config.py).
 7. O `completedPoints` do Zenhub aparece na tabela só como conferência: ele usa o
    estado atual das issues, não a data em que foram concluídas.
 

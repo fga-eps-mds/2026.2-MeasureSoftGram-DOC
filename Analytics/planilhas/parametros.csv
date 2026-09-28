@@ -1,6 +1,0 @@
-parametro,valor,unidade,fonte
-criterio_feito,Done,pipeline do Zenhub,"Decisão do time, 27/09/2026"
-niveis_pontuados,Feature;Task;Bug,tipo de issue,"Decisão do time, 27/09/2026: US (Feature no Zenhub) e Task; Bug como Task de correção. US com Tasks filhas não pontua."
-janela_planning_horas,24,horas,"Velocity (Zenhub): o planejado é o escopo da sprint ao fim do 1º dia (planning)"
-min_sprints_media_velocity,2,sprints,"Average Velocity só com pelo menos 2 sprints concluídas"
-sprints_canceladas,,ids do Zenhub separados por ;,"Sprints fora da média (o Zenhub não tem estado de cancelada)"

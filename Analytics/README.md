@@ -12,8 +12,8 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Sem configurar nada o painel já abre com os arquivos versionados em `data/` e
-`planilhas/`. Para atualizar os dados:
+Sem configurar nada o painel já abre com os arquivos versionados em `data/` e as
+abas publicadas da planilha. Para atualizar os dados:
 
 ```bash
 python scripts/coleta_velocity.py   # Zenhub (ZENHUB_API_KEY no .env)
@@ -34,10 +34,12 @@ da fonte (`SONAR`, `ZENHUB`, `PLANILHA`, `GITHUB`, `CALCULADO`).
 | Cobertura, duplicação, LOC, testes, ratings | SonarCloud | `metrics.yml` de cada repositório → `data/*.json` |
 | Bugs, vulnerabilidades, code smells, hotspots, dívida técnica, Quality Gate, severidade, histórico | SonarCloud | `scripts/coleta_sonar.py` → `data/sonar/` (workflow `sonar-coleta.yml`, diário) |
 | Sprints, story points, velocity, backlog, pipelines, épicos, releases | Zenhub | `scripts/coleta_velocity.py` → `data/zenhub/velocity/` (workflow `zenhub-velocity.yml`, diário) |
-| Custos, time por semana, horas, riscos, monitoramento, decisões | Planilha | abas publicadas em CSV (`config.PLANILHAS`); sem URL, `planilhas/*.csv` |
+| Custos, time por semana, horas, riscos, monitoramento, decisões | Planilha | abas publicadas no Google em CSV (`config.PLANILHAS`), sem cópia local |
 | Execuções da CI | GitHub | `metrics.yml` → `GitHub_API-Runs-*.json` |
 
-A planilha **não repete** nada que o Sonar ou o Zenhub têm. **Nenhum valor é
+A planilha **não repete** nada que o Sonar ou o Zenhub têm, e não há cópia local em CSV:
+aba sem URL ou que não responde aparece como indisponível. As regras do cálculo da velocity
+(critério de feito, níveis pontuados, janela de planning) ficam em `config.PARAMETROS`. **Nenhum valor é
 inventado:** métrica sem insumo aparece como *Indisponível*, com o motivo e o que
 falta para calculá-la (ex.: *CPI indisponível: Actual Cost não foi fornecido*).
 
@@ -74,15 +76,15 @@ Analytics/
 │   │   ├── sonar.py        # .json do pipeline + snapshot da API
 │   │   ├── sonar_api.py    # cliente da Web API do SonarCloud (usado só pela coleta)
 │   │   ├── github.py       # issues e execuções de CI
-│   │   └── planilha.py     # abas da planilha e parametros.csv
+│   │   └── planilha.py     # abas publicadas da planilha e config.PARAMETROS
 │   ├── zenhub/             # cliente GraphQL, queries, normalização e coleta do Zenhub
 │   ├── metrics/            # cálculos puros, testados
 │   │   ├── velocity.py  ├── evm.py  ├── agile.py (backlog, throughput, épicos, releases)
 │   │   ├── qualidade.py ├── resumo.py (visão executiva) └── calculations.py (variação, status, formatação)
 │   ├── components/         # kpi.py, charts.py, filters.py, tables.py, layout.py
 │   └── theme.py            # IDV da documentação (cores, tipografia, CSS)
-├── planilhas/              # cópia local das abas + parametros.csv
-├── data/                   # ← pipeline e coletas escrevem aqui (sonar/, zenhub/velocity/)
+├── planilhas/              # planilhas-fonte (.xlsx); os CSVs são lidos direto da versão publicada
+├── data/                   # ← TODOS os .json: pipeline (metrics.yml), sonar/ e zenhub/velocity/
 ├── scripts/                # coleta_velocity.py, coleta_sonar.py, diagnostico_zenhub.py
 ├── tests/                  # python -m unittest discover -s tests -v
 └── stlite/build.py         # empacota o app para o GitHub Pages
@@ -102,7 +104,7 @@ unidade, período, tooltip e a tabela dos dados logo abaixo.
 ## Publicação (GitHub Pages)
 
 O `deploy.yml` roda `python Analytics/stlite/build.py`, que copia `app.py`,
-`config.py`, `pages/`, `src/`, `planilhas/*.csv` e `data/**/*.json` para
+`config.py`, `pages/`, `src/` e `data/**/*.json` (e baixa as abas publicadas da planilha) para
 `static/dashboard/` e gera um `index.html` com o [stlite](https://github.com/whitphx/stlite)
 (Streamlit no navegador). É o mesmo `app.py`. `.env`, `scripts/` e `*.xlsx` nunca
 entram no pacote. Testar localmente:

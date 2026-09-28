@@ -7,7 +7,7 @@ Regras (documentadas também em ``docs/metricas/velocity-zenhub.mdx``)
 ----------------------------------------------------------------------
 
 **Issue pontuável.** Só US (``Feature``), ``Task`` e ``Bug`` sem filhas contam
-pontos (``planilhas/parametros.csv``, ``niveis_pontuados``); PR, Épico e
+pontos (``config.PARAMETROS``, ``niveis_pontuados``); PR, Épico e
 Sub-task não. Issue pontuável sem estimativa conta como issue (planejada ou
 concluída) com **0 SP** e aparece na coluna "sem estimativa" — nunca recebe um
 valor estimado pelo painel.
@@ -61,7 +61,7 @@ class Regras:
 
     @classmethod
     def dos_parametros(cls, params: dict) -> "Regras":
-        """Monta as regras a partir de ``gestao.carregar_parametros`` (planilhas/parametros.csv)."""
+        """Monta as regras a partir de ``gestao.carregar_parametros`` (config.PARAMETROS)."""
         tabela = params.get("tabela")
         brutos = dict(zip(tabela["parametro"], tabela["valor"])) if tabela is not None and not tabela.empty else {}
 
@@ -302,7 +302,7 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
         if status == STATUS_ANDAMENTO:
             notas.append("Sprint em andamento: valores parciais, fora da média.")
         if status == STATUS_CANCELADA:
-            notas.append("Sprint marcada como cancelada em planilhas/parametros.csv: fora da média.")
+            notas.append("Sprint marcada como cancelada em config.PARAMETROS: fora da média.")
         sem_est = [i for i in atuais if issues[i].get("estimate") is None]
         if sem_est:
             notas.append(f"{len(sem_est)} issue(s) pontuável(is) sem estimativa na sprint (contam 0 SP).")

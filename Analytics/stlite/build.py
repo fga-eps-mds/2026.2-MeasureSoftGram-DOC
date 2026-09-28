@@ -4,8 +4,8 @@ O GitHub Pages só serve arquivos estáticos. O stlite (https://github.com/whitp
 roda o próprio Streamlit dentro do navegador, com Python compilado para
 WebAssembly (Pyodide). Este script:
 
-1. copia o app (``app.py``, ``config.py``, ``pages/``, ``src/``), as planilhas (``planilhas/*.csv``)
-   e os dados do pipeline (``data/**/*.json`` e ``../analytics-raw-data/*.json``)
+1. copia o app (``app.py``, ``config.py``, ``pages/``, ``src/``) e os dados do pipeline
+   (``Analytics/data/**/*.json``), baixa as abas publicadas da planilha (``config.PLANILHAS``)
    para a pasta de saída, mantendo a mesma estrutura do repositório;
 2. gera um ``index.html`` que monta esses arquivos no sistema de arquivos virtual
    do Pyodide e executa ``Analytics/app.py`` — o mesmo arquivo que roda com
@@ -44,9 +44,8 @@ STLITE = "0"
 REQUISITOS = ["altair", "requests", "tzdata"]
 
 INCLUIR = [
-    ("Analytics", ["app.py", "config.py", "pages/*.py", "src/*.py", "src/*/*.py", "planilhas/*.csv",
+    ("Analytics", ["app.py", "config.py", "pages/*.py", "src/*.py", "src/*/*.py",
                    "data/*.json", "data/sonar/*.json", "data/zenhub/*.json", "data/zenhub/velocity/*.json"]),
-    ("analytics-raw-data", ["*.json"]),
 ]
 
 
@@ -119,12 +118,14 @@ PAGINA = """<!doctype html>
 """
 
 
-def _baixar_planilhas(saida: Path) -> None:
-    """Troca os CSVs empacotados pelas abas publicadas no Google (URLs de config.py).
+def _baixar_planilhas(saida: Path) -> list[str]:
+    """Baixa as abas publicadas no Google (URLs de config.py) para o pacote.
 
-    No navegador o app lê só o CSV empacotado; por isso o deploy baixa a versão
-    publicada aqui. Se o download falhar, fica o CSV do repositório e o log diz.
+    O navegador não lê a planilha direto; por isso o deploy baixa a versão
+    publicada aqui. Aba que falhar fica fora do pacote e o painel a mostra como
+    indisponível. Devolve os caminhos baixados (para montar no navegador).
     """
+    baixados: list[str] = []
     import importlib.util
     import urllib.request
 
@@ -141,9 +142,11 @@ def _baixar_planilhas(saida: Path) -> None:
             conteudo.decode("utf-8")  # garante texto antes de gravar
             destino.parent.mkdir(parents=True, exist_ok=True)
             destino.write_bytes(conteudo)
+            baixados.append(destino.relative_to(saida).as_posix())
             print(f"planilha: {chave} baixada da versão publicada")
         except Exception as erro:  # noqa: BLE001
-            print(f"planilha: {chave} NÃO baixada ({erro.__class__.__name__}); ficou o CSV do repositório")
+            print(f"planilha: {chave} NÃO baixada ({erro.__class__.__name__}); a aba ficará indisponível")
+    return baixados
 
 
 def main() -> None:
@@ -162,7 +165,7 @@ def main() -> None:
         destino = saida / rel
         destino.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(RAIZ / rel, destino)
-    _baixar_planilhas(saida)
+    arquivos += _baixar_planilhas(saida)
 
     from datetime import datetime, timedelta, timezone
     gerado = datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y %H:%M")

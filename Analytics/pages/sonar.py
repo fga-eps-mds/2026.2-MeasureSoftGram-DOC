@@ -77,7 +77,7 @@ def pagina():
 
     if ctx.sonar_serie.empty and ctx.sonar_atual.empty:
         layout.indisponivel("Nenhuma métrica do SonarCloud encontrada",
-                            "não há arquivos em `data/`, `analytics-raw-data/` nem snapshot em `data/sonar/`.",
+                            "não há arquivos do pipeline em `Analytics/data/` nem snapshot em `Analytics/data/sonar/`.",
                             "rodar o workflow `metrics.yml` em cada repositório ou `scripts/coleta_sonar.py`.")
         return
 

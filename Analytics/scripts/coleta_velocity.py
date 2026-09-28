@@ -40,7 +40,7 @@ def executar(pasta: Path = coleta.PASTA, log=_log) -> Path:
     agora = datetime.now(timezone.utc)
     snapshot = coleta.coletar(cliente, agora, log=log)
     destino = coleta.salvar_snapshot(snapshot, pasta)
-    regras = Regras.dos_parametros(planilha.carregar_parametros(RAIZ / "planilhas"))
+    regras = Regras.dos_parametros(planilha.carregar_parametros())
     linhas, congeladas = congelar_linhas_de_base(snapshot, coleta.ler_linhas_de_base(pasta), agora, regras)
     coleta.gravar_linhas_de_base(linhas, pasta)
     log(f"Gravado {destino.name} ({cliente.requisicoes} requisições)")

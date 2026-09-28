@@ -10,7 +10,6 @@ modificação (fontes em disco) ou por tempo (planilha publicada, 5 minutos).
 
 from __future__ import annotations
 
-import os
 import sys
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -25,8 +24,8 @@ from src.metrics import agile, evm, velocity
 from src.zenhub import coleta as zh_coleta
 
 RAIZ = Path(__file__).resolve().parents[2]
-PASTAS_PIPELINE = [RAIZ / "data", RAIZ.parent / "analytics-raw-data"]
-PASTA_PLANILHAS = RAIZ / "planilhas"
+PASTAS_PIPELINE = [RAIZ / "data"]          # todos os .json do pipeline ficam em Analytics/data
+PASTA_PLANILHAS = RAIZ / "planilhas"       # só no navegador: CSVs baixados da planilha publicada no deploy
 NO_NAVEGADOR = sys.platform == "emscripten"
 
 
@@ -175,7 +174,7 @@ def carregar() -> Contexto:
                            else pd.DataFrame(columns=["repositorio", "metrica", "valor", "coleta"]))
         if agregado.empty:
             ctx.fontes.append(Fonte("SONAR", "Pipeline (metrics.yml → data/*.json)", "sem dados",
-                                    mensagem="Nenhum .json do SonarCloud em data/ ou analytics-raw-data/."))
+                                    mensagem="Nenhum .json do SonarCloud em Analytics/data/."))
         else:
             n_arq = agregado["arquivo"].nunique()
             ctx.fontes.append(Fonte(
@@ -223,18 +222,13 @@ def carregar() -> Contexto:
                           ("riscos", ctx.riscos), ("monitoramento", ctx.monitoramento),
                           ("decisoes", ctx.decisoes)):
             origem = ctx.origem_planilha.get(chave, "—")
-            local = "CSV local" in origem
-            quando = lidos_em
-            if local and (PASTA_PLANILHAS / f"{chave}.csv").exists():
-                quando = pd.Timestamp(datetime.fromtimestamp(os.path.getmtime(PASTA_PLANILHAS / f"{chave}.csv")))
-            status = "ok" if not df.empty else "sem dados"
-            if "falhou" in origem:
-                status = "parcial"
+            quando = lidos_em if not df.empty else None
+            status = "ok" if not df.empty else ("erro" if "não respondeu" in origem else "sem dados")
             ctx.fontes.append(Fonte("PLANILHA", f"Aba {planilha.ABAS.get(chave, ('', chave))[1]}", status, quando,
                                     None, len(df), origem.replace("**", "")))
     except Exception as erro:  # noqa: BLE001
         _registrar_erro(ctx, "PLANILHA", "Planilha do time", erro)
-    ctx.parametros = planilha.carregar_parametros(PASTA_PLANILHAS)
+    ctx.parametros = planilha.carregar_parametros()
 
     # ZENHUB ───────────────────────────────────────────
     try:

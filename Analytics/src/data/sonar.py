@@ -3,7 +3,7 @@
 Duas entradas, as duas geradas automaticamente (nada digitado à mão):
 
 1. **Pipeline** — ``<org>-<repo>-MM-DD-YYYY-HH-MM-SS-<branch>.json`` em
-   ``data/`` e ``../analytics-raw-data/``, gravados pelo ``metrics.yml`` de cada
+   ``Analytics/data/``, gravados pelo ``metrics.yml`` de cada
    repositório. ``baseComponent.measures`` = agregado do repositório;
    ``components`` = detalhe por arquivo/pasta. A data sai do nome do arquivo.
 2. **API do SonarCloud** — ``data/sonar/sonar-AAAA-MM-DDTHHMM.json``, gravado por

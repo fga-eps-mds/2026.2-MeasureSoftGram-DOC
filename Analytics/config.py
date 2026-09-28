@@ -20,7 +20,8 @@ do GitHub. Ver ``.env.example``.
 # ───────────────────────── planilha do time ─────────────────────────
 # Para cada aba: Arquivo > Compartilhar > Publicar na Web > escolher a aba >
 # "Valores separados por vírgula (.csv)" > Publicar, e colar o link na chave.
-# Enquanto a URL estiver vazia, o app lê o CSV de mesmo nome em ``planilhas/``.
+# Não há cópia local: aba sem URL (ou que não responde) aparece como indisponível.
+# No GitHub Pages o deploy baixa as abas publicadas e empacota junto do app.
 
 PLANILHAS = {
     "custos": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTv3UZwvn0vVDrRZj1Pa6woJwnFZdJtE1MtR5tn-yrrO7AYBcCs--Zcw89nv66QKNVqIoy3EQHT7UZo/pub?gid=668960529&single=true&output=csv",
@@ -32,6 +33,15 @@ PLANILHAS = {
 }
 
 CACHE_PLANILHAS_S = 300  # a planilha publicada é relida a cada 5 minutos
+
+# Regras do time usadas no cálculo da velocity (antes em planilhas/parametros.csv).
+PARAMETROS = {
+    "criterio_feito": "Done",                  # pipeline do Zenhub que conta como feito (além de fechada)
+    "niveis_pontuados": "Feature;Task;Bug",    # US (Feature), Task e Bug; US com Tasks filhas não pontua
+    "janela_planning_horas": "24",             # planejado = escopo da sprint ao fim do 1º dia (planning)
+    "min_sprints_media_velocity": "2",         # velocity média só com pelo menos 2 sprints concluídas
+    "sprints_canceladas": "",                  # ids de sprint separados por ";"
+}
 
 # ───────────────────────── SonarCloud ─────────────────────────
 
