@@ -49,7 +49,7 @@ O levantamento analítico inicial com a íntegra dos trechos de código e formul
   </div>
   <div className="col col--3">
     <div className="card padding--sm text--center">
-      <strong style={{fontSize: '1.8rem'}}>6</strong>
+      <strong style={{fontSize: '1.8rem'}}>16</strong>
       <div>Resolvidos</div>
     </div>
   </div>
@@ -223,6 +223,16 @@ Itens cuja correção já foi integrada aos repositórios e validada no ciclo 20
 | **MSG-22** | Transversal | Chaves do SonarCloud divergindo em 3 padrões diferentes de organização | Resolvido na padronização canônica da organização `fga-eps-mds` via [[TAREFA] Organização dos repositórios (#14)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/14) |
 | **MSG-39** | Transversal | Duas identidades concorrentes (repositórios centrais vs. semestrais) | Resolvido pela definição formal dos forks canônicos 2026.2 e arquivamento de legados via [[TAREFA] Organização dos repositórios (#14)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/14) |
 | **MSG-11** | Service | Django 4.0.6 sem suporte de segurança desde abril de 2023 | Resolvido no repositório `MeasureSoftGram-Service` com a migração para Django 5.2 LTS na [[BACKEND] Atualizar Django para a versão 5.2 LTS (#3 no Service)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/3) |
+| **MSG-14** | Front | `.gitignore` não cobre o diretório `.envs/` contendo arquivos de variáveis locais | Resolvido na [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57) |
+| **MSG-15** | Service | `debug_toolbar` incluído em `INSTALLED_APPS` base e nas dependências de produção | Resolvido na [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57) |
+| **MSG-16** | Service | CORS e CSRF com domínios padrão apontando para infraestruturas inativas | Resolvido na [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57) |
+| **MSG-18** | Action | Manifesto `action.yml` declarando runtime `node16` (removido pelo GitHub) | Resolvido na [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57) |
+| **MSG-28** | Front / Docs | Convivência simultânea de `yarn.lock` e `package-lock.json` nos mesmos repos | Resolvido na [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57) |
+| **MSG-31** | Action | Dependências de teste declaradas em `dependencies` de produção no `package.json` | Resolvido na [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57) |
+| **MSG-32** | Service | Arquivos temporários e de sistema (`.DS_Store`, `output_sonar.json`, `test.json`) versionados | Resolvido na [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57) |
+| **MSG-36** | Service | Suíte de testes do Service exigindo Postgres externo sem documentação local | Resolvido na [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57) |
+| **MSG-37** | Core | Configuração contraditória no `pytest.ini` (`--ignore=./tests` e `testpaths = tests`) | Resolvido na [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57) |
+| **MSG-38** | Core | Notebook Jupyter de 63 KB versionado na raiz gerando diffs ilegíveis | Resolvido na [[TASK03.02] Saneamento do Backlog Técnico: Infraestrutura, CI/CD e Higiene de Repositórios](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/57) |
 
 ---
 
