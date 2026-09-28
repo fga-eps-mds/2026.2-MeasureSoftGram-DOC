@@ -1,5 +1,119 @@
 [
     {
+        "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/16",
+        "repository_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front",
+        "labels_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/16/labels{/name}",
+        "comments_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/16/comments",
+        "events_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/16/events",
+        "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/16",
+        "id": 5608000046,
+        "node_id": "PR_kwDOULOMpc8AAAABFaX2ZA",
+        "number": 16,
+        "title": "chore(ci): configurar dependabot, auto-merge e pinning de github actions",
+        "user": {
+            "login": "Diogo-Barboza",
+            "id": 119085534,
+            "node_id": "U_kgDOBxkZ3g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/119085534?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/Diogo-Barboza",
+            "html_url": "https://github.com/Diogo-Barboza",
+            "followers_url": "https://api.github.com/users/Diogo-Barboza/followers",
+            "following_url": "https://api.github.com/users/Diogo-Barboza/following{/other_user}",
+            "gists_url": "https://api.github.com/users/Diogo-Barboza/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/Diogo-Barboza/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/Diogo-Barboza/subscriptions",
+            "organizations_url": "https://api.github.com/users/Diogo-Barboza/orgs",
+            "repos_url": "https://api.github.com/users/Diogo-Barboza/repos",
+            "events_url": "https://api.github.com/users/Diogo-Barboza/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/Diogo-Barboza/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "labels": [],
+        "state": "open",
+        "locked": false,
+        "assignees": [
+            {
+                "login": "Diogo-Barboza",
+                "id": 119085534,
+                "node_id": "U_kgDOBxkZ3g",
+                "avatar_url": "https://avatars.githubusercontent.com/u/119085534?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/Diogo-Barboza",
+                "html_url": "https://github.com/Diogo-Barboza",
+                "followers_url": "https://api.github.com/users/Diogo-Barboza/followers",
+                "following_url": "https://api.github.com/users/Diogo-Barboza/following{/other_user}",
+                "gists_url": "https://api.github.com/users/Diogo-Barboza/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/Diogo-Barboza/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/Diogo-Barboza/subscriptions",
+                "organizations_url": "https://api.github.com/users/Diogo-Barboza/orgs",
+                "repos_url": "https://api.github.com/users/Diogo-Barboza/repos",
+                "events_url": "https://api.github.com/users/Diogo-Barboza/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/Diogo-Barboza/received_events",
+                "type": "User",
+                "user_view_type": "public",
+                "site_admin": false
+            }
+        ],
+        "milestone": null,
+        "comments": 1,
+        "created_at": "2026-09-28T01:27:41Z",
+        "updated_at": "2026-09-28T01:43:59Z",
+        "closed_at": null,
+        "assignee": {
+            "login": "Diogo-Barboza",
+            "id": 119085534,
+            "node_id": "U_kgDOBxkZ3g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/119085534?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/Diogo-Barboza",
+            "html_url": "https://github.com/Diogo-Barboza",
+            "followers_url": "https://api.github.com/users/Diogo-Barboza/followers",
+            "following_url": "https://api.github.com/users/Diogo-Barboza/following{/other_user}",
+            "gists_url": "https://api.github.com/users/Diogo-Barboza/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/Diogo-Barboza/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/Diogo-Barboza/subscriptions",
+            "organizations_url": "https://api.github.com/users/Diogo-Barboza/orgs",
+            "repos_url": "https://api.github.com/users/Diogo-Barboza/repos",
+            "events_url": "https://api.github.com/users/Diogo-Barboza/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/Diogo-Barboza/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "author_association": "MEMBER",
+        "issue_field_values": [],
+        "type": null,
+        "active_lock_reason": null,
+        "draft": false,
+        "pull_request": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/pulls/16",
+            "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/16",
+            "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/16.diff",
+            "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/16.patch",
+            "merged_at": null
+        },
+        "body": "##  Descri\u00e7\u00e3o\r\nAdi\u00e7\u00e3o da configura\u00e7\u00e3o do Dependabot para pacotes Node.js (`npm`), `docker` e `github-actions`, adi\u00e7\u00e3o do workflow de auto-merge seguro de pacotes minor/patch e pinning de todas as GitHub Actions para hashes de commit de 40 caracteres no projeto Frontend (Next.js/React).\r\n\r\n##  Por que este Pull Request \u00e9 necess\u00e1rio?\r\nProteger o reposit\u00f3rio de frontend contra vulnerabilidades em depend\u00eancias npm e imprevistos com atualiza\u00e7\u00f5es de Actions em ambientes de deploy e build.\r\n\r\n## Principais Mudan\u00e7as\r\n- **Cria\u00e7\u00e3o de `.github/dependabot.yml`**: Monitoramento dos ecossistemas `npm`, `docker` e `github-actions`.\r\n- **Cria\u00e7\u00e3o de `.github/workflows/dependabot-automerge.yml`**: Estrutura de automa\u00e7\u00e3o de merge para PRs seguros do Dependabot.\r\n- **Pinning de Actions nos Workflows**: Substitui\u00e7\u00e3o das tags por commit SHAs fixos nos arquivos `.github/workflows/build.yml`, `deploy-prod.yml`, `linter.yml`, `metrics.yml` e `test.yml`.\r\n\r\n##  Crit\u00e9rios de Aceita\u00e7\u00e3o\r\n- [x] `.github/dependabot.yml` cobrindo `npm`, `docker` e `github-actions`.\r\n- [x] Workflow `dependabot-automerge.yml` adicionado com permiss\u00f5es adequadas.\r\n- [x] GitHub Actions imut\u00e1veis via SHA-1 de 40 caracteres.\r\n- [x] Execu\u00e7\u00e3o e aprova\u00e7\u00e3o total de 523 testes unit\u00e1rios (102 su\u00edtes).\r\n\r\n##  Como Testar\r\n1. Executar os testes via pnpm:\r\n   ```bash\r\n   pnpm run ci:test\r\n   ```\r\n2. Confirmar a aprova\u00e7\u00e3o das su\u00edtes de testes.",
+        "closed_by": null,
+        "reactions": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/16/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/16/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null
+    },
+    {
         "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/15",
         "repository_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front",
         "labels_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/15/labels{/name}",
@@ -66,7 +180,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -94,8 +208,8 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-09-28T00:52:26Z",
-        "updated_at": "2026-09-28T01:01:19Z",
-        "closed_at": null,
+        "updated_at": "2026-09-28T01:15:21Z",
+        "closed_at": "2026-09-28T01:15:10Z",
         "assignee": {
             "login": "gusrberto",
             "id": 79723182,
@@ -127,10 +241,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/15",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/15.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/15.patch",
-            "merged_at": null
+            "merged_at": "2026-09-28T01:15:10Z"
         },
         "body": "## Motiva\u00e7\u00e3o\r\n\r\nParte Front da [US01.02](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/77): exibir a medida de d\u00edvida t\u00e9cnica (`technical_debt_ratio`), que o Core calcula (fga-eps-mds/2026.2-MeasureSoftGram-Core#5) e o Service grava e exp\u00f5e (fga-eps-mds/2026.2-MeasureSoftGram-Service#21).\r\n\r\nA medida pertence \u00e0 subcaracter\u00edstica `modifiability` (caracter\u00edstica `maintainability`), vai de 0 a 1 e usa os thresholds 0 e 20 (% de d\u00edvida t\u00e9cnica).\r\n\r\nHoje, no Front, as medidas aparecem em dois lugares:\r\n- **Planejamento de release** (React): nomes, pesos e valores de refer\u00eancia das medidas da pr\u00e9-configura\u00e7\u00e3o.\r\n- **Dashboards do Grafana** (iframe): hist\u00f3rico e gr\u00e1ficos, montados direto do banco a partir da liga\u00e7\u00e3o subcaracter\u00edstica \u2192 medida.\r\n\r\nPor isso o c\u00f3digo muda s\u00f3 no planejamento de release. Nos dashboards, a medida aparece sem mudan\u00e7a de c\u00f3digo, porque o Service j\u00e1 a liga a `modifiability`.\r\n\r\nCloses #5\r\n\r\n## Mudan\u00e7as\r\n\r\n- Adiciona `technical_debt_ratio` \u00e0s regras de threshold (`getThresholdInfo.ts`), seguindo `duplication_absense`: m\u00ednimo fixo em 0 e m\u00e1ximo edit\u00e1vel.\r\n- Adiciona nome e descri\u00e7\u00e3o da medida nas tradu\u00e7\u00f5es `pt` e `en` (`plan_release.json`). Sem isso, a tela mostrava a chave crua `measures.technical_debt_ratio`.\r\n- Adiciona a medida em `modifiability` no mock `releaseConfig.json` (modo `dev:mock`), com peso de 25% para as quatro medidas, igual \u00e0 pr\u00e9-configura\u00e7\u00e3o do Service.\r\n- Atualiza a pr\u00e9-configura\u00e7\u00e3o dos testes de `ReleaseCreation` com a medida e os thresholds 0 e 20.\r\n- Adiciona a medida nos dados de `GraphicChart.spec.tsx` e ajusta a quantidade esperada de gr\u00e1ficos gauge (de 3 para 4 linhas com 7 medidas).\r\n\r\n### Crit\u00e9rios da issue\r\n\r\n1. [x] Threshold da medida em `getThresholdInfo.ts`\r\n2. [x] Nome e descri\u00e7\u00e3o nas tradu\u00e7\u00f5es `pt` e `en`\r\n3. [x] Medida e valor atual em `modifiability` (cen\u00e1rios 1 e 2): validado no planejamento de release e no dashboard\r\n4. [x] Medida no hist\u00f3rico e nos gr\u00e1ficos (cen\u00e1rios 3 e 4): validado no dashboard \"Evolu\u00e7\u00e3o Temporal\"\r\n5. [ ] \"Medida indispon\u00edvel\" (cen\u00e1rio 5): depende do Service, ver pontos de aten\u00e7\u00e3o\r\n6. [x] Mocks e testes atualizados\r\n\r\n### Pontos de aten\u00e7\u00e3o\r\n\r\n- **Cen\u00e1rio 5 depende do Service:** quando falta `sqale_debt_ratio`, o Service grava a medida com valor `0.0`, a pior nota, em vez de registr\u00e1-la como indispon\u00edvel. O Grafana ent\u00e3o mostra 0 em vez de \"indispon\u00edvel\", e o valor ainda puxa para baixo `modifiability`, `maintainability` e `tsqmi`. A corre\u00e7\u00e3o \u00e9 no c\u00e1lculo do Service (`math_model/services.py`), fora do escopo deste PR.\r\n- **Testes no Arch Linux:** o Next 12.2.2 procura a `libssl.so.1.1`, que n\u00e3o existe mais no Arch. Nesse caso o Jest falha ao rodar as su\u00edtes em paralelo. Localmente, use `--runInBand`. No CI n\u00e3o acontece.\r\n\r\n## Status Checklist\r\n\r\n- [x] Test: 102 su\u00edtes e 523 testes passando, snapshots inalterados\r\n- [x] Lint: sem erros nos arquivos alterados\r\n- [x] Development\r\n\r\n## Screenshots\r\n<img width=\"571\" height=\"564\" alt=\"metrica-divida-tecnica\" src=\"https://github.com/user-attachments/assets/b1e69fef-d7a1-49dd-b3a4-b4756f5a0607\" />\r\n<img width=\"640\" height=\"613\" alt=\"metrica-divida-tecnica-2\" src=\"https://github.com/user-attachments/assets/77fa3f52-fe44-41d6-a430-c66f4a062bbf\" />\r\n<img width=\"813\" height=\"688\" alt=\"metrica-divida-tecnica-4\" src=\"https://github.com/user-attachments/assets/ae0299b5-964c-4f2e-b1fa-7b297a4fac75\" />\r\n<img width=\"1552\" height=\"837\" alt=\"metrica-divida-tecnica-3\" src=\"https://github.com/user-attachments/assets/23b8a816-8834-42bd-a957-e0457b6b578a\" />\r\n\r\n## Execu\u00e7\u00e3o\r\n\r\n1. Suba o Service (`develop`) com Grafana: `make setup` e `make seed`.\r\n2. Suba o Front: `cp .env.example .env` (preencha `GITHUB_CLIENT_ID`) e `pnpm dev`. Acesse http://127.0.0.1:3000.\r\n3. Em um produto, acesse **Releases \u2192 criar release**: em Maintainability \u2192 Modifiability, a medida \"Technical Debt Ratio\" aparece com peso 25%. Ao ligar \"Modify reference values\", o m\u00ednimo (0) fica travado e o m\u00e1ximo (20) \u00e9 edit\u00e1vel.\r\n4. Acesse **Dashboards \u2192 Evolu\u00e7\u00e3o Temporal**, selecione Maintainability e a medida Technical Debt Ratio: o hist\u00f3rico aparece no gr\u00e1fico de medidas.\r\n5. Sem subir o Service: `pnpm dev:mock` mostra a medida no planejamento de release usando o mock.\r\n6. Testes: `pnpm test:all` (no Arch: `TZ=America/Sao_Paulo pnpm exec jest --ci --runInBand`).\r\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "gusrberto",
+            "id": 79723182,
+            "node_id": "MDQ6VXNlcjc5NzIzMTgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/79723182?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusrberto",
+            "html_url": "https://github.com/gusrberto",
+            "followers_url": "https://api.github.com/users/gusrberto/followers",
+            "following_url": "https://api.github.com/users/gusrberto/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusrberto/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusrberto/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusrberto/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusrberto/orgs",
+            "repos_url": "https://api.github.com/users/gusrberto/repos",
+            "events_url": "https://api.github.com/users/gusrberto/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusrberto/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/15/reactions",
             "total_count": 0,
@@ -449,14 +583,14 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [],
         "milestone": null,
         "comments": 0,
         "created_at": "2026-09-27T21:50:27Z",
-        "updated_at": "2026-09-27T21:52:39Z",
-        "closed_at": null,
+        "updated_at": "2026-09-28T01:55:25Z",
+        "closed_at": "2026-09-28T01:55:23Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -468,10 +602,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/12",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/12.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/12.patch",
-            "merged_at": null
+            "merged_at": "2026-09-28T01:55:23Z"
         },
         "body": "## Motiva\u00e7\u00e3o\r\n\r\nSubstitui\u00e7\u00e3o do `iframe` legado do Grafana no painel de Vis\u00e3o Geral do Produto (`ProductContent`) por um componente nativo em **Apache ECharts** (`PulseChart`).\r\n\r\nO uso do iframe do Grafana apresentava limita\u00e7\u00f5es de desempenho, depend\u00eancia externa e falta de integra\u00e7\u00e3o nativa com os filtros e a identidade visual do frontend. A nova implementa\u00e7\u00e3o nativa garante alta velocidade de renderiza\u00e7\u00e3o, visualiza\u00e7\u00e3o em formato de **eletrocardiograma (ECG)** para a evolu\u00e7\u00e3o do TSQMI por reposit\u00f3rio, marcadores visuais de releases planejadas e suporte completo a filtros em tempo real.\r\n\r\n## Mudan\u00e7as\r\n\r\n- **Algoritmo de Pulso (`toPulseSeries`):** Desenvolvimento da fun\u00e7\u00e3o pura que converte medi\u00e7\u00f5es de TSQMI em picos estilo ECG com retorno \u00e0 linha de base.\r\n- **Componente Nativo (`PulseChart`):** Constru\u00e7\u00e3o da interface com suporte a layout multi-grid empilhado (um painel por reposit\u00f3rio) e painel lateral informativo (TSQMI em 24px bold, status e varia\u00e7\u00e3o %).\r\n- **Mapeamento por Faixa de Qualidade (`visualMap`):** Colora\u00e7\u00e3o din\u00e2mica das linhas de acordo com o TSQMI:\r\n  - \ud83d\udd34 **Cr\u00edtico:** $< 0,40$ (`#D13310`)\r\n  - \ud83d\udfe0 **Aten\u00e7\u00e3o:** $0,40 \\le \\text{TSQMI} < 0,70$ (`#DF8E16`)\r\n  - \ud83d\udfe2 **Adequado:** $\\ge 0,70$ (`#04724D`)\r\n- **Marcadores de Release (`markLine`):** Linhas pontilhadas e cont\u00ednuas indicando as datas de in\u00edcio (`start_at`) e entrega (`end_at`) das releases.\r\n- **Barra de Filtros:** Sele\u00e7\u00e3o de reposit\u00f3rios (Todos ou individual) e intervalo temporal (`De`/`At\u00e9`).\r\n- **Exporta\u00e7\u00e3o CSV:** Fun\u00e7\u00e3o `convertPulseRepositoriesToCsv` para exportar a tabela de dados avaliados considerando os filtros ativos.\r\n- **Remo\u00e7\u00e3o do Grafana:** Desvincula\u00e7\u00e3o do `iframe` e do hook `useGrafanaDashboard` em `ProductContent.tsx`.\r\n- **Testes Unit\u00e1rios:** Su\u00edte de testes em Jest para `toPulseSeries`, `formatPulseChart`, `PulseChartFilters`, `PulseChartRepoSidebar` e `PulseChart`.\r\n\r\n## Status Checklist\r\n\r\n- [x] Test\r\n- [x] Lint\r\n- [x] Development\r\n\r\n## Screenshots\r\n<img width=\"1922\" height=\"959\" alt=\"image\" src=\"https://github.com/user-attachments/assets/99ee0591-693c-4ad0-a5d4-2b4dec50702a\" />\r\n\r\n## Execu\u00e7\u00e3o\r\n\r\n1. Execute a aplica\u00e7\u00e3o localmente:\r\n   ```bash\r\n   npm run dev\r\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "bottinolucas",
+            "id": 101297130,
+            "node_id": "U_kgDOBgmr6g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bottinolucas",
+            "html_url": "https://github.com/bottinolucas",
+            "followers_url": "https://api.github.com/users/bottinolucas/followers",
+            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+            "repos_url": "https://api.github.com/users/bottinolucas/repos",
+            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/12/reactions",
             "total_count": 0,
@@ -549,7 +703,7 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-09-27T21:28:13Z",
-        "updated_at": "2026-09-28T00:48:56Z",
+        "updated_at": "2026-09-28T01:13:59Z",
         "closed_at": "2026-09-28T00:48:56Z",
         "assignee": {
             "login": "DiegoCarlito",
@@ -792,7 +946,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -820,8 +974,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-09-26T22:21:52Z",
-        "updated_at": "2026-09-28T00:59:55Z",
-        "closed_at": null,
+        "updated_at": "2026-09-28T01:15:12Z",
+        "closed_at": "2026-09-28T01:15:12Z",
         "assignee": {
             "login": "gusrberto",
             "id": 79723182,
@@ -869,7 +1023,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nExibir a medida de d\u00edvida t\u00e9cnica (`technical_debt_ratio`) no Front. \u00c9 a parte Front da [US01.02](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/77).\n\nA medida pertence \u00e0 subcaracter\u00edstica `modifiability` (caracter\u00edstica `maintainability`). O valor vai de 0 a 1 e usa os thresholds 0 e 20 (% de d\u00edvida t\u00e9cnica). O Core devolve `{\"key\": \"technical_debt_ratio\", \"value\": <0..1>}` (ver fga-eps-mds/2026.2-MeasureSoftGram-Core#5). O Front consome esse dado pelo Service (TASK01.05, fga-eps-mds/2026.2-MeasureSoftGram-Service#6).\n\n## Lista de afazeres\n1. [x] Adicionar `technical_debt_ratio` \u00e0s informa\u00e7\u00f5es de threshold das medidas (`src/shared/utils/getThresholdInfo.ts`), seguindo `duplication_absense`.\n2. [x] Adicionar nome e descri\u00e7\u00e3o da medida nas tradu\u00e7\u00f5es (`public/locales/pt/plan_release.json` e `public/locales/en/plan_release.json`).\n3. [x] Exibir a medida e o valor atual na subcaracter\u00edstica `modifiability` (cen\u00e1rios 1 e 2 da US).\n4. [x] Incluir a medida no hist\u00f3rico por release e nos gr\u00e1ficos existentes (cen\u00e1rios 3 e 4).\n5. [ ] Mostrar \"medida indispon\u00edvel\" quando n\u00e3o houver valor, sem impedir a exibi\u00e7\u00e3o das demais medidas (cen\u00e1rio 5).\n6. [x] Atualizar mocks e testes (`src/mocks/fixtures/releaseConfig.json`, `GraphicChart.spec.tsx`, `ReleaseCreation.spec.tsx`).\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "gusrberto",
+            "id": 79723182,
+            "node_id": "MDQ6VXNlcjc5NzIzMTgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/79723182?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusrberto",
+            "html_url": "https://github.com/gusrberto",
+            "followers_url": "https://api.github.com/users/gusrberto/followers",
+            "following_url": "https://api.github.com/users/gusrberto/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusrberto/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusrberto/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusrberto/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusrberto/orgs",
+            "repos_url": "https://api.github.com/users/gusrberto/repos",
+            "events_url": "https://api.github.com/users/gusrberto/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusrberto/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/5/reactions",
             "total_count": 0,
@@ -884,7 +1058,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/5/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -1565,7 +1739,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -1614,8 +1788,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-09-24T02:51:53Z",
-        "updated_at": "2026-09-28T00:43:33Z",
-        "closed_at": null,
+        "updated_at": "2026-09-28T01:06:07Z",
+        "closed_at": "2026-09-28T01:06:07Z",
         "assignee": {
             "login": "thegm445",
             "id": 110239666,
@@ -1663,7 +1837,27 @@
             "total_blocking": 0
         },
         "body": "## 1. Contexto e Justificativa\n\nLogo ap\u00f3s o login, e a cada recarga da p\u00e1gina, organiza\u00e7\u00e3o, produtos e reposit\u00f3rios demoram a aparecer. Nesse momento o Front executa v\u00e1rias a\u00e7\u00f5es em sequ\u00eancia, todas antes de liberar a tela:\n\n- busca o token antes de cada chamada;\n- busca as organiza\u00e7\u00f5es duas vezes;\n- consulta o GitHub;\n- tenta importar de novo organiza\u00e7\u00f5es j\u00e1 cadastradas.\n\nQuando a busca de organiza\u00e7\u00f5es falha, a aplica\u00e7\u00e3o tenta de novo sem parar.\n\n**Reposit\u00f3rio:** MeasureSoftGram-Front \u00b7 **Respons\u00e1vel:** @dev-b \u00b7 **Estimativa:** 5 \u00b7 **Depende de:** MSG-02.1 (`github_org_name` e `isSameGithubOrg`)\n\n## 2. Itens do Diagn\u00f3stico Cobertos\n\n| ID  | Item                                                                                                                                   | Reposit\u00f3rio | Gravidade | Alvo t\u00e9cnico                                                                          |\n| --- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------- | --------- | ------------------------------------------------------------------------------------- |\n| L1  | `GET /accounts/access-token` antes de cada chamada, embora o interceptor j\u00e1 envie o token                                              | Front       | Alta      | `src/shared/services/organization.ts`, `repository.ts`, `user.ts`                     |\n| L2  | Organiza\u00e7\u00f5es buscadas 2\u00d7 por recarga: a sess\u00e3o lida do `localStorage` \u00e9 substitu\u00edda por `getUser()`                                    | Front       | Alta      | `src/shared/contexts/Auth/Auth.context.tsx`, `OrganizationProvider.tsx`               |\n| L3  | A cada recarga: `getGithubOrganizations` + reimporta\u00e7\u00e3o das organiza\u00e7\u00f5es cujo nome de exibi\u00e7\u00e3o difere do login, bloqueando `isLoading` | Front       | Alta      | `OrganizationProvider.tsx` (`fetchOrganizations`)                                     |\n| L4  | `Products.tsx` chama `fetchOrganizations(true)`, que reinicia a importa\u00e7\u00e3o                                                             | Front       | M\u00e9dia     | `src/pages/products/Products.tsx` (~155, ~273)                                        |\n| L5  | Nova tentativa sem fim quando a busca falha (efeito com `fetchOrganizations` n\u00e3o memorizado)                                           | Front       | Alta      | `src/shared/components/Layout/SideMenu/OrganizationSelector/OrganizationSelector.tsx` |\n| L6  | `loadAllProducts` recriada a cada render e usada no `useMemo` do contexto                                                              | Front       | M\u00e9dia     | `src/shared/contexts/ProductProvider/ProductProvider.tsx`                             |\n| L7  | `setValue`/`removeValue` do `useLocalStorage` n\u00e3o s\u00e3o memorizados, ent\u00e3o os efeitos dos providers rodam a cada render                  | Front       | Baixa     | `src/shared/hooks/useLocalStorage.tsx`                                                |\n\n> [!NOTE]\n> Os itens desta tarefa correspondem aos diagn\u00f3sticos t\u00e9cnicos espec\u00edficos do fluxo de carregamento mapeados no \u00e9pico `[MSG02]`. Para rastrear os d\u00e9bitos arquiteturais catalogados em todo o ecossistema, consulte o [Backlog T\u00e9cnico](https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/diagnostico/backlog-tecnico/).\n\n## 3. Atividades T\u00e9cnicas\n\n### 3.1. Token (L1)\n\n- Remover a chamada de `getAccessToken()` e o header manual antes das requisi\u00e7\u00f5es em `organization.ts`, `repository.ts` e `user.ts`.\n- Ajustar os mocks dos testes desses services.\n\n### 3.2. Organiza\u00e7\u00f5es (L2, L3, L4)\n\n- No `OrganizationProvider`:\n  - fazer o efeito depender de `session?.username`, e n\u00e3o do objeto `session`;\n  - envolver `fetchOrganizations` em `useCallback`;\n  - liberar `isLoading` logo ap\u00f3s `getAllOrganization()`;\n  - mover a sincroniza\u00e7\u00e3o com o GitHub (`getGithubOrganizations` + `importOrganization`) para uma fun\u00e7\u00e3o separada, executada em segundo plano;\n  - executar essa sincroniza\u00e7\u00e3o uma vez por sess\u00e3o (flag em `sessionStorage`), comparando com `isSameGithubOrg`;\n  - buscar a lista de novo apenas se alguma organiza\u00e7\u00e3o for importada.\n- Em `Products.tsx`, trocar `fetchOrganizations(true)` por uma atualiza\u00e7\u00e3o da lista que n\u00e3o reinicie a importa\u00e7\u00e3o.\n\n### 3.3. Erro de carregamento (L5)\n\n- Remover de `OrganizationSelector` o efeito que chama `fetchOrganizations`.\n- No provider, em caso de erro, registrar o estado de erro e marcar `hasFetched = true`, sem tentar de novo automaticamente.\n\n### 3.4. Estabilidade dos contextos (L6, L7)\n\n- No `ProductProvider`:\n  - envolver `loadAllProducts` em `useCallback`;\n  - buscar os produtos apenas quando `currentOrganization?.id` mudar.\n- No `useLocalStorage`, envolver `setValue` e `removeValue` em `useCallback`, e s\u00f3 gravar e disparar o evento `local-storage` quando o valor mudar.\n\n## 4. Crit\u00e9rios T\u00e9cnicos (Cen\u00e1rios de Teste)\n\n> **Nota:** Os cen\u00e1rios abaixo foram modelados no formato de cen\u00e1rios para facilitar a reprodu\u00e7\u00e3o e execu\u00e7\u00e3o de testes pela equipe de desenvolvimento e QA, mas **N\u00c3O S\u00c3O BDDs** de regras de neg\u00f3cio funcionais, tratando-se estritamente de verifica\u00e7\u00f5es t\u00e9cnicas de estabilidade e performance.\n\n**Cen\u00e1rio 1: Token**\n\n- **Dado** qualquer tela autenticada\n- **Quando** a tela carrega\n- **Ent\u00e3o** nenhuma requisi\u00e7\u00e3o a `/accounts/access-token` precede outra requisi\u00e7\u00e3o\n\n**Cen\u00e1rio 2: Recarga da p\u00e1gina**\n\n- **Dado** um usu\u00e1rio logado com organiza\u00e7\u00f5es j\u00e1 cadastradas\n- **Quando** a p\u00e1gina \u00e9 recarregada\n- **Ent\u00e3o** `GET /organizations/` \u00e9 feito uma vez, e `POST /organizations/import/` n\u00e3o \u00e9 chamado\n\n**Cen\u00e1rio 3: GitHub fora do caminho cr\u00edtico**\n\n- **Dado** que `github-organizations` demora a responder\n- **Quando** a aplica\u00e7\u00e3o carrega\n- **Ent\u00e3o** a lista de organiza\u00e7\u00f5es do banco \u00e9 exibida sem esperar essa resposta\n\n**Cen\u00e1rio 4: Falha na busca de organiza\u00e7\u00f5es**\n\n- **Dado** que `GET /organizations/` responde erro\n- **Quando** o menu lateral \u00e9 renderizado\n- **Ent\u00e3o** a requisi\u00e7\u00e3o \u00e9 feita uma vez, e a mensagem de erro \u00e9 exibida uma vez\n\n## 5. \ud83d\udccb Definition of Ready (DoR - Task T\u00e9cnica)\n\n- [x] Objetivo t\u00e9cnico claro e motiva\u00e7\u00e3o da implementa\u00e7\u00e3o registrados\n- [x] Crit\u00e9rios T\u00e9cnicos definidos (arquivos/servi\u00e7os afetados, padr\u00f5es de implementa\u00e7\u00e3o, depend\u00eancias)\n- [x] Estimativa de esfor\u00e7o pontuada pela equipe de desenvolvimento (5 pontos)\n- [ ] Desenvolvedor(a) respons\u00e1vel designado(a) na issue\n- [x] Issue cadastrada no ZenHub com Labels, \u00c9pico Pai ([MSG02]) e Sprint configurados\n\n## 6. \u2705 Definition of Done (DoD - Task T\u00e9cnica)\n\n- [ ] C\u00f3digo implementado estritamente aderente aos Crit\u00e9rios T\u00e9cnicos acordados\n- [ ] Nenhum uso de `getAccessToken()` antes de requisi\u00e7\u00f5es nos services\n- [ ] A sincroniza\u00e7\u00e3o com o GitHub roda em segundo plano, uma vez por sess\u00e3o\n- [ ] Os 4 cen\u00e1rios t\u00e9cnicos acima cobertos por testes\n- [ ] C\u00f3digo em conformidade com linter e diretrizes do ecossistema (`pnpm lint`, `pnpm typecheck` e `pnpm ci:test` passando)\n- [ ] Pipeline de CI/CD executado com sucesso no reposit\u00f3rio central\n- [ ] Pull Request (PR) revisado e aprovado por pelo menos um outro integrante da equipe\n- [ ] C\u00f3digo integrado \u00e0 branch `develop` do reposit\u00f3rio central (ambiente de homologa\u00e7\u00e3o)",
-        "closed_by": null,
+        "closed_by": {
+            "login": "thegm445",
+            "id": 110239666,
+            "node_id": "U_kgDOBpIfsg",
+            "avatar_url": "https://avatars.githubusercontent.com/u/110239666?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/thegm445",
+            "html_url": "https://github.com/thegm445",
+            "followers_url": "https://api.github.com/users/thegm445/followers",
+            "following_url": "https://api.github.com/users/thegm445/following{/other_user}",
+            "gists_url": "https://api.github.com/users/thegm445/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/thegm445/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/thegm445/subscriptions",
+            "organizations_url": "https://api.github.com/users/thegm445/orgs",
+            "repos_url": "https://api.github.com/users/thegm445/repos",
+            "events_url": "https://api.github.com/users/thegm445/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/thegm445/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/7/reactions",
             "total_count": 0,
@@ -1678,7 +1872,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/7/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -1776,7 +1970,7 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-09-24T02:50:59Z",
-        "updated_at": "2026-09-28T00:48:57Z",
+        "updated_at": "2026-09-28T01:15:27Z",
         "closed_at": "2026-09-28T00:48:57Z",
         "assignee": {
             "login": "DiegoCarlito",
@@ -1824,7 +2018,7 @@
             "blocking": 0,
             "total_blocking": 0
         },
-        "body": "## 1. Contexto e Justificativa\n\nNa tela Produtos (`/products`), a lista de reposit\u00f3rios do GitHub abre vazia depois que o usu\u00e1rio autoriza o acesso. Ela s\u00f3 aparece depois de v\u00e1rias recargas da p\u00e1gina. Ao trocar de organiza\u00e7\u00e3o, a lista tamb\u00e9m pode ficar vazia ou mostrar dados da organiza\u00e7\u00e3o anterior.\n\nAs causas s\u00e3o duas:\n\n- **Condi\u00e7\u00f5es de corrida em `Products.tsx`.** Buscas simult\u00e2neas se sobrescrevem, e a busca de reposit\u00f3rios come\u00e7a antes de a autoriza\u00e7\u00e3o do GitHub terminar.\n- **Compara\u00e7\u00e3o de organiza\u00e7\u00f5es pelo nome de exibi\u00e7\u00e3o**, em vez do login do GitHub.\n\n**Reposit\u00f3rio:** MeasureSoftGram-Front (+ 1 campo no serializer do MeasureSoftGram-Service) \u00b7 **Respons\u00e1vel:** @DiegoCarlito \u00b7 **Estimativa:** 5 \u00b7 **Depende de:** \u2014\n\n## 2. Itens do Diagn\u00f3stico Cobertos\n\n| ID  | Item                                                                                                 | Reposit\u00f3rio     | Gravidade | Alvo t\u00e9cnico                                                                                      |\n| --- | ---------------------------------------------------------------------------------------------------- | --------------- | --------- | ------------------------------------------------------------------------------------------------- |\n| P1  | A busca de reposit\u00f3rios come\u00e7a antes de `signInWithGithub` terminar e n\u00e3o \u00e9 refeita depois           | Front           | Alta      | `src/pages/products/Products.tsx` (efeitos das linhas ~259 e ~263)                                |\n| P2  | `handleSelectOrganization` n\u00e3o descarta execu\u00e7\u00f5es antigas; a \u00faltima a terminar sobrescreve as listas | Front           | Alta      | `Products.tsx` (linhas ~161 e ~299)                                                               |\n| P3  | Organiza\u00e7\u00f5es comparadas por `name`/`includes`; `name` \u00e9 o nome de exibi\u00e7\u00e3o e `key` chega vazio       | Front e Service | Alta      | `Products.tsx` (~108, ~141, ~299) e `src/organizations/serializers.py` (`OrganizationSerializer`) |\n| P4  | `getBackendOrgId` chama `getAllOrganization()` a cada troca de organiza\u00e7\u00e3o                           | Front           | M\u00e9dia     | `Products.tsx` (~137)                                                                             |\n| P5  | A falha em `getGithubRepos` aparece como \"Nenhum reposit\u00f3rio\u2026\"                                       | Front           | M\u00e9dia     | `Products.tsx` (~201)                                                                             |\n\n> [!NOTE]\n> Os itens desta tarefa correspondem aos diagn\u00f3sticos t\u00e9cnicos espec\u00edficos do fluxo de carregamento mapeados no \u00e9pico `[MSG02]`. Para rastrear os d\u00e9bitos arquiteturais catalogados em todo o ecossistema, consulte o [Backlog T\u00e9cnico](https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/diagnostico/backlog-tecnico/).\n\n\n## 3. Atividades T\u00e9cnicas\n\n### 3.1. Identificador de organiza\u00e7\u00e3o do GitHub (P3)\n\n- No Service, incluir `github_org_name` (somente leitura) nos `fields` do `OrganizationSerializer`.\n- No Front, adicionar `github_org_name` ao tipo `Organization` e ao mapeamento do `OrganizationProvider`.\n- Criar `isSameGithubOrg(dbOrg, ghOrg)` em `src/shared/utils`, comparando `github_org_name` sem diferenciar mai\u00fasculas.\n- Substituir todas as compara\u00e7\u00f5es por nome e `includes` de `Products.tsx` por `isSameGithubOrg`.\n\n### 3.2. Fluxo de retorno da autoriza\u00e7\u00e3o do GitHub (P1)\n\n- Com `code` na URL, n\u00e3o chamar `loadGitHubOrgs()` no efeito de montagem.\n- Depois de `signInWithGithub(code)`, chamar `loadGitHubOrgs()` e `handleSelectOrganization(selectedOrgName)` diretamente, mesmo que `selectedOrgName` n\u00e3o mude.\n\n### 3.3. Execu\u00e7\u00f5es concorrentes (P2)\n\n- Em `handleSelectOrganization`, guardar um id da execu\u00e7\u00e3o em `useRef` e aplicar os resultados (`setProducts`, `setGitHubRepos` etc.) apenas se a execu\u00e7\u00e3o ainda for a mais recente.\n\n### 3.4. Buscas redundantes e erros (P4, P5)\n\n- Em `getBackendOrgId`, procurar primeiro em `organizationList` do contexto e s\u00f3 chamar a API se a organiza\u00e7\u00e3o n\u00e3o estiver na lista.\n- Quando `getGithubRepos` falhar, exibir na \u00e1rea da lista a mensagem \"N\u00e3o foi poss\u00edvel carregar os reposit\u00f3rios do GitHub\" com o bot\u00e3o \"Tentar novamente\". Se o erro indicar token inv\u00e1lido (`409`, definido na MSG-02.4), exibir o link \"Autorizar GitHub\".\n\n### 3.5. Testes\n\n- Atualizar `src/pages/products/test/Products.spec.tsx` com os cen\u00e1rios da se\u00e7\u00e3o 4.\n\n## 4. Crit\u00e9rios T\u00e9cnicos (Cen\u00e1rios de Teste)\n\n> **Nota:** Os cen\u00e1rios abaixo foram modelados no formato de cen\u00e1rios para facilitar a reprodu\u00e7\u00e3o e execu\u00e7\u00e3o de testes pela equipe de desenvolvimento e QA, mas **N\u00c3O S\u00c3O BDDs** de regras de neg\u00f3cio funcionais, tratando-se estritamente de verifica\u00e7\u00f5es t\u00e9cnicas de estabilidade e performance.\n\n**Cen\u00e1rio 1: Retorno da autoriza\u00e7\u00e3o do GitHub**\n\n- **Dado** que a p\u00e1gina `/products` abre com `?code=` na URL\n- **Quando** o login com GitHub termina\n- **Ent\u00e3o** `GET /organizations/{id}/github-repos/` \u00e9 chamado uma \u00fanica vez, depois de `POST /accounts/github/login/`\n- **E** a lista de reposit\u00f3rios \u00e9 exibida\n\n**Cen\u00e1rio 2: Trocas r\u00e1pidas de organiza\u00e7\u00e3o**\n\n- **Dado** que duas organiza\u00e7\u00f5es s\u00e3o selecionadas em sequ\u00eancia r\u00e1pida\n- **Quando** a resposta da primeira chega depois da segunda\n- **Ent\u00e3o** a tela exibe apenas os produtos e os reposit\u00f3rios da segunda\n\n**Cen\u00e1rio 3: Nome de exibi\u00e7\u00e3o diferente do login**\n\n- **Dado** uma organiza\u00e7\u00e3o com `name` \"Alexandre Beck\" e `github_org_name` \"alexandrebeck\"\n- **Quando** ela \u00e9 a organiza\u00e7\u00e3o atual\n- **Ent\u00e3o** ela \u00e9 selecionada no seletor da tela Produtos, e a sele\u00e7\u00e3o n\u00e3o \u00e9 zerada\n\n**Cen\u00e1rio 4: Falha do GitHub**\n\n- **Dado** que `github-repos` responde erro\n- **Quando** a lista \u00e9 renderizada\n- **Ent\u00e3o** aparece a mensagem de falha com \"Tentar novamente\", e n\u00e3o \"Nenhum reposit\u00f3rio\u2026\"\n\n## 5. \ud83d\udccb Definition of Ready (DoR - Task T\u00e9cnica)\n\n- [x] Objetivo t\u00e9cnico claro e motiva\u00e7\u00e3o da implementa\u00e7\u00e3o registrados\n- [x] Crit\u00e9rios T\u00e9cnicos definidos (arquivos/servi\u00e7os afetados, padr\u00f5es de implementa\u00e7\u00e3o, depend\u00eancias)\n- [x] Estimativa de esfor\u00e7o pontuada pela equipe de desenvolvimento (5 pontos)\n- [x] Desenvolvedor(a) respons\u00e1vel designado(a) na issue\n- [x] Issue cadastrada no ZenHub com Labels, \u00c9pico Pai ([MSG02]) e Sprint configurados\n\n## 6. \u2705 Definition of Done (DoD - Task T\u00e9cnica)\n\n- [x] C\u00f3digo implementado estritamente aderente aos Crit\u00e9rios T\u00e9cnicos acordados\n- [x] `OrganizationSerializer` devolve `github_org_name`\n- [x] Nenhuma compara\u00e7\u00e3o de organiza\u00e7\u00e3o por `includes` ou pelo nome de exibi\u00e7\u00e3o em `Products.tsx`\n- [x] Os 4 cen\u00e1rios t\u00e9cnicos acima cobertos por testes em `Products.spec.tsx`\n- [x] C\u00f3digo em conformidade com linter e diretrizes do ecossistema (`pnpm lint`, `pnpm typecheck` e `pnpm ci:test` passando)\n- [ ] Pipeline de CI/CD executado com sucesso no reposit\u00f3rio central\n- [ ] Pull Request (PR) revisado e aprovado por pelo menos um outro integrante da equipe\n- [ ] C\u00f3digo integrado \u00e0 branch `develop` do reposit\u00f3rio central (ambiente de homologa\u00e7\u00e3o)",
+        "body": "## 1. Contexto e Justificativa\n\nNa tela Produtos (`/products`), a lista de reposit\u00f3rios do GitHub abre vazia depois que o usu\u00e1rio autoriza o acesso. Ela s\u00f3 aparece depois de v\u00e1rias recargas da p\u00e1gina. Ao trocar de organiza\u00e7\u00e3o, a lista tamb\u00e9m pode ficar vazia ou mostrar dados da organiza\u00e7\u00e3o anterior.\n\nAs causas s\u00e3o duas:\n\n- **Condi\u00e7\u00f5es de corrida em `Products.tsx`.** Buscas simult\u00e2neas se sobrescrevem, e a busca de reposit\u00f3rios come\u00e7a antes de a autoriza\u00e7\u00e3o do GitHub terminar.\n- **Compara\u00e7\u00e3o de organiza\u00e7\u00f5es pelo nome de exibi\u00e7\u00e3o**, em vez do login do GitHub.\n\n**Reposit\u00f3rio:** MeasureSoftGram-Front (+ 1 campo no serializer do MeasureSoftGram-Service) \u00b7 **Respons\u00e1vel:** @DiegoCarlito \u00b7 **Estimativa:** 5 \u00b7 **Depende de:** \u2014\n\n## 2. Itens do Diagn\u00f3stico Cobertos\n\n| ID  | Item                                                                                                 | Reposit\u00f3rio     | Gravidade | Alvo t\u00e9cnico                                                                                      |\n| --- | ---------------------------------------------------------------------------------------------------- | --------------- | --------- | ------------------------------------------------------------------------------------------------- |\n| P1  | A busca de reposit\u00f3rios come\u00e7a antes de `signInWithGithub` terminar e n\u00e3o \u00e9 refeita depois           | Front           | Alta      | `src/pages/products/Products.tsx` (efeitos das linhas ~259 e ~263)                                |\n| P2  | `handleSelectOrganization` n\u00e3o descarta execu\u00e7\u00f5es antigas; a \u00faltima a terminar sobrescreve as listas | Front           | Alta      | `Products.tsx` (linhas ~161 e ~299)                                                               |\n| P3  | Organiza\u00e7\u00f5es comparadas por `name`/`includes`; `name` \u00e9 o nome de exibi\u00e7\u00e3o e `key` chega vazio       | Front e Service | Alta      | `Products.tsx` (~108, ~141, ~299) e `src/organizations/serializers.py` (`OrganizationSerializer`) |\n| P4  | `getBackendOrgId` chama `getAllOrganization()` a cada troca de organiza\u00e7\u00e3o                           | Front           | M\u00e9dia     | `Products.tsx` (~137)                                                                             |\n| P5  | A falha em `getGithubRepos` aparece como \"Nenhum reposit\u00f3rio\u2026\"                                       | Front           | M\u00e9dia     | `Products.tsx` (~201)                                                                             |\n\n> [!NOTE]\n> Os itens desta tarefa correspondem aos diagn\u00f3sticos t\u00e9cnicos espec\u00edficos do fluxo de carregamento mapeados no \u00e9pico `[MSG02]`. Para rastrear os d\u00e9bitos arquiteturais catalogados em todo o ecossistema, consulte o [Backlog T\u00e9cnico](https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/diagnostico/backlog-tecnico/).\n\n\n## 3. Atividades T\u00e9cnicas\n\n### 3.1. Identificador de organiza\u00e7\u00e3o do GitHub (P3)\n\n- No Service, incluir `github_org_name` (somente leitura) nos `fields` do `OrganizationSerializer`.\n- No Front, adicionar `github_org_name` ao tipo `Organization` e ao mapeamento do `OrganizationProvider`.\n- Criar `isSameGithubOrg(dbOrg, ghOrg)` em `src/shared/utils`, comparando `github_org_name` sem diferenciar mai\u00fasculas.\n- Substituir todas as compara\u00e7\u00f5es por nome e `includes` de `Products.tsx` por `isSameGithubOrg`.\n\n### 3.2. Fluxo de retorno da autoriza\u00e7\u00e3o do GitHub (P1)\n\n- Com `code` na URL, n\u00e3o chamar `loadGitHubOrgs()` no efeito de montagem.\n- Depois de `signInWithGithub(code)`, chamar `loadGitHubOrgs()` e `handleSelectOrganization(selectedOrgName)` diretamente, mesmo que `selectedOrgName` n\u00e3o mude.\n\n### 3.3. Execu\u00e7\u00f5es concorrentes (P2)\n\n- Em `handleSelectOrganization`, guardar um id da execu\u00e7\u00e3o em `useRef` e aplicar os resultados (`setProducts`, `setGitHubRepos` etc.) apenas se a execu\u00e7\u00e3o ainda for a mais recente.\n\n### 3.4. Buscas redundantes e erros (P4, P5)\n\n- Em `getBackendOrgId`, procurar primeiro em `organizationList` do contexto e s\u00f3 chamar a API se a organiza\u00e7\u00e3o n\u00e3o estiver na lista.\n- Quando `getGithubRepos` falhar, exibir na \u00e1rea da lista a mensagem \"N\u00e3o foi poss\u00edvel carregar os reposit\u00f3rios do GitHub\" com o bot\u00e3o \"Tentar novamente\". Se o erro indicar token inv\u00e1lido (`409`, definido na MSG-02.4), exibir o link \"Autorizar GitHub\".\n\n### 3.5. Testes\n\n- Atualizar `src/pages/products/test/Products.spec.tsx` com os cen\u00e1rios da se\u00e7\u00e3o 4.\n\n## 4. Crit\u00e9rios T\u00e9cnicos (Cen\u00e1rios de Teste)\n\n> **Nota:** Os cen\u00e1rios abaixo foram modelados no formato de cen\u00e1rios para facilitar a reprodu\u00e7\u00e3o e execu\u00e7\u00e3o de testes pela equipe de desenvolvimento e QA, mas **N\u00c3O S\u00c3O BDDs** de regras de neg\u00f3cio funcionais, tratando-se estritamente de verifica\u00e7\u00f5es t\u00e9cnicas de estabilidade e performance.\n\n**Cen\u00e1rio 1: Retorno da autoriza\u00e7\u00e3o do GitHub**\n\n- **Dado** que a p\u00e1gina `/products` abre com `?code=` na URL\n- **Quando** o login com GitHub termina\n- **Ent\u00e3o** `GET /organizations/{id}/github-repos/` \u00e9 chamado uma \u00fanica vez, depois de `POST /accounts/github/login/`\n- **E** a lista de reposit\u00f3rios \u00e9 exibida\n\n**Cen\u00e1rio 2: Trocas r\u00e1pidas de organiza\u00e7\u00e3o**\n\n- **Dado** que duas organiza\u00e7\u00f5es s\u00e3o selecionadas em sequ\u00eancia r\u00e1pida\n- **Quando** a resposta da primeira chega depois da segunda\n- **Ent\u00e3o** a tela exibe apenas os produtos e os reposit\u00f3rios da segunda\n\n**Cen\u00e1rio 3: Nome de exibi\u00e7\u00e3o diferente do login**\n\n- **Dado** uma organiza\u00e7\u00e3o com `name` \"Alexandre Beck\" e `github_org_name` \"alexandrebeck\"\n- **Quando** ela \u00e9 a organiza\u00e7\u00e3o atual\n- **Ent\u00e3o** ela \u00e9 selecionada no seletor da tela Produtos, e a sele\u00e7\u00e3o n\u00e3o \u00e9 zerada\n\n**Cen\u00e1rio 4: Falha do GitHub**\n\n- **Dado** que `github-repos` responde erro\n- **Quando** a lista \u00e9 renderizada\n- **Ent\u00e3o** aparece a mensagem de falha com \"Tentar novamente\", e n\u00e3o \"Nenhum reposit\u00f3rio\u2026\"\n\n## 5. \ud83d\udccb Definition of Ready (DoR - Task T\u00e9cnica)\n\n- [x] Objetivo t\u00e9cnico claro e motiva\u00e7\u00e3o da implementa\u00e7\u00e3o registrados\n- [x] Crit\u00e9rios T\u00e9cnicos definidos (arquivos/servi\u00e7os afetados, padr\u00f5es de implementa\u00e7\u00e3o, depend\u00eancias)\n- [x] Estimativa de esfor\u00e7o pontuada pela equipe de desenvolvimento (5 pontos)\n- [x] Desenvolvedor(a) respons\u00e1vel designado(a) na issue\n- [x] Issue cadastrada no ZenHub com Labels, \u00c9pico Pai ([MSG02]) e Sprint configurados\n\n## 6. \u2705 Definition of Done (DoD - Task T\u00e9cnica)\n\n- [x] C\u00f3digo implementado estritamente aderente aos Crit\u00e9rios T\u00e9cnicos acordados\n- [x] `OrganizationSerializer` devolve `github_org_name`\n- [x] Nenhuma compara\u00e7\u00e3o de organiza\u00e7\u00e3o por `includes` ou pelo nome de exibi\u00e7\u00e3o em `Products.tsx`\n- [x] Os 4 cen\u00e1rios t\u00e9cnicos acima cobertos por testes em `Products.spec.tsx`\n- [x] C\u00f3digo em conformidade com linter e diretrizes do ecossistema (`pnpm lint`, `pnpm typecheck` e `pnpm ci:test` passando)\n- [ ] Pipeline de CI/CD executado com sucesso no reposit\u00f3rio central\n- [x] Pull Request (PR) revisado e aprovado por pelo menos um outro integrante da equipe\n- [ ] C\u00f3digo integrado \u00e0 branch `develop` do reposit\u00f3rio central (ambiente de homologa\u00e7\u00e3o)",
         "closed_by": {
             "login": "bottinolucas",
             "id": 101297130,
