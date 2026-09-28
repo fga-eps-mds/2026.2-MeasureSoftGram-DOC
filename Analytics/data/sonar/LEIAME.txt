@@ -1,0 +1,1 @@
+Snapshots da API do SonarCloud gravados por scripts/coleta_sonar.py (sonar-AAAA-MM-DDTHHMM.json).

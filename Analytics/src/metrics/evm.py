@@ -1,7 +1,7 @@
 """AgileEVM por release com os pontos do Zenhub e os custos da planilha.
 
 Método de Sulaiman, Barton & Blackburn (2006), o mesmo da planilha de 2026.1.
-Tudo o que é ponto vem do Zenhub (``src/velocity.py``); da planilha vêm só o que
+Tudo o que é ponto vem do Zenhub (``src/metrics/velocity.py``); da planilha vêm só o que
 o Zenhub não tem: o custo planejado de cada semana (abas Custos e Planejamento)
 e as horas reais (aba Horas).
 
@@ -14,8 +14,10 @@ Para cada sprint ``n`` de uma release com ``L`` sprints:
 * **APC** = RPC ÷ PRP · **PPC** = semanas decorridas ÷ semanas da release.
 * **BAC** = custo planejado das semanas da release · **PV** = PPC × BAC ·
   **EV** = APC × BAC.
-* **AC**: horas reais × custo/hora; sprint sem horas registradas usa o custo
-  planejado da sprint e a coluna ``origem_do_ac`` diz isso.
+* **AC**: horas reais (aba Horas) × custo/hora (aba Custos), acumulado. Se
+  alguma sprint iniciada da release não tem horas registradas, o AC fica
+  **indisponível** a partir dela — nunca é trocado pelo custo planejado — e
+  CPI, CV, ETC e EAC ficam indisponíveis junto. ``origem_do_ac`` diz o motivo.
 * **SPI** = EV ÷ PV · **CPI** = EV ÷ AC · **CV**, **SV**, **ETC** = (BAC − EV) ÷ CPI,
   **EAC** = AC + ETC · **RD** = início + duração ÷ SPI.
 """
@@ -26,7 +28,7 @@ import math
 
 import pandas as pd
 
-from src import velocity as vel
+from src.metrics import velocity as vel
 
 NAN = float("nan")
 
@@ -93,7 +95,7 @@ def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: p
         prp_base = sum(est.get(i, 0.0) for i in (base_ids or []))
         escopo, feitos = set(base_ids or []), set()
         prp_ant = prp_base
-        semanas_acum, ac_acum = 0.0, 0.0
+        semanas_acum, ac_acum, ac_completo = 0.0, 0.0, True
         for n, r in enumerate(grupo.itertuples(), start=1):
             semanas_acum += r.semanas
             ppc = _div(semanas_acum, semanas_rel)
@@ -118,20 +120,28 @@ def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: p
             h = horas_da_sprint(r.sprint_label, r.inicio, horas)
             if h > 0 and custo_hora:
                 custo_real, origem = h * custo_hora, "horas reais × custo/hora"
+            elif not custo_hora:
+                custo_real, origem = NAN, "indisponível: custo/hora não informado (aba Custos)"
             else:
-                custo_real, origem = sc, "estimado (custo planejado)"
-            ac_acum += 0.0 if custo_real is None or math.isnan(custo_real) else custo_real
+                custo_real, origem = NAN, f"indisponível: sem horas registradas na {r.sprint_label} (aba Horas)"
+            if math.isnan(custo_real):
+                ac_completo = False
+            if ac_completo:
+                ac_acum += custo_real
+            elif not math.isnan(custo_real):
+                origem = "indisponível: sprint anterior da release sem horas registradas"
             ev = apc * bac if not math.isnan(bac) else NAN
             pv = linha["PV"]
             spi = _div(apc, ppc)          # = EV ÷ PV, e não depende do custo
-            cpi = _div(ev, ac_acum)
-            etc = _div(bac - ev, cpi)
+            ac = ac_acum if ac_completo else NAN
+            cpi = _div(ev, ac) if not math.isnan(ac) else NAN
+            etc = _div(bac - ev, cpi) if not math.isnan(cpi) else NAN
             duracao = (grupo["fim"].iloc[-1] - grupo["inicio"].iloc[0]).days + 1
             rd = (grupo["inicio"].iloc[0] + pd.Timedelta(days=duracao / spi)) if spi and not math.isnan(spi) else pd.NaT
             linhas.append({**linha, "PP": r.planned_story_points, "PC": r.completed_story_points, "PA": pa,
-                           "PRP": prp, "RPC": rpc, "APC": apc, "horas_reais": h, "AC": ac_acum,
-                           "origem_do_ac": origem, "EV": ev, "CV": ev - ac_acum, "SV": ev - pv, "CPI": cpi,
-                           "SPI": spi, "ETC": etc, "EAC": ac_acum + etc if not math.isnan(etc) else NAN, "RD": rd,
+                           "PRP": prp, "RPC": rpc, "APC": apc, "horas_reais": h, "AC": ac,
+                           "origem_do_ac": origem, "EV": ev, "CV": ev - ac, "SV": ev - pv, "CPI": cpi,
+                           "SPI": spi, "ETC": etc, "EAC": ac + etc if not math.isnan(etc) else NAN, "RD": rd,
                            "issues": len(escopo)})
     return pd.DataFrame(linhas)
 

@@ -1,0 +1,32 @@
+{
+ "Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTU4": {
+  "congelado_em": "2026-09-27T20:02:46+00:00",
+  "corte": "2026-08-25T03:59:00+00:00",
+  "fonte": "histórico do Zenhub (scopeChange)",
+  "issues": {},
+  "planned_issues": 0,
+  "planned_story_points": 0,
+  "planned_unestimated_issues": 0,
+  "sprint_name": "Sprint: Aug 24 - Sep 6, 2026"
+ },
+ "Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTU5": {
+  "congelado_em": "2026-09-27T20:02:46+00:00",
+  "corte": "2026-09-08T03:59:00+00:00",
+  "fonte": "histórico do Zenhub (scopeChange)",
+  "issues": {},
+  "planned_issues": 0,
+  "planned_story_points": 0,
+  "planned_unestimated_issues": 0,
+  "sprint_name": "Sprint: Sep 7 - Sep 20, 2026"
+ },
+ "Z2lkOi8vcmFwdG9yL1NwcmludC81MjU3NTYw": {
+  "congelado_em": "2026-09-27T20:02:46+00:00",
+  "corte": "2026-09-22T03:59:00+00:00",
+  "fonte": "histórico do Zenhub (scopeChange)",
+  "issues": {},
+  "planned_issues": 0,
+  "planned_story_points": 0,
+  "planned_unestimated_issues": 0,
+  "sprint_name": "Sprint: Sep 21 - Sep 27, 2026"
+ }
+}

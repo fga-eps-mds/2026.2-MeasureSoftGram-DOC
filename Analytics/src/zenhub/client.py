@@ -34,7 +34,8 @@ WORKSPACE_PADRAO = "6a8326e265e211000ef9379a"  # workspace MeasureSoftGram 2026.
 
 # Tamanhos de página iniciais, calculados para ficar abaixo de 200 pontos de
 # complexidade (ver src/zenhub/queries.py). O cliente reduz se precisar.
-PAGINA = {"sprints": 15, "issues": 8, "scope": 18, "releases": 20, "release_issues": 100}
+PAGINA = {"sprints": 15, "issues": 8, "scope": 18, "releases": 20, "release_issues": 100,
+          "pipelines": 30, "pipeline_issues": 7}
 
 
 class ZenhubError(RuntimeError):
@@ -375,3 +376,14 @@ class ZenhubClient:
         nos, _ = self.paginar(queries.RELEASE_ISSUES, {"releaseId": release_id},
                               ["node", "issues"], PAGINA["release_issues"])
         return [n["id"] for n in nos if n.get("id")]
+
+    def get_pipelines(self) -> list[dict]:
+        nos, _ = self.paginar(queries.PIPELINES, {"workspaceId": self.workspace_id},
+                              ["workspace", "pipelinesConnection"], PAGINA["pipelines"])
+        return nos
+
+    def get_pipeline_issues(self, pipeline_id: str) -> tuple[list[dict], int | None]:
+        nos, extras = self.paginar(queries.PIPELINE_ISSUES, {"pipelineId": pipeline_id,
+                                                             "workspaceId": self.workspace_id},
+                                   ["searchIssuesByPipeline"], PAGINA["pipeline_issues"])
+        return nos, extras.get("totalCount")

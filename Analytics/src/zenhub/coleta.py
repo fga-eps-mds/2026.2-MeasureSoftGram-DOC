@@ -8,7 +8,7 @@ Arquivos em ``Analytics/data/zenhub/velocity/``:
 
 * ``zenhub-velocity-AAAA-MM-DDTHHMM.json`` — um por coleta (histórico reprodutível);
 * ``linhas-de-base.json`` — o planejado de cada sprint, congelado na primeira
-  coleta feita depois do início da sprint (ver ``src/velocity.py``).
+  coleta feita depois do início da sprint (ver ``src/metrics/velocity.py``).
 """
 
 from __future__ import annotations
@@ -106,8 +106,10 @@ def coletar(cliente: ZenhubClient, agora: datetime | None = None, log=print) -> 
         releases.append(rel)
     log(f"{len(releases)} releases")
 
+    backlog = coletar_backlog(cliente, avisos, log)
+
     return {
-        "versao": 1,
+        "versao": 2,
         "fonte": "Zenhub GraphQL API (https://api.zenhub.com/public/graphql)",
         "workspace_id": cliente.workspace_id,
         "coletado_em": agora.astimezone(timezone.utc).isoformat(timespec="seconds"),
@@ -115,8 +117,46 @@ def coletar(cliente: ZenhubClient, agora: datetime | None = None, log=print) -> 
         "sprints": sprints,
         "issues": issues,
         "releases": releases,
+        "backlog": backlog,
         "avisos": avisos,
     }
+
+
+def coletar_backlog(cliente: ZenhubClient, avisos: list[str], log=print) -> dict | None:
+    """Todas as issues abertas do quadro, pipeline por pipeline.
+
+    Falha aqui não derruba a coleta: vira aviso e ``backlog = None`` (a página
+    do Zenhub diz que o backlog completo está indisponível).
+    """
+    if not hasattr(cliente, "get_pipelines"):
+        return None
+    try:
+        pipelines = [{"pipeline_id": p.get("id"), "pipeline": p.get("name")} for p in cliente.get_pipelines()]
+    except ZenhubAuthError:
+        raise
+    except ZenhubError as erro:
+        avisos.append(f"Backlog não coletado: a lista de pipelines falhou ({erro}).")
+        log(f"Backlog: falhou ao ler os pipelines: {erro}")
+        return None
+    log(f"Backlog: {len(pipelines)} pipelines")
+    issues, falhas = [], []
+    for ordem, p in enumerate(pipelines):
+        p["ordem"] = ordem
+        try:
+            nos, total = cliente.get_pipeline_issues(p["pipeline_id"])
+        except ZenhubAuthError:
+            raise
+        except ZenhubError as erro:
+            falhas.append(p["pipeline"])
+            avisos.append(f"Backlog: pipeline {p['pipeline']} não coletado ({erro}).")
+            continue
+        p["total"] = total if total is not None else len(nos)
+        for no in nos:
+            issues.append({**norm.issue_backlog(no, p["pipeline"]), "pipeline_ordem": ordem})
+        log(f"  {p['pipeline']}: {len(nos)} issues")
+    if falhas and len(falhas) == len(pipelines):
+        return None
+    return {"pipelines": pipelines, "issues": issues, "pipelines_com_falha": falhas}
 
 
 def salvar_snapshot(snapshot: dict, pasta: Path = PASTA) -> Path:

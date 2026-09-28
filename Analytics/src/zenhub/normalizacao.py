@@ -2,7 +2,7 @@
 
 Nenhuma regra de negócio aqui: só renomeia campos, trata ``null`` e padroniza
 datas em ISO 8601 UTC. As regras (o que conta como planejado ou concluído)
-ficam em ``src/velocity.py``.
+ficam em ``src/metrics/velocity.py``.
 """
 
 from __future__ import annotations
@@ -71,3 +71,18 @@ def release(no: dict) -> dict:
         "closed_at": no.get("closedAt"),
         "issues_count": no.get("issuesCount"),
     }
+
+
+def issue_backlog(no: dict, pipeline_nome: str | None = None) -> dict:
+    """Issue do quadro (backlog): os campos de ``issue`` + criação, prioridade e responsáveis."""
+    base = issue(no)
+    pipeline_issue = no.get("pipelineIssue") or {}
+    responsaveis = [a.get("login") for a in ((no.get("assignees") or {}).get("nodes") or []) if isinstance(a, dict)]
+    base.update({
+        "created_at": no.get("createdAt"),
+        "priority": _nome(pipeline_issue.get("priority")),
+        "assignees": [r for r in responsaveis if r],
+    })
+    if not base.get("pipeline") and pipeline_nome:
+        base["pipeline"] = pipeline_nome
+    return base

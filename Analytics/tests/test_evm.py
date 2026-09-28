@@ -1,4 +1,4 @@
-"""Testes do AgileEVM (``src/evm.py``) com pontos do Zenhub e custos da planilha."""
+"""Testes do AgileEVM (``src/metrics/evm.py``) com pontos do Zenhub e custos da planilha."""
 
 import math
 import sys
@@ -10,8 +10,8 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src import evm  # noqa: E402
-from src import velocity as v  # noqa: E402
+from src.metrics import evm  # noqa: E402
+from src.metrics import velocity as v  # noqa: E402
 
 UTC = timezone.utc
 
@@ -65,8 +65,11 @@ class AgileEvmTest(unittest.TestCase):
         self.assertEqual(r1.loc[0, "BAC"], 300)                        # 3 semanas × 100
         self.assertAlmostEqual(r1.loc[0, "PPC"], 2 / 3)
         self.assertAlmostEqual(r1.loc[1, "SPI"], (15 / 20) / 1)
-        self.assertEqual(r1.loc[1, "origem_do_ac"], "estimado (custo planejado)")
-        self.assertAlmostEqual(r1.loc[1, "CPI"], r1.loc[1, "SPI"])     # sem horas, CPI = SPI
+        # sem horas registradas o AC não é estimado: fica indisponível, e com ele CPI, CV, ETC e EAC
+        self.assertTrue(r1.loc[1, "origem_do_ac"].startswith("indisponível"))
+        for col in ("AC", "CPI", "CV", "ETC", "EAC"):
+            self.assertTrue(math.isnan(r1.loc[1, col]), col)
+        self.assertAlmostEqual(r1.loc[1, "SV"], r1.loc[1, "EV"] - r1.loc[1, "PV"])
 
     def test_horas_reais_viram_ac(self):
         horas = pd.DataFrame({"sprint": [1, 2], "horas": [2.0, 1.0]})
@@ -74,6 +77,25 @@ class AgileEvmTest(unittest.TestCase):
         r1 = r1[r1["release"] == "R1"].reset_index(drop=True)
         self.assertEqual(list(r1["AC"]), [20, 30])
         self.assertEqual(r1.loc[0, "origem_do_ac"], "horas reais × custo/hora")
+
+    def test_sprint_sem_horas_interrompe_o_ac(self):
+        horas = pd.DataFrame({"sprint": [1], "horas": [2.0]})           # S2 sem horas
+        r1 = self.calc(horas, custo_hora=10.0)
+        r1 = r1[r1["release"] == "R1"].reset_index(drop=True)
+        self.assertEqual(r1.loc[0, "AC"], 20)
+        self.assertAlmostEqual(r1.loc[0, "CPI"], r1.loc[0, "EV"] / 20)
+        self.assertTrue(math.isnan(r1.loc[1, "AC"]))
+        self.assertIn("S2", r1.loc[1, "origem_do_ac"])
+
+    def test_formulas_basicas(self):
+        horas = pd.DataFrame({"sprint": [1, 2], "horas": [2.0, 1.0]})
+        u = self.calc(horas, custo_hora=10.0).iloc[1]
+        self.assertAlmostEqual(u["SV"], u["EV"] - u["PV"])
+        self.assertAlmostEqual(u["CV"], u["EV"] - u["AC"])
+        self.assertAlmostEqual(u["SPI"], u["EV"] / u["PV"])
+        self.assertAlmostEqual(u["CPI"], u["EV"] / u["AC"])
+        self.assertAlmostEqual(u["ETC"], (u["BAC"] - u["EV"]) / u["CPI"])
+        self.assertAlmostEqual(u["EAC"], u["AC"] + u["ETC"])
 
     def test_sprint_futura_sem_valores_e_sumario(self):
         d = self.calc()

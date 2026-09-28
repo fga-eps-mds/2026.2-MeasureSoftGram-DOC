@@ -24,7 +24,9 @@ escopo para a sprint, o planejado fica **indisponível** (nunca é trocado pelo
 escopo atual, que aparece separado como ``current_story_points``).
 
 **Concluído.** Issue pontuável cuja conclusão aconteceu entre o início e o fim da
-sprint **e** que estava na sprint naquele momento. Conclusão = ``closedAt``
+sprint **e** que estava na sprint naquele momento (pelo histórico; issue que está
+na sprint e não tem nenhum evento no histórico entrou antes do início — o Zenhub
+só registra mudanças de escopo feitas depois que a sprint começa). Conclusão = ``closedAt``
 quando a issue está fechada; se está aberta no pipeline de feito (``Done``),
 ``pipelineIssue.latestTransferTime`` (a última movimentação de pipeline). Issue
 fechada depois do fim conta na sprint em que estava quando fechou (ou em
@@ -280,6 +282,7 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
         # concluído
         candidatas = set(s.get("issue_ids", [])) | {e["issue_id"] for e in eventos if e.get("issue_id")}
         limite = min(fim, agora) if fim else agora
+        com_evento = {e["issue_id"] for e in eventos if e.get("issue_id")}
         concluidas = {}
         for iid in candidatas:
             i = issues.get(iid)
@@ -288,7 +291,12 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
             quando = momento_conclusao(i, regras)
             if quando is None or not (inicio <= quando <= limite):
                 continue
-            na_sprint = (iid in membros_em(eventos, quando)) if eventos else (iid in s.get("issue_ids", []))
+            if iid in com_evento:
+                na_sprint = iid in membros_em(eventos, quando)
+            else:
+                # sem nenhum evento no histórico: o Zenhub só registra mudanças depois do início, então a
+                # issue que está na sprint e nunca teve evento entrou antes do início e ficou até agora
+                na_sprint = iid in s.get("issue_ids", [])
             if na_sprint:
                 concluidas[iid] = i.get("estimate")
         if status == STATUS_ANDAMENTO:

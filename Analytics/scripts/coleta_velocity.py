@@ -1,4 +1,4 @@
-"""Coleta sprints, issues, histórico de escopo e releases do Zenhub para a velocity.
+"""Coleta sprints, issues, histórico de escopo, releases e backlog do Zenhub.
 
 Uso (na pasta Analytics/):
 
@@ -23,8 +23,8 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ))
 
-from src import gestao  # noqa: E402
-from src.velocity import Regras, congelar_linhas_de_base  # noqa: E402
+from src.data import planilha  # noqa: E402
+from src.metrics.velocity import Regras, congelar_linhas_de_base  # noqa: E402
 from src.zenhub import coleta  # noqa: E402
 from src.zenhub.client import ZenhubAuthError, ZenhubClient, ZenhubError, carregar_env  # noqa: E402
 
@@ -40,7 +40,7 @@ def executar(pasta: Path = coleta.PASTA, log=_log) -> Path:
     agora = datetime.now(timezone.utc)
     snapshot = coleta.coletar(cliente, agora, log=log)
     destino = coleta.salvar_snapshot(snapshot, pasta)
-    regras = Regras.dos_parametros(gestao.carregar_parametros(RAIZ / "planilhas"))
+    regras = Regras.dos_parametros(planilha.carregar_parametros(RAIZ / "planilhas"))
     linhas, congeladas = congelar_linhas_de_base(snapshot, coleta.ler_linhas_de_base(pasta), agora, regras)
     coleta.gravar_linhas_de_base(linhas, pasta)
     log(f"Gravado {destino.name} ({cliente.requisicoes} requisições)")

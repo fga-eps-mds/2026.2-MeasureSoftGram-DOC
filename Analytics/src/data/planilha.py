@@ -1,8 +1,9 @@
-"""Leitura das duas planilhas de gestão do time (Google Sheets publicadas em CSV).
+"""Fonte PLANILHA — as abas do time (Google Sheets publicadas em CSV).
 
-Só o que o Zenhub não tem vem da planilha: Custos, Planejamento (quem está no
-time em cada semana), Horas, Riscos, Monitoramento e Decisões. Pontos, sprints,
-velocity, AgileEVM e burndown vêm do Zenhub (``src/velocity.py``, ``src/evm.py``).
+Só o que nem o SonarCloud nem o Zenhub têm vem da planilha: Custos,
+Planejamento (quem está no time em cada semana), Horas, Riscos, Monitoramento e
+Decisões. Nenhum ponto, sprint ou métrica de código é digitado aqui.
+``parametros.csv`` guarda as regras do time usadas no cálculo da velocity.
 
 Sem URL publicada, lê o CSV de mesmo nome em ``planilhas/`` e diz isso na tela.
 No navegador (GitHub Pages) lê sempre o CSV empacotado no deploy, que o
@@ -152,3 +153,55 @@ def converter(df: pd.DataFrame, numericas=(), datas=()) -> pd.DataFrame:
         if c in df:
             df[c] = df[c].map(data)
     return df
+
+
+# ───────────────────────── parâmetros do modelo de gestão ─────────────────────────
+
+TIPOS_PONTUADOS_PADRAO = {"Feature", "Task", "Bug"}
+
+
+def carregar_parametros(pasta: Path) -> dict:
+    """``planilhas/parametros.csv``: critério de feito, níveis pontuados, janela de planning."""
+    try:
+        df = pd.read_csv(Path(pasta) / "parametros.csv", dtype=str).fillna("")
+    except (OSError, pd.errors.EmptyDataError):
+        df = pd.DataFrame(columns=["parametro", "valor"])
+    brutos = dict(zip(df.get("parametro", []), df.get("valor", [])))
+    tipos = str(brutos.get("niveis_pontuados", "")).strip()
+    return {"criterio_feito": brutos.get("criterio_feito", "Done") or "Done",
+            "tipos_pontuados": set(tipos.split(";")) if tipos else TIPOS_PONTUADOS_PADRAO,
+            "tabela": df}
+
+
+# ───────────────────────── custos ─────────────────────────
+
+# Componentes do custo semanal de um integrante (chaves da aba Custos) -> categoria.
+COMPONENTES_CUSTO = {
+    "custo_eps_semana": "Dedicação à disciplina (custo do aluno)",
+    "energia_semana": "Energia",
+    "internet_semana": "Internet",
+    "depreciacao_semana": "Depreciação do notebook",
+}
+
+
+def custo_por_recurso(plano_bruto: pd.DataFrame, custo_membro_semana: float | None) -> pd.DataFrame:
+    """Aba Planejamento (integrante × semana, 1 = ativo) -> custo planejado por integrante e semana."""
+    if plano_bruto is None or plano_bruto.empty or not custo_membro_semana:
+        return pd.DataFrame(columns=["integrante", "semana", "ativo", "custo"])
+    rotulo = plano_bruto.columns[0]
+    titulos = plano_bruto.attrs.get("titulos", {})
+    semanas = [c for c in plano_bruto.columns[1:] if pd.notna(data(titulos.get(c, c)))]
+    linhas = []
+    for _, r in plano_bruto.iterrows():
+        nome = str(r[rotulo]).strip()
+        baixo = nome.lower()
+        if not nome or baixo.startswith(("integrantes ativos", "custo planejado", "release", "sprint", "total",
+                                         "infraestrutura")):
+            continue
+        for c in semanas:
+            ativo = numero(r[c])
+            if pd.isna(ativo):
+                continue
+            linhas.append({"integrante": nome, "semana": data(titulos.get(c, c)), "ativo": ativo,
+                           "custo": ativo * float(custo_membro_semana)})
+    return pd.DataFrame(linhas)

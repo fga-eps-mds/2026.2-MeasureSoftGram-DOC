@@ -23,7 +23,7 @@ e um orçamento `BAC` (ver [Custos](/docs/planejamento/custos)). A cada sprint `
 | APC | RPC ÷ PRP (pontos de issues fechadas ou em Done ÷ pontos da release) | Quanto da release está pronto |
 | PV | PPC × BAC | Valor planejado até aqui |
 | EV | APC × BAC | Valor agregado até aqui |
-| AC | horas reais × custo/hora; sem horas registradas, custo planejado da sprint (como em 2026.1) | Custo real até aqui |
+| AC | horas reais × custo/hora; sem horas registradas o AC fica **indisponível** (não é trocado pelo custo planejado) | Custo real até aqui |
 | SPI | EV ÷ PV | Abaixo de 1: atraso |
 | CPI | EV ÷ AC | Abaixo de 1: gasto maior que o entregue |
 | SV, CV | EV − PV, EV − AC | Variâncias em reais |
@@ -39,7 +39,7 @@ e um orçamento `BAC` (ver [Custos](/docs/planejamento/custos)). A cada sprint `
 | Capacidade e custo/hora | Aba **Custos** |
 | Horas reais | Aba **Horas** (uma linha por integrante por sprint) |
 
-O cálculo é feito pelo dashboard em `Analytics/src/gestao.py`, e não por digitação
+O cálculo é feito pelo dashboard em `Analytics/src/metrics/evm.py`, e não por digitação
 na planilha. Assim o mesmo dado do Zenhub alimenta velocity, burndown e EVM.
 
 ## Regras

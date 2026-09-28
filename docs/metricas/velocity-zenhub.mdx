@@ -18,8 +18,8 @@ flowchart LR
   API["Zenhub GraphQL<br/>api.zenhub.com/public/graphql"] --> CLI["src/zenhub/client.py<br/>paginação, retries, rate limit"]
   CLI --> NORM["src/zenhub/normalizacao.py"]
   NORM --> SNAP["data/zenhub/velocity/<br/>zenhub-velocity-*.json<br/>linhas-de-base.json"]
-  SNAP --> CALC["src/velocity.py<br/>planejado, concluído, média"]
-  CALC --> DASH["src/velocity_dashboard.py<br/>cards, gráfico, filtros, tabela"]
+  SNAP --> CALC["src/metrics/velocity.py<br/>planejado, concluído, média"]
+  CALC --> DASH["pages/zenhub.py<br/>cards, gráficos, filtros, tabela"]
 ```
 
 | Onde roda | Quem chama a API | Chave |

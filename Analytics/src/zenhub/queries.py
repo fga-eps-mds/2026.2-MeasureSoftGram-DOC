@@ -161,6 +161,60 @@ query ReleaseIssues($releaseId: ID!, $first: Int!, $after: String) {
 }
 """
 
+# ───────────────────────── backlog (quadro inteiro) ─────────────────────────
+#
+# As queries acima só enxergam o que passou por uma sprint. Para o backlog
+# (itens planejados, prioridade, épico, responsável) a coleta percorre todos os
+# pipelines do workspace. ATENÇÃO: estas duas queries NÃO foram validadas
+# contra o schema no ambiente em que foram escritas (sem acesso à rede do
+# Zenhub). A coleta trata falha nelas como aviso: a velocity continua, e a
+# página do Zenhub diz que o backlog completo está indisponível. Validar com
+# ``python scripts/diagnostico_zenhub.py`` antes de confiar nos números.
+
+PIPELINES = """
+query Pipelines($workspaceId: ID!, $first: Int!, $after: String) {
+  workspace(id: $workspaceId) {
+    pipelinesConnection(first: $first, after: $after) {
+      pageInfo { hasNextPage endCursor }
+      nodes { id name }
+    }
+  }
+}
+"""
+
+# Issues abertas de um pipeline. ~25 pontos por issue -> first <= 7.
+PIPELINE_ISSUES = """
+query PipelineIssues($pipelineId: ID!, $workspaceId: ID!, $first: Int!, $after: String) {
+  searchIssuesByPipeline(pipelineId: $pipelineId, filters: {}, first: $first, after: $after) {
+    pageInfo { hasNextPage endCursor }
+    totalCount
+    nodes {
+      id
+      number
+      title
+      state
+      createdAt
+      closedAt
+      htmlUrl
+      pullRequest
+      repository { name }
+      estimate { value }
+      issueType {
+        ... on GithubIssueType { name }
+        ... on ZenhubIssueType { name }
+      }
+      parentIssue { id }
+      assignees(first: 3) { nodes { login } }
+      pipelineIssue(workspaceId: $workspaceId) {
+        latestTransferTime
+        pipeline { name }
+        priority { name }
+      }
+    }
+  }
+}
+"""
+
 TODAS = {
     "SPRINTS": SPRINTS,
     "SPRINT_ISSUES": SPRINT_ISSUES,
@@ -168,4 +222,6 @@ TODAS = {
     "ISSUE": ISSUE,
     "RELEASES": RELEASES,
     "RELEASE_ISSUES": RELEASE_ISSUES,
+    "PIPELINES": PIPELINES,
+    "PIPELINE_ISSUES": PIPELINE_ISSUES,
 }

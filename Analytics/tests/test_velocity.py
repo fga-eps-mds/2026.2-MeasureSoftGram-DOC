@@ -1,4 +1,4 @@
-"""Testes dos cálculos de velocity (``src/velocity.py``).
+"""Testes dos cálculos de velocity (``src/metrics/velocity.py``).
 
 Rodar na pasta Analytics/:  python -m unittest discover -s tests -v
 """
@@ -10,7 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src import velocity as v  # noqa: E402
+from src.metrics import velocity as v  # noqa: E402
 
 UTC = timezone.utc
 S1_INI = datetime(2026, 9, 7, 3, 59, tzinfo=UTC)
@@ -137,6 +137,13 @@ class ConcluidoTest(unittest.TestCase):
         self.assertEqual(linha(df, "S1")["completed_story_points"], 0)
         self.assertEqual(linha(df, "S1")["planned_story_points"], 5)
         self.assertEqual(linha(df, "S2")["completed_story_points"], 5)
+
+    def test_issue_sem_evento_que_esta_na_sprint_conta(self):
+        # O Zenhub só registra mudanças depois do início: B já estava na sprint e não tem evento.
+        issues = {"A": issue("A", 2, estado="CLOSED", fechada=t(S1_INI, 3)),
+                  "B": issue("B", 3, estado="CLOSED", fechada=t(S1_INI, 4))}
+        s1 = [ev("A", "ISSUE_ADDED", t(S1_INI, 1), 2)]
+        self.assertEqual(linha(self.calc(issues, ["A", "B"], s1), "S1")["completed_story_points"], 5)
 
     def test_removida_antes_de_fechar_nao_conta(self):
         issues = {"A": issue("A", 5, estado="CLOSED", fechada=t(S1_INI, 5))}

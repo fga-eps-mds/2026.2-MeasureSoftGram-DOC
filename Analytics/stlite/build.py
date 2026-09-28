@@ -4,7 +4,7 @@ O GitHub Pages só serve arquivos estáticos. O stlite (https://github.com/whitp
 roda o próprio Streamlit dentro do navegador, com Python compilado para
 WebAssembly (Pyodide). Este script:
 
-1. copia o app (``app.py``, ``config.py``, ``src/``), as planilhas (``planilhas/*.csv``)
+1. copia o app (``app.py``, ``config.py``, ``pages/``, ``src/``), as planilhas (``planilhas/*.csv``)
    e os dados do pipeline (``data/**/*.json`` e ``../analytics-raw-data/*.json``)
    para a pasta de saída, mantendo a mesma estrutura do repositório;
 2. gera um ``index.html`` que monta esses arquivos no sistema de arquivos virtual
@@ -44,8 +44,8 @@ STLITE = "0"
 REQUISITOS = ["altair", "requests", "tzdata"]
 
 INCLUIR = [
-    ("Analytics", ["app.py", "config.py", "src/*.py", "src/zenhub/*.py", "planilhas/*.csv", "data/*.json",
-                   "data/zenhub/*.json", "data/zenhub/velocity/*.json"]),
+    ("Analytics", ["app.py", "config.py", "pages/*.py", "src/*.py", "src/*/*.py", "planilhas/*.csv",
+                   "data/*.json", "data/sonar/*.json", "data/zenhub/*.json", "data/zenhub/velocity/*.json"]),
     ("analytics-raw-data", ["*.json"]),
 ]
 
@@ -79,21 +79,21 @@ PAGINA = """<!doctype html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <title>Dashboard Analítico · MeasureSoftGram EPS 2026.2</title>
+  <title>MeasureSoftGram — Dashboard de Gestão de Projeto</title>
   <link rel="icon" href="../img/favicon.png" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stlite/browser@{stlite}/build/stlite.css" />
   <style>
-    body {{ margin: 0; font-family: "Source Sans Pro", system-ui, sans-serif; background: #ffffff; color: #0b0b0b; }}
+    body {{ margin: 0; font-family: "Roboto", system-ui, sans-serif; background: #F4F5F6; color: #1F2933; }}
     #carregando {{ max-width: 560px; margin: 18vh auto 0; padding: 0 16px; text-align: center; }}
     #carregando h1 {{ font-size: 1.4rem; margin-bottom: .4rem; }}
-    #carregando p {{ color: #52514e; line-height: 1.5; }}
-    #carregando a {{ color: #2a78d6; }}
+    #carregando p {{ color: #4B5563; line-height: 1.5; }}
+    #carregando a {{ color: #2B4D6F; }}
   </style>
 </head>
 <body>
   <div id="root">
     <div id="carregando">
-      <h1>Dashboard Gerencial e Analítico</h1>
+      <h1>MeasureSoftGram — Dashboard de Gestão de Projeto</h1>
       <p>Carregando o Python no navegador. Na primeira visita leva de 20 a 40 segundos;
          depois o navegador guarda o cache e abre bem mais rápido.</p>
       <p>Publicado em <strong>{gerado}</strong> · <a href="../">voltar para a documentação</a></p>
