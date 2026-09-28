@@ -102,13 +102,38 @@ Confiabilidade (`src/metrics/qualidade.py`).
                 f"<b style='color:{theme.STATUS['neutral']}'>cinza = informativo ou indisponível</b>. "
                 "O status sempre aparece também em texto.", unsafe_allow_html=True)
 
+    layout.secao("Diferenças de propósito em relação ao Zenhub",
+                 "Onde o painel conta diferente do Zenhub, e por quê?", ["ZENHUB"])
+    regras = ctx.zh_regras
+    st.dataframe(pd.DataFrame([
+        {"Regra": "Quem pontua", "Zenhub (completedPoints)": "toda issue ou PR com estimativa",
+         "Painel": f"só {', '.join(sorted(regras.tipos_pontuados))} sem filhas pontuáveis",
+         "Por quê": "PR, Épico e pai de Tasks repetem o trabalho das filhas: somar os dois conta duas vezes"},
+        {"Regra": "Até quando conta na sprint", "Zenhub (completedPoints)": "fechada até o fim da sprint",
+         "Painel": (f"fechada até {regras.prazo_fechamento} (Brasília) do dia seguinte ao último dia"
+                    if regras.prazo_fechamento else "fechada até o fim da sprint"),
+         "Por quê": "combinado do time (config.PARAMETROS · prazo_fechamento_dia_seguinte)"},
+        {"Regra": "Sprint da issue", "Zenhub (completedPoints)": "sprint atual da issue",
+         "Painel": "sprint em que ela estava quando fechou (histórico de escopo)",
+         "Por quê": "o Zenhub leva as abertas para a sprint seguinte e a sprint antiga perde o histórico"},
+        {"Regra": "Estimativa ausente", "Zenhub (completedPoints)": "0 SP (o Team Velocity com assumed estimates presume)",
+         "Painel": "0 SP e a issue aparece em 'Consistência do cadastro'",
+         "Por quê": "nenhum número é inventado"},
+        {"Regra": "Velocity média", "Zenhub (completedPoints)": "média das sprints do relatório",
+         "Painel": f"média das sprints concluídas (≥ {regras.min_sprints_media}), sem a em andamento",
+         "Por quê": "sprint em andamento tem valor parcial"},
+    ]), use_container_width=True, hide_index=True)
+    st.caption("A página ZenHub reproduz o número do Zenhub a partir do snapshot e lista, issue por issue, cada "
+               "diferença com o motivo; se a reprodução não bater com a API, o bloco fica vermelho.")
+
     layout.secao("Tratamento de dados ausentes", "O que o painel faz quando um dado não existe?")
     st.markdown("""
 - **Nenhum valor é inventado, estimado ou trocado por outra métrica.** Um indicador sem insumo aparece como
   *Indisponível*, com o motivo e o que seria preciso para calculá-lo (ex.: *CPI indisponível: Actual Cost não foi
   fornecido*).
-- **Custo real (AC) só com horas registradas.** Sem horas na aba Horas, AC, CPI, CV, ETC e EAC ficam indisponíveis —
-  o custo planejado não substitui o real.
+- **Custo real (AC) só com horas registradas de todo o time.** Sem horas na aba Horas, ou com horas de só parte dos
+  integrantes ativos da aba Planejamento, AC, CPI, CV, ETC e EAC ficam indisponíveis — o custo planejado não substitui
+  o real e um AC parcial deixaria o CPI melhor do que é.
 - **Planejado da sprint só pelo histórico do Zenhub.** Sem histórico de escopo, o planejado fica indisponível; issue
   sem estimativa conta 0 SP e é listada nas observações.
 - **Fonte fora do ar não derruba o painel:** ela aparece como *Erro* ou *Sem dados* na tabela acima e as páginas que
@@ -118,9 +143,11 @@ Confiabilidade (`src/metrics/qualidade.py`).
 
     layout.secao("Limitações conhecidas", "O que os números ainda não capturam?")
     st.markdown("""
-- O Zenhub só registra mudanças de escopo feitas **depois** do início da sprint; issues que já estavam na sprint no
-  início não têm evento. Elas contam no concluído, mas o **planejado** (linha de base) só enxerga os eventos — por isso
-  sprints aparecem com planejado 0 SP quando nada foi estimado ou movido depois da planning.
+- O Zenhub só registra mudanças de escopo feitas **depois** do início da sprint. Issues que já estavam na sprint no
+  início (sem evento) entram no planejado com a **estimativa atual**, não com a do dia da planning.
+- O relatório *Team Velocity* do Zenhub com *assumed estimates* soma estimativas presumidas para issues sem estimativa;
+  esse número não é reproduzível com dados reais. O comparável é o `completedPoints` da API (bloco *Comparação com o
+  Zenhub* na página ZenHub).
 - A coleta do **backlog completo** (todos os pipelines, prioridade e responsável) usa queries novas que precisam ser
   conferidas com `python scripts/diagnostico_zenhub.py`; se falharem, a coleta segue e o painel usa só as issues das
   sprints, avisando.

@@ -183,3 +183,31 @@ class ConciliacaoTest(unittest.TestCase):
         self.assertEqual(len(c["fora"]), 1)
         self.assertIn("10 SP fechados = 5 nas sprints concluídas + 3 na sprint em andamento + 2 fora de sprint",
                       agile.frase_conciliacao(c))
+
+
+class SprintsDaIssueTest(unittest.TestCase):
+    def test_issue_levada_aparece_em_todas_as_sprints(self):
+        snap = {"issues": {"A": issue("A", est=3), "B": issue("B", est=1, estado="CLOSED",
+                                                               fechada="2026-09-10T10:00:00Z")},
+                "sprints": [{"start_at": "2026-09-07T03:59:00Z", "issue_ids": ["A", "B"], "scope_changes": []},
+                            {"start_at": "2026-09-21T03:59:00Z", "issue_ids": ["A"], "scope_changes": []}],
+                "releases": []}
+        df, _ = agile.universo_issues(snap)
+        s = dict(zip(df["issue_id"], df["sprints"]))
+        self.assertEqual(s["A"], ["S1", "S2"])        # filtrar S1 ainda mostra A (hoje na S2)
+        self.assertEqual(s["B"], ["S1"])
+        self.assertEqual(dict(zip(df["issue_id"], df["sprint"]))["A"], "S2")
+
+
+class RiscosTest(unittest.TestCase):
+    def test_contagem_por_status_e_risco_fora_da_aba(self):
+        from src.metrics import resumo
+        r = pd.DataFrame({"id": ["R1", "R2", "R3", "R4"], "status": ["Aberto", "Materializado", "Em monitoramento",
+                                                                     "Encerrado"],
+                          "exposicao_atual": [20, 16, 9, 25]})
+        c = resumo.contagem_riscos(r)
+        self.assertEqual(c["nao_encerrados"], 3)
+        self.assertEqual(list(c["elevados"]["id"]), ["R1", "R2"])        # R4 encerrado não conta
+        self.assertIn("1 materializado", c["frase"])
+        mon = pd.DataFrame({"id_do_risco": ["R1", "R9"]})
+        self.assertEqual(resumo.riscos_fora_da_aba(r, mon), ["R9"])

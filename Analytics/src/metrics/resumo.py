@@ -57,11 +57,15 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
         out.append(_item("Qualidade", "Cobertura de testes", None, "unavailable",
                          "sem métricas do SonarCloud", "Qualidade técnica", "SONAR"))
     else:
-        s = status_meta("coverage", cob["atual"], rel_meta, True)
         ult = ctx.sonar_atual[(ctx.sonar_atual["metrica"] == "coverage") & ctx.sonar_atual["repositorio"].isin(repos)]
         abaixo = sorted(sn.nome_curto(r) for r in ult.loc[ult["valor"] < meta_c, "repositorio"])
-        out.append(_item("Qualidade", "Cobertura média", f"{num(cob['atual'], 1)}%", s,
-                         f"meta ≥ {num(meta_c)}% · abaixo: {', '.join(abaixo)}" if abaixo else f"meta ≥ {num(meta_c)}%",
+        # A meta vale por repositório: a média pode passar com repositórios abaixo, então o status
+        # é o do pior repositório (a média fica só como valor de referência).
+        s = theme.pior([status_meta("coverage", v, rel_meta, True) for v in ult["valor"]]) if not ult.empty \
+            else status_meta("coverage", cob["atual"], rel_meta, True)
+        out.append(_item("Qualidade", "Cobertura (média dos repositórios)", f"{num(cob['atual'], 1)}%", s,
+                         f"meta ≥ {num(meta_c)}% em cada repositório · {len(abaixo)} de {len(ult)} abaixo: "
+                         f"{', '.join(abaixo)}" if abaixo else f"meta ≥ {num(meta_c)}% · todos os repositórios na meta",
                          "Qualidade técnica", "SONAR"))
     dup = ctx.sonar_atual[(ctx.sonar_atual["metrica"] == "duplicated_lines_density")
                           & ctx.sonar_atual["repositorio"].isin(repos)]
@@ -101,9 +105,10 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
                          "Agile EVM", "ZENHUB"))
     else:
         u = feitas.iloc[-1]
-        out.append(_item("Entrega", f"Progresso da {alvo}", f"{pct(u['APC'])} entregue",
-                         status_indice(u["SPI"]), f"planejado até a {u['sprint']}: {pct(u['PPC'])}", "Agile EVM",
-                         "ZENHUB"))
+        out.append(_item("Entrega", f"Progresso da {alvo} (APC)", f"{pct(u['APC'])} entregue",
+                         status_indice(u["SPI"]),
+                         f"{num(u['RPC'])} de {num(u['PRP'])} SP do escopo atual da release · planejado até a "
+                         f"{u['sprint']}: {pct(u['PPC'])} do prazo", "Agile EVM", "ZENHUB"))
         out.append(_item("Entrega", f"SPI da {alvo}", num(u["SPI"], 2) if not vazio(u["SPI"]) else None,
                          status_indice(u["SPI"]), f"EV ÷ PV · meta ≥ {num(config.META_INDICE_EVM, 2)}", "Agile EVM", "CALCULADO"))
         base = u["prp_linha_de_base"]
@@ -121,7 +126,9 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
         taxa = vel.calculate_completion_rate(plan, feito)
         out.append(_item("Entrega", "Taxa de conclusão das sprints", f"{num(taxa)}%" if taxa is not None else None,
                          status_taxa(taxa, config.META_TAXA_CONCLUSAO, config.LIMITE_TAXA_CRITICO),
-                         f"SP concluídos ÷ planejados · meta ≥ {num(config.META_TAXA_CONCLUSAO)}%" if taxa is not None
+                         f"{num(feito)} de {num(plan)} SP planejados nas plannings de {', '.join(concl['sprint_label'])} "
+                         f"(issue levada de sprint conta em cada planning; não é o denominador do APC) · "
+                         f"meta ≥ {num(config.META_TAXA_CONCLUSAO)}%" if taxa is not None
                          else "planejado das sprints concluídas = 0 SP (issues sem estimativa na planning)",
                          "Gestão ágil", "ZENHUB"))
     iss = ctx.zh_issues
@@ -141,11 +148,14 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
                          f"PV até a {u['sprint']}: {brl(u['PV'], 0)}", "Agile EVM", "PLANILHA"))
         if vazio(u["CPI"]):
             out.append(_item("Custo", "CPI (custo)", None, "unavailable",
-                             "Actual Cost não foi fornecido: nenhuma hora registrada na aba Horas", "Agile EVM",
+                             f"Actual Cost indisponível: {str(u['origem_do_ac']).replace('indisponível: ', '')}",
+                             "Agile EVM",
                              "PLANILHA"))
         else:
+            h = float(feitas["horas_reais"].fillna(0).sum())
             out.append(_item("Custo", "CPI (custo)", num(u["CPI"], 2), status_indice(u["CPI"]),
-                             f"EV ÷ AC · meta ≥ {num(config.META_INDICE_EVM, 2)}", "Agile EVM", "CALCULADO"))
+                             f"EV {brl(u['EV'], 0)} ÷ AC {brl(u['AC'], 0)} ({num(h)} h registradas na aba Horas até a "
+                             f"{u['sprint']}) · meta ≥ {num(config.META_INDICE_EVM, 2)}", "Agile EVM", "CALCULADO"))
 
     # ── Riscos (PLANILHA) ──
     r = ctx.riscos
@@ -153,12 +163,19 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
         out.append(_item("Riscos", "Plano de riscos", None, "unavailable", "aba Riscos não lida", "Custos e riscos",
                          "PLANILHA"))
     else:
-        ativos = r[~r["status"].astype(str).str.lower().str.startswith(("encerr", "mitigad", "fechad"))]
-        elev = ativos[ativos["exposicao_atual"] >= 15].sort_values("exposicao_atual", ascending=False)
-        out.append(_item("Riscos", "Riscos com exposição elevada", f"{len(elev)} de {len(ativos)} abertos",
+        cont = contagem_riscos(r)
+        elev = cont["elevados"]
+        out.append(_item("Riscos", "Riscos elevados não encerrados", f"{len(elev)} de {cont['nao_encerrados']}",
                          "critical" if len(elev) >= 3 else ("warning" if len(elev) else "good"),
-                         ("maiores: " + ", ".join(f"{x.id} ({num(x.exposicao_atual)})" for x in elev.head(3).itertuples()))
-                         if len(elev) else "nenhum risco com P × I ≥ 15", "Custos e riscos", "PLANILHA"))
+                         f"{cont['frase']} · " + (("elevados: " + ", ".join(
+                             f"{x.id} ({num(x.exposicao_atual)}, {str(x.status).lower()})" for x in elev.itertuples()))
+                             if len(elev) else "nenhum com P × I ≥ 15"),
+                         "Custos e riscos", "PLANILHA"))
+        faltam = riscos_fora_da_aba(r, ctx.monitoramento)
+        if faltam:
+            out.append(_item("Riscos", "Riscos só no Monitoramento", ", ".join(faltam), "warning",
+                             "aparecem na aba Monitoramento e não na aba Riscos: cadastrar na aba Riscos",
+                             "Custos e riscos", "PLANILHA"))
     n_dec = len(ctx.decisoes) if ctx.decisoes is not None else 0
     meta_dec = {"R2": 3, "R3": 5}.get(rel_meta)
     out.append(_item("Riscos", "Decisões baseadas em dados", num(n_dec),
@@ -175,12 +192,32 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
         if not c.empty:
             t = (c["conclusao"] == "success").mean() * 100
             out.append(_item("Processo", "Sucesso da CI", f"{num(t)}%", status_taxa(t, config.META_CI_SUCESSO, config.LIMITE_CI_CRITICO),
-                             f"{int((c['conclusao'] == 'failure').sum())} falhas em {len(c)} execuções · meta ≥ 80%",
+                             f"{int((c['conclusao'] == 'failure').sum())} falhas em {len(c)} execuções · meta ≥ {num(config.META_CI_SUCESSO)}%",
                              "Integração contínua", "GITHUB"))
     df = pd.DataFrame(out)
     if not df.empty:  # None continua None (o pandas trocaria por NaN)
         df["valor"] = pd.Series([v if isinstance(v, str) else None for v in df["valor"]], index=df.index, dtype=object)
     return df
+
+
+def contagem_riscos(r: pd.DataFrame) -> dict:
+    """Contagem por status da aba Riscos (texto gerado dos dados)."""
+    st_ = r["status"].fillna("sem status").astype(str).str.strip()
+    encerrado = st_.str.lower().str.startswith(("encerr", "mitigad", "fechad"))
+    nao_enc = r[~encerrado]
+    elevados = nao_enc[pd.to_numeric(nao_enc["exposicao_atual"], errors="coerce") >= 15] \
+        .sort_values("exposicao_atual", ascending=False)
+    por = st_[~encerrado].value_counts()
+    frase = ", ".join(f"{n} {s.lower()}" for s, n in por.items())
+    return {"nao_encerrados": len(nao_enc), "elevados": elevados, "por_status": por, "frase": frase}
+
+
+def riscos_fora_da_aba(riscos: pd.DataFrame, monitoramento: pd.DataFrame) -> list[str]:
+    """IDs avaliados no Monitoramento que não existem na aba Riscos."""
+    if monitoramento is None or monitoramento.empty or "id_do_risco" not in monitoramento or "id" not in riscos:
+        return []
+    ids = set(riscos["id"].astype(str).str.strip())
+    return sorted({str(i).strip() for i in monitoramento["id_do_risco"].dropna()} - ids - {""})
 
 
 def situacao_geral(df: pd.DataFrame) -> tuple[str, str]:

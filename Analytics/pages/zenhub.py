@@ -56,7 +56,7 @@ def _filtros(ctx, f, df: pd.DataFrame) -> pd.DataFrame:
     d = filters.por_repo(df, f["repos"])
     tem_prioridade = (d["prioridade"] != "Sem prioridade").any()
     tem_resp = (d["responsavel"] != "Sem responsável").any()
-    campos = [("sprint", "Sprint"), ("release", "Release"), ("epico", "Épico"), ("situacao", "Situação"),
+    campos = [("sprints", "Sprint"), ("release", "Release"), ("epico", "Épico"), ("situacao", "Situação"),
               ("tipo", "Tipo")]
     if tem_prioridade:
         campos.append(("prioridade", "Prioridade"))
@@ -64,10 +64,13 @@ def _filtros(ctx, f, df: pd.DataFrame) -> pd.DataFrame:
         campos.append(("responsavel", "Responsável"))
     cols = st.columns(len(campos))
     for col, (campo, rotulo) in zip(cols, campos):
-        valores = sorted(d[campo].dropna().unique(), key=lambda v: (str(v).startswith("Sem "), str(v)))
-        sel = col.multiselect(rotulo, valores, key=f"zh_f_{campo}", placeholder="Todos")
+        lista = campo == "sprints"   # a issue pode ter passado por várias sprints
+        brutos = {v for vs in d[campo] for v in vs} if lista else set(d[campo].dropna().unique())
+        valores = sorted(brutos, key=lambda v: (str(v).startswith("Sem "), len(str(v)), str(v)))
+        sel = col.multiselect(rotulo, valores, key=f"zh_f_{campo}", placeholder="Todos",
+                              help="issues que passaram pela sprint (situação atual de cada uma)" if lista else None)
         if sel:
-            d = d[d[campo].isin(sel)]
+            d = d[d[campo].map(lambda vs: bool(set(vs) & set(sel)))] if lista else d[d[campo].isin(sel)]
     if not tem_prioridade or not tem_resp:
         faltam = [n for n, t in (("prioridade", tem_prioridade), ("responsável", tem_resp)) if not t]
         st.caption(f"Filtros de {' e '.join(faltam)} não exibidos: o snapshot atual não tem esse campo "
@@ -373,6 +376,34 @@ def pagina():
                    "isso não é comparável com SP. Fechada entre o fim de uma sprint e o início da próxima conta na "
                    "próxima. Só o filtro de repositório vale aqui.")
 
+    # ── comparação com o relatório do Zenhub ──
+    layout.secao("Comparação com o Zenhub", "Por que o concluído do painel difere do Zenhub?", ["ZENHUB", "CALCULADO"])
+    comp, difs = vel.comparar_com_zenhub(snap, ctx.zh_iniciadas, ctx.zh_regras, ctx.agora_utc)
+    if comp.empty:
+        layout.indisponivel("Comparação indisponível", "nenhuma sprint iniciada no snapshot.")
+    else:
+        for frase, r in zip(vel.frase_comparacao(comp, difs), comp.itertuples()):
+            layout.alerta("good" if r.reproduz else "critical", frase)
+        st.dataframe(comp, use_container_width=True, hide_index=True, column_config={
+            "sprint": "Sprint", "status": "Situação",
+            "zenhub_api": st.column_config.NumberColumn("Zenhub (API)", format="%.0f"),
+            "zenhub_reproduzido": st.column_config.NumberColumn("Zenhub reproduzido", format="%.0f"),
+            "reproduz": st.column_config.CheckboxColumn("Bate?"),
+            "painel": st.column_config.NumberColumn("Painel", format="%.0f"),
+            "diferenca": st.column_config.NumberColumn("Painel − Zenhub", format="%+.0f")})
+        if not difs.empty:
+            st.dataframe(difs.drop(columns=["fechada_em"]), use_container_width=True, hide_index=True, column_config={
+                "sprint": "Sprint", "issue": "Issue", "titulo": st.column_config.TextColumn("Título", width="large"),
+                "sp": st.column_config.NumberColumn("SP", format="%.0f"), "efeito": "No painel",
+                "motivo": st.column_config.TextColumn("Motivo", width="large"),
+                "url": st.column_config.LinkColumn("Link", display_text="abrir")})
+        st.caption("'Zenhub (API)' é o `completedPoints` de cada sprint, só com estimativas reais. 'Zenhub reproduzido' "
+                   "recalcula esse número a partir das issues do snapshot com a regra do Zenhub (issue ou PR na sprint, "
+                   "fechada entre o início e o fim, com estimativa): se não bater, o painel avisa em vermelho. "
+                   "O relatório Team Velocity com 'assumed estimates' soma estimativas presumidas para issues sem "
+                   "estimativa, que o painel não usa: por isso ele não é comparável. Regras que diferem de propósito: "
+                   "página Metodologia.")
+
     # ── qualidade do cadastro no Zenhub ──
     alertas = agile.alertas_de_dados(filters.por_repo(todas, f["repos"]), ctx.zh_regras.tipos_pontuados)
     layout.secao("Consistência do cadastro no Zenhub", "Há issues cadastradas de um jeito que distorce os números?",
@@ -392,8 +423,9 @@ def pagina():
 
     with st.expander(f"Ver as {len(d)} issues do filtro"):
         cols = {"number": "Nº", "title": "Título", "repositorio": "Repositório", "tipo": "Tipo", "pipeline": "Pipeline",
-                "situacao": "Situação", "pontos": "SP", "sprint": "Sprint", "epico": "Épico", "release": "Release",
+                "situacao": "Situação", "pontos": "SP", "sprint": "Sprint atual", "sprints_txt": "Passou pelas sprints", "epico": "Épico", "release": "Release",
                 "prioridade": "Prioridade", "responsavel": "Responsável", "url": "Link"}
+        d = d.assign(sprints_txt=d["sprints"].map(", ".join))
         t = d[[c for c in cols if c in d]].rename(columns=cols)
         t["Repositório"] = t["Repositório"].map(nome_curto)
         st.dataframe(t, use_container_width=True, hide_index=True,

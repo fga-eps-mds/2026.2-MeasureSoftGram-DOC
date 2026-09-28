@@ -116,11 +116,19 @@ def universo_issues(snap: dict | None, tipos_pontuados: set | None = None) -> tu
     df["release"] = df["issue_id"].map(rel).fillna("Sem release")
 
     # sprint: a sprint mais recente em que a issue está
-    sprint_de = {}
+    # ``sprints``: todas as sprints por onde a issue passou (está nela ou aparece no histórico de
+    # escopo). O Zenhub leva as abertas para a sprint seguinte, então filtrar pela sprint atual
+    # esconderia a S2 inteira e deixaria só as fechadas na S3.
+    sprint_de, passou = {}, {}
     for n, s in enumerate(sorted(snap.get("sprints") or [], key=lambda s: s.get("start_at") or ""), start=1):
+        ids = list(s.get("issue_ids") or []) + [e.get("issue_id") for e in s.get("scope_changes") or []
+                                                if e.get("issue_id")]
         for iid in s.get("issue_ids") or []:
             sprint_de[iid] = f"S{n}"
+        for iid in dict.fromkeys(ids):
+            passou.setdefault(iid, []).append(f"S{n}")
     df["sprint"] = df["issue_id"].map(sprint_de).fillna("Sem sprint")
+    df["sprints"] = df["issue_id"].map(lambda i: passou.get(i) or ["Sem sprint"])
     return df.reset_index(drop=True), completo
 
 

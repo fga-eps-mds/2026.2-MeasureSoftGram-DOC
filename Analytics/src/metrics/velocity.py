@@ -443,3 +443,95 @@ def calculate_completion_rate(planned, completed) -> float | None:
     except TypeError:
         return None
     return float(completed) / float(planned) * 100
+
+
+# ───────────────────────── comparação com o Zenhub ─────────────────────────
+
+def comparar_com_zenhub(snapshot: dict, sprints: pd.DataFrame, regras: Regras | None = None,
+                        agora: datetime | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Reproduz o "concluído" do Zenhub e explica, issue por issue, a diferença para o painel.
+
+    Regra do Zenhub (``Sprint.completedPoints`` da API, sem estimativas presumidas): soma a
+    estimativa de toda issue ou PR que está na sprint e foi fechada entre o início e o fim dela.
+    Devolve (resumo por sprint, diferenças por issue). Nada é ajustado: se a reprodução não
+    bater com o número da API, a coluna ``reproduz`` fica False.
+    """
+    regras = regras or Regras()
+    agora = agora or datetime.now(timezone.utc)
+    if not snapshot or sprints is None or sprints.empty:
+        return pd.DataFrame(), pd.DataFrame()
+    issues = snapshot.get("issues", {})
+    pais = ids_com_filhas(issues, regras)
+    por_id = {s["sprint_id"]: s for s in snapshot.get("sprints", [])}
+    resumo, difs = [], []
+    prazo_anterior = None
+    for r in sprints.sort_values("start_date").itertuples():
+        s = por_id.get(r.sprint_id)
+        if s is None or r.status == STATUS_FUTURA:
+            continue
+        inicio, fim = _dt(s["start_at"]), _dt(s["end_at"])
+        limite = min(fim, agora) if fim else agora
+        zh = {}
+        for iid in dict.fromkeys(s.get("issue_ids") or []):
+            i = issues.get(iid) or {}
+            quando = _dt(i.get("closed_at")) if i.get("state") == "CLOSED" else None
+            if quando is not None and inicio <= quando <= limite and i.get("estimate"):
+                zh[iid] = float(i["estimate"])
+        painel = {i: _sp((issues.get(i) or {}).get("estimate")) for i in (r.completed_ids or [])}
+        api = s.get("zenhub_completed_points")
+        reproduzido = sum(zh.values())
+        resumo.append({"sprint": r.sprint_label, "status": r.status, "zenhub_api": api,
+                       "zenhub_reproduzido": reproduzido,
+                       "reproduz": api is not None and abs(float(api) - reproduzido) < 1e-9,
+                       "painel": float(r.completed_story_points or 0), "diferenca": float(r.completed_story_points
+                                                                                          or 0) - reproduzido})
+        anterior, prazo_anterior = prazo_anterior, regras.fim_da_contagem(fim)
+        for iid in sorted(set(zh) | set(painel)):
+            if iid in zh and iid in painel:
+                continue
+            i = issues.get(iid) or {}
+            if not _sp(i.get("estimate")):
+                continue   # sem estimativa: 0 SP nos dois lados
+            quando = _dt(i.get("closed_at"))
+            if iid in zh:
+                if i.get("is_pull_request"):
+                    motivo = "pull request: o painel conta só issues"
+                elif anterior is not None and quando is not None and quando <= anterior:
+                    motivo = "fechada no prazo de fechamento da sprint anterior: o painel conta nela"
+                elif iid in pais:
+                    motivo = "pai com filhas pontuáveis: no painel quem pontua são as filhas"
+                elif i.get("issue_type") not in regras.tipos_pontuados:
+                    motivo = f"tipo {i.get('issue_type') or 'sem tipo'} não pontua no painel"
+                else:
+                    motivo = "não estava na sprint quando fechou (histórico de escopo)"
+            else:
+                if quando is not None and fim is not None and quando > fim:
+                    motivo = (f"fechada depois do fim, dentro do prazo de fechamento "
+                              f"({regras.prazo_fechamento} do dia seguinte): o Zenhub não conta")
+                elif quando is not None and inicio is not None and quando < inicio:
+                    motivo = "fechada no intervalo antes do início desta sprint: o Zenhub não conta em nenhuma"
+                else:
+                    motivo = "estava na sprint pelo histórico, mas o Zenhub já a tirou da sprint"
+            difs.append({"sprint": r.sprint_label, "issue": f"{i.get('repository', '')}#{i.get('number', '')}",
+                         "titulo": i.get("title"), "sp": _sp(i.get("estimate")),
+                         "efeito": "−" if iid in zh else "+", "motivo": motivo, "url": i.get("url"),
+                         "fechada_em": quando})
+    return pd.DataFrame(resumo), pd.DataFrame(difs)
+
+
+def frase_comparacao(resumo: pd.DataFrame, difs: pd.DataFrame) -> list[str]:
+    """Uma frase por sprint, gerada dos dados de ``comparar_com_zenhub``."""
+    def f(v):
+        return f"{float(v):.0f}" if float(v).is_integer() else f"{float(v):.1f}".replace(".", ",")
+    frases = []
+    for r in resumo.itertuples():
+        api = "sem número na API" if r.zenhub_api is None or pd.isna(r.zenhub_api) else f"{f(r.zenhub_api)} SP"
+        ok = "reproduzido" if r.reproduz else "NÃO reproduzido"
+        base = f"{r.sprint}: Zenhub {api} ({ok} pelas regras do Zenhub: {f(r.zenhub_reproduzido)}) → painel {f(r.painel)} SP"
+        d = difs[difs["sprint"] == r.sprint] if not difs.empty else difs
+        if d.empty:
+            frases.append(base + " · sem diferença.")
+            continue
+        partes = "; ".join(f"{x.efeito}{f(x.sp)} {x.issue.split('-')[-1]} ({x.motivo.split(':')[0]})" for x in d.itertuples())
+        frases.append(f"{base} · {partes}.")
+    return frases

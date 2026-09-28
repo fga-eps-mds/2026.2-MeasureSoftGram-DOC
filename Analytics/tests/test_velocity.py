@@ -297,5 +297,34 @@ class ReleaseTest(unittest.TestCase):
         self.assertEqual(v.associar_release(s4, {"A"}, rels)[1:], ("R2", "plano de ensino (datas de entrega)"))
 
 
+class ComparacaoZenhubTest(unittest.TestCase):
+    def test_reproduz_o_zenhub_e_explica_cada_diferenca(self):
+        dentro = t(S1_INI, 2)
+        issues = {"T": issue("T", 3, estado="CLOSED", fechada=dentro),
+                  "PR": issue("PR", 2, tipo=None, estado="CLOSED", fechada=dentro, pr=True),
+                  "US": issue("US", 8, tipo="Feature", estado="CLOSED", fechada=dentro),
+                  "F": issue("F", 1, estado="CLOSED", fechada=dentro, pai="US"),
+                  "P": issue("P", 5, estado="CLOSED", fechada=(S1_FIM + timedelta(hours=4)).isoformat())}
+        s1 = sprint("S1", S1_INI, S1_FIM, ["T", "PR", "US", "F", "P"], [])
+        s1["zenhub_completed_points"] = 14.0                           # T + PR + US + F
+        snap = {"sprints": [s1], "issues": issues, "releases": []}
+        regras = v.Regras(prazo_fechamento="08:00")
+        agora = S1_FIM + timedelta(days=1)
+        df = v.calculate_velocity(snap, regras, agora=agora)
+        resumo, difs = v.comparar_com_zenhub(snap, df, regras, agora)
+        r = resumo.iloc[0]
+        self.assertTrue(r["reproduz"])
+        self.assertEqual(r["zenhub_reproduzido"], 14)
+        self.assertEqual(r["painel"], 9)                                  # T + F + P
+        motivos = dict(zip(difs["issue"].str.split("#").str[0].str[-2:], difs["motivo"]))
+        self.assertEqual(set(difs["sp"]), {2, 8, 5})
+        self.assertTrue(any("pull request" in m for m in difs["motivo"]))
+        self.assertTrue(any("pai com filhas" in m for m in difs["motivo"]))
+        self.assertTrue(any("prazo de fechamento" in m for m in difs["motivo"]))
+        self.assertIsNotNone(motivos)
+        self.assertEqual(v.frase_comparacao(resumo, difs)[0].split(" · ")[0],
+                         "S1: Zenhub 14 SP (reproduzido pelas regras do Zenhub: 14) → painel 9 SP")
+
+
 if __name__ == "__main__":
     unittest.main()

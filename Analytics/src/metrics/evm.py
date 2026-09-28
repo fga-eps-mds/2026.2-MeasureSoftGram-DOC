@@ -16,7 +16,8 @@ Para cada sprint ``n`` de uma release com ``L`` sprints:
   **EV** = APC × BAC.
 * **AC**: horas reais (aba Horas) × custo/hora (aba Custos), acumulado. Se
   alguma sprint iniciada da release não tem horas registradas, o AC fica
-  **indisponível** a partir dela — nunca é trocado pelo custo planejado — e
+  **indisponível** a partir dela (também quando só parte dos integrantes ativos da aba
+  Planejamento registrou horas, porque o AC sairia subestimado) — nunca é trocado pelo custo planejado — e
   CPI, CV, ETC e EAC ficam indisponíveis junto. ``origem_do_ac`` diz o motivo.
 * **SPI** = EV ÷ PV · **CPI** = EV ÷ AC · **CV**, **SV**, **ETC** = (BAC − EV) ÷ CPI,
   **EAC** = AC + ETC · **RD** = início + duração ÷ SPI.
@@ -54,6 +55,27 @@ def custo_da_sprint(inicio: pd.Timestamp, fim: pd.Timestamp, plano: pd.DataFrame
     p = plano.dropna(subset=["semana", "custo"])
     semanas = p[(p["semana"] >= inicio) & (p["semana"] <= fim)]
     return float(semanas["custo"].sum()) if not semanas.empty else NAN
+
+
+def integrantes_com_horas(label: str, inicio: pd.Timestamp, horas: pd.DataFrame) -> int:
+    """Quantos integrantes têm horas (> 0) registradas na sprint (aba Horas)."""
+    if horas is None or horas.empty or "horas" not in horas or "integrante" not in horas:
+        return 0
+    h = horas[pd.to_numeric(horas["horas"], errors="coerce").fillna(0) > 0]
+    if "inicio_da_sprint" in h and h["inicio_da_sprint"].notna().any():
+        h = h[h["inicio_da_sprint"] == inicio]
+    else:
+        numero = int(label.lstrip("S")) if label.lstrip("S").isdigit() else None
+        h = h[h["sprint"] == numero] if numero is not None and "sprint" in h else h.iloc[0:0]
+    return int(h["integrante"].astype(str).str.strip().nunique())
+
+
+def integrantes_planejados(inicio: pd.Timestamp, fim: pd.Timestamp, plano: pd.DataFrame) -> float:
+    """Maior número de integrantes ativos (aba Planejamento) nas semanas da sprint."""
+    if plano is None or plano.empty or "integrantes" not in plano:
+        return NAN
+    p = plano[(plano["semana"] >= inicio) & (plano["semana"] <= fim)]["integrantes"].dropna()
+    return float(p.max()) if not p.empty else NAN
 
 
 def horas_da_sprint(label: str, inicio: pd.Timestamp, horas: pd.DataFrame) -> float:
@@ -118,7 +140,13 @@ def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: p
             prp_ant = prp
             apc = _div(rpc, prp)
             h = horas_da_sprint(r.sprint_label, r.inicio, horas)
-            if h > 0 and custo_hora:
+            com_horas = integrantes_com_horas(r.sprint_label, r.inicio, horas)
+            ativos = integrantes_planejados(r.inicio, r.fim, plano)
+            if h > 0 and custo_hora and not math.isnan(ativos) and com_horas < ativos:
+                # horas de só parte do time: o AC sairia subestimado e o CPI melhor do que é
+                custo_real, origem = NAN, (f"indisponível: horas de {com_horas} de {ativos:.0f} integrantes ativos na "
+                                           f"{r.sprint_label} (aba Horas × aba Planejamento)")
+            elif h > 0 and custo_hora:
                 custo_real, origem = h * custo_hora, "horas reais × custo/hora"
             elif not custo_hora:
                 custo_real, origem = NAN, "indisponível: custo/hora não informado (aba Custos)"
@@ -141,7 +169,7 @@ def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: p
             linhas.append({**linha, "PP": r.planned_story_points, "PC": r.completed_story_points, "PA": pa,
                            "PRP": prp, "RPC": rpc, "APC": apc, "horas_reais": h, "AC": ac,
                            "origem_do_ac": origem, "EV": ev, "CV": ev - ac, "SV": ev - pv, "CPI": cpi,
-                           "SPI": spi, "ETC": etc, "EAC": ac + etc if not math.isnan(etc) else NAN, "RD": rd,
+                           "SPI": spi, "integrantes_com_horas": com_horas, "integrantes_ativos": ativos, "ETC": etc, "EAC": ac + etc if not math.isnan(etc) else NAN, "RD": rd,
                            "issues": len(escopo)})
     return pd.DataFrame(linhas)
 

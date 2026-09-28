@@ -14,6 +14,7 @@ from src.components import charts, filters, layout
 from src.components.kpi import kpi
 from src.data import planilha as pl
 from src.metrics.calculations import brl, data_br, num, vazio
+from src.metrics import resumo
 
 NIVEIS = ["Elevado", "Médio", "Baixo"]
 COR_NIVEL = alt.Scale(domain=NIVEIS, range=[theme.RISCO["Elevado"], theme.RISCO["Médio"], theme.RISCO["Baixo"]])
@@ -203,7 +204,8 @@ def _riscos(ctx, f):
     layout.secao("Situação dos riscos", "Quantos riscos estão abertos e quão graves eles são?", ["PLANILHA"])
     k = st.columns(5)
     with k[0]:
-        kpi("Riscos abertos", num(len(ativos)), "PLANILHA", nota=f"{len(r)} riscos registrados")
+        kpi("Não encerrados", num(len(ativos)), "PLANILHA",
+            nota=f"{resumo.contagem_riscos(r)['frase'] or 'nenhum'} · {len(r)} registrados")
     with k[1]:
         kpi("Mitigados / encerrados", num(int(baixo.str.startswith(("encerr", "mitigad", "fechad")).sum())), "PLANILHA")
     with k[2]:
@@ -216,6 +218,10 @@ def _riscos(ctx, f):
         s = int((ativos["responsavel"].astype(str).str.strip() == "").sum()) if "responsavel" in ativos else None
         kpi("Sem responsável", num(s) if s is not None else None, "PLANILHA",
             status=None if s is None else ("good" if s == 0 else "warning"))
+
+    for rid in resumo.riscos_fora_da_aba(ctx.riscos, ctx.monitoramento):
+        layout.alerta("warning", f"{rid} tem avaliação na aba Monitoramento, mas não existe na aba Riscos: "
+                                 "o painel não o conta até ser cadastrado lá.", "PLANILHA")
 
     layout.secao("Matriz de probabilidade × impacto", "Quais riscos têm maior impacto?", ["PLANILHA"])
     e, d = st.columns([1.1, 1])

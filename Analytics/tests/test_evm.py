@@ -87,6 +87,15 @@ class AgileEvmTest(unittest.TestCase):
         self.assertTrue(math.isnan(r1.loc[1, "AC"]))
         self.assertIn("S2", r1.loc[1, "origem_do_ac"])
 
+    def test_horas_de_parte_do_time_nao_viram_ac(self):
+        self.plano["integrantes"] = 2.0                                  # 2 ativos por semana
+        horas = pd.DataFrame({"sprint": [1, 1, 2], "integrante": ["Ana", "Bia", "Ana"], "horas": [2.0, 3.0, 1.0]})
+        r1 = self.calc(horas, custo_hora=10.0)
+        r1 = r1[r1["release"] == "R1"].reset_index(drop=True)
+        self.assertEqual(r1.loc[0, "AC"], 50)                            # S1: os 2 registraram
+        self.assertTrue(math.isnan(r1.loc[1, "AC"]))                     # S2: só 1 de 2
+        self.assertIn("1 de 2 integrantes", r1.loc[1, "origem_do_ac"])
+
     def test_formulas_basicas(self):
         horas = pd.DataFrame({"sprint": [1, 2], "horas": [2.0, 1.0]})
         u = self.calc(horas, custo_hora=10.0).iloc[1]
