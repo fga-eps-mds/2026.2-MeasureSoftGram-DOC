@@ -1,0 +1,88 @@
+name: Coleta de dados do dashboard
+
+# Atualiza sozinho os dados do dashboard e commita em Analytics/data/:
+#   - Zenhub (sprints, pontos, backlog)   -> Analytics/data/zenhub/velocity/
+#   - SonarCloud (bugs, code smells, Quality Gate, histórico...) -> Analytics/data/sonar/
+# O Streamlit Community Cloud republica o dashboard a cada commit na main.
+#
+# Quando roda:
+#   - a cada push na main (menos os commits de dados, para não entrar em laço);
+#   - 3 vezes por dia (08h, 14h e 20h em Brasília), mesmo sem commit;
+#   - na mão: Actions > Coleta de dados do dashboard > Run workflow.
+#
+# Pré-requisitos (uma vez só):
+#   1. Settings > Secrets and variables > Actions > secret ZENHUB_API_KEY
+#      (SONAR_TOKEN é opcional: os projetos do SonarCloud são públicos).
+#   2. Settings > Actions > General > Workflow permissions > "Read and write permissions".
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "Analytics/data/**"        # commits só de dados (ex.: metrics.yml dos outros repositórios) não disparam
+  schedule:
+    - cron: "7 11,17,23 * * *"   # 08:07, 14:07 e 20:07 em Brasília (UTC-3)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: coleta-dados
+  cancel-in-progress: false
+
+jobs:
+  coletar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências
+        run: pip install pandas requests
+
+      - name: Coletar do Zenhub
+        id: zenhub
+        continue-on-error: true      # sem a chave ou com o Zenhub fora do ar, a coleta do Sonar segue
+        working-directory: Analytics
+        env:
+          ZENHUB_API_KEY: ${{ secrets.ZENHUB_API_KEY }}
+          ZENHUB_WORKSPACE_ID: ${{ vars.ZENHUB_WORKSPACE_ID }}
+        run: |
+          if [ -z "$ZENHUB_API_KEY" ]; then
+            echo "::warning::Secret ZENHUB_API_KEY não configurado: coleta do Zenhub pulada."
+            exit 1
+          fi
+          python scripts/coleta_velocity.py
+
+      - name: Coletar do SonarCloud
+        id: sonar
+        continue-on-error: true
+        working-directory: Analytics
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: python scripts/coleta_sonar.py
+
+      - name: Testes dos cálculos
+        working-directory: Analytics
+        run: python -m unittest discover -s tests
+
+      - name: Commitar os dados
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Analytics/data/zenhub Analytics/data/sonar
+          if git diff --cached --quiet; then echo "Sem dados novos"; exit 0; fi
+          git commit -m "chore(dados): coleta automática do Zenhub e do SonarCloud"
+          git pull --rebase origin main
+          git push
+
+      - name: Resumo
+        if: always()
+        run: |
+          echo "### Coleta de dados" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Zenhub: ${{ steps.zenhub.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- SonarCloud: ${{ steps.sonar.outcome }}" >> "$GITHUB_STEP_SUMMARY"

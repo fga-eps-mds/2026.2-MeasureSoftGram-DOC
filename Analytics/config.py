@@ -67,6 +67,7 @@ SONAR_BUSCA = "2026.2-MeasureSoftGram"
 
 RELEASES = {"R1": "2026-09-28", "R2": "2026-10-26", "R3": "2026-11-30"}
 INICIO_SEMESTRE = "2026-08-24"
+RELEASE_FINAL = "2026-12-07"   # Release Final (aceitação e defesas orais): nenhum prazo passa daqui
 
 # Metas de qualidade por release (critérios enviados pelo professor, ver
 # docs/disciplina/avaliacao.mdx). Metas de gestão: SPI e CPI >= 0,95.

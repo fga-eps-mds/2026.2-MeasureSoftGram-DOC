@@ -10,7 +10,7 @@ Rodar:
     pip install -r requirements.txt
     streamlit run app.py
 
-Publicado no Streamlit Community Cloud: https://20262-measuresoftgram-doc-fchaemxpepymufmckz9yyy.streamlit.app/
+Publicado no Streamlit Community Cloud: https://20262-measuresoftgram-doc.streamlit.app/
 """
 
 from __future__ import annotations

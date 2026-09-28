@@ -6,6 +6,8 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+import config
+
 from src import theme
 from src.components import charts, layout
 from src.components.kpi import kpi
@@ -38,7 +40,8 @@ def pagina():
         ("SV · CV", "cálculo", "SV = EV − PV · CV = EV − AC"),
         ("SPI · CPI", "cálculo", "SPI = EV ÷ PV · CPI = EV ÷ AC · 1,0 = no plano; meta ≥ 0,95"),
         ("ETC · EAC", "cálculo", "ETC = (BAC − EV) ÷ CPI · EAC = AC + ETC"),
-        ("Término estimado", "cálculo", "início da release + duração ÷ SPI"),
+        ("Término estimado", "cálculo", "início da release + duração ÷ SPI (projeção no ritmo atual); se passar da "
+         "Release Final (07/12) aparece como \"após 07/12\" — o prazo não se estende, a projeção mostra o atraso"),
     ])
     e = ctx.evm
     if e is None or e.empty:
@@ -127,9 +130,19 @@ def pagina():
         kpi("Planejado × realizado", f"{pct(u['PPC'])} × {pct(u['APC'])}", "CALCULADO",
             status=status_indice(u["SPI"]), nota="% do prazo decorrido (PPC) × % do escopo entregue (APC)")
     with linha3[3]:
-        kpi("Término estimado", data_br(u["RD"]) if not vazio(u["RD"]) else None, "CALCULADO",
-            nota=f"entrega planejada {data_br(d['fim_da_sprint'].max())}" if not vazio(u["RD"])
-            else "Indisponível: SPI zero ou inexistente.")
+        entrega = d["fim_da_sprint"].max()
+        final = pd.Timestamp(config.RELEASE_FINAL)
+        if vazio(u["RD"]):
+            kpi("Término estimado", None, "CALCULADO", nota="Indisponível: SPI zero ou inexistente.")
+        elif u["RD"] > final:
+            # Projeção, não prazo: no ritmo atual a release só terminaria depois do fim do semestre.
+            kpi("Término estimado", f"após {data_br(final)}", "CALCULADO", status="critical",
+                nota=f"no ritmo atual (SPI {num(u['SPI'], 2)}) terminaria em {data_br(u['RD'])}, depois da Release "
+                     f"Final; entrega planejada {data_br(entrega)}")
+        else:
+            kpi("Término estimado", data_br(u["RD"]), "CALCULADO",
+                status="good" if u["RD"] <= entrega else "warning",
+                nota=f"entrega planejada {data_br(entrega)}")
     if not vazio(u["SPI"]):
         st.markdown(f"**Leitura:** até a {u['sprint']}, a {rel} deveria ter entregue **{pct(u['PPC'])}** do escopo e "
                     f"entregou **{pct(u['APC'])}** ({num(u['RPC'])} de {num(u['PRP'])} SP)."

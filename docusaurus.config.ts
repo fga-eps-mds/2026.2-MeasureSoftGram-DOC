@@ -98,7 +98,7 @@ const config: Config = {
         },
         {
           // Dashboard Streamlit no Streamlit Community Cloud (Analytics/app.py).
-          href: 'https://20262-measuresoftgram-doc-fchaemxpepymufmckz9yyy.streamlit.app/',
+          href: 'https://20262-measuresoftgram-doc.streamlit.app/',
           label: 'Dashboard',
           position: 'left',
         },
@@ -126,7 +126,7 @@ const config: Config = {
             {label: 'Metodologia', to: '/docs/planejamento/metodologia'},
             {label: 'Sprints', to: '/docs/sprints'},
             {label: 'Métricas', to: '/docs/metricas'},
-            {label: 'Dashboard analítico', href: 'https://20262-measuresoftgram-doc-fchaemxpepymufmckz9yyy.streamlit.app/'},
+            {label: 'Dashboard analítico', href: 'https://20262-measuresoftgram-doc.streamlit.app/'},
           ],
         },
         {

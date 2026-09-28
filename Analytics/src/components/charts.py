@@ -30,13 +30,28 @@ def finalizar(chart, titulo: str | None = None, subtitulo: str | None = None):
                             tickColor=theme.INK["axis"], labelColor=theme.INK["muted"],
                             titleColor=theme.INK["secondary"], labelFontSize=11, titleFontSize=11,
                             titleFontWeight=500)
+            .configure_axisY(labelLimit=220)            # rótulo longo é cortado com "…" (o nome inteiro fica no tooltip)
+            .configure_scale(bandPaddingInner=0.25)     # barras sempre com espaço entre si, em qualquer altura
             .configure_legend(labelColor=theme.INK["secondary"], titleColor=theme.INK["secondary"],
                               labelFontSize=11, titleFontSize=11, orient="top", symbolStrokeWidth=2))
 
 
+# Espaço que título, subtítulo, legenda e eixo x ocupam. O Streamlit encaixa o
+# gráfico inteiro na altura pedida, então sem esta folga a área das barras
+# encolhe e os rótulos do eixo y se sobrepõem.
+FOLGA = 110
+
+
+def altura_categorias(n: int, passo: int = 26, minimo: int = 90) -> int:
+    """Altura da área de plotagem para ``n`` categorias num gráfico de barras horizontais."""
+    return max(minimo, int(n) * passo)
+
+
 def mostrar(chart, titulo: str, subtitulo: str, dados: pd.DataFrame | None = None, nota: str | None = None,
             altura: int = 300) -> None:
-    st.altair_chart(finalizar(chart.properties(height=altura), titulo, subtitulo), use_container_width=True, theme=None)
+    """``altura`` = área útil do gráfico (as barras); a folga do título e da legenda é somada aqui."""
+    st.altair_chart(finalizar(chart.properties(height=altura + FOLGA), titulo, subtitulo), use_container_width=True,
+                    theme=None)
     if nota:
         st.caption(nota)
     if dados is not None:

@@ -195,7 +195,7 @@ def carregar() -> Contexto:
         else:
             ctx.fontes.append(Fonte("SONAR", "API do SonarCloud (data/sonar/)", "sem dados",
                                     mensagem="Ainda não coletado: rode python scripts/coleta_sonar.py "
-                                             "(ou o workflow sonar-coleta.yml)."))
+                                             "(ou o workflow coleta-dados.yml)."))
     except Exception as erro:  # noqa: BLE001 — a fonte cai, o dashboard não
         _registrar_erro(ctx, "SONAR", "SonarCloud", erro)
 

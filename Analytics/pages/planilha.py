@@ -140,13 +140,13 @@ def _custos(ctx, f):
                 cat = pd.concat([cat, pd.DataFrame([{"categoria": "Infraestrutura (deploy, domínio)",
                                                      "valor": c.get("infra_semana") * len(plano)}])], ignore_index=True)
             cat["texto"] = cat["valor"].map(brl)
-            b = (alt.Chart(cat).mark_bar(size=18, cornerRadiusEnd=3, color=theme.SERIES[0])
+            b = (alt.Chart(cat).mark_bar(cornerRadiusEnd=3, color=theme.SERIES[0])
                  .encode(y=alt.Y("categoria:N", sort="-x", title=None, axis=alt.Axis(labelLimit=240)),
                          x=alt.X("valor:Q", title="R$ no semestre"),
                          tooltip=[alt.Tooltip("categoria:N", title="Categoria"), alt.Tooltip("valor:Q", title="R$", format=",.2f")]))
             rot = b.mark_text(align="left", dx=4, fontSize=11, color=theme.INK["secondary"]).encode(text="texto:N")
             charts.mostrar(b + rot, "Custo planejado por categoria", "R$ no semestre", cat[["categoria", "valor"]],
-                           nota="Infraestrutura é zero: deploy no LAPPIS e documentação no GitHub Pages.", altura=190)
+                           nota="Infraestrutura é zero: deploy no LAPPIS e documentação no GitHub Pages.", altura=charts.altura_categorias(len(cat)))
         with d:
             rec = pl.custo_por_recurso(ctx.plano_bruto, c.get("custo_membro_semana"))
             if rec.empty:
@@ -156,7 +156,7 @@ def _custos(ctx, f):
                 if not horas.empty and custo_hora and "integrante" in horas:
                     hr = horas.groupby("integrante")["horas"].sum() * custo_hora
                     por["realizado"] = por["integrante"].map(hr)
-                b = (alt.Chart(por).mark_bar(size=10, cornerRadiusEnd=2, color=theme.SERIES[0])
+                b = (alt.Chart(por).mark_bar(cornerRadiusEnd=2, color=theme.SERIES[0])
                      .encode(y=alt.Y("integrante:N", sort="-x", title=None, axis=alt.Axis(labelLimit=200)),
                              x=alt.X("planejado:Q", title="R$ planejado no semestre"),
                              tooltip=[alt.Tooltip("integrante:N"), alt.Tooltip("semanas:Q", title="Semanas ativas"),
@@ -164,7 +164,7 @@ def _custos(ctx, f):
                 charts.mostrar(b, "Custo planejado por integrante", "R$ no semestre · semanas ativas × custo semanal",
                                por, nota=None if "realizado" in por else
                                "Custo realizado por integrante indisponível: nenhuma hora registrada.",
-                               altura=max(200, 14 * len(por)))
+                               altura=charts.altura_categorias(len(por), 18))
 
     if not ctx.custos_df.empty:
         layout.tabela(ctx.custos_df.drop(columns=["chave"], errors="ignore"), "Ver as premissas de custo (aba Custos)")
@@ -251,23 +251,23 @@ def _riscos(ctx, f):
     e, d = st.columns(2)
     with e:
         pn = ativos.groupby("nivel_calc", as_index=False).size().rename(columns={"size": "riscos"})
-        b = (alt.Chart(pn).mark_bar(size=26, cornerRadiusEnd=3, stroke=theme.INK["axis"], strokeWidth=1)
+        b = (alt.Chart(pn).mark_bar(cornerRadiusEnd=3, stroke=theme.INK["axis"], strokeWidth=1)
              .encode(y=alt.Y("nivel_calc:N", sort=NIVEIS, title=None), x=alt.X("riscos:Q", title="Riscos abertos"),
                      color=alt.Color("nivel_calc:N", scale=COR_NIVEL, legend=None),
                      tooltip=[alt.Tooltip("nivel_calc:N", title="Nível"), alt.Tooltip("riscos:Q", title="Riscos")]))
         rot = b.mark_text(align="left", dx=4, fontSize=11, color=theme.INK["secondary"]).encode(
             text="riscos:Q", color=alt.value(theme.INK["secondary"]))
-        charts.mostrar(b + rot, "Riscos abertos por severidade", "quantidade · nível pela exposição P × I", pn, altura=150)
+        charts.mostrar(b + rot, "Riscos abertos por severidade", "quantidade · nível pela exposição P × I", pn, altura=charts.altura_categorias(len(pn), 34))
     with d:
         pc = ativos.groupby(["categoria", "nivel_calc"], as_index=False).size().rename(columns={"size": "riscos"})
-        b = (alt.Chart(pc).mark_bar(size=18, stroke=theme.INK["surface"], strokeWidth=2)
+        b = (alt.Chart(pc).mark_bar(stroke=theme.INK["surface"], strokeWidth=2)
              .encode(y=alt.Y("categoria:N", sort="-x", title=None), x=alt.X("riscos:Q", title="Riscos abertos", stack=True),
                      color=alt.Color("nivel_calc:N", title="Nível", scale=COR_NIVEL, sort=NIVEIS),
                      order=alt.Order("nivel_calc:N", sort="ascending"),
                      tooltip=[alt.Tooltip("categoria:N", title="Categoria"), alt.Tooltip("nivel_calc:N", title="Nível"),
                               alt.Tooltip("riscos:Q", title="Riscos")]))
         charts.mostrar(b, "Riscos abertos por categoria", "quantidade · categorias da EAR", pc,
-                       altura=max(150, 30 * pc["categoria"].nunique()))
+                       altura=charts.altura_categorias(pc["categoria"].nunique(), 30))
 
     layout.secao("Evolução dos riscos", "Estamos acumulando riscos ou reduzindo a exposição?", ["PLANILHA"])
     m = ctx.monitoramento
@@ -277,7 +277,7 @@ def _riscos(ctx, f):
         m = m.dropna(subset=["exposicao"]).assign(nivel=lambda x: x["exposicao"].map(_nivel))
         m = m[m["id_do_risco"].isin(r["id"])]
         por = m.groupby(["sprint", "nivel"], as_index=False).size().rename(columns={"size": "riscos"})
-        b = (alt.Chart(por).mark_bar(size=30, stroke=theme.INK["surface"], strokeWidth=2)
+        b = (alt.Chart(por).mark_bar(stroke=theme.INK["surface"], strokeWidth=2)
              .encode(x=alt.X("sprint:O", title="Sprint avaliada", axis=alt.Axis(labelAngle=0)),
                      y=alt.Y("riscos:Q", title="Riscos avaliados", stack=True),
                      color=alt.Color("nivel:N", title="Nível", scale=COR_NIVEL, sort=NIVEIS),

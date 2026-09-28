@@ -36,8 +36,8 @@ def pagina():
     st.markdown(f"""
 | Fonte | Etiqueta | Usada para | Como chega ao painel | Atualização |
 |---|---|---|---|---|
-| **SonarCloud** | {layout.etiqueta('SONAR')} | qualidade técnica: cobertura, duplicação, bugs, vulnerabilidades, code smells, hotspots, dívida técnica, ratings, Quality Gate, testes | `metrics.yml` de cada repositório → `data/*.json`; API do SonarCloud → `scripts/coleta_sonar.py` → `data/sonar/` | a cada execução do pipeline; API diária (workflow `sonar-coleta.yml`) |
-| **Zenhub** | {layout.etiqueta('ZENHUB')} | gestão ágil: sprints, story points, velocity, backlog, pipelines, épicos, releases, throughput | API GraphQL → `scripts/coleta_velocity.py` → `data/zenhub/velocity/` | diária (workflow `zenhub-velocity.yml`) ou botão na página do Zenhub |
+| **SonarCloud** | {layout.etiqueta('SONAR')} | qualidade técnica: cobertura, duplicação, bugs, vulnerabilidades, code smells, hotspots, dívida técnica, ratings, Quality Gate, testes | `metrics.yml` de cada repositório → `data/*.json`; API do SonarCloud → `scripts/coleta_sonar.py` → `data/sonar/` | a cada execução do pipeline; API diária (workflow `coleta-dados.yml`) |
+| **Zenhub** | {layout.etiqueta('ZENHUB')} | gestão ágil: sprints, story points, velocity, backlog, pipelines, épicos, releases, throughput | API GraphQL → `scripts/coleta_velocity.py` → `data/zenhub/velocity/` | diária (workflow `coleta-dados.yml`) ou botão na página do Zenhub |
 | **Planilha** | {layout.etiqueta('PLANILHA')} | só o que não existe nas outras: custos, time por semana, horas, riscos, monitoramento, decisões | abas publicadas no Google em CSV (`config.PLANILHAS`); sem cópia local | a cada {config.CACHE_PLANILHAS_S // 60} min (local) ou a cada deploy (GitHub Pages) |
 | **GitHub** | {layout.etiqueta('GITHUB')} | processo: execuções e resultado da CI | `metrics.yml` → `GitHub_API-Runs-*.json` | a cada execução do pipeline |
 | **Calculado** | {layout.etiqueta('CALCULADO')} | indicadores derivados (EVM, variações, status) | `src/metrics/` — funções puras, com testes em `tests/` | a cada abertura do painel |

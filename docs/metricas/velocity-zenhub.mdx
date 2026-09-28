@@ -6,7 +6,7 @@ sidebar_position: 3
 
 # Velocity pela API do Zenhub
 
-A aba **Projeto → Velocity (Zenhub)** do [dashboard](https://20262-measuresoftgram-doc-fchaemxpepymufmckz9yyy.streamlit.app/) mostra,
+A aba **Projeto → Velocity (Zenhub)** do [dashboard](https://20262-measuresoftgram-doc.streamlit.app/) mostra,
 por sprint, os story points **planejados** e **concluídos**, a quantidade de
 issues, a release e a **Average Velocity** das sprints concluídas. Tudo vem da
 API GraphQL pública do Zenhub; nenhum número é digitado ou simulado.
@@ -24,7 +24,7 @@ flowchart LR
 
 | Onde roda | Quem chama a API | Chave |
 | --- | --- | --- |
-| GitHub Actions (`zenhub-velocity.yml`, diário) | `scripts/coleta_velocity.py` | secret `ZENHUB_API_KEY` |
+| GitHub Actions (`coleta-dados.yml`, a cada push na main e 3×/dia) | `scripts/coleta_velocity.py` | secret `ZENHUB_API_KEY` |
 | Máquina do time (`streamlit run app.py`) | botão **Atualizar dados** ou o script | `Analytics/.env` |
 | Streamlit Community Cloud (app publicado) | ninguém: só lê o último snapshot | nenhuma |
 
@@ -147,5 +147,5 @@ python -m unittest discover -s tests -v
 ```
 
 No GitHub: criar o secret `ZENHUB_API_KEY` em *Settings → Secrets and variables →
-Actions*. O workflow `zenhub-velocity.yml` roda todo dia, commita o snapshot e
-dispara o deploy.
+Actions*. O workflow `coleta-dados.yml` roda a cada push na `main` e 3 vezes por dia, commita
+o snapshot e o Streamlit Cloud republica o dashboard sozinho.

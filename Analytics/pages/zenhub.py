@@ -28,7 +28,7 @@ def _sp(v) -> str:
 def _botao_atualizar(ctx) -> None:
     """Coleta nova pela API (só rodando localmente com a chave no .env)."""
     if sys.platform == "emscripten":
-        st.caption("Na versão publicada os dados do Zenhub são atualizados pelo workflow `zenhub-velocity.yml`.")
+        st.caption("Na versão publicada os dados do Zenhub são atualizados pelo workflow `coleta-dados.yml`.")
         return
     from src.zenhub.client import carregar_env, chave_do_ambiente
     from src.data.contexto import RAIZ
@@ -177,7 +177,7 @@ def pagina():
     if por_pipe.empty:
         st.caption("Sem issues para os filtros selecionados.")
     else:
-        barras = (alt.Chart(por_pipe).mark_bar(size=18, cornerRadiusEnd=3, stroke=theme.INK["surface"], strokeWidth=1)
+        barras = (alt.Chart(por_pipe).mark_bar(cornerRadiusEnd=3, stroke=theme.INK["surface"], strokeWidth=1)
                   .encode(y=alt.Y("pipeline:N", sort=ordem_pipe, title=None),
                           x=alt.X("itens:Q", title="Issues"),
                           color=alt.Color("situacao:N", title="Situação", scale=COR_SIT,
@@ -185,13 +185,13 @@ def pagina():
                           tooltip=[alt.Tooltip("pipeline:N", title="Pipeline"), alt.Tooltip("situacao:N", title="Situação"),
                                    alt.Tooltip("itens:Q", title="Issues"), alt.Tooltip("pontos:Q", title="SP", format=".0f")]))
         charts.mostrar(barras, "Issues por pipeline", "quantidade de issues · situação atual no quadro",
-                       por_pipe, altura=max(140, 28 * por_pipe["pipeline"].nunique()))
+                       por_pipe, altura=charts.altura_categorias(por_pipe["pipeline"].nunique()))
         e, dd = st.columns(2)
         for alvo, campo, titulo in ((e, "epico", "Issues por épico"), (dd, "release", "Issues por release")):
             with alvo:
                 dist = agile.distribuicao(d, campo)
                 ordem = (dist.groupby(campo)["itens"].sum().sort_values(ascending=False).index.tolist())
-                b = (alt.Chart(dist).mark_bar(size=14, stroke=theme.INK["surface"], strokeWidth=1)
+                b = (alt.Chart(dist).mark_bar(stroke=theme.INK["surface"], strokeWidth=1)
                      .encode(y=alt.Y(f"{campo}:N", sort=ordem, title=None,
                                      axis=alt.Axis(labelLimit=260)),
                              x=alt.X("itens:Q", title="Issues"),
@@ -200,7 +200,7 @@ def pagina():
                              tooltip=[alt.Tooltip(f"{campo}:N", title=titulo.split()[-1].capitalize()),
                                       alt.Tooltip("situacao:N", title="Situação"), alt.Tooltip("itens:Q", title="Issues")]))
                 charts.mostrar(b, titulo, "quantidade de issues por situação", dist,
-                               altura=max(140, 24 * dist[campo].nunique()))
+                               altura=charts.altura_categorias(dist[campo].nunique()))
         e, dd = st.columns(2)
         campos_extra = [("tipo", "Issues por tipo")]
         if (d["prioridade"] != "Sem prioridade").any():
@@ -208,13 +208,13 @@ def pagina():
         for alvo, (campo, titulo) in zip((e, dd), campos_extra):
             with alvo:
                 dist = agile.distribuicao(d, campo)
-                b = (alt.Chart(dist).mark_bar(size=14, stroke=theme.INK["surface"], strokeWidth=1)
+                b = (alt.Chart(dist).mark_bar(stroke=theme.INK["surface"], strokeWidth=1)
                      .encode(y=alt.Y(f"{campo}:N", sort="-x", title=None), x=alt.X("itens:Q", title="Issues"),
                              color=alt.Color("situacao:N", title="Situação", scale=COR_SIT,
                                              sort=SIT + [agile.NAO_CLASSIFICADO]),
                              tooltip=[alt.Tooltip(f"{campo}:N"), alt.Tooltip("situacao:N"), alt.Tooltip("itens:Q")]))
                 charts.mostrar(b, titulo, "quantidade de issues por situação", dist,
-                               altura=max(120, 24 * dist[campo].nunique()))
+                               altura=charts.altura_categorias(dist[campo].nunique()))
         if len(campos_extra) == 1:
             with dd:
                 layout.indisponivel("Distribuição por prioridade indisponível",

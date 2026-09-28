@@ -8,7 +8,7 @@ Uso (na pasta Analytics/):
 Grava ``data/zenhub/velocity/zenhub-velocity-<data>.json`` e atualiza
 ``data/zenhub/velocity/linhas-de-base.json`` (planejado congelado de cada sprint
 que já passou da janela de planning). No GitHub, o workflow
-``.github/workflows/zenhub-velocity.yml`` roda este script com o secret
+``.github/workflows/coleta-dados.yml`` roda este script com o secret
 ``ZENHUB_API_KEY``.
 
 A chave nunca é impressa.

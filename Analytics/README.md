@@ -32,8 +32,8 @@ da fonte (`SONAR`, `ZENHUB`, `PLANILHA`, `GITHUB`, `CALCULADO`).
 | Informação | Fonte | Como chega |
 | --- | --- | --- |
 | Cobertura, duplicação, LOC, testes, ratings | SonarCloud | `metrics.yml` de cada repositório → `data/*.json` |
-| Bugs, vulnerabilidades, code smells, hotspots, dívida técnica, Quality Gate, severidade, histórico | SonarCloud | `scripts/coleta_sonar.py` → `data/sonar/` (workflow `sonar-coleta.yml`, diário) |
-| Sprints, story points, velocity, backlog, pipelines, épicos, releases | Zenhub | `scripts/coleta_velocity.py` → `data/zenhub/velocity/` (workflow `zenhub-velocity.yml`, diário) |
+| Bugs, vulnerabilidades, code smells, hotspots, dívida técnica, Quality Gate, severidade, histórico | SonarCloud | `scripts/coleta_sonar.py` → `data/sonar/` (workflow `coleta-dados.yml`: a cada push na main e 3×/dia) |
+| Sprints, story points, velocity, backlog, pipelines, épicos, releases | Zenhub | `scripts/coleta_velocity.py` → `data/zenhub/velocity/` (workflow `coleta-dados.yml`: a cada push na main e 3×/dia) |
 | Custos, time por semana, horas, riscos, monitoramento, decisões | Planilha | abas publicadas no Google em CSV (`config.PLANILHAS`), sem cópia local |
 | Execuções da CI | GitHub | `metrics.yml` → `GitHub_API-Runs-*.json` |
 
@@ -102,7 +102,7 @@ unidade, período, tooltip e a tabela dos dados logo abaixo.
 
 ## Publicação (Streamlit Community Cloud)
 
-O app publicado está em **https://20262-measuresoftgram-doc-fchaemxpepymufmckz9yyy.streamlit.app/** — é o link **Dashboard** do topo da documentação.
+O app publicado está em **https://20262-measuresoftgram-doc.streamlit.app/** — é o link **Dashboard** do topo da documentação.
 O Streamlit Community Cloud roda `Analytics/app.py` da branch `main` e se atualiza
 sozinho a cada push (inclusive os commits das coletas). Os dados vêm dos arquivos
 de `Analytics/data/` e das abas publicadas da planilha, lidas ao vivo.

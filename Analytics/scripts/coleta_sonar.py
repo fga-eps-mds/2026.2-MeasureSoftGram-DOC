@@ -8,7 +8,7 @@ Grava ``data/sonar/sonar-AAAA-MM-DDTHHMM.json`` com, para cada projeto de
 ``config.SONAR_PROJETOS``: métricas atuais (bugs, vulnerabilidades, code smells,
 hotspots, dívida técnica, cobertura, duplicação, ratings, testes), histórico,
 Quality Gate e problemas abertos por severidade e tipo. No GitHub, o workflow
-``.github/workflows/sonar-coleta.yml`` roda este script todo dia.
+``.github/workflows/coleta-dados.yml`` roda este script a cada push na main e 3 vezes por dia.
 
 O token nunca é impresso.
 """

@@ -14,9 +14,9 @@ from src.data import sonar as sn
 from src.metrics import qualidade
 from src.metrics.calculations import data_br, num, status_meta, variacao
 
-SEM_API = ("não coletado pelo pipeline (metrics.yml)",
-           "rodar `python scripts/coleta_sonar.py` (ou o workflow sonar-coleta.yml) para trazer a métrica da API "
-           "do SonarCloud")
+SEM_API = ("o metrics.yml não traz esta métrica e a coleta da API do SonarCloud ainda não rodou",
+           "rodar o workflow \"Coleta de dados do dashboard\" no GitHub Actions (ou "
+           "`python scripts/coleta_sonar.py`), que grava `Analytics/data/sonar/`")
 
 DESTAQUES = [  # (métrica, rótulo)
     ("coverage", "Cobertura"),
@@ -220,7 +220,7 @@ def pagina():
         ordem = [sn.SEVERIDADE_PT[x] for x in sn.SEVERIDADES]
         e, d = st.columns(2)
         with e:
-            barras = (alt.Chart(tot).mark_bar(cornerRadiusEnd=4, size=22)
+            barras = (alt.Chart(tot).mark_bar(cornerRadiusEnd=4)
                       .encode(y=alt.Y("nome:N", sort=ordem, title=None), x=alt.X("quantidade:Q", title="Problemas"),
                               color=alt.Color("nome:N", sort=ordem, legend=None,
                                               scale=alt.Scale(domain=ordem, range=theme.SEQUENCIAL[6:1:-1])),
@@ -229,7 +229,7 @@ def pagina():
             rot = barras.mark_text(align="left", dx=4, fontSize=11, color=theme.INK["secondary"]).encode(
                 text="quantidade:Q", color=alt.value(theme.INK["secondary"]))
             charts.mostrar(barras + rot, "Problemas abertos por severidade", "quantidade · coleta atual da API",
-                           tot[["nome", "quantidade"]].rename(columns={"nome": "severidade"}), altura=200)
+                           tot[["nome", "quantidade"]].rename(columns={"nome": "severidade"}), altura=charts.altura_categorias(len(tot)))
         with d:
             tp = api.get("tipos", pd.DataFrame())
             tp = tp[tp["repositorio"].isin(repos)] if not tp.empty else tp
@@ -241,7 +241,7 @@ def pagina():
                 pr = (tp.assign(repo=tp["repositorio"].map(sn.nome_curto), nome=tp["tipo"].map(nomes_t))
                       .groupby(["repo", "nome"], as_index=False)["quantidade"].sum())
                 ordem_t = [v for v in nomes_t.values() if v in set(pr["nome"])]
-                barras = (alt.Chart(pr).mark_bar(size=16, stroke=theme.INK["surface"], strokeWidth=2)
+                barras = (alt.Chart(pr).mark_bar(stroke=theme.INK["surface"], strokeWidth=2)
                           .encode(y=alt.Y("repo:N", title=None, sort="-x"),
                                   x=alt.X("quantidade:Q", title="Problemas abertos", stack=True),
                                   color=alt.Color("nome:N", title="Tipo", sort=ordem_t,
@@ -251,7 +251,7 @@ def pagina():
                                            alt.Tooltip("nome:N", title="Tipo"),
                                            alt.Tooltip("quantidade:Q", title="Problemas")]))
                 charts.mostrar(barras, "Composição dos problemas por repositório", "quantidade · coleta atual da API",
-                               pr, altura=max(160, 26 * pr["repo"].nunique()))
+                               pr, altura=charts.altura_categorias(pr["repo"].nunique()))
 
     # ── placar por repositório ──
     layout.secao("Situação por repositório", "Quais repositórios precisam de atenção?", ["SONAR"])
@@ -289,7 +289,7 @@ def pagina():
         if not cob.empty:
             layout.secao("Cobertura por componente", "Onde o esforço de teste rende mais?", ["SONAR"])
             cob = cob.nsmallest(15, "valor").assign(repo=lambda d: d["repositorio"].map(sn.nome_curto))
-            barras = (alt.Chart(cob).mark_bar(cornerRadiusEnd=4, size=14, color=theme.SERIES[0])
+            barras = (alt.Chart(cob).mark_bar(cornerRadiusEnd=4, color=theme.SERIES[0])
                       .encode(y=alt.Y("componente:N", sort="x", title=None),
                               x=alt.X("valor:Q", title="Cobertura (%)", scale=alt.Scale(domain=[0, 100])),
                               tooltip=[alt.Tooltip("repo:N", title="Repositório"),
@@ -300,7 +300,7 @@ def pagina():
             charts.mostrar(barras + rot, "Os 15 componentes com menor cobertura",
                            "cobertura de testes (%) · última coleta do pipeline",
                            cob[["repo", "componente", "valor"]].rename(columns={"valor": "cobertura (%)"}),
-                           altura=24 * len(cob) + 20)
+                           altura=charts.altura_categorias(len(cob), 24))
 
         # ── modelo de qualidade (prévia DA-R2) ──
         pipeline = ctx.sonar_pipeline[ctx.sonar_pipeline["repositorio"].isin(repos)]

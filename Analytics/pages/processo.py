@@ -57,13 +57,13 @@ def pagina():
     pr = (r[r["conclusao"].isin(CONCLUSOES)].assign(repo=lambda x: x["repositorio"].map(nome_curto),
                                                       resultado=lambda x: x["conclusao"].map(ROT))
           .groupby(["repo", "resultado"], as_index=False).size().rename(columns={"size": "execucoes"}))
-    b = (alt.Chart(pr).mark_bar(size=18, stroke=theme.INK["surface"], strokeWidth=2)
+    b = (alt.Chart(pr).mark_bar(stroke=theme.INK["surface"], strokeWidth=2)
          .encode(y=alt.Y("repo:N", sort="-x", title=None), x=alt.X("execucoes:Q", title="Execuções", stack=True),
                  color=alt.Color("resultado:N", title="Resultado", scale=COR, sort=[ROT[c] for c in CONCLUSOES]),
                  tooltip=[alt.Tooltip("repo:N", title="Repositório"), alt.Tooltip("resultado:N", title="Resultado"),
                           alt.Tooltip("execucoes:Q", title="Execuções")]))
     charts.mostrar(b, "Execuções de CI por resultado", "quantidade de execuções no período", pr,
-                   altura=max(160, 30 * pr["repo"].nunique()))
+                   altura=charts.altura_categorias(pr["repo"].nunique()))
 
     layout.secao("Evolução", "A estabilidade da CI está melhorando?", ["GITHUB"])
     sem = conc.assign(semana=lambda x: x["criado_em"].dt.tz_convert(None).dt.to_period("W").dt.start_time)
