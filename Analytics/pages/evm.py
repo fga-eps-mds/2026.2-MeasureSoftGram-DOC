@@ -59,7 +59,16 @@ def pagina():
     if feitas.empty:
         layout.indisponivel(f"A {rel} ainda não começou", "nenhuma sprint dela foi iniciada.")
         return
-    u = feitas.iloc[-1]
+    # Sprint de referência: por padrão a última concluída (a em andamento ainda não tem horas nem
+    # todos os pontos); o seletor deixa ver a situação em qualquer sprint já iniciada.
+    opcoes = list(feitas["sprint"])
+    concluidas = feitas[feitas["status"] == vel.STATUS_CONCLUIDA]
+    padrao_sprint = concluidas["sprint"].iloc[-1] if not concluidas.empty else opcoes[-1]
+    rotulos = {r.sprint: f"{r.sprint} ({r.status}, até {data_br(r.fim_da_sprint)})" for r in feitas.itertuples()}
+    escolhida = st.selectbox("Situação ao fim da sprint", opcoes, index=opcoes.index(padrao_sprint),
+                             format_func=rotulos.get, key=f"evm_sprint_{rel}")
+    u = feitas[feitas["sprint"] == escolhida].iloc[-1]
+    ate = feitas[feitas["n"] <= u["n"]]   # sprints até a escolhida (os gráficos mostram todas)
     parcial = u["status"] == vel.STATUS_ANDAMENTO
     motivo_ac = _motivo_ac(u)
 
@@ -68,10 +77,10 @@ def pagina():
                  ["ZENHUB", "PLANILHA"])
     tem_bac = not vazio(u["BAC"])
     tem_ac = not vazio(u["AC"])
-    horas_reg = float(feitas["horas_reais"].fillna(0).sum())
+    horas_reg = float(ate["horas_reais"].fillna(0).sum())
     insumos = pd.DataFrame([
         {"insumo": "Sprints e datas da release", "fonte": "ZENHUB", "situação": "disponível",
-         "valor": f"{len(feitas)} de {len(d)} sprints iniciadas · até {data_br(u['fim_da_sprint'])}"},
+         "valor": f"{len(ate)} de {len(d)} sprints iniciadas · até {data_br(u['fim_da_sprint'])}"},
         {"insumo": "Escopo e pontos concluídos (PRP, RPC)", "fonte": "ZENHUB", "situação": "disponível",
          "valor": f"{num(u['RPC'])} de {num(u['PRP'])} SP · linha de base {num(u['prp_linha_de_base'])} SP"},
         {"insumo": "Orçamento da release (BAC)", "fonte": "PLANILHA",

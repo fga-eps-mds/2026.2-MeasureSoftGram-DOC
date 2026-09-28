@@ -255,9 +255,19 @@ BRT = timezone(timedelta(hours=-3))
 
 def associar_release(sprint: dict, ids: set, releases: list[dict]) -> tuple:
     """(release_id, release_name, fonte). Ordem: issues da sprint -> datas da release no Zenhub -> plano de ensino."""
+    fim = _dt(sprint.get("end_at"))
+
+    def cabe(r) -> bool:
+        """A sprint só pertence à release se terminar até a data final dela (issue levada para a
+        sprint seguinte continua ligada à release antiga e não pode arrastar a sprint junto)."""
+        fim_r = r.get("end_on")
+        return fim is None or not fim_r or fim <= _dt(fim_r + "T23:59:59+00:00") + timedelta(days=1)
+
     if releases and ids:
         votos = Counter()
         for r in releases:
+            if not cabe(r):
+                continue
             comum = len(ids & set(r.get("issue_ids") or []))
             if comum:
                 votos[r["release_id"]] = comum
@@ -265,7 +275,6 @@ def associar_release(sprint: dict, ids: set, releases: list[dict]) -> tuple:
             rid = votos.most_common(1)[0][0]
             r = next(r for r in releases if r["release_id"] == rid)
             return rid, r["release_name"], "Zenhub (issues da sprint na release)"
-    fim = _dt(sprint.get("end_at"))
     if releases and fim is not None:
         for r in releases:
             ini, fim_r = r.get("start_on"), r.get("end_on")

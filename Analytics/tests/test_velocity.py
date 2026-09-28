@@ -289,6 +289,13 @@ class ReleaseTest(unittest.TestCase):
         tarde = sprint("SX", datetime(2027, 1, 1, tzinfo=UTC), datetime(2027, 1, 8, tzinfo=UTC), [], [])
         self.assertEqual(v.associar_release(tarde, set(), [])[:2], (None, None))
 
+    def test_issue_levada_para_a_proxima_sprint_nao_arrasta_a_sprint(self):
+        # Release 01 termina 28/09; a S4 (até 04/10) tem issues da Release 01 levadas da S3
+        rels = [{"release_id": "r1", "release_name": "Release 01", "start_on": "2026-08-10", "end_on": "2026-09-28",
+                 "issue_ids": ["A"]}]
+        s4 = sprint("S4", datetime(2026, 9, 28, 3, 59, tzinfo=UTC), datetime(2026, 10, 5, 2, 59, tzinfo=UTC), ["A"], [])
+        self.assertEqual(v.associar_release(s4, {"A"}, rels)[1:], ("R2", "plano de ensino (datas de entrega)"))
+
 
 if __name__ == "__main__":
     unittest.main()
