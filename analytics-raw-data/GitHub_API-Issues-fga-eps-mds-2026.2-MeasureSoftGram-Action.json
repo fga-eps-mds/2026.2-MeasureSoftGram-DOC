@@ -32,14 +32,14 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [],
         "milestone": null,
         "comments": 1,
         "created_at": "2026-09-26T15:54:55Z",
-        "updated_at": "2026-09-26T15:56:19Z",
-        "closed_at": null,
+        "updated_at": "2026-09-27T21:36:24Z",
+        "closed_at": "2026-09-27T21:36:20Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -51,10 +51,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/2",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/2.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/2.patch",
-            "merged_at": null
+            "merged_at": "2026-09-27T21:36:20Z"
         },
-        "body": "- Request sqale_debt_ratio alongside the existing project metrics to support technical debt analysis.\r\n- Remove the unused Sonarqube import from RequestService.",
-        "closed_by": null,
+        "body": "- Request sqale_debt_ratio alongside the existing project metrics to support technical debt analysis.\r\n- Remove the unused Sonarqube import from RequestService.\r\n\r\nCloses #1 ",
+        "closed_by": {
+            "login": "gusrberto",
+            "id": 79723182,
+            "node_id": "MDQ6VXNlcjc5NzIzMTgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/79723182?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusrberto",
+            "html_url": "https://github.com/gusrberto",
+            "followers_url": "https://api.github.com/users/gusrberto/followers",
+            "following_url": "https://api.github.com/users/gusrberto/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusrberto/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusrberto/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusrberto/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusrberto/orgs",
+            "repos_url": "https://api.github.com/users/gusrberto/repos",
+            "events_url": "https://api.github.com/users/gusrberto/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusrberto/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Action/issues/2/reactions",
             "total_count": 0,
@@ -127,7 +147,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -155,8 +175,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-09-26T15:53:01Z",
-        "updated_at": "2026-09-26T22:32:01Z",
-        "closed_at": null,
+        "updated_at": "2026-09-27T21:36:21Z",
+        "closed_at": "2026-09-27T21:36:21Z",
         "assignee": {
             "login": "pedrosena21",
             "id": 195688119,
@@ -204,7 +224,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nColetar no SonarQube as m\u00e9tricas necess\u00e1rias para a medida de d\u00edvida t\u00e9cnica. \u00c9 a parte `[Action]` da [US01.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/76).\n\nA consulta ao `/api/measures/component_tree` deve trazer `sqale_debt_ratio` por arquivo (`qualifier = FIL`). Isso foi validado no SonarCloud: a m\u00e9trica vem por arquivo, como string com o percentual (ex.: `\"8.3\"`). O contrato completo est\u00e1 no [coment\u00e1rio da US01.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/76#issuecomment-5850278544).\n\n## Lista de afazeres\n1. [ ] Adicionar `sqale_debt_ratio` a `sonarMetrics` (`src/sonarqube.ts`); `files` j\u00e1 est\u00e1 na lista\n2. [ ] Atualizar a URL esperada e os dados de teste (`__tests__/sonarqube.test.ts`, `__tests__/test-data/api-response.ts`)\n3. [ ] Tratar a aus\u00eancia da m\u00e9trica na resposta do SonarQube sem quebrar a coleta das demais\n4. [ ] Regerar o bundle (`npm run build`, que atualiza `dist/index.js`)\n5. [ ] Atualizar o `msgram.json` de exemplo (`.github/input/msgram.json`) com a medida em `modifiability`\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "gusrberto",
+            "id": 79723182,
+            "node_id": "MDQ6VXNlcjc5NzIzMTgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/79723182?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusrberto",
+            "html_url": "https://github.com/gusrberto",
+            "followers_url": "https://api.github.com/users/gusrberto/followers",
+            "following_url": "https://api.github.com/users/gusrberto/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusrberto/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusrberto/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusrberto/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusrberto/orgs",
+            "repos_url": "https://api.github.com/users/gusrberto/repos",
+            "events_url": "https://api.github.com/users/gusrberto/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusrberto/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Action/issues/1/reactions",
             "total_count": 0,
@@ -219,7 +259,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Action/issues/1/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -255,7 +295,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "closed",
+        "state": "open",
         "locked": false,
         "assignees": [
             {
@@ -283,8 +323,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-09-24T01:05:20Z",
-        "updated_at": "2026-09-26T22:29:58Z",
-        "closed_at": "2026-09-26T15:40:57Z",
+        "updated_at": "2026-09-27T16:56:26Z",
+        "closed_at": null,
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -302,27 +342,7 @@
             "total_blocking": 0
         },
         "body": null,
-        "closed_by": {
-            "login": "pedrosena21",
-            "id": 195688119,
-            "node_id": "U_kgDOC6n2tw",
-            "avatar_url": "https://avatars.githubusercontent.com/u/195688119?v=4",
-            "gravatar_id": "",
-            "url": "https://api.github.com/users/pedrosena21",
-            "html_url": "https://github.com/pedrosena21",
-            "followers_url": "https://api.github.com/users/pedrosena21/followers",
-            "following_url": "https://api.github.com/users/pedrosena21/following{/other_user}",
-            "gists_url": "https://api.github.com/users/pedrosena21/gists{/gist_id}",
-            "starred_url": "https://api.github.com/users/pedrosena21/starred{/owner}{/repo}",
-            "subscriptions_url": "https://api.github.com/users/pedrosena21/subscriptions",
-            "organizations_url": "https://api.github.com/users/pedrosena21/orgs",
-            "repos_url": "https://api.github.com/users/pedrosena21/repos",
-            "events_url": "https://api.github.com/users/pedrosena21/events{/privacy}",
-            "received_events_url": "https://api.github.com/users/pedrosena21/received_events",
-            "type": "User",
-            "user_view_type": "public",
-            "site_admin": false
-        },
+        "closed_by": null,
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Action/issues/3/reactions",
             "total_count": 0,
@@ -337,7 +357,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Action/issues/3/timeline",
         "performed_via_github_app": null,
-        "state_reason": "completed",
+        "state_reason": "reopened",
         "pinned_comment": null
     }
 ]

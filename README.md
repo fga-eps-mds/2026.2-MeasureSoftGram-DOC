@@ -22,6 +22,10 @@ docs/
   equipe/                Integrantes, políticas de trabalho, links e acessos
 ```
 
+## Como contribuir
+
+Leia o [Guia de contribuição](CONTRIBUTING.md) e o [Código de Conduta](CODE_OF_CONDUCT.md).
+
 ## Rodando localmente
 
 Requer Node 20 ou superior.
