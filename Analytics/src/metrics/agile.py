@@ -194,7 +194,9 @@ def alertas_de_dados(df: pd.DataFrame, tipos_pontuados: set) -> pd.DataFrame:
     pais = set(df["parent_id"].dropna())
     linhas = []
     for r in df.itertuples():
-        tipo, est = r.issue_type, r.pontos
+        # issue sem tipo chega como None ou NaN, conforme a versão do pandas (NaN é "verdadeiro" em Python)
+        tipo = r.issue_type if isinstance(r.issue_type, str) and r.issue_type.strip() else None
+        est = r.pontos
         problemas = []
         if not tipo and r.issue_id in pais:
             problemas.append("sem tipo, mas tem filhas: se for épico, marque o tipo Epic no Zenhub")
