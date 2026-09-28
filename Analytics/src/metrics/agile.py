@@ -109,6 +109,8 @@ def universo_issues(snap: dict | None, tipos_pontuados: set | None = None) -> tu
 
     df["epico_id"] = df["issue_id"].map(epico)
     df["epico"] = df["epico_id"].map(lambda e: titulo.get(e) if e else None).fillna("Sem épico")
+    url_de = dict(zip(df["issue_id"], df["url"])) if "url" in df else {}
+    df["epico_url"] = df["epico_id"].map(lambda e: url_de.get(e) if e else None)
 
     # release: issues ligadas a cada release do Zenhub
     rel = {}
@@ -166,13 +168,14 @@ def progresso_epicos(df: pd.DataFrame) -> pd.DataFrame:
     """
     if df is None or df.empty:
         return pd.DataFrame()
-    epicos = df[df["issue_type"] == "Epic"][["issue_id", "title", "number", "repositorio", "situacao"]]
+    epicos = df[df["issue_type"] == "Epic"][["issue_id", "title", "number", "repositorio", "situacao"]
+                                            + (["url"] if "url" in df else [])]
     filhas = df[df["epico_id"].notna()]
     linhas = []
     for e in epicos.itertuples():
         f = filhas[filhas["epico_id"] == e.issue_id]
         total, feitas = len(f), int((f["situacao"] == CONCLUIDO).sum())
-        linhas.append({"epico": e.title, "numero": e.number, "repositorio": e.repositorio, "situacao": e.situacao,
+        linhas.append({"epico": e.title, "url": getattr(e, "url", None), "numero": e.number, "repositorio": e.repositorio, "situacao": e.situacao,
                        "filhas": total, "concluidas": feitas, "em_andamento": int((f["situacao"] == ANDAMENTO).sum()),
                        "pontos": f["sp"].sum(min_count=1),
                        "pontos_concluidos": f.loc[f["situacao"] == CONCLUIDO, "sp"].sum(min_count=1),

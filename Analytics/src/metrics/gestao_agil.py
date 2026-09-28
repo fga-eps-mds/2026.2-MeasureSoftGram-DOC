@@ -68,7 +68,8 @@ def _local(ts):
 
 # ───────────────────────── linhas Story × Sprint ─────────────────────────
 
-COLUNAS = ["release", "sprint", "sprint_nome", "sprint_status", "sprint_inicio", "sprint_fim", "epico", "issue",
+COLUNAS = ["release", "sprint", "sprint_nome", "sprint_status", "sprint_inicio", "sprint_fim", "epico", "epico_url",
+           "issue",
            "numero", "repositorio", "titulo", "url", "tipo", "planejada", "sp_planejado", "concluida", "sp_realizado",
            "sp_atual", "sem_estimativa_na_planning", "sem_estimativa", "adicionada", "entrou_em", "removida", "saiu_em", "levada_para",
            "resultado", "status_atual", "pipeline", "criada_em", "concluida_em", "responsavel", "release_da_issue",
@@ -124,7 +125,7 @@ def stories_por_sprint(snap: dict | None, sprints: pd.DataFrame, universo: pd.Da
             linhas.append({
                 "release": r.release_name or "Sem release", "sprint": r.sprint_label, "sprint_nome": r.sprint_name,
                 "sprint_status": r.status, "sprint_inicio": inicio, "sprint_fim": fim,
-                "epico": g("epico", "Sem épico"), "issue": f"{i.get('repository', '')}#{i.get('number', '')}",
+                "epico": g("epico", "Sem épico"), "epico_url": g("epico_url"), "issue": f"{i.get('repository', '')}#{i.get('number', '')}",
                 "numero": i.get("number"), "repositorio": i.get("repository"), "titulo": i.get("title"),
                 "url": i.get("url"), "tipo": i.get("issue_type"), "planejada": planejada,
                 "sp_planejado": _num(est_plan) if planejada else None,
@@ -198,7 +199,9 @@ def hierarquia(linhas: pd.DataFrame) -> pd.DataFrame:
     if linhas is None or linhas.empty:
         return pd.DataFrame()
     g = linhas.groupby(["ordem_sprint", "release", "sprint", "epico"], dropna=False).apply(
-        lambda x: pd.Series({"stories": len(x), "sp_planejado": x["sp_planejado"].sum(min_count=1),
+        lambda x: pd.Series({"epico_link": [(x.name[3], x["epico_url"].iloc[0]
+                                             if isinstance(x["epico_url"].iloc[0], str) else None)],
+                             "stories": len(x), "sp_planejado": x["sp_planejado"].sum(min_count=1),
                              "sp_realizado": x["sp_realizado"].fillna(0).sum(),
                              "issues": _lista(x)}),
         include_groups=False).reset_index()

@@ -95,8 +95,11 @@ def releases_e_epicos(ctx, f, snap, todas, d):
         ep = ep.assign(progresso=ep["progresso"] * 100)
         for col in ("pontos", "pontos_concluidos"):
             ep[col] = ep[col].map(lambda v: "—" if pd.isna(v) else num(v))
+        if "url" in ep:
+            ep["epico"] = [layout.link_celula(u, x) for x, u in zip(ep["epico"], ep["url"])]
+            ep = ep.drop(columns="url")
         st.dataframe(ep, use_container_width=True, hide_index=True, column_config={
-            "epico": st.column_config.TextColumn("Épico", width="large"), "numero": "Nº", "repositorio": "Repositório",
+            "epico": layout.coluna_link("Épico", width="large", help="clique para abrir o épico"), "numero": "Nº", "repositorio": "Repositório",
             "situacao": "Situação", "filhas": "Filhas", "concluidas": "Concluídas", "em_andamento": "Em andamento",
             "pontos": "SP", "pontos_concluidos": "SP concluídos",
             "progresso": st.column_config.ProgressColumn("Progresso", min_value=0, max_value=100, format="%.0f%%")})
@@ -120,8 +123,12 @@ def conferencia(ctx, f, snap, todas, d):
             "visao": "Visão", "parcela": st.column_config.TextColumn("Parcela", width="large"),
             "sp": st.column_config.NumberColumn("SP", format="%.0f"), "issues": "Issues pontuáveis"})
         if not conc["fora"].empty:
-            st.dataframe(conc["fora"], use_container_width=True, hide_index=True, column_config={
-                "url": st.column_config.LinkColumn("Link", display_text="abrir")})
+            fora = conc["fora"].copy()
+            if "url" in fora:
+                fora["title"] = [layout.link_celula(u, x) for x, u in zip(fora["title"], fora["url"])]
+                fora = fora.drop(columns="url")
+            st.dataframe(fora, use_container_width=True, hide_index=True, column_config={
+                "title": layout.coluna_link("Issue", width="large")})
         st.caption("Calculado a cada carga (`agile.conciliacao_sp`): total = issues Feature/Task/Bug sem filhas "
                    "pontuáveis e fechadas. 'Itens concluídos' nos indicadores conta issues de todos os tipos, por "
                    "isso não é comparável com SP. Fechada entre o fim de uma sprint e o início da próxima conta na "
@@ -144,11 +151,14 @@ def comparacao_zenhub(ctx, f, snap, todas, d):
             "painel": st.column_config.NumberColumn("Painel", format="%.0f"),
             "diferenca": st.column_config.NumberColumn("Painel − Zenhub", format="%+.0f")})
         if not difs.empty:
-            st.dataframe(difs.drop(columns=["fechada_em"]), use_container_width=True, hide_index=True, column_config={
-                "sprint": "Sprint", "issue": "Issue", "titulo": st.column_config.TextColumn("Título", width="large"),
+            dd = difs.drop(columns=["fechada_em"]).copy()
+            dd["issue"] = [layout.link_celula(u, x.split("-")[-1]) for x, u in zip(dd["issue"], dd["url"])]
+            dd["titulo"] = [layout.link_celula(u, x) for x, u in zip(dd["titulo"], dd["url"])]
+            st.dataframe(dd.drop(columns="url"), use_container_width=True, hide_index=True, column_config={
+                "sprint": "Sprint", "issue": layout.coluna_link("Issue"),
+                "titulo": layout.coluna_link("Título", width="large"),
                 "sp": st.column_config.NumberColumn("SP", format="%.0f"), "efeito": "No painel",
-                "motivo": st.column_config.TextColumn("Motivo", width="large"),
-                "url": st.column_config.LinkColumn("Link", display_text="abrir")})
+                "motivo": st.column_config.TextColumn("Motivo", width="large")})
         st.caption("'Zenhub (API)' é o `completedPoints` de cada sprint, só com estimativas reais. 'Zenhub reproduzido' "
                    "recalcula esse número a partir das issues do snapshot com a regra do Zenhub (issue ou PR na sprint, "
                    "fechada entre o início e o fim, com estimativa): se não bater, o painel avisa em vermelho. "
@@ -166,10 +176,12 @@ def consistencia(ctx, f, snap, todas, d):
     else:
         graves = alertas[~alertas["problema"].str.startswith("sem estimativa")]
         for g in graves.itertuples():
-            layout.alerta("warning", f"#{g.numero} {g.titulo} — {g.problema}", str(g.repositorio))
-        st.dataframe(alertas, use_container_width=True, hide_index=True, column_config={
-            "numero": "Nº", "titulo": st.column_config.TextColumn("Issue", width="large"), "repositorio": "Repositório",
-            "tipo": "Tipo", "problema": st.column_config.TextColumn("O que corrigir", width="large"),
-            "url": st.column_config.LinkColumn("Link", display_text="abrir")})
+            layout.alerta("warning", f"#{g.numero} {g.titulo} — {g.problema}", str(g.repositorio),
+                          link=(f"#{g.numero} {g.titulo}", g.url))
+        al = alertas.copy()
+        al["titulo"] = [layout.link_celula(u, x) for x, u in zip(al["titulo"], al["url"])]
+        st.dataframe(al.drop(columns="url"), use_container_width=True, hide_index=True, column_config={
+            "numero": "Nº", "titulo": layout.coluna_link("Issue", width="large"), "repositorio": "Repositório",
+            "tipo": "Tipo", "problema": st.column_config.TextColumn("O que corrigir", width="large")})
         st.caption("O painel não corrige o cadastro: o número só muda quando a issue for ajustada no Zenhub e a "
                    "próxima coleta rodar.")

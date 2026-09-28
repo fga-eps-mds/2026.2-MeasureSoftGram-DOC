@@ -65,12 +65,17 @@ def indisponivel(titulo: str, motivo: str, necessario: str | None = None) -> Non
                 unsafe_allow_html=True)
 
 
-def alerta(status: str, texto: str, onde: str = "") -> None:
+def alerta(status: str, texto: str, onde: str = "", link: tuple[str, str] | None = None) -> None:
+    """``link`` = (trecho do texto, url): esse trecho vira link embutido."""
     cor = theme.cor_status(status)
     rot = theme.ROTULO_STATUS.get(status, "")
     o = f" <span class='onde'>· {html.escape(onde)}</span>" if onde else ""
+    corpo = html.escape(texto)
+    if link and link[1] and link[0] in texto:
+        trecho = html.escape(link[0])
+        corpo = corpo.replace(trecho, f"<a href='{html.escape(link[1])}' target='_blank' rel='noopener'>{trecho}</a>", 1)
     st.markdown(f"<div class='msg-alerta' style='--kpi-cor:{cor}'><span class='st' style='color:{cor}'>{rot}</span>"
-                f"{html.escape(texto)}{o}</div>", unsafe_allow_html=True)
+                f"{corpo}{o}</div>", unsafe_allow_html=True)
 
 
 def metodologia(linhas: list[tuple[str, str, str]], titulo: str = "Metodologia desta página") -> None:
@@ -120,3 +125,29 @@ def tabela_html(df: pd.DataFrame, colunas: dict[str, str], links: tuple[str, ...
     estilo = f" style='max-height:{altura}px'" if altura else ""
     st.markdown(f"<div class='msg-tabela'{estilo}><table><thead><tr>{cab}</tr></thead><tbody>{corpo}</tbody>"
                 "</table></div>", unsafe_allow_html=True)
+
+
+# ───────── links embutidos no próprio texto da célula ─────────
+# A tabela do Streamlit só põe um link por célula, com texto tirado da URL por regex. Para o
+# texto ser o nome da issue/épico, ele vai no fragmento da URL (…/issues/42#DOC#42): o GitHub
+# ignora o fragmento e a coluna exibe só o que vem depois do primeiro "#".
+REGEX_TEXTO_LINK = r"#(.+)$"
+
+
+def link_celula(url, texto) -> str | None:
+    """Valor de célula que é, ao mesmo tempo, o texto e o link. Sem URL, fica só o texto."""
+    if texto is None or (isinstance(texto, float) and pd.isna(texto)):
+        return None
+    texto = str(texto)
+    return f"{url}#{texto}" if isinstance(url, str) and url.startswith("http") else texto
+
+
+def coluna_link(rotulo: str, **kw):
+    """Coluna cujo texto é clicável (use com valores de :func:`link_celula`)."""
+    return st.column_config.LinkColumn(rotulo, display_text=REGEX_TEXTO_LINK, **kw)
+
+
+def texto_de_link(valor) -> str:
+    """Desfaz :func:`link_celula` (para CSV): devolve só o texto."""
+    v = "" if valor is None else str(valor)
+    return v.split("#", 1)[1] if v.startswith("http") and "#" in v else v

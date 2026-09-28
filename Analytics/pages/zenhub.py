@@ -83,12 +83,15 @@ def tabela_stories(df: pd.DataFrame, chave: str, arquivo: str, colunas: list[str
     for c in ("criada_em", "entrou_em", "saiu_em", "concluida_em"):
         if c in t:
             t[c] = _brt(t[c])
+    # links embutidos no próprio texto: Issue e Título abrem a issue; Épico abre o épico
+    url = df.loc[t.index, "url"] if "url" in df else pd.Series(None, index=t.index)
     if "issue" in t:
-        # a própria coluna Issue é o link: a URL leva o rótulo no fragmento (#DOC#42), que a tabela exibe
-        urls = df.loc[t.index, "url"] if "url" in df else pd.Series(None, index=t.index)
-        t["issue"] = [f"{u}#{ga.rotulo_issue(i)}" if isinstance(u, str) and u else ga.rotulo_issue(i)
-                      for i, u in zip(t["issue"], urls)]
-        t = t.drop(columns=["url"], errors="ignore")
+        t["issue"] = [layout.link_celula(u, ga.rotulo_issue(i)) for i, u in zip(t["issue"], url)]
+    if "titulo" in t:
+        t["titulo"] = [layout.link_celula(u, x) for x, u in zip(t["titulo"], url)]
+    if "epico" in t and "epico_url" in df:
+        t["epico"] = [layout.link_celula(u, x) for x, u in zip(t["epico"], df.loc[t.index, "epico_url"])]
+    t = t.drop(columns=["url"], errors="ignore")
     for c in ("sp_planejado", "sp_realizado", "sp_atual"):
         if c in t:   # ausente vira "—" (a tabela mostraria "None")
             t[c] = t[c].map(lambda v: "—" if v is None or pd.isna(v) else num(v))
@@ -96,14 +99,18 @@ def tabela_stories(df: pd.DataFrame, chave: str, arquivo: str, colunas: list[str
     datas = {v: st.column_config.DatetimeColumn(v, format="DD/MM/YYYY HH:mm") for k, v in COLUNAS_STORY.items()
              if k in ("criada_em", "entrou_em", "saiu_em", "concluida_em")}
     st.dataframe(t, use_container_width=True, hide_index=True, key=f"tab_{chave}", column_config={
-        "Issue": st.column_config.LinkColumn("Issue", display_text=r"#(.+)$", help="clique para abrir a issue"),
-        "Título": st.column_config.TextColumn("Título", width="large"),
+        "Issue": layout.coluna_link("Issue", help="clique para abrir a issue"),
+        "Título": layout.coluna_link("Título", width="large", help="clique para abrir a issue"),
+        "Épico": layout.coluna_link("Épico", help="clique para abrir o épico"),
         "SP planejado": st.column_config.TextColumn("SP planejado", help="pontos na planning; — = não planejada"),
         "SP realizado": st.column_config.TextColumn("SP realizado", help="pontos concluídos; — = não concluída"),
         "SP atual": st.column_config.TextColumn("SP atual", help="estimativa hoje; — = sem estimativa"), **datas})
-    csv = t.assign(Issue=t["Issue"].str.replace(r"^.*#(?=[^#]+#\d+$)", "", regex=True)) if "Issue" in t else t
-    if "url" in df and "Issue" in t:
-        csv.insert(csv.columns.get_loc("Issue") + 1, "Link", df.loc[t.index, "url"].values)
+    csv = t.copy()
+    for c in ("Issue", "Título", "Épico"):
+        if c in csv:
+            csv[c] = csv[c].map(layout.texto_de_link)
+    if "Issue" in csv:
+        csv.insert(csv.columns.get_loc("Issue") + 1, "Link", url.values)
     st.download_button(f"Baixar CSV ({len(t)} linhas)", csv.to_csv(index=False).encode("utf-8-sig"),
                        file_name=arquivo, mime="text/csv", key=f"csv_{chave}")
 
@@ -161,7 +168,7 @@ def _horas_por_sprint(ctx, concl: pd.DataFrame) -> dict:
     por = por[por > 0]
     if por.empty:
         return {"media": None, "nota": "Indisponível: nenhuma hora registrada nessas sprints (aba Horas)."}
-    return {"media": float(por.mean()), "nota": f"horas registradas (aba Horas) em {len(por)} sprint(s); a planilha "
+    return {"media": float(por.mean()), "nota": f"média de horas da equipe nas {len(por)} sprint(s); a planilha "
                                                 "não tem capacidade em SP"}
 
 
@@ -514,9 +521,9 @@ def _detalhamento(d):
     layout.secao("Detalhamento das issues", "De quais issues vem cada número?", ["ZENHUB"])
     h = ga.hierarquia(d)
     st.markdown("**Release → Sprint → Épico**")
-    layout.tabela_html(h, {"release": "Release", "sprint": "Sprint", "epico": "Épico", "stories": "Stories",
+    layout.tabela_html(h, {"release": "Release", "sprint": "Sprint", "epico_link": "Épico", "stories": "Stories",
                            "sp_planejado": "SP planejados", "sp_realizado": "SP realizados", "issues": "Issues"},
-                       links=("issues",), numericas=("stories", "sp_planejado", "sp_realizado"))
+                       links=("epico_link", "issues"), numericas=("stories", "sp_planejado", "sp_realizado"))
     st.caption("SP planejados = soma dos pontos das stories planejadas; '—' = nenhuma story daquele grupo estava "
                "no planejado (entrou depois da planning). Stories = quantidade de issues do grupo.")
     st.markdown("**Todas as stories do recorte** (uma linha por story em cada sprint)")
