@@ -131,6 +131,13 @@ h4 { font-size: 1rem !important; font-weight: 600 !important; }
 .msg-status-geral .valor { font-size: 1.3rem; font-weight: 700; margin: .15rem 0; }
 
 /* Dado indisponível */
+.msg-tabela { overflow: auto; border: 1px solid #E1E5EA; border-radius: 8px; margin: .3rem 0 .8rem; }
+.msg-tabela table { border-collapse: collapse; width: 100%; font-size: .85rem; }
+.msg-tabela th { position: sticky; top: 0; background: #F4F5F6; color: #52606D; font-weight: 500; text-align: left;
+  padding: .45rem .6rem; border-bottom: 1px solid #E1E5EA; }
+.msg-tabela td { padding: .4rem .6rem; border-bottom: 1px solid #EEF0F2; vertical-align: top; }
+.msg-tabela .num { text-align: right; white-space: nowrap; }
+.msg-tabela a { color: #2B4D6F; text-decoration: underline; }
 .msg-ausente { background: #F9FAFB; border: 1px dashed #C9CED6; border-radius: 6px; padding: .7rem .9rem;
                color: #4B5563; font-size: .88rem; margin: .4rem 0 .8rem; }
 .msg-ausente b { color: #1F2933; }

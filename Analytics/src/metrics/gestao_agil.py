@@ -200,7 +200,7 @@ def hierarquia(linhas: pd.DataFrame) -> pd.DataFrame:
     g = linhas.groupby(["ordem_sprint", "release", "sprint", "epico"], dropna=False).apply(
         lambda x: pd.Series({"stories": len(x), "sp_planejado": x["sp_planejado"].sum(min_count=1),
                              "sp_realizado": x["sp_realizado"].fillna(0).sum(),
-                             "issues": ", ".join(x["issue"].str.split("-").str[-1])}),
+                             "issues": _lista(x)}),
         include_groups=False).reset_index()
     return g.sort_values(["ordem_sprint", "sp_realizado"], ascending=[True, False]).drop(columns="ordem_sprint")
 
@@ -293,9 +293,15 @@ def burndown(snap: dict, sprint: pd.Series, regras: vel.Regras | None = None,
 
 # ───────────────────────── análises qualitativas ─────────────────────────
 
-def _lista(x: pd.DataFrame, n: int = 6) -> str:
-    ids = x["issue"].str.split("-").str[-1].tolist()
-    return ", ".join(ids[:n]) + (f" e mais {len(ids) - n}" if len(ids) > n else "")
+def rotulo_issue(issue: str) -> str:
+    """'2026.2-MeasureSoftGram-DOC#42' -> 'DOC#42'."""
+    return str(issue).split("-")[-1]
+
+
+def _lista(x: pd.DataFrame) -> list[tuple[str, str | None]]:
+    """[(rótulo, url)] das issues, para a tela mostrar cada uma como link."""
+    return [(rotulo_issue(i), u if isinstance(u, str) and u else None)
+            for i, u in zip(x["issue"], x["url"] if "url" in x else [None] * len(x))]
 
 
 def analises(por_sprint: pd.DataFrame, linhas: pd.DataFrame) -> pd.DataFrame:
@@ -304,8 +310,8 @@ def analises(por_sprint: pd.DataFrame, linhas: pd.DataFrame) -> pd.DataFrame:
     if por_sprint is None or por_sprint.empty:
         return pd.DataFrame(columns=["tema", "sprint", "fato", "interpretacao", "issues"])
 
-    def add(tema, sprint, fato, interp, issues=""):
-        out.append({"tema": tema, "sprint": sprint, "fato": fato, "interpretacao": interp, "issues": issues})
+    def add(tema, sprint, fato, interp, issues=None):
+        out.append({"tema": tema, "sprint": sprint, "fato": fato, "interpretacao": interp, "issues": issues or []})
 
     concl = por_sprint[por_sprint["sprint_status"] == vel.STATUS_CONCLUIDA].reset_index(drop=True)
     for k, r in concl.iterrows():
@@ -320,7 +326,7 @@ def analises(por_sprint: pd.DataFrame, linhas: pd.DataFrame) -> pd.DataFrame:
                     f"{len(nao)} story(ies) planejada(s) não concluída(s)",
                     "o time entregou bem menos do que se comprometeu" if dif < 0
                     else "entrou mais trabalho do que o planejado, ou o planejado estava subestimado",
-                    _lista(nao) if len(nao) else "")
+                    _lista(nao) if len(nao) else [])
         anteriores = concl.iloc[:k]
         media_ant = anteriores["sp_realizado"].mean() if len(anteriores) else None
         if media_ant and plan and plan / media_ant >= LIMITE_OVERCOMMIT:

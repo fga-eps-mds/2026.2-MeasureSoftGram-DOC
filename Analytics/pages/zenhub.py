@@ -20,7 +20,6 @@ from pages import zenhub_dados as apoio
 from src import theme
 from src.components import charts, filters, layout
 from src.components.kpi import kpi
-from src.data.sonar import nome_curto
 from src.metrics import gestao_agil as ga
 from src.metrics import velocity as vel
 from src.metrics.calculations import data_br, num, pct, status_taxa
@@ -85,17 +84,27 @@ def tabela_stories(df: pd.DataFrame, chave: str, arquivo: str, colunas: list[str
         if c in t:
             t[c] = _brt(t[c])
     if "issue" in t:
-        t["issue"] = t["issue"].map(nome_curto)
+        # a própria coluna Issue é o link: a URL leva o rótulo no fragmento (#DOC#42), que a tabela exibe
+        urls = df.loc[t.index, "url"] if "url" in df else pd.Series(None, index=t.index)
+        t["issue"] = [f"{u}#{ga.rotulo_issue(i)}" if isinstance(u, str) and u else ga.rotulo_issue(i)
+                      for i, u in zip(t["issue"], urls)]
+        t = t.drop(columns=["url"], errors="ignore")
+    for c in ("sp_planejado", "sp_realizado", "sp_atual"):
+        if c in t:   # ausente vira "—" (a tabela mostraria "None")
+            t[c] = t[c].map(lambda v: "—" if v is None or pd.isna(v) else num(v))
     t = t.rename(columns=COLUNAS_STORY)
     datas = {v: st.column_config.DatetimeColumn(v, format="DD/MM/YYYY HH:mm") for k, v in COLUNAS_STORY.items()
              if k in ("criada_em", "entrou_em", "saiu_em", "concluida_em")}
     st.dataframe(t, use_container_width=True, hide_index=True, key=f"tab_{chave}", column_config={
-        "Link": st.column_config.LinkColumn("Link", display_text="abrir issue"),
+        "Issue": st.column_config.LinkColumn("Issue", display_text=r"#(.+)$", help="clique para abrir a issue"),
         "Título": st.column_config.TextColumn("Título", width="large"),
-        "SP planejado": st.column_config.NumberColumn(format="%.0f"),
-        "SP realizado": st.column_config.NumberColumn(format="%.0f"),
-        "SP atual": st.column_config.NumberColumn(format="%.0f"), **datas})
-    st.download_button(f"Baixar CSV ({len(t)} linhas)", t.to_csv(index=False).encode("utf-8-sig"),
+        "SP planejado": st.column_config.TextColumn("SP planejado", help="pontos na planning; — = não planejada"),
+        "SP realizado": st.column_config.TextColumn("SP realizado", help="pontos concluídos; — = não concluída"),
+        "SP atual": st.column_config.TextColumn("SP atual", help="estimativa hoje; — = sem estimativa"), **datas})
+    csv = t.assign(Issue=t["Issue"].str.replace(r"^.*#(?=[^#]+#\d+$)", "", regex=True)) if "Issue" in t else t
+    if "url" in df and "Issue" in t:
+        csv.insert(csv.columns.get_loc("Issue") + 1, "Link", df.loc[t.index, "url"].values)
+    st.download_button(f"Baixar CSV ({len(t)} linhas)", csv.to_csv(index=False).encode("utf-8-sig"),
                        file_name=arquivo, mime="text/csv", key=f"csv_{chave}")
 
 
@@ -403,13 +412,21 @@ def _velocity(ctx, R, d):
     ev = st.dataframe(t, hide_index=True, use_container_width=True, key="ga_vel_tab", on_select="rerun",
                       selection_mode="single-row", column_config={
                           "sprint": "Sprint", "sprint_nome": "Nome", "release": "Release", "sprint_status": "Situação",
-                          "sp_planejado": st.column_config.NumberColumn("Planejado", format="%.0f"),
-                          "sp_realizado": st.column_config.NumberColumn("Realizado", format="%.0f"),
-                          "diferenca": st.column_config.NumberColumn("Diferença", format="%+.0f"),
-                          "taxa": st.column_config.NumberColumn("Conclusão", format="%.0f%%"),
-                          "stories_planejadas": "Planejadas", "stories_concluidas": "Concluídas",
-                          "stories_adicionadas": "Adicionadas", "stories_removidas": "Removidas",
-                          "stories_levadas": "Levadas"})
+                          "sp_planejado": st.column_config.NumberColumn("SP planejados", format="%.0f",
+                                                                        help="soma dos story points planejados"),
+                          "sp_realizado": st.column_config.NumberColumn("SP realizados", format="%.0f",
+                                                                        help="soma dos story points concluídos"),
+                          "diferenca": st.column_config.NumberColumn("Diferença (SP)", format="%+.0f"),
+                          "taxa": st.column_config.NumberColumn("Conclusão (SP)", format="%.0f%%"),
+                          "stories_planejadas": st.column_config.NumberColumn(
+                              "Stories planejadas", help="quantidade de stories (issues), não pontos"),
+                          "stories_concluidas": st.column_config.NumberColumn("Stories concluídas"),
+                          "stories_adicionadas": st.column_config.NumberColumn(
+                              "Stories adicionadas", help="entraram depois da planning"),
+                          "stories_removidas": st.column_config.NumberColumn(
+                              "Stories removidas", help="saíram antes do fim sem concluir"),
+                          "stories_levadas": st.column_config.NumberColumn(
+                              "Stories levadas", help="não concluídas e presentes na sprint seguinte")})
     try:
         linhas_sel = list(ev.selection.rows)
     except AttributeError:
@@ -484,10 +501,11 @@ def _analises(R, d):
                f"diferença ≥ {ga.LIMITE_DIFERENCA:.0%}, overcommitment ≥ {ga.LIMITE_OVERCOMMIT:.1f}× a média "
                f"anterior, variação de velocity ≥ {ga.LIMITE_VARIACAO_VELOCITY:.0%}, escopo adicionado ≥ "
                f"{ga.LIMITE_ESCOPO:.0%}, concentração ≥ {ga.LIMITE_CONCENTRACAO:.0%} nas 20% maiores stories.")
-    st.dataframe(a, hide_index=True, use_container_width=True, column_config={
-        "tema": "Tema", "sprint": "Sprint", "fato": st.column_config.TextColumn("Fato observado", width="large"),
-        "interpretacao": st.column_config.TextColumn("Interpretação", width="large"),
-        "issues": st.column_config.TextColumn("Issues envolvidas", width="medium")})
+    layout.tabela_html(a, {"tema": "Tema", "sprint": "Sprint", "fato": "Fato observado",
+                           "interpretacao": "Interpretação", "issues": "Issues envolvidas"}, links=("issues",))
+    st.download_button("Baixar CSV das análises", a.assign(issues=a["issues"].map(
+        lambda xs: ", ".join(f"{r} ({u})" if u else r for r, u in xs))).to_csv(index=False).encode("utf-8-sig"),
+        file_name="analises_qualitativas.csv", mime="text/csv", key="csv_analises")
 
 
 # ───────────────────────── 9. detalhamento ─────────────────────────
@@ -496,11 +514,11 @@ def _detalhamento(d):
     layout.secao("Detalhamento das issues", "De quais issues vem cada número?", ["ZENHUB"])
     h = ga.hierarquia(d)
     st.markdown("**Release → Sprint → Épico**")
-    st.dataframe(h, hide_index=True, use_container_width=True, column_config={
-        "release": "Release", "sprint": "Sprint", "epico": st.column_config.TextColumn("Épico", width="large"),
-        "stories": "Stories", "sp_planejado": st.column_config.NumberColumn("SP planejados", format="%.0f"),
-        "sp_realizado": st.column_config.NumberColumn("SP realizados", format="%.0f"),
-        "issues": st.column_config.TextColumn("Issues", width="large")})
+    layout.tabela_html(h, {"release": "Release", "sprint": "Sprint", "epico": "Épico", "stories": "Stories",
+                           "sp_planejado": "SP planejados", "sp_realizado": "SP realizados", "issues": "Issues"},
+                       links=("issues",), numericas=("stories", "sp_planejado", "sp_realizado"))
+    st.caption("SP planejados = soma dos pontos das stories planejadas; '—' = nenhuma story daquele grupo estava "
+               "no planejado (entrou depois da planning). Stories = quantidade de issues do grupo.")
     st.markdown("**Todas as stories do recorte** (uma linha por story em cada sprint)")
     tabela_stories(d.sort_values(["ordem_sprint", "epico", "issue"]), "todas", "stories_do_recorte.csv")
     ausentes = []

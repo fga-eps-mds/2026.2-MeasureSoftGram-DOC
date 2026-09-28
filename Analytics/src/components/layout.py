@@ -92,3 +92,31 @@ def tabela(df: pd.DataFrame, rotulo: str = "Ver os dados em tabela", **kw) -> No
 def estado():
     """(contexto, filtros) montados pelo app.py nesta execução."""
     return st.session_state["ctx"], st.session_state["filtros"]
+
+
+def tabela_html(df: pd.DataFrame, colunas: dict[str, str], links: tuple[str, ...] = (),
+                numericas: tuple[str, ...] = (), altura: int | None = 420) -> None:
+    """Tabela em HTML quando uma célula precisa de vários links (ex.: as issues de um épico).
+
+    ``links``: colunas com listas de (rótulo, url), cada item vira um link para a issue.
+    Número ausente aparece como "—", nunca como None.
+    """
+    if df is None or df.empty:
+        st.caption("Sem linhas.")
+        return
+
+    def celula(col, v):
+        if col in links:
+            itens = v if isinstance(v, (list, tuple)) else []
+            return ", ".join(f"<a href='{html.escape(u)}' target='_blank' rel='noopener'>{html.escape(r)}</a>"
+                             if u else html.escape(r) for r, u in itens) or "—"
+        if col in numericas:
+            return "—" if v is None or (isinstance(v, float) and pd.isna(v)) else f"{float(v):,.0f}".replace(",", ".")
+        return "—" if v is None or (isinstance(v, float) and pd.isna(v)) else html.escape(str(v))
+
+    cab = "".join(f"<th class='{'num' if c in numericas else ''}'>{html.escape(t)}</th>" for c, t in colunas.items())
+    corpo = "".join("<tr>" + "".join(f"<td class='{'num' if c in numericas else ''}'>{celula(c, r[c])}</td>"
+                                     for c in colunas) + "</tr>" for _, r in df.iterrows())
+    estilo = f" style='max-height:{altura}px'" if altura else ""
+    st.markdown(f"<div class='msg-tabela'{estilo}><table><thead><tr>{cab}</tr></thead><tbody>{corpo}</tbody>"
+                "</table></div>", unsafe_allow_html=True)
