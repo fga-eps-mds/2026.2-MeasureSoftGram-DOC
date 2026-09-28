@@ -9,7 +9,7 @@
         "id": 5606356738,
         "node_id": "PR_kwDOUAEulM8AAAABFZGQzQ",
         "number": 24,
-        "title": "fix: timeouts no GitHub, tratamento 401 para 409 e elimina\u00e7\u00e3o de N+1",
+        "title": "fix: timeouts no GitHub, tratamento 401 e otimiza\u00e7\u00f5es de N+1, Grafana e banco",
         "user": {
             "login": "DiegoCarlito",
             "id": 118839301,
@@ -32,7 +32,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -58,10 +58,10 @@
             }
         ],
         "milestone": null,
-        "comments": 0,
+        "comments": 1,
         "created_at": "2026-09-27T21:17:00Z",
-        "updated_at": "2026-09-27T21:39:01Z",
-        "closed_at": null,
+        "updated_at": "2026-09-28T00:49:02Z",
+        "closed_at": "2026-09-28T00:49:01Z",
         "assignee": {
             "login": "DiegoCarlito",
             "id": 118839301,
@@ -93,10 +93,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/24",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/24.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/24.patch",
-            "merged_at": null
+            "merged_at": "2026-09-28T00:49:01Z"
         },
-        "body": "# Tratamento de timeouts no GitHub, mapeamento de erro 401 e otimiza\u00e7\u00e3o de consultas N+1\r\n\r\n## Descri\u00e7\u00e3o\r\nImplementa no Service a estabiliza\u00e7\u00e3o das chamadas externas ao GitHub e a otimiza\u00e7\u00e3o de consultas ao banco de dados, referente \u00e0 task [TASK02.04 Service: consultas ao banco e chamadas ao GitHub e ao Grafana](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/15), da hist\u00f3ria [US02.01 Carregar e navegar pelos dados do produto sem travamentos nem recargas](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/75) vinculada ao \u00e9pico [MSG02 Revisar o fluxo de carregamento (frontend)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/42).\r\n\r\nMudan\u00e7as:\r\n- `config/settings/base.py`: adicionada a constante `GITHUB_TIMEOUT = int(os.getenv(\"GITHUB_TIMEOUT\", \"10\"))` para limitar o tempo de espera das requisi\u00e7\u00f5es externas.\r\n- `organizations/views.py`, `accounts/views.py` e `grafana_proxy/services.py`: adi\u00e7\u00e3o de `timeout=settings.GITHUB_TIMEOUT` em todas as chamadas `requests.get` ao GitHub.\r\n- `organizations/views.py` e `accounts/views.py`: tratamento de exce\u00e7\u00f5es `requests.exceptions.Timeout` retornando status `503 Service Unavailable`, e intercepta\u00e7\u00e3o de erros `401`/`403` vindos do GitHub mapeados para `409 Conflict` (`{\"error\": \"github_token_invalid\"}`).\r\n- `organizations/serializers.py`: inclus\u00e3o do campo `github_org_name` no `OrganizationSerializer` para viabilizar a identifica\u00e7\u00e3o un\u00edvoca de organiza\u00e7\u00f5es no Front sem depender de nome de exibi\u00e7\u00e3o.\r\n- `organizations/views.py`, `releases/views.py`, `measures/views.py` e `tsqmi/views.py`: elimina\u00e7\u00e3o de consultas N+1 com uso de `select_related` e `prefetch_related` nos querysets de releases, reposit\u00f3rios, TSQMI e medidas calculadas.\r\n- Migrations (`metrics`, `measures`, `subcharacteristics`, `tsqmi`): adi\u00e7\u00e3o de \u00edndices compostos nos models com ordena\u00e7\u00e3o decrescente (`models.Index(fields=[\"repository\", \"<entidade>\", \"-created_at\"])`), acelerando consultas de hist\u00f3rico.\r\n- Testes automatizados:\r\n  - `organizations/tests/test_organizations_endpoints.py`: testes com mock de timeout (503) e bad credentials (401 convertido para 409).\r\n  - `organizations/tests/test_repositories_endpoints.py` e `releases/tests/test_releases_endpoints.py`: valida\u00e7\u00e3o de complexidade constante de queries atrav\u00e9s de `assertNumQueries`.\r\n\r\n## Porque este Pull Request \u00e9 necess\u00e1rio?\r\nSem estas altera\u00e7\u00f5es, instabilidades ou lentid\u00f5es na API do GitHub prendiam os workers s\u00edncronos do Django, travando a plataforma inteira. Al\u00e9m disso, erros de credenciais (401) do GitHub eram repassados diretamente ao frontend, causando o encerramento indevido da sess\u00e3o do usu\u00e1rio. No banco de dados, os endpoints de releases, TSQMI e reposit\u00f3rios sofriam com problemas de N+1 e falta de \u00edndices compostos, degradando a performance \u00e0 medida que a base crescia.\r\n\r\n## Pontos de aten\u00e7\u00e3o\r\n- **Migrations de \u00edndices**: foram adicionadas migrations em quatro apps (`metrics`, `measures`, `subcharacteristics` e `tsqmi`). \u00c9 necess\u00e1rio rodar `python manage.py migrate` ao atualizar o ambiente.\r\n- **Falha pr\u00e9-existente conhecida no reposit\u00f3rio**: existe um teste pr\u00e9-existente na branch `develop` (`test_create_github_repository_authenticated_via_social_token`) que falha devido ao `InvalidReleaseConfigurationException` por aus\u00eancia de seed completo de `SupportedMeasures` em ambiente de teste limpo. Os testes introduzidos por esta PR est\u00e3o 100% verdes e isolados.\r\n\r\n## Como testar\r\n1. Subir os containers e rodar as migrations:\r\n```bash\r\ndocker compose --env-file .env exec service python manage.py migrate\r\n```\r\n\r\n2. Executar os testes de timeout e 401 mapeado:\r\n```bash\r\ndocker compose --env-file .env exec service pytest organizations/tests/test_organizations_endpoints.py -k \"test_list_repos_timeout or test_list_repos_401\"\r\n```\r\n*Resultado esperado:* 2 testes passando.\r\n\r\n3. Executar os testes de queries constantes (N+1 resolvido):\r\n```bash\r\ndocker compose --env-file .env exec service pytest releases/tests/test_releases_endpoints.py -k \"test_get_list_releases\"\r\ndocker compose --env-file .env exec service pytest organizations/tests/test_repositories_endpoints.py -k \"test_get_list_repository\"\r\n```\r\n*Resultado esperado:* Todos os testes com `assertNumQueries` passando.\r\n\r\n## Crit\u00e9rios de aceita\u00e7\u00e3o\r\n- [x] Configura\u00e7\u00e3o `GITHUB_TIMEOUT = 10` aplicada em todas as chamadas HTTP externas ao GitHub\r\n- [x] Retorno de status 503 em caso de timeout na comunica\u00e7\u00e3o com o GitHub (Cen\u00e1rio 1)\r\n- [x] Intercepta\u00e7\u00e3o de 401 vindo do GitHub e resposta com status 409 `github_token_invalid` (Cen\u00e1rio 2)\r\n- [x] Endpoint `github-organizations` utiliza cache de 10 minutos (Cen\u00e1rio 3)\r\n- [x] Elimina\u00e7\u00e3o de consultas N+1 comprovada via `assertNumQueries` (Cen\u00e1rio 4)\r\n- [x] \u00cdndices compostos de banco criados e aplicando/revertendo sem erro via migrations\r\n- [x] Contratos JSON de resposta mantidos inalterados (Cen\u00e1rio 5)\r\n- [x] `OrganizationSerializer` exp\u00f5e `github_org_name`\r\n\r\nCloses #15  \r\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#75  \r\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#42",
-        "closed_by": null,
+        "body": "# Tratamento de timeouts no GitHub, mapeamento de erro 401 e otimiza\u00e7\u00f5es de performance (N+1, Grafana e DB)\r\n\r\n## Descri\u00e7\u00e3o\r\nImplementa no Service a estabiliza\u00e7\u00e3o das chamadas externas ao GitHub e uma s\u00e9rie de otimiza\u00e7\u00f5es de consultas ao banco de dados e ao Grafana, referente \u00e0 task [TASK02.04 Service: consultas ao banco e chamadas ao GitHub e ao Grafana](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/15), da hist\u00f3ria [US02.01 Carregar e navegar pelos dados do produto sem travamentos nem recargas](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/75) vinculada ao \u00e9pico [MSG02 Revisar o fluxo de carregamento (frontend)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/42).\r\n\r\nMudan\u00e7as:\r\n- `config/settings/base.py`: adicionada a constante `GITHUB_TIMEOUT = int(os.getenv(\"GITHUB_TIMEOUT\", \"10\"))` para limitar o tempo de espera das requisi\u00e7\u00f5es externas.\r\n- `config/settings/base.py`: adicionadas as configura\u00e7\u00f5es `\"CONN_MAX_AGE\": 60` e `\"CONN_HEALTH_CHECKS\": True` no pool de conex\u00f5es do banco de dados (item S9).\r\n- `organizations/views.py`, `accounts/views.py`: adi\u00e7\u00e3o de `timeout=settings.GITHUB_TIMEOUT` em todas as chamadas `requests.get` ao GitHub.\r\n- `organizations/views.py` e `accounts/views.py`: tratamento de exce\u00e7\u00f5es `requests.exceptions.Timeout` retornando status `503 Service Unavailable`, e intercepta\u00e7\u00e3o de erros `401`/`403` vindos do GitHub mapeados para `409 Conflict` (`{\"error\": \"github_token_invalid\"}`).\r\n- `grafana_proxy/services.py`: implementa\u00e7\u00e3o de cache de 10 min (`cache.get`/`set`) em `get_dashboard_by_uid` e reuso dos metadados j\u00e1 obtidos em `build_dashboard_url`, evitando requests duplicados ao Grafana interno (item S4).\r\n- `organizations/serializers.py`: inclus\u00e3o do campo `github_org_name` no `OrganizationSerializer` para viabilizar a identifica\u00e7\u00e3o un\u00edvoca de organiza\u00e7\u00f5es no Front sem depender de nome de exibi\u00e7\u00e3o.\r\n- `organizations/views.py`, `releases/views.py`, `measures/views.py` e `tsqmi/views.py`: elimina\u00e7\u00e3o de consultas N+1 com uso de `select_related` e `prefetch_related` nos querysets de releases, reposit\u00f3rios, TSQMI e medidas calculadas (itens S5, S6, S7).\r\n- Migrations (`metrics`, `measures`, `subcharacteristics`, `tsqmi`): adi\u00e7\u00e3o de \u00edndices compostos nos models com ordena\u00e7\u00e3o decrescente (`models.Index(fields=[\"repository\", \"<entidade>\", \"-created_at\"])`), acelerando consultas de hist\u00f3rico (item S8).\r\n- Testes automatizados:\r\n  - `organizations/tests/test_organizations_endpoints.py`: testes com mock de timeout (503) e bad credentials (401 convertido para 409).\r\n  - `organizations/tests/test_repositories_endpoints.py` e `releases/tests/test_releases_endpoints.py`: valida\u00e7\u00e3o de complexidade constante de queries atrav\u00e9s de `assertNumQueries`.\r\n\r\n## Porque este Pull Request \u00e9 necess\u00e1rio?\r\nSem estas altera\u00e7\u00f5es, instabilidades ou lentid\u00f5es na API do GitHub prendiam os workers s\u00edncronos do Django, travando a plataforma inteira, e erros de credenciais (401) encerravam indevidamente a sess\u00e3o do usu\u00e1rio no frontend. No banco de dados, os endpoints sofriam com problemas de N+1, falta de \u00edndices compostos e aberturas repetidas de conex\u00e3o TCP (aus\u00eancia de `CONN_MAX_AGE`), degradando a performance com o crescimento da base. Al\u00e9m disso, o carregamento do Grafana gerava requisi\u00e7\u00f5es redundantes sem cache.\r\n\r\n## Pontos de aten\u00e7\u00e3o\r\n- **Migrations de \u00edndices**: foram adicionadas migrations em quatro apps (`metrics`, `measures`, `subcharacteristics` e `tsqmi`). \u00c9 necess\u00e1rio rodar `python manage.py migrate` ao atualizar o ambiente.\r\n\r\n## Como testar\r\n1. Subir os containers e rodar as migrations:\r\n```bash\r\ndocker compose --env-file .env exec service python manage.py migrate\r\n```\r\n\r\n2. Executar os testes de timeout e 401 mapeado:\r\n```bash\r\ndocker compose --env-file .env exec service pytest organizations/tests/test_organizations_endpoints.py -k \"test_list_repos_timeout or test_list_repos_401\"\r\n```\r\n*Resultado esperado:* 2 testes passando.\r\n\r\n3. Executar os testes de queries constantes (N+1 resolvido):\r\n```bash\r\ndocker compose --env-file .env exec service pytest releases/tests/test_releases_endpoints.py -k \"test_get_list_releases\"\r\ndocker compose --env-file .env exec service pytest organizations/tests/test_repositories_endpoints.py -k \"test_if_historical_measures_values_action_url_is_working or test_if_latest_tsqmi_values_action_url_is_working\"\r\n```\r\n*Resultado esperado:* Todos os testes com `assertNumQueries` passando.\r\n\r\n4. Navegar localmente (`http://localhost`) para visualizar dashboards do Grafana e acompanhar os logs (`docker compose --env-file .env logs -f service`) para validar o cache.\r\n\r\n## Crit\u00e9rios de aceita\u00e7\u00e3o\r\n- [x] Configura\u00e7\u00e3o `GITHUB_TIMEOUT = 10` aplicada em todas as chamadas HTTP externas ao GitHub (Cen\u00e1rio 1)\r\n- [x] Retorno de status 503 em caso de timeout na comunica\u00e7\u00e3o com o GitHub (Cen\u00e1rio 1)\r\n- [x] Intercepta\u00e7\u00e3o de 401 vindo do GitHub e resposta com status 409 `github_token_invalid` (Cen\u00e1rio 2)\r\n- [x] Endpoint `github-organizations` utiliza cache de 10 minutos (Cen\u00e1rio 3)\r\n- [x] Grafana Proxy utilizando cache (`get_dashboard_by_uid`) e reuso de metadados na view (S4)\r\n- [x] Conex\u00f5es persistentes de banco configuradas com `CONN_MAX_AGE` e `CONN_HEALTH_CHECKS` (S9)\r\n- [x] Elimina\u00e7\u00e3o de consultas N+1 comprovada via `assertNumQueries` (Cen\u00e1rio 4)\r\n- [x] \u00cdndices compostos de banco criados e aplicando/revertendo sem erro via migrations (S8)\r\n- [x] Contratos JSON de resposta mantidos inalterados (Cen\u00e1rio 5)\r\n- [x] `OrganizationSerializer` exp\u00f5e `github_org_name`\r\n\r\nCloses #15  \r\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#75  \r\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#42",
+        "closed_by": {
+            "login": "bottinolucas",
+            "id": 101297130,
+            "node_id": "U_kgDOBgmr6g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bottinolucas",
+            "html_url": "https://github.com/bottinolucas",
+            "followers_url": "https://api.github.com/users/bottinolucas/followers",
+            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+            "repos_url": "https://api.github.com/users/bottinolucas/repos",
+            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/24/reactions",
             "total_count": 0,
@@ -174,7 +194,7 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-09-27T21:07:10Z",
-        "updated_at": "2026-09-27T21:07:27Z",
+        "updated_at": "2026-09-27T23:16:25Z",
         "closed_at": null,
         "assignee": {
             "login": "Diogo-Barboza",
@@ -201,7 +221,7 @@
         "issue_field_values": [],
         "type": null,
         "active_lock_reason": null,
-        "draft": false,
+        "draft": true,
         "pull_request": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/pulls/23",
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/23",
@@ -287,9 +307,9 @@
         "locked": false,
         "assignees": [],
         "milestone": null,
-        "comments": 1,
+        "comments": 2,
         "created_at": "2026-09-27T03:46:26Z",
-        "updated_at": "2026-09-27T17:11:36Z",
+        "updated_at": "2026-09-27T23:59:32Z",
         "closed_at": null,
         "assignee": null,
         "author_association": "NONE",
@@ -361,7 +381,7 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-09-26T23:37:14Z",
-        "updated_at": "2026-09-27T21:45:43Z",
+        "updated_at": "2026-09-27T21:50:48Z",
         "closed_at": "2026-09-27T21:45:43Z",
         "assignee": null,
         "author_association": "NONE",
@@ -924,7 +944,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -952,8 +972,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-09-24T02:54:23Z",
-        "updated_at": "2026-09-27T20:35:02Z",
-        "closed_at": null,
+        "updated_at": "2026-09-28T00:49:03Z",
+        "closed_at": "2026-09-28T00:49:03Z",
         "assignee": {
             "login": "DiegoCarlito",
             "id": 118839301,
@@ -1001,7 +1021,27 @@
             "total_blocking": 0
         },
         "body": "## 1. Contexto e Justificativa\n\nO Service roda com 3 workers s\u00edncronos (`start_service.sh`, `GUNICORN_WORKERS=3`, timeout de 120 s). As chamadas ao GitHub e ao Grafana n\u00e3o t\u00eam timeout nem cache, ent\u00e3o qualquer lentid\u00e3o externa ocupa os workers e trava todas as telas. Al\u00e9m disso:\n\n- o 401 do GitHub \u00e9 repassado ao Front, que o interpreta como sess\u00e3o expirada e desloga o usu\u00e1rio;\n- os endpoints de valores, TSQMI e reposit\u00f3rios fazem consultas repetidas ao banco (N+1);\n- as tabelas de hist\u00f3rico n\u00e3o t\u00eam \u00edndices compostos.\n\n**Reposit\u00f3rio:** MeasureSoftGram-Service \u00b7 **Respons\u00e1vel:** @DiegoCarlito \u00b7 **Estimativa:** 8 \u00b7 **Depende de:** \u2014\n\n## 2. Itens do Diagn\u00f3stico Cobertos\n\n| ID  | Item                                                                                                          | Reposit\u00f3rio | Gravidade | Alvo t\u00e9cnico                                                                                                          | Backlog T\u00e9cnico |\n| --- | ------------------------------------------------------------------------------------------------------------- | ----------- | --------- | --------------------------------------------------------------------------------------------------------------------- | :---: |\n| S1  | Chamadas `requests` ao GitHub sem `timeout`                                                                   | Service     | Alta      | `src/accounts/views.py` (~138, ~177, ~190), `src/organizations/views.py` (~172, ~186, ~278)                           | Diagn\u00f3stico MSG02 |\n| S2  | O status do GitHub (inclusive 401) \u00e9 repassado ao Front, que desloga o usu\u00e1rio                                | Service     | Alta      | `github-organizations`, `github-repos` e `import` (`status=r.status_code`)                                            | Diagn\u00f3stico MSG02 |\n| S3  | `github-organizations` e `github-repos` sem cache. `github-repos` percorre todas as p\u00e1ginas em s\u00e9rie.         | Service     | Alta      | `src/accounts/views.py`, `src/organizations/views.py`                                                                 | Diagn\u00f3stico MSG02 |\n| S4  | `get_dashboard_by_uid` \u00e9 chamado 2\u00d7 por painel, sem cache                                                     | Service     | M\u00e9dia     | `src/grafana_proxy/views.py` (`get_dashboard`), `services.py` (`build_dashboard_url`)                                 | Diagn\u00f3stico MSG02 |\n| S5  | N+1 em `latest-values` e `historical-values`: `get_repository()` e uma consulta de valores por item           | Service     | Alta      | `src/metrics/`, `measures/`, `subcharacteristics/` e `characteristics/serializers.py`                                 | **MSG-08** |\n| S6  | TSQMI por reposit\u00f3rio: prefetch do hist\u00f3rico completo, e `.reverse()[:MAX]` gera uma consulta por reposit\u00f3rio | Service     | M\u00e9dia     | `src/organizations/views.py` (~95\u2013130), `serializers.py` (~516)                                                       | **MSG-08** |\n| S7  | Lista de reposit\u00f3rios: `select_related(\"product\")`, mas o serializer acessa `product.organization`            | Service     | M\u00e9dia     | `src/organizations/views.py` (~85)                                                                                    | **MSG-08** |\n| S8  | Faltam \u00edndices compostos `(repository, entidade, -created_at)`                                                | Service     | M\u00e9dia     | models de `CollectedMetric`, `CalculatedMeasure`, `CalculatedSubCharacteristic`, `CalculatedCharacteristic` e `TSQMI` | **MSG-09** |\n| S9  | `CONN_MAX_AGE` n\u00e3o definido: uma nova conex\u00e3o com o banco a cada requisi\u00e7\u00e3o                                   | Service     | Baixa     | `src/config/settings/base.py`                                                                                         | Diagn\u00f3stico MSG02 |\n\n> [!NOTE]\n> Os itens **S5**, **S6** e **S7** cobrem diretamente o d\u00e9bito **MSG-08** (Consulta N+1 em cascata no c\u00e1lculo do modelo), e o item **S8** cobre o **MSG-09** (Tabela CollectedMetric e tabelas de valores calculados sem \u00edndices compostos). Os demais itens derivam do diagn\u00f3stico de estabilidade do Service. Para mais detalhes, consulte o [Backlog T\u00e9cnico](https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/diagnostico/backlog-tecnico/).\n\n## 3. Atividades T\u00e9cnicas\n\n### 3.1. GitHub (S1, S2, S3)\n\n- Criar `GITHUB_TIMEOUT` (padr\u00e3o de 10 s) em `settings/base.py` e passar `timeout=` em todas as chamadas ao GitHub.\n- Tratar `Timeout` e `ConnectionError` com `503 {\"error\": \"GitHub indispon\u00edvel\"}`.\n- Quando o GitHub responder 401 ou 403, responder `409 {\"error\": \"github_token_invalid\"}`. **Nunca** repassar 401.\n- Guardar em cache (`django.core.cache`):\n  - `github-organizations`, por usu\u00e1rio, por 10 min;\n  - `github-repos`, por organiza\u00e7\u00e3o, por 5 min.\n- Invalidar esse cache ao importar uma organiza\u00e7\u00e3o e depois do login com GitHub.\n\n### 3.2. Grafana (S4)\n\n- Guardar em cache o resultado de `get_dashboard_by_uid`, por uid, por 10 min.\n- Em `get_dashboard`, passar os metadados j\u00e1 obtidos para `build_dashboard_url`, sem busc\u00e1-los de novo.\n\n### 3.3. Consultas (S5, S6, S7)\n\n- Resolver o reposit\u00f3rio uma vez na view (`get_serializer_context`) e ler `self.context[\"repository\"]` nos 8 m\u00e9todos `get_latest` e `get_history`.\n- Em `get_latest`: buscar os valores mais recentes com uma consulta (`order_by(\"<entidade>_id\", \"-created_at\").distinct(\"<entidade>_id\")`) e pass\u00e1-los como dicion\u00e1rio no contexto.\n- Em `get_history`: limitar a `MAX` registros por entidade com `Window(RowNumber())`, mantendo os filtros `start_at` e `end_at` e a ordem atual.\n- No TSQMI por reposit\u00f3rio: usar `Prefetch` limitado e ler a lista pr\u00e9-carregada no serializer.\n- Usar `select_related(\"product__organization\")` na lista de reposit\u00f3rios e nas views de TSQMI.\n\n### 3.4. Banco (S8, S9)\n\n- Criar uma migration com `models.Index(fields=[\"repository\", \"<entidade>\", \"-created_at\"])` nas 4 tabelas calculadas e `[\"repository\", \"-created_at\"]` em `TSQMI`.\n- Definir `CONN_MAX_AGE` (padr\u00e3o de 60) e `CONN_HEALTH_CHECKS = True`.\n\n## 4. Crit\u00e9rios T\u00e9cnicos (Cen\u00e1rios de Teste)\n\n> **Nota:** Os cen\u00e1rios abaixo foram modelados no formato de cen\u00e1rios para facilitar a reprodu\u00e7\u00e3o e execu\u00e7\u00e3o de testes pela equipe de desenvolvimento e QA, mas **N\u00c3O S\u00c3O BDDs** de regras de neg\u00f3cio funcionais, tratando-se estritamente de verifica\u00e7\u00f5es t\u00e9cnicas de estabilidade e performance.\n\n**Cen\u00e1rio 1: GitHub lento**\n\n- **Dado** que a chamada ao GitHub excede `GITHUB_TIMEOUT`\n- **Quando** `github-organizations` ou `github-repos` \u00e9 chamado\n- **Ent\u00e3o** a resposta \u00e9 `503` em at\u00e9 ~10 s\n\n**Cen\u00e1rio 2: Token do GitHub inv\u00e1lido**\n\n- **Dado** que o GitHub responde 401\n- **Quando** `github-organizations`, `github-repos` ou `import` \u00e9 chamado\n- **Ent\u00e3o** a resposta \u00e9 `409 github_token_invalid`, e nunca `401`\n\n**Cen\u00e1rio 3: Cache**\n\n- **Dado** que `github-organizations` j\u00e1 foi chamado pelo usu\u00e1rio\n- **Quando** \u00e9 chamado de novo dentro de 10 min\n- **Ent\u00e3o** o GitHub n\u00e3o \u00e9 acionado\n\n**Cen\u00e1rio 4: N\u00famero de consultas**\n\n- **Dado** um reposit\u00f3rio com 1 entidade e outro com 10\n- **Quando** `latest-values`, `historical-values`, TSQMI por reposit\u00f3rio e a lista de reposit\u00f3rios s\u00e3o chamados\n- **Ent\u00e3o** o n\u00famero de consultas \u00e9 o mesmo nos dois casos\n\n**Cen\u00e1rio 5: Respostas inalteradas**\n\n- **Dado** o banco do seed\n- **Quando** os endpoints alterados s\u00e3o chamados antes e depois da mudan\u00e7a\n- **Ent\u00e3o** o JSON de sucesso \u00e9 id\u00eantico\n\n## 5. \ud83d\udccb Definition of Ready (DoR - Task T\u00e9cnica)\n\n- [x] Objetivo t\u00e9cnico claro e motiva\u00e7\u00e3o da implementa\u00e7\u00e3o registrados\n- [x] Crit\u00e9rios T\u00e9cnicos definidos (arquivos/servi\u00e7os afetados, padr\u00f5es de implementa\u00e7\u00e3o, depend\u00eancias)\n- [x] Estimativa de esfor\u00e7o pontuada pela equipe de desenvolvimento (8 pontos)\n- [x] Desenvolvedor(a) respons\u00e1vel designado(a) na issue\n- [x] Issue cadastrada no ZenHub com Labels, \u00c9pico Pai ([MSG02] #42) e Sprint configurados\n\n## 6. \u2705 Definition of Done (DoD - Task T\u00e9cnica)\n\n- [x] C\u00f3digo implementado estritamente aderente aos Crit\u00e9rios T\u00e9cnicos acordados\n- [x] Nenhuma chamada `requests` ao GitHub sem `timeout`\n- [x] Nenhum endpoint repassa 401 vindo do GitHub (tratamento para 409)\n- [x] Testes com `django_assert_num_queries` nos endpoints de valores, TSQMI e reposit\u00f3rios (valida\u00e7\u00e3o MSG-08)\n- [x] Testes de timeout, 401 e cache com mock de `requests`\n- [x] Migration de \u00edndices aplicando e revertendo sem erro (valida\u00e7\u00e3o MSG-09)\n- [x] Os 5 cen\u00e1rios t\u00e9cnicos acima cobertos por testes (`pytest` passando)\n- [ ] Pipeline de CI/CD executado com sucesso no reposit\u00f3rio central\n- [ ] Pull Request (PR) revisado e aprovado por pelo menos um outro integrante da equipe\n- [ ] C\u00f3digo integrado \u00e0 branch `develop` do reposit\u00f3rio central (ambiente de homologa\u00e7\u00e3o)",
-        "closed_by": null,
+        "closed_by": {
+            "login": "bottinolucas",
+            "id": 101297130,
+            "node_id": "U_kgDOBgmr6g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bottinolucas",
+            "html_url": "https://github.com/bottinolucas",
+            "followers_url": "https://api.github.com/users/bottinolucas/followers",
+            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+            "repos_url": "https://api.github.com/users/bottinolucas/repos",
+            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/15/reactions",
             "total_count": 0,
@@ -1016,7 +1056,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/15/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -1246,15 +1286,57 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
-        "assignees": [],
+        "assignees": [
+            {
+                "login": "bottinolucas",
+                "id": 101297130,
+                "node_id": "U_kgDOBgmr6g",
+                "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/bottinolucas",
+                "html_url": "https://github.com/bottinolucas",
+                "followers_url": "https://api.github.com/users/bottinolucas/followers",
+                "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+                "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+                "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+                "repos_url": "https://api.github.com/users/bottinolucas/repos",
+                "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+                "type": "User",
+                "user_view_type": "public",
+                "site_admin": false
+            }
+        ],
         "milestone": null,
         "comments": 0,
         "created_at": "2026-09-24T00:55:54Z",
-        "updated_at": "2026-09-26T22:31:59Z",
-        "closed_at": null,
-        "assignee": null,
+        "updated_at": "2026-09-27T22:03:58Z",
+        "closed_at": "2026-09-27T22:00:41Z",
+        "assignee": {
+            "login": "bottinolucas",
+            "id": 101297130,
+            "node_id": "U_kgDOBgmr6g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bottinolucas",
+            "html_url": "https://github.com/bottinolucas",
+            "followers_url": "https://api.github.com/users/bottinolucas/followers",
+            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+            "repos_url": "https://api.github.com/users/bottinolucas/repos",
+            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "author_association": "NONE",
         "issue_field_values": [],
         "type": {
@@ -1281,7 +1363,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nExpor pela API do Service a medida `technical_debt_ratio` para o Front consumir: valor atual e hist\u00f3rico por release. \u00c9 a parte Service da [US01.02](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/77). O c\u00e1lculo e a persist\u00eancia da medida s\u00e3o da TASK01.04 (#11), da qual esta task depende.\n\n## Lista de afazeres\n1. [ ] Garantir que os endpoints de medidas do reposit\u00f3rio retornem `technical_debt_ratio` dentro de `modifiability` (cen\u00e1rios 1 e 2 da US01.02)\n2. [ ] Incluir a medida nos endpoints de hist\u00f3rico por release usados pelos gr\u00e1ficos (cen\u00e1rios 3 e 4)\n3. [ ] Retornar a aus\u00eancia da medida de forma expl\u00edcita, por exemplo com valor nulo, sem quebrar a resposta das demais medidas (cen\u00e1rio 5)\n4. [ ] Ajustar serializers e DTOs necess\u00e1rios\n5. [ ] Documentar os campos em `src/endpoints.md` e na cole\u00e7\u00e3o do Postman (`MSG.postman_collection.json`)\n6. [ ] Criar ou atualizar testes de integra\u00e7\u00e3o dos endpoints\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "bottinolucas",
+            "id": 101297130,
+            "node_id": "U_kgDOBgmr6g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bottinolucas",
+            "html_url": "https://github.com/bottinolucas",
+            "followers_url": "https://api.github.com/users/bottinolucas/followers",
+            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+            "repos_url": "https://api.github.com/users/bottinolucas/repos",
+            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/6/reactions",
             "total_count": 0,
@@ -1296,7 +1398,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/6/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
