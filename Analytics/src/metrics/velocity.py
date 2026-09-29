@@ -291,7 +291,8 @@ def associar_release(sprint: dict, ids: set, releases: list[dict]) -> tuple:
 # ───────────────────────── cálculo ─────────────────────────
 
 def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: datetime | None = None,
-                       linhas_de_base: dict | None = None, incluir_futuras: bool = False) -> pd.DataFrame:
+                       linhas_de_base: dict | None = None, incluir_futuras: bool = False,
+                       filtro_issue=None) -> pd.DataFrame:
     """Uma linha por sprint, no formato pedido para o gráfico e a tabela.
 
     ``sprint_label`` é S1, S2... na ordem de início (a mesma numeração do time).
@@ -305,8 +306,12 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
     linhas_de_base = linhas_de_base or {}
     issues = snapshot.get("issues", {})
     releases = snapshot.get("releases", [])
-    pais = ids_com_filhas(issues, regras)
+    pais = ids_com_filhas(issues, regras)   # sempre com todas as issues: o recorte não muda quem pontua
     saida = []
+
+    def pont(i) -> bool:
+        """Pontuável e dentro do recorte (``filtro_issue``, ex.: repositórios da barra lateral)."""
+        return pontuavel(i, regras, pais) and (filtro_issue is None or filtro_issue(i))
 
     ordem = sorted(snapshot.get("sprints", []), key=lambda s: s.get("start_at") or "")
     fim_anterior = None
@@ -330,7 +335,7 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
                               "completed_ids": [], "scope_ids": [], "notes": "Sprint futura."})
             continue
         eventos = s.get("scope_changes") or []
-        atuais = [i for i in dict.fromkeys(s.get("issue_ids", [])) if pontuavel(issues.get(i), regras, pais)]
+        atuais = [i for i in dict.fromkeys(s.get("issue_ids", [])) if pont(issues.get(i))]
         notas = []
 
         # planejado
@@ -344,6 +349,9 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
             base = linha_de_base(s, issues, regras)
             planejadas = base["issues"] if base else None
             fonte_base = base["fonte"] if base else "indisponível (sem histórico de escopo)"
+        planejadas_todas = planejadas
+        if planejadas is not None and filtro_issue is not None:
+            planejadas = {k: v for k, v in planejadas.items() if filtro_issue(issues.get(k))}
         if s.get("falhas"):
             notas.append("Coleta incompleta desta sprint (" + ", ".join(s["falhas"]) + "): rode a coleta de novo.")
         if planejadas is None:
@@ -356,7 +364,7 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
         concluidas = {}
         for iid in candidatas:
             i = issues.get(iid)
-            if not pontuavel(i, regras, pais):
+            if not pont(i):
                 continue
             quando = momento_conclusao(i, regras)
             if quando is None or not (abertura <= quando <= limite):
@@ -377,7 +385,7 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
         if sem_detalhe:
             notas.append(f"{len(set(sem_detalhe))} issue(s) do histórico sem detalhe (ignoradas).")
 
-        ids_rel = set(s.get("issue_ids", [])) | set(planejadas or {})
+        ids_rel = set(s.get("issue_ids", [])) | set(planejadas_todas or {})   # release não muda com o recorte
         rel_id, rel_nome, rel_fonte = associar_release(s, ids_rel, releases)
 
         planned_sp = sum(_sp(v) for v in planejadas.values()) if planejadas is not None else None
@@ -389,7 +397,7 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
                 and inicio <= (_dt(e.get("effective_at")) or inicio) <= limite}
         else:
             passaram = set(s.get("issue_ids", []))
-        escopo = sorted(i for i in passaram if pontuavel(issues.get(i), regras, pais))
+        escopo = sorted(i for i in passaram if pont(issues.get(i)))
         saida.append({
             "sprint_id": s["sprint_id"],
             "sprint_label": f"S{n}",

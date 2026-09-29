@@ -326,5 +326,18 @@ class ComparacaoZenhubTest(unittest.TestCase):
                          "S1: Zenhub 14 SP (reproduzido pelas regras do Zenhub: 14) → painel 9 SP")
 
 
+class RecorteTest(unittest.TestCase):
+    def test_filtro_de_repositorio_so_conta_as_issues_do_recorte(self):
+        a = issue("A", 5, estado="CLOSED", fechada=t(S1_INI, 1)); a["repository"] = "front"
+        b = issue("B", 3, estado="CLOSED", fechada=t(S1_INI, 1)); b["repository"] = "doc"
+        snap = {"sprints": [sprint("S1", S1_INI, S1_FIM, ["A", "B"], [])], "issues": {"A": a, "B": b},
+                "releases": []}
+        agora = S1_FIM + timedelta(days=1)
+        todas = v.calculate_velocity(snap, agora=agora).iloc[0]
+        so_front = v.calculate_velocity(snap, agora=agora, filtro_issue=lambda i: i["repository"] == "front").iloc[0]
+        self.assertEqual((todas["planned_story_points"], todas["completed_story_points"]), (8, 8))
+        self.assertEqual((so_front["planned_story_points"], so_front["completed_story_points"]), (5, 5))
+
+
 if __name__ == "__main__":
     unittest.main()

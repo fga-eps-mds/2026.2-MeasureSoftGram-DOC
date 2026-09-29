@@ -21,6 +21,7 @@ import streamlit as st
 
 import config
 from src import theme
+from src.data import contexto
 from src.components import charts, layout, rastreio
 from src.components.kpi import kpi
 from src.data import planilha
@@ -107,7 +108,8 @@ def _leitura(rel, u, parcial):
 
 def _kpis(u, d):
     tem_bac, tem_ac = not vazio(u["BAC"]), not vazio(u["AC"])
-    sem_bac = "Indisponível: orçamento não encontrado na planilha."
+    sem_bac = (f"Indisponível: {u['motivo_valor']}." if isinstance(u.get("motivo_valor"), str)
+               else "Indisponível: orçamento não encontrado na planilha.")
     sem_ac = f"Indisponível: {_motivo_ac(u)}."
     st.markdown("**Prazo** — o time está entregando no ritmo planejado?")
     c = st.columns(4)
@@ -177,8 +179,9 @@ def _graficos(rel, feitas, u):
     tem_bac, tem_ac = not vazio(u["BAC"]), not vazio(u["AC"])
     nomes = {"PV": "Planejado (PV)", "EV": "Entregue em valor (EV)", "AC": "Gasto (AC)"}
     if not tem_bac:
-        layout.indisponivel("Curvas de valor indisponíveis", "orçamento não encontrado na planilha.",
-                            "abas Custos e Planejamento da planilha.")
+        layout.indisponivel("Curvas de valor indisponíveis", u["motivo_valor"] if isinstance(u.get("motivo_valor"), str)
+                            else "orçamento não encontrado na planilha.",
+                            None if isinstance(u.get("motivo_valor"), str) else "abas Custos e Planejamento da planilha.")
     else:
         longo = feitas.melt(id_vars=["sprint"], value_vars=["PV", "EV", "AC"], var_name="serie",
                             value_name="valor").dropna(subset=["valor"])
@@ -337,8 +340,13 @@ def _tabela_completa(d):
 
 def pagina():
     ctx, f = layout.estado()
+    ctx = contexto.com_recorte(ctx, f["repos"])
     layout.titulo_pagina("Agile EVM", "Prazo e custo da release: entregas do Zenhub × orçamento e horas da planilha.",
                          ["ZENHUB", "PLANILHA", "CALCULADO"])
+    if ctx.repos_recorte:
+        layout.alerta("neutral", "Filtro de repositórios ativo (" + ", ".join(ctx.repos_recorte) + "): pontos, sprints "
+                      "e velocity são só desses repositórios. Orçamento e horas são do time inteiro, então custo, "
+                      "CPI e valores em R$ do EVM ficam indisponíveis no recorte.")
     _menus(ctx)
     e = ctx.evm
     if e is None or e.empty:

@@ -140,7 +140,9 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
 
     # ── Custo (PLANILHA + EVM) ──
     if feitas.empty or vazio(feitas.iloc[-1]["BAC"]):
-        out.append(_item("Custo", "Orçamento (BAC)", None, "unavailable", "abas Custos/Planejamento não lidas",
+        motivo = feitas.iloc[-1].get("motivo_valor") if not feitas.empty else None
+        out.append(_item("Custo", "Orçamento (BAC)", None, "unavailable",
+                         motivo if isinstance(motivo, str) else "abas Custos/Planejamento não lidas",
                          "Custos", "PLANILHA"))
     else:
         u = feitas.iloc[-1]

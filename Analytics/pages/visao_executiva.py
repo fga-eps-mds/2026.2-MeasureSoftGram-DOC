@@ -7,6 +7,7 @@ import html
 import streamlit as st
 
 from src import theme
+from src.data import contexto
 from src.components import layout, rastreio
 from src.components.kpi import kpi
 from src.metrics import resumo
@@ -22,6 +23,7 @@ CARTOES = [
 
 def pagina():
     ctx, f = layout.estado()
+    ctx = contexto.com_recorte(ctx, f["repos"])
     ind = resumo.indicadores(ctx, f)
     status, frase = resumo.situacao_geral(ind)
     rel_nome, entrega = release_atual(ctx.hoje)
@@ -31,6 +33,10 @@ def pagina():
 
     layout.titulo_pagina("Visão Executiva", "O projeto em uma tela: cada cartão leva à página que explica o número.",
                          ["SONAR", "ZENHUB", "PLANILHA", "GITHUB"])
+    if ctx.repos_recorte:
+        layout.alerta("neutral", "Filtro de repositórios ativo (" + ", ".join(ctx.repos_recorte) + "): pontos, sprints "
+                      "e velocity são só desses repositórios. Orçamento e horas são do time inteiro, então custo, "
+                      "CPI e valores em R$ do EVM ficam indisponíveis no recorte.")
     layout.menus([
         ("Status geral", "a pior situação entre os indicadores com meta", "Crítico se algum indicador é crítico; "
          "Atenção se algum está em atenção; senão Conforme", []),

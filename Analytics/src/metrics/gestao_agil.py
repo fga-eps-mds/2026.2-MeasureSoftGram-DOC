@@ -245,7 +245,7 @@ def planejado_no_tempo(por_sprint: pd.DataFrame) -> pd.DataFrame:
 # ───────────────────────── burndown ─────────────────────────
 
 def burndown(snap: dict, sprint: pd.Series, regras: vel.Regras | None = None,
-             agora: datetime | None = None) -> dict:
+             agora: datetime | None = None, filtro_issue=None) -> dict:
     """Trabalho restante ao fim de cada dia da sprint, só com dados do histórico.
 
     Escopo em cada momento = issues pontuáveis na sprint pelo ``scopeChange`` (quem já
@@ -279,7 +279,8 @@ def burndown(snap: dict, sprint: pd.Series, regras: vel.Regras | None = None,
             escopo_sp = None
         else:
             membros = vel.membros_em(eventos, min(momento, fim), iniciais)
-            membros = {i: v for i, v in membros.items() if vel.pontuavel(issues.get(i), regras, pais)}
+            membros = {i: v for i, v in membros.items() if vel.pontuavel(issues.get(i), regras, pais)
+                       and (filtro_issue is None or filtro_issue(issues.get(i)))}
             # concluída que já saiu da sprint pelo histórico ainda conta como feita
             feitos = {i for i in concluidas if (issues.get(i) or {}).get("closed_at")
                       and _dt(issues[i]["closed_at"]) <= momento}

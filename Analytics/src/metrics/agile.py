@@ -193,6 +193,8 @@ def progresso_epicos(df: pd.DataFrame) -> pd.DataFrame:
                        "pontos": f["sp"].sum(min_count=1),
                        "pontos_concluidos": f.loc[f["situacao"] == CONCLUIDO, "sp"].sum(min_count=1),
                        "progresso": feitas / total if total else None})
+    if not linhas:
+        return pd.DataFrame()
     return pd.DataFrame(linhas).sort_values(["progresso", "filhas"], ascending=[True, False], na_position="last")
 
 

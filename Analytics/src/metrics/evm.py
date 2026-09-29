@@ -90,7 +90,7 @@ def horas_da_sprint(label: str, inicio: pd.Timestamp, horas: pd.DataFrame) -> fl
 
 
 def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: pd.DataFrame,
-              custo_hora: float | None) -> pd.DataFrame:
+              custo_hora: float | None, recorte: str | None = None) -> pd.DataFrame:
     """Uma linha por sprint de cada release (inclusive as futuras, com valores vazios).
 
     ``sprints`` é a saída de ``velocity.calculate_velocity(..., incluir_futuras=True)``.
@@ -171,7 +171,16 @@ def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: p
                            "origem_do_ac": origem, "EV": ev, "CV": ev - ac, "SV": ev - pv, "CPI": cpi,
                            "SPI": spi, "integrantes_com_horas": com_horas, "integrantes_ativos": ativos, "ETC": etc, "EAC": ac + etc if not math.isnan(etc) else NAN, "RD": rd,
                            "issues": len(escopo)})
-    return pd.DataFrame(linhas)
+    df = pd.DataFrame(linhas)
+    if recorte and not df.empty:
+        # Com recorte (ex.: só alguns repositórios) os pontos são do recorte, mas orçamento e horas são do
+        # time inteiro: juntar os dois daria valores em R$ sem sentido. Fica só o prazo (PPC, APC, SPI).
+        for col in ("BAC", "SC", "PV", "EV", "AC", "CV", "SV", "CPI", "ETC", "EAC", "horas_reais"):
+            if col in df:
+                df[col] = NAN
+        df["origem_do_ac"] = f"indisponível: {recorte}"
+        df["motivo_valor"] = recorte
+    return df
 
 
 def sumario(evm: pd.DataFrame) -> pd.DataFrame:

@@ -18,6 +18,7 @@ import streamlit as st
 import config
 from pages import zenhub_dados as apoio
 from src import theme
+from src.data import contexto
 from src.components import charts, filters, layout
 from src.components.kpi import kpi
 from src.metrics import gestao_agil as ga
@@ -470,7 +471,7 @@ def _burndown(ctx, sprints_rec: pd.DataFrame):
     idx = opcoes.index(padrao["sprint_label"].iloc[0]) if not padrao.empty else len(opcoes) - 1
     alvo = st.selectbox("Sprint do burndown", opcoes, index=idx, key="ga_burn")
     s = sprints_rec[sprints_rec["sprint_label"] == alvo].iloc[0]
-    b = ga.burndown(ctx.zh_snap, s, ctx.zh_regras, ctx.agora_utc)
+    b = ga.burndown(ctx.zh_snap, s, ctx.zh_regras, ctx.agora_utc, filtro_issue=ctx.zh_filtro)
     dados = b["dados"]
     if dados.empty:
         layout.indisponivel("Burndown indisponível", b["motivo"] or "sem dados")
@@ -553,7 +554,12 @@ def _detalhamento(d):
 
 def pagina():
     ctx, f = layout.estado()
+    ctx = contexto.com_recorte(ctx, f["repos"])
     layout.titulo_pagina("Gestão ágil", "Planejado × realizado em Story Points, do resumo até cada issue.", ["ZENHUB"])
+    if ctx.repos_recorte:
+        layout.alerta("neutral", "Filtro de repositórios ativo (" + ", ".join(ctx.repos_recorte) + "): pontos, sprints "
+                      "e velocity são só desses repositórios. Orçamento e horas são do time inteiro, então custo, "
+                      "CPI e valores em R$ do EVM ficam indisponíveis no recorte.")
     snap = ctx.zh_snap
     topo_e, topo_d = st.columns([3, 1])
     with topo_d:
@@ -628,7 +634,9 @@ def pagina():
     t1, t2, t3 = st.tabs(["Comparação com o Zenhub", "Consistência do cadastro",
                           "Backlog atual, releases e épicos"])
     with t1:
-        apoio.comparacao_zenhub(ctx, f, snap, todas, todas)
+        if ctx.repos_recorte:
+            st.caption("A comparação usa o workspace inteiro: o número do Zenhub não se divide por repositório.")
+        apoio.comparacao_zenhub(ctx.base or ctx, f, snap, (ctx.base or ctx).zh_issues, (ctx.base or ctx).zh_issues)
         apoio.conferencia(ctx, f, snap, todas, todas)
     with t2:
         apoio.consistencia(ctx, f, snap, todas, todas)

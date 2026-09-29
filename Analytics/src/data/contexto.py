@@ -107,6 +107,11 @@ class Contexto:
     # CALCULADO
     evm: pd.DataFrame = field(default_factory=pd.DataFrame)
     evm_sumario: pd.DataFrame = field(default_factory=pd.DataFrame)
+    zh_linhas: dict = field(default_factory=dict)          # linhas de base congeladas (para recalcular)
+    repos_recorte: tuple = ()                              # repositórios do recorte ("" = todos)
+    zh_filtro: object = None                               # filtro de issue do recorte (None = todas)
+    base: object = None                                    # contexto sem recorte (comparações com o Zenhub)
+    recortes: dict = field(default_factory=dict)
     calendario: pd.DataFrame = field(default_factory=pd.DataFrame)
 
     def fonte(self, nome: str) -> list[Fonte]:
@@ -242,7 +247,7 @@ def carregar() -> Contexto:
     try:
         ctx.zh_regras = velocity.Regras.dos_parametros(ctx.parametros)
         snap, nome, linhas = _zenhub(str(zh_coleta.PASTA), _marca([zh_coleta.PASTA]))
-        ctx.zh_snap, ctx.zh_arquivo = snap, nome
+        ctx.zh_snap, ctx.zh_arquivo, ctx.zh_linhas = snap, nome, linhas or {}
         if not snap:
             ctx.fontes.append(Fonte("ZENHUB", "API GraphQL do Zenhub (data/zenhub/velocity/)", "sem dados",
                                     mensagem="Nenhum snapshot: rode python scripts/coleta_velocity.py."))
@@ -277,3 +282,37 @@ def carregar() -> Contexto:
     except Exception as erro:  # noqa: BLE001
         _registrar_erro(ctx, "CALCULADO", "AgileEVM", erro)
     return ctx
+
+
+def com_recorte(ctx: Contexto, repos) -> Contexto:
+    """Contexto com Zenhub e Agile EVM recalculados só com as issues dos repositórios escolhidos.
+
+    Pontos, sprints e velocity passam a ser do recorte. Orçamento e horas são do time inteiro, então no
+    EVM com recorte só o prazo (PPC, APC, SPI) é calculado; os valores em R$ ficam indisponíveis.
+    Sem repositório escolhido devolve o próprio contexto.
+    """
+    from dataclasses import replace
+
+    from src.components import filters
+    from src.data.sonar import nome_curto
+
+    repos = tuple(sorted(repos or ()))
+    if not repos or not ctx.zh_snap:
+        return ctx
+    if repos in ctx.recortes:
+        return ctx.recortes[repos]
+    escolhidos = set(repos)
+
+    def filtro(issue) -> bool:
+        return bool(issue) and nome_curto(issue.get("repository") or "") in escolhidos
+
+    sprints = velocity.calculate_velocity(ctx.zh_snap, ctx.zh_regras, ctx.agora_utc, ctx.zh_linhas,
+                                          incluir_futuras=True, filtro_issue=filtro)
+    motivo = ("orçamento e horas são do time inteiro e não se dividem por repositório (filtro de repositórios "
+              f"ativo: {', '.join(repos)}); só o prazo (SPI) vale para o recorte")
+    e = evm.agile_evm(sprints, ctx.zh_snap.get("issues", {}), ctx.plano, ctx.horas, ctx.custo.get("custo_hora"),
+                      recorte=motivo)
+    novo = replace(ctx, zh_sprints=sprints, zh_issues=filters.por_repo(ctx.zh_issues, list(repos)), evm=e,
+                   evm_sumario=evm.sumario(e), repos_recorte=repos, zh_filtro=filtro, base=ctx, recortes={})
+    ctx.recortes[repos] = novo
+    return novo
