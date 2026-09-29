@@ -72,7 +72,7 @@ COLUNAS = ["release", "sprint", "sprint_nome", "sprint_status", "sprint_inicio",
            "issue",
            "numero", "repositorio", "titulo", "url", "tipo", "planejada", "sp_planejado", "concluida", "sp_realizado",
            "sp_atual", "sem_estimativa_na_planning", "sem_estimativa", "adicionada", "entrou_em", "removida", "saiu_em", "levada_para",
-           "resultado", "status_atual", "pipeline", "criada_em", "concluida_em", "responsavel", "release_da_issue",
+           "resultado", "status_atual", "pipeline", "criada_em", "concluida_em", "responsavel", "pessoas", "release_da_issue",
            "issue_id", "sprint_id", "ordem_sprint"]
 
 
@@ -137,7 +137,8 @@ def stories_por_sprint(snap: dict | None, sprints: pd.DataFrame, universo: pd.Da
                 "resultado": resultado, "status_atual": g("situacao"), "pipeline": g("pipeline", i.get("pipeline")),
                 "criada_em": pd.to_datetime(g("created_at"), utc=True, errors="coerce"),
                 "concluida_em": _dt(i.get("closed_at")) if i.get("state") == "CLOSED" else None,
-                "responsavel": g("responsavel"), "release_da_issue": g("release"),
+                "responsavel": g("responsavel"), "pessoas": g("pessoas") or ["Não coletado"],
+                "release_da_issue": g("release"),
                 "issue_id": iid, "sprint_id": r.sprint_id, "ordem_sprint": n,
                 "_ate": ate})
     df = pd.DataFrame(linhas)

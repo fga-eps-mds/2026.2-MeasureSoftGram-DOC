@@ -125,7 +125,7 @@ def _filtros(ctx, f, linhas: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, 
     sprints["primeiro_dia"] = _brt(sprints["start_date"]).dt.normalize()
     rotulo = {r.sprint_label: f"{r.sprint_label} · {data_br(r.primeiro_dia)} a {data_br(r.ultimo_dia)} · "
                               f"{r.release_name}" for r in sprints.itertuples()}
-    c = st.columns([1.1, 1.8, 1.4, 1.8, 1.5])
+    c = st.columns([1.0, 1.6, 1.3, 1.6, 1.5, 1.4])
     rels = list(dict.fromkeys(sprints["release_name"]))
     rel_sel = c[0].multiselect("Release", rels, key="ga_release", placeholder="Todas")
     opc = sprints[sprints["release_name"].isin(rel_sel)] if rel_sel else sprints
@@ -144,16 +144,24 @@ def _filtros(ctx, f, linhas: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, 
     base = filters.por_repo(linhas[linhas["sprint_id"].isin(s["sprint_id"])], f["repos"])
     epicos = sorted(base["epico"].dropna().unique(), key=lambda e: (e == "Sem épico", e))
     ep_sel = c[3].multiselect("Épico", epicos, key="ga_epico", placeholder="Todos")
-    busca = c[4].text_input("Issue / Story", key="ga_issue", placeholder="número ou parte do título")
+    pessoas = sorted({p for ps in base["pessoas"] for p in ps},
+                     key=lambda p: (p in ("Sem responsável", "Não coletado"), p.lower()))
+    pes_sel = c[4].multiselect("Pessoa", pessoas, key="ga_pessoa", placeholder="Todas",
+                               help="responsável (assignee) da story; story com várias pessoas entra inteira para "
+                                    "cada uma")
+    busca = c[5].text_input("Issue / Story", key="ga_issue", placeholder="número ou parte do título")
     d = base[base["epico"].isin(ep_sel)] if ep_sel else base
+    if pes_sel:
+        d = d[d["pessoas"].map(lambda ps: bool(set(ps) & set(pes_sel)))]
     if busca.strip():
         b = busca.strip().lstrip("#").lower()
         d = d[d["issue"].str.lower().str.endswith("#" + b)
               | d["titulo"].fillna("").str.lower().str.contains(b, regex=False)]
-    desc = {"sprints": s, "fora": fora, "parcial": bool(ep_sel or busca.strip()), "periodo": (ini, fim),
+    desc = {"sprints": s, "fora": fora, "parcial": bool(ep_sel or pes_sel or busca.strip()), "pessoas": pes_sel, "periodo": (ini, fim),
             "texto": (f"**{len(s)} sprint(s)** · **{d['issue_id'].nunique()} stories** "
                       f"({len(d)} registros story × sprint) · sprints terminando de {data_br(ini)} a {data_br(fim)}"
-                      + (f" · repositórios: {', '.join(f['repos'])}" if f["repos"] else ""))}
+                      + (f" · repositórios: {', '.join(f['repos'])}" if f["repos"] else "")
+                      + (f" · pessoa: {', '.join(pes_sel)}" if pes_sel else ""))}
     return s, d, desc
 
 
@@ -230,7 +238,9 @@ def _kpis(ctx, R: pd.DataFrame, d: pd.DataFrame, desc: dict) -> None:
             nota=f"stories adicionadas / removidas · +{num(R['sp_adicionado'].sum())} SP / "
                  f"−{num(R['sp_removido'].sum())} SP (histórico scopeChange)")
     if desc["parcial"]:
-        st.caption("Com filtro de épico ou issue, os totais são só das stories filtradas, não da sprint inteira.")
+        st.caption("Com filtro de épico, pessoa ou issue, os totais são só das stories filtradas, não da sprint "
+                   "inteira." + (" Story com mais de uma pessoa entra inteira para cada uma (os pontos não são "
+                                 "divididos)." if desc.get("pessoas") else ""))
 
 
 # ───────────────────────── 3–5. planejado, realizado, comparação ─────────────────────────
@@ -604,6 +614,9 @@ def pagina():
     _realizado(R, d, rel, desc)       # 4
     _comparacao(R, d, rel)            # 5
     _velocity(ctx, R, d)              # 6
+    if desc.get("pessoas") or desc["parcial"]:
+        st.caption("O burndown abaixo é da sprint inteira: ele usa o histórico da sprint e não segue os filtros de "
+                   "épico, pessoa e issue.")
     _burndown(ctx, sprints_rec)       # 7
     _analises(R, d)                   # 8
     _detalhamento(d)                  # 9

@@ -90,6 +90,9 @@ def universo_issues(snap: dict | None, tipos_pontuados: set | None = None) -> tu
         return ", ".join(n if n == l else f"{n} ({l})" for n, l in zip(nomes, logins))
 
     df["responsavel"] = [responsavel(a, n) for a, n in zip(df["assignees"], df["assignee_names"])]
+    # uma pessoa por item (para filtrar por pessoa); vazio/ausente vira o rótulo de "sem"/"não coletado"
+    df["pessoas"] = [[x.strip() for x in r.split(", ")] if r not in ("Sem responsável", "Não coletado") else [r]
+                     for r in df["responsavel"]]
     df["repositorio"] = df["repository"].fillna("—")
     df["pipeline"] = df["pipeline"].where(df["pipeline"].notna(),
                                           df["state"].map(lambda e: "Fechada" if e == "CLOSED" else "Sem pipeline"))
