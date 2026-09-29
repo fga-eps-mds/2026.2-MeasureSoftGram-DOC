@@ -557,9 +557,9 @@ def pagina():
     ctx = contexto.com_recorte(ctx, f["repos"])
     layout.titulo_pagina("Gestão ágil", "Planejado × realizado em Story Points, do resumo até cada issue.", ["ZENHUB"])
     if ctx.repos_recorte:
-        layout.alerta("neutral", "Filtro de repositórios ativo (" + ", ".join(ctx.repos_recorte) + "): pontos, sprints "
-                      "e velocity são só desses repositórios. Orçamento e horas são do time inteiro, então custo, "
-                      "CPI e valores em R$ do EVM ficam indisponíveis no recorte.")
+        layout.alerta("neutral", "Filtro de repositórios ativo (" + ", ".join(ctx.repos_recorte) + "): pontos, sprints, "
+                      "velocity e SPI são só desses repositórios. Orçamento, horas, custo e CPI são do time inteiro "
+                      "(não dependem de repositório).")
     snap = ctx.zh_snap
     topo_e, topo_d = st.columns([3, 1])
     with topo_d:

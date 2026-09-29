@@ -157,7 +157,9 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
             h = float(feitas["horas_reais"].fillna(0).sum())
             out.append(_item("Custo", "CPI (custo)", num(u["CPI"], 2), status_indice(u["CPI"]),
                              f"EV {brl(u['EV'], 0)} ÷ AC {brl(u['AC'], 0)} ({num(h)} h registradas na aba Horas até a "
-                             f"{u['sprint']}) · meta ≥ {num(config.META_INDICE_EVM, 2)}", "Agile EVM", "CALCULADO"))
+                             f"{u['sprint']}) · meta ≥ {num(config.META_INDICE_EVM, 2)}"
+                             + (" · time inteiro, independe do filtro de repositórios"
+                                if isinstance(u.get("escopo_custo"), str) else ""), "Agile EVM", "CALCULADO"))
 
     # ── Riscos (PLANILHA) ──
     r = ctx.riscos

@@ -105,6 +105,16 @@ class AgileEvmTest(unittest.TestCase):
             self.assertTrue(math.isnan(r1.loc[1, col]), col)
         self.assertIn("só alguns repositórios", r1.loc[1, "origem_do_ac"])
 
+    def test_recorte_com_time_usa_custo_do_time_inteiro(self):
+        horas = pd.DataFrame({"sprint": [1, 2], "horas": [2.0, 1.0]})
+        time = evm.agile_evm(self.vel, self.issues, self.plano, horas, 10.0)
+        d = evm.agile_evm(self.vel, self.issues, self.plano, horas, 10.0, recorte="só alguns", time=time)
+        a, b = d[d["release"] == "R1"].reset_index(drop=True), time[time["release"] == "R1"].reset_index(drop=True)
+        for col in ("BAC", "AC", "CPI", "EAC"):
+            self.assertEqual(a.loc[1, col], b.loc[1, col], col)
+        self.assertIn("time inteiro", a.loc[1, "escopo_custo"])
+        self.assertNotIn("motivo_valor", d)
+
     def test_formulas_basicas(self):
         horas = pd.DataFrame({"sprint": [1, 2], "horas": [2.0, 1.0]})
         u = self.calc(horas, custo_hora=10.0).iloc[1]

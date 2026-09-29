@@ -288,7 +288,7 @@ def com_recorte(ctx: Contexto, repos) -> Contexto:
     """Contexto com Zenhub e Agile EVM recalculados só com as issues dos repositórios escolhidos.
 
     Pontos, sprints e velocity passam a ser do recorte. Orçamento e horas são do time inteiro, então no
-    EVM com recorte só o prazo (PPC, APC, SPI) é calculado; os valores em R$ ficam indisponíveis.
+    EVM com recorte o prazo (PPC, APC, SPI) é do recorte; custo, CPI e valores em R$ vêm do time inteiro.
     Sem repositório escolhido devolve o próprio contexto.
     """
     from dataclasses import replace
@@ -308,10 +308,9 @@ def com_recorte(ctx: Contexto, repos) -> Contexto:
 
     sprints = velocity.calculate_velocity(ctx.zh_snap, ctx.zh_regras, ctx.agora_utc, ctx.zh_linhas,
                                           incluir_futuras=True, filtro_issue=filtro)
-    motivo = ("orçamento e horas são do time inteiro e não se dividem por repositório (filtro de repositórios "
-              f"ativo: {', '.join(repos)}); só o prazo (SPI) vale para o recorte")
+    motivo = f"filtro de repositórios ativo: {', '.join(repos)}"
     e = evm.agile_evm(sprints, ctx.zh_snap.get("issues", {}), ctx.plano, ctx.horas, ctx.custo.get("custo_hora"),
-                      recorte=motivo)
+                      recorte=motivo, time=ctx.evm)
     novo = replace(ctx, zh_sprints=sprints, zh_issues=filters.por_repo(ctx.zh_issues, list(repos)), evm=e,
                    evm_sumario=evm.sumario(e), repos_recorte=repos, zh_filtro=filtro, base=ctx, recortes={})
     ctx.recortes[repos] = novo

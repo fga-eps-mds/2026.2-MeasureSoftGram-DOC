@@ -344,9 +344,9 @@ def pagina():
     layout.titulo_pagina("Agile EVM", "Prazo e custo da release: entregas do Zenhub × orçamento e horas da planilha.",
                          ["ZENHUB", "PLANILHA", "CALCULADO"])
     if ctx.repos_recorte:
-        layout.alerta("neutral", "Filtro de repositórios ativo (" + ", ".join(ctx.repos_recorte) + "): pontos, sprints "
-                      "e velocity são só desses repositórios. Orçamento e horas são do time inteiro, então custo, "
-                      "CPI e valores em R$ do EVM ficam indisponíveis no recorte.")
+        layout.alerta("neutral", "Filtro de repositórios ativo (" + ", ".join(ctx.repos_recorte) + "): pontos, sprints, "
+                      "velocity e SPI são só desses repositórios. Orçamento, horas, custo e CPI são do time inteiro "
+                      "(não dependem de repositório).")
     _menus(ctx)
     e = ctx.evm
     if e is None or e.empty:

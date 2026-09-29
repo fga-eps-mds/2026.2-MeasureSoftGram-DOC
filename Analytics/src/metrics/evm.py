@@ -89,11 +89,20 @@ def horas_da_sprint(label: str, inicio: pd.Timestamp, horas: pd.DataFrame) -> fl
     return float(h.loc[h["sprint"] == numero, "horas"].sum()) if numero is not None and "sprint" in h else 0.0
 
 
+# lado de custo do EVM: não depende de quais repositórios estão no filtro
+COLUNAS_CUSTO = ("BAC", "SC", "PV", "EV", "AC", "CV", "SV", "CPI", "ETC", "EAC", "horas_reais", "origem_do_ac",
+                 "integrantes_com_horas", "integrantes_ativos")
+
+
 def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: pd.DataFrame,
-              custo_hora: float | None, recorte: str | None = None) -> pd.DataFrame:
+              custo_hora: float | None, recorte: str | None = None,
+              time: pd.DataFrame | None = None) -> pd.DataFrame:
     """Uma linha por sprint de cada release (inclusive as futuras, com valores vazios).
 
     ``sprints`` é a saída de ``velocity.calculate_velocity(..., incluir_futuras=True)``.
+    ``recorte`` (ex.: filtro de repositórios): os pontos e o prazo (PPC, APC, SPI) são do recorte, mas
+    orçamento e horas não dependem de repositório. Com ``time`` (o EVM do time inteiro) os valores em R$ e o
+    CPI vêm dele e ``escopo_custo`` diz isso; sem ``time`` ficam indisponíveis.
     """
     if sprints is None or sprints.empty:
         return pd.DataFrame()
@@ -173,13 +182,21 @@ def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: p
                            "issues": len(escopo)})
     df = pd.DataFrame(linhas)
     if recorte and not df.empty:
-        # Com recorte (ex.: só alguns repositórios) os pontos são do recorte, mas orçamento e horas são do
-        # time inteiro: juntar os dois daria valores em R$ sem sentido. Fica só o prazo (PPC, APC, SPI).
-        for col in ("BAC", "SC", "PV", "EV", "AC", "CV", "SV", "CPI", "ETC", "EAC", "horas_reais"):
-            if col in df:
-                df[col] = NAN
-        df["origem_do_ac"] = f"indisponível: {recorte}"
-        df["motivo_valor"] = recorte
+        # Pontos são do recorte; orçamento e horas são do time inteiro. Misturar os dois (EV do recorte ÷ AC
+        # do time) daria um CPI sem sentido, então o lado de custo vem inteiro do EVM do time.
+        custo = [c for c in COLUNAS_CUSTO if c in df]
+        if time is not None and not time.empty:
+            t = time.set_index(["release", "sprint"])
+            for col in custo:
+                if col in t:
+                    df[col] = [t[col].get((r, s_), NAN) for r, s_ in zip(df["release"], df["sprint"])]
+            df["escopo_custo"] = "time inteiro (orçamento e horas não dependem do filtro de repositórios)"
+        else:
+            for col in custo:
+                if col not in ("origem_do_ac", "integrantes_com_horas", "integrantes_ativos"):
+                    df[col] = NAN
+            df["origem_do_ac"] = f"indisponível: {recorte}"
+            df["motivo_valor"] = recorte
     return df
 
 
