@@ -51,8 +51,9 @@ def pagina():
                 f"{f['release_metas']}</div></div>", unsafe_allow_html=True)
 
     layout.secao("Resumo por tema", "Como estamos em prazo, custo, entrega, qualidade, riscos e CI?")
-    cols = st.columns(3)
     for n, (tema, prefixo, fonte) in enumerate(CARTOES):
+        if n % 3 == 0:
+            cols = st.columns(3)   # uma linha por vez: os cartões de cada linha ficam com a mesma altura
         m = ind[ind["indicador"].str.startswith(prefixo)]
         with cols[n % 3]:
             if m.empty:

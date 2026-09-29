@@ -35,10 +35,10 @@ def kpi(rotulo: str, valor: str | None, fonte: str, *, status: str | None = None
         n += f"<div class='msg-kpi-nota'>Fonte: {itens}</div>"
     t = f" title='{html.escape(ajuda)}'" if ajuda else ""
     st.markdown(f"""<div class='msg-kpi' style='--kpi-cor:{cor}'{t}>
-  <div class='msg-kpi-topo'><span class='msg-kpi-rotulo'>{html.escape(rotulo)}</span>{etiqueta(fonte)}</div>
+  <div class='msg-kpi-topo'><span class='msg-kpi-rotulo' title='{html.escape(rotulo)}'>{html.escape(rotulo)}</span>{etiqueta(fonte)}</div>
   <div class='msg-kpi-valor{" indisponivel" if indisp else ""}'>{"Indisponível" if indisp else html.escape(str(valor))}</div>
   {d}
-  {f"<div class='msg-kpi-status' style='color:{cor}'>{rot_status}</div>" if rot_status else ""}
+  <div class='msg-kpi-status' style='color:{cor}'>{rot_status}</div>
   {n}
 </div>""", unsafe_allow_html=True)
 

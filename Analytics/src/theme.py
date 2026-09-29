@@ -120,14 +120,24 @@ h4 { font-size: 1rem !important; font-weight: 600 !important; }
 
 /* KPI */
 .msg-kpi { background: #FFFFFF; border: 1px solid #DDE1E6; border-left: 4px solid var(--kpi-cor, #9AA5B1);
-           border-radius: 6px; padding: .7rem .85rem .65rem; height: 100%; min-height: 118px; }
-.msg-kpi-topo { display: flex; justify-content: space-between; align-items: center; gap: .4rem; }
-.msg-kpi-rotulo { color: #4B5563; font-size: .8rem; font-weight: 500; }
-.msg-kpi-valor { color: #1F2933; font-size: 1.55rem; font-weight: 700; line-height: 1.25; margin-top: .2rem;
-                 font-variant-numeric: tabular-nums; }
-.msg-kpi-valor.indisponivel { color: #9AA5B1; font-size: 1.15rem; font-weight: 500; }
+           border-radius: 6px; padding: .7rem .85rem .65rem; height: 100%; min-height: 132px;
+           display: flex; flex-direction: column; box-sizing: border-box; }
+/* título sempre com 2 linhas de altura: o valor fica na mesma altura em todos os cartões da linha */
+.msg-kpi-topo { display: flex; justify-content: space-between; align-items: flex-start; gap: .4rem;
+                min-height: 2.5em; }
+.msg-kpi-rotulo { color: #4B5563; font-size: .8rem; font-weight: 500; line-height: 1.25;
+                  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.msg-kpi-topo .msg-ponto { flex: none; margin-top: .2rem; }
+.msg-kpi-valor { color: #1F2933; font-size: 1.55rem; font-weight: 700; line-height: 1.25; margin-top: .1rem;
+                 font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.msg-kpi-valor.indisponivel { color: #9AA5B1; font-size: 1.15rem; font-weight: 500; line-height: 1.6; }
 .msg-kpi-delta { font-size: .8rem; color: #4B5563; margin-top: .1rem; font-variant-numeric: tabular-nums; }
-.msg-kpi-status { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+/* linha de status sempre reservada, com ou sem status: as notas começam na mesma altura */
+.msg-kpi-status { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+                  min-height: 1.1rem; line-height: 1.1rem; }
+/* cartões lado a lado com a mesma altura (as colunas do Streamlit esticam até o mais alto) */
+div[data-testid="stHorizontalBlock"]:has(.msg-kpi) { align-items: stretch; }
+div[data-testid="stColumn"] :has(.msg-kpi), div[data-testid="column"] :has(.msg-kpi) { height: 100%; }
 .msg-kpi-nota { font-size: .75rem; color: #6B7280; margin-top: .25rem; line-height: 1.3; }
 
 /* Situação geral */
