@@ -132,7 +132,7 @@ def _filtros(ctx, f, linhas: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, 
     opc = sprints[sprints["release_name"].isin(rel_sel)] if rel_sel else sprints
     spr_sel = c[1].multiselect("Sprint", list(opc["sprint_label"]), format_func=rotulo.get, key="ga_sprint",
                                placeholder="Todas as da release" if rel_sel else "Todas")
-    per = c[2].date_input("Período (último dia da sprint)", value=(f["periodo"][0].date(), f["periodo"][1].date()),
+    per = c[2].date_input("Período", value=(f["periodo"][0].date(), f["periodo"][1].date()),
                           format="DD/MM/YYYY", key="ga_periodo",
                           help="Entram as sprints cujo último dia cai no período; as entregas no tempo usam a data "
                                "de conclusão. Começa no período da barra lateral.")
