@@ -89,6 +89,9 @@ METAS = {
     "coverage": {"R1": 85.0, "R2": 85.0, "R3": 90.0},
     "duplicated_lines_density": {"R1": 5.0, "R2": 5.0, "R3": 3.0},
 }
+RISCO_ELEVADO = 15   # P × I a partir do qual o risco é elevado (escala do plano de riscos)
+RISCO_MEDIO = 6      # P × I a partir do qual o risco é médio
+METAS_DECISOES = {"R2": 3, "R3": 5}   # decisões baseadas em dados registradas (plano de ensino)
 META_INDICE_EVM = 0.95   # SPI/CPI abaixo disso = atenção
 LIMITE_INDICE_CRITICO = 0.80   # SPI/CPI abaixo disso = crítico
 META_TAXA_CONCLUSAO = 80.0     # % de SP concluídos ÷ planejados nas sprints concluídas

@@ -46,9 +46,14 @@ def issue(no: dict) -> dict:
         "url": no.get("htmlUrl"),
         # só quando a query pediu o campo: ausente = não coletado (≠ lista vazia = ninguém atribuído)
         **({"created_at": no.get("createdAt")} if "createdAt" in no else {}),
-        **({"assignees": [a.get("login") for a in ((no.get("assignees") or {}).get("nodes") or [])
-                          if isinstance(a, dict) and a.get("login")]} if "assignees" in no else {}),
+        **(_responsaveis(no) if "assignees" in no else {}),
     }
+
+
+def _responsaveis(no: dict) -> dict:
+    """Logins e nomes dos responsáveis (o nome pode vir vazio no GitHub: aí vale o login)."""
+    nos = [a for a in ((no.get("assignees") or {}).get("nodes") or []) if isinstance(a, dict) and a.get("login")]
+    return {"assignees": [a["login"] for a in nos], "assignee_names": [a.get("name") or a["login"] for a in nos]}
 
 
 def scope_change(no: dict) -> dict:
@@ -81,11 +86,10 @@ def issue_backlog(no: dict, pipeline_nome: str | None = None) -> dict:
     """Issue do quadro (backlog): os campos de ``issue`` + criação, prioridade e responsáveis."""
     base = issue(no)
     pipeline_issue = no.get("pipelineIssue") or {}
-    responsaveis = [a.get("login") for a in ((no.get("assignees") or {}).get("nodes") or []) if isinstance(a, dict)]
     base.update({
         "created_at": no.get("createdAt"),
         "priority": _nome(pipeline_issue.get("priority")),
-        "assignees": [r for r in responsaveis if r],
+        **_responsaveis(no),
     })
     if not base.get("pipeline") and pipeline_nome:
         base["pipeline"] = pipeline_nome

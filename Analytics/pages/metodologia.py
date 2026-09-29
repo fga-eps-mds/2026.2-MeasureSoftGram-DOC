@@ -6,17 +6,16 @@ import pandas as pd
 import streamlit as st
 
 import config
-from src import theme
 from src.components import layout
-from src.metrics.calculations import data_br, num
+from src.metrics.calculations import data_br
 
 STATUS_COLETA = {"ok": "Coletado", "parcial": "Parcial", "sem dados": "Sem dados", "erro": "Erro na leitura"}
 
 
 def pagina():
     ctx, f = layout.estado()
-    layout.titulo_pagina("Metodologia e Fontes", "Origem dos dados, periodicidade, fórmulas, limitações e o "
-                         "tratamento de dados ausentes.")
+    layout.titulo_pagina("Metodologia e Fontes", "Origem e atualização dos dados, regras que diferem das "
+                         "ferramentas, limitações e o tratamento de dados ausentes.")
 
     layout.secao("Metadados e atualização dos dados", "De onde veio cada número e quando foi atualizado?")
     linhas = []
@@ -34,73 +33,20 @@ def pagina():
 
     layout.secao("Fontes e responsabilidades", "Por que cada informação vem de onde vem?")
     st.markdown(f"""
-| Fonte | Etiqueta | Usada para | Como chega ao painel | Atualização |
+| Fonte | Cor | Usada para | Como chega ao painel | Atualização |
 |---|---|---|---|---|
 | **SonarCloud** | {layout.etiqueta('SONAR')} | qualidade técnica: cobertura, duplicação, bugs, vulnerabilidades, code smells, hotspots, dívida técnica, ratings, Quality Gate, testes | `metrics.yml` de cada repositório → `data/*.json`; API do SonarCloud → `scripts/coleta_sonar.py` → `data/sonar/` | a cada execução do pipeline; API diária (workflow `coleta-dados.yml`) |
 | **Zenhub** | {layout.etiqueta('ZENHUB')} | gestão ágil: sprints, story points, velocity, backlog, pipelines, épicos, releases, throughput | API GraphQL → `scripts/coleta_velocity.py` → `data/zenhub/velocity/` | diária (workflow `coleta-dados.yml`) ou botão na página do Zenhub |
 | **Planilha** | {layout.etiqueta('PLANILHA')} | só o que não existe nas outras: custos, time por semana, horas, riscos, monitoramento, decisões | abas publicadas no Google em CSV (`config.PLANILHAS`); sem cópia local | a cada {config.CACHE_PLANILHAS_S // 60} min (local) ou a cada deploy (GitHub Pages) |
-| **GitHub** | {layout.etiqueta('GITHUB')} | processo: execuções e resultado da CI | `metrics.yml` → `GitHub_API-Runs-*.json` | a cada execução do pipeline |
+| **GitHub** | {layout.etiqueta('GITHUB')} | processo: execuções e resultado da CI | API do GitHub → `scripts/coleta_github.py` → `data/github/`; `metrics.yml` → `GitHub_API-Runs-*.json` | 3 vezes por dia (workflow `coleta-dados.yml`) e a cada execução do pipeline |
 | **Calculado** | {layout.etiqueta('CALCULADO')} | indicadores derivados (EVM, variações, status) | `src/metrics/` — funções puras, com testes em `tests/` | a cada abertura do painel |
 """, unsafe_allow_html=True)
     st.markdown("A planilha **não repete** nenhum dado do Sonar ou do Zenhub: nenhum ponto, sprint ou métrica de "
                 "código é digitado nela. As abas antigas de EVM da planilha não são lidas — o EVM é calculado com os "
                 "pontos do Zenhub.")
 
-    layout.secao("Fórmulas dos indicadores", "Como cada número derivado é calculado?")
-    st.markdown(f"""
-**Agile EVM** (Sulaiman, Barton & Blackburn, 2006), por release, a cada sprint *n*:
-
-| Indicador | Fórmula | Insumos |
-|---|---|---|
-| PPC — % planejado | semanas decorridas ÷ semanas da release | datas das sprints (Zenhub) |
-| APC — % realizado | RPC ÷ PRP | SP concluídos e escopo da release (Zenhub) |
-| BAC | Σ custo planejado das semanas da release | abas Custos e Planejamento |
-| PV | PPC × BAC | |
-| EV | APC × BAC | |
-| AC | Σ horas registradas × custo/hora | abas Horas e Custos |
-| SV | EV − PV | |
-| CV | EV − AC | |
-| SPI | EV ÷ PV | |
-| CPI | EV ÷ AC | |
-| ETC | (BAC − EV) ÷ CPI | |
-| EAC | AC + ETC | |
-
-**Gestão ágil:** critério de feito = issue **fechada** (em qualquer pipeline; aberta não conta) · velocity = SP das issues pontuáveis ({', '.join(sorted(ctx.zh_regras.tipos_pontuados))}) fechadas
-dentro da sprint · velocity média = média das sprints concluídas (≥ {ctx.zh_regras.min_sprints_media}) · média móvel
-= média das 3 últimas sprints concluídas · taxa de conclusão = SP concluídos ÷ SP planejados · throughput = issues
-pontuáveis concluídas por semana.
-
-**Qualidade:** atual → anterior → variação entre os dois últimos dias com coleta; percentuais em pontos percentuais
-(p.p.). Entre repositórios: média simples para percentuais, soma para contagens, pior valor para ratings. Modelo de
-qualidade agregado (prévia DA-R2): proporção de arquivos dentro de limiares, ponderada em Manutenibilidade e
-Confiabilidade (`src/metrics/qualidade.py`).
-
-**Riscos:** exposição = probabilidade × impacto (1 a 5 cada) · baixo 1–5, médio 6–12, elevado 15–25.
-""")
-
-    layout.secao("Metas e status", "Quando um indicador é conforme, de atenção ou crítico?")
-    metas = pd.DataFrame([
-        {"Indicador": "Cobertura de testes", "Conforme": " / ".join(f"{k} ≥ {num(v)}%" for k, v in config.METAS["coverage"].items()),
-         "Atenção": "até 10% abaixo da meta", "Crítico": "mais de 10% abaixo"},
-        {"Indicador": "Duplicação", "Conforme": " / ".join(f"{k} ≤ {num(v)}%" for k, v in
-                                                          config.METAS["duplicated_lines_density"].items()),
-         "Atenção": "até 1,5 × a meta", "Crítico": "acima de 1,5 × a meta"},
-        {"Indicador": "SPI e CPI", "Conforme": f"≥ {num(config.META_INDICE_EVM, 2)}", "Atenção": f"{num(config.LIMITE_INDICE_CRITICO, 2)} a {num(config.META_INDICE_EVM, 2)}",
-         "Crítico": f"< {num(config.LIMITE_INDICE_CRITICO, 2)}"},
-        {"Indicador": "Taxa de conclusão das sprints", "Conforme": f"≥ {num(config.META_TAXA_CONCLUSAO)}%",
-         "Atenção": f"{num(config.LIMITE_TAXA_CRITICO)}% a {num(config.META_TAXA_CONCLUSAO)}%",
-         "Crítico": f"< {num(config.LIMITE_TAXA_CRITICO)}%"},
-        {"Indicador": "Sucesso da CI", "Conforme": f"≥ {num(config.META_CI_SUCESSO)}%",
-         "Atenção": f"{num(config.LIMITE_CI_CRITICO)}% a {num(config.META_CI_SUCESSO)}%",
-         "Crítico": f"< {num(config.LIMITE_CI_CRITICO)}%"},
-        {"Indicador": "Riscos elevados abertos", "Conforme": "0", "Atenção": "1 ou 2", "Crítico": "3 ou mais"},
-    ])
-    st.dataframe(metas, use_container_width=True, hide_index=True)
-    st.markdown(f"Cores: <b style='color:{theme.STATUS['good']}'>verde = conforme</b> · "
-                f"<b style='color:{theme.STATUS['warning']}'>amarelo = atenção</b> · "
-                f"<b style='color:{theme.STATUS['critical']}'>vermelho = crítico</b> · "
-                f"<b style='color:{theme.STATUS['neutral']}'>cinza = informativo ou indisponível</b>. "
-                "O status sempre aparece também em texto.", unsafe_allow_html=True)
+    st.caption("Fórmulas, siglas e parâmetros de cada indicador ficam nos menus **Legenda e fórmulas** e "
+               "**Parâmetros usados** no topo de cada página.")
 
     layout.secao("Diferenças de propósito em relação ao Zenhub",
                  "Onde o painel conta diferente do Zenhub, e por quê?", ["ZENHUB"])

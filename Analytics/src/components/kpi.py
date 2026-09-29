@@ -7,7 +7,7 @@ import html
 import streamlit as st
 
 from src import theme
-from src.components.layout import etiqueta
+from src.components.layout import _alvo, etiqueta
 
 
 def kpi(rotulo: str, valor: str | None, fonte: str, *, status: str | None = None, delta: dict | None = None,
@@ -30,7 +30,7 @@ def kpi(rotulo: str, valor: str | None, fonte: str, *, status: str | None = None
              f"</span>{palavra} vs. coleta anterior</div>")
     n = f"<div class='msg-kpi-nota'>{html.escape(nota)}</div>" if nota else ""
     if origem:   # [(texto, url)] — de onde vem o dado, com link embutido
-        itens = " · ".join(f"<a href='{html.escape(u)}' target='_blank' rel='noopener'>{html.escape(t)}</a>" if u
+        itens = " · ".join(f"<a href='{html.escape(u)}' {_alvo(u)}>{html.escape(t)}</a>" if u
                            else html.escape(t) for t, u in origem)
         n += f"<div class='msg-kpi-nota'>Fonte: {itens}</div>"
     t = f" title='{html.escape(ajuda)}'" if ajuda else ""

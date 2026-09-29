@@ -26,7 +26,7 @@ import streamlit as st  # noqa: E402
 st.set_page_config(page_title="MeasureSoftGram — Dashboard de Gestão de Projeto", layout="wide",
                    initial_sidebar_state="expanded")
 
-from pages import evm, metodologia, planilha, processo, sonar, visao_executiva, zenhub  # noqa: E402
+from pages import custos, decisoes, evm, metodologia, processo, riscos, sonar, visao_executiva, zenhub  # noqa: E402
 from src.components import filters, layout  # noqa: E402
 from src.data import contexto  # noqa: E402
 
@@ -39,15 +39,15 @@ navegacao = st.navigation({
     "Gestão": [
         st.Page(visao_executiva.pagina, title="Visão Executiva", url_path="visao-executiva",
                 icon=":material/dashboard:", default=True),
+        st.Page(zenhub.pagina, title="Gestão ágil", url_path="zenhub", icon=":material/view_kanban:"),
         st.Page(evm.pagina, title="Agile EVM", url_path="agile-evm", icon=":material/stacked_line_chart:"),
+        st.Page(custos.pagina, title="Custos", url_path="custos", icon=":material/payments:"),
+        st.Page(riscos.pagina, title="Riscos", url_path="riscos", icon=":material/warning:"),
+        st.Page(decisoes.pagina, title="Decisões", url_path="decisoes", icon=":material/gavel:"),
     ],
-    "Por fonte": [
-        st.Page(sonar.pagina, title="Qualidade técnica (Sonar)", url_path="sonar", icon=":material/code:"),
-        st.Page(zenhub.pagina, title="Gestão ágil (ZenHub)", url_path="zenhub", icon=":material/view_kanban:"),
-        st.Page(planilha.pagina, title="Custos e riscos (Planilha)", url_path="planilha",
-                icon=":material/table_chart:"),
-        st.Page(processo.pagina, title="Integração contínua (GitHub)", url_path="processo",
-                icon=":material/sync:"),
+    "Qualidade e processo": [
+        st.Page(sonar.pagina, title="Qualidade técnica", url_path="sonar", icon=":material/code:"),
+        st.Page(processo.pagina, title="Integração contínua", url_path="processo", icon=":material/sync:"),
     ],
     "Referência": [
         st.Page(metodologia.pagina, title="Metodologia e Fontes", url_path="metodologia",

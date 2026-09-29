@@ -21,7 +21,7 @@ import streamlit as st
 
 import config
 from src import theme
-from src.components import charts, layout
+from src.components import charts, layout, rastreio
 from src.components.kpi import kpi
 from src.data import planilha
 from src.metrics import gestao_agil as ga
@@ -155,15 +155,23 @@ def _kpis(u, d):
                   if not vazio(u["EAC"]) else "Indisponível: depende do CPI, que depende do custo real."))
 
 
-def _legenda():
-    tab = pd.DataFrame([{"sigla": k, "nome": v[0], "significa": v[1], "formula": v[2], "fonte": v[3]}
-                        for k, v in LEGENDA.items()])
-    layout.tabela_html(tab, {"sigla": "Sigla", "nome": "Nome", "significa": "O que significa",
-                             "formula": "Como é calculado", "fonte": "De onde vem"}, links=("fonte",), altura=None)
-    st.caption(f"Status: SPI e CPI ≥ {num(config.META_INDICE_EVM, 2)} conforme, entre "
-               f"{num(config.LIMITE_INDICE_CRITICO, 2)} e {num(config.META_INDICE_EVM, 2)} atenção, abaixo crítico. "
-               "Método: Sulaiman, Barton & Blackburn (2006), AgileEVM.")
-
+def _menus(ctx):
+    c = ctx.custo or {}
+    layout.menus([(f"{v[0]} ({k})", v[1], v[2], v[3]) for k, v in LEGENDA.items()], [
+        ("Meta de SPI e CPI (conforme)", f"≥ {num(config.META_INDICE_EVM, 2)}", "config.py · META_INDICE_EVM",
+         rastreio.codigo()),
+        ("Abaixo disso é crítico", f"< {num(config.LIMITE_INDICE_CRITICO, 2)}", "config.py · LIMITE_INDICE_CRITICO",
+         rastreio.codigo()),
+        ("Custo por hora", brl(c.get("custo_hora")), "aba Custos · custo_hora", planilha.link_aba("custos")),
+        ("Custo de um integrante por semana", brl(c.get("custo_membro_semana")), "aba Custos · custo_membro_semana",
+         planilha.link_aba("custos")),
+        *[(f"Entrega da {k}", data_br(pd.Timestamp(v)), "config.py · RELEASES", rastreio.codigo())
+          for k, v in config.RELEASES.items()],
+        ("Release Final (limite do semestre)", data_br(pd.Timestamp(config.RELEASE_FINAL)),
+         "config.py · RELEASE_FINAL", rastreio.codigo()),
+        ("Sprint → release", "a sprint entra na release em cujo intervalo ela termina", "velocity.associar_release",
+         rastreio.codigo("src/metrics/velocity.py")),
+    ], fontes=["ZENHUB", "PLANILHA", "CALCULADO"])
 
 def _graficos(rel, feitas, u):
     tem_bac, tem_ac = not vazio(u["BAC"]), not vazio(u["AC"])
@@ -195,21 +203,6 @@ def _graficos(rel, feitas, u):
                        nota=nota, altura=280)
     e2, d2 = st.columns(2)
     with e2:
-        prog = feitas.melt(id_vars=["sprint"], value_vars=["PPC", "APC"], var_name="serie", value_name="valor")
-        prog["nome"] = prog["serie"].map({"PPC": "Prazo decorrido (PPC)", "APC": "Escopo entregue (APC)"})
-        dom = ["Prazo decorrido (PPC)", "Escopo entregue (APC)"]
-        g = (alt.Chart(prog).mark_line(strokeWidth=2, point=alt.OverlayMarkDef(size=70, filled=True))
-             .encode(x=alt.X("sprint:O", title="Sprint", sort=list(feitas["sprint"])),
-                     y=alt.Y("valor:Q", title="% da release", axis=alt.Axis(format="%"),
-                             scale=alt.Scale(domain=[0, 1])),
-                     color=alt.Color("nome:N", title=None, scale=alt.Scale(domain=dom, range=[theme.SERIES[2],
-                                                                                           theme.SERIES[0]])),
-                     strokeDash=alt.StrokeDash("nome:N", legend=None,
-                                               scale=alt.Scale(domain=dom, range=[[6, 4], [1, 0]])),
-                     tooltip=[alt.Tooltip("sprint:O"), alt.Tooltip("nome:N", title="Série"),
-                              alt.Tooltip("valor:Q", title="%", format=".0%")]))
-        charts.mostrar(g, "Prazo decorrido × escopo entregue", "a distância entre as linhas é o atraso", altura=220)
-    with d2:
         idx = feitas.melt(id_vars=["sprint"], value_vars=["SPI", "CPI"], var_name="indice",
                           value_name="valor").dropna()
         if idx.empty:
@@ -228,23 +221,24 @@ def _graficos(rel, feitas, u):
             charts.mostrar(g + charts.regra_horizontal(1.0, "1,0 = no plano"), "Índices de prazo e custo",
                            "acima de 1,0 = melhor que o plano", altura=220,
                            nota=None if "Custo (CPI)" in dom else f"Custo não aparece: {_motivo_ac(u)}.")
-    b = feitas.assign(restante=feitas["PRP"] - feitas["RPC"], ideal=feitas["PRP"] * (1 - feitas["PPC"]))
-    nomes_b = {"restante": "Falta entregar", "ideal": "Deveria faltar", "PRP": "Escopo total (PRP)"}
-    longo_b = b.melt(id_vars=["sprint"], value_vars=list(nomes_b), var_name="serie", value_name="pontos")
-    longo_b["nome"] = longo_b["serie"].map(nomes_b)
-    dom = list(nomes_b.values())
-    g = (alt.Chart(longo_b).mark_line(strokeWidth=2, point=alt.OverlayMarkDef(size=60, filled=True))
-         .encode(x=alt.X("sprint:O", title="Sprint", sort=list(feitas["sprint"])),
-                 y=alt.Y("pontos:Q", title="Story Points"),
-                 color=alt.Color("nome:N", title=None, scale=alt.Scale(domain=dom, range=[
-                     theme.SERIES[0], theme.SERIES[2], theme.SERIES[1]])),
-                 strokeDash=alt.StrokeDash("nome:N", legend=None,
-                                           scale=alt.Scale(domain=dom, range=[[1, 0], [6, 4], [2, 2]])),
-                 tooltip=[alt.Tooltip("sprint:O"), alt.Tooltip("nome:N", title="Série"),
-                          alt.Tooltip("pontos:Q", title="SP", format=".0f")]))
-    charts.mostrar(g, f"Burndown da release — {rel}", "Story Points no fim de cada sprint", altura=240,
-                   nota="Se o escopo total sobe, entrou trabalho novo na release e o que falta sobe junto, mesmo com "
-                        "o time entregando. Burndown dia a dia de cada sprint: página Gestão ágil.")
+    with d2:
+        b = feitas.assign(restante=feitas["PRP"] - feitas["RPC"], ideal=feitas["PRP"] * (1 - feitas["PPC"]))
+        nomes_b = {"restante": "Falta entregar", "ideal": "Deveria faltar", "PRP": "Escopo total (PRP)"}
+        longo_b = b.melt(id_vars=["sprint"], value_vars=list(nomes_b), var_name="serie", value_name="pontos")
+        longo_b["nome"] = longo_b["serie"].map(nomes_b)
+        dom = list(nomes_b.values())
+        g = (alt.Chart(longo_b).mark_line(strokeWidth=2, point=alt.OverlayMarkDef(size=60, filled=True))
+             .encode(x=alt.X("sprint:O", title="Sprint", sort=list(feitas["sprint"])),
+                     y=alt.Y("pontos:Q", title="Story Points"),
+                     color=alt.Color("nome:N", title=None, scale=alt.Scale(domain=dom, range=[
+                         theme.SERIES[0], theme.SERIES[2], theme.SERIES[1]])),
+                     strokeDash=alt.StrokeDash("nome:N", legend=None,
+                                               scale=alt.Scale(domain=dom, range=[[1, 0], [6, 4], [2, 2]])),
+                     tooltip=[alt.Tooltip("sprint:O"), alt.Tooltip("nome:N", title="Série"),
+                              alt.Tooltip("pontos:Q", title="SP", format=".0f")]))
+        charts.mostrar(g, f"Burndown da release — {rel}", "Story Points no fim de cada sprint", altura=240,
+                       nota="Se o escopo total sobe, entrou trabalho novo na release e o que falta sobe junto, mesmo com "
+                            "o time entregando. Burndown dia a dia de cada sprint: página Gestão ágil.")
 
 
 def _rastreabilidade(ctx, rel, d, u):
@@ -345,6 +339,7 @@ def pagina():
     ctx, f = layout.estado()
     layout.titulo_pagina("Agile EVM", "Prazo e custo da release: entregas do Zenhub × orçamento e horas da planilha.",
                          ["ZENHUB", "PLANILHA", "CALCULADO"])
+    _menus(ctx)
     e = ctx.evm
     if e is None or e.empty:
         layout.indisponivel("Agile EVM indisponível", "não há sprints do Zenhub associadas a releases.",
@@ -384,14 +379,11 @@ def pagina():
         layout.alerta("warning", f"Nada foi estimado na planning da 1ª sprint da {rel}; todo o escopo "
                                  f"({num(u['PRP'])} SP) entrou depois.")
 
-    layout.secao("Legenda", "O que significa cada sigla e de onde vem?", ["ZENHUB", "PLANILHA"])
-    _legenda()
-
-    layout.secao("Evolução da release", "Como prazo, custo e escopo evoluíram sprint a sprint?", ["CALCULADO"])
-    _graficos(rel, feitas, u)
-
-    layout.secao("De onde vem cada número", "Quais stories, horas e semanas formam o EVM?", ["ZENHUB", "PLANILHA"])
+    layout.secao("Dado bruto", "Quais stories, horas e semanas formam o EVM?", ["ZENHUB", "PLANILHA"])
     _rastreabilidade(ctx, rel, d, u)
+
+    layout.secao("Análise", "Como prazo, custo e escopo evoluíram sprint a sprint?", ["CALCULADO"])
+    _graficos(rel, feitas, u)
 
     with st.expander("Tabela completa do Agile EVM (todas as sprints da release)"):
         _tabela_completa(d)

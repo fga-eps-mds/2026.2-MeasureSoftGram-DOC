@@ -72,12 +72,14 @@ SEQUENCIAL = ["#E6ECF2", "#C3D0DE", "#98ADC5", "#6F8CAE", "#4A6D93", "#2B4D6F", 
 RISCO = {"Baixo": "#CFE5DC", "Médio": "#F7E1BD", "Elevado": "#F2C4B8"}
 
 # Rótulo curto de cada fonte (aparece como etiqueta em cada bloco).
+# Cor de cada fonte: aparece como um ponto nos títulos e cartões (o nome fica na legenda de cada
+# página). Cores distintas das de status (verde/âmbar/vermelho) para não confundir.
 FONTES = {
     "SONAR": ("SonarCloud", "#2B4D6F"),
     "ZENHUB": ("Zenhub", "#5F7EA3"),
-    "PLANILHA": ("Planilha", "#4B5563"),
-    "GITHUB": ("GitHub", "#6B7280"),
-    "CALCULADO": ("Calculado", "#6B7280"),
+    "PLANILHA": ("Planilha do time", "#7A5C99"),
+    "GITHUB": ("GitHub Actions", "#1F2933"),
+    "CALCULADO": ("Calculado pelo painel", "#9AA5B1"),
 }
 
 CSS = """
@@ -106,6 +108,10 @@ h4 { font-size: 1rem !important; font-weight: 600 !important; }
              text-transform: uppercase; color: #FFFFFF; border-radius: 3px; padding: .08rem .4rem;
              vertical-align: middle; }
 .msg-fonte-contorno { background: transparent !important; border: 1px solid currentColor; }
+.msg-ponto { display: inline-block; width: .62rem; height: .62rem; border-radius: 50%; vertical-align: middle;
+             margin-left: .15rem; }
+.msg-legenda-cores { display: flex; flex-wrap: wrap; gap: .3rem 1rem; font-size: .82rem; color: #4B5563;
+                     margin: .2rem 0 .6rem; }
 
 /* Pergunta gerencial acima de cada bloco */
 .msg-secao { margin: 1.6rem 0 .5rem; }

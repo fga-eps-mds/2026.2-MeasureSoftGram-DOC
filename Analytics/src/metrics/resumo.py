@@ -141,7 +141,7 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
     # ── Custo (PLANILHA + EVM) ──
     if feitas.empty or vazio(feitas.iloc[-1]["BAC"]):
         out.append(_item("Custo", "Orçamento (BAC)", None, "unavailable", "abas Custos/Planejamento não lidas",
-                         "Custos e riscos", "PLANILHA"))
+                         "Custos", "PLANILHA"))
     else:
         u = feitas.iloc[-1]
         out.append(_item("Custo", f"Orçamento da {alvo} (BAC)", brl(u["BAC"], 0), "neutral",
@@ -160,7 +160,7 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
     # ── Riscos (PLANILHA) ──
     r = ctx.riscos
     if r is None or r.empty or "exposicao_atual" not in r:
-        out.append(_item("Riscos", "Plano de riscos", None, "unavailable", "aba Riscos não lida", "Custos e riscos",
+        out.append(_item("Riscos", "Plano de riscos", None, "unavailable", "aba Riscos não lida", "Riscos",
                          "PLANILHA"))
     else:
         cont = contagem_riscos(r)
@@ -169,19 +169,20 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
                          "critical" if len(elev) >= 3 else ("warning" if len(elev) else "good"),
                          f"{cont['frase']} · " + (("elevados: " + ", ".join(
                              f"{x.id} ({num(x.exposicao_atual)}, {str(x.status).lower()})" for x in elev.itertuples()))
-                             if len(elev) else "nenhum com P × I ≥ 15"),
-                         "Custos e riscos", "PLANILHA"))
+                             if len(elev) else f"nenhum com P × I ≥ {config.RISCO_ELEVADO}"),
+                         "Riscos", "PLANILHA"))
         faltam = riscos_fora_da_aba(r, ctx.monitoramento)
         if faltam:
             out.append(_item("Riscos", "Riscos só no Monitoramento", ", ".join(faltam), "warning",
                              "aparecem na aba Monitoramento e não na aba Riscos: cadastrar na aba Riscos",
-                             "Custos e riscos", "PLANILHA"))
+                             "Riscos", "PLANILHA"))
     n_dec = len(ctx.decisoes) if ctx.decisoes is not None else 0
-    meta_dec = {"R2": 3, "R3": 5}.get(rel_meta)
+    meta_dec = config.METAS_DECISOES.get(rel_meta)
     out.append(_item("Riscos", "Decisões baseadas em dados", num(n_dec),
                      "neutral" if not meta_dec else ("good" if n_dec >= meta_dec else "warning"),
-                     f"meta da {rel_meta}: ≥ {meta_dec}" if meta_dec else "metas: ≥ 3 na R2 e ≥ 5 na R3",
-                     "Custos e riscos", "PLANILHA"))
+                     f"meta da {rel_meta}: ≥ {meta_dec}" if meta_dec else
+                     "metas: " + ", ".join(f"≥ {v} na {k}" for k, v in config.METAS_DECISOES.items()),
+                     "Decisões", "PLANILHA"))
 
     # ── Processo (GITHUB) ──
     runs = ctx.gh_runs
@@ -205,7 +206,7 @@ def contagem_riscos(r: pd.DataFrame) -> dict:
     st_ = r["status"].fillna("sem status").astype(str).str.strip()
     encerrado = st_.str.lower().str.startswith(("encerr", "mitigad", "fechad"))
     nao_enc = r[~encerrado]
-    elevados = nao_enc[pd.to_numeric(nao_enc["exposicao_atual"], errors="coerce") >= 15] \
+    elevados = nao_enc[pd.to_numeric(nao_enc["exposicao_atual"], errors="coerce") >= config.RISCO_ELEVADO] \
         .sort_values("exposicao_atual", ascending=False)
     por = st_[~encerrado].value_counts()
     frase = ", ".join(f"{n} {s.lower()}" for s, n in por.items())

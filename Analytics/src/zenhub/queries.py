@@ -62,7 +62,7 @@ query SprintIssues($sprintId: ID!, $workspaceId: ID!, $first: Int!, $after: Stri
           }
           parentIssue { id }
           createdAt
-          assignees(first: 3) { nodes { login } }
+          assignees(first: 10) { nodes { login name } }
           pipelineIssue(workspaceId: $workspaceId) {
             latestTransferTime
             pipeline { name }
@@ -122,7 +122,7 @@ query Issue($issueId: ID!, $workspaceId: ID!) {
       }
       parentIssue { id }
       createdAt
-      assignees(first: 3) { nodes { login } }
+      assignees(first: 10) { nodes { login name } }
       pipelineIssue(workspaceId: $workspaceId) {
         latestTransferTime
         pipeline { name }
@@ -209,7 +209,7 @@ query PipelineIssues($pipelineId: ID!, $workspaceId: ID!, $first: Int!, $after: 
         ... on ZenhubIssueType { name }
       }
       parentIssue { id }
-      assignees(first: 3) { nodes { login } }
+      assignees(first: 10) { nodes { login name } }
       pipelineIssue(workspaceId: $workspaceId) {
         latestTransferTime
         pipeline { name }

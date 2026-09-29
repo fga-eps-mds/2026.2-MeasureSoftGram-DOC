@@ -11,10 +11,49 @@ from src import theme
 from src.metrics.calculations import data_br
 
 
+def _alvo(url: str) -> str:
+    """Link interno (outra página do painel) abre na mesma aba; externo, em aba nova."""
+    return "target='_self'" if str(url).startswith("./") else "target='_blank' rel='noopener'"
+
+
 def etiqueta(fonte: str) -> str:
-    """HTML da etiqueta de fonte (SONAR, ZENHUB, PLANILHA, GITHUB, CALCULADO)."""
+    """Ponto na cor da fonte (o nome aparece ao passar o mouse e na legenda de cada página)."""
     nome, cor = theme.FONTES.get(fonte, (fonte, theme.INK["muted"]))
-    return f"<span class='msg-fonte' style='background:{cor}' title='Fonte: {html.escape(nome)}'>{fonte}</span>"
+    return f"<span class='msg-ponto' style='background:{cor}' title='Fonte: {html.escape(nome)}'></span>"
+
+
+def legenda_cores(fontes=None) -> str:
+    """HTML com o ponto e o nome de cada fonte (todas, ou só as da página)."""
+    itens = [(k, v) for k, v in theme.FONTES.items() if not fontes or k in fontes]
+    return "<div class='msg-legenda-cores'>" + "".join(
+        f"<span><span class='msg-ponto' style='background:{cor}'></span> {html.escape(nome)}</span>"
+        for _, (nome, cor) in itens) + "</div>"
+
+
+def menus(legenda: list[tuple], parametros: list[tuple], fontes=None) -> None:
+    """Os dois menus recolhidos de cada página.
+
+    ``legenda``: (termo, o que significa, como é calculado[, fontes [(texto, url)]]).
+    ``parametros``: (parâmetro, valor, onde é definido[, url]). Os valores vêm do config/planilha,
+    nunca digitados na página.
+    """
+    with st.expander("Legenda e fórmulas"):
+        st.markdown("**Cores das fontes**" + legenda_cores(fontes), unsafe_allow_html=True)
+        if legenda:
+            tab = pd.DataFrame([{"termo": x[0], "significa": x[1], "formula": x[2],
+                                 "fonte": x[3] if len(x) > 3 else []} for x in legenda])
+            cols = {"termo": "Termo", "significa": "O que significa", "formula": "Como é calculado"}
+            if tab["fonte"].map(bool).any():
+                cols["fonte"] = "De onde vem"
+            tabela_html(tab, cols, links=("fonte",), altura=None)
+    with st.expander("Parâmetros usados"):
+        if not parametros:
+            st.caption("Esta página não usa parâmetros próprios.")
+        else:
+            tab = pd.DataFrame([{"parametro": x[0], "valor": x[1],
+                                 "onde": [(x[2], x[3] if len(x) > 3 else None)]} for x in parametros])
+            tabela_html(tab, {"parametro": "Parâmetro", "valor": "Valor", "onde": "Onde é definido"},
+                        links=("onde",), altura=None)
 
 
 def etiquetas(fontes) -> str:
@@ -73,7 +112,7 @@ def alerta(status: str, texto: str, onde: str = "", link: tuple[str, str] | None
     corpo = html.escape(texto)
     if link and link[1] and link[0] in texto:
         trecho = html.escape(link[0])
-        corpo = corpo.replace(trecho, f"<a href='{html.escape(link[1])}' target='_blank' rel='noopener'>{trecho}</a>", 1)
+        corpo = corpo.replace(trecho, f"<a href='{html.escape(link[1])}' {_alvo(link[1])}>{trecho}</a>", 1)
     st.markdown(f"<div class='msg-alerta' style='--kpi-cor:{cor}'><span class='st' style='color:{cor}'>{rot}</span>"
                 f"{corpo}{o}</div>", unsafe_allow_html=True)
 
@@ -113,7 +152,7 @@ def tabela_html(df: pd.DataFrame, colunas: dict[str, str], links: tuple[str, ...
     def celula(col, v):
         if col in links:
             itens = v if isinstance(v, (list, tuple)) else []
-            return ", ".join(f"<a href='{html.escape(u)}' target='_blank' rel='noopener'>{html.escape(r)}</a>"
+            return ", ".join(f"<a href='{html.escape(u)}' {_alvo(u)}>{html.escape(r)}</a>"
                              if u else html.escape(r) for r, u in itens) or "—"
         if col in numericas:
             return "—" if v is None or (isinstance(v, float) and pd.isna(v)) else f"{float(v):,.0f}".replace(",", ".")

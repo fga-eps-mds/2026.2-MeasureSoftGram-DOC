@@ -28,9 +28,9 @@ ensino. Cada link abre a tela certa do dashboard.
 | **Velocity** | [Gestão ágil (ZenHub)](https://20262-measuresoftgram-doc.streamlit.app/zenhub) → bloco **Velocity** (planejado × realizado por sprint, velocity, média e tendência; clique numa sprint da tabela para ver as stories que a compõem) | Zenhub |
 | **Burndown** | [Gestão ágil (ZenHub)](https://20262-measuresoftgram-doc.streamlit.app/zenhub) → bloco **Burndown** (por sprint, dia a dia) e [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm) → **Burndown da release** | Zenhub |
 | **EVM-Ágil** | [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm) → leitura em linguagem simples, cartões de **prazo** (SPI, SV, PPC × APC, término) e de **custo** (BAC, AC, CPI, EAC), **Legenda** das siglas com link para a aba da planilha e **De onde vem cada número** (stories, horas e orçamento por semana) | Zenhub + Planilha |
-| **Matriz de riscos** | [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha) → aba **Riscos** → **Matriz de probabilidade × impacto** e tabela **Matriz de riscos** (resposta, responsável, mitigação e contingência) | Planilha |
-| **Custos** | [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha) → aba **Custos** (orçamento, custo planejado × realizado, por semana, por categoria e por integrante) | Planilha |
-| **Decisões baseadas em dados** | [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha) → aba **Decisões** (contexto e dado, decisão, evidência, critério de sucesso e resultado) | Planilha |
+| **Matriz de riscos** | [Riscos](https://20262-measuresoftgram-doc.streamlit.app/riscos) → **Dado bruto** (resposta, ação preventiva, contingência, responsável) e **Matriz probabilidade × impacto** | Planilha |
+| **Custos** | [Custos](https://20262-measuresoftgram-doc.streamlit.app/custos) → orçamento, gasto, premissas, horas por integrante e sprint, custo planejado × real por sprint e por categoria | Planilha |
+| **Decisões baseadas em dados** | [Decisões](https://20262-measuresoftgram-doc.streamlit.app/decisoes) → contexto e dado, decisão, evidência (com link), critério de sucesso e resultado | Planilha |
 | **Indicadores técnicos** (.json do pipeline de CI/CD) | [Qualidade técnica (Sonar)](https://20262-measuresoftgram-doc.streamlit.app/sonar) → **Indicadores atuais** e **Evolução das métricas** | SonarCloud |
 
 ## Mapa completo
@@ -74,18 +74,21 @@ Qualquer total pode ser aberto até as issues (link direto) e baixado em CSV.
 
 Regras de cálculo em [Velocity pela API do Zenhub](/docs/metricas/velocity-zenhub).
 
-### [Custos e riscos (Planilha)](https://20262-measuresoftgram-doc.streamlit.app/planilha)
+### [Custos](https://20262-measuresoftgram-doc.streamlit.app/custos) · [Riscos](https://20262-measuresoftgram-doc.streamlit.app/riscos) · [Decisões](https://20262-measuresoftgram-doc.streamlit.app/decisoes)
 
-Três abas no topo da tela:
+Todas as páginas seguem a mesma ordem: **Resumo** (cartões) → **Dado bruto** (tabela com link) →
+**Análise** (poucos gráficos) → **Ver a aba original** (a aba da planilha embutida). No topo de cada
+página, os menus **Legenda e fórmulas** e **Parâmetros usados** explicam cada número e cada limite,
+com link para a aba da planilha ou para o `config.py`.
 
-- **Custos** — orçamento do semestre, custo planejado no período e até hoje, custo
-  realizado, custo por semana, custo acumulado planejado × realizado, custo por
-  categoria e por integrante. Premissas em [Custos](/docs/planejamento/custos).
-- **Riscos** — riscos abertos, mitigados, elevados e sem responsável; **matriz de
-  probabilidade × impacto**; riscos por severidade e por categoria; evolução por
-  revisão; tabela completa da matriz de riscos. Critérios em [Plano de Riscos](/docs/planejamento/riscos).
-- **Decisões** — cada decisão registrada, com evidência e resultado. Registro em
-  [Decisões baseadas em dados](/docs/planejamento/decisoes).
+- **Custos** — orçamento, gasto, custo por hora e horas; premissas (aba Custos), horas por
+  integrante e sprint, custo planejado por semana; planejado × real por sprint e orçamento por
+  categoria. Premissas em [Custos](/docs/planejamento/custos).
+- **Riscos** — não encerrados, elevados, materializados e sem responsável; tabela com resposta,
+  ação preventiva e contingência; matriz P × I e exposição por revisão. Critérios em
+  [Plano de Riscos](/docs/planejamento/riscos).
+- **Decisões** — cada decisão com contexto, evidência (os caminhos de arquivo viram link) e
+  resultado. Registro em [Decisões baseadas em dados](/docs/planejamento/decisoes).
 
 ### [Qualidade técnica (Sonar)](https://20262-measuresoftgram-doc.streamlit.app/sonar)
 
