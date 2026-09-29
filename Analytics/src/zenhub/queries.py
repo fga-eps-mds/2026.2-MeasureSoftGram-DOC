@@ -38,7 +38,8 @@ query Sprints($workspaceId: ID!, $first: Int!, $after: String) {
 }
 """
 
-# Issues que estão AGORA na sprint (escopo atual). ~20 pontos por issue.
+# Issues que estão AGORA na sprint (escopo atual). ~25 pontos por issue (com responsáveis e criação:
+# as issues fechadas saem do quadro e só aqui trazem quem foi o responsável).
 SPRINT_ISSUES = """
 query SprintIssues($sprintId: ID!, $workspaceId: ID!, $first: Int!, $after: String) {
   node(id: $sprintId) {
@@ -60,6 +61,8 @@ query SprintIssues($sprintId: ID!, $workspaceId: ID!, $first: Int!, $after: Stri
             ... on ZenhubIssueType { name }
           }
           parentIssue { id }
+          createdAt
+          assignees(first: 3) { nodes { login } }
           pipelineIssue(workspaceId: $workspaceId) {
             latestTransferTime
             pipeline { name }
@@ -118,6 +121,8 @@ query Issue($issueId: ID!, $workspaceId: ID!) {
         ... on ZenhubIssueType { name }
       }
       parentIssue { id }
+      createdAt
+      assignees(first: 3) { nodes { login } }
       pipelineIssue(workspaceId: $workspaceId) {
         latestTransferTime
         pipeline { name }

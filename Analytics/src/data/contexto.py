@@ -206,13 +206,16 @@ def carregar() -> Contexto:
 
     # GITHUB ───────────────────────────────────────────
     try:
-        ctx.gh_issues, ctx.gh_runs = _github(pastas, _marca(PASTAS_PIPELINE, "GitHub_API-*.json"))
+        ctx.gh_issues, ctx.gh_runs = _github(pastas, _marca(PASTAS_PIPELINE, "GitHub_API-*.json")
+                                                 + _marca([github.PASTA_COLETA], "runs-*.json"))
         r = ctx.gh_runs
         if r.empty:
             ctx.fontes.append(Fonte("GITHUB", "API do GitHub (GitHub_API-Runs-*.json)", "sem dados",
                                     mensagem="Nenhuma execução de CI coletada."))
         else:
-            ctx.fontes.append(Fonte("GITHUB", "API do GitHub (GitHub_API-Runs-*.json)", "ok",
+            entrada = ("API do GitHub (data/github/runs-*.json)" if (r["origem"] == "coleta do dashboard").any()
+                       else "API do GitHub (GitHub_API-Runs-*.json do metrics.yml)")
+            ctx.fontes.append(Fonte("GITHUB", entrada, "ok",
                                     _para_brt(r["atualizado_em"].max()),
                                     (_para_brt(r["criado_em"].min()), _para_brt(r["criado_em"].max())), len(r),
                                     f"{r['repositorio'].nunique()} repositórios"))

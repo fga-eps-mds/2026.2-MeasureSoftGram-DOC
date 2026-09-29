@@ -3,6 +3,7 @@ name: Coleta de dados do dashboard
 # Atualiza sozinho os dados do dashboard e commita em Analytics/data/:
 #   - Zenhub (sprints, pontos, backlog)   -> Analytics/data/zenhub/velocity/
 #   - SonarCloud (bugs, code smells, Quality Gate, histórico...) -> Analytics/data/sonar/
+#   - GitHub Actions (execuções de CI de cada repositório)     -> Analytics/data/github/
 # O Streamlit Community Cloud republica o dashboard a cada commit na main.
 #
 # Quando roda:
@@ -26,6 +27,7 @@ on:
 
 permissions:
   contents: write
+  actions: read          # ler as execuções de workflow (scripts/coleta_github.py)
 
 concurrency:
   group: coleta-dados
@@ -66,6 +68,14 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: python scripts/coleta_sonar.py
 
+      - name: Coletar execuções do GitHub Actions
+        id: github
+        continue-on-error: true
+        working-directory: Analytics
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/coleta_github.py
+
       - name: Testes dos cálculos
         working-directory: Analytics
         run: python -m unittest discover -s tests
@@ -74,9 +84,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Analytics/data/zenhub Analytics/data/sonar
+          git add Analytics/data/zenhub Analytics/data/sonar $(ls -d Analytics/data/github 2>/dev/null)
           if git diff --cached --quiet; then echo "Sem dados novos"; exit 0; fi
-          git commit -m "chore(dados): coleta automática do Zenhub e do SonarCloud"
+          git commit -m "chore(dados): coleta automática do Zenhub, SonarCloud e GitHub Actions"
           git pull --rebase origin main
           git push
 
@@ -86,3 +96,4 @@ jobs:
           echo "### Coleta de dados" >> "$GITHUB_STEP_SUMMARY"
           echo "- Zenhub: ${{ steps.zenhub.outcome }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- SonarCloud: ${{ steps.sonar.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- GitHub Actions: ${{ steps.github.outcome }}" >> "$GITHUB_STEP_SUMMARY"

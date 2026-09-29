@@ -44,6 +44,10 @@ def issue(no: dict) -> dict:
         "pipeline": _nome(pipeline_issue.get("pipeline")),
         "pipeline_moved_at": pipeline_issue.get("latestTransferTime"),
         "url": no.get("htmlUrl"),
+        # só quando a query pediu o campo: ausente = não coletado (≠ lista vazia = ninguém atribuído)
+        **({"created_at": no.get("createdAt")} if "createdAt" in no else {}),
+        **({"assignees": [a.get("login") for a in ((no.get("assignees") or {}).get("nodes") or [])
+                          if isinstance(a, dict) and a.get("login")]} if "assignees" in no else {}),
     }
 
 

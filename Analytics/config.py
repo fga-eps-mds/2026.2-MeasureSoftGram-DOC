@@ -69,6 +69,13 @@ SONAR_PROJETOS: list[str] = [
 ]
 SONAR_BUSCA = "2026.2-MeasureSoftGram"
 
+# ───────────────────────── GitHub Actions ─────────────────────────
+# Repositórios cujas execuções de CI o dashboard coleta direto da API do GitHub
+# (scripts/coleta_github.py). Execuções criadas a partir de INICIO_SEMESTRE.
+GITHUB_ORG = "fga-eps-mds"
+GITHUB_REPOS: list[str] = [k.split("_", 1)[1] for k in SONAR_PROJETOS] + [
+    "2026.2-MeasureSoftGram-DOC", "2026.2-MeasureSoftGram-docs-eps"]
+
 # ───────────────────────── calendário e metas ─────────────────────────
 # Datas de entrega do plano de ensino (EPS 2026.2).
 

@@ -18,12 +18,48 @@ COR = alt.Scale(domain=[ROT[c] for c in CONCLUSOES],
                 range=[theme.STATUS["good"], theme.STATUS["critical"], theme.NEUTRO, theme.NEUTRO_CLARO])
 
 
+def _tabela_repos(todas, r, f) -> None:
+    """Uma linha por repositório: contagem por resultado, até quando há dado e de onde veio, com link."""
+    import pandas as pd
+
+    linhas = []
+    for repo in config.GITHUB_REPOS:
+        if f["repos"] and nome_curto(repo) not in f["repos"]:
+            continue
+        x = r[r["repositorio"] == repo]
+        tudo = todas[todas["repositorio"] == repo]
+        cont = x["conclusao"].fillna("em andamento").value_counts()
+        ok, falha = int(cont.get("success", 0)), int(cont.get("failure", 0))
+        origem = ", ".join(sorted(tudo["origem"].dropna().unique())) if not tudo.empty else "sem dados"
+        ate = (tudo["coletado_em"].max() if (tudo["origem"] == "coleta do dashboard").any()
+               else tudo["atualizado_em"].max()) if not tudo.empty else None
+        linhas.append({
+            "repo": [(nome_curto(repo), f"https://github.com/{config.GITHUB_ORG}/{repo}/actions")],
+            "total": len(x), "sucesso": ok, "falha": falha,
+            "outras": len(x) - ok - falha,
+            "taxa": f"{num(ok / (ok + falha) * 100)}%" if ok + falha else "—",
+            "ate": pd.Timestamp(ate).tz_convert("America/Sao_Paulo").strftime("%d/%m %H:%M") if ate is not None
+            and not pd.isna(ate) else "—",
+            "origem": origem})
+    tab = pd.DataFrame(linhas)
+    layout.tabela_html(tab, {"repo": "Repositório", "total": "Execuções no período", "sucesso": "Sucesso",
+                             "falha": "Falha", "outras": "Canceladas / ignoradas / em andamento",
+                             "taxa": "Taxa de sucesso", "ate": "Dados até", "origem": "Origem do dado"},
+                       links=("repo",), numericas=("total", "sucesso", "falha", "outras"), altura=None)
+    st.caption("Para conferir no GitHub: abra o repositório (link), aba Actions, e compare com as execuções criadas "
+               "no período da barra lateral. 'Dados até' é o momento da última coleta: execuções depois disso só "
+               "aparecem na próxima. Origem 'metrics.yml' = arquivo enviado pelo pipeline do próprio repositório, "
+               "que só atualiza quando ele roda; 'coleta do dashboard' = `scripts/coleta_github.py`, 3 vezes por "
+               "dia, com todas as execuções do semestre.")
+
+
 def pagina():
     ctx, f = layout.estado()
     layout.titulo_pagina("Integração contínua", "Saúde dos pipelines de CI/CD dos repositórios (processo de "
                          "desenvolvimento).", ["GITHUB"])
     layout.metodologia([
-        ("Execuções, sucesso, falhas", "GITHUB — Actions (`GitHub_API-Runs-*.json`, coletado pelo metrics.yml)",
+        ("Execuções, sucesso, falhas", "GITHUB — Actions (`data/github/runs-*.json` da coleta do dashboard e "
+         "`GitHub_API-Runs-*.json` do metrics.yml)",
          "taxa de sucesso = execuções com sucesso ÷ execuções concluídas com sucesso ou falha"),
         ("Tempo de feedback", "GITHUB", "atualização final − início de cada execução, em minutos (mediana)"),
         ("Meta", "time", f"sucesso da CI ≥ {num(config.META_CI_SUCESSO)}%"),
@@ -43,15 +79,21 @@ def pagina():
     k = st.columns(4)
     with k[0]:
         kpi("Taxa de sucesso", f"{num(taxa)}%", "GITHUB",
-            status=status_taxa(taxa, config.META_CI_SUCESSO, 60), nota=f"meta ≥ {num(config.META_CI_SUCESSO)}%")
+            status=status_taxa(taxa, config.META_CI_SUCESSO, config.LIMITE_CI_CRITICO), nota=f"meta ≥ {num(config.META_CI_SUCESSO)}%")
     with k[1]:
-        kpi("Execuções concluídas", num(len(conc)), "GITHUB", nota=f"{r['repositorio'].nunique()} repositórios")
+        outras = len(r) - len(conc)
+        kpi("Execuções no período", num(len(r)), "GITHUB",
+            nota=f"{num(len(conc))} com sucesso ou falha (base da taxa) · {num(outras)} canceladas, ignoradas ou "
+                 f"em andamento · {r['repositorio'].nunique()} repositórios")
     with k[2]:
         kpi("Falhas", num(int((conc["conclusao"] == "failure").sum())), "GITHUB")
     with k[3]:
         dur = conc["duracao_min"].dropna()
         kpi("Tempo mediano de feedback", f"{num(dur.median(), 1)} min" if not dur.empty else None, "GITHUB",
             nota=f"mais lenta: {num(dur.max(), 1)} min" if not dur.empty else "sem duração registrada")
+
+    layout.secao("Execuções por repositório", "Os números batem com a aba Actions de cada repositório?", ["GITHUB"])
+    _tabela_repos(runs, r, f)
 
     layout.secao("Resultado por repositório", "Onde a CI falha mais?", ["GITHUB"])
     pr = (r[r["conclusao"].isin(CONCLUSOES)].assign(repo=lambda x: x["repositorio"].map(nome_curto),
