@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-09-29T02:08:33+00:00",
+ "coletado_em": "2026-09-29T11:22:07+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-AI",
  "desde": "2026-08-24",
- "total_count": 25,
+ "total_count": 27,
  "workflow_runs": [
+  {
+   "id": 36513006547,
+   "name": "Publish Docker Image",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "v1.0.0",
+   "event": "push",
+   "created_at": "2026-09-29T02:31:34Z",
+   "run_started_at": "2026-09-29T02:31:34Z",
+   "updated_at": "2026-09-29T02:31:48Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-AI/actions/runs/36513006547",
+   "run_number": 2,
+   "workflow_id": 365651329
+  },
+  {
+   "id": 36513006612,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "v1.0.0",
+   "event": "push",
+   "created_at": "2026-09-29T02:31:34Z",
+   "run_started_at": "2026-09-29T02:31:34Z",
+   "updated_at": "2026-09-29T02:31:49Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-AI/actions/runs/36513006612",
+   "run_number": 9,
+   "workflow_id": 365651330
+  },
   {
    "id": 36496556402,
    "name": "SonarCloud Scan",
