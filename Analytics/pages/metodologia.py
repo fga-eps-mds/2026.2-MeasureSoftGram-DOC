@@ -35,7 +35,7 @@ def pagina():
     st.markdown(f"""
 | Fonte | Cor | Usada para | Como chega ao painel | Atualização |
 |---|---|---|---|---|
-| **SonarCloud** | {layout.etiqueta('SONAR')} | qualidade técnica: cobertura, duplicação, bugs, vulnerabilidades, code smells, hotspots, dívida técnica, ratings, Quality Gate, testes | `metrics.yml` de cada repositório → `data/*.json`; API do SonarCloud → `scripts/coleta_sonar.py` → `data/sonar/` | a cada execução do pipeline; API diária (workflow `coleta-dados.yml`) |
+| **SonarCloud** | {layout.etiqueta('SONAR')} | qualidade técnica: cobertura, duplicação, bugs, vulnerabilidades, code smells, hotspots, dívida técnica, ratings, Quality Gate, testes e métricas por componente (DA-R2) | API do SonarCloud → `scripts/coleta_sonar.py` → `data/sonar/` (compatível com `data/*.json` legados) | 3 vezes por dia e a cada push na `main` (workflow `coleta-dados.yml`) |
 | **Zenhub** | {layout.etiqueta('ZENHUB')} | gestão ágil: sprints, story points, velocity, backlog, pipelines, épicos, releases, throughput | API GraphQL → `scripts/coleta_velocity.py` → `data/zenhub/velocity/` | diária (workflow `coleta-dados.yml`) ou botão na página do Zenhub |
 | **Planilha** | {layout.etiqueta('PLANILHA')} | só o que não existe nas outras: custos, time por semana, horas, riscos, monitoramento, decisões | abas publicadas no Google em CSV (`config.PLANILHAS`); sem cópia local | a cada {config.CACHE_PLANILHAS_S // 60} min (local) ou a cada deploy (GitHub Pages) |
 | **GitHub** | {layout.etiqueta('GITHUB')} | processo: execuções e resultado da CI | API do GitHub → `scripts/coleta_github.py` → `data/github/`; `metrics.yml` → `GitHub_API-Runs-*.json` | 3 vezes por dia (workflow `coleta-dados.yml`) e a cada execução do pipeline |
@@ -97,8 +97,8 @@ def pagina():
 - A coleta do **backlog completo** (todos os pipelines, prioridade e responsável) usa queries novas que precisam ser
   conferidas com `python scripts/diagnostico_zenhub.py`; se falharem, a coleta segue e o painel usa só as issues das
   sprints, avisando.
-- Métricas do SonarCloud que o `metrics.yml` não pede (bugs, vulnerabilidades, code smells, hotspots, dívida,
-  Quality Gate) dependem do snapshot da API (`scripts/coleta_sonar.py`).
-- Repositórios sem projeto no SonarCloud (ex.: AI) não têm métrica de qualidade.
+- As métricas do SonarCloud (agregadas, histórico, Quality Gate, issues e `component_tree` por arquivo/suíte) são
+  coletadas pelo snapshot da API (`scripts/coleta_sonar.py` no workflow `coleta-dados.yml`).
+- Repositórios sem projeto no SonarCloud não têm métrica de qualidade.
 - Médias entre repositórios são simples (não ponderadas por linhas de código).
 """)

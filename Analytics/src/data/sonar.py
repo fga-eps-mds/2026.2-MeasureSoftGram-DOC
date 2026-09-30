@@ -115,7 +115,7 @@ def carregar_sonar(pastas) -> tuple[pd.DataFrame, pd.DataFrame]:
             for medida in componente.get("measures", []):
                 linhas_comp.append({**base, "componente": componente.get("path") or componente.get("name"),
                                     "tipo": componente.get("qualifier"), "metrica": medida.get("metric"),
-                                    "valor": _num(medida.get("value"))})
+                                    "valor": _num(medida.get("value")), "origem": "pipeline"})
     return pd.DataFrame(linhas_repo), pd.DataFrame(linhas_comp)
 
 
@@ -211,11 +211,11 @@ def snapshot_para_tabelas(snap: dict | None) -> dict[str, pd.DataFrame]:
             for metrica, valor in (c.get("measures") or {}).items():
                 comp.append({"repositorio": repo, "branch": branch, "coleta": coleta,
                              "componente": caminho, "tipo": tipo, "metrica": metrica,
-                             "valor": _num(valor)})
+                             "valor": _num(valor), "origem": "api"})
     h = pd.DataFrame(hist)
     if not h.empty:
         h["coleta"] = h["coleta"].dt.tz_convert(None)
-        h = h.dropna(subset=["coleta", "valor"])
+        h = h.dropna(subset=["coleta", \"valor\"])
     return {"medidas": pd.DataFrame(med), "historico": h, "quality_gate": pd.DataFrame(qg),
             "condicoes": pd.DataFrame(cond), "severidades": pd.DataFrame(sev), "tipos": pd.DataFrame(tip),
             "linguagens": pd.DataFrame(lang), "componentes": pd.DataFrame(comp), "erros": pd.DataFrame(err)}

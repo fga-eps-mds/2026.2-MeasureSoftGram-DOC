@@ -14,8 +14,8 @@ from src.data import sonar as sn
 from src.metrics import qualidade
 from src.metrics.calculations import data_br, num, status_meta, variacao
 
-SEM_API = ("o metrics.yml não traz esta métrica e a coleta da API do SonarCloud ainda não rodou",
-           "rodar o workflow \"Coleta de dados do dashboard\" no GitHub Actions (ou "
+SEM_API = ("a coleta da API do SonarCloud ainda não rodou para esta métrica",
+           "rodar o workflow \"Coleta de dados do dashboard\" (`coleta-dados.yml` / "
            "`python scripts/coleta_sonar.py`), que grava `Analytics/data/sonar/`")
 
 def _repos_completos(ctx, curtos: list[str]) -> list[str]:
@@ -134,8 +134,8 @@ def pagina():
 
     if ctx.sonar_serie.empty and ctx.sonar_atual.empty:
         layout.indisponivel("Nenhuma métrica do SonarCloud encontrada",
-                            "não há arquivos do pipeline em `Analytics/data/` nem snapshot em `Analytics/data/sonar/`.",
-                            "rodar o workflow `metrics.yml` em cada repositório ou `scripts/coleta_sonar.py`.")
+                            "não há snapshot em `Analytics/data/sonar/` nem arquivos em `Analytics/data/`.",
+                            "rodar o workflow `coleta-dados.yml` (`python scripts/coleta_sonar.py`).")
         return
 
     # ── filtros da página ──
@@ -166,9 +166,9 @@ def pagina():
         sem = sorted({sn.nome_curto(r) for r in ctx.sonar_erros["repositorio"]} - {sn.nome_curto(r) for r in repos})
         if sem:
             layout.indisponivel(f"Sem métricas: {', '.join(sem)}",
-                                "o pipeline roda nesses repositórios, mas a API do SonarCloud responde erro "
+                                "a API do SonarCloud responde erro para esses repositórios "
                                 "(projeto não encontrado). Não é ausência de valor: é ausência de projeto.",
-                                "criar o projeto no SonarCloud e rodar o `metrics.yml`.")
+                                "criar o projeto no SonarCloud e rodar o `coleta-dados.yml` (`scripts/coleta_sonar.py`).")
 
     # ── resumo ──
     layout.secao("Resumo", "Como está a qualidade técnica agora, e mudou desde a última coleta?", ["SONAR"])
@@ -221,7 +221,7 @@ def pagina():
     if not comp.empty:
         comp = comp[comp["repositorio"].isin(repos)]
         if f["branch"]:
-            comp = comp[comp["branch"] == f["branch"]]
+            comp = comp[(comp["branch"] == f["branch"]) | (comp.get("origem") == "api")]
         cob = (comp[comp["metrica"] == "coverage"].sort_values("coleta")
                .drop_duplicates(["repositorio", "componente"], keep="last"))
         if not cob.empty:
@@ -235,7 +235,7 @@ def pagina():
             rot = barras.mark_text(align="left", dx=4, fontSize=11, color=theme.INK["secondary"]).encode(
                 text=alt.Text("valor:Q", format=".0f"))
             charts.mostrar(barras + rot, "Os 15 componentes com menor cobertura",
-                           "cobertura de testes (%) · última coleta do pipeline",
+                           "cobertura de testes (%) · última coleta do SonarCloud",
                            cob[["repo", "componente", "valor"]].rename(columns={"valor": "cobertura (%)"}),
                            altura=charts.altura_categorias(len(cob), 24))
 

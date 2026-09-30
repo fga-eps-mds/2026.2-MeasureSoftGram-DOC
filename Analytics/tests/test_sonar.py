@@ -105,9 +105,17 @@ class ClienteTest(unittest.TestCase):
         self.assertEqual(tab["severidades"]["quantidade"].sum(), 7)
         self.assertEqual(tab["quality_gate"].iloc[0]["repositorio"], "2026.2-MeasureSoftGram-Core")
         self.assertFalse(tab["componentes"].empty)
+        self.assertEqual(set(tab["componentes"]["origem"]), {"api"})
         mq = qualidade.calcular(tab["componentes"], tab["medidas"])
         self.assertEqual(len(mq), 1)
         self.assertAlmostEqual(mq.iloc[0]["total"], 1.0)
+        # Combinação de pipeline + API ou branch None não quebra qualidade.calcular
+        dup = pd.concat([tab["medidas"], tab["medidas"]], ignore_index=True)
+        comp_sem_branch = tab["componentes"].assign(branch=None)
+        dup_sem_branch = dup.assign(branch=None)
+        mq2 = qualidade.calcular(comp_sem_branch, dup_sem_branch)
+        self.assertEqual(len(mq2), 1)
+        self.assertAlmostEqual(mq2.iloc[0]["total"], 1.0)
 
     def test_erro_de_um_projeto_nao_derruba_os_outros(self):
         r = respostas_ok()
