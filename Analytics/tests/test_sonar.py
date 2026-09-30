@@ -11,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.data import sonar as sn  # noqa: E402
 from src.data import sonar_api as api  # noqa: E402
+from src.metrics import qualidade  # noqa: E402
 
 
 class SerieTest(unittest.TestCase):
@@ -56,8 +57,22 @@ def respostas_ok():
     return {
         "api/measures/component": lambda p: api.Resposta(404, {"errors": [{"msg": "Component 'x' on branch 'develop' not found"}]})
         if p.get("branch") else api.Resposta(200, {"component": {"measures": [
-            {"metric": "bugs", "value": "3"}, {"metric": "alert_status", "value": "ERROR"},
+            {"metric": "bugs", "value": "3"}, {"metric": "tests", "value": "10"},
+            {"metric": "test_errors", "value": "0"}, {"metric": "test_failures", "value": "0"},
+            {"metric": "alert_status", "value": "ERROR"},
             {"metric": "ncloc_language_distribution", "value": "py=1200;js=300"}]}}),
+        "api/measures/component_tree": api.Resposta(200, {"paging": {"total": 2}, "components": [
+            {"path": "src/main.py", "qualifier": "FIL", "measures": [
+                {"metric": "coverage", "value": "85.0"},
+                {"metric": "complexity", "value": "4"},
+                {"metric": "functions", "value": "2"},
+                {"metric": "comment_lines_density", "value": "15.0"},
+                {"metric": "duplicated_lines_density", "value": "0.0"},
+            ]},
+            {"path": "tests/test_main.py", "qualifier": "UTS", "measures": [
+                {"metric": "test_execution_time", "value": "120"},
+            ]},
+        ]}),
         "api/measures/search_history": api.Resposta(200, {"measures": [
             {"metric": "bugs", "history": [{"date": "2026-09-20T10:00:00+0000", "value": "5"},
                                            {"date": "2026-09-27T10:00:00+0000"}]}]}),
@@ -82,12 +97,17 @@ class ClienteTest(unittest.TestCase):
         self.assertEqual(p["linguagens"], {"py": 1200.0, "js": 300.0})
         self.assertEqual(p["quality_gate"]["status"], "ERROR")
         self.assertEqual(len(p["historico"]["bugs"]), 1)            # ponto sem valor descartado
+        self.assertEqual(len(p["componentes"]), 2)
         self.assertEqual(t.chamadas[0][2]["Authorization"], "Bearer segredo")
         self.assertNotIn("segredo", repr(c))
         tab = sn.snapshot_para_tabelas(snap)
         self.assertEqual(tab["medidas"].set_index("metrica").loc["bugs", "valor"], 3.0)
         self.assertEqual(tab["severidades"]["quantidade"].sum(), 7)
         self.assertEqual(tab["quality_gate"].iloc[0]["repositorio"], "2026.2-MeasureSoftGram-Core")
+        self.assertFalse(tab["componentes"].empty)
+        mq = qualidade.calcular(tab["componentes"], tab["medidas"])
+        self.assertEqual(len(mq), 1)
+        self.assertAlmostEqual(mq.iloc[0]["total"], 1.0)
 
     def test_erro_de_um_projeto_nao_derruba_os_outros(self):
         r = respostas_ok()

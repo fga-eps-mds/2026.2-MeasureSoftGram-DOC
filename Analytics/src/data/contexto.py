@@ -176,8 +176,13 @@ def carregar() -> Contexto:
     # SONAR ────────────────────────────────────────────
     try:
         agregado, comp, erros, snap, nome = _sonar(pastas, _marca(PASTAS_PIPELINE + [sonar.PASTA_API]))
-        ctx.sonar_pipeline, ctx.sonar_componentes, ctx.sonar_erros = agregado, comp, erros
         ctx.sonar_api_snap, ctx.sonar_api = snap, sonar.snapshot_para_tabelas(snap)
+        comp_api = ctx.sonar_api.get("componentes", pd.DataFrame())
+        comp_partes = [x for x in (comp, comp_api) if not x.empty]
+        ctx.sonar_componentes = (pd.concat(comp_partes, ignore_index=True) if comp_partes else comp)
+        pip_partes = [x for x in (agregado, ctx.sonar_api["medidas"]) if not x.empty]
+        ctx.sonar_pipeline = (pd.concat(pip_partes, ignore_index=True) if pip_partes else agregado)
+        ctx.sonar_erros = erros
         ctx.sonar_serie = sonar.serie_temporal(agregado, ctx.sonar_api["historico"])
         atual = [x for x in (sonar.ultimo_por_repo(agregado), ctx.sonar_api["medidas"]) if not x.empty]
         ctx.sonar_atual = (sonar.ultimo_por_repo(pd.concat(atual, ignore_index=True)) if atual
