@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-09-30T17:22:08+00:00",
+ "coletado_em": "2026-09-30T23:21:11+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-CLI",
  "desde": "2026-08-24",
- "total_count": 54,
+ "total_count": 56,
  "workflow_runs": [
+  {
+   "id": 36755349637,
+   "name": "MSG Action",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "chore/ci-governance-cleanup",
+   "event": "pull_request",
+   "created_at": "2026-09-30T17:59:32Z",
+   "run_started_at": "2026-09-30T17:59:32Z",
+   "updated_at": "2026-09-30T17:59:42Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36755349637",
+   "run_number": 1,
+   "workflow_id": 371436452
+  },
+  {
+   "id": 36755349407,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "chore/ci-governance-cleanup",
+   "event": "pull_request",
+   "created_at": "2026-09-30T17:59:32Z",
+   "run_started_at": "2026-09-30T17:59:32Z",
+   "updated_at": "2026-09-30T18:02:11Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36755349407",
+   "run_number": 21,
+   "workflow_id": 346797058
+  },
   {
    "id": 36644932603,
    "name": "Linter",
