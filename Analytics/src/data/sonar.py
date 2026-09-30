@@ -215,7 +215,7 @@ def snapshot_para_tabelas(snap: dict | None) -> dict[str, pd.DataFrame]:
     h = pd.DataFrame(hist)
     if not h.empty:
         h["coleta"] = h["coleta"].dt.tz_convert(None)
-        h = h.dropna(subset=["coleta", \"valor\"])
+        h = h.dropna(subset=["coleta", "valor"])
     return {"medidas": pd.DataFrame(med), "historico": h, "quality_gate": pd.DataFrame(qg),
             "condicoes": pd.DataFrame(cond), "severidades": pd.DataFrame(sev), "tipos": pd.DataFrame(tip),
             "linguagens": pd.DataFrame(lang), "componentes": pd.DataFrame(comp), "erros": pd.DataFrame(err)}
