@@ -7,6 +7,7 @@ Pages (onde não há token nem rede para o Sonar) e todo número é reprodutíve
 Endpoints (https://sonarcloud.io/web_api), todos de leitura:
 
 * ``api/measures/component``      valores atuais das métricas
+* ``api/measures/component_tree`` métricas por arquivo/suíte (cobertura por componente e modelo DA-R2)
 * ``api/measures/search_history`` série histórica de cada métrica
 * ``api/qualitygates/project_status`` situação do Quality Gate e condições
 * ``api/issues/search`` (``ps=1`` + ``facets``) problemas abertos por severidade e tipo
@@ -28,7 +29,13 @@ METRICAS_ATUAIS = [
     "bugs", "vulnerabilities", "code_smells", "security_hotspots", "sqale_index", "sqale_debt_ratio",
     "coverage", "duplicated_lines", "duplicated_lines_density", "ncloc", "reliability_rating",
     "security_rating", "sqale_rating", "tests", "test_errors", "test_failures", "test_success_density",
+    "test_execution_time", "comment_lines_density", "complexity", "files", "functions",
     "alert_status", "ncloc_language_distribution",
+]
+METRICAS_COMPONENTES = [
+    "files", "functions", "complexity", "comment_lines_density", "duplicated_lines_density",
+    "coverage", "ncloc", "tests", "test_errors", "test_failures", "test_execution_time",
+    "security_rating",
 ]
 METRICAS_HISTORICO = [
     "bugs", "vulnerabilities", "code_smells", "security_hotspots", "sqale_index", "coverage",
@@ -118,6 +125,28 @@ class SonarClient:
         comp = d.get("component") or {}
         return {m["metric"]: m.get("value") for m in comp.get("measures", []) if "metric" in m}
 
+    def componentes(self, projeto: str, branch: str | None, max_paginas: int = 10) -> list[dict]:
+        """Métricas por arquivo/suíte (api/measures/component_tree) para cobertura por arquivo e modelo DA-R2."""
+        itens, pagina = [], 1
+        while pagina <= max_paginas:
+            p = {"component": projeto, "metricKeys": ",".join(METRICAS_COMPONENTES),
+                 "qualifiers": "FIL,UTS", "ps": 500, "p": pagina}
+            if branch:
+                p["branch"] = branch
+            d = self.get("api/measures/component_tree", p)
+            lote = d.get("components") or []
+            for c in lote:
+                med = {m["metric"]: m.get("value") for m in c.get("measures", [])
+                       if "metric" in m and m.get("value") is not None}
+                if med:
+                    itens.append({"path": c.get("path") or c.get("name"),
+                                  "qualifier": c.get("qualifier"), "measures": med})
+            total = (d.get("paging") or {}).get("total", len(lote))
+            if len(lote) < 500 or pagina * 500 >= total:
+                break
+            pagina += 1
+        return itens
+
     def historico(self, projeto: str, branch: str | None) -> dict:
         p = {"component": projeto, "metrics": ",".join(METRICAS_HISTORICO), "ps": 1000}
         if branch:
@@ -194,7 +223,9 @@ def coletar(cliente: SonarClient, projetos: list[str], branch: str | None, busca
             if not registro["quality_gate"].get("status") and status_gate:
                 registro["quality_gate"]["status"] = status_gate
             registro["issues"] = cliente.issues_abertas(chave, b)
-            log(f"  {repo}: {len(medidas)} métricas, Quality Gate {registro['quality_gate'].get('status')}")
+            registro["componentes"] = cliente.componentes(chave, b)
+            log(f"  {repo}: {len(medidas)} métricas, {len(registro['componentes'])} componentes, "
+                f"Quality Gate {registro['quality_gate'].get('status')}")
         except SonarAuthError:
             raise
         except SonarError as erro:
