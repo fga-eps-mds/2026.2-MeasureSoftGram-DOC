@@ -1,25 +1,11 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-02T23:19:06+00:00",
+ "coletado_em": "2026-10-03T12:00:44+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
  "total_count": 128,
  "workflow_runs": [
-  {
-   "id": 36513261294,
-   "name": "Export de métricas",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "v1.0.0",
-   "event": "push",
-   "created_at": "2026-09-29T02:34:48Z",
-   "run_started_at": "2026-09-29T02:34:48Z",
-   "updated_at": "2026-09-29T02:35:18Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36513261294",
-   "run_number": 12,
-   "workflow_id": 348865696
-  },
   {
    "id": 36513261284,
    "name": "Release & Dist Bundle",
@@ -33,6 +19,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36513261284",
    "run_number": 2,
    "workflow_id": 367457063
+  },
+  {
+   "id": 36513261294,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "v1.0.0",
+   "event": "push",
+   "created_at": "2026-09-29T02:34:48Z",
+   "run_started_at": "2026-09-29T02:34:48Z",
+   "updated_at": "2026-09-29T02:35:18Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36513261294",
+   "run_number": 12,
+   "workflow_id": 348865696
   },
   {
    "id": 36500356217,
@@ -357,20 +357,6 @@
    "workflow_id": 348865699
   },
   {
-   "id": 36499932354,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "dependabot/npm_and_yarn/babel/core-7.29.7",
-   "event": "pull_request",
-   "created_at": "2026-09-28T23:48:44Z",
-   "run_started_at": "2026-09-28T23:48:44Z",
-   "updated_at": "2026-09-28T23:49:02Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499932354",
-   "run_number": 22,
-   "workflow_id": 348865694
-  },
-  {
    "id": 36499932509,
    "name": "Dependabot Auto-merge",
    "status": "completed",
@@ -383,6 +369,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499932509",
    "run_number": 7,
    "workflow_id": 368691716
+  },
+  {
+   "id": 36499932354,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "dependabot/npm_and_yarn/babel/core-7.29.7",
+   "event": "pull_request",
+   "created_at": "2026-09-28T23:48:44Z",
+   "run_started_at": "2026-09-28T23:48:44Z",
+   "updated_at": "2026-09-28T23:49:02Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499932354",
+   "run_number": 22,
+   "workflow_id": 348865694
   },
   {
    "id": 36499932436,
@@ -539,6 +539,20 @@
    "workflow_id": 348865699
   },
   {
+   "id": 36499797052,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "dependabot/npm_and_yarn/axios-1.18.0",
+   "event": "pull_request",
+   "created_at": "2026-09-28T23:47:03Z",
+   "run_started_at": "2026-09-28T23:47:03Z",
+   "updated_at": "2026-09-28T23:47:13Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499797052",
+   "run_number": 5,
+   "workflow_id": 368691716
+  },
+  {
    "id": 36499796909,
    "name": "Linter",
    "status": "completed",
@@ -565,20 +579,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499796882",
    "run_number": 20,
    "workflow_id": 348865699
-  },
-  {
-   "id": 36499797052,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "dependabot/npm_and_yarn/axios-1.18.0",
-   "event": "pull_request",
-   "created_at": "2026-09-28T23:47:03Z",
-   "run_started_at": "2026-09-28T23:47:03Z",
-   "updated_at": "2026-09-28T23:47:13Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499797052",
-   "run_number": 5,
-   "workflow_id": 368691716
   },
   {
    "id": 36499791147,
@@ -623,20 +623,6 @@
    "workflow_id": 368693001
   },
   {
-   "id": 36499734354,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "dependabot/npm_and_yarn/browserslist-4.29.2",
-   "event": "pull_request",
-   "created_at": "2026-09-28T23:46:18Z",
-   "run_started_at": "2026-09-28T23:46:18Z",
-   "updated_at": "2026-09-28T23:46:30Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499734354",
-   "run_number": 4,
-   "workflow_id": 368691716
-  },
-  {
    "id": 36499734347,
    "name": "Linter",
    "status": "completed",
@@ -649,6 +635,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499734347",
    "run_number": 19,
    "workflow_id": 348865694
+  },
+  {
+   "id": 36499734354,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "dependabot/npm_and_yarn/browserslist-4.29.2",
+   "event": "pull_request",
+   "created_at": "2026-09-28T23:46:18Z",
+   "run_started_at": "2026-09-28T23:46:18Z",
+   "updated_at": "2026-09-28T23:46:30Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499734354",
+   "run_number": 4,
+   "workflow_id": 368691716
   },
   {
    "id": 36499734346,
@@ -791,6 +791,20 @@
    "workflow_id": 368693001
   },
   {
+   "id": 36499604272,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-09-28T23:44:50Z",
+   "run_started_at": "2026-09-28T23:44:50Z",
+   "updated_at": "2026-09-28T23:45:11Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499604272",
+   "run_number": 17,
+   "workflow_id": 348865694
+  },
+  {
    "id": 36499604222,
    "name": "Publish Docker Image",
    "status": "completed",
@@ -817,20 +831,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499604169",
    "run_number": 11,
    "workflow_id": 348865696
-  },
-  {
-   "id": 36499604272,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-09-28T23:44:50Z",
-   "run_started_at": "2026-09-28T23:44:50Z",
-   "updated_at": "2026-09-28T23:45:11Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36499604272",
-   "run_number": 17,
-   "workflow_id": 348865694
   },
   {
    "id": 36499604176,
@@ -1169,20 +1169,6 @@
    "workflow_id": 368691716
   },
   {
-   "id": 36366981538,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "chore/dependabot-automerge-sha-pinning",
-   "event": "pull_request",
-   "created_at": "2026-09-28T01:42:04Z",
-   "run_started_at": "2026-09-28T01:42:04Z",
-   "updated_at": "2026-09-28T01:42:25Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36366981538",
-   "run_number": 11,
-   "workflow_id": 348865694
-  },
-  {
    "id": 36366981419,
    "name": "Rodar Testes",
    "status": "completed",
@@ -1195,6 +1181,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36366981419",
    "run_number": 11,
    "workflow_id": 348865699
+  },
+  {
+   "id": 36366981538,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "chore/dependabot-automerge-sha-pinning",
+   "event": "pull_request",
+   "created_at": "2026-09-28T01:42:04Z",
+   "run_started_at": "2026-09-28T01:42:04Z",
+   "updated_at": "2026-09-28T01:42:25Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36366981538",
+   "run_number": 11,
+   "workflow_id": 348865694
   },
   {
    "id": 36364100485,
@@ -1295,20 +1295,6 @@
    "workflow_id": 348865696
   },
   {
-   "id": 36352341822,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-09-27T21:36:23Z",
-   "run_started_at": "2026-09-27T21:36:23Z",
-   "updated_at": "2026-09-27T21:36:47Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36352341822",
-   "run_number": 9,
-   "workflow_id": 348865694
-  },
-  {
    "id": 36352341864,
    "name": "Rodar Testes",
    "status": "completed",
@@ -1321,6 +1307,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36352341864",
    "run_number": 9,
    "workflow_id": 348865699
+  },
+  {
+   "id": 36352341822,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-09-27T21:36:23Z",
+   "run_started_at": "2026-09-27T21:36:23Z",
+   "updated_at": "2026-09-27T21:36:47Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36352341822",
+   "run_number": 9,
+   "workflow_id": 348865694
   },
   {
    "id": 36347757054,
@@ -1379,20 +1379,6 @@
    "workflow_id": 348865697
   },
   {
-   "id": 36284827527,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-09-27T01:12:27Z",
-   "run_started_at": "2026-09-27T01:12:27Z",
-   "updated_at": "2026-09-27T01:13:51Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36284827527",
-   "run_number": 7,
-   "workflow_id": 348865699
-  },
-  {
    "id": 36284827483,
    "name": "Export de métricas",
    "status": "completed",
@@ -1419,6 +1405,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36284827518",
    "run_number": 7,
    "workflow_id": 348865694
+  },
+  {
+   "id": 36284827527,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-09-27T01:12:27Z",
+   "run_started_at": "2026-09-27T01:12:27Z",
+   "updated_at": "2026-09-27T01:13:51Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36284827527",
+   "run_number": 7,
+   "workflow_id": 348865699
   },
   {
    "id": 36253671012,
@@ -1491,6 +1491,20 @@
    "workflow_id": 348865697
   },
   {
+   "id": 36172568159,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-09-25T18:18:22Z",
+   "run_started_at": "2026-09-25T18:18:22Z",
+   "updated_at": "2026-09-25T18:18:45Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36172568159",
+   "run_number": 5,
+   "workflow_id": 348865694
+  },
+  {
    "id": 36172568239,
    "name": "Export de métricas",
    "status": "completed",
@@ -1517,20 +1531,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36172567978",
    "run_number": 5,
    "workflow_id": 348865699
-  },
-  {
-   "id": 36172568159,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-09-25T18:18:22Z",
-   "run_started_at": "2026-09-25T18:18:22Z",
-   "updated_at": "2026-09-25T18:18:45Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/36172568159",
-   "run_number": 5,
-   "workflow_id": 348865694
   },
   {
    "id": 34881436076,
@@ -1659,20 +1659,6 @@
    "workflow_id": 348865697
   },
   {
-   "id": 33700361007,
-   "name": "Export de métricas",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-09-03T00:38:28Z",
-   "run_started_at": "2026-09-03T01:21:21Z",
-   "updated_at": "2026-09-03T01:21:34Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/33700361007",
-   "run_number": 3,
-   "workflow_id": 348865696
-  },
-  {
    "id": 33700360997,
    "name": "Linter",
    "status": "completed",
@@ -1699,6 +1685,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/33700360994",
    "run_number": 2,
    "workflow_id": 348865699
+  },
+  {
+   "id": 33700361007,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-09-03T00:38:28Z",
+   "run_started_at": "2026-09-03T01:21:21Z",
+   "updated_at": "2026-09-03T01:21:34Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/33700361007",
+   "run_number": 3,
+   "workflow_id": 348865696
   },
   {
    "id": 33700152812,
@@ -1743,18 +1743,18 @@
    "workflow_id": 348865697
   },
   {
-   "id": 33695944157,
-   "name": "Linter",
+   "id": 33695944159,
+   "name": "Export de métricas",
    "status": "completed",
-   "conclusion": "success",
+   "conclusion": "failure",
    "head_branch": "develop",
    "event": "push",
    "created_at": "2026-09-02T23:37:37Z",
-   "run_started_at": "2026-09-02T23:37:37Z",
-   "updated_at": "2026-09-02T23:37:57Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/33695944157",
-   "run_number": 1,
-   "workflow_id": 348865694
+   "run_started_at": "2026-09-03T00:36:00Z",
+   "updated_at": "2026-09-03T00:36:14Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/33695944159",
+   "run_number": 2,
+   "workflow_id": 348865696
   },
   {
    "id": 33695944156,
@@ -1771,18 +1771,18 @@
    "workflow_id": 348865699
   },
   {
-   "id": 33695944159,
-   "name": "Export de métricas",
+   "id": 33695944157,
+   "name": "Linter",
    "status": "completed",
-   "conclusion": "failure",
+   "conclusion": "success",
    "head_branch": "develop",
    "event": "push",
    "created_at": "2026-09-02T23:37:37Z",
-   "run_started_at": "2026-09-03T00:36:00Z",
-   "updated_at": "2026-09-03T00:36:14Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/33695944159",
-   "run_number": 2,
-   "workflow_id": 348865696
+   "run_started_at": "2026-09-02T23:37:37Z",
+   "updated_at": "2026-09-02T23:37:57Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/33695944157",
+   "run_number": 1,
+   "workflow_id": 348865694
   },
   {
    "id": 33694859710,
