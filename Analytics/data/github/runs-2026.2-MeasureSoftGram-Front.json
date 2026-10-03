@@ -1,11 +1,25 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-03T12:00:44+00:00",
+ "coletado_em": "2026-10-03T18:17:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
- "total_count": 172,
+ "total_count": 173,
  "workflow_runs": [
+  {
+   "id": 37141861657,
+   "name": "npm_and_yarn in /. for brace-expansion - Update #1606883070",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "develop",
+   "event": "dynamic",
+   "created_at": "2026-10-03T17:48:27Z",
+   "run_started_at": "2026-10-03T17:48:27Z",
+   "updated_at": "2026-10-03T17:49:22Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37141861657",
+   "run_number": 1,
+   "workflow_id": 374076414
+  },
   {
    "id": 36893167741,
    "name": "Rodar Testes",
