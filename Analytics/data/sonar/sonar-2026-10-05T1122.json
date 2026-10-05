@@ -1,0 +1,2893 @@
+{
+ "versao": 1,
+ "fonte": "SonarCloud Web API (https://sonarcloud.io)",
+ "organizacao": "fga-eps-mds",
+ "branch": "develop",
+ "coletado_em": "2026-10-05T11:22:48+00:00",
+ "requisicoes": 32,
+ "projetos": [
+  {
+   "key": "fga-eps-mds_2026.2-MeasureSoftGram-Action",
+   "repositorio": "2026.2-MeasureSoftGram-Action",
+   "branch": "develop",
+   "linguagens": {
+    "ts": 663.0
+   },
+   "medidas": {
+    "coverage": "82.7",
+    "reliability_rating": "1.0",
+    "duplicated_lines_density": "0.0",
+    "code_smells": "9",
+    "duplicated_lines": "0",
+    "security_rating": "1.0",
+    "sqale_debt_ratio": "0.8",
+    "security_hotspots": "0",
+    "sqale_index": "151",
+    "sqale_rating": "1.0",
+    "test_success_density": "100.0",
+    "test_failures": "0",
+    "bugs": "0",
+    "tests": "30",
+    "ncloc": "663",
+    "vulnerabilities": "0",
+    "test_errors": "0"
+   },
+   "historico": {
+    "sqale_index": [
+     {
+      "date": "2026-09-03T00:26:10+0000",
+      "value": "200"
+     },
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "152"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "152"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "152"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "151"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "151"
+     }
+    ],
+    "security_hotspots": [
+     {
+      "date": "2026-09-03T00:26:10+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "0"
+     }
+    ],
+    "vulnerabilities": [
+     {
+      "date": "2026-09-03T00:26:10+0000",
+      "value": "13"
+     },
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "0"
+     }
+    ],
+    "sqale_rating": [
+     {
+      "date": "2026-09-03T00:26:10+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "1.0"
+     }
+    ],
+    "reliability_rating": [
+     {
+      "date": "2026-09-03T00:26:10+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "1.0"
+     }
+    ],
+    "duplicated_lines_density": [
+     {
+      "date": "2026-09-03T00:26:10+0000",
+      "value": "7.7"
+     },
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "0.0"
+     }
+    ],
+    "tests": [
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "30"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "30"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "30"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "30"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "30"
+     }
+    ],
+    "coverage": [
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "82.7"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "82.7"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "82.7"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "82.7"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "82.7"
+     }
+    ],
+    "bugs": [
+     {
+      "date": "2026-09-03T00:26:10+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "0"
+     }
+    ],
+    "security_rating": [
+     {
+      "date": "2026-09-03T00:26:10+0000",
+      "value": "5.0"
+     },
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "1.0"
+     }
+    ],
+    "ncloc": [
+     {
+      "date": "2026-09-03T00:26:10+0000",
+      "value": "1909"
+     },
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "663"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "663"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "663"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "663"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "663"
+     }
+    ],
+    "code_smells": [
+     {
+      "date": "2026-09-03T00:26:10+0000",
+      "value": "17"
+     },
+     {
+      "date": "2026-09-14T18:31:07+0000",
+      "value": "10"
+     },
+     {
+      "date": "2026-09-25T18:19:02+0000",
+      "value": "10"
+     },
+     {
+      "date": "2026-09-27T01:13:12+0000",
+      "value": "10"
+     },
+     {
+      "date": "2026-09-28T00:56:30+0000",
+      "value": "9"
+     },
+     {
+      "date": "2026-09-28T23:45:35+0000",
+      "value": "9"
+     }
+    ]
+   },
+   "quality_gate": {
+    "status": "OK",
+    "condicoes": [
+     {
+      "metrica": "new_reliability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_maintainability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_coverage",
+      "status": "OK",
+      "valor": "100.0",
+      "limite": "80",
+      "comparador": "LT"
+     },
+     {
+      "metrica": "new_duplicated_lines_density",
+      "status": "OK",
+      "valor": "0.0",
+      "limite": "3",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_hotspots_reviewed",
+      "status": "OK",
+      "valor": "100.0",
+      "limite": "100",
+      "comparador": "LT"
+     }
+    ]
+   },
+   "issues": {
+    "total": 0,
+    "severidades": {
+     "INFO": 0,
+     "MINOR": 0,
+     "MAJOR": 0,
+     "CRITICAL": 0,
+     "BLOCKER": 0
+    },
+    "tipos": {
+     "CODE_SMELL": 0,
+     "BUG": 0,
+     "VULNERABILITY": 0
+    }
+   }
+  },
+  {
+   "key": "fga-eps-mds_2026.2-MeasureSoftGram-AI",
+   "repositorio": "2026.2-MeasureSoftGram-AI",
+   "branch": "develop",
+   "linguagens": {
+    "docker": 16.0,
+    "py": 1930.0,
+    "yaml": 203.0
+   },
+   "medidas": {
+    "reliability_rating": "1.0",
+    "duplicated_lines_density": "0.0",
+    "code_smells": "4",
+    "duplicated_lines": "0",
+    "security_rating": "5.0",
+    "sqale_debt_ratio": "0.0",
+    "security_hotspots": "0",
+    "sqale_index": "8",
+    "sqale_rating": "1.0",
+    "bugs": "0",
+    "ncloc": "2149",
+    "vulnerabilities": "16"
+   },
+   "historico": {
+    "sqale_index": [
+     {
+      "date": "2026-09-28T00:45:16+0000",
+      "value": "8"
+     }
+    ],
+    "security_hotspots": [
+     {
+      "date": "2026-09-28T00:45:16+0000",
+      "value": "0"
+     }
+    ],
+    "vulnerabilities": [
+     {
+      "date": "2026-09-28T00:45:16+0000",
+      "value": "16"
+     }
+    ],
+    "sqale_rating": [
+     {
+      "date": "2026-09-28T00:45:16+0000",
+      "value": "1.0"
+     }
+    ],
+    "reliability_rating": [
+     {
+      "date": "2026-09-28T00:45:16+0000",
+      "value": "1.0"
+     }
+    ],
+    "duplicated_lines_density": [
+     {
+      "date": "2026-09-28T00:45:16+0000",
+      "value": "0.0"
+     }
+    ],
+    "tests": [],
+    "coverage": [],
+    "bugs": [
+     {
+      "date": "2026-09-28T00:45:16+0000",
+      "value": "0"
+     }
+    ],
+    "security_rating": [
+     {
+      "date": "2026-09-28T00:45:16+0000",
+      "value": "5.0"
+     }
+    ],
+    "ncloc": [
+     {
+      "date": "2026-09-28T00:45:16+0000",
+      "value": "2149"
+     }
+    ],
+    "code_smells": [
+     {
+      "date": "2026-09-28T00:45:16+0000",
+      "value": "4"
+     }
+    ]
+   },
+   "quality_gate": {
+    "status": "NONE",
+    "condicoes": []
+   },
+   "issues": {
+    "total": 0,
+    "severidades": {
+     "INFO": 0,
+     "MINOR": 0,
+     "MAJOR": 0,
+     "CRITICAL": 0,
+     "BLOCKER": 0
+    },
+    "tipos": {
+     "CODE_SMELL": 0,
+     "BUG": 0,
+     "VULNERABILITY": 0
+    }
+   }
+  },
+  {
+   "key": "fga-eps-mds_2026.2-MeasureSoftGram-CLI",
+   "repositorio": "2026.2-MeasureSoftGram-CLI",
+   "branch": "develop",
+   "linguagens": {
+    "py": 2005.0
+   },
+   "medidas": {
+    "coverage": "89.7",
+    "reliability_rating": "1.0",
+    "duplicated_lines_density": "0.0",
+    "code_smells": "71",
+    "duplicated_lines": "0",
+    "security_rating": "1.0",
+    "sqale_debt_ratio": "0.6",
+    "security_hotspots": "0",
+    "sqale_index": "364",
+    "sqale_rating": "1.0",
+    "test_success_density": "100.0",
+    "test_failures": "0",
+    "bugs": "0",
+    "tests": "143",
+    "ncloc": "2005",
+    "vulnerabilities": "0",
+    "test_errors": "0"
+   },
+   "historico": {
+    "sqale_index": [
+     {
+      "date": "2026-09-12T06:11:03+0000",
+      "value": "392"
+     },
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "364"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "364"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "364"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "364"
+     }
+    ],
+    "security_hotspots": [
+     {
+      "date": "2026-09-12T06:11:03+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "0"
+     }
+    ],
+    "vulnerabilities": [
+     {
+      "date": "2026-09-12T06:11:03+0000",
+      "value": "13"
+     },
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "0"
+     }
+    ],
+    "sqale_rating": [
+     {
+      "date": "2026-09-12T06:11:03+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "1.0"
+     }
+    ],
+    "reliability_rating": [
+     {
+      "date": "2026-09-12T06:11:03+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "1.0"
+     }
+    ],
+    "duplicated_lines_density": [
+     {
+      "date": "2026-09-12T06:11:03+0000",
+      "value": "1.2"
+     },
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "0.0"
+     }
+    ],
+    "tests": [
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "134"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "134"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "143"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "143"
+     }
+    ],
+    "coverage": [
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "89.5"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "89.5"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "89.7"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "89.7"
+     }
+    ],
+    "bugs": [
+     {
+      "date": "2026-09-12T06:11:03+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "0"
+     }
+    ],
+    "security_rating": [
+     {
+      "date": "2026-09-12T06:11:03+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "1.0"
+     }
+    ],
+    "ncloc": [
+     {
+      "date": "2026-09-12T06:11:03+0000",
+      "value": "4637"
+     },
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "1952"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "1952"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "2005"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "2005"
+     }
+    ],
+    "code_smells": [
+     {
+      "date": "2026-09-12T06:11:03+0000",
+      "value": "78"
+     },
+     {
+      "date": "2026-09-13T01:03:36+0000",
+      "value": "71"
+     },
+     {
+      "date": "2026-09-24T01:53:47+0000",
+      "value": "71"
+     },
+     {
+      "date": "2026-09-27T16:39:11+0000",
+      "value": "71"
+     },
+     {
+      "date": "2026-09-28T00:16:32+0000",
+      "value": "71"
+     }
+    ]
+   },
+   "quality_gate": {
+    "status": "OK",
+    "condicoes": [
+     {
+      "metrica": "new_reliability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_maintainability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_coverage",
+      "status": "OK",
+      "valor": "100.0",
+      "limite": "80",
+      "comparador": "LT"
+     },
+     {
+      "metrica": "new_duplicated_lines_density",
+      "status": "OK",
+      "valor": "0.0",
+      "limite": "3",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_hotspots_reviewed",
+      "status": "OK",
+      "valor": "100.0",
+      "limite": "100",
+      "comparador": "LT"
+     }
+    ]
+   },
+   "issues": {
+    "total": 0,
+    "severidades": {
+     "INFO": 0,
+     "MINOR": 0,
+     "MAJOR": 0,
+     "CRITICAL": 0,
+     "BLOCKER": 0
+    },
+    "tipos": {
+     "CODE_SMELL": 0,
+     "BUG": 0,
+     "VULNERABILITY": 0
+    }
+   }
+  },
+  {
+   "key": "fga-eps-mds_2026.2-MeasureSoftGram-Core",
+   "repositorio": "2026.2-MeasureSoftGram-Core",
+   "branch": "develop",
+   "linguagens": {
+    "py": 1471.0
+   },
+   "medidas": {
+    "coverage": "91.5",
+    "reliability_rating": "1.0",
+    "duplicated_lines_density": "0.0",
+    "code_smells": "27",
+    "duplicated_lines": "0",
+    "security_rating": "1.0",
+    "sqale_debt_ratio": "0.3",
+    "security_hotspots": "0",
+    "sqale_index": "154",
+    "sqale_rating": "1.0",
+    "test_success_density": "100.0",
+    "test_failures": "0",
+    "bugs": "0",
+    "tests": "112",
+    "ncloc": "1471",
+    "vulnerabilities": "0",
+    "test_errors": "0"
+   },
+   "historico": {
+    "sqale_index": [
+     {
+      "date": "2026-09-13T15:27:09+0000",
+      "value": "162"
+     },
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "154"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "154"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "154"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "154"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "154"
+     }
+    ],
+    "security_hotspots": [
+     {
+      "date": "2026-09-13T15:27:09+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "0"
+     }
+    ],
+    "vulnerabilities": [
+     {
+      "date": "2026-09-13T15:27:09+0000",
+      "value": "19"
+     },
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "0"
+     }
+    ],
+    "sqale_rating": [
+     {
+      "date": "2026-09-13T15:27:09+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "1.0"
+     }
+    ],
+    "reliability_rating": [
+     {
+      "date": "2026-09-13T15:27:09+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "1.0"
+     }
+    ],
+    "duplicated_lines_density": [
+     {
+      "date": "2026-09-13T15:27:09+0000",
+      "value": "9.8"
+     },
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "0.0"
+     }
+    ],
+    "tests": [
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "80"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "112"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "112"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "112"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "112"
+     }
+    ],
+    "coverage": [
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "91.1"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "91.5"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "91.5"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "91.5"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "91.5"
+     }
+    ],
+    "bugs": [
+     {
+      "date": "2026-09-13T15:27:09+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "0"
+     }
+    ],
+    "security_rating": [
+     {
+      "date": "2026-09-13T15:27:09+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "1.0"
+     }
+    ],
+    "ncloc": [
+     {
+      "date": "2026-09-13T15:27:09+0000",
+      "value": "5343"
+     },
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "1396"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "1471"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "1471"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "1471"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "1471"
+     }
+    ],
+    "code_smells": [
+     {
+      "date": "2026-09-13T15:27:09+0000",
+      "value": "28"
+     },
+     {
+      "date": "2026-09-23T23:06:55+0000",
+      "value": "27"
+     },
+     {
+      "date": "2026-09-27T04:49:44+0000",
+      "value": "27"
+     },
+     {
+      "date": "2026-09-29T00:03:56+0000",
+      "value": "27"
+     },
+     {
+      "date": "2026-10-03T23:44:49+0000",
+      "value": "27"
+     },
+     {
+      "date": "2026-10-03T23:45:48+0000",
+      "value": "27"
+     }
+    ]
+   },
+   "quality_gate": {
+    "status": "OK",
+    "condicoes": [
+     {
+      "metrica": "new_reliability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_maintainability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_coverage",
+      "status": "OK",
+      "valor": "100.0",
+      "limite": "80",
+      "comparador": "LT"
+     },
+     {
+      "metrica": "new_duplicated_lines_density",
+      "status": "OK",
+      "valor": "0.0",
+      "limite": "3",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_hotspots_reviewed",
+      "status": "OK",
+      "valor": "100.0",
+      "limite": "100",
+      "comparador": "LT"
+     }
+    ]
+   },
+   "issues": {
+    "total": 0,
+    "severidades": {
+     "INFO": 0,
+     "MINOR": 0,
+     "MAJOR": 0,
+     "CRITICAL": 0,
+     "BLOCKER": 0
+    },
+    "tipos": {
+     "CODE_SMELL": 0,
+     "BUG": 0,
+     "VULNERABILITY": 0
+    }
+   }
+  },
+  {
+   "key": "fga-eps-mds_2026.2-MeasureSoftGram-Front",
+   "repositorio": "2026.2-MeasureSoftGram-Front",
+   "branch": "develop",
+   "linguagens": {
+    "ts": 12998.0
+   },
+   "medidas": {
+    "coverage": "78.8",
+    "reliability_rating": "3.0",
+    "duplicated_lines_density": "1.1",
+    "code_smells": "177",
+    "duplicated_lines": "161",
+    "security_rating": "1.0",
+    "sqale_debt_ratio": "0.3",
+    "security_hotspots": "0",
+    "sqale_index": "1340",
+    "sqale_rating": "1.0",
+    "test_success_density": "100.0",
+    "test_failures": "0",
+    "bugs": "64",
+    "tests": "554",
+    "ncloc": "12998",
+    "vulnerabilities": "0",
+    "test_errors": "0"
+   },
+   "historico": {
+    "sqale_index": [
+     {
+      "date": "2026-09-01T19:28:51+0000",
+      "value": "1462"
+     },
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "1449"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "1449"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "1387"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "1340"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "1340"
+     }
+    ],
+    "security_hotspots": [
+     {
+      "date": "2026-09-01T19:28:51+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "0"
+     }
+    ],
+    "vulnerabilities": [
+     {
+      "date": "2026-09-01T19:28:51+0000",
+      "value": "2"
+     },
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "0"
+     }
+    ],
+    "sqale_rating": [
+     {
+      "date": "2026-09-01T19:28:51+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "1.0"
+     }
+    ],
+    "reliability_rating": [
+     {
+      "date": "2026-09-01T19:28:51+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "3.0"
+     }
+    ],
+    "duplicated_lines_density": [
+     {
+      "date": "2026-09-01T19:28:51+0000",
+      "value": "6.2"
+     },
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "1.2"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "1.2"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "1.2"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "1.1"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "1.1"
+     }
+    ],
+    "tests": [
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "523"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "523"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "534"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "554"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "554"
+     }
+    ],
+    "coverage": [
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "80.4"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "80.4"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "80.7"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "78.8"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "78.8"
+     }
+    ],
+    "bugs": [
+     {
+      "date": "2026-09-01T19:28:51+0000",
+      "value": "16"
+     },
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "16"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "16"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "16"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "64"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "64"
+     }
+    ],
+    "security_rating": [
+     {
+      "date": "2026-09-01T19:28:51+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "1.0"
+     }
+    ],
+    "ncloc": [
+     {
+      "date": "2026-09-01T19:28:51+0000",
+      "value": "23925"
+     },
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "11986"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "11986"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "12034"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "12998"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "12998"
+     }
+    ],
+    "code_smells": [
+     {
+      "date": "2026-09-01T19:28:51+0000",
+      "value": "203"
+     },
+     {
+      "date": "2026-09-14T01:59:23+0000",
+      "value": "198"
+     },
+     {
+      "date": "2026-09-25T17:44:21+0000",
+      "value": "198"
+     },
+     {
+      "date": "2026-09-28T00:49:57+0000",
+      "value": "184"
+     },
+     {
+      "date": "2026-10-01T00:55:06+0000",
+      "value": "177"
+     },
+     {
+      "date": "2026-10-05T01:15:58+0000",
+      "value": "177"
+     }
+    ]
+   },
+   "quality_gate": {
+    "status": "ERROR",
+    "condicoes": [
+     {
+      "metrica": "new_reliability_rating",
+      "status": "ERROR",
+      "valor": "3",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_maintainability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_coverage",
+      "status": "ERROR",
+      "valor": "68.3",
+      "limite": "80",
+      "comparador": "LT"
+     },
+     {
+      "metrica": "new_duplicated_lines_density",
+      "status": "OK",
+      "valor": "0.3",
+      "limite": "3",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_hotspots_reviewed",
+      "status": "OK",
+      "valor": "100.0",
+      "limite": "100",
+      "comparador": "LT"
+     }
+    ]
+   },
+   "issues": {
+    "total": 0,
+    "severidades": {
+     "INFO": 0,
+     "MINOR": 0,
+     "MAJOR": 0,
+     "CRITICAL": 0,
+     "BLOCKER": 0
+    },
+    "tipos": {
+     "CODE_SMELL": 0,
+     "BUG": 0,
+     "VULNERABILITY": 0
+    }
+   }
+  },
+  {
+   "key": "fga-eps-mds_2026.2-MeasureSoftGram-Parser",
+   "repositorio": "2026.2-MeasureSoftGram-Parser",
+   "branch": "develop",
+   "linguagens": {
+    "py": 251.0
+   },
+   "medidas": {
+    "coverage": "89.1",
+    "reliability_rating": "1.0",
+    "duplicated_lines_density": "0.0",
+    "code_smells": "10",
+    "duplicated_lines": "0",
+    "security_rating": "1.0",
+    "sqale_debt_ratio": "2.0",
+    "security_hotspots": "0",
+    "sqale_index": "149",
+    "sqale_rating": "1.0",
+    "test_success_density": "100.0",
+    "test_failures": "0",
+    "bugs": "0",
+    "tests": "12",
+    "ncloc": "251",
+    "vulnerabilities": "0",
+    "test_errors": "0"
+   },
+   "historico": {
+    "sqale_index": [
+     {
+      "date": "2026-09-14T17:59:13+0000",
+      "value": "157"
+     },
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "149"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "149"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "149"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "149"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "149"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "149"
+     }
+    ],
+    "security_hotspots": [
+     {
+      "date": "2026-09-14T17:59:13+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "0"
+     }
+    ],
+    "vulnerabilities": [
+     {
+      "date": "2026-09-14T17:59:13+0000",
+      "value": "16"
+     },
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "0"
+     }
+    ],
+    "sqale_rating": [
+     {
+      "date": "2026-09-14T17:59:13+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "1.0"
+     }
+    ],
+    "reliability_rating": [
+     {
+      "date": "2026-09-14T17:59:13+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "1.0"
+     }
+    ],
+    "duplicated_lines_density": [
+     {
+      "date": "2026-09-14T17:59:13+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "0.0"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "0.0"
+     }
+    ],
+    "tests": [
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "9"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "9"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "9"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "12"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "12"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "12"
+     }
+    ],
+    "coverage": [
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "88.6"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "88.6"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "88.6"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "89.1"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "89.1"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "89.1"
+     }
+    ],
+    "bugs": [
+     {
+      "date": "2026-09-14T17:59:13+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "0"
+     }
+    ],
+    "security_rating": [
+     {
+      "date": "2026-09-14T17:59:13+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "1.0"
+     }
+    ],
+    "ncloc": [
+     {
+      "date": "2026-09-14T17:59:13+0000",
+      "value": "760"
+     },
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "251"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "251"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "251"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "251"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "251"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "251"
+     }
+    ],
+    "code_smells": [
+     {
+      "date": "2026-09-14T17:59:13+0000",
+      "value": "14"
+     },
+     {
+      "date": "2026-09-22T13:26:28+0000",
+      "value": "10"
+     },
+     {
+      "date": "2026-09-25T03:02:21+0000",
+      "value": "10"
+     },
+     {
+      "date": "2026-09-27T07:55:34+0000",
+      "value": "10"
+     },
+     {
+      "date": "2026-09-28T01:12:11+0000",
+      "value": "10"
+     },
+     {
+      "date": "2026-10-03T23:38:25+0000",
+      "value": "10"
+     },
+     {
+      "date": "2026-10-03T23:39:13+0000",
+      "value": "10"
+     }
+    ]
+   },
+   "quality_gate": {
+    "status": "OK",
+    "condicoes": [
+     {
+      "metrica": "new_reliability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_maintainability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_duplicated_lines_density",
+      "status": "OK",
+      "valor": "0.0",
+      "limite": "3",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_hotspots_reviewed",
+      "status": "OK",
+      "valor": "100.0",
+      "limite": "100",
+      "comparador": "LT"
+     }
+    ]
+   },
+   "issues": {
+    "total": 0,
+    "severidades": {
+     "INFO": 0,
+     "MINOR": 0,
+     "MAJOR": 0,
+     "CRITICAL": 0,
+     "BLOCKER": 0
+    },
+    "tipos": {
+     "CODE_SMELL": 0,
+     "BUG": 0,
+     "VULNERABILITY": 0
+    }
+   }
+  },
+  {
+   "key": "fga-eps-mds_2026.2-MeasureSoftGram-Plugin",
+   "repositorio": "2026.2-MeasureSoftGram-Plugin",
+   "branch": "develop",
+   "linguagens": {
+    "css": 741.0,
+    "ts": 2212.0
+   },
+   "medidas": {
+    "coverage": "89.9",
+    "reliability_rating": "2.0",
+    "duplicated_lines_density": "1.5",
+    "code_smells": "29",
+    "duplicated_lines": "52",
+    "security_rating": "5.0",
+    "sqale_debt_ratio": "0.2",
+    "security_hotspots": "0",
+    "sqale_index": "181",
+    "sqale_rating": "1.0",
+    "bugs": "2",
+    "ncloc": "2953",
+    "vulnerabilities": "3"
+   },
+   "historico": {
+    "sqale_index": [
+     {
+      "date": "2026-09-18T17:17:15+0000",
+      "value": "167"
+     },
+     {
+      "date": "2026-09-27T19:02:10+0000",
+      "value": "201"
+     },
+     {
+      "date": "2026-09-28T23:37:54+0000",
+      "value": "201"
+     },
+     {
+      "date": "2026-10-03T23:36:43+0000",
+      "value": "196"
+     },
+     {
+      "date": "2026-10-03T23:38:56+0000",
+      "value": "181"
+     }
+    ],
+    "security_hotspots": [
+     {
+      "date": "2026-09-18T17:17:15+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T19:02:10+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T23:37:54+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:36:43+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-10-03T23:38:56+0000",
+      "value": "0"
+     }
+    ],
+    "vulnerabilities": [
+     {
+      "date": "2026-09-18T17:17:15+0000",
+      "value": "15"
+     },
+     {
+      "date": "2026-09-27T19:02:10+0000",
+      "value": "3"
+     },
+     {
+      "date": "2026-09-28T23:37:54+0000",
+      "value": "3"
+     },
+     {
+      "date": "2026-10-03T23:36:43+0000",
+      "value": "3"
+     },
+     {
+      "date": "2026-10-03T23:38:56+0000",
+      "value": "3"
+     }
+    ],
+    "sqale_rating": [
+     {
+      "date": "2026-09-18T17:17:15+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T19:02:10+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T23:37:54+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:36:43+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-10-03T23:38:56+0000",
+      "value": "1.0"
+     }
+    ],
+    "reliability_rating": [
+     {
+      "date": "2026-09-18T17:17:15+0000",
+      "value": "2.0"
+     },
+     {
+      "date": "2026-09-27T19:02:10+0000",
+      "value": "2.0"
+     },
+     {
+      "date": "2026-09-28T23:37:54+0000",
+      "value": "2.0"
+     },
+     {
+      "date": "2026-10-03T23:36:43+0000",
+      "value": "2.0"
+     },
+     {
+      "date": "2026-10-03T23:38:56+0000",
+      "value": "2.0"
+     }
+    ],
+    "duplicated_lines_density": [
+     {
+      "date": "2026-09-18T17:17:15+0000",
+      "value": "2.3"
+     },
+     {
+      "date": "2026-09-27T19:02:10+0000",
+      "value": "1.5"
+     },
+     {
+      "date": "2026-09-28T23:37:54+0000",
+      "value": "1.5"
+     },
+     {
+      "date": "2026-10-03T23:36:43+0000",
+      "value": "1.5"
+     },
+     {
+      "date": "2026-10-03T23:38:56+0000",
+      "value": "1.5"
+     }
+    ],
+    "tests": [],
+    "coverage": [
+     {
+      "date": "2026-09-27T19:02:10+0000",
+      "value": "89.9"
+     },
+     {
+      "date": "2026-09-28T23:37:54+0000",
+      "value": "89.9"
+     },
+     {
+      "date": "2026-10-03T23:36:43+0000",
+      "value": "89.9"
+     },
+     {
+      "date": "2026-10-03T23:38:56+0000",
+      "value": "89.9"
+     }
+    ],
+    "bugs": [
+     {
+      "date": "2026-09-18T17:17:15+0000",
+      "value": "2"
+     },
+     {
+      "date": "2026-09-27T19:02:10+0000",
+      "value": "2"
+     },
+     {
+      "date": "2026-09-28T23:37:54+0000",
+      "value": "2"
+     },
+     {
+      "date": "2026-10-03T23:36:43+0000",
+      "value": "2"
+     },
+     {
+      "date": "2026-10-03T23:38:56+0000",
+      "value": "2"
+     }
+    ],
+    "security_rating": [
+     {
+      "date": "2026-09-18T17:17:15+0000",
+      "value": "5.0"
+     },
+     {
+      "date": "2026-09-27T19:02:10+0000",
+      "value": "5.0"
+     },
+     {
+      "date": "2026-09-28T23:37:54+0000",
+      "value": "5.0"
+     },
+     {
+      "date": "2026-10-03T23:36:43+0000",
+      "value": "5.0"
+     },
+     {
+      "date": "2026-10-03T23:38:56+0000",
+      "value": "5.0"
+     }
+    ],
+    "ncloc": [
+     {
+      "date": "2026-09-18T17:17:15+0000",
+      "value": "5793"
+     },
+     {
+      "date": "2026-09-27T19:02:10+0000",
+      "value": "2953"
+     },
+     {
+      "date": "2026-09-28T23:37:54+0000",
+      "value": "2953"
+     },
+     {
+      "date": "2026-10-03T23:36:43+0000",
+      "value": "2953"
+     },
+     {
+      "date": "2026-10-03T23:38:56+0000",
+      "value": "2953"
+     }
+    ],
+    "code_smells": [
+     {
+      "date": "2026-09-18T17:17:15+0000",
+      "value": "25"
+     },
+     {
+      "date": "2026-09-27T19:02:10+0000",
+      "value": "31"
+     },
+     {
+      "date": "2026-09-28T23:37:54+0000",
+      "value": "31"
+     },
+     {
+      "date": "2026-10-03T23:36:43+0000",
+      "value": "30"
+     },
+     {
+      "date": "2026-10-03T23:38:56+0000",
+      "value": "29"
+     }
+    ]
+   },
+   "quality_gate": {
+    "status": "OK",
+    "condicoes": [
+     {
+      "metrica": "new_reliability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_maintainability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_coverage",
+      "status": "OK",
+      "valor": "100.0",
+      "limite": "80",
+      "comparador": "LT"
+     },
+     {
+      "metrica": "new_duplicated_lines_density",
+      "status": "OK",
+      "valor": "0.0",
+      "limite": "3",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_hotspots_reviewed",
+      "status": "OK",
+      "valor": "100.0",
+      "limite": "100",
+      "comparador": "LT"
+     }
+    ]
+   },
+   "issues": {
+    "total": 0,
+    "severidades": {
+     "INFO": 0,
+     "MINOR": 0,
+     "MAJOR": 0,
+     "CRITICAL": 0,
+     "BLOCKER": 0
+    },
+    "tipos": {
+     "CODE_SMELL": 0,
+     "BUG": 0,
+     "VULNERABILITY": 0
+    }
+   }
+  },
+  {
+   "key": "fga-eps-mds_2026.2-MeasureSoftGram-Service",
+   "repositorio": "2026.2-MeasureSoftGram-Service",
+   "branch": "develop",
+   "linguagens": {
+    "py": 6392.0,
+    "shell": 43.0
+   },
+   "medidas": {
+    "coverage": "83.0",
+    "reliability_rating": "1.0",
+    "duplicated_lines_density": "1.1",
+    "code_smells": "72",
+    "duplicated_lines": "96",
+    "security_rating": "3.0",
+    "sqale_debt_ratio": "0.2",
+    "security_hotspots": "0",
+    "sqale_index": "343",
+    "sqale_rating": "1.0",
+    "test_success_density": "100.0",
+    "test_failures": "0",
+    "bugs": "0",
+    "tests": "324",
+    "ncloc": "6435",
+    "vulnerabilities": "26",
+    "test_errors": "0"
+   },
+   "historico": {
+    "sqale_index": [
+     {
+      "date": "2026-08-22T00:00:26+0000",
+      "value": "469"
+     },
+     {
+      "date": "2026-09-22T15:04:30+0000",
+      "value": "336"
+     },
+     {
+      "date": "2026-09-25T17:21:39+0000",
+      "value": "336"
+     },
+     {
+      "date": "2026-09-26T01:06:04+0000",
+      "value": "336"
+     },
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "336"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "343"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "343"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "343"
+     }
+    ],
+    "security_hotspots": [
+     {
+      "date": "2026-08-22T00:00:26+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-22T15:04:30+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-25T17:21:39+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-26T01:06:04+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "0"
+     }
+    ],
+    "vulnerabilities": [
+     {
+      "date": "2026-08-22T00:00:26+0000",
+      "value": "49"
+     },
+     {
+      "date": "2026-09-22T15:04:30+0000",
+      "value": "26"
+     },
+     {
+      "date": "2026-09-25T17:21:39+0000",
+      "value": "26"
+     },
+     {
+      "date": "2026-09-26T01:06:04+0000",
+      "value": "26"
+     },
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "26"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "26"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "26"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "26"
+     }
+    ],
+    "sqale_rating": [
+     {
+      "date": "2026-08-22T00:00:26+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-22T15:04:30+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-25T17:21:39+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-26T01:06:04+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "1.0"
+     }
+    ],
+    "reliability_rating": [
+     {
+      "date": "2026-08-22T00:00:26+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-22T15:04:30+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-25T17:21:39+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-26T01:06:04+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "1.0"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "1.0"
+     }
+    ],
+    "duplicated_lines_density": [
+     {
+      "date": "2026-08-22T00:00:26+0000",
+      "value": "1.9"
+     },
+     {
+      "date": "2026-09-22T15:04:30+0000",
+      "value": "1.1"
+     },
+     {
+      "date": "2026-09-25T17:21:39+0000",
+      "value": "1.1"
+     },
+     {
+      "date": "2026-09-26T01:06:04+0000",
+      "value": "1.1"
+     },
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "1.1"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "1.1"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "1.1"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "1.1"
+     }
+    ],
+    "tests": [
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "289"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "291"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "314"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "324"
+     }
+    ],
+    "coverage": [
+     {
+      "date": "2026-09-22T15:04:30+0000",
+      "value": "82.4"
+     },
+     {
+      "date": "2026-09-25T17:21:39+0000",
+      "value": "82.4"
+     },
+     {
+      "date": "2026-09-26T01:06:04+0000",
+      "value": "82.4"
+     },
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "82.4"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "82.4"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "82.6"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "83.0"
+     }
+    ],
+    "bugs": [
+     {
+      "date": "2026-08-22T00:00:26+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-22T15:04:30+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-25T17:21:39+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-26T01:06:04+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "0"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "0"
+     }
+    ],
+    "security_rating": [
+     {
+      "date": "2026-08-22T00:00:26+0000",
+      "value": "5.0"
+     },
+     {
+      "date": "2026-09-22T15:04:30+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-25T17:21:39+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-26T01:06:04+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "3.0"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "3.0"
+     }
+    ],
+    "ncloc": [
+     {
+      "date": "2026-08-22T00:00:26+0000",
+      "value": "17380"
+     },
+     {
+      "date": "2026-09-22T15:04:30+0000",
+      "value": "6216"
+     },
+     {
+      "date": "2026-09-25T17:21:39+0000",
+      "value": "6216"
+     },
+     {
+      "date": "2026-09-26T01:06:04+0000",
+      "value": "6216"
+     },
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "6269"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "6308"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "6354"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "6435"
+     }
+    ],
+    "code_smells": [
+     {
+      "date": "2026-08-22T00:00:26+0000",
+      "value": "88"
+     },
+     {
+      "date": "2026-09-22T15:04:30+0000",
+      "value": "72"
+     },
+     {
+      "date": "2026-09-25T17:21:39+0000",
+      "value": "72"
+     },
+     {
+      "date": "2026-09-26T01:06:04+0000",
+      "value": "72"
+     },
+     {
+      "date": "2026-09-27T21:46:56+0000",
+      "value": "72"
+     },
+     {
+      "date": "2026-09-28T00:50:28+0000",
+      "value": "72"
+     },
+     {
+      "date": "2026-09-28T03:11:01+0000",
+      "value": "72"
+     },
+     {
+      "date": "2026-09-28T04:13:10+0000",
+      "value": "72"
+     }
+    ]
+   },
+   "quality_gate": {
+    "status": "OK",
+    "condicoes": [
+     {
+      "metrica": "new_reliability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_maintainability_rating",
+      "status": "OK",
+      "valor": "1",
+      "limite": "1",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_coverage",
+      "status": "OK",
+      "valor": "89.5",
+      "limite": "80",
+      "comparador": "LT"
+     },
+     {
+      "metrica": "new_duplicated_lines_density",
+      "status": "OK",
+      "valor": "0.3",
+      "limite": "3",
+      "comparador": "GT"
+     },
+     {
+      "metrica": "new_security_hotspots_reviewed",
+      "status": "OK",
+      "valor": "100.0",
+      "limite": "100",
+      "comparador": "LT"
+     }
+    ]
+   },
+   "issues": {
+    "total": 0,
+    "severidades": {
+     "INFO": 0,
+     "MINOR": 0,
+     "MAJOR": 0,
+     "CRITICAL": 0,
+     "BLOCKER": 0
+    },
+    "tipos": {
+     "CODE_SMELL": 0,
+     "BUG": 0,
+     "VULNERABILITY": 0
+    }
+   }
+  }
+ ],
+ "avisos": []
+}
