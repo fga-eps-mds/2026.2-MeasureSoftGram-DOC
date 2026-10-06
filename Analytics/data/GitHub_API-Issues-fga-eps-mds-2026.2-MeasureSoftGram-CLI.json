@@ -280,7 +280,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -308,8 +308,8 @@
         "milestone": null,
         "comments": 2,
         "created_at": "2026-09-27T19:24:16Z",
-        "updated_at": "2026-09-28T23:38:22Z",
-        "closed_at": null,
+        "updated_at": "2026-10-06T23:53:46Z",
+        "closed_at": "2026-10-06T23:53:45Z",
         "assignee": {
             "login": "Diogo-Barboza",
             "id": 119085534,
@@ -341,10 +341,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/7",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/7.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/7.patch",
-            "merged_at": null
+            "merged_at": "2026-10-06T23:53:45Z"
         },
         "body": "##  Descri\u00e7\u00e3o\r\nAdi\u00e7\u00e3o das configura\u00e7\u00f5es do Dependabot para atualiza\u00e7\u00f5es cont\u00ednuas de pacotes Python e Actions, cria\u00e7\u00e3o do fluxo de auto-merge para vers\u00f5es n\u00e3o-breaking (`minor` e `patch`), e substitui\u00e7\u00e3o das tags de GitHub Actions por commit SHAs imut\u00e1veis.\r\n\r\n##  Por que este Pull Request \u00e9 necess\u00e1rio?\r\nPadronizar a gest\u00e3o de depend\u00eancias da CLI do MeasureSoftGram e proteger o pipeline contra altera\u00e7\u00f5es maliciosas ou instabilidades em tags de terceiros no GitHub Actions.\r\n\r\n##  Principais Mudan\u00e7as\r\n- **Cria\u00e7\u00e3o de `.github/dependabot.yml`**: Monitoramento dos ecossistemas `pip` e `github-actions`.\r\n- **Cria\u00e7\u00e3o de `.github/workflows/dependabot-automerge.yml`**: Automa\u00e7\u00e3o de aprova\u00e7\u00e3o e merge de PRs minor/patch do Dependabot.\r\n- **Pinning de Actions nos Workflows**: Convers\u00e3o de SHAs nos arquivos `.github/workflows/linter.yml`, `metrics.yml`, `python-publish.yml` e `test.yml`.\r\n\r\n##  Crit\u00e9rios de Aceita\u00e7\u00e3o\r\n- [x] Configura\u00e7\u00e3o do Dependabot v\u00e1lida.\r\n- [x] Auto-merge configurado de acordo com a pol\u00edtica de semver.\r\n- [x] Actions fixadas com SHAs de 40 caracteres.\r\n- [x] Todos os 134 testes da CLI executados e aprovados.\r\n\r\n##  Como Testar\r\n1. Ativar o ambiente virtual Python e incluir o bin\u00e1rio no PATH:\r\n   ```bash\r\n   PATH=\"$PWD/.venv/bin:$PATH\" pytest\r\n   ```\r\n2. Garantir que os testes sejam executados com sucesso.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "Diogo-Barboza",
+            "id": 119085534,
+            "node_id": "U_kgDOBxkZ3g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/119085534?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/Diogo-Barboza",
+            "html_url": "https://github.com/Diogo-Barboza",
+            "followers_url": "https://api.github.com/users/Diogo-Barboza/followers",
+            "following_url": "https://api.github.com/users/Diogo-Barboza/following{/other_user}",
+            "gists_url": "https://api.github.com/users/Diogo-Barboza/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/Diogo-Barboza/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/Diogo-Barboza/subscriptions",
+            "organizations_url": "https://api.github.com/users/Diogo-Barboza/orgs",
+            "repos_url": "https://api.github.com/users/Diogo-Barboza/repos",
+            "events_url": "https://api.github.com/users/Diogo-Barboza/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/Diogo-Barboza/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-CLI/issues/7/reactions",
             "total_count": 0,
