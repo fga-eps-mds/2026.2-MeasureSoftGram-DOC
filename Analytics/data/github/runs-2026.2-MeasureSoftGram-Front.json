@@ -1,11 +1,95 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-07T11:22:03+00:00",
+ "coletado_em": "2026-10-07T17:25:16+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
- "total_count": 209,
+ "total_count": 215,
  "workflow_runs": [
+  {
+   "id": 37644211551,
+   "name": "Deploy Prod (self-hosted)",
+   "status": "pending",
+   "conclusion": null,
+   "head_branch": "develop",
+   "event": "workflow_run",
+   "created_at": "2026-10-07T15:28:33Z",
+   "run_started_at": "2026-10-07T15:28:33Z",
+   "updated_at": "2026-10-07T15:28:34Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37644211551",
+   "run_number": 16,
+   "workflow_id": 347831681
+  },
+  {
+   "id": 37643660960,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-07T15:24:33Z",
+   "run_started_at": "2026-10-07T15:24:33Z",
+   "updated_at": "2026-10-07T15:24:56Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37643660960",
+   "run_number": 23,
+   "workflow_id": 347831685
+  },
+  {
+   "id": 37643661093,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-07T15:24:33Z",
+   "run_started_at": "2026-10-07T15:24:33Z",
+   "updated_at": "2026-10-07T15:25:08Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37643661093",
+   "run_number": 48,
+   "workflow_id": 347831684
+  },
+  {
+   "id": 37643660926,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-07T15:24:33Z",
+   "run_started_at": "2026-10-07T15:24:33Z",
+   "updated_at": "2026-10-07T15:27:15Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37643660926",
+   "run_number": 48,
+   "workflow_id": 347831686
+  },
+  {
+   "id": 37643660945,
+   "name": "Build Docker",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-07T15:24:33Z",
+   "run_started_at": "2026-10-07T15:24:33Z",
+   "updated_at": "2026-10-07T15:27:59Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37643660945",
+   "run_number": 48,
+   "workflow_id": 347831680
+  },
+  {
+   "id": 37643660977,
+   "name": "Publish Docker Image",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-07T15:24:33Z",
+   "run_started_at": "2026-10-07T15:24:33Z",
+   "updated_at": "2026-10-07T15:28:30Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37643660977",
+   "run_number": 15,
+   "workflow_id": 347831683
+  },
   {
    "id": 37547818882,
    "name": "Deploy Prod (self-hosted)",
@@ -231,6 +315,20 @@
    "workflow_id": 347831681
   },
   {
+   "id": 37250831537,
+   "name": "Build Docker",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "dependabot/npm_and_yarn/next-15.5.24",
+   "event": "pull_request",
+   "created_at": "2026-10-05T01:17:09Z",
+   "run_started_at": "2026-10-06T02:24:09Z",
+   "updated_at": "2026-10-06T02:25:04Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37250831537",
+   "run_number": 45,
+   "workflow_id": 347831680
+  },
+  {
    "id": 37250831550,
    "name": "Linter",
    "status": "completed",
@@ -259,20 +357,6 @@
    "workflow_id": 347831686
   },
   {
-   "id": 37250831537,
-   "name": "Build Docker",
-   "status": "completed",
-   "conclusion": "failure",
-   "head_branch": "dependabot/npm_and_yarn/next-15.5.24",
-   "event": "pull_request",
-   "created_at": "2026-10-05T01:17:09Z",
-   "run_started_at": "2026-10-06T02:24:09Z",
-   "updated_at": "2026-10-06T02:25:04Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37250831537",
-   "run_number": 45,
-   "workflow_id": 347831680
-  },
-  {
    "id": 37250827229,
    "name": "Build Docker",
    "status": "completed",
@@ -287,20 +371,6 @@
    "workflow_id": 347831680
   },
   {
-   "id": 37250827236,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "dependabot/npm_and_yarn/axios-0.34.0",
-   "event": "pull_request",
-   "created_at": "2026-10-05T01:17:05Z",
-   "run_started_at": "2026-10-05T01:17:05Z",
-   "updated_at": "2026-10-05T01:17:40Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37250827236",
-   "run_number": 44,
-   "workflow_id": 347831684
-  },
-  {
    "id": 37250827263,
    "name": "Rodar Testes",
    "status": "completed",
@@ -313,6 +383,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37250827263",
    "run_number": 44,
    "workflow_id": 347831686
+  },
+  {
+   "id": 37250827236,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "dependabot/npm_and_yarn/axios-0.34.0",
+   "event": "pull_request",
+   "created_at": "2026-10-05T01:17:05Z",
+   "run_started_at": "2026-10-05T01:17:05Z",
+   "updated_at": "2026-10-05T01:17:40Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/37250827236",
+   "run_number": 44,
+   "workflow_id": 347831684
   },
   {
    "id": 37250825036,
@@ -2121,20 +2205,6 @@
    "workflow_id": 347831680
   },
   {
-   "id": 36346782705,
-   "name": "Build Docker",
-   "status": "completed",
-   "conclusion": "failure",
-   "head_branch": "feat/issue-69-orientacao-sem-releases",
-   "event": "pull_request",
-   "created_at": "2026-09-27T20:06:11Z",
-   "run_started_at": "2026-09-27T20:06:11Z",
-   "updated_at": "2026-09-27T20:06:50Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/36346782705",
-   "run_number": 11,
-   "workflow_id": 347831680
-  },
-  {
    "id": 36346782738,
    "name": "Linter",
    "status": "completed",
@@ -2161,6 +2231,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/36346782758",
    "run_number": 11,
    "workflow_id": 347831686
+  },
+  {
+   "id": 36346782705,
+   "name": "Build Docker",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "feat/issue-69-orientacao-sem-releases",
+   "event": "pull_request",
+   "created_at": "2026-09-27T20:06:11Z",
+   "run_started_at": "2026-10-07T17:07:02Z",
+   "updated_at": "2026-10-07T17:07:44Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/36346782705",
+   "run_number": 11,
+   "workflow_id": 347831680
   },
   {
    "id": 36262364379,
