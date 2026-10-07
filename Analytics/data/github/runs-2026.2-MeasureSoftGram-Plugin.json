@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-07T17:25:16+00:00",
+ "coletado_em": "2026-10-07T23:19:56+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Plugin",
  "desde": "2026-08-24",
@@ -63,20 +63,6 @@
    "workflow_id": 361536815
   },
   {
-   "id": 36641066535,
-   "name": "msg",
-   "status": "completed",
-   "conclusion": "failure",
-   "head_branch": "develop",
-   "event": "workflow_run",
-   "created_at": "2026-09-29T22:41:42Z",
-   "run_started_at": "2026-09-29T22:41:42Z",
-   "updated_at": "2026-09-29T22:41:48Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36641066535",
-   "run_number": 9,
-   "workflow_id": 361536813
-  },
-  {
    "id": 36641066528,
    "name": "SonarCloud Scan",
    "status": "completed",
@@ -89,6 +75,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36641066528",
    "run_number": 6,
    "workflow_id": 368518121
+  },
+  {
+   "id": 36641066535,
+   "name": "msg",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "develop",
+   "event": "workflow_run",
+   "created_at": "2026-09-29T22:41:42Z",
+   "run_started_at": "2026-09-29T22:41:42Z",
+   "updated_at": "2026-09-29T22:41:48Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36641066535",
+   "run_number": 9,
+   "workflow_id": 361536813
   },
   {
    "id": 36640903333,
@@ -133,20 +133,6 @@
    "workflow_id": 361536811
   },
   {
-   "id": 36499177881,
-   "name": "msg",
-   "status": "completed",
-   "conclusion": "failure",
-   "head_branch": "develop",
-   "event": "workflow_run",
-   "created_at": "2026-09-28T23:39:48Z",
-   "run_started_at": "2026-09-28T23:39:48Z",
-   "updated_at": "2026-09-28T23:39:57Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36499177881",
-   "run_number": 8,
-   "workflow_id": 361536813
-  },
-  {
    "id": 36499177912,
    "name": "SonarCloud Scan",
    "status": "completed",
@@ -159,6 +145,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36499177912",
    "run_number": 5,
    "workflow_id": 368518121
+  },
+  {
+   "id": 36499177881,
+   "name": "msg",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "develop",
+   "event": "workflow_run",
+   "created_at": "2026-09-28T23:39:48Z",
+   "run_started_at": "2026-09-28T23:39:48Z",
+   "updated_at": "2026-09-28T23:39:57Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36499177881",
+   "run_number": 8,
+   "workflow_id": 361536813
   },
   {
    "id": 36498933548,
@@ -245,20 +245,6 @@
    "workflow_id": 361536811
   },
   {
-   "id": 36346264890,
-   "name": "msg",
-   "status": "completed",
-   "conclusion": "failure",
-   "head_branch": "develop",
-   "event": "workflow_run",
-   "created_at": "2026-09-27T19:58:06Z",
-   "run_started_at": "2026-09-27T19:58:06Z",
-   "updated_at": "2026-09-27T19:58:32Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36346264890",
-   "run_number": 6,
-   "workflow_id": 361536813
-  },
-  {
    "id": 36346264836,
    "name": "SonarCloud Scan",
    "status": "completed",
@@ -271,6 +257,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36346264836",
    "run_number": 3,
    "workflow_id": 368518121
+  },
+  {
+   "id": 36346264890,
+   "name": "msg",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "develop",
+   "event": "workflow_run",
+   "created_at": "2026-09-27T19:58:06Z",
+   "run_started_at": "2026-09-27T19:58:06Z",
+   "updated_at": "2026-09-27T19:58:32Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36346264890",
+   "run_number": 6,
+   "workflow_id": 361536813
   },
   {
    "id": 36346095673,
@@ -385,20 +385,6 @@
    "workflow_id": 368518121
   },
   {
-   "id": 36342790572,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-09-27T19:01:12Z",
-   "run_started_at": "2026-09-27T19:01:12Z",
-   "updated_at": "2026-09-27T19:04:00Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36342790572",
-   "run_number": 3,
-   "workflow_id": 361536815
-  },
-  {
    "id": 36342790551,
    "name": "Export de métricas",
    "status": "completed",
@@ -411,6 +397,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36342790551",
    "run_number": 4,
    "workflow_id": 361536811
+  },
+  {
+   "id": 36342790572,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-09-27T19:01:12Z",
+   "run_started_at": "2026-09-27T19:01:12Z",
+   "updated_at": "2026-09-27T19:04:00Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/36342790572",
+   "run_number": 3,
+   "workflow_id": 361536815
   },
   {
    "id": 36342789918,
@@ -511,20 +511,6 @@
    "workflow_id": 361536813
   },
   {
-   "id": 35372920005,
-   "name": "Export de métricas",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-09-18T17:12:05Z",
-   "run_started_at": "2026-09-18T17:12:05Z",
-   "updated_at": "2026-09-18T17:12:24Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/35372920005",
-   "run_number": 2,
-   "workflow_id": 361536811
-  },
-  {
    "id": 35372919850,
    "name": "Rodar Testes",
    "status": "completed",
@@ -537,6 +523,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/35372919850",
    "run_number": 1,
    "workflow_id": 361536815
+  },
+  {
+   "id": 35372920005,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-09-18T17:12:05Z",
+   "run_started_at": "2026-09-18T17:12:05Z",
+   "updated_at": "2026-09-18T17:12:24Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/35372920005",
+   "run_number": 2,
+   "workflow_id": 361536811
   },
   {
    "id": 35372792260,
