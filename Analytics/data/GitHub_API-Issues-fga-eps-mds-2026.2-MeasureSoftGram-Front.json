@@ -1242,7 +1242,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -1270,8 +1270,8 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-09-27T22:21:29Z",
-        "updated_at": "2026-10-05T01:15:12Z",
-        "closed_at": null,
+        "updated_at": "2026-10-07T15:24:32Z",
+        "closed_at": "2026-10-07T15:24:29Z",
         "assignee": {
             "login": "zzzBECK",
             "id": 82113486,
@@ -1303,10 +1303,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/13",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/13.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/13.patch",
-            "merged_at": null
+            "merged_at": "2026-10-07T15:24:29Z"
         },
         "body": "## 1. Descri\u00e7\u00e3o\r\n\r\n**Como** usu\u00e1rio do MeasureSoftGram (analista de qualidade / gestor do produto)\r\n**Quero** navegar entre as telas de um produto sem a tela cheia de \"Carregando\", sem o menu lateral piscar e sem o painel do Grafana recarregar\r\n**Para que** eu acompanhe a qualidade do produto sem esperas nem recargas desnecess\u00e1rias\r\n\r\nRelacionado: \u00c9pico #42 (MSG02) \u00b7 Issue: #___\r\n\r\n---\r\n\r\n## 2. Prot\u00f3tipo e Interface\r\n\r\n- [x] N\u00e3o h\u00e1 nova interface: o comportamento das telas atuais (Vis\u00e3o Geral, dashboards, reposit\u00f3rio e Criar release) \u00e9 mantido e s\u00f3 o carregamento \u00e9 corrigido.\r\n\r\n---\r\n\r\n## 3. Crit\u00e9rios de Aceita\u00e7\u00e3o (BDD)\r\n\r\n### Cen\u00e1rio 1: Navega\u00e7\u00e3o dentro de um produto\r\n* **Dado** que estou dentro de um produto\r\n* **Quando** navego entre as telas pelo menu lateral\r\n* **Ent\u00e3o** o produto e os reposit\u00f3rios s\u00e3o buscados no m\u00e1ximo uma vez, em paralelo\r\n* **E** o menu lateral n\u00e3o pisca\r\n\r\n### Cen\u00e1rio 2: Painel do Grafana est\u00e1vel\r\n* **Dado** que um dashboard j\u00e1 foi carregado\r\n* **Quando** o produto \u00e9 atualizado ou uma nova busca come\u00e7a\r\n* **Ent\u00e3o** o iframe continua montado com a URL anterior at\u00e9 chegar a nova\r\n* **E** respostas de buscas antigas s\u00e3o descartadas\r\n\r\n### Cen\u00e1rio 3: Criar release carrega em paralelo\r\n* **Dado** que abro a tela Criar release\r\n* **Quando** a p\u00e1gina carrega\r\n* **Ent\u00e3o** as 5 buscas iniciais (relacionamentos, goal, pr\u00e9-config padr\u00e3o, pr\u00e9-config atual e matriz de balan\u00e7o) s\u00e3o disparadas ao mesmo tempo\r\n* **E** se o goal falhar, \u00e9 usado o fallback com peso 50; se as configura\u00e7\u00f5es falharem, aparece o aviso de erro\r\n\r\n### Cen\u00e1rio 4: Sem requisi\u00e7\u00f5es inv\u00e1lidas\r\n* **Dado** que a organiza\u00e7\u00e3o, o produto ou o reposit\u00f3rio ainda n\u00e3o est\u00e3o definidos\r\n* **Quando** uma tela depende deles\r\n* **Ent\u00e3o** nenhuma requisi\u00e7\u00e3o com `undefined` na URL \u00e9 feita, e as rotas usam barra final (sem redirecionamento 301)\r\n\r\n### Cen\u00e1rio 5: Voltar de outra aba\r\n* **Dado** que estou em uma tela do produto\r\n* **Quando** troco de aba do navegador e volto\r\n* **Ent\u00e3o** n\u00e3o s\u00e3o feitas novas requisi\u00e7\u00f5es\r\n\r\n---\r\n\r\n## 4. Altera\u00e7\u00f5es T\u00e9cnicas\r\n\r\n- **N1/N2:** `useQuery()` saiu do `SideMenuItem` (rodava uma vez por item) e agora \u00e9 chamado uma \u00fanica vez no `Layout`. O id do produto \u00e9 comparado como `String`, e o produto n\u00e3o \u00e9 buscado de novo quando j\u00e1 \u00e9 o atual. Produto e reposit\u00f3rios s\u00e3o buscados com `Promise.all`.\r\n- **N3:** `useGrafanaDashboard` depende de `currentProduct?.id` / `currentOrganization?.id` em vez dos objetos. Cada efeito tem uma flag `cancelled` no cleanup, e `grafanaUrl` n\u00e3o \u00e9 zerado durante uma nova busca. Nas 6 telas com Grafana, o spinner s\u00f3 aparece quando ainda n\u00e3o h\u00e1 URL.\r\n- **N4:** removidos o `loadRepositoriesTsqmiHistory` e o estado dele, que ningu\u00e9m usava, na p\u00e1gina do produto. As buscas restantes rodam em paralelo.\r\n- **N5:** `ReleaseCreation` usa `Promise.allSettled` para as 5 buscas. \u26a0\ufe0f O c\u00f3digo antigo chamava `setPreConfigEntitiesRelationship`, que n\u00e3o existe: a chamada lan\u00e7ava erro e o fallback com peso 50 era usado sempre. Agora o goal salvo \u00e9 usado quando carrega, ent\u00e3o os pesos exibidos podem mudar em rela\u00e7\u00e3o a antes.\r\n- **N6:** `SWRConfig` global com `revalidateOnFocus: false`, `dedupingInterval: 60000` e `shouldRetryOnError: false`.\r\n- **N7:** as chaves do SWR ficam `null` quando falta algum id (`useProductCurrentPreConfig`, `useHistoricalCharacteristics`), e `getReleaseList` retorna `null`.\r\n- **N8:** barra final em `.../repositories/` e `/v1/balance-matrix/`.\r\n- **N9:** removidos os `console.log` de depura\u00e7\u00e3o.\r\n\r\n- **Reposit\u00f3rio afetado:** MeasureSoftGram-Front\r\n- **Restri\u00e7\u00f5es:** n\u00e3o altera regras de neg\u00f3cio nem o c\u00e1lculo das medidas\r\n\r\n---\r\n\r\n## 5. Testes\r\n\r\n- Novos: `sideMenuItemRequests.spec` (renderizar n\u00e3o dispara buscas) e `ProductContent.spec` (iframe continua montado durante o loading).\r\n- Estendidos: `useQuery.spec` (id num\u00e9rico igual ao da rota n\u00e3o recarrega o produto; busca em paralelo), `useGrafanaDashboard.spec` (novo objeto do mesmo produto n\u00e3o refaz a busca; URL mantida; resposta antiga descartada), `ReleaseCreation.spec` (5 chamadas em paralelo; fallback do goal), `useProductCurrentPreConfig.spec` / `useHistoricalCharacteristics.spec` (sem id, sem requisi\u00e7\u00e3o), `product.spec` / `balanceMatrix.spec` (barra final; `getReleaseList` retorna `null`).\r\n- Resultado: 525 testes passam. As 8 su\u00edtes que falham j\u00e1 falhavam em `develop`: snapshots com hash de styled-components desatualizado, sem rela\u00e7\u00e3o com este PR. `tsc` e `lint` mostram os mesmos resultados de `develop`, sem erros novos.\r\n\r\n---\r\n\r\n## 6. Defini\u00e7\u00e3o de Pronto (DoD)\r\n\r\n- [x] C\u00f3digo implementado aderente aos Crit\u00e9rios T\u00e9cnicos e conven\u00e7\u00f5es de estilo/linter\r\n- [x] Testes automatizados implementados e executados com sucesso\r\n- [ ] Pipeline de CI/CD executado com sucesso no reposit\u00f3rio central\r\n- [ ] PR revisado e aprovado por pelo menos um integrante da equipe\r\n- [ ] C\u00f3digo integrado \u00e0 branch `develop` do reposit\u00f3rio central\r\n- [ ] Cen\u00e1rios BDD demonstrados e validados (verifica\u00e7\u00e3o manual na aba Network)\r\n- [ ] Funcionalidade validada e homologada pelo Product Owner na branch `develop`\r\n- [ ] Documenta\u00e7\u00e3o atualizada, quando aplic\u00e1vel\r\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "MilenaFRocha",
+            "id": 104432227,
+            "node_id": "U_kgDOBjmCYw",
+            "avatar_url": "https://avatars.githubusercontent.com/u/104432227?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/MilenaFRocha",
+            "html_url": "https://github.com/MilenaFRocha",
+            "followers_url": "https://api.github.com/users/MilenaFRocha/followers",
+            "following_url": "https://api.github.com/users/MilenaFRocha/following{/other_user}",
+            "gists_url": "https://api.github.com/users/MilenaFRocha/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/MilenaFRocha/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/MilenaFRocha/subscriptions",
+            "organizations_url": "https://api.github.com/users/MilenaFRocha/orgs",
+            "repos_url": "https://api.github.com/users/MilenaFRocha/repos",
+            "events_url": "https://api.github.com/users/MilenaFRocha/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/MilenaFRocha/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/13/reactions",
             "total_count": 0,
