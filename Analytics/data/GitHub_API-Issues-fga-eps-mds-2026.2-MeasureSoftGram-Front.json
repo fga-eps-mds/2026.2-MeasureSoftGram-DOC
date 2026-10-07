@@ -1695,7 +1695,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -1723,8 +1723,8 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-09-27T20:06:07Z",
-        "updated_at": "2026-09-28T10:54:44Z",
-        "closed_at": null,
+        "updated_at": "2026-10-07T22:13:06Z",
+        "closed_at": "2026-10-07T22:13:03Z",
         "assignee": {
             "login": "luciano-freitas-melo",
             "id": 88516249,
@@ -1756,10 +1756,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/10",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/10.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/10.patch",
-            "merged_at": null
+            "merged_at": "2026-10-07T22:13:03Z"
         },
         "body": "## Motiva\u00e7\u00e3o\r\n\r\nEsta altera\u00e7\u00e3o faz parte da **Issue #69** (vinculada \u00e0 issue mestre **#48**), cujo objetivo \u00e9 melhorar a experi\u00eancia do usu\u00e1rio quando um produto ainda n\u00e3o possui releases cadastradas na plataforma MeasureSoftGram. \r\n\r\nAnteriormente, ao acessar um produto sem releases, o usu\u00e1rio se deparava com quadros vazios ou erros de consulta no dashboard do Grafana. Com esta altera\u00e7\u00e3o, exibimos um componente visual orientativo (*Empty State*) validado pelo PO, informando o usu\u00e1rio sobre a aus\u00eancia de releases e fornecendo um atalho direto (*\"Ir para Releases\"*) para iniciar o planejamento.\r\n\r\n---\r\n\r\n## Mudan\u00e7as\r\n\r\n- **Internacionaliza\u00e7\u00e3o (i18n):** Adicionadas chaves de tradu\u00e7\u00e3o em portugu\u00eas e ingl\u00eas para a tela de Vis\u00e3o Geral (`public/locales/pt/overview.json` e `public/locales/en/overview.json`).\r\n- **Novo Componente (`NoReleasesState`):** Criado o componente de orienta\u00e7\u00e3o visual com card tracejado, \u00edcone ilustrativo, textos din\u00e2micos com o nome do produto e bot\u00e3o de navega\u00e7\u00e3o.\r\n- **Integra\u00e7\u00e3o na Vis\u00e3o Geral (`ProductContent.tsx`):** Adicionada verifica\u00e7\u00e3o din\u00e2mica da lista de releases do produto ativo. Caso a lista esteja vazia (`length === 0`), o componente `NoReleasesState` \u00e9 renderizado no lugar do dashboard.\r\n- **Testes Unit\u00e1rios:** Criadas as su\u00edtes de testes unit\u00e1rios para o `NoReleasesState` e atualizados os testes do `ProductContent`.\r\n\r\n---\r\n\r\n## Status Checklist\r\n\r\n- [x] Test\r\n- [x] Lint\r\n- [x] Development\r\n\r\n---\r\n\r\n## Screenshots\r\n### Antes\r\n<img width=\"1917\" height=\"957\" alt=\"image\" src=\"https://github.com/user-attachments/assets/e5e5e6a6-31f3-4261-b311-47ede168960b\" />\r\n\r\n### Depois\r\n<img width=\"1915\" height=\"719\" alt=\"image\" src=\"https://github.com/user-attachments/assets/34fa8635-b84b-44ca-ab09-3bd246cb4f55\" />\r\n\r\n*Para o caso de nao haver releases cadastradas para o produto; nesse cen\u00e1rio, eu inseri o componente diretamente na tela sem a l\u00f3gica para renderizacao do Gr\u00e1fico de Pulso, j\u00e1 que o script popula releases imediatamente ap\u00f3s a criacao de um produto novo no ambiente dev.\r\n\r\n---\r\n\r\n## Execu\u00e7\u00e3o\r\n\r\n1. Fa\u00e7a login na plataforma MeasureSoftGram.\r\n2. Selecione uma organiza\u00e7\u00e3o e navegue at\u00e9 um produto que **n\u00e3o possui** nenhuma release cadastrada.\r\n3. Acesse a aba **Vis\u00e3o Geral** do produto (`/products/[id-do-produto]`).\r\n4. Verifique se o quadro orientativo *\"Este produto ainda n\u00e3o tem releases cadastradas\"* \u00e9 exibido com o nome din\u00e2mico do produto.\r\n5. Clique no bot\u00e3o **\"Ir para Releases\"** e confirme o redirecionamento para a rota `/products/[id-do-produto]/releases`.\r\n6. Rode a su\u00edte de testes unit\u00e1rios no terminal:\r\n   ```bash\r\n   npm run test\r\n\r\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "thegm445",
+            "id": 110239666,
+            "node_id": "U_kgDOBpIfsg",
+            "avatar_url": "https://avatars.githubusercontent.com/u/110239666?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/thegm445",
+            "html_url": "https://github.com/thegm445",
+            "followers_url": "https://api.github.com/users/thegm445/followers",
+            "following_url": "https://api.github.com/users/thegm445/following{/other_user}",
+            "gists_url": "https://api.github.com/users/thegm445/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/thegm445/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/thegm445/subscriptions",
+            "organizations_url": "https://api.github.com/users/thegm445/orgs",
+            "repos_url": "https://api.github.com/users/thegm445/repos",
+            "events_url": "https://api.github.com/users/thegm445/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/thegm445/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/10/reactions",
             "total_count": 0,
