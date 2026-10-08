@@ -1,23 +1,23 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-08T22:14:11+00:00",
+ "coletado_em": "2026-10-08T23:21:42+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
- "total_count": 223,
+ "total_count": 224,
  "workflow_runs": [
   {
-   "id": 37852044839,
+   "id": 37858953494,
    "name": "Coleta de dados do dashboard",
    "status": "in_progress",
    "conclusion": null,
    "head_branch": "main",
-   "event": "push",
-   "created_at": "2026-10-08T22:13:02Z",
-   "run_started_at": "2026-10-08T22:13:02Z",
-   "updated_at": "2026-10-08T22:13:05Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/actions/runs/37852044839",
-   "run_number": 56,
+   "event": "schedule",
+   "created_at": "2026-10-08T23:21:15Z",
+   "run_started_at": "2026-10-08T23:21:15Z",
+   "updated_at": "2026-10-08T23:21:18Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/actions/runs/37858953494",
+   "run_number": 57,
    "workflow_id": 368737717
   },
   {
@@ -33,6 +33,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/actions/runs/37852044784",
    "run_number": 150,
    "workflow_id": 346705613
+  },
+  {
+   "id": 37852044839,
+   "name": "Coleta de dados do dashboard",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "main",
+   "event": "push",
+   "created_at": "2026-10-08T22:13:02Z",
+   "run_started_at": "2026-10-08T22:13:02Z",
+   "updated_at": "2026-10-08T22:14:58Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/actions/runs/37852044839",
+   "run_number": 56,
+   "workflow_id": 368737717
   },
   {
    "id": 37836144870,
