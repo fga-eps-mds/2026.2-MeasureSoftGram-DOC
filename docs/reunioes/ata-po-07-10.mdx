@@ -1,0 +1,224 @@
+---
+id: ata-po-07-10
+title: Ata - Reunião com o PO (07/10/2026)
+sidebar_position: 5
+---
+
+# Ata - Reunião Semanal com o Product Owner
+
+**Data**: 07/10/2026 · 19h37 · Duração: 1h 19m 32s  
+**Tipo**: Validação de critérios de aceitação, prévia da próxima sprint e status da Release 1  
+**Participantes**: Hilmer Rodrigues Neri (PO), Gabriel Moura, Milena Fernandes Rocha,
+Alexandre De Santana Beck, Lucas Bottino, Guilherme Storch De Oliveira, Diogo Rodrigues Barboza,
+Luiza Maluf Amorim
+
+:::tip[Resultado]
+O PO validou os critérios de aceitação das três histórias da sprint, com ajustes de redação e a
+remoção de um critério. Decidiu retirar o plugin do VS Code do semestre e removê-lo do
+marketplace, realocando o esforço para revisar o produto em busca de problemas deixados por
+semestres anteriores. A equipe confirmou a entrega da Release 1 para 08/10. O PO aceitou a
+prévia das seis histórias da próxima sprint, avisando que é a última vez que valida por Figma, e
+cobrou backlog instanciado e estimado no ZenHub.
+:::
+
+---
+
+## 1. Critérios de aceitação das histórias da sprint
+
+As três histórias da sprint estão sob responsabilidade do Gabriel. O PO havia comentado dúvidas
+nas issues, e elas foram tratadas uma a uma.
+
+### Login (web): critério de "login cancelado"
+
+- O PO não conhecia nenhum ponto do fluxo em que o login pudesse ser "cancelado".
+- Gabriel e Alexandre explicaram: o cancelamento ocorre **durante o redirecionamento para
+  autorização no GitHub/GitLab**, quando o usuário fecha a janela, desiste ou clica em *deny*.
+- Com o usuário já logado não existe cancelamento: existe finalizar sessão, que tem critério
+  próprio. Sessão expirada também já tem critério próprio (CA 5).
+- Decisão: o critério fica, desde que seja reescrito e restrito ao fluxo de autorização.
+
+### Login no VS Code
+
+- Os critérios eram os mesmos da história 11.1 (web). O PO pediu adaptação ao contexto do VS Code
+  e protótipos para dar o OK final, porque não usa VS Code (usa PyCharm) e não conseguiria testar.
+- A discussão levou à decisão sobre o plugin (seção 2).
+
+### Terminologia por provedor
+
+- Alexandre explicou o comportamento: o login é por provedor. Com o mesmo e-mail, quem entra pelo
+  GitHub vê só os projetos do GitHub; para ver os do GitLab é preciso sair e entrar pelo GitLab
+  (o Sonar funciona da mesma forma).
+- CA 4 validado, com a redação a ser reescrita para refletir essa explicação.
+- CA 5 (termos "neutros e claros") removido: por ora o escopo fica só em GitHub e GitLab, que
+  têm equivalência direta de termos (organização/grupo, repositório/projeto, pull/merge request).
+  A neutralidade será tratada quando entrarem outros provedores.
+- Os demais critérios da história foram validados. Ainda faltam os protótipos.
+
+> "Qual é aquela situação clássica de vocês, que vocês estão cansados de saber, mas na hora de
+> fazer cai no buraco? Requisito ambíguo, vago."
+>
+> — Hilmer Rodrigues Neri, 30:06
+
+---
+
+## 2. Plugin do VS Code retirado do semestre
+
+### O que a equipe encontrou
+
+- Ao instalar o plugin publicado, Milena, Guilherme e Diogo encontraram uma tela com **dados
+  mockados**, os mesmos do ambiente de desenvolvimento, e sem login: URL, token e token do
+  GitHub são configurados manualmente.
+- Lucas: o plugin foi construído como um "segundo front" dentro do VS Code, sem relação com o
+  código aberto no editor. Para virar plugin de fato seria uma refatoração pesada (conexão
+  automática ao repositório em uso, suporte a GitHub e GitLab).
+- Guilherme: a funcionalidade tem valor para desenvolvedores, mas seria uma implementação nova, do
+  zero.
+
+### Decisão do PO
+
+- O plugin sai do escopo do semestre e deve ser removido do VS Code Marketplace. Não precisa
+  ser durante a reunião: Lucas confere o acesso à conta.
+- O propósito original continua válido: aproximar o MeasureSoftGram do ambiente do desenvolvedor,
+  como o plugin do Sonar na IDE. A modelagem futura deve partir de plugins semelhantes e de
+  prototipação própria.
+> "Do jeito que está aí, está mais sendo vergonha alheia do que qualquer outra coisa. Longe do
+> propósito que era esperado."
+>
+> — Hilmer Rodrigues Neri, 23:52
+
+### Problemas legados no produto
+
+- Luiza relatou que, revisando issues com o Lucas no fim de semana, encontraram outros resquícios
+  no código, como um log de console que está no produto há cerca de dois semestres (já foi
+  removido e reintroduzido em commits).
+- Ela propôs revisar o produto com olhar crítico e documentar tudo o que for encontrado, mesmo
+  que vire uma lista longa de issues.
+- Acordo: o esforço que iria para o VS Code passa para essa revisão, no modelo "achamos,
+  corrigimos", até o fim da disciplina. A equipe se reorganiza com a saída das histórias do plugin.
+
+---
+
+## 3. Prévia das histórias da próxima sprint
+
+- Gabriel apresentou no Figma 3 épicos (em roxo) e 6 histórias (em azul), referentes a
+  MSG-12 (importar repositórios) e MSG-21/MSG-22 (gráfico planejado × realizado e novos
+  gráficos de dashboard).
+- O PO confirmou que os épicos são os da EAP já validada e estão coerentes com o MVP.
+- Ressalvas do PO:
+  - É a última vez que aceita prévia de histórias pelo Figma. As histórias devem ir para o
+    ZenHub, onde ele comenta diretamente nas issues.
+  - Tarefas controladas manualmente no Figma (em amarelo) deveriam estar na ferramenta. Ele avalia
+    só as histórias.
+  - O uso de persona na escrita da história não é formalidade: serve para manter as
+    necessidades dos perfis validados na visão do produto ao passar do requisito para o código.
+- Gabriel caiu da chamada no meio da apresentação e a lista não foi concluída. Ficou combinado que
+  o PO olha pelo ZenHub.
+
+---
+
+## 4. Gráfico planejado × realizado
+
+### Tentativa de demonstração no ambiente de homologação
+
+- O produto de teste (usuário *teste MSG 2026.1*) não carregou o dashboard.
+- Causa identificada pelo Lucas: no service, a rota do dashboard é liberada só para o admin da
+  organização, mas a listagem usa a permissão de membro. O produto aparece na lista e, ao ser
+  selecionado, retorna 403 ("Não foi possível carregar dashboard"). Será registrado como
+  bug.
+- Mesmo com permissão, não há dados. O PO pediu para rodar o script de população criado no
+  semestre passado (parametrizado com a data do semestre, provavelmente no repositório do front).
+  Ele gera a organização e o produto de teste com dados fictícios, usados nas demonstrações.
+
+### O que o PO espera do componente
+
+- O componente atual é um gráfico de linhas genérico com duas retas. Com poucas
+  características, as retas ocupam quase a tela inteira.
+- O esperado é projetar as retas sobre o componente do equalizador, como na tela de
+  planejamento de release, seguindo as funções do documento de formalização do modelo. Isso cobre
+  as três situações: planejado igual ao realizado, realizado acima e realizado abaixo.
+- Não é para remover o gráfico atual: pode ser uma opção adicional de visualização.
+- O PO compartilhou prints de referência no chat do Teams.
+
+---
+
+## 5. Release 1, Grafana e ambientes
+
+### Status da Release 1
+
+- Lucas: os 3 pacotes release candidate já estão no PyPI. O deploy do front e do service na VM
+  estava com referências trocadas e foi corrigido. A parte web deve ser liberada entre 07 e 08/10.
+- A R1 deve trazer os dois épicos: gráfico de pulso geral (TSQMI) sem Grafana (Guilherme) e o
+  fluxo de carregamento do front (Alexandre, já mergeado, com todas as tarefas fechadas).
+- O PO registrou que o prazo da quinta-feira anterior para enviar os formulários de teste passou
+  sem comunicação. Pediu o instrumento de teste completo (web e PyPI) até 08/10.
+
+### Grafana e novos dashboards
+- Guilherme: o Grafana foi desreferenciado no front, não removido. Os gráficos novos são feitos
+  sem ele e, à medida que forem validados, as referências saem do front. A última etapa é remover o
+  Grafana dos repositórios que o alimentam.
+- A equipe confirmou que consegue implementar os 4 dashboards novos já sem o Grafana,
+  independentemente dos 2 dashboards atuais, que serão refeitos depois.
+- O PO vai mandar os requisitos gerais dos 4 dashboards até sexta (09/10) ou sábado de manhã
+  (10/10). A equipe não precisa gastar tempo tentando adivinhá-los.
+- O ZenHub ainda não reflete a EAP aprovada, então a issue para refazer os 2 dashboards atuais
+  ainda não existe e precisa entrar no backlog.
+
+### Ambientes
+
+- Lucas perguntou se a VM era produção. A VM é o ambiente de homologação, e produção ainda não
+  existe. No PyPI, a release candidate cumpre o papel de homologação e vira produção quando o PO
+  valida. Não é preciso outra VM.
+
+---
+
+## 6. Considerações do PO como professor
+
+- Roadmap no ZenHub: precisa ter, no mínimo, a EAP representada (entregas e pacotes de trabalho,
+  os dois níveis), com datas em todos os pacotes, principalmente nas releases, e estimativa. As
+  fases (iniciação, planejamento etc.) são opcionais: entram só se ajudarem a equipe.
+- Backlog do produto: instanciar com a escrita das histórias como estava no Figma e **estimar
+  as histórias, não as tarefas**. O detalhamento continua sprint a sprint, na cadência desta
+  semana.
+- Custos (AgileEVM): a estimativa das histórias destrava o cálculo. O PRP mede o tamanho do
+  backlog (pontos planejados), e também entram pontos completados e pontos adicionados
+  (histórias que entram e que saem do backlog).
+- Planning ineficaz: faltam responsáveis definidos, e ele teve que perguntar quem cuidava das
+  histórias. Os responsáveis pelas histórias da próxima sprint devem estar atribuídos no ZenHub e
+  falar diretamente com ele.
+- Percepção geral: até a véspera, ele não via reação da equipe depois da conversa da semana
+  anterior. Com a EAP e esta reunião, passou a perceber o início de uma reorganização. A equipe
+  ainda perdeu o prazo da entrega e o prazo assumido depois, e **a R1 "não tem muito o que
+  avaliar"** porque não houve release. Agora o ponto é estabilizar a cadência.
+- Como não haverá aula na semana seguinte, as validações das histórias acontecem **de forma
+  assíncrona** (Discord e issues).
+
+> "Hoje vocês já me deram um up, então eu vou dormir com esse up e vou acreditar que vocês vão
+> segurar ele lá em cima."
+>
+> — Hilmer Rodrigues Neri, 1:18:49
+
+---
+
+## 7. Encaminhamentos
+
+### Pendências do Product Owner
+
+| Item | Descrição | Previsão |
+| --- | --- | --- |
+| Requisitos dos novos dashboards | Enviar a ideia geral dos requisitos de cada um dos 4 dashboards novos | 09/10 ou manhã de 10/10 |
+| Validação das histórias | Comentar e aprovar as histórias da próxima sprint diretamente no ZenHub | Assíncrono, após o envio |
+
+### Ações da equipe
+| Ação | Responsável | Prazo |
+| --- | --- | --- |
+| Reescrever o critério de login cancelado, restrito ao fluxo de autorização OAuth | Gabriel | Próxima sprint |
+| Reescrever o CA 4 e remover o CA 5 da história de terminologia | Gabriel | Próxima sprint |
+| Enviar os protótipos pendentes das histórias da sprint | Gabriel | Próxima sprint |
+| Remover o plugin do VS Code Marketplace | Lucas (ou quem tiver acesso à conta) | A definir |
+| Revisar o produto e documentar problemas legados como issues | Equipe | Contínuo |
+| Liberar a R1 web e enviar o instrumento de teste (web e PyPI) | Lucas | 08/10 |
+| Instanciar no ZenHub as 6 histórias da próxima sprint, com responsáveis atribuídos | Gabriel | Até 11/10 |
+| Estimar as histórias do backlog em pontos e montar o roadmap com datas no ZenHub | Equipe | A definir |
+| Registrar e corrigir o bug de permissão (403) no dashboard para membros da organização | Equipe (diagnóstico: Lucas) | A definir |
+| Rodar o script de população de dados de teste no ambiente de homologação | Equipe | A definir |
+| Criar a issue para refazer os 2 dashboards atuais sem Grafana | Equipe | A definir |
