@@ -7,9 +7,10 @@ Duas entradas, as duas geradas automaticamente (nada digitado à mão):
    repositório. ``baseComponent.measures`` = agregado do repositório;
    ``components`` = detalhe por arquivo/pasta. A data sai do nome do arquivo.
 2. **API do SonarCloud** — ``data/sonar/sonar-AAAA-MM-DDTHHMM.json``, gravado por
-   ``scripts/coleta_sonar.py``. Traz o que o pipeline não pede: bugs,
-   vulnerabilidades, code smells, security hotspots, dívida técnica, Quality
-   Gate, ratings, problemas por severidade e o histórico de cada métrica.
+   ``scripts/coleta_sonar.py``. Traz tanto as métricas agregadas, histórico,
+   Quality Gate, ratings e issues por severidade quanto o detalhe por
+   arquivo/suíte (``api/measures/component_tree``), tornando o dashboard
+   autossuficiente em relação ao ``metrics.yml``.
 
 Se um arquivo não existe, as funções devolvem DataFrame vazio e a página diz
 que o dado falta — nunca inventa valor.
@@ -114,7 +115,7 @@ def carregar_sonar(pastas) -> tuple[pd.DataFrame, pd.DataFrame]:
             for medida in componente.get("measures", []):
                 linhas_comp.append({**base, "componente": componente.get("path") or componente.get("name"),
                                     "tipo": componente.get("qualifier"), "metrica": medida.get("metric"),
-                                    "valor": _num(medida.get("value"))})
+                                    "valor": _num(medida.get("value")), "origem": "pipeline"})
     return pd.DataFrame(linhas_repo), pd.DataFrame(linhas_comp)
 
 
@@ -171,12 +172,12 @@ def snapshot_para_tabelas(snap: dict | None) -> dict[str, pd.DataFrame]:
     """Snapshot da API -> tabelas planas (vazias quando não há snapshot)."""
     vazio = {"medidas": pd.DataFrame(), "historico": pd.DataFrame(), "quality_gate": pd.DataFrame(),
              "condicoes": pd.DataFrame(), "severidades": pd.DataFrame(), "tipos": pd.DataFrame(),
-             "linguagens": pd.DataFrame(), "erros": pd.DataFrame()}
+             "linguagens": pd.DataFrame(), "componentes": pd.DataFrame(), "erros": pd.DataFrame()}
     if not snap:
         return vazio
     coleta = pd.to_datetime(snap.get("coletado_em"), utc=True, errors="coerce")
     coleta = coleta.tz_convert(None) if pd.notna(coleta) else pd.NaT
-    med, hist, qg, cond, sev, tip, lang, err = [], [], [], [], [], [], [], []
+    med, hist, qg, cond, sev, tip, lang, comp, err = [], [], [], [], [], [], [], [], []
     for p in snap.get("projetos", []):
         repo = _repo_do_projeto(p)
         branch = p.get("branch") or snap.get("branch") or ""
@@ -204,13 +205,20 @@ def snapshot_para_tabelas(snap: dict | None) -> dict[str, pd.DataFrame]:
             tip.append({"repositorio": repo, "tipo": t, "quantidade": _num(n) or 0.0})
         for linguagem, n in (p.get("linguagens") or {}).items():
             lang.append({"repositorio": repo, "linguagem": linguagem, "ncloc": _num(n) or 0.0})
+        for c in p.get("componentes") or []:
+            caminho = c.get("path") or c.get("name")
+            tipo = c.get("qualifier")
+            for metrica, valor in (c.get("measures") or {}).items():
+                comp.append({"repositorio": repo, "branch": branch, "coleta": coleta,
+                             "componente": caminho, "tipo": tipo, "metrica": metrica,
+                             "valor": _num(valor), "origem": "api"})
     h = pd.DataFrame(hist)
     if not h.empty:
         h["coleta"] = h["coleta"].dt.tz_convert(None)
         h = h.dropna(subset=["coleta", "valor"])
     return {"medidas": pd.DataFrame(med), "historico": h, "quality_gate": pd.DataFrame(qg),
             "condicoes": pd.DataFrame(cond), "severidades": pd.DataFrame(sev), "tipos": pd.DataFrame(tip),
-            "linguagens": pd.DataFrame(lang), "erros": pd.DataFrame(err)}
+            "linguagens": pd.DataFrame(lang), "componentes": pd.DataFrame(comp), "erros": pd.DataFrame(err)}
 
 
 def serie_temporal(pipeline: pd.DataFrame, historico_api: pd.DataFrame) -> pd.DataFrame:

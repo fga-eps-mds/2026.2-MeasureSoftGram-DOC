@@ -61,7 +61,8 @@ def barra_lateral(ctx) -> dict:
         repos = _repos(ctx)
         repos_sel = st.multiselect("Repositórios", repos, default=[], key="f_repos", placeholder="Todos",
                                    help="Vale para Sonar, Zenhub (repositório da issue) e GitHub.")
-        branches = sorted(set(ctx.sonar_pipeline["branch"].dropna()) if not ctx.sonar_pipeline.empty else set())
+        branches = sorted(b for b in set(ctx.sonar_pipeline["branch"].dropna()) if b) \
+            if not ctx.sonar_pipeline.empty else []
         branch = None
         if branches:
             padrao = config.SONAR_BRANCH if config.SONAR_BRANCH in branches else branches[0]
