@@ -1,11 +1,53 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-14T23:19:09+00:00",
+ "coletado_em": "2026-10-15T11:19:55+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Core",
  "desde": "2026-08-24",
- "total_count": 204,
+ "total_count": 207,
  "workflow_runs": [
+  {
+   "id": 38661794565,
+   "name": "SonarCloud Scan",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "develop",
+   "event": "workflow_run",
+   "created_at": "2026-10-15T00:45:02Z",
+   "run_started_at": "2026-10-15T00:45:02Z",
+   "updated_at": "2026-10-15T00:45:09Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/actions/runs/38661794565",
+   "run_number": 36,
+   "workflow_id": 367876885
+  },
+  {
+   "id": 38661651628,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "chore/ci-governance-cleanup",
+   "event": "pull_request",
+   "created_at": "2026-10-15T00:43:29Z",
+   "run_started_at": "2026-10-15T00:43:29Z",
+   "updated_at": "2026-10-15T00:43:30Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/actions/runs/38661651628",
+   "run_number": 14,
+   "workflow_id": 368545693
+  },
+  {
+   "id": 38661651557,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "chore/ci-governance-cleanup",
+   "event": "pull_request",
+   "created_at": "2026-10-15T00:43:29Z",
+   "run_started_at": "2026-10-15T00:43:29Z",
+   "updated_at": "2026-10-15T00:45:00Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/actions/runs/38661651557",
+   "run_number": 46,
+   "workflow_id": 357187133
+  },
   {
    "id": 38629254432,
    "name": "SonarCloud Scan",
@@ -91,20 +133,6 @@
    "workflow_id": 367876885
   },
   {
-   "id": 38618643583,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "chore/ci-governance-cleanup",
-   "event": "pull_request",
-   "created_at": "2026-10-14T18:50:56Z",
-   "run_started_at": "2026-10-14T18:50:56Z",
-   "updated_at": "2026-10-14T18:52:24Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/actions/runs/38618643583",
-   "run_number": 44,
-   "workflow_id": 357187133
-  },
-  {
    "id": 38618643320,
    "name": "Dependabot Auto-merge",
    "status": "completed",
@@ -117,6 +145,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/actions/runs/38618643320",
    "run_number": 12,
    "workflow_id": 368545693
+  },
+  {
+   "id": 38618643583,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "chore/ci-governance-cleanup",
+   "event": "pull_request",
+   "created_at": "2026-10-14T18:50:56Z",
+   "run_started_at": "2026-10-14T18:50:56Z",
+   "updated_at": "2026-10-14T18:52:24Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/actions/runs/38618643583",
+   "run_number": 44,
+   "workflow_id": 357187133
   },
   {
    "id": 38613273535,
