@@ -55,7 +55,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -83,8 +83,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-10-14T19:58:12Z",
-        "updated_at": "2026-10-14T19:58:12Z",
-        "closed_at": null,
+        "updated_at": "2026-10-16T21:39:08Z",
+        "closed_at": "2026-10-16T21:39:08Z",
         "assignee": {
             "login": "gusrberto",
             "id": 79723182,
@@ -116,10 +116,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/15",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/15.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/15.patch",
-            "merged_at": null
+            "merged_at": "2026-10-16T21:39:08Z"
         },
         "body": "## Motiva\u00e7\u00e3o\n\nParte da [TASK05.08](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/143) (US05.01): varredura de resqu\u00edcios de semestres anteriores no CLI, Core e Parser. Os outros PRs da task s\u00e3o o PR do CLI e o PR do Core, na branch `fix/task05.08-varredura-resquicios`.\n\nEm `ParserGithub._make_request`, o `except` s\u00f3 fazia um `print` de debug e seguia a execu\u00e7\u00e3o. Quando a requisi\u00e7\u00e3o falhava (sem rede, timeout etc.), a linha seguinte usava `response`, que nunca tinha sido criado, e o parser quebrava com `UnboundLocalError` em vez de tratar o erro.\n\n## Mudan\u00e7as\n\n- `_make_request` captura `requests.exceptions.RequestException` e retorna `{}`, o mesmo retorno de quando a API responde com status diferente de 200. Remove o `print` de debug.\n- Adiciona teste para a falha de requisi\u00e7\u00e3o.\n- Remove a linha comentada em `parser.py` e o `# @pytest.mark.parametrize()` solto em `test_github_parser_metrics.py`.\n\nOs `print` de `parser.py` continuam: o script roda no workflow `metrics.yml` e as mensagens s\u00e3o sa\u00edda esperada da CI.\n\n## Status Checklist\n\n- [x] Test: 13 testes passando\n- [x] Lint: flake8 sem erros nos arquivos alterados\n\n## Execu\u00e7\u00e3o\n\n1. `pip install -r requirements.txt`\n2. `pytest`\n\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#143\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "bottinolucas",
+            "id": 101297130,
+            "node_id": "U_kgDOBgmr6g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bottinolucas",
+            "html_url": "https://github.com/bottinolucas",
+            "followers_url": "https://api.github.com/users/bottinolucas/followers",
+            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+            "repos_url": "https://api.github.com/users/bottinolucas/repos",
+            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Parser/issues/15/reactions",
             "total_count": 0,
