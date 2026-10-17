@@ -82,6 +82,7 @@ const sidebars: SidebarsConfig = {
         'reunioes/ata-po-02-09',
         'reunioes/ata-po-23-09',
         'reunioes/ata-po-07-10',
+        'reunioes/ata-po-14-10',
       ],
     },
     {
