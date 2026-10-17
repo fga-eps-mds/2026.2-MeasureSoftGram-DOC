@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-16T23:17:18+00:00",
+ "coletado_em": "2026-10-17T11:17:48+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-CLI",
  "desde": "2026-08-24",
@@ -63,6 +63,20 @@
    "workflow_id": 346797058
   },
   {
+   "id": 38628731382,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "fix/task05.08-varredura-resquicios",
+   "event": "pull_request",
+   "created_at": "2026-10-14T20:02:42Z",
+   "run_started_at": "2026-10-14T20:02:42Z",
+   "updated_at": "2026-10-14T20:04:35Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38628731382",
+   "run_number": 36,
+   "workflow_id": 346797058
+  },
+  {
    "id": 38628731363,
    "name": "Dependabot Auto-merge",
    "status": "completed",
@@ -89,20 +103,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38628731664",
    "run_number": 33,
    "workflow_id": 346797055
-  },
-  {
-   "id": 38628731382,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "fix/task05.08-varredura-resquicios",
-   "event": "pull_request",
-   "created_at": "2026-10-14T20:02:42Z",
-   "run_started_at": "2026-10-14T20:02:42Z",
-   "updated_at": "2026-10-14T20:04:35Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38628731382",
-   "run_number": 36,
-   "workflow_id": 346797058
   },
   {
    "id": 38618262972,
