@@ -434,7 +434,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -462,8 +462,8 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-10-20T02:24:29Z",
-        "updated_at": "2026-10-20T03:29:10Z",
-        "closed_at": null,
+        "updated_at": "2026-10-20T03:55:12Z",
+        "closed_at": "2026-10-20T03:55:09Z",
         "assignee": {
             "login": "thegm445",
             "id": 110239666,
@@ -495,10 +495,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/44",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/44.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/44.patch",
-            "merged_at": null
+            "merged_at": "2026-10-20T03:55:09Z"
         },
         "body": "Tmj",
-        "closed_by": null,
+        "closed_by": {
+            "login": "bottinolucas",
+            "id": 101297130,
+            "node_id": "U_kgDOBgmr6g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bottinolucas",
+            "html_url": "https://github.com/bottinolucas",
+            "followers_url": "https://api.github.com/users/bottinolucas/followers",
+            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+            "repos_url": "https://api.github.com/users/bottinolucas/repos",
+            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/44/reactions",
             "total_count": 0,
@@ -710,7 +730,7 @@
         "milestone": null,
         "comments": 2,
         "created_at": "2026-10-20T00:05:37Z",
-        "updated_at": "2026-10-20T02:58:32Z",
+        "updated_at": "2026-10-20T03:55:07Z",
         "closed_at": null,
         "assignee": {
             "login": "bottinolucas",
@@ -737,7 +757,7 @@
         "issue_field_values": [],
         "type": null,
         "active_lock_reason": null,
-        "draft": true,
+        "draft": false,
         "pull_request": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/pulls/42",
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/42",
@@ -745,7 +765,7 @@
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/42.patch",
             "merged_at": null
         },
-        "body": "## Motiva\u00e7\u00e3o\n\nParte `[Front]` da US21.02 (fga-eps-mds/2026.2-MeasureSoftGram-DOC#127): o dashboard \"4. An\u00e1lise por Entidade\" compara os reposit\u00f3rios do produto em uma entidade do modelo (caracter\u00edstica, subcaracter\u00edstica, medida ou m\u00e9trica) numa release. Assim fica claro quais reposit\u00f3rios puxam a qualidade para baixo. Consome o endpoint da TASK21.02.01 (fga-eps-mds/2026.2-MeasureSoftGram-Service#47).\n\n## Mudan\u00e7as\n\n- Item **4. An\u00e1lise por Entidade** no submenu Dashboards (`SideMenu.tsx`), habilitado com produto selecionado (CA1).\n- P\u00e1gina `src/pages/products/[product]/dashboards/entidade/` com seletores de release (come\u00e7a pela mais recente), n\u00edvel e entidade. A lista de entidades vem da configura\u00e7\u00e3o da release, via `entity-analysis/entities/` do Service (CA2).\n- Barras horizontais ECharts do pior para o melhor, com o valor escrito na barra. Caracter\u00edsticas, subcaracter\u00edsticas e medidas usam o valor de 0 a 1 com a cor da faixa de qualidade; m\u00e9tricas usam o valor coletado com a unidade (CA3).\n- **Mostrar meta e faixa de refer\u00eancia**: linha tracejada da meta planejada sobre as barras das caracter\u00edsticas e legenda com a faixa m\u00ednimo\u2013m\u00e1ximo das medidas (CA4).\n- Clique na barra abre a decomposi\u00e7\u00e3o da entidade naquele reposit\u00f3rio, com o peso e o valor de cada filho, e o bot\u00e3o **Fechar** (CA5).\n- Reposit\u00f3rio sem valor aparece como \"sem dado\", no fim da lista, e n\u00e3o como zero (CA6).\n- Estados vazios para produto sem release (com \"Ir para releases\") e release sem an\u00e1lise; erro da API com \"Tentar novamente\" e sem detalhes t\u00e9cnicos (CA7).\n- O tempo entre a chegada dos dados e o fim do desenho (evento `finished` do ECharts) fica em `data-render-ms` no container do gr\u00e1fico (CA8).\n\nObserva\u00e7\u00f5es para a revis\u00e3o:\n- **Faixa das medidas (CA4):** `min_threshold`/`max_threshold` est\u00e3o nas unidades da m\u00e9trica (ex.: cobertura de 60 a 100), e a barra da medida j\u00e1 \u00e9 o valor normalizado de 0 a 1. Desenhar a faixa no eixo n\u00e3o teria significado, ent\u00e3o ela aparece como legenda acima das barras. Vale confirmar com o P.O. se \u00e9 isso que o prot\u00f3tipo pede.\n- **Depend\u00eancias:** a \u00e1rvore da TASK21.01.01 e o seletor de release da TASK21.01.02 ainda n\u00e3o existem. Por isso a lista de entidades usa o `entities/` do novo endpoint e o seletor de release \u00e9 local. Quando essas tasks entrarem, d\u00e1 para trocar.\n- M\u00e9tricas tamb\u00e9m s\u00e3o ordenadas do menor para o maior valor. Para algumas m\u00e9tricas (ex.: complexidade), maior \u00e9 pior, e o modelo n\u00e3o informa a dire\u00e7\u00e3o.\n\n## Status Checklist\n\n- [x] Test: 32 testes novos (p\u00e1gina, ordena\u00e7\u00e3o, \"sem dado\", detalhe, estados vazios/erro, hook e formata\u00e7\u00e3o); su\u00edte completa com 122 su\u00edtes e 682 testes passando\n- [x] Lint: `eslint` sem erros nos arquivos alterados\n- [ ] Development: ainda n\u00e3o validado no navegador com o Service rodando\n\n## Screenshots\n\nAinda sem screenshot: a valida\u00e7\u00e3o visual contra o prot\u00f3tipo do Figma fica para a homologa\u00e7\u00e3o.\n\n## Execu\u00e7\u00e3o\n\n- Suba o Service com a branch `feat/43-analise-por-entidade`.\n- Acesse `/products/{org}-{produto}-{nome}/dashboards/entidade` ou o item **Dashboards \u203a 4. An\u00e1lise por Entidade**.\n- Escolha release, n\u00edvel e entidade e clique numa barra para ver os filhos.\n\nCloses #38\n",
+        "body": "## Motiva\u00e7\u00e3o\n\nParte `[Front]` da US21.02 (fga-eps-mds/2026.2-MeasureSoftGram-DOC#127): o dashboard \"4. An\u00e1lise por Entidade\" compara os reposit\u00f3rios do produto em uma entidade do modelo (caracter\u00edstica, subcaracter\u00edstica, medida ou m\u00e9trica) numa release. Assim fica claro quais reposit\u00f3rios puxam a qualidade para baixo. Consome o endpoint da TASK21.02.01 (fga-eps-mds/2026.2-MeasureSoftGram-Service#47).\n\n## Mudan\u00e7as\n\n- Item **4. An\u00e1lise por Entidade** no submenu Dashboards (`SideMenu.tsx`), habilitado com produto selecionado (CA1).\n- P\u00e1gina `src/pages/products/[product]/dashboards/entidade/` com seletores de release, n\u00edvel e entidade. O de release \u00e9 o `ReleaseSelect` compartilhado (#47), que abre na release atual e marca \"(atual)\". A lista de entidades vem da configura\u00e7\u00e3o da release, via `entity-analysis/entities/` do Service (CA2).\n- Barras horizontais ECharts do pior para o melhor, com o valor escrito na barra. Caracter\u00edsticas, subcaracter\u00edsticas e medidas usam o valor de 0 a 1 com a cor da faixa de qualidade; m\u00e9tricas usam o valor coletado com a unidade (CA3).\n- **Mostrar meta e faixa de refer\u00eancia**: linha tracejada da meta planejada sobre as barras das caracter\u00edsticas e legenda com a faixa m\u00ednimo\u2013m\u00e1ximo das medidas (CA4).\n- Clique na barra abre a decomposi\u00e7\u00e3o da entidade naquele reposit\u00f3rio, com o peso e o valor de cada filho, e o bot\u00e3o **Fechar** (CA5).\n- Reposit\u00f3rio sem valor aparece como \"sem dado\", no fim da lista, e n\u00e3o como zero (CA6).\n- Estados vazios para produto sem release (com \"Ir para releases\") e release sem an\u00e1lise; erro da API com \"Tentar novamente\" e sem detalhes t\u00e9cnicos (CA7).\n- O tempo entre a chegada dos dados e o fim do desenho (evento `finished` do ECharts) fica em `data-render-ms` no container do gr\u00e1fico (CA8).\n\nObserva\u00e7\u00f5es para a revis\u00e3o:\n- **Faixa das medidas (CA4):** `min_threshold`/`max_threshold` est\u00e3o nas unidades da m\u00e9trica (ex.: cobertura de 60 a 100), e a barra da medida j\u00e1 \u00e9 o valor normalizado de 0 a 1. Desenhar a faixa no eixo n\u00e3o teria significado, ent\u00e3o ela aparece como legenda acima das barras. Vale confirmar com o P.O. se \u00e9 isso que o prot\u00f3tipo pede.\n- **Depend\u00eancias:** o seletor de release \u00e9 o `ReleaseSelect` que entrou na `develop` pelo #47, o mesmo da Vis\u00e3o Geral. A lista de entidades continua vindo do `entities/` do endpoint, que usa a configura\u00e7\u00e3o em vigor na release (`resolve_release_configuration`, da TASK21.01.01).\n- M\u00e9tricas tamb\u00e9m s\u00e3o ordenadas do menor para o maior valor. Para algumas m\u00e9tricas (ex.: complexidade), maior \u00e9 pior, e o modelo n\u00e3o informa a dire\u00e7\u00e3o.\n\n## Status Checklist\n\n- [x] Test: 33 testes novos (p\u00e1gina, ordena\u00e7\u00e3o, \"sem dado\", detalhe, estados vazios/erro, hook, troca de release e formata\u00e7\u00e3o); su\u00edte completa com 133 su\u00edtes e 788 testes passando\n- [x] Lint: `next lint` sem erros\n- [ ] Development: ainda n\u00e3o validado no navegador com o Service rodando\n\n## Screenshots\n\nAinda sem screenshot: a valida\u00e7\u00e3o visual contra o prot\u00f3tipo do Figma fica para a homologa\u00e7\u00e3o.\n\n## Execu\u00e7\u00e3o\n\n- Suba o Service na `develop` (o endpoint entrou pelo Service#47 e foi corrigido no Service#50).\n- Acesse `/products/{org}-{produto}-{nome}/dashboards/entidade` ou o item **Dashboards \u203a 4. An\u00e1lise por Entidade**.\n- Escolha release, n\u00edvel e entidade e clique numa barra para ver os filhos.\n\nCloses #38\n\n",
         "closed_by": null,
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/42/reactions",
