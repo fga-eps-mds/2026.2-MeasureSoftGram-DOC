@@ -18,6 +18,8 @@ e foi conferido em **27/09/2026** contra a branch `develop` dos repositórios `2
 são a linha de desenvolvimento ativa (ver [Diagnóstico](../diagnostico/diagnostico.mdx)).
 Onde o código atual diverge do documento anterior, vale o código.
 
+Em **20/10/2026** o documento foi atualizado para refletir a retirada do Grafana (US07.01).
+
 :::
 
 ## Visão geral
@@ -39,7 +41,7 @@ arquiteturais, o impacto do MVP de 2026.2, as metas e restrições e as decisõe
   matemático e é importado por quem precisa calcular (Service e CLI). Não há chamada de rede
   para calcular.
 - **O Service é o ponto de acesso aos dados.** Front, Plugin, Action e MCP falam com o
-  Service por HTTP. A exceção é o Grafana, que lê o banco diretamente.
+  Service por HTTP.
 - **A coleta acontece fora do Service.** As métricas são extraídas no CI do usuário (Action)
   ou na máquina do usuário (CLI), a partir do SonarQube e do GitHub.
 
@@ -49,13 +51,12 @@ arquiteturais, o impacto do MVP de 2026.2, as metas e restrições e as decisõe
 | --- | --- | --- | --- |
 | Core | Modelo matemático de qualidade: medidas, subcaracterísticas, características e TSQMI | Python 3.10+, pandas, numpy, marshmallow | PyPI `msgram_core` (1.5.5rc1 no `develop`) |
 | Parser | Extração e normalização de métricas do SonarQube (estático) e do GitHub (dinâmico), por plugins | Python 3.9+, pandas, requests | PyPI `msgram-parser` (1.2.3rc1) |
-| Service | API REST, autenticação, persistência, cálculo via Core, job diário de releases e autorização dos dashboards | Django 5.2, DRF 3.18, django-allauth, APScheduler, gunicorn, Python 3.12, uv | Imagem Docker própria (DockerHub) |
-| Front | Interface web: organizações, produtos, repositórios, releases e dashboards | Next.js 12.2, React 18, MUI 5, ECharts, TypeScript, pnpm | Imagem Docker própria (DockerHub) |
+| Service | API REST, autenticação, persistência, cálculo via Core, job diário de releases e dados dos dashboards por release | Django 5.2, DRF 3.18, django-allauth, APScheduler, gunicorn, Python 3.12, uv | Imagem Docker própria (DockerHub) |
+| Front | Interface web: organizações, produtos, repositórios, releases e dashboards nativos (ECharts) | Next.js 12.2, React 18, MUI 5, ECharts, TypeScript, pnpm | Imagem Docker própria (DockerHub) |
 | CLI | Extração e cálculo local, sem acesso ao Service | Python 3.9+ | PyPI `msgram` (3.3.1rc2) |
 | Action | Coleta métricas no CI do usuário, envia ao Service e comenta o resultado no PR | TypeScript, `@actions/*`, octokit, axios, runtime node20 | GitHub Action |
 | Plugin | Painel de qualidade, dashboards e execução local da Action dentro do VS Code | TypeScript (extension host) + React e Vite (webview) | Extensão VS Code (1.0.2) |
 | AI (MCP) | Expõe os dados do Service a clientes de IA pelo protocolo MCP | Python 3.11+, SDK `mcp` (FastMCP), httpx | Imagem Docker `measuresoftgram/ai` |
-| Grafana | Dashboards analíticos lidos direto do banco e incorporados por iframe | Grafana com plugin `volkovlabs-echarts-panel` | Container de terceiros |
 | PostgreSQL | Persistência do Service | PostgreSQL 18 (`postgres:18-alpine`) | Container |
 
 :::warning Versões do Core desalinhadas
@@ -77,7 +78,6 @@ A stack do Service é orquestrada por dois arquivos Docker Compose: `docker-comp
 | `db` | `postgres:18-alpine` | Volume `service_postgres_data`. Em desenvolvimento publica a porta 5432 só em `127.0.0.1`; em produção não publica porta. |
 | `service` | Dev: build local (multi-stage, builder com uv e runtime `python:3.12-slim-bookworm`). Prod: imagem do DockerHub. | gunicorn com `GUNICORN_WORKERS` (padrão 3). Healthcheck controla a ordem de subida. |
 | `front` | Imagem do DockerHub (só no compose de produção) | Sobe junto com a stack em produção. |
-| `grafana` | `grafana/grafana:latest` | Volume `grafana_data`; dashboards e datasource provisionados por arquivo. |
 | `proxy` | `nginx:1.27-alpine` (só em produção) | Único container que publica porta no host (`80:80`). |
 
 Em produção, os containers ficam na rede bridge `msgram`. O nginx interno fica atrás de um
@@ -87,31 +87,35 @@ caminho:
 | Rota | Destino |
 | --- | --- |
 | `/api/`, `/swagger/`, `/admin/`, `/static/` | `service:8080` (Django) |
-| `/grafana/` | `grafana:3000`, com upgrade para WebSocket |
 | `/` | `front` (Next.js) |
 
-### Integração com o Grafana
+### Dashboards por release
 
-O Grafana consulta o **mesmo PostgreSQL do Service diretamente**, sem passar pela API. Para
-ser incorporado por iframe, ele roda com acesso anônimo somente leitura
-(`GF_AUTH_ANONYMOUS_ENABLED`, papel `Viewer`) e `GF_SECURITY_ALLOW_EMBEDDING=true`.
+Os dashboards são gráficos nativos do Front (ECharts) que leem a API do Service. Não há iframe
+nem acesso direto ao banco: a autorização é a do resto da API, e **qualquer membro da
+organização** vê os dashboards dos produtos dela, não só o administrador (quem não é membro
+recebe 404).
 
-Como o Grafana é aberto para leitura, o controle de acesso fica no Service, no app
-`grafana_proxy`:
+**Regra do valor por release.** O valor de uma entidade (característica, subcaracterística,
+medida, métrica ou TSQMI) em uma release é o do **último cálculo feito entre o dia de `start_at`
+e o dia de `end_at`**, ambos inclusive, a mesma regra do gráfico de pulso. Release sem análise
+aparece como "sem dado", e não como zero. Por isso os valores podem diferir dos do Grafana, que
+usava a média dos últimos 7 dias (planejado × realizado) e dos últimos 30 dias (radar).
 
-- `GET /api/v1/grafana/dashboards/` lista os dashboards disponíveis.
-- `GET /api/v1/grafana/dashboard/<uid>/` valida se o usuário tem acesso ao produto e ao
-  repositório informados e devolve a URL do dashboard já filtrada, usada como `src` do iframe.
+Os endpoints ficam em `/api/v1/organizations/{org}/products/{produto}/`:
 
-Front e Plugin nunca chamam o Grafana para autorização: sempre pedem a URL ao Service.
+| Rota | O que devolve | Usada em |
+| --- | --- | --- |
+| `release-dashboard/summary/?release_id=` | Totais da release: características, subcaracterísticas, medidas e métricas da configuração da release (contados como entidades, e não como linhas do histórico), repositórios com análise na janela e arquivos distintos analisados | Visão Geral de Qualidade |
+| `release-dashboard/characteristics/?release_id=` | Valor de cada característica por repositório (radar), meta da release, média e desvio entre os repositórios (planejado × realizado) e TSQMI por repositório | Visão Geral de Qualidade |
+| `repositories/{repo}/historical-values/{nível}/` | Histórico do repositório, com os 100 registros mais recentes de cada entidade. `{nível}` é `characteristics`, `subcharacteristics`, `measures` ou `metrics`; o de métricas aceita `?qualifier=TRK` para trazer só o valor do repositório | Evolução Temporal e tela do repositório |
+| `repositories/{repo}/release-history/?level=&keys=` | Um ponto por release para cada entidade do nível, da mais antiga para a mais nova | Disponível, ainda sem tela |
 
-:::note Retirada do Grafana
-
-A retirada do Grafana está planejada para o MVP de 2026.2 (ver
-[Impacto do MVP na arquitetura](#impacto-do-mvp-na-arquitetura)). Enquanto isso não
-acontece, esta seção descreve o estado vigente.
-
-:::
+O `release_id` é obrigatório nas rotas `release-dashboard/*` (400 sem ele; 404 se a release não
+for do produto). Os repositórios considerados são os da release, sempre restritos ao produto;
+se a release não escolheu nenhum, valem todos os do produto. A configuração da release segue a
+regra da árvore do modelo. O detalhe de cada rota está em `src/endpoints.md`, no repositório do
+Service.
 
 ## Visão lógica
 
@@ -127,11 +131,8 @@ flowchart TB
         RP["nginx<br/>(proxy interno)"]
         SVC["Service<br/>(Django + Core como biblioteca)"]
         DB[("PostgreSQL 18")]
-        GF["Grafana"]
         RP -->|"/api /swagger /admin /static"| SVC
-        RP -->|"/grafana"| GF
         SVC --> DB
-        GF -->|"SQL direto"| DB
     end
 
     subgraph CI["CI do usuário"]
@@ -148,8 +149,6 @@ flowchart TB
 
     FE <-->|HTTPS| RP
     VSC <-->|"HTTPS (token)"| RP
-    FE -.->|"iframe (URL resolvida pelo Service)"| GF
-    VSC -.->|"iframe (URL resolvida pelo Service)"| GF
     IA <-->|MCP| MCP
     MCP <-->|"HTTP/REST (token)"| RP
     ACT -->|"HTTPS (token)"| RP
@@ -184,7 +183,6 @@ existente roda dentro do processo do Service.
 | Processo | Natureza | Comunicação |
 | --- | --- | --- |
 | Service | gunicorn (WSGI síncrono), modelo prefork com `GUNICORN_WORKERS` processos (padrão 3) | HTTP/REST síncrono |
-| Grafana | Container com ciclo de vida próprio | SQL direto no PostgreSQL |
 | Servidor MCP | Container HTTP (porta 8000) | Recebe chamadas MCP e as traduz em chamadas HTTP síncronas ao Service |
 | Front | Servidor Next.js | Chama a API do Service |
 
@@ -305,11 +303,10 @@ Projeto Django em `src/`, com um app por entidade do domínio:
 | `measures`, `subcharacteristics`, `characteristics` | Entidades suportadas e valores calculados de cada nível do modelo; matriz de balanceamento |
 | `tsqmi` | Nota final de qualidade |
 | `goals` | Metas de qualidade (equalizador) |
-| `releases` | Releases e job diário de cálculo |
+| `releases` | Releases, job diário de cálculo e dados dos dashboards por release |
 | `release_configuration` | Configuração do modelo por produto |
 | `math_model` | Endpoint de cálculo usado pela Action |
 | `entity_trees` | Árvore de relacionamento entre entidades de qualidade |
-| `grafana_proxy` | Autorização e resolução de URLs dos dashboards |
 | `utils` | Utilitários e compatibilidade com o Core |
 
 ### Front
@@ -321,6 +318,20 @@ src/
 ├── mocks/
 └── shared/       # components, contexts, hooks, layouts, services, utils, customTypes
 ```
+
+Os dashboards da US07.01 ficam em `src/pages/products/[product]/dashboards/` e na tela do repositório:
+
+| Tela | Rota do Front | Conteúdo |
+| --- | --- | --- |
+| Visão Geral de Qualidade | `dashboards/overview` | Totais da release, TSQMI por repositório, radar das características de um repositório e planejado × realizado por característica; seletor de release que abre na atual |
+| Evolução Temporal | `dashboards/temporal` | Quatro gráficos (características, subcaracterísticas, medidas e métricas) do repositório escolhido, com um ponto por release |
+| Repositório | `repositories/[repository]` | Evolução das características do repositório, com um ponto por release |
+
+Os componentes compartilhados ficam em `src/shared/`: `DashboardCard` (estados de carregamento,
+sem dados e erro com "Tentar novamente"), `ReleaseEvolutionChart` (linhas por release),
+`ReleaseSelect` e `dashboardColors` (paleta dos gráficos). Os dashboards do Metamodelo
+(`dashboards/metamodelo`) e da Análise por Entidade (`dashboards/entidade`) pertencem às US21.01
+e US21.02.
 
 ### Action
 
@@ -356,7 +367,7 @@ flowchart TB
     subgraph Webview["webview-ui/ (React + Vite)"]
         APP["App.tsx"]
         DASH["DashboardView"]
-        GRAF["GrafanaView (iframe)"]
+        GRAF["GrafanaView (iframe, sem efeito)"]
         SETV["SettingsView"]
         ACTIONV["action/"]
     end
@@ -378,6 +389,14 @@ flowchart TB
 
 Para executar a Action localmente, o Plugin salva o workflow no workspace do usuário e sobe
 um `docker compose` empacotado na extensão (`resources/docker`) em um terminal do VS Code.
+
+:::note Plugin e Grafana
+
+O Plugin do `develop` ainda tem a tela `GrafanaView`, que pede a URL do dashboard em
+`/api/v1/grafana/`. Esse endpoint saiu do Service com a US07.01, então a tela não funciona
+mais. O Plugin está fora do escopo do semestre (ata do PO de 07/10/2026) e não foi alterado.
+
+:::
 
 ### Servidor MCP (AI)
 
@@ -402,19 +421,6 @@ A autenticação usa uma conta de serviço fixa (`SERVICE`, `MSGRAM_USER`, `MSGR
 o token é obtido uma vez na subida e reaproveitado por todas as tools. O MCP não repassa a
 identidade de quem usa o agente de IA.
 
-### Grafana
-
-O Grafana não tem código próprio: é provisionado por arquivos no repositório do Service.
-
-```
-grafana/
-├── dashboards/            # dashboards em JSON
-├── provisioning/
-│   ├── datasources/       # datasource PostgreSQL (mesmo banco do Service)
-│   └── dashboards/        # provider que carrega os JSONs
-└── seed_planejado_vs_realizado.sql
-```
-
 ## Visão física
 
 ```mermaid
@@ -432,17 +438,12 @@ flowchart TB
             NG["proxy<br/>nginx:1.27-alpine :80"]
             SV["service<br/>gunicorn"]
             FR["front"]
-            GR["grafana"]
             PG["db<br/>postgres:18-alpine"]
             V1[("service_postgres_data")]
-            V2[("grafana_data")]
             NG --> SV
             NG --> FR
-            NG --> GR
             SV --> PG
-            GR --> PG
             PG --- V1
-            GR --- V2
         end
         OR --> NG
     end
@@ -458,8 +459,8 @@ flowchart TB
     MC -->|HTTP/REST| OR
 ```
 
-Em desenvolvimento não há nginx nem openresty: o Service publica a porta 8080, o Grafana
-publica a porta 5000 mapeada para 3000, e o banco fica só em `127.0.0.1:5432`.
+Em desenvolvimento não há nginx nem openresty: o Service publica a porta 8080 e o banco
+fica só em `127.0.0.1:5432`.
 
 :::note Ambiente de produção
 
@@ -536,7 +537,7 @@ flowchart LR
 
 O modelo abaixo foi extraído dos `models.py` do Service. Tabelas de infraestrutura de
 terceiros (autenticação do Django, `authtoken`, `allauth`, `django_apscheduler`) ficam fora do
-escopo. Os apps `grafana_proxy`, `entity_trees` e `math_model` não têm modelos próprios. Para
+escopo. Os apps `entity_trees` e `math_model` não têm modelos próprios. Para
 legibilidade, o diagrama mostra os atributos das entidades principais.
 
 ```mermaid
@@ -677,7 +678,6 @@ O MER textual completo e o diagrama lógico gerado por `graph_models` estão no
 | --- | --- | --- |
 | Três gerações de repositórios públicas (centrais, `2026.1-*`, `2026.2-*`) sem decisão registrada | Correções precisam escolher onde entram; repositórios abandonados continuam com defeitos conhecidos | MSG-39 |
 | Versões do Core divergentes entre Service, CLI e Core | Resultados podem diferir entre o fluxo hospedado e a CLI; exige código de compatibilidade no Service | MSG-05 |
-| Grafana lê o banco direto e roda com acesso anônimo | A autorização depende do `grafana_proxy`; uma URL de dashboard vazada é acessível sem login | Visão lógica |
 | MCP autentica com conta de serviço fixa | Todas as consultas via IA usam a mesma identidade, sem controle de acesso por usuário | MSG-50 |
 | Thread de onboarding sem fila nem retentativa | Falhas silenciosas se o worker reiniciar | Visão de processo |
 | Métricas coletadas sem vínculo com release | Planejado × realizado depende de janela de tempo, não de vínculo explícito | Modelo de dados |
@@ -693,7 +693,7 @@ arquitetura nestes pontos:
 | Frente do MVP | Componentes afetados | Mudança esperada |
 | --- | --- | --- |
 | GitLab como alternativa ao GitHub | Service, Front, Plugin, Action | Autenticação via GitLab (OAuth2/OIDC), importação de repositórios pela API do GitLab, pipeline de CI análoga à Action e nomenclatura adaptada (merge request em vez de pull request). O campo `platform` de `Repository` já aceita `gitlab`. |
-| Retirada do Grafana | Service, Front, Plugin, infraestrutura | Gráficos recriados no Front e no Plugin; remoção do container, do `grafana_proxy` e do acesso direto ao banco. |
+| Retirada do Grafana | Service, Front, infraestrutura | Concluída na US07.01: gráficos nativos no Front e remoção do container, do `grafana_proxy` e do acesso direto ao banco. O Plugin saiu do semestre e ainda referencia o Grafana. |
 | Rastreabilidade da degradação e alerta antes do merge | Action, Service, Front | Uso de `path` das métricas coletadas para ligar indicadores a arquivos; alerta no PR quando a qualidade cair. |
 | Característica de segurança e medida de Dívida Técnica | Core, Parser, Action, Service | Novas métricas (SAST, DAST, SCM e chaves de dívida técnica do SonarQube) e novas medidas no modelo. |
 | Pesos qualitativos (AHP) | Core, Service, Front | Cálculo de pesos das entidades de qualidade a partir de comparações par a par. |
@@ -726,9 +726,9 @@ arquitetura nestes pontos:
 
 ## Decisões arquiteturais
 
-Nenhuma decisão arquitetural foi registrada formalmente até esta versão. As propostas abaixo
-foram levantadas no [Diagnóstico](../diagnostico/diagnostico.mdx) e na Lean Inception e
-**aguardam decisão da equipe**.
+Só a ADR 002 foi aceita e implementada (US07.01). As demais propostas foram levantadas no
+[Diagnóstico](../diagnostico/diagnostico.mdx) e na Lean Inception e **aguardam decisão da
+equipe**.
 
 ### ADR 001 - Repositórios `2026.2-*` como conjunto canônico
 
@@ -745,16 +745,19 @@ foram levantadas no [Diagnóstico](../diagnostico/diagnostico.mdx) e na Lean Inc
 
 ### ADR 002 - Retirada do Grafana
 
-- **Status:** Proposta
-- **Contexto:** O Grafana roda como container separado, lê o banco diretamente e precisa de
+- **Status:** Aceita e implementada (US07.01)
+- **Contexto:** O Grafana rodava como container separado, lia o banco diretamente e precisava de
   acesso anônimo para ser incorporado por iframe no Front e no Plugin. A retirada foi mapeada
-  na revisão técnica da Lean Inception.
-- **Decisão proposta:** Substituir os dashboards do Grafana por gráficos implementados no
-  Front e no Plugin, consumindo a API do Service.
+  na revisão técnica da Lean Inception e a estratégia foi validada pelo PO em 23/09/2026.
+- **Decisão:** Substituir os dashboards do Grafana por gráficos implementados no Front,
+  consumindo a API do Service, com o valor de cada release definido pela última análise dentro
+  do período da release (ver [Dashboards por release](#dashboards-por-release)).
 - **Alternativas consideradas:** Manter o Grafana com autenticação própria; manter o Grafana
   apenas para uso interno.
-- **Consequências:** Remove um container, o `grafana_proxy` e o acesso direto ao banco. Exige
-  recriar todos os gráficos e definir a unidade de referência dos dados.
+- **Consequências:** Saíram um container, o `grafana_proxy` e o acesso direto ao banco, e
+  qualquer membro da organização passa a ver os dashboards. Os valores podem diferir dos
+  antigos, que usavam médias de 7 e de 30 dias. O Plugin, fora do escopo do semestre, não foi
+  migrado.
 
 ### ADR 003 - Vínculo explícito entre métricas coletadas e release
 
