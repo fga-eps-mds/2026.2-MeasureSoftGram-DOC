@@ -89,6 +89,34 @@ caminho:
 | `/api/`, `/swagger/`, `/admin/`, `/static/` | `service:8080` (Django) |
 | `/` | `front` (Next.js) |
 
+### Dashboards por release
+
+Os dashboards são gráficos nativos do Front (ECharts) que leem a API do Service. Não há iframe
+nem acesso direto ao banco: a autorização é a do resto da API, e **qualquer membro da
+organização** vê os dashboards dos produtos dela, não só o administrador (quem não é membro
+recebe 404).
+
+**Regra do valor por release.** O valor de uma entidade (característica, subcaracterística,
+medida, métrica ou TSQMI) em uma release é o do **último cálculo feito entre o dia de `start_at`
+e o dia de `end_at`**, ambos inclusive, a mesma regra do gráfico de pulso. Release sem análise
+aparece como "sem dado", e não como zero. Por isso os valores podem diferir dos do Grafana, que
+usava a média dos últimos 7 dias (planejado × realizado) e dos últimos 30 dias (radar).
+
+Os endpoints ficam em `/api/v1/organizations/{org}/products/{produto}/`:
+
+| Rota | O que devolve | Usada em |
+| --- | --- | --- |
+| `release-dashboard/summary/?release_id=` | Totais da release: características, subcaracterísticas, medidas e métricas da configuração da release (contados como entidades, e não como linhas do histórico), repositórios com análise na janela e arquivos distintos analisados | Visão Geral de Qualidade |
+| `release-dashboard/characteristics/?release_id=` | Valor de cada característica por repositório (radar), meta da release, média e desvio entre os repositórios (planejado × realizado) e TSQMI por repositório | Visão Geral de Qualidade |
+| `repositories/{repo}/historical-values/{nível}/` | Histórico do repositório, com os 100 registros mais recentes de cada entidade. `{nível}` é `characteristics`, `subcharacteristics`, `measures` ou `metrics`; o de métricas aceita `?qualifier=TRK` para trazer só o valor do repositório | Evolução Temporal e tela do repositório |
+| `repositories/{repo}/release-history/?level=&keys=` | Um ponto por release para cada entidade do nível, da mais antiga para a mais nova | Disponível, ainda sem tela |
+
+O `release_id` é obrigatório nas rotas `release-dashboard/*` (400 sem ele; 404 se a release não
+for do produto). Os repositórios considerados são os da release, sempre restritos ao produto;
+se a release não escolheu nenhum, valem todos os do produto. A configuração da release segue a
+regra da árvore do modelo. O detalhe de cada rota está em `src/endpoints.md`, no repositório do
+Service.
+
 ## Visão lógica
 
 ```mermaid
@@ -290,6 +318,20 @@ src/
 ├── mocks/
 └── shared/       # components, contexts, hooks, layouts, services, utils, customTypes
 ```
+
+Os dashboards da US07.01 ficam em `src/pages/products/[product]/dashboards/` e na tela do repositório:
+
+| Tela | Rota do Front | Conteúdo |
+| --- | --- | --- |
+| Visão Geral de Qualidade | `dashboards/overview` | Totais da release, TSQMI por repositório, radar das características de um repositório e planejado × realizado por característica; seletor de release que abre na atual |
+| Evolução Temporal | `dashboards/temporal` | Quatro gráficos (características, subcaracterísticas, medidas e métricas) do repositório escolhido, com um ponto por release |
+| Repositório | `repositories/[repository]` | Evolução das características do repositório, com um ponto por release |
+
+Os componentes compartilhados ficam em `src/shared/`: `DashboardCard` (estados de carregamento,
+sem dados e erro com "Tentar novamente"), `ReleaseEvolutionChart` (linhas por release),
+`ReleaseSelect` e `dashboardColors` (paleta dos gráficos). Os dashboards do Metamodelo
+(`dashboards/metamodelo`) e da Análise por Entidade (`dashboards/entidade`) pertencem às US21.01
+e US21.02.
 
 ### Action
 
@@ -709,7 +751,7 @@ equipe**.
   na revisão técnica da Lean Inception e a estratégia foi validada pelo PO em 23/09/2026.
 - **Decisão:** Substituir os dashboards do Grafana por gráficos implementados no Front,
   consumindo a API do Service, com o valor de cada release definido pela última análise dentro
-  do período da release.
+  do período da release (ver [Dashboards por release](#dashboards-por-release)).
 - **Alternativas consideradas:** Manter o Grafana com autenticação própria; manter o Grafana
   apenas para uso interno.
 - **Consequências:** Saíram um container, o `grafana_proxy` e o acesso direto ao banco, e
