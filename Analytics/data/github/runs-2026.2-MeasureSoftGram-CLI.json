@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-20T17:21:48+00:00",
+ "coletado_em": "2026-10-20T23:18:32+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-CLI",
  "desde": "2026-08-24",
@@ -119,20 +119,6 @@
    "workflow_id": 346797058
   },
   {
-   "id": 39065176790,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "feat/ci-automation",
-   "event": "pull_request",
-   "created_at": "2026-10-17T20:04:37Z",
-   "run_started_at": "2026-10-17T20:04:37Z",
-   "updated_at": "2026-10-17T20:06:35Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39065176790",
-   "run_number": 45,
-   "workflow_id": 346797058
-  },
-  {
    "id": 39065176519,
    "name": "Linter",
    "status": "completed",
@@ -161,6 +147,34 @@
    "workflow_id": 368530720
   },
   {
+   "id": 39065176790,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "feat/ci-automation",
+   "event": "pull_request",
+   "created_at": "2026-10-17T20:04:37Z",
+   "run_started_at": "2026-10-17T20:04:37Z",
+   "updated_at": "2026-10-17T20:06:35Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39065176790",
+   "run_number": 45,
+   "workflow_id": 346797058
+  },
+  {
+   "id": 39064631749,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-17T19:56:58Z",
+   "run_started_at": "2026-10-17T19:56:58Z",
+   "updated_at": "2026-10-17T19:58:55Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064631749",
+   "run_number": 44,
+   "workflow_id": 346797058
+  },
+  {
    "id": 39064631768,
    "name": "Linter",
    "status": "completed",
@@ -187,20 +201,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064631758",
    "run_number": 16,
    "workflow_id": 346797056
-  },
-  {
-   "id": 39064631749,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-17T19:56:58Z",
-   "run_started_at": "2026-10-17T19:56:58Z",
-   "updated_at": "2026-10-17T19:58:55Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064631749",
-   "run_number": 44,
-   "workflow_id": 346797058
   },
   {
    "id": 39064148902,
