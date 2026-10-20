@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-20T15:30:12+00:00",
+ "coletado_em": "2026-10-20T17:21:48+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
- "total_count": 196,
+ "total_count": 198,
  "workflow_runs": [
+  {
+   "id": 39464693144,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "perf/medidas-sem-prefetch",
+   "event": "pull_request",
+   "created_at": "2026-10-20T17:16:55Z",
+   "run_started_at": "2026-10-20T17:16:55Z",
+   "updated_at": "2026-10-20T17:18:58Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/39464693144",
+   "run_number": 111,
+   "workflow_id": 339749512
+  },
+  {
+   "id": 39463582412,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "refactor/sonar-issues-dos-prs",
+   "event": "pull_request",
+   "created_at": "2026-10-20T17:09:21Z",
+   "run_started_at": "2026-10-20T17:09:21Z",
+   "updated_at": "2026-10-20T17:11:21Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/39463582412",
+   "run_number": 110,
+   "workflow_id": 339749512
+  },
   {
    "id": 39433376501,
    "name": "Export de métricas",
