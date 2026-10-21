@@ -1,0 +1,241 @@
+---
+id: ata-po-14-10
+title: Ata - Reunião com o PO (14/10/2026)
+sidebar_position: 6
+---
+
+# Ata - Reunião Semanal com o Product Owner
+
+**Data**: 14/10/2026 · 19h35 · **Duração**: 1h 24m 44s  
+**Tipo**: Resolução de bloqueios de contas, alinhamento de entregas, revisão de protótipos e decisões de arquitetura/governança  
+**Participantes**: Hilmer Rodrigues Neri (PO), Luciano De Freitas Melo, Luiza Maluf Amorim,
+Milena Fernandes Rocha, Alexandre De Santana Beck, Gabriel Moura, Henrique Camelo Quenino,
+Gustavo Roberto Silva De Melo, Diogo Rodrigues Barboza, Nathan Abreu
+
+:::info[Resultado]
+Foram definidas medidas de contorno para o bloqueio de acesso às contas oficiais do projeto (Gmail,
+GitHub, PyPI) e acordada a criação da conta oficial no GitLab com e-mail secundário de segurança. O
+PO validou o uso contínuo de formulários para os roteiros de teste, aprovou a evolução de
+performance no Frontend (SWR/Next.js) e reportou **dois defeitos importantes**: uma regressão na
+paginação de repositórios na Web e uma **falha crítica na CLI, que está ignorando as edições feitas
+no arquivo de configuração `.msgram`**. Ficou definido que os intervalos de cores do TSQMI serão
+implementados *hardcoded* na Release 2 e dinâmicos na Release 3, o épico de LGPD foi movido para o
+final do MVP e a coleta de métricas do dashboard gerencial foi autorizada de forma centralizada
+mediante uso de *squash merge* nos PRs.
+:::
+
+---
+
+## 1. Bloqueio de Acesso às Contas Oficiais (Gmail, GitHub, PyPI e GitLab)
+
+O PO relatou grande desgaste e perda de tempo (cerca de 8 horas) tentando recuperar o acesso
+administrativo completo às contas institucionais do MeasureSoftGram:
+
+- **Gmail**: A conta não possui autenticação de dois fatores (2FA) padrão, mas exige uma chave de
+  acesso (*passkey*) atrelada ao aparelho celular antigo do PO, cuja câmera está danificada e impede
+  a leitura do QR Code. Atualmente, o PO consegue apenas visualizar os e-mails recebidos (pois a
+  conta está vinculada ao seu Gmail pessoal), mas qualquer alteração de segurança, senha ou login
+  direto é bloqueada.
+- **GitHub e PyPI**: Na conta do GitHub, alguém da equipe de `2024.1` habilitou o 2FA em julho de
+  2024 sem os dados do PO. Tanto no PyPI quanto no Gmail, as políticas de segurança informam que
+  contas sem código de recuperação não têm acesso restabelecido pelo suporte. Migrar para contas
+  totalmente novas geraria perda de histórico e da base de usuários dos pacotes já publicados no
+  PyPI e no Docker Hub.
+- **Plugin no VS Code Marketplace**: Luiza explicou que a remoção do plugin exigia um código de
+  verificação enviado para o e-mail do projeto. Contudo, ela, Lucas, Gabriel, Alisson e Gustavo
+  estão planejando melhorias e ajustes no plugin para tentar evitar a necessidade de retirá-lo do
+  ar, sem prejudicar as demandas da sprint.
+
+### Soluções de Contorno e Prevenção (GitLab)
+
+- **Sincronização de códigos via e-mail**: Como o PO consegue ler a caixa de entrada do Gmail
+  oficial através de sua conta pessoal, sempre que a equipe precisar de códigos de verificação (como
+  para o Marketplace ou outras integrações), o horário será sincronizado para que ele repasse o
+  código.
+- **Criação da conta do GitLab**: Ainda não existe conta do MeasureSoftGram no GitLab. O PO criará a
+  conta oficial no dia seguinte (15/10), gerará o token de organização necessário para a equipe
+  testar a importação de repositórios e vinculará seu **e-mail pessoal como e-mail secundário de
+  recuperação**, garantindo que o problema de perda de acesso não se repita.
+
+---
+
+## 2. Governança, Testes de Aceitação e Fluxo de Releases
+
+### Roteiros de Teste (Formulários vs. ZenHub)
+
+- Luciano questionou se os formulários de teste poderiam ser substituídos por instruções diretas no
+  ZenHub para evitar retrabalho e erros humanos de duplicação de Critérios de Aceitação (como
+  ocorreu em um dos formulários recentes).
+- **Decisão do PO**: Rejeitou colocar os roteiros de teste nos comentários das issues no ZenHub.
+  Explicou que o volume de instruções de execução e comandos de terminal é extenso demais e que
+  misturar requisitos com roteiros de teste desvirtua a ferramenta. Os **formulários de teste serão
+  mantidos**, cabendo à equipe criar um processo interno de revisão para evitar erros de cópia.
+
+> "A gente está juntando coisa demais, requisito e teste em um lugar só. E aquilo ali não é feito
+> para isso."
+>
+> — Hilmer Rodrigues Neri, 25:18
+
+### Atraso na Release Minor e Organização do ZenHub
+
+- O PO cobrou a entrega da *release minor* prevista para segunda-feira (12/10), que não ocorreu.
+- Luciano explicou que a equipe se perdeu nos prazos intermediários das *minors* (focando apenas nas
+  *majors*) e evitou gerar a release porque a branch `develop` continha código pronto misturado com
+  histórias que ainda aguardavam validação do PO, temendo subir código não validado para produção
+  (`main`).
+- **Alinhamento no Board**: O PO apontou que duas histórias que ele ainda estava testando (relacionadas ao épico de Dívida Técnica) constavam
+  como "Fechadas" (*Closed*) no ZenHub. A equipe corrigiu o status para a coluna `Review/QA` e `Validação pelo PO`.
+- **Desbloqueio da Sprint**: Como o PO só conseguirá validar as novas histórias e protótipos até
+  sábado (17/10), ele autorizou excepcionalmente que a equipe inicie o desenvolvimento
+  (especialmente de *backend*) das histórias pendentes de validação nesta sprint, assumindo o risco
+  de pequenos ajustes posteriores para não travar o time.
+
+---
+
+## 3. Acompanhamento Técnico, Bugs e Melhorias
+
+| Frente / Issue | Status e Discussão | Encaminhamento |
+| :--- | :--- | :--- |
+| **Performance do Front (SWR / Next.js)** | Alexandre relatou a atualização da biblioteca HTTP `SWR` para a versão máxima compatível com o Next.js atual e a resolução das chamadas múltiplas em cascata. O PO confirmou que já sentiu uma **melhora muito significativa** na fluidez durante os testes. | Concluído no escopo mapeado. |
+| **Regressão na Importação de Repositórios** | O PO reportou que, ao logar, o sistema não está listando todos os repositórios da conta nem os repositórios da organização `fga-eps-mds`. Trata-se de uma regressão de um problema de paginação que havia sido corrigido no final do semestre passado. | Alexandre anotou o defeito para investigar e corrigir a paginação. |
+| **Remoção de Código Obsoleto (#113)** | Gabriel informou que foram removidas ~3.800 linhas de código morto que não deveriam estar no repositório e adicionados 2 testes pontuais ao final para subir a cobertura e aprovar o PR. | Concluído. |
+| **Bug no Login OAuth (Erro 500)** | O PO perguntou sobre o erro no login com GitHub reportado no início do semestre. Henrique informou que o erro 500 já foi corrigido localmente e o *merge* na `develop` foi feito no dia da reunião (14/10), faltando apenas atualizar a implantação. | Aguardando deploy no ambiente. |
+| **Arquitetura de Provedores (US 11.3 / GitLab)** | Luciano e o PO reafirmaram que contas de provedores distintos (GitHub e GitLab) são isoladas e não se misturam na mesma sessão (padrão SonarQube). Gustavo alertou que, na modelagem atual do banco, a plataforma está atrelada ao *Repositório* e não à *Organização/Grupo*, o que permitiria inserir repositórios GitHub dentro de um grupo GitLab. | Gustavo documentará essa restrição arquitetural no épico de importação do GitLab para refatoração. |
+
+### Falha Crítica na CLI: Arquivo de Configuração `.msgram` Ignorado e *Performance Efficiency*
+
+Durante a revisão da limpeza de código e ao final da reunião (a pedido de Luciano para esclarecer os
+comentários deixados nos testes de aceitação), o PO detalhou dois problemas interligados e críticos
+identificados ao executar o roteiro de testes da **CLI**:
+
+- **Geração indevida de *Performance Efficiency* no comando `init`**:
+  - O PO questionou por que o comando de inicialização (`init`) da CLI ainda está gerando no arquivo
+    de configuração a característica de *Performance Efficiency* (*Performance e Eficiência*), visto
+    que esse trecho havia se tornado "código lixo" em semestres anteriores.
+  - Permaneceu a dúvida arquitetural sobre o que está ocorrendo nos bastidores: se o Core e o
+    Service ainda estão considerando efetivamente essa característica e suas métricas associadas nas
+    métricas suportadas pelo cálculo.
+  - **Encaminhamento**: Gabriel Moura comprometeu-se a investigar na biblioteca (`Core`), no
+    `Service` e no `Front` se a característica ainda é processada e confirmar o comportamento ao PO.
+- **Bug Crítico — Edições no arquivo `.msgram` não surtem efeito no cálculo**:
+  - O PO relatou que seguiu o roteiro de testes e, no "caminho feliz" (execução padrão sem alterar
+    configurações), a CLI funcionou normalmente.
+  - Contudo, ao realizar o teste de customização editando manualmente o arquivo `.msgram` — no qual
+    **removeu a característica de *Performance Efficiency* e alterou os pesos das outras três
+    características** —, a execução da CLI **retornou exatamente o mesmo resultado anterior**, sem
+    qualquer reflexo das mudanças realizadas.
+  - **Diagnóstico do PO**: A falha é classificada como **crítica**, pois evidencia que a CLI não
+    está lendo ou consumindo o arquivo de configuração `.msgram` durante o cálculo, utilizando
+    provavelmente valores padrões fixos internamente.
+
+> "Na hora que eu peguei o arquivo `.msgram`, editei, tirei característica e mudei os pesos, não
+> teve reflexo nenhum. Eu comentei com o Gabriel, inclusive, que a sensação que está me dando — e
+> por isso é crítico — é que não está usando o arquivo de configuração. Eu tirei a característica de
+> performance e eficiência, mudei os pesos das outras três e o resultado é exatamente o mesmo."
+>
+> — Hilmer Rodrigues Neri, 1:22:02
+
+## 4. Revisão de Protótipos e Escopo de Produto
+
+### Gráfico Histórico de TSQMI (US 6.1) e Intervalos do Sistema
+
+- Milena explicou que a versão subida anteriormente estava desatualizada porque os desenvolvedores
+  codificaram antes da finalização do novo protótipo; os ajustes (incluindo o botão de exportar e os
+  marcadores de release) entrarão na sprint atual.
+- **Defeito visual em produção**: O PO notou que no ambiente atual há duas etiquetas (tags)
+  sobrepostas na mesma data, uma com cor sólida e outra transparente.
+- **Padrão de nomenclatura da etiqueta de Release**: Ficou definido pelo PO que o marcador no
+  gráfico deve exibir `[Tag da versão vinda do repositório] + [Nome/descrição da release cadastrado]`.
+  Caso um produto possua múltiplos repositórios com tags diferentes, cada um exibirá sua respectiva
+  tag. O PO dispensou nova validação de protótipo para esse ajuste, liberando a implementação direta.
+- **Escopo Global dos Intervalos de Pontuação e Cores (Hardcoded na R2 vs. Dinâmico na R3)**:
+  - **Impacto Sistêmico**: O PO destacou que os intervalos de valores e o esquema de cores presentes
+    no protótipo extrapolam o escopo da US 6.1, pois pertencem ao produto como um todo. Os mesmos
+    intervalos e cores são consumidos pelo gráfico de TSQMI, pelo gráfico geral, pelo gráfico de
+    semáforo do dashboard (quando for reimplementado sem o Grafana) e em uma terceira visualização.
+    Por isso, sugeriu que a página de configurações seja o ponto central para definir esses padrões.
+  - **Histórico da Funcionalidade (`2024.1`)**: O PO reforçou que os intervalos não podem ser apenas
+    fixos, devendo permitir customização pelo usuário. Ele recordou que até o semestre `2024.1`
+    existia uma implementação na página antiga (substituída pelo Grafana no semestre passado) que
+    permitia ao usuário configurar esses limites, mas não sabe se o código foi removido (*dropado*)
+    ou apenas ocultado no repositório.
+  - **Arquitetura e Decisão de Escopo**: Luciano pontuou que criar a interface de edição e novos
+    *endpoints* para tornar os valores dinâmicos configura um novo épico/funcionalidade (embora da
+    camada de `Service` para baixo a lógica de cálculo permaneça a mesma). Para não bloquear o
+    desenvolvimento atual, o PO e a equipe fecharam o seguinte acordo:
+    1. **Release 2 (*Hardcoded*)**: Os intervalos e cores serão implementados de forma fixa
+       (*hardcoded*) com os valores atuais para destravar a entrega da US 6.1;
+    2. **Release 3 (Configuração Dinâmica no MVP)**: Como a funcionalidade é indispensável para os
+       demais gráficos, ela **não pode ficar fora do MVP** e entrará obrigatoriamente na Release 3.
+       A equipe deverá investigar se o código legado de `2024.1` ainda existe nos repositórios para
+       servir de base, atualizando-o para a nova estrutura de intervalos.
+
+### Gráfico Planejado × Realizado
+
+- Ao avaliar o protótipo apresentado por Luciano e Alexandre, o PO apontou que a equipe utilizou a
+  imagem de referência que ele havia enviado, mas que o **componente visual do equalizador** deve ser
+  exatamente o mesmo componente já utilizado na tela de planejar release.
+- **Escala vertical**: O PO esclareceu que o gráfico não deve exibir aquela escala vertical lateral
+  de `0` a `1` que constava no rascunho.
+- Durante a navegação em tela, notou-se também lentidão e uma mensagem de erro inadequada induzindo
+  à seleção de repositório ao clicar na release `4.0`. A equipe ajustará o protótipo e corrigirá os
+  comportamentos.
+
+### Despriorização da LGPD e Risco de Cronograma
+
+- **LGPD no fim do Backlog**: Como Marcos já implementou na Release 1 a criptografia de dados
+  sensíveis (usuário e e-mail) no `Service` e os tokens não ficam expostos no `Front`, e
+  considerando que a aplicação web só entrará em produção efetiva para usuários externos no próximo
+  semestre, o PO decidiu **mover o épico de LGPD para o final do backlog do MVP**.
+- **Capacidade da Equipe**: Luciano comunicou que a equipe sofreu uma redução de **20 para 16
+  integrantes**, o que, somado aos bloqueios recentes, gera risco de não concluir todo o escopo
+  planejado da Release 2 dentro do prazo. A equipe atualizará o planejamento das sprints no ZenHub
+  para apresentar na próxima semana (item cobrado novamente pelo PO).
+
+---
+
+## 5. Coleta de Métricas do Dashboard Gerencial da Disciplina
+
+Luciano apresentou a solução desenvolvida junto à Milena para centralizar a coleta de métricas do
+SonarQube e do GitHub diretamente pela pipeline do repositório de documentação da disciplina
+(`2026.2-MeasureSoftGram-DOC`), eliminando a necessidade de manter scripts de CI (`export-metrics`)
+espalhados em todos os repositórios do produto (cujos *parsers* estavam divergentes).
+
+- **Questionamento do PO (Professor)**: O PO alertou que a coleta não pode ser feita a cada *commit*
+  comum nem por agendamento cego de tempo, pois isso polui a base de dados com pontos sem alteração
+  estatística (transformando o gráfico em uma reta). O gatilho metodológico correto da disciplina é
+  o **fechamento de Pull Request (merge) nas branches `develop` ou `main`**.
+- **Solução Acordada**:
+  1. Terminar de ativar a proteção de branches (*branch protection*) em todos os repositórios para
+     impedir commits diretos na `develop` e na `main`;
+  2. Padronizar o fechamento de PRs utilizando **Squash and Merge**, garantindo que cada Pull
+     Request fechado gere exatamente um único commit na branch de destino;
+  3. O script centralizado no repositório de documentação rodará periodicamente (ex.: diariamente)
+     verificando via API se houve novo PR/commit de merge na `develop` ou `main` e, somente nesse
+     caso, coletará e persistirá os dados do SonarQube.
+- A validação final dessa implementação ocorrerá na aula de segunda-feira (19/10).
+
+---
+
+## 6. Encaminhamentos e Próximos Passos
+
+### Pendências do Product Owner
+
+| Item | Descrição | Previsão |
+| :--- | :--- | :--- |
+| **Conta e Token do GitLab** | Criar a conta oficial do MeasureSoftGram no GitLab (vinculando e-mail pessoal como recuperação) e enviar o token para a equipe. | 15/10 (Quinta-feira) |
+| **Tentativa final no Gmail/GitHub** | Realizar últimas tentativas de recuperação das contas antigas e sincronizar envio de códigos de verificação quando solicitado pela equipe. | Até o fim de semana |
+| **Validação de Histórias e Aceite** | Validar os critérios e protótipos pendentes no ZenHub e realizar o aceite das histórias do GitLab (mediante entrega de deploy e formulário de teste). | Até 17/10 (Sábado) |
+
+### Ações da Equipe
+
+| Ação | Responsável | Prazo |
+| :--- | :--- | :--- |
+| Corrigir bug crítico da CLI que ignora edições no arquivo `.msgram` (URGENTE) | Lucas, Gustavo e Wallyson | Sprint atual |
+| Verificar se *Performance Efficiency* segue ativa no Core/Service | Gabriel Moura | Sprint atual |
+| Investigar e corrigir o bug de regressão na paginação/importação de repositórios da organização | Alexandre Beck | Sprint atual |
+| Documentar na issue do GitLab a necessidade de atrelar a plataforma à Organização/Grupo em vez do Repositório | Gustavo Roberto | Sprint atual |
+| Ajustar gráfico TSQMI (tag da versão + nome da release, correção de tags sobrepostas e intervalos *hardcoded* para a R2) | Milena e Guilherme | Sprint atual |
+| Atualizar protótipo do gráfico Planejado × Realizado (usar o mesmo componente do equalizador e remover escala vertical de 0 a 1) | Guilherme | Sprint atual |
+| Ajustar a coleta centralizada de métricas do repositório DOC (garantir proteção de branches, uso de *squash merge* e coleta restrita a PRs) | Luciano Melo | 19/10 (Segunda-feira) |
+| Reorganizar o ZenHub (mover LGPD para o fim do MVP, adicionar novo épico para configuração de intervalos de pontuação pelo usuário e atualizar o cronograma geral do projeto) | Gabriel Moura / Equipe EPS | 19/10 (Planning de segunda-feira) |
