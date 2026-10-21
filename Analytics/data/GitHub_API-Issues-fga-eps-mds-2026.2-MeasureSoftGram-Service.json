@@ -1,5 +1,97 @@
 [
     {
+        "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/66",
+        "repository_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service",
+        "labels_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/66/labels{/name}",
+        "comments_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/66/comments",
+        "events_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/66/events",
+        "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/66",
+        "id": 5959799255,
+        "node_id": "PR_kwDOUAEulM8AAAABJxnWJw",
+        "number": 66,
+        "title": "fix(accounts): retorna 409 em token revogado do GitHub para manter se\u2026",
+        "user": {
+            "login": "DanielFsR",
+            "id": 118537519,
+            "node_id": "U_kgDOBxC9Lw",
+            "avatar_url": "https://avatars.githubusercontent.com/u/118537519?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/DanielFsR",
+            "html_url": "https://github.com/DanielFsR",
+            "followers_url": "https://api.github.com/users/DanielFsR/followers",
+            "following_url": "https://api.github.com/users/DanielFsR/following{/other_user}",
+            "gists_url": "https://api.github.com/users/DanielFsR/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/DanielFsR/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/DanielFsR/subscriptions",
+            "organizations_url": "https://api.github.com/users/DanielFsR/orgs",
+            "repos_url": "https://api.github.com/users/DanielFsR/repos",
+            "events_url": "https://api.github.com/users/DanielFsR/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/DanielFsR/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "labels": [],
+        "state": "closed",
+        "locked": false,
+        "assignees": [],
+        "milestone": null,
+        "comments": 1,
+        "created_at": "2026-10-21T11:42:45Z",
+        "updated_at": "2026-10-21T16:51:18Z",
+        "closed_at": "2026-10-21T16:51:18Z",
+        "assignee": null,
+        "author_association": "NONE",
+        "issue_field_values": [],
+        "type": null,
+        "active_lock_reason": null,
+        "draft": false,
+        "pull_request": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/pulls/66",
+            "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/66",
+            "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/66.diff",
+            "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/66.patch",
+            "merged_at": "2026-10-21T16:51:18Z"
+        },
+        "body": "# fix(accounts): retorna 409 em token revogado do GitHub para manter sess\u00e3o (US02.01)\r\n\r\n## Descri\u00e7\u00e3o\r\nTrata a expira\u00e7\u00e3o e revoga\u00e7\u00e3o do token OAuth do GitHub no carregamento de organiza\u00e7\u00f5es e importa\u00e7\u00e3o, retornando `HTTP 409 Conflict` em vez de `401 Unauthorized`. Isso impede que o interceptor global do frontend confunda o token do GitHub com a sess\u00e3o da MeasureSoftGram e deslogue o usu\u00e1rio.\r\n\r\nIssue de refer\u00eancia:\r\n[US02.01 - Cen\u00e1rio 3: Revoga\u00e7\u00e3o de permiss\u00f5es ou expira\u00e7\u00e3o de token do GitHub](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/75#issuecomment-6282381276)\r\n\r\n## Porque este Pull Request \u00e9 necess\u00e1rio?\r\nAnteriormente, ao carregar a lista de organiza\u00e7\u00f5es do usu\u00e1rio (`GET /api/v1/accounts/github-organizations/`), se o token do GitHub estivesse revogado ou expirado, a API do GitHub retornava `401 Unauthorized` e o backend repassava esse status diretamente para o frontend. \r\n\r\nComo o frontend intercepta qualquer resposta `401` como expira\u00e7\u00e3o da sess\u00e3o do MeasureSoftGram, o usu\u00e1rio era deslogado imediatamente e jogado na tela de login (`/auth`). Com a altera\u00e7\u00e3o para `409 Conflict`, o frontend consegue capturar o erro espec\u00edfico de token do provedor e exibir o bot\u00e3o de reautoriza\u00e7\u00e3o mantendo o usu\u00e1rio logado na plataforma.\r\n\r\n## Crit\u00e9rios de aceita\u00e7\u00e3o\r\n1. [x] Endpoint `GET /api/v1/accounts/github-organizations/` intercepta `401` e `403` do GitHub e responde `409 Conflict` com `{\"error\": \"github_token_invalid\"}`.\r\n2. [x] Endpoint `POST /api/v1/organizations/import/` responde `409 Conflict` caso o token seja inv\u00e1lido/revogado.\r\n3. [x] Timeouts e erros de conex\u00e3o com a API externa retornam `503 Service Unavailable`.\r\n4. [x] Fallback de `GITHUB_TOKEN_ENCRYPTION_KEYS` adicionado em `config/settings/dev.py` para evitar `ImproperlyConfigured` em ambiente de desenvolvimento local.\r\n5. [x] Testes unit\u00e1rios adicionados em `accounts/tests.py` cobrindo cen\u00e1rios de 401, 403, 503 e 500 (88 testes passando na su\u00edte).\r\n\r\n\r\nCo-authored-by: MilenaFRocha <Milenafernandes594@gmail.com>",
+        "closed_by": {
+            "login": "MilenaFRocha",
+            "id": 104432227,
+            "node_id": "U_kgDOBjmCYw",
+            "avatar_url": "https://avatars.githubusercontent.com/u/104432227?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/MilenaFRocha",
+            "html_url": "https://github.com/MilenaFRocha",
+            "followers_url": "https://api.github.com/users/MilenaFRocha/followers",
+            "following_url": "https://api.github.com/users/MilenaFRocha/following{/other_user}",
+            "gists_url": "https://api.github.com/users/MilenaFRocha/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/MilenaFRocha/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/MilenaFRocha/subscriptions",
+            "organizations_url": "https://api.github.com/users/MilenaFRocha/orgs",
+            "repos_url": "https://api.github.com/users/MilenaFRocha/repos",
+            "events_url": "https://api.github.com/users/MilenaFRocha/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/MilenaFRocha/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "reactions": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/66/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/66/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null
+    },
+    {
         "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/65",
         "repository_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service",
         "labels_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/65/labels{/name}",
@@ -1009,7 +1101,7 @@
                 "archived_by": null
             }
         ],
-        "state": "closed",
+        "state": "open",
         "locked": false,
         "assignees": [
             {
@@ -1037,8 +1129,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-10-20T04:14:10Z",
-        "updated_at": "2026-10-20T04:32:32Z",
-        "closed_at": "2026-10-20T04:32:32Z",
+        "updated_at": "2026-10-21T01:12:54Z",
+        "closed_at": null,
         "assignee": {
             "login": "LuizaMaluf",
             "id": 117913962,
@@ -1077,27 +1169,7 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nAumentar o limite de tamanho do corpo das requisi\u00e7\u00f5es no Service, para o `POST .../repositories/{id}/calculate/math-model/` aceitar o envio com todos os componentes do SonarQube. \u00c9 subtarefa da TASK21.03.03 (fga-eps-mds/2026.2-MeasureSoftGram-Action#17), parte da [US21.03](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/128).\n\nCom a pagina\u00e7\u00e3o da TASK21.03.03, a Action deixa de mandar s\u00f3 os primeiros 500 componentes e passa a mandar todos, cerca de 870 bytes por componente. O Service n\u00e3o define `DATA_UPLOAD_MAX_MEMORY_SIZE` (em `src/config/settings/base.py` s\u00f3 existe o `DATA_UPLOAD_MAX_NUMBER_FIELDS`), ent\u00e3o vale o padr\u00e3o do Django: 2,5 MiB (2.621.440 bytes). Acima disso o Django 5.2 recusa a requisi\u00e7\u00e3o com 400 ao ler o corpo, antes de a view rodar, e nada \u00e9 gravado. A Action mostra \"The data was not calculated properly .\" e o job falha.\n\nMedido localmente no `develop` (`dba30b7`), com gunicorn e `DEBUG=False`: um corpo de 2.621.440 bytes responde 201 e um de 2.621.441 bytes responde 400. Isso d\u00e1 um teto de cerca de 3.000 componentes; o `apache_struts` (3.037 componentes, 2,65 MB) j\u00e1 \u00e9 recusado. Hoje o problema n\u00e3o aparece porque a Action envia no m\u00e1ximo 500 componentes (cerca de 430 KB).\n\nA borda e o nginx interno aceitam 50 MB (`client_max_body_size 50m`, em `deploy/nginx/default.conf`), ent\u00e3o o Django \u00e9 o \u00fanico ponto que barra. O endpoint exige token. No pior caso, cada worker do gunicorn (3 por padr\u00e3o, `GUNICORN_WORKERS`) segura um corpo do tamanho do limite em mem\u00f3ria.\n\nA TASK21.03.03 depende desta: ela s\u00f3 pode ir para homologa\u00e7\u00e3o depois desta task implantada, sen\u00e3o os reposit\u00f3rios com mais de cerca de 3.000 componentes passam de dados parciais a nenhum dado.\n\n## Lista de afazeres\n1. [ ] Definir `DATA_UPLOAD_MAX_MEMORY_SIZE` em `src/config/settings/base.py`, com padr\u00e3o de 50 MB (o mesmo limite dos proxies) e ajuste pela vari\u00e1vel de ambiente de mesmo nome, no padr\u00e3o do `DATA_UPLOAD_MAX_NUMBER_FIELDS`.\n2. [ ] Incluir a vari\u00e1vel em `env-vars-example/.service.env`.\n3. [ ] Criar teste que envia ao `calculate/math-model/` um corpo maior que 2,5 MiB e espera 201.\n4. [ ] Implantar em homologa\u00e7\u00e3o antes do merge da TASK21.03.03.\n",
-        "closed_by": {
-            "login": "devwallyson",
-            "id": 120031974,
-            "node_id": "U_kgDOByeK5g",
-            "avatar_url": "https://avatars.githubusercontent.com/u/120031974?v=4",
-            "gravatar_id": "",
-            "url": "https://api.github.com/users/devwallyson",
-            "html_url": "https://github.com/devwallyson",
-            "followers_url": "https://api.github.com/users/devwallyson/followers",
-            "following_url": "https://api.github.com/users/devwallyson/following{/other_user}",
-            "gists_url": "https://api.github.com/users/devwallyson/gists{/gist_id}",
-            "starred_url": "https://api.github.com/users/devwallyson/starred{/owner}{/repo}",
-            "subscriptions_url": "https://api.github.com/users/devwallyson/subscriptions",
-            "organizations_url": "https://api.github.com/users/devwallyson/orgs",
-            "repos_url": "https://api.github.com/users/devwallyson/repos",
-            "events_url": "https://api.github.com/users/devwallyson/events{/privacy}",
-            "received_events_url": "https://api.github.com/users/devwallyson/received_events",
-            "type": "User",
-            "user_view_type": "public",
-            "site_admin": false
-        },
+        "closed_by": null,
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/56/reactions",
             "total_count": 0,
@@ -1112,7 +1184,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/56/timeline",
         "performed_via_github_app": null,
-        "state_reason": "completed",
+        "state_reason": "reopened",
         "pinned_comment": null
     },
     {
@@ -1176,7 +1248,7 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-10-20T02:51:39Z",
-        "updated_at": "2026-10-20T15:01:03Z",
+        "updated_at": "2026-10-21T01:17:37Z",
         "closed_at": "2026-10-20T03:00:40Z",
         "assignee": {
             "login": "LuizaMaluf",
@@ -1211,7 +1283,7 @@
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/55.patch",
             "merged_at": "2026-10-20T03:00:40Z"
         },
-        "body": "# Endpoint de distribui\u00e7\u00e3o das m\u00e9tricas por arquivo\r\n\r\n## Descri\u00e7\u00e3o\r\nCria o endpoint da parte `[Service]` da US21.03 (Distribui\u00e7\u00e3o das M\u00e9tricas):\r\n\r\n`GET /api/v1/organizations/{org}/products/{product}/metrics-distribution/?release_id=&metric=&repository_id=`\r\n\r\n- `metric`: s\u00f3 as m\u00e9tricas coletadas por arquivo (`coverage`, `complexity`, `functions`, `comment_lines_density`, `duplicated_lines_density`, `sqale_debt_ratio`). Qualquer outra responde 400 (CA2).\r\n- Com `repository_id`: valores por arquivo (caminho e valor) e o resumo daquele reposit\u00f3rio (CA3, CA5). Sem `repository_id`: s\u00f3 o resumo de cada reposit\u00f3rio da release, para a compara\u00e7\u00e3o (CA6).\r\n- Resumo: quantidade, m\u00ednimo, 1\u00ba quartil, mediana, 3\u00ba quartil, m\u00e1ximo, m\u00e9dia e desvio padr\u00e3o. Quartis pelo m\u00e9todo `inclusive` (o `linear` do NumPy) e desvio padr\u00e3o populacional.\r\n- Usa a \u00faltima coleta de cada reposit\u00f3rio dentro da janela da release. Arquivos com `ncloc = 0` ficam fora do c\u00e1lculo, como em `_resolve_metric_params_in_memory`, e `excluded_files` informa quantos sa\u00edram (CA7).\r\n- `reference`: `min_threshold` e `max_threshold` da medida que usa a m\u00e9trica, na configura\u00e7\u00e3o vigente na release, ou `null` (CA4).\r\n- Reposit\u00f3rio sem dados por arquivo na release vem com `files: []`, `summary: null` e `collected_at: null` (CA8).\r\n\r\nComo a \u00faltima coleta \u00e9 identificada: cada `CollectedMetric` de uma coleta recebe o pr\u00f3prio `timezone.now()`, ent\u00e3o as linhas da mesma coleta t\u00eam hor\u00e1rios um pouco diferentes. A \u00e2ncora \u00e9 a linha mais recente entre a m\u00e9trica pedida e o `ncloc` dentro da janela, com uma consulta por m\u00e9trica, para usar o \u00edndice `(repository, metric, -created_at)`. A coleta s\u00e3o as linhas `FIL` dos 20 minutos antes da \u00e2ncora, a mesma toler\u00e2ncia de `SupportedMetric.get_latest_metric_values`. Ancorar s\u00f3 na m\u00e9trica pedida deixava de fora o `ncloc` gravado microssegundos depois, e arquivos vazios n\u00e3o eram exclu\u00eddos.\r\n\r\nReaproveita as regras das #47, #50 e #54, para os dashboards se comportarem igual:\r\n- janela da release: `filter_release_window` (por dia, incluindo o \u00faltimo dia);\r\n- configura\u00e7\u00e3o da release: `resolve_release_configuration`;\r\n- reposit\u00f3rios da release: `get_release_repositories`, de `releases/entity_analysis.py`. A distribui\u00e7\u00e3o lista os mesmos reposit\u00f3rios que a An\u00e1lise por Entidade e os dashboards por release: restritos ao produto e em ordem de nome.\r\n\r\nA lista de m\u00e9tricas por arquivo virou a constante `utils/file_metrics.FILE_LEVEL_METRICS`, tamb\u00e9m usada pelo `math_model`.\r\n\r\nDocumentado em `src/endpoints.md` e no `MSG.postman_collection.json` (Products \u203a A\u00e7\u00f5es).\r\n\r\n[[TASK21.03.01] Endpoint de distribui\u00e7\u00e3o das m\u00e9tricas por arquivo (Service)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/44) \u00b7 US: fga-eps-mds/2026.2-MeasureSoftGram-DOC#128\r\n\r\n## Porque este Pull Request \u00e9 necess\u00e1rio?\r\nO dashboard \"5. Distribui\u00e7\u00e3o das M\u00e9tricas\" do Front precisa dos valores de uma m\u00e9trica por arquivo, e de um resumo estat\u00edstico por reposit\u00f3rio numa release, para mostrar o histograma, o boxplot e a compara\u00e7\u00e3o entre reposit\u00f3rios. Nenhum endpoint devolvia esses valores por release.\r\n\r\n## Crit\u00e9rios de aceita\u00e7\u00e3o\r\n1. [ ] Com `repository_id`, o endpoint devolve os arquivos e o resumo; sem ele, um resumo por reposit\u00f3rio da release.\r\n2. [ ] Arquivos com `ncloc = 0` ficam fora e `excluded_files` informa quantos.\r\n3. [ ] `reference` traz o m\u00ednimo e o m\u00e1ximo da medida que usa a m\u00e9trica, ou `null`.\r\n4. [ ] M\u00e9trica que n\u00e3o \u00e9 coletada por arquivo, ou par\u00e2metro ausente, responde 400; release ou reposit\u00f3rio de outro produto, ou usu\u00e1rio que n\u00e3o \u00e9 membro, responde 404; sem autentica\u00e7\u00e3o, 401.\r\n5. [ ] Reposit\u00f3rios de outro produto ligados \u00e0 release n\u00e3o aparecem na resposta.\r\n6. [ ] Testes passam: 29 testes novos (`metrics/tests/` e `releases/tests/test_window.py`); su\u00edte completa com 327 testes, `flake8` limpo e `makemigrations --check` sem mudan\u00e7as.\r\n\r\n## Pontos para o time\r\n- **Fora deste PR:** o `ReleaseSerializer` ainda aceita `repositories_ids` de outro produto, e o `planned_x_accomplished` busca a release sem checar o produto. As leituras dos dois dashboards j\u00e1 filtram pelo produto; esses dois pontos ficam para uma issue de follow-up.\r\n- **Para o PO:** os limites de `non_complex_file_density` (0 a 10) valem para `complexity / functions` por arquivo. Desenhar essa linha sobre o histograma de `complexity` bruta \r\n",
+        "body": "# Endpoint de distribui\u00e7\u00e3o das m\u00e9tricas por arquivo\r\n\r\n## Descri\u00e7\u00e3o\r\nCria o endpoint da parte `[Service]` da US21.03 (Distribui\u00e7\u00e3o das M\u00e9tricas):\r\n\r\n`GET /api/v1/organizations/{org}/products/{product}/metrics-distribution/?release_id=&metric=&repository_id=`\r\n\r\n- `metric`: s\u00f3 as m\u00e9tricas coletadas por arquivo (`coverage`, `complexity`, `functions`, `comment_lines_density`, `duplicated_lines_density`, `sqale_debt_ratio`). Qualquer outra responde 400 (CA2).\r\n- Com `repository_id`: valores por arquivo (caminho e valor) e o resumo daquele reposit\u00f3rio (CA3, CA5). Sem `repository_id`: s\u00f3 o resumo de cada reposit\u00f3rio da release, para a compara\u00e7\u00e3o (CA6).\r\n- Resumo: quantidade, m\u00ednimo, 1\u00ba quartil, mediana, 3\u00ba quartil, m\u00e1ximo, m\u00e9dia e desvio padr\u00e3o. Quartis pelo m\u00e9todo `inclusive` (o `linear` do NumPy) e desvio padr\u00e3o populacional.\r\n- Usa a \u00faltima coleta de cada reposit\u00f3rio dentro da janela da release. Arquivos com `ncloc = 0` ficam fora do c\u00e1lculo, como em `_resolve_metric_params_in_memory`, e `excluded_files` informa quantos sa\u00edram (CA7).\r\n- `reference`: `min_threshold` e `max_threshold` da medida que usa a m\u00e9trica, na configura\u00e7\u00e3o vigente na release, ou `null` (CA4).\r\n- Reposit\u00f3rio sem dados por arquivo na release vem com `files: []`, `summary: null` e `collected_at: null` (CA8).\r\n\r\nComo a \u00faltima coleta \u00e9 identificada: cada `CollectedMetric` de uma coleta recebe o pr\u00f3prio `timezone.now()`, ent\u00e3o as linhas da mesma coleta t\u00eam hor\u00e1rios um pouco diferentes. A \u00e2ncora \u00e9 a linha mais recente entre a m\u00e9trica pedida e o `ncloc` dentro da janela, com uma consulta por m\u00e9trica, para usar o \u00edndice `(repository, metric, -created_at)`. A coleta s\u00e3o as linhas `FIL` dos 20 minutos antes da \u00e2ncora, a mesma toler\u00e2ncia de `SupportedMetric.get_latest_metric_values`. Ancorar s\u00f3 na m\u00e9trica pedida deixava de fora o `ncloc` gravado microssegundos depois, e arquivos vazios n\u00e3o eram exclu\u00eddos.\r\n\r\nReaproveita as regras das , e , para os dashboards se comportarem igual:\r\n- janela da release: `filter_release_window` (por dia, incluindo o \u00faltimo dia);\r\n- configura\u00e7\u00e3o da release: `resolve_release_configuration`;\r\n- reposit\u00f3rios da release: `get_release_repositories`, de `releases/entity_analysis.py`. A distribui\u00e7\u00e3o lista os mesmos reposit\u00f3rios que a An\u00e1lise por Entidade e os dashboards por release: restritos ao produto e em ordem de nome.\r\n\r\nA lista de m\u00e9tricas por arquivo virou a constante `utils/file_metrics.FILE_LEVEL_METRICS`, tamb\u00e9m usada pelo `math_model`.\r\n\r\nDocumentado em `src/endpoints.md` e no `MSG.postman_collection.json` (Products \u203a A\u00e7\u00f5es).\r\n\r\n## Porque este Pull Request \u00e9 necess\u00e1rio?\r\nO dashboard \"5. Distribui\u00e7\u00e3o das M\u00e9tricas\" do Front precisa dos valores de uma m\u00e9trica por arquivo, e de um resumo estat\u00edstico por reposit\u00f3rio numa release, para mostrar o histograma, o boxplot e a compara\u00e7\u00e3o entre reposit\u00f3rios. Nenhum endpoint devolvia esses valores por release.\r\n\r\n## Crit\u00e9rios de aceita\u00e7\u00e3o\r\n1. [ ] Com `repository_id`, o endpoint devolve os arquivos e o resumo; sem ele, um resumo por reposit\u00f3rio da release.\r\n2. [ ] Arquivos com `ncloc = 0` ficam fora e `excluded_files` informa quantos.\r\n3. [ ] `reference` traz o m\u00ednimo e o m\u00e1ximo da medida que usa a m\u00e9trica, ou `null`.\r\n4. [ ] M\u00e9trica que n\u00e3o \u00e9 coletada por arquivo, ou par\u00e2metro ausente, responde 400; release ou reposit\u00f3rio de outro produto, ou usu\u00e1rio que n\u00e3o \u00e9 membro, responde 404; sem autentica\u00e7\u00e3o, 401.\r\n5. [ ] Reposit\u00f3rios de outro produto ligados \u00e0 release n\u00e3o aparecem na resposta.\r\n6. [ ] Testes passam: 29 testes novos (`metrics/tests/` e `releases/tests/test_window.py`); su\u00edte completa com 327 testes, `flake8` limpo e `makemigrations --check` sem mudan\u00e7as.\r\n\r\n## Pontos para o time\r\n- **Fora deste PR:** o `ReleaseSerializer` ainda aceita `repositories_ids` de outro produto, e o `planned_x_accomplished` busca a release sem checar o produto. As leituras dos dois dashboards j\u00e1 filtram pelo produto; esses dois pontos ficam para uma issue de follow-up.\r\n- **Para o PO:** os limites de `non_complex_file_density` (0 a 10) valem para `complexity / functions` por arquivo. Desenhar essa linha sobre o histograma de `complexity` bruta \r\n",
         "closed_by": {
             "login": "bottinolucas",
             "id": 101297130,
@@ -2322,14 +2394,14 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [],
         "milestone": null,
         "comments": 0,
         "created_at": "2026-10-19T22:41:14Z",
-        "updated_at": "2026-10-20T02:28:19Z",
-        "closed_at": null,
+        "updated_at": "2026-10-21T01:57:36Z",
+        "closed_at": "2026-10-21T01:57:36Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -2340,7 +2412,6 @@
             "completed": 0,
             "percent_completed": 0
         },
-        "parent_issue_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/130",
         "issue_dependencies_summary": {
             "blocked_by": 0,
             "total_blocked_by": 0,
@@ -2348,7 +2419,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nCriar o endpoint que, para uma medida, um reposit\u00f3rio e uma release, devolve os arquivos que influenciaram a medida. \u00c9 a parte `[Service]` da [US23.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/130). Depende da TASK23.01.01 (Core) e da TASK21.03.03 (Action), para ter todos os arquivos de reposit\u00f3rios grandes.\n\n`CalculatedMeasure` n\u00e3o guarda qual coleta usou. A \"mesma an\u00e1lise que gerou a medida\" \u00e9 o grupo de m\u00e9tricas gravado at\u00e9 20 min antes da m\u00e9trica mais recente, a regra de `SupportedMetric.get_latest_metric_values`, limitada ao per\u00edodo da release. A regra deve ser a mesma da TASK21.03.01.\n\nO Service j\u00e1 guarda as m\u00e9tricas por arquivo em `CollectedMetric` (`path`, `qualifier = FIL`), e `_resolve_metric_params_in_memory` (`src/math_model/services.py`) monta as listas que v\u00e3o para o Core, sem os arquivos com `ncloc = 0`.\n\n## Lista de afazeres\n1. [ ] Confirmar em homologa\u00e7\u00e3o que a Action envia os componentes por arquivo (`sonarqube.components` com `qualifier = FIL`) e que eles chegam ao banco.\n2. [ ] Criar o endpoint aninhado no reposit\u00f3rio, com `measure` e `release_id`.\n3. [ ] Usar a mesma an\u00e1lise que gerou o valor da medida mostrado na tela (janela de 20 min) e a mesma exclus\u00e3o por `ncloc = 0` (CA5).\n4. [ ] Para cada arquivo, devolver o caminho, o valor usado pela medida, a contribui\u00e7\u00e3o de 0 a 1 e, para os de fora da faixa, a dist\u00e2ncia at\u00e9 o limite, todos da fun\u00e7\u00e3o da TASK23.01.01 (CA2).\n5. [ ] Ordenar da menor para a maior contribui\u00e7\u00e3o, desempatando pela maior dist\u00e2ncia at\u00e9 o limite, e devolver o total de arquivos e quantos est\u00e3o fora da faixa (CA3).\n6. [ ] Paginar de 10 em 10 e aceitar busca pelo caminho (CA4).\n7. [ ] Para medidas que n\u00e3o s\u00e3o calculadas por arquivo, responder de forma que o Front mostre a mensagem do CA6, sem erro 500.\n8. [ ] Atualizar o `msgram-core` para a vers\u00e3o da TASK23.01.01.\n9. [ ] Criar testes da ordena\u00e7\u00e3o (com empates), da pagina\u00e7\u00e3o, da busca, da medida sem arquivos e do acesso de membro.\n10. [ ] Documentar em `src/endpoints.md` e no Postman.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "zzzBECK",
+            "id": 82113486,
+            "node_id": "MDQ6VXNlcjgyMTEzNDg2",
+            "avatar_url": "https://avatars.githubusercontent.com/u/82113486?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/zzzBECK",
+            "html_url": "https://github.com/zzzBECK",
+            "followers_url": "https://api.github.com/users/zzzBECK/followers",
+            "following_url": "https://api.github.com/users/zzzBECK/following{/other_user}",
+            "gists_url": "https://api.github.com/users/zzzBECK/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/zzzBECK/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/zzzBECK/subscriptions",
+            "organizations_url": "https://api.github.com/users/zzzBECK/orgs",
+            "repos_url": "https://api.github.com/users/zzzBECK/repos",
+            "events_url": "https://api.github.com/users/zzzBECK/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/zzzBECK/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/46/reactions",
             "total_count": 0,
@@ -2363,7 +2454,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/46/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "not_planned",
         "pinned_comment": null
     },
     {
@@ -3192,7 +3283,7 @@
                 "archived_by": null
             }
         ],
-        "state": "closed",
+        "state": "open",
         "locked": false,
         "assignees": [
             {
@@ -3218,10 +3309,10 @@
             }
         ],
         "milestone": null,
-        "comments": 1,
+        "comments": 2,
         "created_at": "2026-10-19T22:10:17Z",
-        "updated_at": "2026-10-20T02:34:28Z",
-        "closed_at": "2026-10-20T02:34:28Z",
+        "updated_at": "2026-10-21T15:41:03Z",
+        "closed_at": null,
         "assignee": {
             "login": "devwallyson",
             "id": 120031974,
@@ -3259,28 +3350,8 @@
             "blocking": 0,
             "total_blocking": 0
         },
-        "body": "## Descri\u00e7\u00e3o da atividade\n\nCriar no Service os endpoints que o Front vai usar para desenhar, sem o Grafana, os dashboards Vis\u00e3o Geral de Qualidade e Evolu\u00e7\u00e3o Temporal e o gr\u00e1fico da tela do reposit\u00f3rio, com os valores organizados por release. \u00c9 a parte `[Service]` da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131).\n\nHoje o Grafana l\u00ea esses dados direto do banco (consultas em `grafana/dashboards/*.json`), e o acesso passa pelo `grafana_proxy`, que s\u00f3 libera o admin da organiza\u00e7\u00e3o (erro 403 da reuni\u00e3o de 07/10). Os novos endpoints ficam aninhados em `products/` e usam o `RepositoryViewSetMixin` (`UserScopedMixin`), como `repositories-tsqmi-historical-values`, ent\u00e3o os membros da organiza\u00e7\u00e3o tamb\u00e9m t\u00eam acesso.\n\nParte dos dados j\u00e1 tem endpoint: `historical-values/*` e `latest-values/*` por reposit\u00f3rio e `repositories-tsqmi-*` por produto. A regra do valor de uma release j\u00e1 existe em `releases/service.py` (`filter_release_window` e `get_latest_values_in_release_window`, da TASK21.02.01): vale o \u00faltimo valor calculado entre o dia de in\u00edcio e o dia de fim da release. A tela da release n\u00e3o entra nesta task, porque a US22.01 j\u00e1 tirou o Grafana dela.\n\n## Lista de afazeres\n1. [ ] Criar um endpoint de resumo do produto, com `release_id`, com os totais da Vis\u00e3o Geral (CA1). Cada total conta entidades distintas, e n\u00e3o linhas do hist\u00f3rico: caracter\u00edsticas, subcaracter\u00edsticas, medidas e m\u00e9tricas da configura\u00e7\u00e3o da release (hoje o Grafana conta todas as suportadas e soma cada coleta de novo), reposit\u00f3rios analisados na release e arquivos distintos analisados (`qualifier = FIL`).\n2. [ ] Criar um endpoint com o valor de cada caracter\u00edstica por reposit\u00f3rio na release, para o radar e o planejado \u00d7 realizado da Vis\u00e3o Geral, usando `get_latest_values_in_release_window` (CA1, CA4). Hoje o Grafana usa a m\u00e9dia dos \u00faltimos 30 dias no radar e dos \u00faltimos 7 dias, com 0,5 quando n\u00e3o h\u00e1 meta, no planejado \u00d7 realizado.\n3. [ ] Conferir se `historical-values/{characteristics,subcharacteristics,measures,metrics}` entrega o que a Evolu\u00e7\u00e3o Temporal e a tela do reposit\u00f3rio precisam para ter um ponto por release (CA2, CA3). Ajustar s\u00f3 o que faltar.\n4. [ ] Garantir que um membro da organiza\u00e7\u00e3o que n\u00e3o \u00e9 admin acessa todos esses endpoints (CA6). Usar o `RepositoryViewSetMixin` resolve isso; o 403 de hoje vem de `grafana_proxy/permissions.py`.\n5. [ ] Criar testes em `src/organizations/tests/` cobrindo os totais por release (contando entidades, n\u00e3o linhas), o radar, o acesso de membro e o de usu\u00e1rio de fora da organiza\u00e7\u00e3o.\n6. [ ] Documentar os endpoints em `src/endpoints.md` e na cole\u00e7\u00e3o do Postman.",
-        "closed_by": {
-            "login": "bottinolucas",
-            "id": 101297130,
-            "node_id": "U_kgDOBgmr6g",
-            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
-            "gravatar_id": "",
-            "url": "https://api.github.com/users/bottinolucas",
-            "html_url": "https://github.com/bottinolucas",
-            "followers_url": "https://api.github.com/users/bottinolucas/followers",
-            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
-            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
-            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
-            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
-            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
-            "repos_url": "https://api.github.com/users/bottinolucas/repos",
-            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
-            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
-            "type": "User",
-            "user_view_type": "public",
-            "site_admin": false
-        },
+        "body": "## Descri\u00e7\u00e3o da atividade\n\nCriar no Service os endpoints que o Front vai usar para desenhar, sem o Grafana, os dashboards Vis\u00e3o Geral de Qualidade e Evolu\u00e7\u00e3o Temporal e o gr\u00e1fico da tela do reposit\u00f3rio. \u00c9 a parte `[Service]` da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131).\n\nHoje o Grafana l\u00ea esses dados direto do banco (consultas em `grafana/dashboards/*.json`), e o acesso passa pelo `grafana_proxy`, que s\u00f3 libera o admin da organiza\u00e7\u00e3o (erro 403 da reuni\u00e3o de 07/10). Os novos endpoints ficam aninhados em `products/` e usam o `RepositoryViewSetMixin` (`UserScopedMixin`), como `repositories-tsqmi-historical-values`, ent\u00e3o os membros da organiza\u00e7\u00e3o tamb\u00e9m t\u00eam acesso.\n\nParte dos dados j\u00e1 tem endpoint: `historical-values/*` e `latest-values/*` por reposit\u00f3rio e `repositories-tsqmi-*` por produto. A regra do valor de uma release j\u00e1 existe em `releases/service.py` (`filter_release_window` e `get_latest_values_in_release_window`, da TASK21.02.01): vale o \u00faltimo valor calculado entre o dia de in\u00edcio e o dia de fim da release. A tela da release n\u00e3o entra nesta task, porque a US22.01 j\u00e1 tirou o Grafana dela.\n\n**Corre\u00e7\u00f5es do PO (21/10):** com os ajustes do Front, o planejado \u00d7 realizado e o radar da Vis\u00e3o Geral passam a usar `analysis-data` (o mesmo da tela da release), e a Evolu\u00e7\u00e3o Temporal e a tela do reposit\u00f3rio passam a usar `historical-values/*`. Assim, `release-dashboard/characteristics` fica usado s\u00f3 pelo Indicador Total da Qualidade por reposit\u00f3rio, e `release-history` fica sem uso.\n\n## Lista de afazeres\n1. [x] Criar um endpoint de resumo do produto, com `release_id`, com os totais da Vis\u00e3o Geral (CA1). Cada total conta entidades distintas, e n\u00e3o linhas do hist\u00f3rico: caracter\u00edsticas, subcaracter\u00edsticas, medidas e m\u00e9tricas da configura\u00e7\u00e3o da release, reposit\u00f3rios analisados na release e arquivos distintos analisados (`qualifier = FIL`).\n2. [x] Criar um endpoint com o TSQMI e o valor de cada caracter\u00edstica por reposit\u00f3rio na release, usando `get_latest_values_in_release_window` (CA1).\n3. [x] Conferir se `historical-values/{characteristics,subcharacteristics,measures,metrics}` entrega o que a Evolu\u00e7\u00e3o Temporal e a tela do reposit\u00f3rio precisam (CA2, CA3).\n4. [x] Garantir que um membro da organiza\u00e7\u00e3o que n\u00e3o \u00e9 admin acessa todos esses endpoints (CA5).\n5. [x] Criar testes em `src/organizations/tests/` cobrindo os totais por release (contando entidades, n\u00e3o linhas), o radar, o acesso de membro e o de usu\u00e1rio de fora da organiza\u00e7\u00e3o.\n6. [x] Documentar os endpoints em `src/endpoints.md` e na cole\u00e7\u00e3o do Postman.\n\n### Corre\u00e7\u00f5es do PO (21/10)\n7. [ ] Depois das corre\u00e7\u00f5es das TASK07.01.02 a 07.01.04 no Front, confirmar com `grep` no Front que `release-history` e os campos `planned`, `accomplished`, `dispersion` e `repositories[].characteristics` de `release-dashboard/characteristics` n\u00e3o s\u00e3o mais usados.\n8. [ ] Remover o que estiver sem uso, com os testes.\n9. [ ] Atualizar `src/endpoints.md` e a cole\u00e7\u00e3o do Postman.",
+        "closed_by": null,
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/40/reactions",
             "total_count": 0,
@@ -3295,7 +3366,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/40/timeline",
         "performed_via_github_app": null,
-        "state_reason": "completed",
+        "state_reason": "reopened",
         "pinned_comment": null
     },
     {
