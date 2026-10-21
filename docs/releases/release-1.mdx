@@ -1,0 +1,75 @@
+---
+id: release-1
+title: Release 1
+sidebar_label: Release 1 (28/09)
+description: Critérios da Release 1, situação de cada um e onde está a evidência.
+---
+
+# Release 1
+
+| Data | Sprints | Peso | Status |
+| --- | --- | --- | --- |
+| 28/09/2026 | 1 a 3 (24/08–27/09) | 30% das releases | Apresentada em 28/09 · tags `v1.0.0` em 29/09 · entrega em homologação confirmada para 08/10 ([ata de 07/10](/docs/reunioes/ata-po-07-10)) |
+
+## Objetivo da release
+
+Planejamento do semestre, diagnóstico e estabilização do ecossistema herdado e o
+primeiro dashboard gerencial (DA-R1). Do [sequenciador](/docs/lean-inception/sequenciador),
+a onda 1 começou nesta release e continua na R2.
+
+## Critérios da disciplina
+
+Legenda: ✅ atendido · 🟡 parcial · ❌ não atendido · ⏳ a verificar (sem evidência no site).
+Situação levantada em 21/10/2026; a cobertura é a da coleta do SonarCloud de 28/09 (23h21).
+
+### I. Projeto-Produto
+
+| Critério | Situação | Evidência | Observação |
+| --- | --- | --- | --- |
+| Visão do Produto / Canvas MVP validado com o cliente | 🟡 | [Visão do produto](/docs/produto/visao-do-produto), [Canvas MVP](/docs/lean-inception/canvas-mvp) | A validação com o PO não está registrada em ata |
+| Backlog priorizado com critérios de aceitação | 🟡 | [Gestão do backlog](/docs/planejamento/backlog), [Zenhub](https://app.zenhub.com) | Na reunião de 07/10 o PO cobrou backlog instanciado e estimado no Zenhub |
+| Documento de Arquitetura | 🟡 | [Arquitetura](/docs/produto/arquitetura) | Issue [DOC#23](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/23) ainda aberta |
+| Protótipos de alta fidelidade no Figma | ⏳ | — | Incluir o link do arquivo do Figma |
+| Repositório configurado (licença, código de conduta, contribuição, templates) | 🟡 | Repositórios 2026.2-* | Licença, código de conduta e guia de contribuição em todos, exceto Plugin. Templates de issue e PR faltam no AI, no Action e no Plugin |
+| Pipeline CI/CD: lint, build, testes, SonarCloud | ✅ | Workflows `test.yml` e `metrics.yml` em todos os repositórios | |
+| Coleta de métricas `.json` automática | ✅ | `metrics.yml` nos repositórios · [`Analytics/data`](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/tree/main/Analytics/data) | |
+| Cobertura de testes ≥ 85% | ❌ | [Qualidade técnica](https://20262-measuresoftgram-doc.streamlit.app/sonar) | Core 91,5 · CLI 89,7 · Parser 89,1 · Plugin 89,9 · **Service 83,0 · Action 82,7 · Front 80,1** · AI sem projeto no SonarCloud ([risco R08](/docs/planejamento/riscos)) |
+| Quadro de conhecimento e pareamentos | ❌ | [Squads](/docs/planejamento/squads#quadro-de-conhecimento) | Quadro vazio; competências só na aba Habilidades da planilha |
+| `MD_Template.md` com ≥ 2 ciclos | ⏳ | — | Individual; indicar onde cada um mantém o seu ([Uso de IA](/docs/equipe/uso-de-ia)) |
+
+### II. Dashboard (DA-R1)
+
+| Critério | Situação | Evidência | Observação |
+| --- | --- | --- | --- |
+| Velocity, burndown, EVM-Ágil, matriz de riscos | ✅ | [Guia do Dashboard](/docs/dashboard) | |
+| Streamlit consumindo o `.json` do SonarCloud | ✅ | [Dashboard](https://20262-measuresoftgram-doc.streamlit.app/sonar) | |
+| Evidência de uso crítico de IA no `MD_Template.md` | ⏳ | — | |
+| URL e PR do app no Aprender 3 | ⏳ | — | Confirmar a submissão |
+
+### III. Individual
+
+Critérios individuais (MD-R1, entradas no `MD_Template.md`, contribuições
+rastreáveis, explicar o código) são avaliados por pessoa e não são acompanhados
+nesta página.
+
+## Indicadores no fechamento (27/09)
+
+| Indicador | Valor | Fonte |
+| --- | --- | --- |
+| Pontos concluídos na R1 (Zenhub) | 52 (só na Sprint 3; sprints 1 e 2 com 0 pelo critério antigo de feito) | [Sprints](/docs/sprints) |
+| SPI / CPI da release | 0,08 / 0,22 (linha de base reconstituída) | Planilha *Custos e AgileEVM*, aba Sumário EVM |
+| Riscos elevados abertos | R01 (exposição 16) e R02 (20) | [Riscos](https://20262-measuresoftgram-doc.streamlit.app/riscos) |
+
+## O que aprendemos
+
+:::caution[A preencher]
+Feedback do professor e do PO na apresentação de 28/09 e o que mudou na R2.
+Responsáveis: líderes da quinzena 3 (Kathlyn Lara Murussi, Henrique Camelo
+Quenino, Pedro Sena Barbosa Holtz Yen).
+:::
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 21/10/2026 | Criação: critérios da R1 com situação e evidências | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

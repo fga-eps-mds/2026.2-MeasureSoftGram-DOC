@@ -1,0 +1,73 @@
+---
+id: release-2
+title: Release 2
+sidebar_label: Release 2 (26/10)
+description: Critérios da Release 2, situação de cada um e onde está a evidência.
+---
+
+# Release 2
+
+| Data | Sprints | Peso | Status |
+| --- | --- | --- | --- |
+| 26/10/2026 | 4 a 7 (28/09–25/10) | 30% das releases | Em andamento |
+
+## Objetivo da release
+
+Incremento funcional em homologação, com as histórias das ondas 1 e 2 do
+[sequenciador](/docs/lean-inception/sequenciador): login e importação de
+repositórios pelo GitLab, medição de dívida técnica, histórico de TSQMI e
+planejado × realizado. A release também precisa do dashboard v2 com as métricas
+de qualidade.
+
+## Critérios da disciplina
+
+Legenda: ✅ atendido · 🟡 parcial · ❌ não atendido · ⏳ a verificar.
+Situação em 21/10/2026, a 5 dias da entrega.
+
+### I. Projeto-Produto
+
+| Critério | Situação | Evidência | Observação |
+| --- | --- | --- | --- |
+| Incremento funcional implantado em homologação | ⏳ | — | Issue de homologação [DOC#71](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/71) aberta |
+| Histórias aceitas pelo cliente com testes de aceitação documentados | ❌ | [Sprint 7](/docs/sprints/sprint-7) | Nenhuma US da R2 fechada em 21/10. Critérios de aceitação validados na [reunião de 07/10](/docs/reunioes/ata-po-07-10) |
+| Backlog atualizado e repriorizado após a R1 | 🟡 | [Ata de 07/10](/docs/reunioes/ata-po-07-10) | O plugin do VS Code saiu do escopo |
+| Protótipos evoluídos no Figma com validação do cliente | 🟡 | [Ata de 07/10](/docs/reunioes/ata-po-07-10) | O PO aceitou a prévia das 6 histórias por Figma; incluir o link |
+| Testes de integração e cobertura ≥ 85% | 🟡 | [Qualidade técnica](https://20262-measuresoftgram-doc.streamlit.app/sonar) | Coleta de 21/10: AI 99,5 · CLI 92,2 · Parser 92,1 · Core 91,5 · Plugin 89,6 · Front 87,4 · Service 87,2 · **Action 83,3**. Testes de integração a verificar |
+| `.json` de métricas atualizado a cada sprint | 🟡 | `Analytics/data` | SonarCloud coletado até 21/10; **coleta do Zenhub parada desde 07/10** |
+| Capacidade ajustada com dados reais | ⏳ | [Custos](/docs/planejamento/custos) | Depende das horas registradas ([risco R14](/docs/planejamento/riscos)) |
+| `MD_Template.md` com ≥ 5 ciclos | ⏳ | — | Individual |
+
+### II. Dashboard (DA-R2)
+
+| Critério | Situação | Evidência | Observação |
+| --- | --- | --- | --- |
+| Métricas de qualidade normalizadas, ponderadas, agregadas e interpretadas | ⏳ | [Qualidade técnica](https://20262-measuresoftgram-doc.streamlit.app/sonar) | |
+| Comparação R1 × R2 (velocidade, cobertura, defeitos) | ⏳ | — | Os dados da cobertura estão acima; falta a tela ou a análise |
+| ≥ 3 decisões gerenciais com causa + evidência + ação | 🟡 | [Decisões](/docs/planejamento/decisoes) | D1 e D2 vigentes; D3 planejada; nenhuma com resultado medido |
+| Uso crítico de IA: o que foi aceito e o que foi rejeitado | ⏳ | [Uso de IA na equipe](/docs/equipe/uso-de-ia) | |
+
+## Escopo planejado × entregue
+
+| Item | Pontos | Situação em 21/10 |
+| --- | --- | --- |
+| [US11.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/112) Login com GitLab | 5 | Aberta |
+| [US11.03](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/114) Termos do GitLab (merge request) | 5 | Aberta |
+| [US12.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/124) Listar e importar repositórios do GitLab | 8 | Aberta |
+| [US01.02](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/77) Dívida técnica no Front | 8 | Aberta |
+| [US06.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/67) Histórico de TSQMI por release | 10 | Aberta |
+| [US22.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/125) Planejado × realizado da release | 8 | Aberta |
+| [US02.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/75) Carregar e navegar sem travamentos | 8 | Aberta |
+| [US5.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/113) Usar o produto sem erros | 5 | Aberta |
+
+## O que aprendemos
+
+:::caution[A preencher após a apresentação de 26/10]
+Feedback do professor e do PO e o que muda na R3. Responsáveis: líderes da
+quinzena 5 (Gabriel Moura, Gustavo Roberto Silva de Melo, Wallyson Souza).
+:::
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 21/10/2026 | Criação: critérios da R2 com situação a 5 dias da entrega | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
