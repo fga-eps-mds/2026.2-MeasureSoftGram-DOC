@@ -109,7 +109,7 @@ Use o [template de PR](/docs/processo#pull-request). Um bom PR:
 | Precisa ter | Por quê |
 | --- | --- |
 | Título no padrão de commit, com o código da issue: `feat(front): [US11.01] login com GitLab` | Rastreabilidade no Zenhub e no histórico |
-| `Closes <repo>#<n>` ligando a issue | Fecha a issue no merge e conta o ponto ([D2](/docs/planejamento/decisoes)) |
+| `Refs <repo>#<n>` ligando a issue (`Closes` só para tasks e bugs sem validação do PO) | A issue só fecha depois da aprovação do PO ([seção 7](#7-a-issue-no-quadro-do-zenhub)) |
 | O que muda e **por quê**, em 2–5 frases | O revisor entende a intenção antes de ler o código |
 | Passo a passo de **como testar** | Qualquer pessoa reproduz sem perguntar ao autor |
 | Evidências (print, GIF, log, saída de teste) | Prova que funciona; vira evidência da release |
@@ -141,11 +141,55 @@ tempo vai para a daily como bloqueio.
 ## 6. Depois do merge
 
 - Apague a branch de trabalho.
-- Confira se a issue fechou no Zenhub (fechada = feita).
-- Se o PO precisa validar, avise na issue com o link da homologação.
+- Mova a issue para **Aguardando aprovação do PO (DoD)** e avise na issue, com o
+  link da homologação e o passo a passo de validação.
+- **Não feche a issue no merge** quando ela depende de validação do PO: use
+  `Refs #n` no PR em vez de `Closes #n`. Só feche quando o PO aprovar.
+
+## 7. A issue no quadro do Zenhub
+
+```mermaid
+flowchart LR
+  N[New Issues] --> PB[Product Backlog]
+  PB --> V1[Aguardando Validação<br/>do PO - DoR]
+  V1 -->|PO aprova o escopo| SB[Sprint Backlog]
+  SB --> IP[In Progress]
+  IP -->|PR aberto| RQ[Review/QA]
+  RQ -->|PR aprovado e mergeado| V2[Aguardando aprovação<br/>do PO - DoD]
+  V2 -->|PO aprova| D[Done - Em Homolog<br/>issue fechada]
+  V2 -->|impedimento| IB[Icebox]
+  IP -->|impedimento| IB
+```
+
+| Pipeline | Entra quando | Quem move |
+| --- | --- | --- |
+| New Issues | A issue é criada | Autor |
+| Escopo Técnico | Demanda técnica (ambiente, arquitetura, deploy, correção) ainda não priorizada | Autor |
+| Product Backlog | A issue foi refinada, estimada e priorizada | Líderes da quinzena |
+| Aguardando Validação do PO (DoR) | US, épico ou task com impacto funcional precisa do OK do PO **antes** de começar | Responsável pela issue |
+| Sprint Backlog | DoR atendido e issue planejada na sprint | Líderes da quinzena (planning) |
+| In Progress | Alguém começou a trabalhar (branch criada) | Responsável pela issue |
+| Review/QA | PR aberto, aguardando revisão e testes | Autor do PR |
+| Aguardando aprovação do PO (DoD) | PR revisado e mergeado; falta o PO validar os critérios de aceitação na homologação | Autor do PR |
+| Done [Em Homolog] | **PO aprovou.** A issue é movida para cá e **fechada** | Responsável pela issue |
+| Icebox | Há um **impedimento** (o PO reprovou, dependência externa, bloqueio técnico) e a issue não continua nesta sprint | Responsável, avisando na daily |
+
+Regras:
+
+- **A issue só é fechada depois da aprovação do PO.** Fechada = feita
+  ([decisão D2](/docs/planejamento/decisoes#d2-critério-de-feito-e-níveis-pontuados)),
+  então fechar antes conta ponto que o PO ainda não aceitou.
+- Tasks e bugs **sem impacto funcional** não passam pelo PO: depois do merge vão
+  direto para **Done [Em Homolog]** e são fechadas.
+- Ao mandar para **Icebox**, comente na issue o impedimento e o que destrava, e
+  registre como bloqueio na daily. Se o PO reprovou, a issue volta para
+  **Sprint Backlog** quando o ajuste entrar no planejamento.
+- Feche a issue primeiro e mova depois: mover uma issue já fechada para outra
+  pipeline faz o Zenhub reabri-la.
 
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
 | 1.0 | 21/10/2026 | Criação: fluxo fork → develop → develop central → main, padrões de branch, commit, PR e revisão | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.1 | 22/10/2026 | Quadro do Zenhub: aprovação do PO antes de fechar, Done e Icebox para impedimentos | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
