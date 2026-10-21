@@ -1,8 +1,4 @@
----
-id: velocity-zenhub
-title: Velocity pela API do Zenhub
-sidebar_position: 3
----
+<!-- Movido de docs/metricas/velocity-zenhub.mdx em 21/10/2026: detalhe técnico do coletor fica junto do código. -->
 
 # Velocity pela API do Zenhub
 
@@ -61,11 +57,10 @@ chave (HTTP 429 → espera `Retry-After` ou backoff exponencial), timeout e 5xx
 (até 5 tentativas), 401/403 (erro de autenticação, sem nova tentativa) e nós
 repetidos entre páginas (descartados pelo `id`).
 
-:::note Achado ao conferir o schema
+> **Achado ao conferir o schema**
 `issueType { name }` — usado no antigo `scripts/coleta_zenhub.py` (removido,
 substituído por `coleta_velocity.py`) — **não é válido** no schema atual:
 `issueType` é uma união e exige fragmentos (`... on GithubIssueType { name }`).
-:::
 
 ## Regras de cálculo
 

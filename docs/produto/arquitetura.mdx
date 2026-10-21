@@ -2,6 +2,7 @@
 id: arquitetura
 title: Arquitetura
 sidebar_position: 2
+sidebar_label: Arquitetura
 ---
 
 # Arquitetura
@@ -10,8 +11,7 @@ Este documento descreve a arquitetura do MeasureSoftGram no semestre 2026.2: os 
 do ecossistema, as tecnologias de cada um, como se comunicam em tempo de execução, como são
 implantados e como os dados são modelados.
 
-:::info Base e verificação
-
+:::info[Base e verificação]
 Este documento parte do
 [documento de arquitetura de 2026.1](https://github.com/fga-eps-mds/2026.1-MeasureSoftGram-DOC/blob/main/docs/planejamento/arquitetura.md)
 e foi conferido em **27/09/2026** contra a branch `develop` dos repositórios `2026.2-*`, que
@@ -59,8 +59,7 @@ arquiteturais, o impacto do MVP de 2026.2, as metas e restrições e as decisõe
 | AI (MCP) | Expõe os dados do Service a clientes de IA pelo protocolo MCP | Python 3.11+, SDK `mcp` (FastMCP), httpx | Imagem Docker `measuresoftgram/ai` |
 | PostgreSQL | Persistência do Service | PostgreSQL 18 (`postgres:18-alpine`) | Container |
 
-:::warning Versões do Core desalinhadas
-
+:::warning[Versões do Core desalinhadas]
 Cada consumidor usa uma versão diferente do Core: o Service fixa `msgram-core==1.4.9`, a CLI
 declara `msgram-core~=1.5.3` e o Core está em `1.5.5rc1`. Por isso o Service mantém um
 substituto provisório da medida `technical_debt_ratio` (`utils/core_compat.py`), a ser
@@ -390,8 +389,7 @@ flowchart TB
 Para executar a Action localmente, o Plugin salva o workflow no workspace do usuário e sobe
 um `docker compose` empacotado na extensão (`resources/docker`) em um terminal do VS Code.
 
-:::note Plugin e Grafana
-
+:::note[Plugin e Grafana]
 O Plugin do `develop` ainda tem a tela `GrafanaView`, que pede a URL do dashboard em
 `/api/v1/grafana/`. Esse endpoint saiu do Service com a US07.01, então a tela não funciona
 mais. O Plugin está fora do escopo do semestre (ata do PO de 07/10/2026) e não foi alterado.
@@ -462,8 +460,7 @@ flowchart TB
 Em desenvolvimento não há nginx nem openresty: o Service publica a porta 8080 e o banco
 fica só em `127.0.0.1:5432`.
 
-:::note Ambiente de produção
-
+:::note[Ambiente de produção]
 A topologia acima é a descrita em `deploy/docker-compose.prod.yml`. O diagnóstico de 19/09
 registra que o ambiente de produção em execução não pôde ser verificado (item MSG-40).
 
@@ -781,3 +778,13 @@ equipe**.
 - [Diagnóstico do ecossistema](../diagnostico/diagnostico.mdx)
 - [Django](https://www.djangoproject.com), [Next.js](https://nextjs.org),
   [PostgreSQL](https://www.postgresql.org), [Model Context Protocol](https://modelcontextprotocol.io)
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 31/08/2026 | docs: estrutura inicial do site de documentacao da EPS 2026.2 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.1 | 02/09/2026 | docs: adiciona acentuacao no texto visivel da documentacao | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.2 | 27/09/2026 | adicionando arquitetura revisada | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.3 | 20/10/2026 | docs(arquitetura): remove o Grafana da arquitetura | [@henriquecq](https://github.com/henriquecq) |  |
+| 1.4 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

@@ -1,68 +1,71 @@
 ---
 id: intro
 title: Introdução
+sidebar_label: Introdução
 sidebar_position: 1
 slug: /intro
+description: Para que serve este site, como ele está organizado e os próximos prazos da equipe.
 ---
 
-# Documentação da equipe - EPS 2026.2
+# Introdução
 
-Este site reúne a documentação produzida pela equipe de **Engenharia de Produto de
-Software (EPS)** do semestre 2026.2 no projeto **MeasureSoftGram**.
-
-## O que você encontra aqui
-
-| Seção | Conteúdo |
-| --- | --- |
-| [A disciplina](/docs/disciplina) | Regras, avaliação, cronograma e política de uso de IA — o que é exigido, quando e com que peso. |
-| [Produto](/docs/produto/visao-do-produto) | Visão do produto, arquitetura e repositórios que compõem o sistema. |
-| [Diagnóstico](/docs/diagnostico) | Estado técnico do ecossistema levantado na Sprint 1, e o backlog técnico de 41 itens que saiu dele. |
-| [Planejamento](/docs/planejamento/metodologia) | Metodologia, gestão do backlog, roadmap do semestre, riscos e a organização em squads por release. |
-| [Sprints](/docs/sprints) | Planejamento, acompanhamento e retrospectiva de cada sprint. |
-| [Guia do Dashboard](/docs/dashboard) | Onde está cada gráfico: velocity, burndown, EVM, riscos, custos e decisões. |
-| [Métricas](/docs/metricas) | Indicadores de processo, projeto e produto que alimentam o dashboard. |
-| [Equipe](/docs/equipe) | Integrantes, papéis e políticas de trabalho. |
+Documentação do trabalho da equipe de **Engenharia de Produto de Software (EPS)
+2026.2** no **MeasureSoftGram**: o que planejamos, o que entregamos em cada
+release e com quais evidências. A documentação **do produto** (como usar, CLI,
+componentes) fica em [MeasureSoftGram-Docs](https://fga-eps-mds.github.io/MeasureSoftGram-Docs/).
 
 ## Próximos prazos
 
-| Data | Entrega |
+| Data | Entrega | Situação |
+| --- | --- | --- |
+| **26/10** | Release **R2** + Dashboard **DA-R2** | [Release 2](/docs/releases/release-2) |
+| **27/10** | **MD-R2** individual (até 06h00) | — |
+| **30/11** | Release **R3** + Dashboard **DA-R3** | [Release 3](/docs/releases/release-3) |
+| **07/12** | Release Final: testes de aceitação e defesas orais | [Release 3](/docs/releases/release-3) |
+| **08/12** | **MD-R3** individual (até 06h00) | — |
+
+Já entregue: [Release 1](/docs/releases/release-1) (28/09). Todos os prazos e
+regras em [A disciplina](/docs/disciplina).
+
+## Como o site está organizado
+
+| Seção | Para que serve |
 | --- | --- |
-| 28/09 | Release Major **R1** + Dashboard **DA-R1** |
-| 29/09 | **MD-R1** individual |
-| 26/10 | Release Major **R2** + Dashboard **DA-R2** |
-| 30/11 | Release Major **R3** + Dashboard **DA-R3** |
-
-Calendário completo em [Cronograma](/docs/disciplina/cronograma) e critérios em
-[Avaliação e entregas](/docs/disciplina/avaliacao).
-
-## Sobre o MeasureSoftGram
-
-O MeasureSoftGram é uma plataforma de medição e avaliação de qualidade de
-software. Ele coleta métricas de repositórios, aplica um modelo de qualidade
-configurável e apresenta o resultado de forma comparável ao longo do tempo.
-
-A documentação **do produto** (como usar, referência da CLI, componentes) vive em
-repositório próprio: [MeasureSoftGram-Docs](https://fga-eps-mds.github.io/MeasureSoftGram-Docs/).
-Este site trata do **trabalho da equipe na disciplina**.
+| [A disciplina](/docs/disciplina) | Prazos, pesos e regras que afetam a equipe |
+| [Releases](/docs/releases/release-1) | Critérios de cada release, situação e evidência |
+| [Produto](/docs/produto/visao-do-produto) | Visão do produto, arquitetura e repositórios |
+| [Lean Inception](/docs/lean-inception/visao-geral) | O que decidimos com o PO sobre escopo e MVP |
+| [Templates e fluxos](/docs/processo) | Fluxo de branch, commit e PR, templates de issue, PR, US e reuniões |
+| [Diagnóstico](/docs/diagnostico) | Estado do ecossistema herdado e backlog técnico de 41 itens |
+| [Planejamento](/docs/planejamento/metodologia) | Metodologia, backlog, EAP, roadmap, riscos, custos, EVM, decisões e squads |
+| [Sprints](/docs/sprints) | Planejado × realizado e retrospectiva de cada sprint |
+| [Reuniões](/docs/reunioes) | Atas das reuniões com o PO |
+| [Métricas](/docs/metricas) | Indicadores e onde ver cada um no [dashboard](https://20262-measuresoftgram-doc.streamlit.app/) |
+| [Equipe](/docs/equipe) | Integrantes, lideranças, políticas, uso de IA e guia de documentação |
 
 ## Como a equipe se organiza
 
-Diferente de 2026.1, que se organizou em **clãs por repositório**, em 2026.2 a
-equipe trabalha com **squads temporários por onda/release**: cada squad pega uma
-fatia vertical de funcionalidade e mexe em quantos repositórios forem necessários
-para entregá-la ponta a ponta. O racional e a alocação estão em
+Em 2026.2 a equipe trabalha com **squads temporários por release**, cada um
+responsável por uma fatia vertical de funcionalidade em quantos repositórios
+forem necessários (em 2026.1 eram clãs por repositório). Ver
 [Squads por release](/docs/planejamento/squads).
 
-## Como contribuir com esta documentação
+## Como contribuir
 
-O site é gerado com [Docusaurus](https://docusaurus.io/) a partir dos arquivos
-Markdown em `docs/`. Para rodar localmente:
+Siga o [Guia de documentação](/docs/equipe/guia-documentacao): modelo de página,
+onde registrar cada coisa e checklist de revisão. Para rodar o site localmente:
 
 ```bash
-yarn install
-yarn start
+npm ci
+npm start
 ```
 
-Cada página tem um link **Edit this page** no rodapé que leva direto ao arquivo
-correspondente no GitHub. Alterações na branch `main` são publicadas
-automaticamente pelo workflow do GitHub Pages.
+Cada página tem o link **Editar esta página** no rodapé. O que entra na `main` é
+publicado automaticamente no GitHub Pages.
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 31/08/2026 | Estrutura inicial do site | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 2.0 | 21/10/2026 | Prazos atualizados, mapa do site igual à barra lateral, link para o guia de documentação | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
