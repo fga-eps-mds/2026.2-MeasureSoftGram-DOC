@@ -2,6 +2,7 @@
 id: decisoes
 title: Decisões baseadas em dados
 sidebar_position: 6
+sidebar_label: Decisões baseadas em dados
 ---
 
 # Decisões baseadas em dados
@@ -11,7 +12,7 @@ métrica, um gráfico do dashboard ou um evento observável. A disciplina exige
 **≥ 3 decisões na R2** e **≥ 5 na R3**. Cada decisão também entra na aba
 **Decisões** da planilha e aparece no dashboard.
 
-:::tip Ver no dashboard
+:::tip[Ver no dashboard]
 [Decisões](https://20262-measuresoftgram-doc.streamlit.app/decisoes).
 Mapa de todos os gráficos no [Guia do Dashboard](/docs/dashboard).
 :::
@@ -26,15 +27,18 @@ Cada decisão tem:
 4. **Critério de sucesso:** a métrica que dirá se funcionou.
 5. **Resultado:** o que a métrica mostrou depois (preenchido na sprint seguinte).
 
-| # | Sprint | Tipo | Decisão | Status |
-| --- | --- | --- | --- | --- |
-| D1 | 3 | Gerencial | Calendário oficial de sprints: o do Zenhub | Vigente |
-| D2 | 3 | Gerencial | Critério de "feito" e níveis que recebem story points | Vigente |
-| D3 | 3 | Gerencial | Modelo de custo e registro de horas reais | Planejada |
+| # | Sprint | Tipo | Decisão | Status | Resultado |
+| --- | --- | --- | --- | --- | --- |
+| D1 | 3 | Gerencial | Calendário oficial de sprints: o do Zenhub | Vigente | Parcial: sprints criadas no Zenhub; planilha a conferir |
+| D2 | 3 | Gerencial | Critério de "feito" e níveis que recebem story points | Vigente | Meta não atingida na S4 (28%) |
+| D3 | 3 | Gerencial | Modelo de custo e registro de horas reais | Planejada | A medir |
 
-:::caution Rascunho para revisão
-As decisões abaixo foram tomadas em 27/09/2026 durante a construção do DA-R1 e
-precisam ser revisadas e assinadas pelos líderes da quinzena.
+:::caution[A preencher]
+D1 a D3 foram tomadas em 27/09/2026, na construção do DA-R1, e ainda não têm
+revisor registrado: os líderes da quinzena confirmam cada uma (coluna "Revisor"
+do histórico). A R2 exige **≥ 3 decisões com causa + evidência + ação** e a R3,
+**≥ 5 com resultado medido**. Novas decisões seguem o
+[modelo de decisão](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/decisao.mdx).
 :::
 
 ## D1: Calendário oficial de sprints
@@ -50,8 +54,16 @@ com 4 e R3 com 5.
 **Evidência.** `Analytics/planilhas/sprints.csv`, aba Sprints da planilha,
 [Modelo de gestão](/docs/metricas/modelo-de-gestao).
 
+As datas de fechamento (27/09, 25/10, 29/11) são o último dia da sprint; a entrega
+na disciplina é na segunda seguinte (28/09, 26/10, 30/11).
+
 **Critério de sucesso.** Todas as sprints até 29/11 criadas no Zenhub e com as
 mesmas datas na planilha.
+
+**Resultado (21/10).** As sprints semanais até 13/12 estão criadas no Zenhub. A
+conferência com a aba Sprints da planilha ainda não foi registrada. As páginas
+de [Sprints](/docs/sprints) e de [Metodologia](/docs/planejamento/metodologia)
+passaram a usar este calendário.
 
 ## D2: Critério de feito e níveis pontuados
 
@@ -75,6 +87,11 @@ e o ponto sai da conta. A regra anterior (só pipeline Done) foi descartada porq
 **Critério de sucesso.** Na planning da S4, planejado > 0 SP e bloco de consistência
 sem pendências; taxa de conclusão ≥ 60% na S4 (S3: 39 de 100 SP).
 
+**Resultado (21/10).** Meta não atingida: a S4 fechou com 29 de 102 SP (28%),
+segundo o Zenhub ([Sprint 4](/docs/sprints/sprint-4)). Achado novo: issues
+continuam listadas em várias sprints, o que infla o planejado. Ação sugerida:
+limpar as sprints antigas na planning.
+
 ## D3: Modelo de custo e horas reais
 
 **Contexto e dado.** O EVM precisa de orçamento (BAC) e custo real (AC). Não havia
@@ -90,8 +107,12 @@ cada integrante na aba Horas, toda segunda, a partir de 28/09.
 **Critério de sucesso.** 20 de 20 integrantes com horas registradas na sprint 4, e
 CPI calculado no dashboard.
 
+**Resultado.** *A medir:* conferir quantos integrantes lançaram horas nas sprints
+4 a 7 (aba Horas) e se o CPI aparece no [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm).
+
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
-| 1.0 | 27/09/2026 | Formato e três primeiras decisões (rascunho) | [@MilenaFRocha](https://github.com/MilenaFRocha) | |
+| 1.0 | 27/09/2026 | Formato e três primeiras decisões (rascunho) | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.1 | 21/10/2026 | Resultados de D1 e D2, coluna de resultado no resumo | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
