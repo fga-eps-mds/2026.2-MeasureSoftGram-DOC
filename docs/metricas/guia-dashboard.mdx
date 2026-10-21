@@ -3,16 +3,17 @@ id: guia-dashboard
 slug: /dashboard
 title: Guia do Dashboard
 sidebar_position: 0
+sidebar_label: Guia do Dashboard
 ---
 
-# Guia do Dashboard — onde está cada gráfico
+# Guia do Dashboard
 
 O **Dashboard de Gestão de Projeto** está publicado em
 **[20262-measuresoftgram-doc.streamlit.app](https://20262-measuresoftgram-doc.streamlit.app/)**.
 Esta página diz em qual tela e em qual bloco está cada indicador pedido no plano de
 ensino. Cada link abre a tela certa do dashboard.
 
-:::tip Como ler
+:::tip[Como ler]
 - Cada bloco tem uma **etiqueta de fonte**: `SONAR`, `ZENHUB`, `PLANILHA`, `GITHUB` ou `CALCULADO`.
 - Cada tela tem um expansor **Metodologia desta página** com a fórmula de cada número, e
   cada gráfico tem **Ver os dados em tabela** logo abaixo.
@@ -72,7 +73,7 @@ Qualquer total pode ser aberto até as issues (link direto) e baixado em CSV.
 | Detalhamento das issues | Release → Sprint → Épico → Story, com todas as colunas e download |
 | Confiabilidade dos dados | comparação com o Zenhub, conferência dos SP, consistência do cadastro e backlog atual |
 
-Regras de cálculo em [Velocity pela API do Zenhub](/docs/metricas/velocity-zenhub).
+Regras de cálculo em [Velocity pela API do Zenhub](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/Analytics/docs/velocity-zenhub.md).
 
 ### [Custos](https://20262-measuresoftgram-doc.streamlit.app/custos) · [Riscos](https://20262-measuresoftgram-doc.streamlit.app/riscos) · [Decisões](https://20262-measuresoftgram-doc.streamlit.app/decisoes)
 
@@ -112,3 +113,11 @@ Os dados são coletados automaticamente pelo workflow `coleta-dados.yml` (a cada
 na `main` e às 08h, 14h e 20h) e pelo `metrics.yml` de cada repositório; custos,
 riscos e decisões vêm da planilha publicada do time. Detalhes em
 [Modelo de gestão](/docs/metricas/modelo-de-gestao).
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 28/09/2026 | docs: guia do dashboard com links diretos para cada gráfico | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.1 | 29/09/2026 | refactor(dashboard): páginas com resumo, dado bruto e análise; menus de legenda e parâmetr | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.2 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
