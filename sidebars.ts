@@ -43,6 +43,16 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Templates e fluxos',
+      items: [
+        'processo/templates',
+        'processo/fluxo-de-trabalho',
+        'processo/historia-de-usuario',
+        'processo/pauta-reuniao-diaria',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Diagnóstico',
       items: ['diagnostico/diagnostico', 'diagnostico/backlog-tecnico'],
     },

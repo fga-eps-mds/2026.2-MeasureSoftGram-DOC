@@ -14,6 +14,8 @@ Formato: [USXX.YY] Nome da História
 - 'YY': Número sequencial da US com dois dígitos dentro do Épico (ex: 01, 02, 03...).
 Exemplo: Para a 1ª História de Usuário vinculada ao Épico 01 [MSG01]:
 -> [US01.01] Visualizar histórico do TSQMI
+Branch: feat/US01.01-visualizar-historico-tsqmi
+Guia completo (critérios de avaliação INVEST, DoR e DoD): https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/processo/historia-de-usuario/
 ================================================================================
 -->
 
@@ -76,12 +78,28 @@ Liste endpoints, contratos de API, microsserviços afetados, padrões de código
 
 ---
 
-## 5. Configuração no ZenHub (DoR de Metadados)
+## 5. Como validar
+
+<!-- Passo a passo que o PO e o revisor seguem na homologação para conferir os cenários acima. -->
+
+1.
+2.
+
+---
+
+## 6. Definição de Preparado (DoR)
+
+- [ ] História no formato Como / Quero / Para que, com persona do produto
+- [ ] Passa nos critérios INVEST (independente, negociável, valiosa, estimável, pequena, testável)
+- [ ] Cenários BDD com pelo menos um caso de exceção
+- [ ] **Cenários e escopo validados com o PO** (registrar a data/ata nos comentários)
+
+### Configuração no ZenHub
 
 <!--
 ATENÇÃO: Este checklist deve ser marcado diretamente no card após configurar os metadados nativos no ZenHub:
 -->
-- [ ] Estimativa de esforço pontuada no card (Story Points via Planning Poker)
+- [ ] Estimativa de esforço pontuada no card (Story Points via Planning Poker, até 8 pontos)
 - [ ] Desenvolvedores e integrantes do Squad atribuídos aos **Assignees**
 - [ ] Issue Type configurado como **Feature** no ZenHub
 - [ ] Labels dos repositórios que serão alterados adicionadas (ex: Service, Core, Frontend)
@@ -90,15 +108,16 @@ ATENÇÃO: Este checklist deve ser marcado diretamente no card após configurar 
 
 ---
 
-## 6. Definição de Pronto (DoD)
+## 7. Definição de Pronto (DoD)
 
 <!--
 Checklist obrigatório de qualidade para mover este card para Closed / Done:
 -->
 - [ ] Código implementado aderente aos Critérios Técnicos e convenções de estilo/linter
 - [ ] Testes automatizados implementados e executados com sucesso (unitários e/ou integração)
-- [ ] Pipeline de CI/CD executado com sucesso no repositório central
-- [ ] Pull Request (PR) revisado e aprovado por pelo menos um integrante da equipe
+- [ ] Quality gate do SonarCloud aprovado, sem problemas novos de severidade alta
+- [ ] PRs seguindo o fluxo (fork → develop do fork → develop central), com CI verde: https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/processo/fluxo-de-trabalho/
+- [ ] Pull Request (PR) revisado e aprovado por pelo menos um integrante que não é o autor
 - [ ] Código integrado à branch `develop` do repositório central (ambiente de homologação)
 - [ ] Todos os cenários BDD demonstrados e validados
 - [ ] Interface validada em conformidade com o protótipo do Figma (quando aplicável)
