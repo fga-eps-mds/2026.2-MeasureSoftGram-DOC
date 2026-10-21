@@ -1,5 +1,77 @@
 [
     {
+        "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/61",
+        "repository_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front",
+        "labels_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/61/labels{/name}",
+        "comments_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/61/comments",
+        "events_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/61/events",
+        "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/61",
+        "id": 5959835850,
+        "node_id": "PR_kwDOULOMpc8AAAABJxpP-A",
+        "number": 61,
+        "title": "fix(products): trata 409 de organizacoes e exibe reautorizacao sem de\u2026",
+        "user": {
+            "login": "DanielFsR",
+            "id": 118537519,
+            "node_id": "U_kgDOBxC9Lw",
+            "avatar_url": "https://avatars.githubusercontent.com/u/118537519?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/DanielFsR",
+            "html_url": "https://github.com/DanielFsR",
+            "followers_url": "https://api.github.com/users/DanielFsR/followers",
+            "following_url": "https://api.github.com/users/DanielFsR/following{/other_user}",
+            "gists_url": "https://api.github.com/users/DanielFsR/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/DanielFsR/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/DanielFsR/subscriptions",
+            "organizations_url": "https://api.github.com/users/DanielFsR/orgs",
+            "repos_url": "https://api.github.com/users/DanielFsR/repos",
+            "events_url": "https://api.github.com/users/DanielFsR/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/DanielFsR/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "labels": [],
+        "state": "open",
+        "locked": false,
+        "assignees": [],
+        "milestone": null,
+        "comments": 1,
+        "created_at": "2026-10-21T11:45:27Z",
+        "updated_at": "2026-10-21T11:57:33Z",
+        "closed_at": null,
+        "assignee": null,
+        "author_association": "NONE",
+        "issue_field_values": [],
+        "type": null,
+        "active_lock_reason": null,
+        "draft": false,
+        "pull_request": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/pulls/61",
+            "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/61",
+            "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/61.diff",
+            "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/61.patch",
+            "merged_at": null
+        },
+        "body": "## Motiva\u00e7\u00e3o\r\nAtende ao Cen\u00e1rio 3 da US02.01 (revoga\u00e7\u00e3o de permiss\u00f5es ou expira\u00e7\u00e3o de token do GitHub). \r\n\r\nAnteriormente, quando o token do GitHub expirava, a busca de organiza\u00e7\u00f5es em `/products` falhava e o erro 401 fazia o interceptor global do Axios limpar os tokens locais e redirecionar for\u00e7adamente para `/auth`, derrubando a sess\u00e3o do MeasureSoftGram. Com o backend agora retornando 409 Conflict, o frontend mant\u00e9m a sess\u00e3o ativa e oferece o bot\u00e3o para reautorizar o app.\r\n\r\nRefs [fga-eps-mds/2026.2-MeasureSoftGram-DOC#75](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/75#issuecomment-6282381276)\r\n\r\n## Mudan\u00e7as\r\n- Em `loadProviderNamespaces` (`src/pages/products/Products.tsx`), captura o status 409 retornado pelas rotas de organiza\u00e7\u00f5es/namespaces e define `repoFetchError('409')` sem deslogar.\r\n- Exibe o card de aviso *\"Token do GitHub expirado ou inv\u00e1lido\"* com o bot\u00e3o *\"Autorizar GitHub\"* para renovar o consentimento OAuth sem perder a sess\u00e3o atual.\r\n- Mant\u00e9m coer\u00eancia e tratamento id\u00eantico para o provedor GitLab.\r\n- Adiciona testes unit\u00e1rios em `src/pages/products/test/Products.spec.tsx` cobrindo o recebimento de 409 e garantindo que o usu\u00e1rio permanece logado (25 testes passando).\r\n\r\n## Status Checklist\r\n- [x] Test\r\n- [x] Lint\r\n- [x] Development\r\n\r\n## Screenshots\r\n\r\n| Before (Bug) | After (Corrigido) |\r\n| --- | --- |\r\n| Usu\u00e1rio era deslogado e redirecionado para `/auth` com perda de sess\u00e3o | Usu\u00e1rio permanece logado e v\u00ea o card com bot\u00e3o **\"Autorizar GitHub\"** |\r\n\r\n## Execu\u00e7\u00e3o\r\n1. Fa\u00e7a login na plataforma com qualquer usu\u00e1rio (`admin`/`admin`).\r\n2. No terminal, simule um token inv\u00e1lido:\r\n   `docker compose exec service python manage.py shell -c \"from accounts.models import CustomUser; u = CustomUser.objects.get(username='admin'); u.github_access_token = 'token_invalido_expirado'; u.save()\"`\r\n   `docker compose exec service python manage.py shell -c \"from accounts.models import CustomUser; CustomUser.objects.filter(username='admin').update(github_access_token='token_invalido_expirado')\"`\r\n3. Acesse a p\u00e1gina `/products`:\r\n   - O usu\u00e1rio **n\u00e3o \u00e9 deslogado**.\r\n   - Notifica\u00e7\u00e3o toast: *\"Token do GitHub expirado ou inv\u00e1lido.\"*\r\n   - Card exibindo o bot\u00e3o *\"Autorizar GitHub\"*.\r\n4. Para limpar o token simulado:\r\n   `docker compose exec service python manage.py shell -c \"from accounts.models import CustomUser; u = CustomUser.objects.get(username='admin'); u.github_access_token = None; u.save()\"`\r\n   `docker compose exec service python manage.py shell -c \"from accounts.models import CustomUser; CustomUser.objects.filter(username='admin').update(github_access_token=None)\"`\r\n\r\nCo-authored-by: MilenaFRocha <Milenafernandes594@gmail.com>\r\n\r\n",
+        "closed_by": null,
+        "reactions": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/61/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/61/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null
+    },
+    {
         "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/59",
         "repository_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front",
         "labels_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/59/labels{/name}",
@@ -350,14 +422,14 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [],
         "milestone": null,
         "comments": 1,
         "created_at": "2026-10-20T20:24:37Z",
-        "updated_at": "2026-10-20T21:43:49Z",
-        "closed_at": null,
+        "updated_at": "2026-10-21T15:42:43Z",
+        "closed_at": "2026-10-21T15:42:40Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -369,10 +441,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/56",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/56.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/56.patch",
-            "merged_at": null
+            "merged_at": "2026-10-21T15:42:40Z"
         },
         "body": "## Motiva\u00e7\u00e3o\n\nNo `next dev`, trocar de aba levava de 2 a 5 s, e a primeira visita chegava a 19 s. Isso afeta o dev local e o `pnpm dev` da Platform. Eram dois problemas no `next.config.js`:\n\n1. **O `modularizeImports` era ignorado.** Ele estava no n\u00edvel raiz, e o Next 12.2 s\u00f3 l\u00ea esse campo dentro de `experimental`. Com os imports pelo barril (`import { Box } from '@mui/material'`), cada p\u00e1gina compilava **~13,8 mil m\u00f3dulos**.\n2. **O `next dev` guardava s\u00f3 2 p\u00e1ginas compiladas** e descartava as paradas h\u00e1 25 s (`onDemandEntries` padr\u00e3o). Voltar para uma aba recompilava tudo.\n\nMedido no `next dev` com o `.next` limpo:\n\n| | Antes | Depois |\n| --- | --- | --- |\n| M\u00f3dulos compilados por p\u00e1gina | ~13,8 mil | ~2,9 mil |\n| Primeira compila\u00e7\u00e3o da p\u00e1gina do produto | 12,5 s | 3,9 s |\n| Primeira visita a cada aba (troca pelo menu) | 1,5\u20132,9 s (a primeira de todas, 19 s) | 0,7\u20132 s |\n| Voltar para uma aba j\u00e1 visitada | 1,5\u20132,4 s (recompila) | ~20 ms |\n| Recompila\u00e7\u00f5es numa sess\u00e3o de 18 trocas | 16 | 8 |\n\n## Mudan\u00e7as\n\n- `next.config.js`:\n  - `modularizeImports` passa para `experimental`, com os \u00edcones do MUI inclu\u00eddos;\n  - `onDemandEntries` guarda 20 p\u00e1ginas por uma hora.\n- A transforma\u00e7\u00e3o fica fora do Jest (`NODE_ENV === 'test'`), porque 3 su\u00edtes mocam `@mui/material` ou `@mui/x-charts` inteiros.\n- Os 7 nomes importados do barril sem pasta pr\u00f3pria no pacote passam a vir do caminho certo: `ButtonProps`, `ThemeOptions`, `SelectChangeEvent`, `SxProps`/`Theme`, `useTheme`, `hexToRgb` e `timelineItemClasses`. Os tipos viram `import type`.\n\n## Mem\u00f3ria (RAM) no ambiente de desenvolvimento\n\nMedido nesta m\u00e1quina (16 n\u00facleos):\n\n| | Antes | Depois |\n| --- | --- | --- |\n| `next dev` depois de visitar as abas | 3,1 GB | 1,5 GB |\n| Pico do Jest na su\u00edte inteira | 11,7 GB | 3,8 GB (~37 s) |\n\n- **`next dev`:** a queda vem do `modularizeImports` (cerca de 2,9 mil m\u00f3dulos por p\u00e1gina, em vez de 13,8 mil). Guardar 20 p\u00e1ginas no `onDemandEntries` n\u00e3o custa mem\u00f3ria a mais (1,50 GB contra 1,54 GB com o padr\u00e3o).\n- **Jest:** abria 15 workers, e a mem\u00f3ria de cada um crescia a cada arquivo de teste.\n  - Agora, fora do CI, usa at\u00e9 25% dos n\u00facleos (`maxWorkers`).\n  - Cada worker \u00e9 reiniciado ao passar de 768 MB (`workerIdleMemoryLimit`), o que exigiu atualizar para o Jest 29.7.\n  - O formato de snapshot do Jest 28 ficou configurado, ent\u00e3o os 56 snapshots n\u00e3o mudam.\n  - O teste de estabilidade do `ProductProvider` passou a esperar a carga inicial antes de contar os renders do `rerender`.\n- **`@mui/x-charts` e `next-transpile-modules` removidos:** o \u00fanico uso do x-charts era o `CustomLineChart`, renderizado s\u00f3 pelo `ReleaseChart`, que nenhuma p\u00e1gina importa mais.\n\n## Status Checklist\n\n- [x] Test: 145 su\u00edtes e 957 testes passam com o Jest 29 (saem os testes dos 2 componentes removidos).\n- [x] Lint: `next lint` sem erros. O `tsc` continua com os mesmos 52 erros do `develop`.\n- [x] Development: `next build` passa e o JS de produ\u00e7\u00e3o fica igual (213 kB compartilhados); em produ\u00e7\u00e3o o webpack j\u00e1 eliminava o c\u00f3digo n\u00e3o usado. O ganho \u00e9 s\u00f3 no `next dev`.\n\n## Execu\u00e7\u00e3o\n\n- `rm -rf .next && pnpm dev` e trocar entre as abas pelo menu. O terminal mostra ~3 mil m\u00f3dulos por p\u00e1gina, em vez de ~13 mil, e voltar para uma aba j\u00e1 aberta n\u00e3o recompila.\n\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "thegm445",
+            "id": 110239666,
+            "node_id": "U_kgDOBpIfsg",
+            "avatar_url": "https://avatars.githubusercontent.com/u/110239666?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/thegm445",
+            "html_url": "https://github.com/thegm445",
+            "followers_url": "https://api.github.com/users/thegm445/followers",
+            "following_url": "https://api.github.com/users/thegm445/following{/other_user}",
+            "gists_url": "https://api.github.com/users/thegm445/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/thegm445/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/thegm445/subscriptions",
+            "organizations_url": "https://api.github.com/users/thegm445/orgs",
+            "repos_url": "https://api.github.com/users/thegm445/repos",
+            "events_url": "https://api.github.com/users/thegm445/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/thegm445/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/56/reactions",
             "total_count": 0,
@@ -2069,14 +2161,14 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [],
         "milestone": null,
         "comments": 0,
         "created_at": "2026-10-19T22:42:16Z",
-        "updated_at": "2026-10-20T02:28:24Z",
-        "closed_at": null,
+        "updated_at": "2026-10-21T01:57:37Z",
+        "closed_at": "2026-10-21T01:57:37Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -2087,7 +2179,6 @@
             "completed": 0,
             "percent_completed": 0
         },
-        "parent_issue_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/130",
         "issue_dependencies_summary": {
             "blocked_by": 0,
             "total_blocked_by": 0,
@@ -2095,7 +2186,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nMostrar, na tela do reposit\u00f3rio, os arquivos que influenciaram uma medida. \u00c9 a parte `[Front]` da [US23.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/130) e segue o [prot\u00f3tipo do Figma](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6804-2743&page-id=617%3A1923&starting-point-node-id=6804%3A2743&show-proto-sidebar=1). Depende da TASK23.01.02 (Service) e da TASK07.01.04 (Front), que monta a nova tela do reposit\u00f3rio.\n\nA TASK07.01.04 troca o iframe da tela do reposit\u00f3rio (`repositories/[repository]/Repository.tsx`) pela estrutura nova; esta task acrescenta a lista de medidas e a lista de arquivos.\n\n## Lista de afazeres\n1. [ ] Mostrar as medidas do reposit\u00f3rio na release escolhida, com a a\u00e7\u00e3o \"Ver arquivos\" (CA1).\n2. [ ] Criar a tabela com caminho, valor usado pela medida, contribui\u00e7\u00e3o (0 a 1), situa\u00e7\u00e3o (texto e \u00edcone, n\u00e3o s\u00f3 cor) e dist\u00e2ncia at\u00e9 o limite, na ordem que o Service devolve, com o resumo \"X de Y arquivos fora da faixa\" (CA2, CA3).\n3. [ ] Adicionar pagina\u00e7\u00e3o de 10 itens e busca pelo caminho (CA4).\n4. [ ] Exibir \"Esta medida n\u00e3o \u00e9 calculada a partir de arquivos\" quando for o caso, e o erro com \"Tentar novamente\" (CA6).\n5. [ ] Criar testes da tabela, da busca, da pagina\u00e7\u00e3o e das mensagens.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "zzzBECK",
+            "id": 82113486,
+            "node_id": "MDQ6VXNlcjgyMTEzNDg2",
+            "avatar_url": "https://avatars.githubusercontent.com/u/82113486?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/zzzBECK",
+            "html_url": "https://github.com/zzzBECK",
+            "followers_url": "https://api.github.com/users/zzzBECK/followers",
+            "following_url": "https://api.github.com/users/zzzBECK/following{/other_user}",
+            "gists_url": "https://api.github.com/users/zzzBECK/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/zzzBECK/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/zzzBECK/subscriptions",
+            "organizations_url": "https://api.github.com/users/zzzBECK/orgs",
+            "repos_url": "https://api.github.com/users/zzzBECK/repos",
+            "events_url": "https://api.github.com/users/zzzBECK/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/zzzBECK/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/41/reactions",
             "total_count": 0,
@@ -2110,7 +2221,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/41/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "not_planned",
         "pinned_comment": null
     },
     {
@@ -2939,7 +3050,7 @@
                 "archived_by": null
             }
         ],
-        "state": "closed",
+        "state": "open",
         "locked": false,
         "assignees": [
             {
@@ -2965,10 +3076,10 @@
             }
         ],
         "milestone": null,
-        "comments": 0,
+        "comments": 1,
         "created_at": "2026-10-19T22:16:32Z",
-        "updated_at": "2026-10-20T02:51:51Z",
-        "closed_at": "2026-10-20T02:51:51Z",
+        "updated_at": "2026-10-21T15:39:14Z",
+        "closed_at": null,
         "assignee": {
             "login": "bottinolucas",
             "id": 101297130,
@@ -3006,28 +3117,8 @@
             "blocking": 0,
             "total_blocking": 0
         },
-        "body": "## Descri\u00e7\u00e3o da atividade\n\nTrocar o iframe da tela do reposit\u00f3rio (`repositories/[repository]/Repository.tsx`, dashboard `saude-qualidade-repo`) por um gr\u00e1fico nativo. \u00c9 parte da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131) e segue o [prot\u00f3tipo do Figma](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6804-1011&page-id=617%3A1923&starting-point-node-id=6804%3A1011&show-proto-sidebar=1).\n\nA tela da release saiu desta task: a [US22.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/125) j\u00e1 trocou o gr\u00e1fico de linhas do Grafana pelo equalizador.\n\nEsta task monta a estrutura da nova tela do reposit\u00f3rio. A TASK23.01.03 (lista de arquivos por medida) acrescenta a lista de medidas nessa mesma tela e depende desta task.\n\n## Lista de afazeres\n1. [ ] Montar a nova tela do reposit\u00f3rio, j\u00e1 com espa\u00e7o para a lista de medidas da TASK23.01.03.\n2. [ ] Desenhar a evolu\u00e7\u00e3o das caracter\u00edsticas do reposit\u00f3rio, com um ponto por release (CA3).\n3. [ ] Tratar os estados de carregamento, sem dados e erro (CA5) e aplicar a paleta das telas atuais do produto (CA8).\n4. [ ] Criar os testes da tela do reposit\u00f3rio.",
-        "closed_by": {
-            "login": "devwallyson",
-            "id": 120031974,
-            "node_id": "U_kgDOByeK5g",
-            "avatar_url": "https://avatars.githubusercontent.com/u/120031974?v=4",
-            "gravatar_id": "",
-            "url": "https://api.github.com/users/devwallyson",
-            "html_url": "https://github.com/devwallyson",
-            "followers_url": "https://api.github.com/users/devwallyson/followers",
-            "following_url": "https://api.github.com/users/devwallyson/following{/other_user}",
-            "gists_url": "https://api.github.com/users/devwallyson/gists{/gist_id}",
-            "starred_url": "https://api.github.com/users/devwallyson/starred{/owner}{/repo}",
-            "subscriptions_url": "https://api.github.com/users/devwallyson/subscriptions",
-            "organizations_url": "https://api.github.com/users/devwallyson/orgs",
-            "repos_url": "https://api.github.com/users/devwallyson/repos",
-            "events_url": "https://api.github.com/users/devwallyson/events{/privacy}",
-            "received_events_url": "https://api.github.com/users/devwallyson/received_events",
-            "type": "User",
-            "user_view_type": "public",
-            "site_admin": false
-        },
+        "body": "## Descri\u00e7\u00e3o da atividade\n\nTrocar o iframe da tela do reposit\u00f3rio (`repositories/[repository]/Repository.tsx`, dashboard `saude-qualidade-repo`) por um gr\u00e1fico nativo. \u00c9 parte da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131) e segue o [prot\u00f3tipo do Figma](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6804-1011&page-id=617%3A1923&starting-point-node-id=6804%3A1011&show-proto-sidebar=1).\n\nA tela da release saiu desta task: a [US22.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/125) j\u00e1 trocou o gr\u00e1fico de linhas do Grafana pelo equalizador.\n\nEsta task monta a estrutura da nova tela do reposit\u00f3rio. A TASK23.01.03 (lista de arquivos por medida) acrescenta a lista de medidas nessa mesma tela e depende desta task.\n\n**Corre\u00e7\u00f5es do PO (21/10):** a primeira entrega desenhou um gr\u00e1fico de linhas com um ponto por release. O painel do Grafana que a tela mostrava (\"Indicador das Caracter\u00edsticas por reposit\u00f3rio\", em `grafana/dashboards/dashboard-saude-qualidade-repositorio.json`) era um pulso com uma linha por caracter\u00edstica. O PO pediu para manter essa met\u00e1fora do eletrocardiograma e seguir o gr\u00e1fico de pulso do produto da [US06.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/67) (`PulseChart`, `toPulseSeries` e `formatPulseChart`). Depende das faixas de cor da TASK07.01.02.\n\n## Lista de afazeres\n1. [x] Montar a nova tela do reposit\u00f3rio, j\u00e1 com espa\u00e7o para a lista de medidas da TASK23.01.03.\n2. [x] Desenhar a evolu\u00e7\u00e3o das caracter\u00edsticas do reposit\u00f3rio (CA3).\n3. [x] Tratar os estados de carregamento, sem dados e erro (CA4) e aplicar a paleta das telas atuais do produto (CA7).\n4. [x] Criar os testes da tela do reposit\u00f3rio.\n\n### Corre\u00e7\u00f5es do PO (21/10)\n5. [ ] Buscar todas as medi\u00e7\u00f5es das caracter\u00edsticas do reposit\u00f3rio em `historical-values/characteristics`.\n6. [ ] Trocar o gr\u00e1fico de linhas por release por uma faixa de pulso por caracter\u00edstica, com a mesma altura do pulso do produto (`gridHeight` de `PulseChart.tsx`), os marcadores das releases e as cores das faixas da TASK07.01.02 (CA3).\n7. [ ] Incluir o filtro de per\u00edodo e o bot\u00e3o \"Exportar .csv\", como em `PulseChartFilters` (CA3).\n8. [ ] Aplicar as observa\u00e7\u00f5es do PO na US06.01: tag da vers\u00e3o + nome da release na etiqueta, sem linhas horizontais e sem etiquetas sobrepostas.\n9. [ ] Usar nos estados de sem dados e erro as mensagens do guia de IDV (CA4).\n10. [ ] Atualizar os testes da tela do reposit\u00f3rio.",
+        "closed_by": null,
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/35/reactions",
             "total_count": 0,
@@ -3042,7 +3133,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/35/timeline",
         "performed_via_github_app": null,
-        "state_reason": "completed",
+        "state_reason": "reopened",
         "pinned_comment": null
     },
     {
@@ -3101,7 +3192,7 @@
                 "archived_by": null
             }
         ],
-        "state": "closed",
+        "state": "open",
         "locked": false,
         "assignees": [
             {
@@ -3127,10 +3218,10 @@
             }
         ],
         "milestone": null,
-        "comments": 0,
+        "comments": 1,
         "created_at": "2026-10-19T22:14:30Z",
-        "updated_at": "2026-10-20T02:51:51Z",
-        "closed_at": "2026-10-20T02:51:51Z",
+        "updated_at": "2026-10-21T15:38:16Z",
+        "closed_at": null,
         "assignee": {
             "login": "bottinolucas",
             "id": 101297130,
@@ -3168,28 +3259,8 @@
             "blocking": 0,
             "total_blocking": 0
         },
-        "body": "## Descri\u00e7\u00e3o da atividade\n\nTrocar o iframe da Evolu\u00e7\u00e3o Temporal (`dashboards/temporal/TemporalDashboard.tsx`) por gr\u00e1ficos nativos, com um ponto por release. \u00c9 parte da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131) e segue o [prot\u00f3tipo do Figma](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6804-1011&page-id=617%3A1923&starting-point-node-id=6804%3A1011&show-proto-sidebar=1).\n\nHoje o painel do Grafana mostra 4 s\u00e9ries temporais (caracter\u00edstica, subcaracter\u00edsticas, medidas e m\u00e9tricas) por data de c\u00e1lculo. A US pede a unidade de refer\u00eancia por release, como no gr\u00e1fico de pulso (US06.01).\n\n## Lista de afazeres\n1. [ ] Consumir `historical-values/*` do reposit\u00f3rio escolhido e a lista de releases do produto (`productQuery.getReleaseList`).\n2. [ ] Agrupar os valores por release, com a mesma regra do gr\u00e1fico de pulso (\u00faltimo valor dentro de `start_at` e `end_at`).\n3. [ ] Desenhar os 4 gr\u00e1ficos com o eixo X por release, mantendo o seletor de reposit\u00f3rio que j\u00e1 existe (CA2).\n4. [ ] Tratar os estados de carregamento, sem dados e erro (CA5) e aplicar a paleta das telas atuais do produto (CA8).\n5. [ ] Criar testes do agrupamento por release e do dashboard.",
-        "closed_by": {
-            "login": "devwallyson",
-            "id": 120031974,
-            "node_id": "U_kgDOByeK5g",
-            "avatar_url": "https://avatars.githubusercontent.com/u/120031974?v=4",
-            "gravatar_id": "",
-            "url": "https://api.github.com/users/devwallyson",
-            "html_url": "https://github.com/devwallyson",
-            "followers_url": "https://api.github.com/users/devwallyson/followers",
-            "following_url": "https://api.github.com/users/devwallyson/following{/other_user}",
-            "gists_url": "https://api.github.com/users/devwallyson/gists{/gist_id}",
-            "starred_url": "https://api.github.com/users/devwallyson/starred{/owner}{/repo}",
-            "subscriptions_url": "https://api.github.com/users/devwallyson/subscriptions",
-            "organizations_url": "https://api.github.com/users/devwallyson/orgs",
-            "repos_url": "https://api.github.com/users/devwallyson/repos",
-            "events_url": "https://api.github.com/users/devwallyson/events{/privacy}",
-            "received_events_url": "https://api.github.com/users/devwallyson/received_events",
-            "type": "User",
-            "user_view_type": "public",
-            "site_admin": false
-        },
+        "body": "## Descri\u00e7\u00e3o da atividade\n\nTrocar o iframe da Evolu\u00e7\u00e3o Temporal (`dashboards/temporal/TemporalDashboard.tsx`) por gr\u00e1ficos nativos. \u00c9 parte da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131) e segue o [prot\u00f3tipo do Figma](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6804-1011&page-id=617%3A1923&starting-point-node-id=6804%3A1011&show-proto-sidebar=1).\n\n**Corre\u00e7\u00f5es do PO (21/10):** a primeira entrega desenhou os 4 gr\u00e1ficos em grade 2\u00d72, com um ponto por release (`useReleaseEvolution` e `release-history`) e s\u00f3 o filtro de reposit\u00f3rio. O PO pediu para manter os gr\u00e1ficos, os filtros e as regras do dashboard do Grafana, incluir o filtro de m\u00e9trica e mostrar o tempo em dias, com op\u00e7\u00e3o de meses.\n\nO dashboard do Grafana (`grafana/dashboards/dashboard-evolucao.json`, removido no Service #58) tinha:\n- 4 gr\u00e1ficos de linha (caracter\u00edstica, subcaracter\u00edsticas, medidas e m\u00e9tricas), um abaixo do outro, com o tempo no eixo X (\u00faltimos 6 meses);\n- os filtros Reposit\u00f3rio, Caracter\u00edstica (uma), Subcaracter\u00edstica (v\u00e1rias, com \"Todas\") e Medida (v\u00e1rias, com \"Todas\"), em cascata: as op\u00e7\u00f5es de cada filtro s\u00e3o as filhas do que foi escolhido no anterior;\n- em cada gr\u00e1fico, s\u00f3 as entidades filtradas.\n\nOs dados j\u00e1 existem no Service: `historical-values/{characteristics,subcharacteristics,measures,metrics}` do reposit\u00f3rio, com `start_at` e `end_at`.\n\n## Lista de afazeres\n1. [x] Consumir os dados do reposit\u00f3rio escolhido e a lista de releases do produto (`productQuery.getReleaseList`).\n2. [x] Desenhar os 4 gr\u00e1ficos, mantendo o seletor de reposit\u00f3rio que j\u00e1 existe (CA2).\n3. [x] Tratar os estados de carregamento, sem dados e erro (CA4) e aplicar a paleta das telas atuais do produto (CA7).\n\n### Corre\u00e7\u00f5es do PO (21/10)\n4. [ ] Montar os filtros Reposit\u00f3rio, Caracter\u00edstica, Subcaracter\u00edstica, Medida e M\u00e9trica (novo), em cascata, a partir da configura\u00e7\u00e3o do produto. Avaliar se o `TreeViewFilter` da tela do reposit\u00f3rio serve (CA2).\n5. [ ] No n\u00edvel m\u00e9trica, listar s\u00f3 as m\u00e9tricas com valor por reposit\u00f3rio (as do GitHub), a mesma regra da An\u00e1lise por Entidade (US21.02).\n6. [ ] Desenhar os 4 gr\u00e1ficos um abaixo do outro, com os valores de `historical-values/*` e o tempo no eixo X, no lugar do ponto por release (CA2).\n7. [ ] Mostrar o eixo X em dias por padr\u00e3o, com a op\u00e7\u00e3o de trocar para meses (CA2).\n8. [ ] Usar nos estados de sem dados e erro as mensagens do guia de IDV (CA4).\n9. [ ] Remover `ReleaseEvolutionChart` e `useReleaseEvolution`, se ficarem sem uso depois da TASK07.01.04.\n10. [ ] Criar testes da cascata dos filtros, da troca dias/meses e dos estados.",
+        "closed_by": null,
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/34/reactions",
             "total_count": 0,
@@ -3204,7 +3275,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/34/timeline",
         "performed_via_github_app": null,
-        "state_reason": "completed",
+        "state_reason": "reopened",
         "pinned_comment": null
     },
     {
@@ -3263,7 +3334,7 @@
                 "archived_by": null
             }
         ],
-        "state": "closed",
+        "state": "open",
         "locked": false,
         "assignees": [
             {
@@ -3289,10 +3360,10 @@
             }
         ],
         "milestone": null,
-        "comments": 0,
+        "comments": 1,
         "created_at": "2026-10-19T22:12:22Z",
-        "updated_at": "2026-10-20T03:37:01Z",
-        "closed_at": "2026-10-20T03:37:01Z",
+        "updated_at": "2026-10-21T15:36:35Z",
+        "closed_at": null,
         "assignee": {
             "login": "devwallyson",
             "id": 120031974,
@@ -3330,28 +3401,8 @@
             "blocking": 0,
             "total_blocking": 0
         },
-        "body": "## Descri\u00e7\u00e3o da atividade\n\nTrocar o iframe da Vis\u00e3o Geral de Qualidade (`dashboards/overview/OverviewDashboard.tsx`) por gr\u00e1ficos nativos em ECharts. \u00c9 parte da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131) e segue o [prot\u00f3tipo do Figma](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6804-1011&page-id=617%3A1923&starting-point-node-id=6804%3A1011&show-proto-sidebar=1).\n\nDepende dos endpoints da TASK07.01.01. O gr\u00e1fico de pulso (`PulseChart` e `usePulseChartData`) \u00e9 a refer\u00eancia de componente nativo e de consumo de dados.\n\n## Lista de afazeres\n1. [ ] Adicionar em `src/shared/services/product.ts` as chamadas dos endpoints de resumo e de radar, e os tipos em `@customTypes/product`.\n2. [ ] Montar a linha de cards com os totais, o gr\u00e1fico de TSQMI por reposit\u00f3rio, o planejado \u00d7 realizado por caracter\u00edstica e o radar (CA1).\n3. [ ] Tratar os estados de carregamento, sem dados e erro com \"Tentar novamente\" (CA5).\n4. [ ] Aplicar a paleta das telas atuais do produto (CA8).\n5. [ ] Adicionar o seletor de release, que abre na release atual (CA1). Reaproveitar o seletor da TASK21.01.02, se j\u00e1 existir.\n6. [ ] Conferir com o produto de teste populado que os valores s\u00e3o os da \u00faltima an\u00e1lise de cada reposit\u00f3rio dentro da release, e registrar no PR as diferen\u00e7as em rela\u00e7\u00e3o ao Grafana (CA4).\n7. [ ] Criar testes do dashboard, cobrindo dados, estado vazio e erro.",
-        "closed_by": {
-            "login": "bottinolucas",
-            "id": 101297130,
-            "node_id": "U_kgDOBgmr6g",
-            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
-            "gravatar_id": "",
-            "url": "https://api.github.com/users/bottinolucas",
-            "html_url": "https://github.com/bottinolucas",
-            "followers_url": "https://api.github.com/users/bottinolucas/followers",
-            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
-            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
-            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
-            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
-            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
-            "repos_url": "https://api.github.com/users/bottinolucas/repos",
-            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
-            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
-            "type": "User",
-            "user_view_type": "public",
-            "site_admin": false
-        },
+        "body": "## Descri\u00e7\u00e3o da atividade\n\nTrocar o iframe da Vis\u00e3o Geral de Qualidade (`dashboards/overview/OverviewDashboard.tsx`) por gr\u00e1ficos nativos em ECharts. \u00c9 parte da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131) e segue o [prot\u00f3tipo do Figma](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6804-1011&page-id=617%3A1923&starting-point-node-id=6804%3A1011&show-proto-sidebar=1).\n\nDepende dos endpoints da TASK07.01.01. O gr\u00e1fico de pulso (`PulseChart` e `usePulseChartData`) \u00e9 a refer\u00eancia de componente nativo e de consumo de dados.\n\n**Corre\u00e7\u00f5es do PO (21/10):** o planejado \u00d7 realizado da Vis\u00e3o Geral deve ser o mesmo gr\u00e1fico da tela da release, e n\u00e3o um gr\u00e1fico de barras com a m\u00e9dia entre os reposit\u00f3rios (`formatPlannedAccomplishedOptions` em `src/shared/utils/formatOverviewCharts.ts`). Para isso, usar o `PlannedVsAccomplishedEqualizer` com os dados de `analysis-data` (`productQuery.getReleaseAnalysisDataByReleaseId`), que j\u00e1 trazem o `diff` e o `norm_diff` de cada reposit\u00f3rio. O radar passa a usar os mesmos valores do realizado.\n\nAs barras do indicador usam as 5 faixas de cor que o PO definiu na [US06.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/67). Hoje `getQualityStatus` (`src/shared/utils/formatPulseChart.ts`) tem s\u00f3 3 faixas. A regra \u00e9 fixa nesta release; a configura\u00e7\u00e3o pelo usu\u00e1rio fica para a R3. Combinar com a equipe da US06.01, que usa o mesmo c\u00f3digo.\n\n| Grau | Intervalo | Cor | R\u00f3tulo |\n|---|---|---|---|\n| A | 0,8 \u2264 indicador \u2264 1 | #1A9641 | \u00d3timo |\n| B | 0,6 \u2264 indicador < 0,8 | #8CC63F | Muito bom |\n| C | 0,4 \u2264 indicador < 0,6 | #DFB317 | Bom |\n| D | 0,2 \u2264 indicador < 0,4 | #FE7D37 | Ruim |\n| E | 0 \u2264 indicador < 0,2 | #D7191C | Muito ruim |\n\n## Lista de afazeres\n1. [x] Adicionar em `src/shared/services/product.ts` as chamadas dos endpoints de resumo e de radar, e os tipos em `@customTypes/product`.\n2. [x] Montar a linha de cards com os totais, o gr\u00e1fico de TSQMI por reposit\u00f3rio, o planejado \u00d7 realizado por caracter\u00edstica e o radar (CA1).\n3. [x] Tratar os estados de carregamento, sem dados e erro com \"Tentar novamente\" (CA4).\n4. [x] Aplicar a paleta das telas atuais do produto (CA7).\n5. [x] Adicionar o seletor de release, que abre na release atual (CA1). Reaproveitar o seletor da TASK21.01.02, se j\u00e1 existir.\n6. [x] Conferir com o produto de teste populado que os valores s\u00e3o os da \u00faltima an\u00e1lise de cada reposit\u00f3rio dentro da release.\n7. [x] Criar testes do dashboard, cobrindo dados, estado vazio e erro.\n\n### Corre\u00e7\u00f5es do PO (21/10)\n8. [ ] Trocar as 3 faixas de `getQualityStatus` pelas 5 da tabela, num \u00fanico lugar do c\u00f3digo, e atualizar a legenda de `PulseChart.tsx` e os outros usos (`PulseChartRepoSidebar`, `formatEntityAnalysisChart`).\n9. [ ] Trocar o t\u00edtulo \"TSQMI por reposit\u00f3rio\" por \"Indicador Total da Qualidade\" e pintar cada barra com a cor da faixa do valor, com a legenda das faixas (CA1).\n10. [ ] Trocar o gr\u00e1fico de barras do planejado \u00d7 realizado pelo `PlannedVsAccomplishedEqualizer`, com os dados de `analysis-data` da release escolhida e um seletor de reposit\u00f3rio, como na tela da release (CA1).\n11. [ ] Usar o mesmo seletor de reposit\u00f3rio no radar e desenhar o radar com os valores do realizado (`accomplished` do reposit\u00f3rio em `analysis-data`) (CA1).\n12. [ ] Trocar a mensagem de aviso do radar (\"O reposit\u00f3rio \u2026 n\u00e3o tem an\u00e1lise nesta release\") e a mensagem de erro do planejado \u00d7 realizado pelos componentes de aviso e de erro do guia de IDV (CA4).\n13. [ ] Conferir as cores com o guia de IDV (CA7).\n14. [ ] Remover o que ficar sem uso (`formatPlannedAccomplishedOptions`, `PlannedAccomplishedLegend`, `hasPlannedOrAccomplished` e o texto da dispers\u00e3o).\n15. [ ] Atualizar os testes do dashboard, de `formatOverviewCharts` e de `getQualityStatus`, com os valores de limite das faixas (0,2; 0,4; 0,6; 0,8; 1).\n",
+        "closed_by": null,
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/33/reactions",
             "total_count": 0,
@@ -3366,7 +3417,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/33/timeline",
         "performed_via_github_app": null,
-        "state_reason": "completed",
+        "state_reason": "reopened",
         "pinned_comment": null
     },
     {
