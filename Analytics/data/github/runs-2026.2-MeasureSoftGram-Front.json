@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-21T23:18:46+00:00",
+ "coletado_em": "2026-10-22T00:54:44+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
- "total_count": 466,
+ "total_count": 468,
  "workflow_runs": [
+  {
+   "id": 39695009404,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-21T23:41:14Z",
+   "run_started_at": "2026-10-21T23:41:14Z",
+   "updated_at": "2026-10-21T23:41:37Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39695009404",
+   "run_number": 50,
+   "workflow_id": 347831685
+  },
+  {
+   "id": 39695009400,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-21T23:41:14Z",
+   "run_started_at": "2026-10-21T23:41:14Z",
+   "updated_at": "2026-10-21T23:48:01Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39695009400",
+   "run_number": 147,
+   "workflow_id": 347831686
+  },
   {
    "id": 39691426763,
    "name": "Dependabot Auto-merge",
