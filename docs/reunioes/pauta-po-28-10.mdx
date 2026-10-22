@@ -1,0 +1,105 @@
+---
+id: pauta-po-28-10
+title: Pauta – Reunião com o PO (28/10/2026)
+sidebar_position: 6
+sidebar_label: Pauta PO 28/10
+---
+
+# Pauta – Reunião com o PO (28/10/2026)
+
+**Data:** 28/10/2026 · 19h30 · Teams
+**Tipo:** Entrega da Release 2
+**Condutor:** _a definir_ · **Relator:** _a definir_
+
+:::info[Feriado]
+28/10 é ponto facultativo, mas o PO manteve a reunião (aviso na reunião de 21/10).
+:::
+
+:::tip[Objetivo]
+Demonstrar a **Release 2 em homologação** e sair com o aceite do PO, os
+instrumentos de teste enviados e o escopo da R3 combinado.
+:::
+
+---
+
+## 1. Demonstração da Release 2
+
+- Demo no ambiente de homologação (VM) e no PyPI, **sem localhost**.
+- Data de referência para a análise dos repositórios: segunda-feira (26/10).
+
+## 2. Instrumentos de teste de aceitação
+
+- Dois formulários separados: um para a R2 e outro para as histórias pendentes
+  da R1 (decisão de 21/10).
+- Confirmar o envio, previsto para terça-feira (27/10).
+
+## 3. Status dos ajustes acordados em 21/10
+
+- **US 7.1 – Visão do repositório (descontinuação do Grafana)**
+  - Radar no centro e "desvio geral do repositório" abaixo dele.
+  - Remover o produto do primeiro card, porque já aparece na sidebar.
+  - URL do repositório como hiperlink para o GitHub/GitLab.
+  - Unificar a terminologia repositório/projeto nos protótipos.
+- **Evolução temporal**
+  - Usar o gráfico de pulso no lugar do gráfico de linhas.
+  - Filtros em cascata: característica → subcaracterística → medida → métrica.
+  - Exportar CSV geral no topo, mais um por nível, no mesmo padrão da visão geral.
+- **Qualidade por entidade (mapa de calor)**
+  - Característica em caixa com o nome em negrito, na mesma cor da caixa de medida.
+  - Incluir a linha de subcaracterística.
+- **Distribuição estatística:** critérios atualizados conforme a imagem de
+  referência do PO. Os filtros refletem em todos os gráficos.
+- **Correlação:** feita por característica/subcaracterística, não por métrica,
+  com mínimo de 10 observações. Depende da referência do PO.
+- **Importação de repositórios:** listar os repositórios em que o usuário é dono
+  e também membro. Confirmar a correção em homologação.
+- Mudanças feitas direto no código, sem nova validação de protótipo: confirmar
+  se as tasks no ZenHub foram atualizadas.
+
+## 4. Adiado para a R3
+
+- **Rastreabilidade (23):** reformular a proposta.
+  - Navegação por diretório no estilo Sonar.
+  - Sem "nota" e sem distância do limiar; usar "valor calculado".
+  - Tratar separadamente as medidas por arquivo, por diretório e por repositório.
+- **Configuração de intervalos e cores:** apresentar o novo épico formalizado e o
+  protótipo da página de configurações.
+
+## 5. Pendências do PO
+
+- Referência visual do dashboard de correlação.
+- Revisão dos critérios de aceitação das histórias da R2.
+
+## 6. Organização da equipe
+
+- Primeira avaliação dos 3 squads com líder fixo e rodízio de áreas.
+
+## 7. Planejamento da R3
+
+- Escopo: rastreabilidade, configurações e o que sobrar da R2.
+- Backlog estimado em pontos no ZenHub.
+- Roadmap com datas nos pacotes da EAP.
+
+## 8. Pendências de reuniões anteriores (confirmar status)
+
+- Remoção do plugin do VS Code do Marketplace ([ata de 07/10](./ata-po-07-10.mdx)).
+- Bug 403 no dashboard para membros da organização.
+- Script de população de dados em homologação.
+- Issue para refazer os 2 dashboards atuais sem Grafana.
+- Nome correto da medida de dívida técnica, que hoje aparece como "razão de
+  dívida técnica".
+- Coleta de métricas do plugin no Sonar.
+
+---
+
+## Preparação
+
+- [ ] Definir condutor e relator.
+- [ ] Testar a demo em homologação antes da reunião.
+- [ ] Retirar da seção 8 o que já estiver resolvido.
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 22/10/2026 | Criação da pauta da entrega da R2 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
