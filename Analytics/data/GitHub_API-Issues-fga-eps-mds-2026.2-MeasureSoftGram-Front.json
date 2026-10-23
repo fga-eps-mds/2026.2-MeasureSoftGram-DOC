@@ -32,14 +32,14 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [],
         "milestone": null,
-        "comments": 1,
+        "comments": 0,
         "created_at": "2026-10-23T19:28:47Z",
-        "updated_at": "2026-10-23T19:31:54Z",
-        "closed_at": null,
+        "updated_at": "2026-10-23T19:52:52Z",
+        "closed_at": "2026-10-23T19:52:50Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -51,10 +51,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/83",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/83.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/83.patch",
-            "merged_at": null
+            "merged_at": "2026-10-23T19:52:50Z"
         },
-        "body": "## Motiva\u00e7\u00e3o\n\nEsta PR implementa a TASK21.02.04 (#80), parte [Front] da US21.02 (fga-eps-mds/2026.2-MeasureSoftGram-DOC#127).\n\nSegue a decis\u00e3o do PO na reuni\u00e3o de 21/10: um bot\u00e3o \"Exportar .csv\" em cada gr\u00e1fico e um bot\u00e3o no topo da p\u00e1gina que exporta todos os gr\u00e1ficos de uma vez num `.zip`. A PR usa a base de exporta\u00e7\u00e3o criada na TASK21.04.04 (#69). O CSV \u00e9 montado com os dados que a p\u00e1gina j\u00e1 carregou, ent\u00e3o o Service n\u00e3o muda.\n\n> **Depende do #74.** A issue s\u00f3 pode ser implementada com o dashboard da TASK21.02.02 (#38) pronto, e o #74 ainda est\u00e1 aberto. Esta branch sai do #74 com a `develop` mesclada (para trazer o `exportCsv` do #76). At\u00e9 o #74 entrar, o diff desta PR mostra os commits dele tamb\u00e9m. A mudan\u00e7a desta task \u00e9 s\u00f3 o \u00faltimo commit.\n\nCloses #80\n\n## Mudan\u00e7as\n\n### CSVs (`src/shared/utils/entityMatrix.ts`)\n\nTodos levam as colunas Release e N\u00edvel com o que est\u00e1 escolhido na tela, e os valores saem sem arredondar.\n\n- **`formatEntityHeatmapCsv` (`mapa-calor`):** uma linha por c\u00e9lula, na ordem da tela (linhas do pior para o melhor TSQMI). As colunas s\u00e3o Reposit\u00f3rio, Entidade, Chave da entidade, Entidades de cima (o caminho na hierarquia), Peso (%), Valor, Grau, Indicador Total da Qualidade, Grau do indicador e Varia\u00e7\u00e3o do indicador.\n- **`formatEntityContributionCsv` (`contribuicao`):** os pares do quadro \"O que puxa a qualidade total para baixo\", na ordem da tela, com a release anterior, o valor nas duas releases e a contribui\u00e7\u00e3o para a varia\u00e7\u00e3o do indicador. Na primeira release n\u00e3o tem linhas.\n- **`formatEntityRankingCsv` (`ranking`):** Posi\u00e7\u00e3o, Reposit\u00f3rio, Entidade, Chave da entidade, Valor, Grau e Varia\u00e7\u00e3o.\n- A c\u00e9lula \"sem dado\" fica com o valor e o grau vazios, e a varia\u00e7\u00e3o da primeira release fica vazia, nunca zero.\n- Al\u00e9m do nome da entidade, os CSVs trazem a chave (`test_coverage`), que \u00e9 o que aparece no ranking e na contribui\u00e7\u00e3o.\n\n### Bot\u00f5es na p\u00e1gina\n\n- \"Exportar .csv\" no `headerAction` dos tr\u00eas quadros, que baixa `msgram-entidade-<quadro>-<data>.csv`. No ranking, o bot\u00e3o fica ao lado do selo do n\u00edvel.\n- \"Exportar todos (.zip)\" no topo, ao lado do seletor de release, com os tr\u00eas CSVs.\n- Os CSVs s\u00f3 existem com o mapa na tela. Carregando, com erro, sem an\u00e1lise, sem entidades no n\u00edvel ou sem reposit\u00f3rios, o `.zip` fica desabilitado e os quadros n\u00e3o mostram o bot\u00e3o. Na primeira release o quadro de contribui\u00e7\u00e3o n\u00e3o tem bot\u00e3o e o `.zip` leva s\u00f3 o mapa e o ranking.\n\n### Testes\n\n- Fun\u00e7\u00f5es do CSV: nomes dos arquivos, colunas, ordem da tela, c\u00e9lula \"sem dado\" e primeira release.\n- P\u00e1gina: bot\u00e3o de cada quadro, `.zip` com os tr\u00eas, troca de release e de n\u00edvel, primeira release, estado vazio, carregando e erro.\n\n### Documenta\u00e7\u00e3o\n\n- A se\u00e7\u00e3o \"Exporta\u00e7\u00e3o de CSV dos dashboards\" do README cita as fun\u00e7\u00f5es deste dashboard.\n\n## Status Checklist\n\n- [x] Test\n- [x] Lint\n- [x] Development\n\n## Screenshots\n\n**Bot\u00f5es na p\u00e1gina:**\n\n<!-- imagem: dashboard com o bot\u00e3o do topo e os bot\u00f5es dos tr\u00eas quadros -->\n\n**CSV do mapa de calor aberto numa planilha:**\n\n<!-- imagem: CSV aberto -->\n\n## Execu\u00e7\u00e3o\n\n1. Suba o Service com o endpoint `entity-analysis/matrix/` e rode `make seed`.\n2. Rode `pnpm install`, para instalar o `jszip`.\n3. No Front, acesse `/products/<produto>/dashboards/entidade`.\n4. Clique em \"Exportar .csv\" em cada quadro. Confira o nome do arquivo, a release e o n\u00edvel em cada linha e as c\u00e9lulas \"sem dado\" vazias.\n5. Troque a release e o n\u00edvel e exporte de novo: as linhas acompanham a escolha.\n6. Clique em \"Exportar todos (.zip)\" e confira os tr\u00eas CSVs dentro do `.zip`.\n7. Na primeira release do produto, confira que a varia\u00e7\u00e3o fica vazia e que o `.zip` n\u00e3o traz a contribui\u00e7\u00e3o.\n8. Numa release sem an\u00e1lise, confira que o bot\u00e3o do topo fica desabilitado.\n",
-        "closed_by": null,
+        "body": "## Motiva\u00e7\u00e3o\n\nEsta PR implementa a TASK21.02.04 (#80), parte [Front] da US21.02 (fga-eps-mds/2026.2-MeasureSoftGram-DOC#127).\n\nSegue a decis\u00e3o do PO na reuni\u00e3o de 21/10: um bot\u00e3o \"Exportar .csv\" em cada gr\u00e1fico e um bot\u00e3o no topo da p\u00e1gina que exporta todos os gr\u00e1ficos de uma vez num `.zip`. A PR usa a base de exporta\u00e7\u00e3o criada na TASK21.04.04 (#69). O CSV \u00e9 montado com os dados que a p\u00e1gina j\u00e1 carregou, ent\u00e3o o Service n\u00e3o muda.\n\nUsa o dashboard da TASK21.02.02 (#38), que entrou com o #74.\n\nCloses #80\n\n## Mudan\u00e7as\n\n### CSVs (`src/shared/utils/entityMatrix.ts`)\n\nTodos levam as colunas Release e N\u00edvel com o que est\u00e1 escolhido na tela, e os valores saem sem arredondar.\n\n- **`formatEntityHeatmapCsv` (`mapa-calor`):** uma linha por c\u00e9lula, na ordem da tela (linhas do pior para o melhor TSQMI). As colunas s\u00e3o Reposit\u00f3rio, Entidade, Chave da entidade, Entidades de cima (o caminho na hierarquia), Peso (%), Valor, Grau, Indicador Total da Qualidade, Grau do indicador e Varia\u00e7\u00e3o do indicador.\n- **`formatEntityContributionCsv` (`contribuicao`):** os pares do quadro \"O que puxa a qualidade total para baixo\", na ordem da tela, com a release anterior, o valor nas duas releases e a contribui\u00e7\u00e3o para a varia\u00e7\u00e3o do indicador. Na primeira release n\u00e3o tem linhas.\n- **`formatEntityRankingCsv` (`ranking`):** Posi\u00e7\u00e3o, Reposit\u00f3rio, Entidade, Chave da entidade, Valor, Grau e Varia\u00e7\u00e3o.\n- A c\u00e9lula \"sem dado\" fica com o valor e o grau vazios, e a varia\u00e7\u00e3o da primeira release fica vazia, nunca zero.\n- Al\u00e9m do nome da entidade, os CSVs trazem a chave (`test_coverage`), que \u00e9 o que aparece no ranking e na contribui\u00e7\u00e3o.\n\n### Bot\u00f5es na p\u00e1gina\n\n- \"Exportar .csv\" no `headerAction` dos tr\u00eas quadros, que baixa `msgram-entidade-<quadro>-<data>.csv`. No ranking, o bot\u00e3o fica ao lado do selo do n\u00edvel.\n- \"Exportar todos (.zip)\" no topo, ao lado do seletor de release, com os tr\u00eas CSVs.\n- Os CSVs s\u00f3 existem com o mapa na tela. Carregando, com erro, sem an\u00e1lise, sem entidades no n\u00edvel ou sem reposit\u00f3rios, o `.zip` fica desabilitado e os quadros n\u00e3o mostram o bot\u00e3o. Na primeira release o quadro de contribui\u00e7\u00e3o n\u00e3o tem bot\u00e3o e o `.zip` leva s\u00f3 o mapa e o ranking.\n\n### Testes\n\n- Fun\u00e7\u00f5es do CSV: nomes dos arquivos, colunas, ordem da tela, c\u00e9lula \"sem dado\" e primeira release.\n- P\u00e1gina: bot\u00e3o de cada quadro, `.zip` com os tr\u00eas, troca de release e de n\u00edvel, primeira release, estado vazio, carregando e erro.\n\n### Documenta\u00e7\u00e3o\n\n- A se\u00e7\u00e3o \"Exporta\u00e7\u00e3o de CSV dos dashboards\" do README cita as fun\u00e7\u00f5es deste dashboard.\n\n## Status Checklist\n\n- [x] Test\n- [x] Lint\n- [x] Development\n\n## Screenshots\n\n**Bot\u00f5es na p\u00e1gina:**\n\n<!-- imagem: dashboard com o bot\u00e3o do topo e os bot\u00f5es dos tr\u00eas quadros -->\n\n**CSV do mapa de calor aberto numa planilha:**\n\n<!-- imagem: CSV aberto -->\n\n## Execu\u00e7\u00e3o\n\n1. Suba o Service com o endpoint `entity-analysis/matrix/` e rode `make seed`.\n2. Rode `pnpm install`, para instalar o `jszip`.\n3. No Front, acesse `/products/<produto>/dashboards/entidade`.\n4. Clique em \"Exportar .csv\" em cada quadro. Confira o nome do arquivo, a release e o n\u00edvel em cada linha e as c\u00e9lulas \"sem dado\" vazias.\n5. Troque a release e o n\u00edvel e exporte de novo: as linhas acompanham a escolha.\n6. Clique em \"Exportar todos (.zip)\" e confira os tr\u00eas CSVs dentro do `.zip`.\n7. Na primeira release do produto, confira que a varia\u00e7\u00e3o fica vazia e que o `.zip` n\u00e3o traz a contribui\u00e7\u00e3o.\n8. Numa release sem an\u00e1lise, confira que o bot\u00e3o do topo fica desabilitado.\n\n",
+        "closed_by": {
+            "login": "bottinolucas",
+            "id": 101297130,
+            "node_id": "U_kgDOBgmr6g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bottinolucas",
+            "html_url": "https://github.com/bottinolucas",
+            "followers_url": "https://api.github.com/users/bottinolucas/followers",
+            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+            "repos_url": "https://api.github.com/users/bottinolucas/repos",
+            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/83/reactions",
             "total_count": 0,
@@ -411,7 +431,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -439,8 +459,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-10-23T19:11:29Z",
-        "updated_at": "2026-10-23T19:12:24Z",
-        "closed_at": null,
+        "updated_at": "2026-10-23T19:52:52Z",
+        "closed_at": "2026-10-23T19:52:52Z",
         "assignee": {
             "login": "bottinolucas",
             "id": 101297130,
@@ -479,7 +499,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nUsar a exporta\u00e7\u00e3o de CSV dos dashboards, criada na TASK21.04.04 (#69), no dashboard \"4. An\u00e1lise por Entidade\". \u00c9 parte `[Front]` da [US21.02](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/127) e segue a decis\u00e3o do PO na reuni\u00e3o de 21/10: um bot\u00e3o \"Exportar .csv\" em cada gr\u00e1fico e um bot\u00e3o no topo da p\u00e1gina que exporta todos os gr\u00e1ficos de uma vez num `.zip`.\n\n> **Antes de come\u00e7ar:** esta task s\u00f3 pode ser implementada depois que o dashboard estiver pronto, com as corre\u00e7\u00f5es do PO da TASK21.02.02 (#38) integradas na `develop`: o mapa de calor, \"O que puxa a qualidade total para baixo\" e o ranking dos piores pares. As colunas abaixo seguem esses quadros. Se a tela mudar, as colunas mudam junto.\n\nA base j\u00e1 existe: `toCsv`, `downloadCsv` e `downloadCsvZip` em `src/shared/utils/exportCsv.ts`, os bot\u00f5es `ExportCsvButton` e `ExportAllCsvButton` em `src/shared/components/ExportCsvButton/`, e a se\u00e7\u00e3o \"Exporta\u00e7\u00e3o de CSV dos dashboards\" do README. O exemplo completo \u00e9 o dashboard \"6. Rela\u00e7\u00f5es e Correla\u00e7\u00f5es\" (`formatCorrelationCsv`). O CSV \u00e9 montado com os dados que a p\u00e1gina j\u00e1 carregou, ent\u00e3o o Service n\u00e3o muda.\n\n## Lista de afazeres\n1. [ ] Criar as fun\u00e7\u00f5es que montam o CSV de cada quadro, sempre com a release e o n\u00edvel escolhidos e os valores sem arredondar:\n   - **mapa de calor** (`mapa-calor`): uma linha por c\u00e9lula, com as colunas Reposit\u00f3rio, Entidade, Entidades de cima (o caminho na hierarquia), Peso (%), Valor, Grau, Indicador Total da Qualidade do reposit\u00f3rio, Grau do indicador e Varia\u00e7\u00e3o do indicador;\n   - **o que puxa a qualidade para baixo** (`contribuicao`): uma linha por par reposit\u00f3rio \u00d7 entidade, com a contribui\u00e7\u00e3o para a varia\u00e7\u00e3o do indicador, na ordem da tela;\n   - **ranking dos piores pares** (`ranking`): Posi\u00e7\u00e3o, Reposit\u00f3rio, Entidade, Valor, Grau e Varia\u00e7\u00e3o.\n2. [ ] Deixar vazios, e n\u00e3o zero, o valor e o grau da c\u00e9lula \"sem dado\" e a varia\u00e7\u00e3o da primeira release do produto.\n3. [ ] Colocar o `ExportCsvButton` no `headerAction` de cada quadro, com o nome `msgram-entidade-<quadro>-<data>.csv`.\n4. [ ] Colocar o `ExportAllCsvButton` no topo da p\u00e1gina, com os tr\u00eas CSVs no `.zip`, desabilitado sem dados.\n5. [ ] Criar os testes das fun\u00e7\u00f5es do CSV (inclusive \"sem dado\" e primeira release) e dos bot\u00f5es na p\u00e1gina (troca de release e de n\u00edvel, e estado vazio).",
-        "closed_by": null,
+        "closed_by": {
+            "login": "bottinolucas",
+            "id": 101297130,
+            "node_id": "U_kgDOBgmr6g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bottinolucas",
+            "html_url": "https://github.com/bottinolucas",
+            "followers_url": "https://api.github.com/users/bottinolucas/followers",
+            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+            "repos_url": "https://api.github.com/users/bottinolucas/repos",
+            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/80/reactions",
             "total_count": 0,
@@ -494,7 +534,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/80/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -2584,7 +2624,7 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-10-21T21:12:51Z",
-        "updated_at": "2026-10-23T19:40:22Z",
+        "updated_at": "2026-10-23T19:52:35Z",
         "closed_at": null,
         "assignee": null,
         "author_association": "NONE",
