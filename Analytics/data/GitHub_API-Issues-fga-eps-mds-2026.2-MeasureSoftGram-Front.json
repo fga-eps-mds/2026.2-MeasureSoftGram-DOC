@@ -189,7 +189,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -215,10 +215,10 @@
             }
         ],
         "milestone": null,
-        "comments": 1,
+        "comments": 2,
         "created_at": "2026-10-23T18:06:41Z",
-        "updated_at": "2026-10-23T18:36:24Z",
-        "closed_at": null,
+        "updated_at": "2026-10-23T18:58:06Z",
+        "closed_at": "2026-10-23T18:58:04Z",
         "assignee": {
             "login": "gusrberto",
             "id": 79723182,
@@ -250,10 +250,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/76",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/76.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/76.patch",
-            "merged_at": null
+            "merged_at": "2026-10-23T18:58:04Z"
         },
         "body": "## Motiva\u00e7\u00e3o\n\nEsta PR implementa a TASK21.04.04 (#69), parte [Front] da US21.04 (fga-eps-mds/2026.2-MeasureSoftGram-DOC#129).\n\nNa reuni\u00e3o de 21/10, o PO pediu para exportar os dashboards em CSV de dois jeitos: um bot\u00e3o \"Exportar .csv\" em cada gr\u00e1fico e um bot\u00e3o no topo da p\u00e1gina que exporta todos os gr\u00e1ficos de uma vez num `.zip`.\n\nHoje cada gr\u00e1fico monta o pr\u00f3prio CSV. O `convertToCsv` e o `convertPulseRepositoriesToCsv` s\u00f3 servem para o formato de hist\u00f3rico, repetem o c\u00f3digo do download e n\u00e3o escapam v\u00edrgula nem aspas.\n\nEsta PR cria uma base gen\u00e9rica para todos os dashboards e j\u00e1 a usa no dashboard \"6. Rela\u00e7\u00f5es e Correla\u00e7\u00f5es\". O CSV \u00e9 montado no Front, com os dados que a p\u00e1gina j\u00e1 carregou, ent\u00e3o o Service n\u00e3o muda. Os outros dashboards passam a usar a mesma base nas tasks das suas USs.\n\nCloses #69\n\n## Mudan\u00e7as\n\n### Base compartilhada (`src/shared/utils/exportCsv.ts`)\n\n- **`toCsv`:** recebe as colunas (a chave do campo e o t\u00edtulo do cabe\u00e7alho) e as linhas, e devolve o CSV separado por v\u00edrgula.\n  - P\u00f5e entre aspas o valor que tem v\u00edrgula, aspas ou quebra de linha, e dobra as aspas (RFC 4180).\n  - Um valor `null` fica vazio. Os n\u00fameros saem sem arredondar.\n- **`downloadCsv`:** baixa `msgram-<dashboard>-<grafico>-<data>.csv` e libera o link tempor\u00e1rio depois do download.\n- **`downloadCsvZip`:** baixa `msgram-<dashboard>-<data>.zip`, com um CSV por gr\u00e1fico, porque cada gr\u00e1fico tem colunas diferentes.\n- **Depend\u00eancia nova:** `jszip` 3.10.2.\n\n### Bot\u00f5es (`src/shared/components/ExportCsvButton/`)\n\n- **`ExportCsvButton`:** o bot\u00e3o \"Exportar .csv\" de um gr\u00e1fico. Vai no `headerAction` do `DashboardCard` e fica desabilitado quando o gr\u00e1fico n\u00e3o tem dados.\n- **`ExportAllCsvButton`:** o bot\u00e3o \"Exportar todos (.zip)\" do topo da p\u00e1gina. S\u00f3 p\u00f5e no `.zip` os gr\u00e1ficos que t\u00eam dados e mostra \"Exportando\u2026\" enquanto gera o arquivo. Se a gera\u00e7\u00e3o falhar, mostra um aviso e o bot\u00e3o volta a ficar habilitado.\n\n### Dashboard \"6. Rela\u00e7\u00f5es e Correla\u00e7\u00f5es\"\n\n- **CSV de cada matriz (`formatCorrelationCsv`):** um par de entidades por linha, com estas colunas: Reposit\u00f3rio, N\u00edvel, Linha, Coluna, Coeficiente, p-valor, Significativo, Coeficiente aplicado e Releases.\n  - As colunas Reposit\u00f3rio e N\u00edvel mostram os filtros aplicados na tela.\n  - O coeficiente e o p-valor saem como o Service devolve, sem arredondar.\n- **Bot\u00f5es na p\u00e1gina:**\n  - \"Exportar .csv\" no cabe\u00e7alho da matriz de correla\u00e7\u00e3o (`matriz-correlacao`) e no da matriz de bolhas (`matriz-bolhas`);\n  - \"Exportar todos (.zip)\" ao lado do t\u00edtulo da p\u00e1gina, com os dois CSVs.\n\n### Documenta\u00e7\u00e3o\n\n- O README ganhou a se\u00e7\u00e3o \"Exporta\u00e7\u00e3o de CSV dos dashboards\", que mostra como um dashboard declara as colunas de cada gr\u00e1fico e usa os dois bot\u00f5es.\n\n## Status Checklist\n\n- [x] Test\n- [x] Lint\n- [x] Development\n\n## Screenshots\n\n**Bot\u00f5es na p\u00e1gina:**\n\n<!-- imagem: dashboard com o bot\u00e3o do topo e os bot\u00f5es das duas matrizes -->\n\n**CSV de uma matriz aberto numa planilha:**\n\n<!-- imagem: CSV aberto -->\n\n**Conte\u00fado do `.zip`:**\n\n<!-- imagem: arquivos do .zip -->\n\n## Execu\u00e7\u00e3o\n\n1. Suba o Service com o `msgram-core` 1.5.5rc4 e rode `make seed`.\n2. Rode `pnpm install`, para instalar o `jszip`.\n3. No Front, acesse `/products/<produto>/dashboards/relacoes`.\n4. Escolha um reposit\u00f3rio e um n\u00edvel e clique em \"Exportar .csv\" em cada matriz. Confira o nome do arquivo e se cada par traz o reposit\u00f3rio e o n\u00edvel escolhidos.\n5. Clique em \"Exportar todos (.zip)\" e confira os dois CSVs dentro do `.zip`.\n6. Num reposit\u00f3rio sem an\u00e1lise, confira que o bot\u00e3o do topo fica desabilitado.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "gusrberto",
+            "id": 79723182,
+            "node_id": "MDQ6VXNlcjc5NzIzMTgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/79723182?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusrberto",
+            "html_url": "https://github.com/gusrberto",
+            "followers_url": "https://api.github.com/users/gusrberto/followers",
+            "following_url": "https://api.github.com/users/gusrberto/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusrberto/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusrberto/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusrberto/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusrberto/orgs",
+            "repos_url": "https://api.github.com/users/gusrberto/repos",
+            "events_url": "https://api.github.com/users/gusrberto/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusrberto/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/76/reactions",
             "total_count": 0,
@@ -922,7 +942,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -950,8 +970,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-10-22T14:20:57Z",
-        "updated_at": "2026-10-22T14:21:26Z",
-        "closed_at": null,
+        "updated_at": "2026-10-23T18:58:05Z",
+        "closed_at": "2026-10-23T18:58:05Z",
         "assignee": {
             "login": "gusrberto",
             "id": 79723182,
@@ -990,7 +1010,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nCriar a base para exportar os dashboards em CSV, decidida pelo PO na reuni\u00e3o de 21/10, e us\u00e1-la no dashboard \"6. Rela\u00e7\u00f5es e Correla\u00e7\u00f5es\": um bot\u00e3o \"Exportar .csv\" em cada gr\u00e1fico e um bot\u00e3o no topo da p\u00e1gina que exporta todos os gr\u00e1ficos de uma vez. \u00c9 parte `[Front]` da [US21.04](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/129). Os outros dashboards passam a usar a mesma base nas tasks das suas USs.\n\nHoje cada gr\u00e1fico monta o pr\u00f3prio CSV: o gr\u00e1fico de pulso usa `convertPulseRepositoriesToCsv` (`src/shared/utils/formatPulseChart.ts`), e os gr\u00e1ficos de hist\u00f3rico usam `convertToCsv` (`src/shared/utils/convertToCsv.ts`) e o `DownloadButton`. Os dois servem s\u00f3 para o formato de hist\u00f3rico, repetem o c\u00f3digo do download e n\u00e3o escapam v\u00edrgula nem aspas. O CSV \u00e9 montado no Front, com os dados que a p\u00e1gina j\u00e1 carregou, ent\u00e3o o Service n\u00e3o muda. Depende da TASK21.04.02 (p\u00e1gina e matrizes).\n\n## Lista de afazeres\n1. [ ] Criar em `src/shared/utils/` uma fun\u00e7\u00e3o gen\u00e9rica que recebe as colunas (chave e t\u00edtulo) e as linhas e devolve o CSV separado por v\u00edrgula, escapando v\u00edrgula, aspas e quebra de linha (RFC 4180).\n2. [ ] Criar a fun\u00e7\u00e3o de download (Blob, link tempor\u00e1rio e `revokeObjectURL`) com nome `msgram-<dashboard>-<grafico>-<data>.csv`.\n3. [ ] Criar em `src/shared/components/` o bot\u00e3o \"Exportar .csv\" por gr\u00e1fico, desabilitado sem dados, que recebe as colunas e as linhas do gr\u00e1fico.\n4. [ ] Adicionar o `jszip` ao `package.json` e criar o bot\u00e3o de exporta\u00e7\u00e3o geral do topo, que gera um `.zip` com um CSV por gr\u00e1fico da p\u00e1gina.\n5. [ ] Exportar sempre os dados com os filtros aplicados na tela e os valores sem arredondar.\n6. [ ] Usar os bot\u00f5es no dashboard \"6. Rela\u00e7\u00f5es e Correla\u00e7\u00f5es\": um CSV por matriz (par de entidades, coeficiente, p-valor e se \u00e9 significativo, com o coeficiente aplicado e o n\u00famero de releases) e o `.zip` com os dois no topo (CA7).\n7. [ ] Criar testes do escape, do nome do arquivo, do bot\u00e3o sem dados, do `.zip` e dos CSVs das duas matrizes.\n8. [ ] Documentar no README do Front como um dashboard declara as colunas de cada gr\u00e1fico para exportar.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "gusrberto",
+            "id": 79723182,
+            "node_id": "MDQ6VXNlcjc5NzIzMTgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/79723182?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusrberto",
+            "html_url": "https://github.com/gusrberto",
+            "followers_url": "https://api.github.com/users/gusrberto/followers",
+            "following_url": "https://api.github.com/users/gusrberto/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusrberto/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusrberto/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusrberto/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusrberto/orgs",
+            "repos_url": "https://api.github.com/users/gusrberto/repos",
+            "events_url": "https://api.github.com/users/gusrberto/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusrberto/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/69/reactions",
             "total_count": 0,
@@ -1005,7 +1045,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/69/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -1697,7 +1737,7 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-10-21T21:18:12Z",
-        "updated_at": "2026-10-21T21:18:12Z",
+        "updated_at": "2026-10-23T18:52:31Z",
         "closed_at": null,
         "assignee": null,
         "author_association": "NONE",
@@ -1769,7 +1809,7 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-10-21T21:12:51Z",
-        "updated_at": "2026-10-21T21:15:52Z",
+        "updated_at": "2026-10-23T18:55:31Z",
         "closed_at": null,
         "assignee": null,
         "author_association": "NONE",
