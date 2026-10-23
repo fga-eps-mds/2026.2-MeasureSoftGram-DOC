@@ -1,25 +1,11 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-22T23:19:27+00:00",
+ "coletado_em": "2026-10-23T11:21:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "total_count": 506,
  "workflow_runs": [
-  {
-   "id": 39857806962,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "feat/paginacao-repos-github",
-   "event": "pull_request",
-   "created_at": "2026-10-22T21:30:25Z",
-   "run_started_at": "2026-10-22T21:30:25Z",
-   "updated_at": "2026-10-22T21:37:36Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39857806962",
-   "run_number": 167,
-   "workflow_id": 347831686
-  },
   {
    "id": 39857806879,
    "name": "Dependabot Auto-merge",
@@ -35,17 +21,17 @@
    "workflow_id": 368685720
   },
   {
-   "id": 39857312896,
+   "id": 39857806962,
    "name": "Rodar Testes",
    "status": "completed",
    "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-22T21:26:46Z",
-   "run_started_at": "2026-10-22T21:26:46Z",
-   "updated_at": "2026-10-22T21:34:04Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39857312896",
-   "run_number": 166,
+   "head_branch": "feat/paginacao-repos-github",
+   "event": "pull_request",
+   "created_at": "2026-10-22T21:30:25Z",
+   "run_started_at": "2026-10-22T21:30:25Z",
+   "updated_at": "2026-10-22T21:37:36Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39857806962",
+   "run_number": 167,
    "workflow_id": 347831686
   },
   {
@@ -61,6 +47,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39857312995",
    "run_number": 54,
    "workflow_id": 347831685
+  },
+  {
+   "id": 39857312896,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-22T21:26:46Z",
+   "run_started_at": "2026-10-22T21:26:46Z",
+   "updated_at": "2026-10-22T21:34:04Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39857312896",
+   "run_number": 166,
+   "workflow_id": 347831686
   },
   {
    "id": 39856828021,
@@ -91,20 +91,6 @@
    "workflow_id": 347831686
   },
   {
-   "id": 39856476927,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "feat/paginacao-repos-github",
-   "event": "pull_request",
-   "created_at": "2026-10-22T21:20:41Z",
-   "run_started_at": "2026-10-22T21:20:41Z",
-   "updated_at": "2026-10-22T21:20:42Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39856476927",
-   "run_number": 92,
-   "workflow_id": 368685720
-  },
-  {
    "id": 39856476921,
    "name": "Rodar Testes",
    "status": "completed",
@@ -117,6 +103,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39856476921",
    "run_number": 164,
    "workflow_id": 347831686
+  },
+  {
+   "id": 39856476927,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "feat/paginacao-repos-github",
+   "event": "pull_request",
+   "created_at": "2026-10-22T21:20:41Z",
+   "run_started_at": "2026-10-22T21:20:41Z",
+   "updated_at": "2026-10-22T21:20:42Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39856476927",
+   "run_number": 92,
+   "workflow_id": 368685720
   },
   {
    "id": 39850141898,
