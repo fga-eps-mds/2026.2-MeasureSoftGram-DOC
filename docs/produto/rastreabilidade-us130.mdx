@@ -15,12 +15,13 @@ e a revisão do squad na
 [task DOC #167](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/167).
 
 :::info[Estado em 24/10/2026]
-O contexto fornecido pelo solicitante informa autorização de Luciano para levantar
-métricas e propor sua apresentação. A US está em reformulação e a implementação
-completa do épico foi adiada. Este documento é um levantamento técnico com proposta,
+Luciano autorizou o levantamento das métricas e uma proposta de apresentação.
+A US está em reformulação; a implementação completa do épico foi adiada.
+Este documento é um levantamento técnico com proposta,
 sem aprovação do PO e sem conclusão da US. A prova de conceito de
 [Core #24](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/issues/24)
-compara somente uma métrica bruta por arquivo.
+está no [Draft PR Core #25](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/25)
+e compara somente uma métrica bruta por arquivo.
 :::
 
 ## Método e escopo das evidências
@@ -136,9 +137,43 @@ Referências de navegação vinculadas à US na consulta de 24/10/2026:
 [Fluxo A](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6993-1008),
 [Fluxo B](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6996-1160)
 e [CLI C1/C2](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6980-1893).
-As três páginas ficaram inacessíveis à ferramenta web. Esta proposta usa os fluxos
-e nomes de telas descritos no corpo da US; conferir o visual e a versão mais recente
-do Figma permanece pendente. O texto antigo da US não é tratado como decisão vigente.
+O acesso direto às três páginas falhou na ferramenta web. A proposta usa os fluxos
+descritos na US e agora conta com conferência parcial baseada nas capturas do
+protótipo conferidas pelo usuário, resumidas abaixo. Não houve revisão integral do
+Figma nem aprovação do PO; confirmar a versão completa permanece pendente.
+O texto antigo da US não é tratado como decisão vigente.
+
+### Aderência parcial ao protótipo
+
+As capturas apresentam detalhes além do recorte executável da PoC:
+
+| Elemento apresentado | Dados e cálculos necessários | Cobertura da PoC atual | Lacunas e decisões pendentes |
+| --- | --- | --- | --- |
+| CLI proposta: `msgram files --measure non_complex_file_density --metrics ...`, com `complexity`, `functions`, razão, situação, contribuição e distância ao limite; saída correspondente à web. | Métricas da mesma análise alinhadas por caminho; razão `complexity/functions`; configuração e limites usados; contrato de situação, distância e contribuição compartilhado com a web. | Compara somente `complexity` bruta entre duas árvores Sonar, com valores anteriores/atuais e delta. | O comando é proposta de interface e não foi implementado. Faltam razão, tratamento de denominador zero/ausente, situação, contribuição, distância e equivalência de saída com a web. Validar cada cálculo antes de exibir nota por arquivo. |
+| Aba **Código-fonte**: releases base/alvo, busca por arquivo/diretório, filtro **Só o que mudou** e navegação hierárquica. | Política para selecionar análises por release, proveniência, árvore de caminhos e definição do que conta como mudança. | Une caminhos exatos das duas entradas fornecidas e indica presença e métrica ausente. | Não seleciona releases, não implementa interface, busca, filtro ou árvore de diretórios. Definir se mudança significa alteração Git, variação de métrica ou ambas, e como tratar ausência de dados. |
+| Tabela de mudanças: linhas adicionadas/removidas do Git e anteriores/atuais/deltas de Manutenibilidade e Confiabilidade/cobertura por arquivo e diretório. | Referências Git verificáveis para base/alvo e diff Git; análises vinculadas a essas referências; regras demonstradas para cada nota, atribuição e agregação por diretório. | Retorna delta bruto de `complexity` e presença por caminho; não fornece diff Git, cobertura ou notas. | Presença/ausência nas entradas não comprova operação Git. Cobertura é uma métrica distinta de Confiabilidade. Não há fórmula validada nesta entrega para notas ou contribuições de arquivos/diretórios nesses níveis; médias simples não podem ser consideradas equivalentes ao modelo sem demonstração. |
+
+Os valores dessas telas pertencem a níveis distintos:
+
+- **Complexidade bruta:** `complexity` do Sonar por arquivo; é o único valor que a PoC compara.
+- **Razão:** `complexity/functions` relaciona duas métricas do mesmo arquivo. Não é a
+  complexidade bruta nem a medida normalizada; sua disponibilidade depende das duas
+  entradas e do tratamento de `functions` igual a zero.
+- **Medida normalizada:** `non_complex_file_density` aplica a interpretação, os limites
+  e a agregação do Core sobre o conjunto de arquivos elegíveis (C1). O delta bruto ou
+  a razão de um arquivo não são a nota dessa medida.
+- **Atribuição nos níveis superiores:** distribuir notas ou variações por arquivo e
+  diretório nos níveis de subcaracterística, característica ou TSQMI exige uma regra
+  demonstrada e alinhamento com o squad. A PoC não calcula essa atribuição e este
+  levantamento não propõe uma fórmula nem substitui o modelo por médias simples.
+
+As capturas dos fluxos do Figma usam **US23.02**, enquanto a
+[issue principal DOC #130](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/130)
+continua identificada como **US23.01**. A divergência deve ser confirmada com o squad,
+junto à correspondência entre os fluxos e à versão vigente do protótipo. O levantamento
+permanece vinculado à DOC #130 e à DOC #167; não cria escopo para outra história.
+
+### Apresentação por granularidade
 
 Todas as visões devem mostrar repositório, fonte, análise selecionada, data/hora,
 branch quando disponível, release e período quando a associação for verificável.
@@ -187,7 +222,8 @@ atribuir toda a diferença à alteração do código.
 | Questão | Quem precisa alinhar | Situação |
 | --- | --- | --- |
 | Qual análise representa uma release, como tratar sobreposição e ausência? | PO + squad Service | Pendente na reformulação; prazo a combinar. |
-| Como apresentar `UTS`, agregados, runtime e granularidades sem dados? | PO + squad de interface | Proposta acima; conferência visual do Figma pendente. |
+| Como apresentar `UTS`, agregados, runtime e granularidades sem dados? | PO + squad de interface | Conferência parcial por capturas registrada acima; revisão integral do Figma pendente. |
+| Como alinhar a aba Código-fonte, a CLI/web e a identificação US23.02 no Figma com US23.01 / DOC #130? | Squad responsável pela US e pelo protótipo | Confirmar identificação, versão vigente e contratos de cálculo; sem ampliar esta PoC. |
 | Como versionar manifesto, configuração e regras de compatibilidade? | Squads Core/Service/coleta | Pendente; nenhuma mudança de banco/endpoint nesta tarefa. |
 | Qual é a interpretação desejada para comentários e demais faixas? | PO + responsáveis pelo modelo | Conferir o comportamento C1 antes de classificar melhora/piora. |
 | Como atribuir variações em medidas e níveis superiores? | Squad responsável pelo levantamento matemático | Fora da PoC; depende de alinhamento separado. |
@@ -196,7 +232,7 @@ atribuir toda a diferença à alteração do código.
 
 O [experimento no Core](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/81f4a977f550c9da02b742dec1b2b382704a538c/docs/experiments/us130.md)
 documenta o comando, o formato e as limitações. A
-[função experimental](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/81f4a977f550c9da02b742dec1b2b382704a538c/src/core/file_comparison.py)
+[função experimental](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/8cbcd9656024b3cf2ef2cae32d0707270d195ab0/src/core/file_comparison.py)
 compara `complexity` em duas árvores brutas do mesmo projeto/branch Sonar, filtra
 `FIL`, ordena caminhos e devolve anterior/atual/diferença, inclusão/remoção e métrica
 ausente. Reutiliza o `Checker` do Core e rejeita valores inválidos, duplicatas e
@@ -221,11 +257,11 @@ Não há score, rótulo de melhora/piora, detecção de rename ou efeito no TSQM
 
 | Verificação | Resultado |
 | --- | --- |
-| Core: `python -m tox -e test_core` | 167 testes passaram; 100% de cobertura de linhas do módulo novo, 93% no total. Dois avisos de coleta em esquemas preexistentes. |
+| Core: `python -m tox -e test_core` | 167 testes passaram após a alteração de `file_status` para `if/elif/else`; 100% de cobertura de linhas do módulo, 94% no total. Dois avisos de coleta em esquemas preexistentes. |
 | Core: Black, Flake8, compilação e build | Passaram. Sdist e wheel gerados somente localmente; avisos de metadados de licença preexistentes. |
 | DOC: `npm ci --no-audit --no-fund` | Concluído com o lockfile preservado; Node 22.21.0 e npm 11.14.1. |
 | DOC: `npm run build` | Passou com validação de links quebrados habilitada. Aviso de HTML na página preexistente Planejamento/EAP, sem alteração nesta entrega. |
-| DOC: links relativos e navegação | Ambos os links relativos da página resolvem; a página e o item de navegação constam no HTML gerado. Não substitui conferência visual do Figma. |
+| DOC: links relativos e navegação | Ambos os links relativos da página resolvem; a página e o item de navegação constam no HTML gerado. Não substitui revisão integral do Figma. |
 | DOC: `npm run typecheck` | Falhou com TS5102: opção `baseUrl` removida no TypeScript instalado. O mesmo erro foi reproduzido em cópia limpa de `origin/main`; configuração e dependências não foram alteradas. Correção fora deste levantamento. |
 | Ambos: `git diff --check` | Passou. |
 
@@ -247,3 +283,4 @@ encontrados arquivos `AGENTS.md` nas árvores consultadas nem em seus ancestrais
 | 0.1 | 24/10/2026 | Levantamento fundamentado no código, preparado com auxílio do Codex; revisão humana pendente | [@nateejpg](https://github.com/nateejpg) | Pendente |
 | 0.2 | 24/10/2026 | Proposta por granularidade, contrato de proveniência e vínculo com a PoC; preparada com auxílio do Codex | [@nateejpg](https://github.com/nateejpg) | Pendente |
 | 0.3 | 24/10/2026 | Registra validação local, falha preexistente do typecheck e bases confirmadas | [@nateejpg](https://github.com/nateejpg) | Pendente |
+| 0.4 | 24/10/2026 | Alinha o levantamento à conferência parcial das capturas, distingue níveis de cálculo e registra a divergência US23.02/US23.01; auxílio do Codex | [@nateejpg](https://github.com/nateejpg) | Pendente |
