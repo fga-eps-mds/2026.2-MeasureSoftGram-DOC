@@ -8,7 +8,9 @@ PR com CI vermelha não é revisado.
 
 ## Issue
 
-Closes fga-eps-mds/2026.2-MeasureSoftGram-DOC#<!-- número -->
+<!-- Use "Refs" quando a issue depende de aprovação do PO (ela é fechada só depois da validação).
+     Use "Closes" apenas para tasks e bugs sem impacto funcional. -->
+Refs fga-eps-mds/2026.2-MeasureSoftGram-DOC#<!-- número -->
 
 ## Etapa do fluxo
 
