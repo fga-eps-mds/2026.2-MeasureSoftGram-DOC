@@ -217,9 +217,33 @@ Exemplos do resultado: `src/changed.py` passa de 6 para 4, diferença -2;
 dois lados, mas tem atual `null` e indicação de métrica ausente no lado atual.
 Não há score, rótulo de melhora/piora, detecção de rename ou efeito no TSQMI.
 
+## Validação local em 24/10/2026
+
+| Verificação | Resultado |
+| --- | --- |
+| Core: `python -m tox -e test_core` | 167 testes passaram; 100% de cobertura de linhas do módulo novo, 93% no total. Dois avisos de coleta em esquemas preexistentes. |
+| Core: Black, Flake8, compilação e build | Passaram. Sdist e wheel gerados somente localmente; avisos de metadados de licença preexistentes. |
+| DOC: `npm ci --no-audit --no-fund` | Concluído com o lockfile preservado; Node 22.21.0 e npm 11.14.1. |
+| DOC: `npm run build` | Passou com validação de links quebrados habilitada. Aviso de HTML na página preexistente Planejamento/EAP, sem alteração nesta entrega. |
+| DOC: links relativos e navegação | Ambos os links relativos da página resolvem; a página e o item de navegação constam no HTML gerado. Não substitui conferência visual do Figma. |
+| DOC: `npm run typecheck` | Falhou com TS5102: opção `baseUrl` removida no TypeScript instalado. O mesmo erro foi reproduzido em cópia limpa de `origin/main`; configuração e dependências não foram alteradas. Correção fora deste levantamento. |
+| Ambos: `git diff --check` | Passou. |
+
+A DOC não define script de lint. O build é o check obrigatório indicado no guia;
+o typecheck foi executado como verificação adicional e sua falha preexistente fica
+explícita. Estes resultados não são aprovação de CI, SonarCloud, revisão humana ou PO.
+
+O Core reutilizou a branch dedicada já existente, baseada em `origin/develop`.
+A DOC foi isolada em worktree dedicada a partir de `origin/main`: o `CONTRIBUTING.md`
+e o guia documental indicam `main`, a API confirma essa branch padrão e não há
+`origin/develop` nesse remoto. O fluxo geral que cita `develop` está divergente;
+nenhuma branch de integração foi criada ou alterada por esta tarefa. Não foram
+encontrados arquivos `AGENTS.md` nas árvores consultadas nem em seus ancestrais locais.
+
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
 | 0.1 | 24/10/2026 | Levantamento fundamentado no código, preparado com auxílio do Codex; revisão humana pendente | [@nateejpg](https://github.com/nateejpg) | Pendente |
 | 0.2 | 24/10/2026 | Proposta por granularidade, contrato de proveniência e vínculo com a PoC; preparada com auxílio do Codex | [@nateejpg](https://github.com/nateejpg) | Pendente |
+| 0.3 | 24/10/2026 | Registra validação local, falha preexistente do typecheck e bases confirmadas | [@nateejpg](https://github.com/nateejpg) | Pendente |
