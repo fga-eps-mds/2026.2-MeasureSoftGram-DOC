@@ -6,9 +6,11 @@ Uso (na pasta Analytics/):
 
 Grava ``data/sonar/sonar-AAAA-MM-DDTHHMM.json`` com, para cada projeto de
 ``config.SONAR_PROJETOS``: métricas atuais (bugs, vulnerabilidades, code smells,
-hotspots, dívida técnica, cobertura, duplicação, ratings, testes), histórico,
-Quality Gate e problemas abertos por severidade e tipo. No GitHub, o workflow
-``.github/workflows/coleta-dados.yml`` roda este script a cada push na main e 3 vezes por dia.
+hotspots, dívida técnica, cobertura, duplicação, ratings, testes), métricas por
+componente (``api/measures/component_tree`` para cobertura por arquivo e modelo
+DA-R2), histórico, Quality Gate e problemas abertos por severidade e tipo. No
+GitHub, o workflow ``.github/workflows/coleta-dados.yml`` roda este script a
+cada push na main e 3 vezes por dia.
 
 O token nunca é impresso.
 """

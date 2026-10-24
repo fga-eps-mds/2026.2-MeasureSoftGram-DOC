@@ -176,16 +176,20 @@ def carregar() -> Contexto:
     # SONAR ────────────────────────────────────────────
     try:
         agregado, comp, erros, snap, nome = _sonar(pastas, _marca(PASTAS_PIPELINE + [sonar.PASTA_API]))
-        ctx.sonar_pipeline, ctx.sonar_componentes, ctx.sonar_erros = agregado, comp, erros
         ctx.sonar_api_snap, ctx.sonar_api = snap, sonar.snapshot_para_tabelas(snap)
+        comp_api = ctx.sonar_api.get("componentes", pd.DataFrame())
+        comp_partes = [x for x in (comp, comp_api) if not x.empty]
+        ctx.sonar_componentes = (pd.concat(comp_partes, ignore_index=True) if comp_partes else comp)
+        pip_partes = [x for x in (agregado, ctx.sonar_api["medidas"]) if not x.empty]
+        ctx.sonar_pipeline = (pd.concat(pip_partes, ignore_index=True) if pip_partes else agregado)
+        err_partes = [x for x in (erros, ctx.sonar_api.get("erros", pd.DataFrame())) if not x.empty]
+        ctx.sonar_erros = (pd.concat(err_partes, ignore_index=True).drop_duplicates(subset=["repositorio", "erro"])
+                           if err_partes else erros)
         ctx.sonar_serie = sonar.serie_temporal(agregado, ctx.sonar_api["historico"])
         atual = [x for x in (sonar.ultimo_por_repo(agregado), ctx.sonar_api["medidas"]) if not x.empty]
         ctx.sonar_atual = (sonar.ultimo_por_repo(pd.concat(atual, ignore_index=True)) if atual
                            else pd.DataFrame(columns=["repositorio", "metrica", "valor", "coleta"]))
-        if agregado.empty:
-            ctx.fontes.append(Fonte("SONAR", "Pipeline (metrics.yml → data/*.json)", "sem dados",
-                                    mensagem="Nenhum .json do SonarCloud em Analytics/data/."))
-        else:
+        if not agregado.empty:
             n_arq = agregado["arquivo"].nunique()
             ctx.fontes.append(Fonte(
                 "SONAR", "Pipeline (metrics.yml → data/*.json)", "parcial" if not erros.empty else "ok",
@@ -193,6 +197,9 @@ def carregar() -> Contexto:
                 (f"{erros['repositorio'].nunique()} repositório(s) sem projeto no SonarCloud: "
                  + ", ".join(sorted(sonar.nome_curto(r) for r in erros["repositorio"].unique())))
                 if not erros.empty else f"{agregado['repositorio'].nunique()} repositórios"))
+        elif not snap:
+            ctx.fontes.append(Fonte("SONAR", "Pipeline (metrics.yml → data/*.json)", "sem dados",
+                                    mensagem="Nenhum .json do SonarCloud em Analytics/data/."))
         if snap:
             h = ctx.sonar_api["historico"]
             n_erro = len(ctx.sonar_api["erros"])

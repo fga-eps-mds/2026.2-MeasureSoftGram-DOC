@@ -59,13 +59,19 @@ def calcular(componentes: pd.DataFrame, agregado: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame()
     linhas = []
     chaves = ["repositorio", "branch", "coleta"]
-    for (repo, branch, coleta), comp in componentes.groupby(chaves):
+    for (repo, branch, coleta), comp in componentes.groupby(chaves, dropna=False):
+        branch_norm = branch if pd.notna(branch) and branch is not None else ""
         arq = comp[comp["tipo"] == "FIL"].pivot_table(
             index="componente", columns="metrica", values="valor", aggfunc="last")
         uts = comp[comp["tipo"] == "UTS"].pivot_table(
             index="componente", columns="metrica", values="valor", aggfunc="last")
-        base = agregado[(agregado["repositorio"] == repo) & (agregado["branch"] == branch)
-                        & (agregado["coleta"] == coleta)].set_index("metrica")["valor"]
+        if agregado is not None and not agregado.empty:
+            rec = agregado[(agregado["repositorio"] == repo)
+                           & (agregado["branch"].fillna("") == branch_norm)
+                           & (agregado["coleta"] == coleta)].dropna(subset=["valor"])
+            base = rec.drop_duplicates("metrica", keep="last").set_index("metrica")["valor"]
+        else:
+            base = pd.Series(dtype=float)
 
         f = {}
         if {"complexity", "functions"} <= set(arq.columns):
@@ -81,8 +87,11 @@ def calcular(componentes: pd.DataFrame, agregado: pd.DataFrame) -> pd.DataFrame:
         if "coverage" in arq:
             f["cobertura"] = _proporcao(arq["coverage"].dropna() > LIMIARES["cobertura_min"])
         testes = base.get("tests")
-        if testes and testes > 0:
-            erros = (base.get("test_errors") or 0) + (base.get("test_failures") or 0)
+        if testes is not None and pd.notna(testes) and testes > 0:
+            err_t = base.get("test_errors")
+            fal_t = base.get("test_failures")
+            erros = (err_t if err_t is not None and pd.notna(err_t) else 0.0) + (
+                fal_t if fal_t is not None and pd.notna(fal_t) else 0.0)
             f["sucesso_testes"] = max(0.0, (testes - erros) / testes)
         if "test_execution_time" in uts:
             f["testes_rapidos"] = _proporcao(uts["test_execution_time"].dropna() < LIMIARES["teste_rapido_ms"])
@@ -90,7 +99,7 @@ def calcular(componentes: pd.DataFrame, agregado: pd.DataFrame) -> pd.DataFrame:
         f["manutenibilidade"] = _pondera(f, PESOS["manutenibilidade"])
         f["confiabilidade"] = _pondera(f, PESOS["confiabilidade"])
         f["total"] = _pondera(f, PESOS["total"])
-        linhas.append({"repositorio": repo, "branch": branch, "coleta": coleta, **f})
+        linhas.append({"repositorio": repo, "branch": branch_norm, "coleta": coleta, **f})
     return pd.DataFrame(linhas).sort_values(["repositorio", "coleta"])
 
 
