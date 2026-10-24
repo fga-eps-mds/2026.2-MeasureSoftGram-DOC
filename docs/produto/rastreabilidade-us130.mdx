@@ -89,6 +89,20 @@ de 20 minutos para listas e pode confundir lotes. Também há divergência legad
 métricas GitHub são buscadas como `FIL` no método antigo, enquanto o fluxo novo
 escreve e lê `TRK`. Nenhuma dessas diferenças foi modificada nesta tarefa.
 
+A redução de valores da CLI (L1) também merece cuidado: `get_metric_value` percorre
+todas as chaves sem verificar qualificador. Executada somente em memória sobre a
+fixture L1 de 88 componentes, retorna 48 valores de `complexity`; o primeiro é o
+agregado 254 do projeto, seguido por valores de arquivos. Logo, o comentário sobre
+selecionar apenas `FIL` não garante o comportamento real dessa função. Não se deve
+reutilizar essa lista para rastrear arquivos; a PoC lê a árvore bruta e filtra `FIL`.
+
+Há associação de release no nível de
+[característica calculada](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/blob/faa6f75d3dc4d78e51c3da426068bf85cbb3de5d/src/characteristics/models.py).
+O [job de releases](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/blob/faa6f75d3dc4d78e51c3da426068bf85cbb3de5d/src/releases/jobs.py)
+gera essas características para releases que terminam no dia e usa a configuração
+mais recente. Esse vínculo superior não reconstrói o lote de métricas nem constitui
+seleção de uma análise identificada dentro do período da release.
+
 ## Comparações que já existem
 
 Em C2 e L2, `diff` e `norm_diff` comparam planejado versus desenvolvido no nível
@@ -116,8 +130,96 @@ caminho com valores ausentes. O experimento é separado dessas regras.
   notas, é necessário também saber o universo, filtros, fórmulas, limites e pesos
   aplicados em cada execução. Não atribuir pontos ao TSQMI nem causalidade.
 
+## Proposta de apresentação — ainda não implementada
+
+Referências de navegação vinculadas à US na consulta de 24/10/2026:
+[Fluxo A](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6993-1008),
+[Fluxo B](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6996-1160)
+e [CLI C1/C2](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6980-1893).
+As três páginas ficaram inacessíveis à ferramenta web. Esta proposta usa os fluxos
+e nomes de telas descritos no corpo da US; conferir o visual e a versão mais recente
+do Figma permanece pendente. O texto antigo da US não é tratado como decisão vigente.
+
+Todas as visões devem mostrar repositório, fonte, análise selecionada, data/hora,
+branch quando disponível, release e período quando a associação for verificável.
+Se a análise não puder ser associada, mostrar **Análise sem release vinculada**.
+Quando não houver dado, mostrar **Sem dado nesta análise**; zero permanece zero.
+
+| Granularidade | Apresentação proposta em A / detalhe | Comparação proposta em B | Cuidados e campos específicos |
+| --- | --- | --- | --- |
+| Arquivo de produção (`FIL`) | A2 → A3: tabela com caminho, valor bruto e unidade; busca por caminho e paginação. Para complexidade, apresentar `complexity`, `functions` e razão em detalhe explicativo; a escolha de colunas deve ser validada. | B4: caminho, anterior, atual, diferença e presença: correspondente/adicionado/removido. Filtro adicional **Métrica ausente**. | Distinguir falta do arquivo de falta da métrica. Cobertura, comentários, duplicação e dívida têm percentuais; complexidade/funções têm contagens. Nota e faixa só após reproduzir exatamente o cálculo e seus filtros. |
+| Arquivo de teste (`UTS`) | Detalhe próprio com caminho do teste, quantidade de testes e duração disponível. Resumo explica que resultados agregados não apontam arquivo de produção responsável. | Comparar o mesmo caminho de teste, contagens e duração com unidades verificadas; falhas/erros agregados ficam no resumo do repositório. | Não prometer lista de arquivos de produção para `passed_tests`. Não tratar tempo de execução de testes como duração do CI. |
+| Repositório/projeto (`TRK`, GitHub agregado) | A4: cartões de numerador, denominador, unidade e período; exibir filtros de labels/workflows usados. Sem botão de lista de arquivos. | B5: base, alvo e diferença das métricas agregadas; informar mudanças dos filtros ou períodos. | `team_throughput` e `ci_feedback_time` não têm rastreabilidade por arquivo na entrada observada. Só oferecer links a runs/issues se seus IDs forem coletados futuramente. |
+| Diretório/subprojeto (`DIR`/`BRC`) | Agrupamento de caminhos para navegação, ou valor agregado identificado como valor da fonte quando existir. | Exibir disponibilidade por lado e origem do agregado. | O modelo de armazenamento S1 admite qualificadores; isso não prova coleta de todo tipo nem fórmula do Core para essa granularidade. Não somar percentuais ou misturar diretórios com arquivos. |
+| Amostra de runtime e carga | Detalhe separado com séries e distribuição de resposta/CPU/memória, unidade, ambiente, janela e carga representada pelas chamadas a endpoints. | Comparar as duas séries e seus contextos; apresentar limitações estatísticas e compatibilidade das cargas. | CSV L2 possui colunas de endpoints, mas o payload numérico perde seus nomes. Não prometer rastreabilidade por arquivo ou consumo individual de endpoint sem dados adicionais. |
+| Medida, subcaracterística, característica e TSQMI | Exibir hierarquia de métricas → medida → níveis superiores com valores, faixas e pesos efetivamente usados. Diferenciar nota da medida de valor bruto. | Mostrar variações observadas e mudanças de configuração separadamente. | Atribuição matemática nos níveis superiores será alinhada com o restante do squad. A PoC não calcula contribuições, causalidade ou pontos do TSQMI. |
+
+Em B6, explicar coleta parcial, análise sem vínculo, ausência de métrica, mudança de
+escopo/configuração e correspondência exata de caminhos. Uma renomeação pode aparecer
+como removido + adicionado, sem confirmação de que houve rename. No resumo, usar
+**variação observada**; filtros de melhorou/piorou, ordenação por impacto, nota por
+arquivo e deltas de diluição/atribuição exigem outro contrato e validação das fórmulas.
+
+Para C1/C2, propor os mesmos nomes, unidades e estados da web, com valor ausente
+representado explicitamente. Os comandos `msgram files --measure/--compare` descritos
+na US são proposta; não foram implementados nesta tarefa. O exemplo Python do Core
+é independente da CLI e serve apenas para discutir o contrato de dados.
+
+### Contrato de proveniência proposto
+
+Antes de implementar comparação de releases no produto, propor um manifesto imutável
+da análise: ID próprio, repositório, fonte, projeto/branch Sonar, instante da análise
+na origem e do recebimento, referência Git **se coletada**, páginas esperadas/recebidas,
+filtros de escopo, versões do coletor/analisador, métricas solicitadas/disponíveis e
+configuração exata usada (identidade e conteúdo/versão de limites e pesos).
+Vincular métricas brutas e resultados ao mesmo manifesto e preservar seus caminhos.
+Esses campos são requisitos propostos, não recursos já implementados.
+
+Escolher a última análise **completa** do repositório dentro do período da release é
+uma política candidata, herdada do texto da US, ainda a validar. Definir timezone,
+limites inclusivos/exclusivos, desempate e sobreposição de períodos. Release sem
+análise elegível deve mostrar indisponibilidade; não usar silenciosamente uma coleta
+externa ao período. Mudança de configuração deve aparecer junto à variação, sem
+atribuir toda a diferença à alteração do código.
+
+### Questões para validação
+
+| Questão | Quem precisa alinhar | Situação |
+| --- | --- | --- |
+| Qual análise representa uma release, como tratar sobreposição e ausência? | PO + squad Service | Pendente na reformulação; prazo a combinar. |
+| Como apresentar `UTS`, agregados, runtime e granularidades sem dados? | PO + squad de interface | Proposta acima; conferência visual do Figma pendente. |
+| Como versionar manifesto, configuração e regras de compatibilidade? | Squads Core/Service/coleta | Pendente; nenhuma mudança de banco/endpoint nesta tarefa. |
+| Qual é a interpretação desejada para comentários e demais faixas? | PO + responsáveis pelo modelo | Conferir o comportamento C1 antes de classificar melhora/piora. |
+| Como atribuir variações em medidas e níveis superiores? | Squad responsável pelo levantamento matemático | Fora da PoC; depende de alinhamento separado. |
+
+## Prova de conceito e reprodução
+
+O [experimento no Core](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/81f4a977f550c9da02b742dec1b2b382704a538c/docs/experiments/us130.md)
+documenta o comando, o formato e as limitações. A
+[função experimental](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/81f4a977f550c9da02b742dec1b2b382704a538c/src/core/file_comparison.py)
+compara `complexity` em duas árvores brutas do mesmo projeto/branch Sonar, filtra
+`FIL`, ordena caminhos e devolve anterior/atual/diferença, inclusão/remoção e métrica
+ausente. Reutiliza o `Checker` do Core e rejeita valores inválidos, duplicatas e
+paginação declaradamente parcial. Sem metadados, completude depende do chamador.
+
+As duas entradas de demonstração são **sintéticas**, identificadas no JSON e em seu
+README. Não representam releases reais. A fixture histórica C3 é usada intacta em
+teste de comparação consigo mesma; não há demonstração de evolução histórica real.
+
+```bash
+# Na raiz da branch spike/130-comparacao-arquivos do Core, após instalar requirements.txt
+PYTHONPATH=src python examples/compare_file_complexity.py \
+  tests/unit/data/us130/before.json tests/unit/data/us130/after.json
+```
+
+Exemplos do resultado: `src/changed.py` passa de 6 para 4, diferença -2;
+`src/added.py` tem anterior `null` e atual 0; `src/missing_after.py` existe nos
+dois lados, mas tem atual `null` e indicação de métrica ausente no lado atual.
+Não há score, rótulo de melhora/piora, detecção de rename ou efeito no TSQMI.
+
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
 | 0.1 | 24/10/2026 | Levantamento fundamentado no código, preparado com auxílio do Codex; revisão humana pendente | [@nateejpg](https://github.com/nateejpg) | Pendente |
+| 0.2 | 24/10/2026 | Proposta por granularidade, contrato de proveniência e vínculo com a PoC; preparada com auxílio do Codex | [@nateejpg](https://github.com/nateejpg) | Pendente |
