@@ -1,11 +1,25 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-23T23:18:44+00:00",
+ "coletado_em": "2026-10-24T11:17:31+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
- "total_count": 256,
+ "total_count": 257,
  "workflow_runs": [
+  {
+   "id": 40046052399,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "fix/150-onboarding-sem-mock",
+   "event": "pull_request",
+   "created_at": "2026-10-24T00:39:30Z",
+   "run_started_at": "2026-10-24T00:39:30Z",
+   "updated_at": "2026-10-24T00:41:51Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/40046052399",
+   "run_number": 157,
+   "workflow_id": 339749512
+  },
   {
    "id": 40017180425,
    "name": "Rodar Testes",
