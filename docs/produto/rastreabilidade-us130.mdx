@@ -1,0 +1,286 @@
+---
+id: rastreabilidade-us130
+title: Rastreabilidade das métricas — US130
+sidebar_label: Rastreabilidade das métricas — US130
+sidebar_position: 4
+description: Levantamento da granularidade disponível e proposta de apresentação para a reformulação da US130.
+---
+
+# Rastreabilidade das métricas — US130
+
+Este levantamento identifica quais dados permitem rastrear métricas até arquivos,
+repositórios e amostras de execução. Apoia a reformulação da
+[US130](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/130)
+e a revisão do squad na
+[task DOC #167](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/167).
+
+:::info[Estado em 24/10/2026]
+Luciano autorizou o levantamento das métricas e uma proposta de apresentação.
+A US está em reformulação; a implementação completa do épico foi adiada.
+Este documento é um levantamento técnico com proposta,
+sem aprovação do PO e sem conclusão da US. A prova de conceito de
+[Core #24](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/issues/24)
+está no [Draft PR Core #25](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/25)
+e compara somente uma métrica bruta por arquivo.
+:::
+
+## Método e escopo das evidências
+
+Foram lidos catálogo, fórmulas, esquemas, consumidores e fixtures versionadas.
+Service e CLI foram consultados apenas para leitura, nos HEADs locais de branches
+de outra tarefa; as conclusões não comprovam o estado de uma implantação.
+Fixtures históricas comprovam formatos e exemplos, sem garantir disponibilidade
+em todo projeto, linguagem ou execução. Os links abaixo fixam os commits consultados.
+
+| Código | Repositório e commit | Evidência |
+| --- | --- | --- |
+| C1 | Core `2f56e779f01c486503ebd817c89ca0353a8ab3d5` | [Catálogo de medidas e métricas](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/2f56e779f01c486503ebd817c89ca0353a8ab3d5/src/staticfiles/supported_metrics.py), [funções das medidas](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/2f56e779f01c486503ebd817c89ca0353a8ab3d5/src/core/measures_functions.py) e [agregação e interpretação](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/2f56e779f01c486503ebd817c89ca0353a8ab3d5/src/core/aggregated_normalized_measures.py). |
+| C2 | Core, mesmo commit | [Esquemas](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/2f56e779f01c486503ebd817c89ca0353a8ab3d5/src/core/schemas.py), [entrada e cálculo](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/2f56e779f01c486503ebd817c89ca0353a8ab3d5/src/resources/analysis.py), [transformações](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/2f56e779f01c486503ebd817c89ca0353a8ab3d5/src/core/transformations.py) e [operações de runtime](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/2f56e779f01c486503ebd817c89ca0353a8ab3d5/src/util/run_time_data_operations.py). |
+| C3 | Core, mesmo commit | [Árvore histórica da CLI](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/2f56e779f01c486503ebd817c89ca0353a8ab3d5/tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-CLI-04-13-2022-02-13-37-v1.1.1.json), [árvore histórica do Service](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/2f56e779f01c486503ebd817c89ca0353a8ab3d5/tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-Service-04-12-2022-17-32-35-v1.1.0.json) e [fixture de dívida técnica](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/2f56e779f01c486503ebd817c89ca0353a8ab3d5/tests/unit/data/technical_debt_ratio_sonar_component_tree.json). |
+| S1 | Service `faa6f75d3dc4d78e51c3da426068bf85cbb3de5d` | [Métricas suportadas e coletadas](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/blob/faa6f75d3dc4d78e51c3da426068bf85cbb3de5d/src/metrics/models.py) e [construção, seleção e persistência dos dados](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/blob/faa6f75d3dc4d78e51c3da426068bf85cbb3de5d/src/math_model/services.py). |
+| S2 | Service, mesmo commit | [Release](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/blob/faa6f75d3dc4d78e51c3da426068bf85cbb3de5d/src/releases/models.py), [medidas calculadas](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/blob/faa6f75d3dc4d78e51c3da426068bf85cbb3de5d/src/measures/models.py), [configuração de release](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/blob/faa6f75d3dc4d78e51c3da426068bf85cbb3de5d/src/release_configuration/models.py) e [configuração selecionada no cálculo](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/blob/faa6f75d3dc4d78e51c3da426068bf85cbb3de5d/src/math_model/views.py). |
+| L1 | CLI `3ac36feae2170e904ebe72376fcc421a879ccaf2` | [Extração](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/blob/3ac36feae2170e904ebe72376fcc421a879ccaf2/src/cli/commands/cmd_extract.py), [seleção de valores](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/blob/3ac36feae2170e904ebe72376fcc421a879ccaf2/src/cli/resources/metrics.py), [fixture extraída do Sonar](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/blob/3ac36feae2170e904ebe72376fcc421a879ccaf2/tests/unit/data/fga-eps-mds-2022-2-MeasureSoftGram-CLI-01-05-2023-21-40-30-develop-extracted.metrics) e [fixture GitHub](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/blob/3ac36feae2170e904ebe72376fcc421a879ccaf2/tests/unit/data/github_fga-eps-mds-2024.1-MeasureSoftGram-DOC-28-07-2024-00-00-22-extracted.metrics). |
+| L2 | CLI, mesmo commit | [Entrada CSV de runtime](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/blob/3ac36feae2170e904ebe72376fcc421a879ccaf2/src/cli/resources/perf_eff_parser.py), [diff](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/blob/3ac36feae2170e904ebe72376fcc421a879ccaf2/src/cli/commands/cmd_diff.py) e [norm_diff](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/blob/3ac36feae2170e904ebe72376fcc421a879ccaf2/src/cli/commands/cmd_norm_diff.py). |
+
+A organização desta página segue [Produto/Arquitetura](./arquitetura.mdx) e o
+[guia da documentação](../equipe/guia-documentacao.mdx). Métricas em outra seção
+da DOC tratam da gestão da equipe; aqui o objeto é o dado do produto.
+A base documental consultada foi `071aaefb257e00573bb06a3ab60aca6116381f60`.
+
+## Catálogo, fonte e granularidade constatada
+
+Os nomes abaixo são os identificadores atuais do catálogo, inclusive grafias como
+`duplication_absense`. A unidade da métrica bruta não é a nota normalizada da medida.
+
+| Medida consumidora | Métricas / fonte | Dado efetivamente observado ou selecionado | Interpretação e limite |
+| --- | --- | --- | --- |
+| `non_complex_file_density` | `complexity`, `functions` / Sonar | Valores por arquivo `FIL` nas árvores C3; S1 seleciona listas de `FIL` e exclui caminhos com `ncloc=0`. | C1 calcula a razão por arquivo; listas precisam preservar o mesmo alinhamento. Variação de complexidade isolada não explica a medida. |
+| `commented_file_density` | `comment_lines_density` (%) / Sonar | Por `FIL` em C3 e listas em S1. | C1 usa faixa e ganho negativo: na faixa padrão 10–30, 10 recebe mais nota que 30. Não assumir que aumentar comentários melhora a nota. |
+| `duplication_absense` | `duplicated_lines_density` (%) / Sonar | Por `FIL` em C3, também existe agregado no projeto. | C1 usa ganho negativo e limite; não misturar agregado e arquivos. |
+| `test_coverage` | `coverage` (%) / Sonar | Por `FIL` e também agregado em C3; alguns arquivos não trazem a métrica. | C1 usa ganho positivo e faixa; falta de cobertura não significa cobertura zero. Não é a média simples dos percentuais brutos. |
+| `technical_debt_ratio` | `sqale_debt_ratio` (%) / Sonar | Há fixture contratual específica com quatro `FIL` (0; 8,3; 4; 32,5) e um `DIR`. As árvores históricas citadas não trazem essa métrica. S1 suporta listas de `FIL`. | Suporte no catálogo e fixture de contrato não comprovam coleta em todos os projetos. C1 usa ganho negativo e limite; a PoC não calcula dívida técnica. |
+| `passed_tests` | `tests`, `test_failures`, `test_errors` / Sonar | C3 contém `tests` em `UTS` e totais em `TRK`. S1 seleciona `tests` de `UTS` e falhas/erros de `TRK`. | O cálculo soma testes e usa falhas/erros agregados (C1). Há detalhe de teste disponível, mas não atribuição de resultado a cada arquivo de produção. |
+| `test_builds` | `test_execution_time`, `tests` / Sonar | Duração e contagem por `UTS` em C3; totais também no projeto. | C1 relaciona tempo de execução e testes; é diferente de feedback do CI. A unidade de duração esperada é milissegundo; não converter sem conferir o contrato da fonte. |
+| `team_throughput` | `total_issues`, `resolved_issues` / GitHub | L1 expõe contagens agregadas; a extração recebe filtros de labels e período. S1 persiste como `TRK`. | Sem associação a arquivo, PR ou causa. C1 usa proporção percentual resolvidas/total. |
+| `ci_feedback_time` | `sum_ci_feedback_times`, `total_builds` / GitHub | L1 recebe workflows e período; fixture extraída guarda agregados. S1 persiste como `TRK`. | C1 calcula tempo por build (segundos no contrato de interpretação 1–900). Sem builds tem tratamento específico no Core; a PoC não o altera. Não é tempo de teste `UTS`. |
+| `response_time` | `mean_response_time`, `endpoint_calls` / runtime | C1 suporta; L2 lê séries CSV `response_time` e colunas com `ENDPOINT` para duas releases. O esquema C2 usa `releases[].metrics` e matrizes de chamadas, não esse nome de métrica estática. | Granularidade de amostra/carga de execução. Não é arquivo nem atribuição individual de consumo a endpoint. |
+| `cpu_utilization` | `cpu_usage`, `endpoint_calls` / runtime | L2 transforma `cpu_app` e chamadas em séries para duas releases. | Suporte do modelo e entrada manual não provam coleta automática. Unidade e ambiente precisam acompanhar o CSV. |
+| `memory_utilization` | `memory_usage`, `endpoint_calls` / runtime | L2 transforma `memory_app` e chamadas em séries para duas releases. | Mesmas limitações de carga, unidade, alinhamento e proveniência. |
+
+`ncloc` é auxiliar para excluir arquivos vazios em S1. `files`, ratings e outras
+métricas aparecem nas árvores, mas a presença na fonte não implica uso por uma medida
+do catálogo C1. O Service pode armazenar métricas cadastradas adicionais; isso não
+equivale a uma fórmula implementada no Core. S1 ignora chaves não cadastradas e
+exclui medidas de runtime do fluxo estático.
+
+## Formatos e identificadores disponíveis
+
+| Etapa / granularidade | Identificadores constatados | O que não fica garantido |
+| --- | --- | --- |
+| Árvore Sonar bruta (C3) | Projeto em `baseComponent.key`; componente com `key`, por vezes `id`, `qualifier`, `path`, linguagem e medidas; `paging` informa página/tamanho/total; algumas árvores incluem `branch`. | `id` de componente não é ID de análise. Não há SHA, tag, release ou configuração de cálculo vinculados nessas árvores. |
+| Arquivo extraído da CLI (L1) | Objeto indexado por chave de componente, por exemplo `projeto:src/arquivo.py`; os valores são pares `metric`/`value`. Nome do arquivo pode incluir data e versão textual. | A fixture não preserva `qualifier`/`paging` como campos de cada componente. Nome e chave não substituem manifesto de análise nem vínculo formal com release. |
+| Parâmetros do Core (C2) | `measures[].key`, `metrics[].key` e lista de valores; runtime usa duas listas de amostras e chamadas a endpoints. | Listas numéricas não guardam o caminho, identidade da coleta nem vínculo com release. Não é possível reconstruir arquivos somente a partir do resultado normalizado. |
+| Métrica persistida no Service (S1) | PK da linha, FK de métrica e repositório, `path`, `qualifier`, `dynamic_key`, `created_at`, valor numérico. | Não há entidade/FK de análise, SHA ou FK de release na métrica; PK da linha identifica um valor, não o lote. A chave de componente Sonar não é preservada pela construção S1. |
+| Release e configuração (S2) | Release tem PK, produto, nome, início/fim e repositórios; configuração tem sua própria identidade e é versionada por novas linhas. | Medidas calculadas não guardam FK de análise/configuração/release no modelo consultado. O cálculo escolhe a configuração mais recente, sem fixá-la junto às métricas históricas. |
+
+No fluxo novo de S1 o cálculo usa somente o payload recebido e persiste as camadas
+em uma transação; isso evita misturar entradas de coletas no cálculo em memória,
+mas não cria um identificador comum persistido. A leitura legada de S1 usa uma janela
+de 20 minutos para listas e pode confundir lotes. Também há divergência legada:
+métricas GitHub são buscadas como `FIL` no método antigo, enquanto o fluxo novo
+escreve e lê `TRK`. Nenhuma dessas diferenças foi modificada nesta tarefa.
+
+A redução de valores da CLI (L1) também merece cuidado: `get_metric_value` percorre
+todas as chaves sem verificar qualificador. Executada somente em memória sobre a
+fixture L1 de 88 componentes, retorna 48 valores de `complexity`; o primeiro é o
+agregado 254 do projeto, seguido por valores de arquivos. Logo, o comentário sobre
+selecionar apenas `FIL` não garante o comportamento real dessa função. Não se deve
+reutilizar essa lista para rastrear arquivos; a PoC lê a árvore bruta e filtra `FIL`.
+
+Há associação de release no nível de
+[característica calculada](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/blob/faa6f75d3dc4d78e51c3da426068bf85cbb3de5d/src/characteristics/models.py).
+O [job de releases](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/blob/faa6f75d3dc4d78e51c3da426068bf85cbb3de5d/src/releases/jobs.py)
+gera essas características para releases que terminam no dia e usa a configuração
+mais recente. Esse vínculo superior não reconstrói o lote de métricas nem constitui
+seleção de uma análise identificada dentro do período da release.
+
+## Comparações que já existem
+
+Em C2 e L2, `diff` e `norm_diff` comparam planejado versus desenvolvido no nível
+de características. `diff` trunca diferenças negativas e não serve para o delta
+bruto entre análises. A correlação do Core opera sobre matriz de releases e
+características. Runtime já compara duas séries, incluindo operações estatísticas
+e controle de carga. Não foi encontrada nessas funções comparação de arquivos por
+caminho com valores ausentes. O experimento é separado dessas regras.
+
+## Limites para comparar releases
+
+- Uma release é uma entidade do produto e uma análise é uma observação. Proximidade
+  de datas ou versão no nome de arquivo não comprova correspondência entre elas.
+- Sem manifesto de análise e configuração fixada, não se garante que a lista
+  histórica de arquivos seja a mesma que originou uma nota apresentada.
+- `paging` permite identificar coleta declaradamente parcial. As fixtures citadas
+  não provam que toda coleta real percorra todas as páginas; o coletor/Action não
+  foi auditado nesta tarefa. Não assumir suporte para mais de 500 componentes.
+- Omissão de métrica, arquivo ausente, valor zero e coleta falha são estados distintos.
+  Nem todo arquivo de uma linguagem oferece todas as métricas.
+- Mudanças de linguagem, versão do analisador, branch, exclusões, filtros e limites
+  podem alterar a população observada. Mudança de caminho produz removido + novo;
+  não é detecção de renomeação nem confirmação de exclusão no Git.
+- Para comparar valores brutos, basta preservar identidade e unidade. Para comparar
+  notas, é necessário também saber o universo, filtros, fórmulas, limites e pesos
+  aplicados em cada execução. Não atribuir pontos ao TSQMI nem causalidade.
+
+## Proposta de apresentação — ainda não implementada
+
+Referências de navegação vinculadas à US na consulta de 24/10/2026:
+[Fluxo A](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6993-1008),
+[Fluxo B](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6996-1160)
+e [CLI C1/C2](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6980-1893).
+O acesso direto às três páginas falhou na ferramenta web. A proposta usa os fluxos
+descritos na US e agora conta com conferência parcial baseada nas capturas do
+protótipo conferidas pelo usuário, resumidas abaixo. Não houve revisão integral do
+Figma nem aprovação do PO; confirmar a versão completa permanece pendente.
+O texto antigo da US não é tratado como decisão vigente.
+
+### Aderência parcial ao protótipo
+
+As capturas apresentam detalhes além do recorte executável da PoC:
+
+| Elemento apresentado | Dados e cálculos necessários | Cobertura da PoC atual | Lacunas e decisões pendentes |
+| --- | --- | --- | --- |
+| CLI proposta: `msgram files --measure non_complex_file_density --metrics ...`, com `complexity`, `functions`, razão, situação, contribuição e distância ao limite; saída correspondente à web. | Métricas da mesma análise alinhadas por caminho; razão `complexity/functions`; configuração e limites usados; contrato de situação, distância e contribuição compartilhado com a web. | Compara somente `complexity` bruta entre duas árvores Sonar, com valores anteriores/atuais e delta. | O comando é proposta de interface e não foi implementado. Faltam razão, tratamento de denominador zero/ausente, situação, contribuição, distância e equivalência de saída com a web. Validar cada cálculo antes de exibir nota por arquivo. |
+| Aba **Código-fonte**: releases base/alvo, busca por arquivo/diretório, filtro **Só o que mudou** e navegação hierárquica. | Política para selecionar análises por release, proveniência, árvore de caminhos e definição do que conta como mudança. | Une caminhos exatos das duas entradas fornecidas e indica presença e métrica ausente. | Não seleciona releases, não implementa interface, busca, filtro ou árvore de diretórios. Definir se mudança significa alteração Git, variação de métrica ou ambas, e como tratar ausência de dados. |
+| Tabela de mudanças: linhas adicionadas/removidas do Git e anteriores/atuais/deltas de Manutenibilidade e Confiabilidade/cobertura por arquivo e diretório. | Referências Git verificáveis para base/alvo e diff Git; análises vinculadas a essas referências; regras demonstradas para cada nota, atribuição e agregação por diretório. | Retorna delta bruto de `complexity` e presença por caminho; não fornece diff Git, cobertura ou notas. | Presença/ausência nas entradas não comprova operação Git. Cobertura é uma métrica distinta de Confiabilidade. Não há fórmula validada nesta entrega para notas ou contribuições de arquivos/diretórios nesses níveis; médias simples não podem ser consideradas equivalentes ao modelo sem demonstração. |
+
+Os valores dessas telas pertencem a níveis distintos:
+
+- **Complexidade bruta:** `complexity` do Sonar por arquivo; é o único valor que a PoC compara.
+- **Razão:** `complexity/functions` relaciona duas métricas do mesmo arquivo. Não é a
+  complexidade bruta nem a medida normalizada; sua disponibilidade depende das duas
+  entradas e do tratamento de `functions` igual a zero.
+- **Medida normalizada:** `non_complex_file_density` aplica a interpretação, os limites
+  e a agregação do Core sobre o conjunto de arquivos elegíveis (C1). O delta bruto ou
+  a razão de um arquivo não são a nota dessa medida.
+- **Atribuição nos níveis superiores:** distribuir notas ou variações por arquivo e
+  diretório nos níveis de subcaracterística, característica ou TSQMI exige uma regra
+  demonstrada e alinhamento com o squad. A PoC não calcula essa atribuição e este
+  levantamento não propõe uma fórmula nem substitui o modelo por médias simples.
+
+As capturas dos fluxos do Figma usam **US23.02**, enquanto a
+[issue principal DOC #130](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/130)
+continua identificada como **US23.01**. A divergência deve ser confirmada com o squad,
+junto à correspondência entre os fluxos e à versão vigente do protótipo. O levantamento
+permanece vinculado à DOC #130 e à DOC #167; não cria escopo para outra história.
+
+### Apresentação por granularidade
+
+Todas as visões devem mostrar repositório, fonte, análise selecionada, data/hora,
+branch quando disponível, release e período quando a associação for verificável.
+Se a análise não puder ser associada, mostrar **Análise sem release vinculada**.
+Quando não houver dado, mostrar **Sem dado nesta análise**; zero permanece zero.
+
+| Granularidade | Apresentação proposta em A / detalhe | Comparação proposta em B | Cuidados e campos específicos |
+| --- | --- | --- | --- |
+| Arquivo de produção (`FIL`) | A2 → A3: tabela com caminho, valor bruto e unidade; busca por caminho e paginação. Para complexidade, apresentar `complexity`, `functions` e razão em detalhe explicativo; a escolha de colunas deve ser validada. | B4: caminho, anterior, atual, diferença e presença: correspondente/adicionado/removido. Filtro adicional **Métrica ausente**. | Distinguir falta do arquivo de falta da métrica. Cobertura, comentários, duplicação e dívida têm percentuais; complexidade/funções têm contagens. Nota e faixa só após reproduzir exatamente o cálculo e seus filtros. |
+| Arquivo de teste (`UTS`) | Detalhe próprio com caminho do teste, quantidade de testes e duração disponível. Resumo explica que resultados agregados não apontam arquivo de produção responsável. | Comparar o mesmo caminho de teste, contagens e duração com unidades verificadas; falhas/erros agregados ficam no resumo do repositório. | Não prometer lista de arquivos de produção para `passed_tests`. Não tratar tempo de execução de testes como duração do CI. |
+| Repositório/projeto (`TRK`, GitHub agregado) | A4: cartões de numerador, denominador, unidade e período; exibir filtros de labels/workflows usados. Sem botão de lista de arquivos. | B5: base, alvo e diferença das métricas agregadas; informar mudanças dos filtros ou períodos. | `team_throughput` e `ci_feedback_time` não têm rastreabilidade por arquivo na entrada observada. Só oferecer links a runs/issues se seus IDs forem coletados futuramente. |
+| Diretório/subprojeto (`DIR`/`BRC`) | Agrupamento de caminhos para navegação, ou valor agregado identificado como valor da fonte quando existir. | Exibir disponibilidade por lado e origem do agregado. | O modelo de armazenamento S1 admite qualificadores; isso não prova coleta de todo tipo nem fórmula do Core para essa granularidade. Não somar percentuais ou misturar diretórios com arquivos. |
+| Amostra de runtime e carga | Detalhe separado com séries e distribuição de resposta/CPU/memória, unidade, ambiente, janela e carga representada pelas chamadas a endpoints. | Comparar as duas séries e seus contextos; apresentar limitações estatísticas e compatibilidade das cargas. | CSV L2 possui colunas de endpoints, mas o payload numérico perde seus nomes. Não prometer rastreabilidade por arquivo ou consumo individual de endpoint sem dados adicionais. |
+| Medida, subcaracterística, característica e TSQMI | Exibir hierarquia de métricas → medida → níveis superiores com valores, faixas e pesos efetivamente usados. Diferenciar nota da medida de valor bruto. | Mostrar variações observadas e mudanças de configuração separadamente. | Atribuição matemática nos níveis superiores será alinhada com o restante do squad. A PoC não calcula contribuições, causalidade ou pontos do TSQMI. |
+
+Em B6, explicar coleta parcial, análise sem vínculo, ausência de métrica, mudança de
+escopo/configuração e correspondência exata de caminhos. Uma renomeação pode aparecer
+como removido + adicionado, sem confirmação de que houve rename. No resumo, usar
+**variação observada**; filtros de melhorou/piorou, ordenação por impacto, nota por
+arquivo e deltas de diluição/atribuição exigem outro contrato e validação das fórmulas.
+
+Para C1/C2, propor os mesmos nomes, unidades e estados da web, com valor ausente
+representado explicitamente. Os comandos `msgram files --measure/--compare` descritos
+na US são proposta; não foram implementados nesta tarefa. O exemplo Python do Core
+é independente da CLI e serve apenas para discutir o contrato de dados.
+
+### Contrato de proveniência proposto
+
+Antes de implementar comparação de releases no produto, propor um manifesto imutável
+da análise: ID próprio, repositório, fonte, projeto/branch Sonar, instante da análise
+na origem e do recebimento, referência Git **se coletada**, páginas esperadas/recebidas,
+filtros de escopo, versões do coletor/analisador, métricas solicitadas/disponíveis e
+configuração exata usada (identidade e conteúdo/versão de limites e pesos).
+Vincular métricas brutas e resultados ao mesmo manifesto e preservar seus caminhos.
+Esses campos são requisitos propostos, não recursos já implementados.
+
+Escolher a última análise **completa** do repositório dentro do período da release é
+uma política candidata, herdada do texto da US, ainda a validar. Definir timezone,
+limites inclusivos/exclusivos, desempate e sobreposição de períodos. Release sem
+análise elegível deve mostrar indisponibilidade; não usar silenciosamente uma coleta
+externa ao período. Mudança de configuração deve aparecer junto à variação, sem
+atribuir toda a diferença à alteração do código.
+
+### Questões para validação
+
+| Questão | Quem precisa alinhar | Situação |
+| --- | --- | --- |
+| Qual análise representa uma release, como tratar sobreposição e ausência? | PO + squad Service | Pendente na reformulação; prazo a combinar. |
+| Como apresentar `UTS`, agregados, runtime e granularidades sem dados? | PO + squad de interface | Conferência parcial por capturas registrada acima; revisão integral do Figma pendente. |
+| Como alinhar a aba Código-fonte, a CLI/web e a identificação US23.02 no Figma com US23.01 / DOC #130? | Squad responsável pela US e pelo protótipo | Confirmar identificação, versão vigente e contratos de cálculo; sem ampliar esta PoC. |
+| Como versionar manifesto, configuração e regras de compatibilidade? | Squads Core/Service/coleta | Pendente; nenhuma mudança de banco/endpoint nesta tarefa. |
+| Qual é a interpretação desejada para comentários e demais faixas? | PO + responsáveis pelo modelo | Conferir o comportamento C1 antes de classificar melhora/piora. |
+| Como atribuir variações em medidas e níveis superiores? | Squad responsável pelo levantamento matemático | Fora da PoC; depende de alinhamento separado. |
+
+## Prova de conceito e reprodução
+
+O [experimento no Core](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/81f4a977f550c9da02b742dec1b2b382704a538c/docs/experiments/us130.md)
+documenta o comando, o formato e as limitações. A
+[função experimental](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/blob/8cbcd9656024b3cf2ef2cae32d0707270d195ab0/src/core/file_comparison.py)
+compara `complexity` em duas árvores brutas do mesmo projeto/branch Sonar, filtra
+`FIL`, ordena caminhos e devolve anterior/atual/diferença, inclusão/remoção e métrica
+ausente. Reutiliza o `Checker` do Core e rejeita valores inválidos, duplicatas e
+paginação declaradamente parcial. Sem metadados, completude depende do chamador.
+
+As duas entradas de demonstração são **sintéticas**, identificadas no JSON e em seu
+README. Não representam releases reais. A fixture histórica C3 é usada intacta em
+teste de comparação consigo mesma; não há demonstração de evolução histórica real.
+
+```bash
+# Na raiz da branch spike/130-comparacao-arquivos do Core, após instalar requirements.txt
+PYTHONPATH=src python examples/compare_file_complexity.py \
+  tests/unit/data/us130/before.json tests/unit/data/us130/after.json
+```
+
+Exemplos do resultado: `src/changed.py` passa de 6 para 4, diferença -2;
+`src/added.py` tem anterior `null` e atual 0; `src/missing_after.py` existe nos
+dois lados, mas tem atual `null` e indicação de métrica ausente no lado atual.
+Não há score, rótulo de melhora/piora, detecção de rename ou efeito no TSQMI.
+
+## Validação local em 24/10/2026
+
+| Verificação | Resultado |
+| --- | --- |
+| Core: `python -m tox -e test_core` | 167 testes passaram após a alteração de `file_status` para `if/elif/else`; 100% de cobertura de linhas do módulo, 94% no total. Dois avisos de coleta em esquemas preexistentes. |
+| Core: Black, Flake8, compilação e build | Passaram. Sdist e wheel gerados somente localmente; avisos de metadados de licença preexistentes. |
+| DOC: `npm ci --no-audit --no-fund` | Concluído com o lockfile preservado; Node 22.21.0 e npm 11.14.1. |
+| DOC: `npm run build` | Passou com validação de links quebrados habilitada. Aviso de HTML na página preexistente Planejamento/EAP, sem alteração nesta entrega. |
+| DOC: links relativos e navegação | Ambos os links relativos da página resolvem; a página e o item de navegação constam no HTML gerado. Não substitui revisão integral do Figma. |
+| DOC: `npm run typecheck` | Falhou com TS5102: opção `baseUrl` removida no TypeScript instalado. O mesmo erro foi reproduzido em cópia limpa de `origin/main`; configuração e dependências não foram alteradas. Correção fora deste levantamento. |
+| Ambos: `git diff --check` | Passou. |
+
+A DOC não define script de lint. O build é o check obrigatório indicado no guia;
+o typecheck foi executado como verificação adicional e sua falha preexistente fica
+explícita. Estes resultados não são aprovação de CI, SonarCloud, revisão humana ou PO.
+
+O Core reutilizou a branch dedicada já existente, baseada em `origin/develop`.
+A DOC foi isolada em worktree dedicada a partir de `origin/main`: o `CONTRIBUTING.md`
+e o guia documental indicam `main`, a API confirma essa branch padrão e não há
+`origin/develop` nesse remoto. O fluxo geral que cita `develop` está divergente;
+nenhuma branch de integração foi criada ou alterada por esta tarefa. Não foram
+encontrados arquivos `AGENTS.md` nas árvores consultadas nem em seus ancestrais locais.
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 0.1 | 24/10/2026 | Levantamento fundamentado no código, preparado com auxílio do Codex; revisão humana pendente | [@nateejpg](https://github.com/nateejpg) | Pendente |
+| 0.2 | 24/10/2026 | Proposta por granularidade, contrato de proveniência e vínculo com a PoC; preparada com auxílio do Codex | [@nateejpg](https://github.com/nateejpg) | Pendente |
+| 0.3 | 24/10/2026 | Registra validação local, falha preexistente do typecheck e bases confirmadas | [@nateejpg](https://github.com/nateejpg) | Pendente |
+| 0.4 | 24/10/2026 | Alinha o levantamento à conferência parcial das capturas, distingue níveis de cálculo e registra a divergência US23.02/US23.01; auxílio do Codex | [@nateejpg](https://github.com/nateejpg) | Pendente |
