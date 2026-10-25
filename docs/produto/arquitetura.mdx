@@ -795,6 +795,10 @@ O MER textual completo e o diagrama lógico gerado por `graph_models` estão no
 | Thread de onboarding sem fila nem retentativa | Falhas silenciosas se o worker reiniciar | Visão de processo |
 | Métricas coletadas sem vínculo com release | Planejado × realizado depende de janela de tempo, não de vínculo explícito | Modelo de dados |
 | Pacotes do Core com nomes genéricos (`core`, `util`, `resources`) | Risco de conflito de nomes com outros pacotes do ambiente | Visão de desenvolvimento |
+| Submódulos do Platform fixados em commits | O clone traz o commit registrado no Platform, não o último do `develop`; sem atualização periódica (`git submodule update --remote`), o ambiente integrado fica defasado | Visão de desenvolvimento |
+| `nginx/default.conf` do Platform é cópia do `deploy/nginx` do Service | Mudanças de rota em produção não chegam sozinhas ao ambiente de desenvolvimento, e os dois podem divergir | Ambiente integrado de desenvolvimento |
+| `dev-entrypoint.sh` do Platform refaz o setup do `start_service.sh` do Service | Mudanças no setup do Service (migrações, seed, estáticos) precisam ser replicadas no Platform | Ambiente integrado de desenvolvimento |
+| PostgreSQL de desenvolvimento publicado em todas as interfaces | Com as credenciais padrão (`postgres`/`postgres`), o banco fica acessível a outras máquinas da rede local | Visão física |
 
 Os itens MSG estão detalhados no [Backlog técnico](../diagnostico/backlog-tecnico.mdx).
 
@@ -831,6 +835,7 @@ arquitetura nestes pontos:
 | --- | --- |
 | Conectividade | O Front exige conexão com a internet; a CLI precisa de rede apenas para extrair dados do GitHub |
 | Plataforma | Web, linha de comando, extensão VS Code e MCP |
+| Ambiente de desenvolvimento | Docker com Compose v2 e git; GNU Make é opcional (os alvos são atalhos para `docker compose`) |
 | Fontes de métricas | Coleta dependente do SonarQube e da API do GitHub |
 | Público | Times de desenvolvimento, líderes técnicos e pesquisadores de qualidade de software |
 | Idioma do código | Inglês, pela integração com plataformas que já usam esse idioma |
@@ -839,9 +844,9 @@ arquitetura nestes pontos:
 
 ## Decisões arquiteturais
 
-Só a ADR 002 foi aceita e implementada (US07.01). As demais propostas foram levantadas no
-[Diagnóstico](../diagnostico/diagnostico.mdx) e na Lean Inception e **aguardam decisão da
-equipe**.
+As ADRs 002 (US07.01) e 004 foram aceitas e implementadas. As ADRs 001 e 003 foram
+levantadas no [Diagnóstico](../diagnostico/diagnostico.mdx) e na Lean Inception e **aguardam
+decisão da equipe**.
 
 ### ADR 001 - Repositórios `2026.2-*` como conjunto canônico
 
@@ -883,6 +888,24 @@ equipe**.
 - **Alternativas consideradas:** Manter a agregação por janela de tempo.
 - **Consequências:** Consultas por release ficam diretas e auditáveis. Exige migração de dados
   e ajuste na Action e no job diário.
+
+### ADR 004 - Repositório guarda-chuva com submódulos para o ambiente de desenvolvimento
+
+- **Status:** Aceita e implementada
+- **Contexto:** O produto é formado por nove repositórios. Para rodá-lo inteiro, cada
+  integrante precisava clonar os repositórios um a um, configurar cada um e subir os serviços
+  com o compose de cada repositório, sem um proxy comum e sem garantia de que todos estavam na
+  mesma linha de desenvolvimento.
+- **Decisão:** Criar o repositório `2026.2-MeasureSoftGram-Platform`, que reúne os demais como
+  git submodules (branch `develop`) e traz um `docker-compose.yml` de desenvolvimento com hot
+  reload, profiles para escolher o que sobe, proxy nginx único e um `.env` único (ver
+  [Ambiente integrado de desenvolvimento](#ambiente-integrado-de-desenvolvimento-platform)).
+- **Alternativas consideradas:** Unificar o código em um monorepo; manter um compose em cada
+  repositório e documentar a ordem de subida.
+- **Consequências:** Um único clone e um único comando sobem o produto, e o smoke test no CI
+  verifica a stack integrada. Os repositórios continuam independentes, mas os submódulos ficam
+  fixados em commits e precisam ser atualizados, e a configuração do nginx e o setup do Service
+  ficam duplicados no Platform (ver [Pontos de atenção](#pontos-de-atenção-arquiteturais)).
 
 ## Referências
 
