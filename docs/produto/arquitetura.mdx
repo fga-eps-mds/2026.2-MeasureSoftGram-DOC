@@ -467,6 +467,67 @@ A autenticação usa uma conta de serviço fixa (`SERVICE`, `MSGRAM_USER`, `MSGR
 o token é obtido uma vez na subida e reaproveitado por todas as tools. O MCP não repassa a
 identidade de quem usa o agente de IA.
 
+### Platform
+
+O Platform não tem código de produto: guarda os submódulos e a configuração que os sobe juntos.
+
+```
+.
+├── docker-compose.yml          # serviços, profiles, volumes e rede msgram
+├── .env.example                # configuração única da stack (copiada para .env)
+├── Makefile                    # atalhos: select, up, down, logs, seed, cli, testes
+├── nginx/default.conf          # proxy único (cópia do deploy do Service + /health/)
+├── docker/
+│   ├── service/dev-entrypoint.sh   # migra, semeia e roda runserver
+│   └── cli/Dockerfile              # Core, Parser e CLI instalados em modo editável
+├── scripts/                    # select, smoke-test, grant-access, set-github-token
+├── workspace/                  # pasta de trabalho montada no container da CLI
+├── .github/workflows/compose-smoke.yml
+└── MeasureSoftGram-*/          # submódulos (Service, Front, Core, Parser, CLI,
+                                #   Action, Plugin, AI, DOC)
+```
+
+Cada submódulo é montado no container que o executa, o que dá o hot reload:
+
+```mermaid
+flowchart LR
+    subgraph Sub["Submódulos"]
+        S_SVC["Service"]
+        S_FE["Front"]
+        S_AI["AI"]
+        S_DOC["DOC"]
+        S_CORE["Core"]
+        S_PAR["Parser"]
+        S_CLI["CLI"]
+        S_ACT["Action"]
+        S_PLG["Plugin"]
+    end
+
+    subgraph Cont["Containers (rede msgram)"]
+        C_SVC["service"]
+        C_FE["front"]
+        C_AI["ai"]
+        C_DOC["docs"]
+        C_CLI["cli"]
+        C_ACT["action"]
+        C_PLG["plugin"]
+    end
+
+    S_SVC --> C_SVC
+    S_FE --> C_FE
+    S_AI --> C_AI
+    S_DOC --> C_DOC
+    S_CORE --> C_CLI
+    S_PAR --> C_CLI
+    S_CLI --> C_CLI
+    S_ACT --> C_ACT
+    S_PLG --> C_PLG
+```
+
+O Plugin não é desenvolvido pelo container: o hot reload dele é o do próprio VS Code (F5). O
+container `plugin` serve só para instalar dependências, rodar testes e empacotar o `.vsix` sem
+Node na máquina.
+
 ## Visão física
 
 ```mermaid
