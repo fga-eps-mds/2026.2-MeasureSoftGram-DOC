@@ -1,11 +1,25 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-21T11:20:45+00:00",
+ "coletado_em": "2026-10-25T13:57:49+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Plugin",
  "desde": "2026-08-24",
- "total_count": 66,
+ "total_count": 67,
  "workflow_runs": [
+  {
+   "id": 39664546537,
+   "name": ".github/workflows/test.yml",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "chore/ci-governance-cleanup",
+   "event": "push",
+   "created_at": "2026-10-21T19:46:28Z",
+   "run_started_at": "2026-10-21T19:46:28Z",
+   "updated_at": "2026-10-21T19:46:28Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/actions/runs/39664546537",
+   "run_number": 18,
+   "workflow_id": 361536815
+  },
   {
    "id": 39274337232,
    "name": "msg",

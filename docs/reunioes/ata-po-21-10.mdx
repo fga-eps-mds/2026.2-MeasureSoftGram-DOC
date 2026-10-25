@@ -1,0 +1,177 @@
+---
+id: ata-po-21-10
+title: Ata – Reunião com o PO (21/10/2026)
+sidebar_position: 6
+sidebar_label: Ata PO 21/10
+---
+
+# Ata – Reunião com o PO (21/10/2026)
+
+**Data**: 21/10/2026 · 19h33 · Duração: 1h 18m 45s · Teams  
+**Tipo**: Validação dos protótipos e critérios de aceitação das histórias da Release 2  
+**Participantes**: Hilmer Rodrigues Neri (PO), Gustavo Roberto Silva De Melo, Luciano De Freitas Melo,
+Alexandre De Santana Beck, Henrique Camelo Quenino, Guilherme Storch De Oliveira, Lucas,
+Diogo Rodrigues Barboza, Diego Carlito Rodrigues De Souza, Luiza Maluf Amorim
+
+:::tip[Resultado]
+O PO validou os protótipos das histórias da R2, com ajustes de layout, exportação de CSV e uso do
+gráfico de pulso na evolução temporal. A correlação passa a ser feita por característica e
+subcaracterística, e a rastreabilidade foi **adiada para a R3** por não se encaixar no modelo
+matemático. O PO autorizou ajustes que não precisam de nova validação a irem direto para o
+código, e aprovou a organização em 3 squads com líder fixo.
+:::
+
+---
+
+## 1. Entrega da Release 2 e testes de aceitação
+
+- A equipe pretende fechar o desenvolvimento até sexta (23/10) e enviar o formulário de teste.
+- O PO aceita receber os formulários até **terça (27/10)**. A data de referência para a análise
+  dos repositórios é a **segunda (26/10)**, como na R1, e o fim de semana pode ser usado.
+- **Decisão:** dois formulários separados, um para a R2 e outro para as histórias pendentes da R1.
+
+## 2. Épico 7 – Visão do repositório (descontinuação do Grafana)
+
+Os critérios confusos apontados pelo PO foram reescritos, e as faixas de cores passaram a seguir
+a outra história indicada por ele.
+
+- O radar de características ficou desalinhado ao lado do bloco de desvio geral. Henrique
+  sugeriu o **radar no centro e o desvio geral do repositório logo abaixo**. O PO aceitou.
+- O nome do produto no primeiro card é redundante, porque não se chega à página sem
+  selecionar o produto na sidebar. **Decisão:** remover.
+- O endereço do repositório deve ser **hiperlink** para o GitHub ou GitLab.
+- Os protótipos misturaram "repositório" e "projeto" (terminologia do GitLab) ao serem copiados.
+- Clicar no repositório ou projeto na visão geral (TSQMI por repositório) leva à visão do
+  repositório, com as características.
+
+### Ajustes sem nova validação
+
+- Henrique perguntou se as mudanças pedidas pelo PO precisam passar de novo pelo protótipo.
+- **Decisão:** não precisam. Podem ir direto para o código, e o PO assume o risco. A equipe
+  registra a mudança na descrição da task no ZenHub, vinculada a esta reunião.
+
+## 3. Evolução temporal
+
+- Lucas atualizou o protótipo e já há 2 PRs. Os gráficos ficam um abaixo do outro, com filtro por
+  característica, subcaracterística, medida e métrica, e escala em dias ou meses.
+- O PO pediu para **usar o gráfico de pulso** no lugar do gráfico de linhas, que enfraquece a
+  visualização principal do produto.
+- Os filtros são em cascata: um filtro em um nível reflete em todos os níveis abaixo dele.
+- Faltava o **exportar CSV**. O PO lembrou que todas as regras atuais implementadas devem ser
+  mantidas.
+- **Decisão:** um botão de exportação geral no topo da página e um por nível, dentro da área de
+  cada seção.
+
+## 4. Épico 21 – Novos dashboards
+
+### Estrutura das medidas e indicadores (metamodelo)
+
+- Já validada pelo PO, que elogiou a proposta da equipe.
+
+### Qualidade por entidade (mapa de calor)
+
+- A tela cobre duas das histórias enviadas. Está feita por característica, e falta a
+  subcaracterística.
+- A característica deve aparecer em uma **caixa com o nome em negrito**, igual à caixa usada na
+  seleção de medida. A subcaracterística acrescenta uma linha, na mesma cor.
+- As cores do mapa foram aprovadas.
+
+### Distribuição estatística
+
+- A referência é a imagem que o PO enviou no Discord. O padrão de seleção atual (dropdown com
+  botão) se mantém.
+- O filtro por repositório ou nível reflete em todos os gráficos da página.
+- Gustavo atualiza os critérios de aceitação em 21/10.
+
+### Correlação
+
+- A equipe propôs uma matriz de correlação de Spearman entre métricas, por arquivo, com mínimo de
+  10 arquivos por par para a análise entrar.
+- O PO prefere a correlação **por característica e subcaracterística**. A função existe no modelo,
+  mas não está implementada nem no documento de síntese enviado à equipe.
+- Correlação por métrica cai no mesmo problema da rastreabilidade: nem toda medida é por arquivo.
+- O critério de mínimo de observações foi aceito.
+- O PO vai enviar a referência visual, como fez com a distribuição.
+
+## 5. Rastreabilidade – adiada para a R3
+
+Squad 3 (Alexandre e Luciano) apresentou duas propostas:
+
+- **Medidas por arquivo** de uma release, com o valor bruto da métrica (vinda do Sonar), a
+  contribuição e a ordenação pela distância até o valor de referência.
+- **Comparação entre releases**, com a variação dos valores por arquivo.
+
+Discussão:
+
+- Fora do valor de referência, a contribuição é zero, independentemente da distância. Ordenar por
+  distância **foge do modelo matemático**. O PO pediu para mostrar apenas o valor da medida.
+- Não existe "nota" no modelo. Usar "valor calculado" no lugar de "razão" ou "nota".
+- A comparação entre releases já é feita pelo gráfico planejado × realizado.
+- Os indicadores (características e subcaracterísticas) não têm relação direta com arquivos. Só
+  a medida tem, e há medidas por arquivo, por diretório e por repositório.
+- Luciano sugeriu uma função no core para estimar a contribuição de cada arquivo. O PO recusou:
+  exigiria formalizar o modelo de novo.
+- O PO gosta da navegação do Sonar pela estrutura de diretórios, que dá a sensação de estar no
+  código-fonte.
+
+**Decisão:** abortar a rastreabilidade na R2 e amadurecer a proposta ao longo da sprint para a
+R3, em vez de a equipe virar a noite para entregar agora. O PO assumiu que não tinha considerado
+essas diferenças ao pedir a funcionalidade.
+
+## 6. Outros pontos
+
+### Configuração de intervalos e cores
+
+- O PO sugeriu a página de configurações há algumas semanas e não teve retorno. As histórias
+  começam a depender desses intervalos e cores.
+- Luciano: vira um **novo épico para a R3**, ainda não formalizado.
+
+### Importação de repositórios
+
+- Alexandre encontrou a regra atual: só são listados os repositórios de que o usuário é dono.
+- **Decisão:** listar os repositórios em que o usuário é **dono ou membro**, a mesma lista da
+  conta no GitHub ou GitLab. Alexandre já corrigiu localmente.
+
+### Organização em squads
+
+- A equipe se dividiu em 3 squads, cada um com um líder fixo, com rodízio das áreas de atuação
+  para que todos passem por todos os repositórios.
+- O PO aprovou e disse perceber melhora na organização.
+
+### Avisos do PO
+
+- **28/10** é ponto facultativo, mas a reunião está mantida. É a semana de entrega da R2.
+- Disponibilidade em 22/10: até 10h, das 15h às 16h30 e depois das 19h.
+
+---
+
+## 7. Encaminhamentos
+
+### Pendências do Product Owner
+
+| Item | Descrição | Previsão |
+| --- | --- | --- |
+| Critérios de aceitação | Revisar os critérios das histórias da R2 | 22/10, antes das 10h |
+| Referência da correlação | Enviar a referência visual do dashboard de correlação | 22/10 (tentativa) |
+
+### Ações da equipe
+
+| Ação | Responsável | Prazo |
+| --- | --- | --- |
+| Reposicionar o radar e o desvio geral, remover o produto do primeiro card e tornar a URL do repositório um hiperlink | Equipe | R2 |
+| Trocar o gráfico de linhas pelo gráfico de pulso na evolução temporal | Lucas | R2 |
+| Adicionar exportação de CSV geral e por nível | Equipe | R2 |
+| Ajustar a caixa de característica e incluir a subcaracterística no mapa de calor | Equipe | R2 |
+| Atualizar os critérios da distribuição estatística | Gustavo | 21/10 |
+| Refazer a correlação por característica e subcaracterística | Equipe | Após a referência do PO |
+| Subir a correção da listagem de repositórios (dono ou membro) | Alexandre | R2 |
+| Registrar no ZenHub as mudanças que foram direto para o código | Equipe | Contínuo |
+| Enviar os formulários de teste da R2 e das pendências da R1, separados | Gustavo | 27/10 |
+| Reformular a rastreabilidade | Squad 3 (Alexandre e Luciano) | R3 |
+| Formalizar o épico de configuração de intervalos e cores, com protótipo | Equipe | R3 |
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 22/10/2026 | Registro da reunião | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
