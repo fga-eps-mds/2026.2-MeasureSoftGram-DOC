@@ -566,8 +566,15 @@ flowchart TB
     MC -->|HTTP/REST| OR
 ```
 
-Em desenvolvimento não há nginx nem openresty: o Service publica a porta 8080 e o banco
-fica só em `127.0.0.1:5432`.
+Em desenvolvimento não há openresty. O que muda depende de como a stack é levantada:
+
+- **Compose do próprio Service** (Service isolado): sem nginx; o Service publica a porta 8080
+  e o banco fica só em `127.0.0.1:5432`.
+- **Platform** (ambiente integrado): tudo roda na máquina de quem desenvolve, com o nginx na
+  porta 80 e as demais portas descritas em
+  [Ambiente integrado de desenvolvimento](#ambiente-integrado-de-desenvolvimento-platform). O
+  banco é publicado na porta `POSTGRES_PUBLIC_PORT` (padrão 5432) **em todas as interfaces de
+  rede**, e não só em `127.0.0.1`.
 
 :::note[Ambiente de produção]
 A topologia acima é a descrita em `deploy/docker-compose.prod.yml`. O diagnóstico de 19/09
