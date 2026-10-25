@@ -65,6 +65,7 @@ arquiteturais, o impacto do MVP de 2026.2, as metas e restrições e as decisõe
 | Plugin | Painel de qualidade, dashboards e execução local da Action dentro do VS Code | TypeScript (extension host) + React e Vite (webview) | Extensão VS Code (1.0.2) |
 | AI (MCP) | Expõe os dados do Service a clientes de IA pelo protocolo MCP | Python 3.11+, SDK `mcp` (FastMCP), httpx | Imagem Docker `measuresoftgram/ai` |
 | PostgreSQL | Persistência do Service | PostgreSQL 18 (`postgres:18-alpine`) | Container |
+| Platform | Ambiente integrado de desenvolvimento: reúne os demais repositórios como submódulos (branch `develop`) e os sobe com hot reload, escolhidos por profiles, atrás de um proxy nginx único | Git submodules, Docker Compose v2, nginx 1.27, GNU Make, shell, GitHub Actions (smoke test) | Não é publicado: `git clone --recurse-submodules` |
 
 :::warning[Versões do Core desalinhadas]
 Cada consumidor usa uma versão diferente do Core: o Service fixa `msgram-core==1.4.9`, a CLI
