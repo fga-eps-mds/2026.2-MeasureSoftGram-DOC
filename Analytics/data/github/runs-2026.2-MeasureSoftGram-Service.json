@@ -1,11 +1,25 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-25T17:17:18+00:00",
+ "coletado_em": "2026-10-25T20:14:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
- "total_count": 260,
+ "total_count": 261,
  "workflow_runs": [
+  {
+   "id": 40224968458,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "fix/151-seed-fake-producao",
+   "event": "pull_request",
+   "created_at": "2026-10-25T19:13:04Z",
+   "run_started_at": "2026-10-25T19:13:04Z",
+   "updated_at": "2026-10-25T19:15:10Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/40224968458",
+   "run_number": 160,
+   "workflow_id": 339749512
+  },
   {
    "id": 40106163028,
    "name": "Export de métricas",
