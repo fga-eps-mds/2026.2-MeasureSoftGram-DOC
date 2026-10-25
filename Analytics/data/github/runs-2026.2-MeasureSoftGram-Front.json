@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-25T13:57:49+00:00",
+ "coletado_em": "2026-10-25T17:17:18+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
@@ -175,20 +175,6 @@
    "workflow_id": 347831685
   },
   {
-   "id": 40018053864,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "fix/38-ajustes-revisao-entidade",
-   "event": "pull_request",
-   "created_at": "2026-10-23T20:17:22Z",
-   "run_started_at": "2026-10-23T20:17:22Z",
-   "updated_at": "2026-10-23T20:17:22Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40018053864",
-   "run_number": 123,
-   "workflow_id": 368685720
-  },
-  {
    "id": 40018053800,
    "name": "Rodar Testes",
    "status": "completed",
@@ -203,17 +189,17 @@
    "workflow_id": 347831686
   },
   {
-   "id": 40017503703,
+   "id": 40018053864,
    "name": "Dependabot Auto-merge",
    "status": "completed",
    "conclusion": "skipped",
-   "head_branch": "feat/81-distribuicao-exportar-csv",
+   "head_branch": "fix/38-ajustes-revisao-entidade",
    "event": "pull_request",
-   "created_at": "2026-10-23T20:13:10Z",
-   "run_started_at": "2026-10-23T20:13:10Z",
-   "updated_at": "2026-10-23T20:13:11Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40017503703",
-   "run_number": 122,
+   "created_at": "2026-10-23T20:17:22Z",
+   "run_started_at": "2026-10-23T20:17:22Z",
+   "updated_at": "2026-10-23T20:17:22Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40018053864",
+   "run_number": 123,
    "workflow_id": 368685720
   },
   {
@@ -229,6 +215,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40017503790",
    "run_number": 201,
    "workflow_id": 347831686
+  },
+  {
+   "id": 40017503703,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "feat/81-distribuicao-exportar-csv",
+   "event": "pull_request",
+   "created_at": "2026-10-23T20:13:10Z",
+   "run_started_at": "2026-10-23T20:13:10Z",
+   "updated_at": "2026-10-23T20:13:11Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40017503703",
+   "run_number": 122,
+   "workflow_id": 368685720
   },
   {
    "id": 40017150012,
@@ -315,20 +315,6 @@
    "workflow_id": 368685720
   },
   {
-   "id": 40015748702,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "feat/34-evolucao-temporal-filtros",
-   "event": "pull_request",
-   "created_at": "2026-10-23T19:59:46Z",
-   "run_started_at": "2026-10-23T19:59:46Z",
-   "updated_at": "2026-10-23T20:05:40Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40015748702",
-   "run_number": 197,
-   "workflow_id": 347831686
-  },
-  {
    "id": 40015748704,
    "name": "Dependabot Auto-merge",
    "status": "completed",
@@ -343,17 +329,17 @@
    "workflow_id": 368685720
   },
   {
-   "id": 40015745887,
+   "id": 40015748702,
    "name": "Rodar Testes",
    "status": "completed",
    "conclusion": "success",
    "head_branch": "feat/34-evolucao-temporal-filtros",
    "event": "pull_request",
-   "created_at": "2026-10-23T19:59:44Z",
-   "run_started_at": "2026-10-23T19:59:44Z",
-   "updated_at": "2026-10-23T20:07:11Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40015745887",
-   "run_number": 196,
+   "created_at": "2026-10-23T19:59:46Z",
+   "run_started_at": "2026-10-23T19:59:46Z",
+   "updated_at": "2026-10-23T20:05:40Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40015748702",
+   "run_number": 197,
    "workflow_id": 347831686
   },
   {
@@ -371,18 +357,18 @@
    "workflow_id": 368685720
   },
   {
-   "id": 40014881283,
-   "name": "Export de métricas",
+   "id": 40015745887,
+   "name": "Rodar Testes",
    "status": "completed",
    "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-23T19:52:54Z",
-   "run_started_at": "2026-10-23T19:52:54Z",
-   "updated_at": "2026-10-23T19:53:22Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40014881283",
-   "run_number": 60,
-   "workflow_id": 347831685
+   "head_branch": "feat/34-evolucao-temporal-filtros",
+   "event": "pull_request",
+   "created_at": "2026-10-23T19:59:44Z",
+   "run_started_at": "2026-10-23T19:59:44Z",
+   "updated_at": "2026-10-23T20:07:11Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40015745887",
+   "run_number": 196,
+   "workflow_id": 347831686
   },
   {
    "id": 40014881338,
@@ -397,6 +383,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40014881338",
    "run_number": 195,
    "workflow_id": 347831686
+  },
+  {
+   "id": 40014881283,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-23T19:52:54Z",
+   "run_started_at": "2026-10-23T19:52:54Z",
+   "updated_at": "2026-10-23T19:53:22Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40014881283",
+   "run_number": 60,
+   "workflow_id": 347831685
   },
   {
    "id": 40014414885,
@@ -889,20 +889,6 @@
    "workflow_id": 368685720
   },
   {
-   "id": 40000622114,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "feat/task21.04.04-exportar-csv",
-   "event": "pull_request",
-   "created_at": "2026-10-23T18:06:45Z",
-   "run_started_at": "2026-10-23T18:06:45Z",
-   "updated_at": "2026-10-23T18:13:34Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40000622114",
-   "run_number": 179,
-   "workflow_id": 347831686
-  },
-  {
    "id": 40000621791,
    "name": "Dependabot Auto-merge",
    "status": "completed",
@@ -915,6 +901,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40000621791",
    "run_number": 104,
    "workflow_id": 368685720
+  },
+  {
+   "id": 40000622114,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "feat/task21.04.04-exportar-csv",
+   "event": "pull_request",
+   "created_at": "2026-10-23T18:06:45Z",
+   "run_started_at": "2026-10-23T18:06:45Z",
+   "updated_at": "2026-10-23T18:13:34Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40000622114",
+   "run_number": 179,
+   "workflow_id": 347831686
   },
   {
    "id": 39999024976,
@@ -945,20 +945,6 @@
    "workflow_id": 347831686
   },
   {
-   "id": 39995789545,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-23T17:31:37Z",
-   "run_started_at": "2026-10-23T17:31:37Z",
-   "updated_at": "2026-10-23T17:37:39Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39995789545",
-   "run_number": 177,
-   "workflow_id": 347831686
-  },
-  {
    "id": 39995789437,
    "name": "Export de métricas",
    "status": "completed",
@@ -971,6 +957,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39995789437",
    "run_number": 56,
    "workflow_id": 347831685
+  },
+  {
+   "id": 39995789545,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-23T17:31:37Z",
+   "run_started_at": "2026-10-23T17:31:37Z",
+   "updated_at": "2026-10-23T17:37:39Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39995789545",
+   "run_number": 177,
+   "workflow_id": 347831686
   },
   {
    "id": 39994882960,
@@ -1001,20 +1001,6 @@
    "workflow_id": 368685720
   },
   {
-   "id": 39993626752,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "fix/us2103-ajustes-validacao",
-   "event": "pull_request",
-   "created_at": "2026-10-23T17:15:48Z",
-   "run_started_at": "2026-10-23T17:15:48Z",
-   "updated_at": "2026-10-23T17:15:54Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39993626752",
-   "run_number": 101,
-   "workflow_id": 368685720
-  },
-  {
    "id": 39993626762,
    "name": "Rodar Testes",
    "status": "completed",
@@ -1029,18 +1015,18 @@
    "workflow_id": 347831686
   },
   {
-   "id": 39990858046,
-   "name": "Rodar Testes",
+   "id": 39993626752,
+   "name": "Dependabot Auto-merge",
    "status": "completed",
-   "conclusion": "success",
-   "head_branch": "feat/38-entidade-mapa-de-calor",
+   "conclusion": "skipped",
+   "head_branch": "fix/us2103-ajustes-validacao",
    "event": "pull_request",
-   "created_at": "2026-10-23T16:55:53Z",
-   "run_started_at": "2026-10-23T16:55:53Z",
-   "updated_at": "2026-10-23T17:01:31Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39990858046",
-   "run_number": 174,
-   "workflow_id": 347831686
+   "created_at": "2026-10-23T17:15:48Z",
+   "run_started_at": "2026-10-23T17:15:48Z",
+   "updated_at": "2026-10-23T17:15:54Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39993626752",
+   "run_number": 101,
+   "workflow_id": 368685720
   },
   {
    "id": 39990857980,
@@ -1055,6 +1041,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39990857980",
    "run_number": 100,
    "workflow_id": 368685720
+  },
+  {
+   "id": 39990858046,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "feat/38-entidade-mapa-de-calor",
+   "event": "pull_request",
+   "created_at": "2026-10-23T16:55:53Z",
+   "run_started_at": "2026-10-23T16:55:53Z",
+   "updated_at": "2026-10-23T17:01:31Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39990858046",
+   "run_number": 174,
+   "workflow_id": 347831686
   },
   {
    "id": 39989631870,
@@ -1085,20 +1085,6 @@
    "workflow_id": 368685720
   },
   {
-   "id": 39989308128,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "failure",
-   "head_branch": "feat/38-entidade-mapa-de-calor",
-   "event": "pull_request",
-   "created_at": "2026-10-23T16:44:39Z",
-   "run_started_at": "2026-10-23T16:44:39Z",
-   "updated_at": "2026-10-23T16:47:38Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39989308128",
-   "run_number": 172,
-   "workflow_id": 347831686
-  },
-  {
    "id": 39989308118,
    "name": "Dependabot Auto-merge",
    "status": "completed",
@@ -1111,6 +1097,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39989308118",
    "run_number": 98,
    "workflow_id": 368685720
+  },
+  {
+   "id": 39989308128,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "feat/38-entidade-mapa-de-calor",
+   "event": "pull_request",
+   "created_at": "2026-10-23T16:44:39Z",
+   "run_started_at": "2026-10-23T16:44:39Z",
+   "updated_at": "2026-10-23T16:47:38Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/39989308128",
+   "run_number": 172,
+   "workflow_id": 347831686
   },
   {
    "id": 39988957781,
