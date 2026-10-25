@@ -98,6 +98,39 @@ caminho:
 | `/api/`, `/swagger/`, `/admin/`, `/static/` | `service:8080` (Django) |
 | `/` | `front` (Next.js) |
 
+### Ambiente integrado de desenvolvimento (Platform)
+
+O repositório Platform sobe o produto inteiro a partir do código dos submódulos, em modo de
+desenvolvimento e com hot reload: editar o código de um submódulo recarrega o serviço
+correspondente, sem rebuild. A configuração fica toda em um único `.env` na raiz, e a variável
+`COMPOSE_PROFILES` (editada à mão ou pelo `make select`) escolhe o que sobe. O padrão do
+`.env.example` é `service,front`.
+
+| Profile | Containers | Porta no host | Observações |
+| --- | --- | --- | --- |
+| `service` | `db`, `service`, `proxy` | `80` (proxy), `5432` (db) | O `service` monta `src/` do submódulo e roda `docker/service/dev-entrypoint.sh`: aguarda o banco, migra, carrega os dados iniciais (`load_initial_data`), coleta os estáticos e termina com `runserver` (reload nativo do Django). |
+| `front` | `front` + os do profile `service` | `3000` | Imagem `node:20-alpine` com o submódulo montado, rodando `pnpm dev` (HMR). |
+| `ai` | `ai`, `mcp-inspector` + `db` e `service` | `8000` (MCP), `6274` (inspector) | Stage `dev` do Dockerfile do AI, com `watchfiles`. O inspector é um cliente web para testar o MCP. |
+| `docs` | `docs` | `3001` | Docusaurus deste repositório de documentação, com hot reload. |
+| `tools` | `cli`, `action`, `plugin` | — | Não sobem com `up`: rodam sob demanda (`docker compose run --rm`, ou `make cli`, `make action-test`, `make plugin`). O `cli` instala Core, Parser e CLI em modo editável. |
+
+Todos os containers ficam na rede bridge `msgram`. O `proxy` (`nginx:1.27-alpine`, porta 80)
+usa uma cópia do `deploy/nginx/default.conf` do Service e roteia como em produção, com uma
+rota a mais:
+
+| Rota | Destino |
+| --- | --- |
+| `/health/` | `service:8080`, usada pelo smoke test |
+| `/api/`, `/swagger/`, `/admin/`, `/static/` | `service:8080` (Django) |
+| `/` | `front:3000` (Next.js, com websocket do HMR) |
+
+Como `service` e `front` são opcionais, o nginx resolve os destinos em tempo de execução pelo
+DNS do Docker: se um backend não está no ar, a rota dele responde 502 e o proxy continua de pé.
+
+O workflow `compose-smoke` (GitHub Actions) roda em cada pull request e em push para `main`
+e `develop`: faz checkout com os submódulos, sobe os profiles padrão e executa
+`scripts/smoke-test.sh`.
+
 ### Dashboards por release
 
 Os dashboards são gráficos nativos do Front (ECharts) que leem a API do Service. Não há iframe
