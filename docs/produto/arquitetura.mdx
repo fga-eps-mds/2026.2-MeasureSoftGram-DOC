@@ -48,6 +48,9 @@ arquiteturais, o impacto do MVP de 2026.2, as metas e restrições e as decisõe
   Service por HTTP.
 - **A coleta acontece fora do Service.** As métricas são extraídas no CI do usuário (Action)
   ou na máquina do usuário (CLI), a partir do SonarQube e do GitHub.
+- **O ambiente de desenvolvimento é um só.** O Platform reúne os repositórios como submódulos
+  e sobe a stack a partir do código deles, com hot reload. Ele não faz parte do deploy de
+  produção.
 
 ## Componentes e tecnologias
 
