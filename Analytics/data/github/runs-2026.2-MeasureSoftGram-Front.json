@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-25T11:17:35+00:00",
+ "coletado_em": "2026-10-25T13:57:49+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
- "total_count": 591,
+ "total_count": 593,
  "workflow_runs": [
+  {
+   "id": 40196857731,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "feat/67-pulso-tsqmi-por-release",
+   "event": "pull_request",
+   "created_at": "2026-10-25T13:16:29Z",
+   "run_started_at": "2026-10-25T13:16:29Z",
+   "updated_at": "2026-10-25T13:16:30Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40196857731",
+   "run_number": 126,
+   "workflow_id": 368685720
+  },
+  {
+   "id": 40196857666,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "feat/67-pulso-tsqmi-por-release",
+   "event": "pull_request",
+   "created_at": "2026-10-25T13:16:29Z",
+   "run_started_at": "2026-10-25T13:16:29Z",
+   "updated_at": "2026-10-25T13:23:37Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40196857666",
+   "run_number": 208,
+   "workflow_id": 347831686
+  },
   {
    "id": 40056133682,
    "name": "Rodar Testes",
