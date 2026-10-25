@@ -77,8 +77,10 @@ removido quando ele for atualizado para o Core 1.5.5 ou superior.
 
 ### Infraestrutura do Service
 
-A stack do Service é orquestrada por dois arquivos Docker Compose: `docker-compose.yml`
-(desenvolvimento) e `deploy/docker-compose.prod.yml` (produção).
+No repositório do Service, a stack é orquestrada por dois arquivos Docker Compose:
+`docker-compose.yml` (desenvolvimento do Service isolado) e `deploy/docker-compose.prod.yml`
+(produção). O ambiente que sobe todos os componentes juntos fica no Platform (ver
+[Ambiente integrado de desenvolvimento](#ambiente-integrado-de-desenvolvimento-platform)).
 
 | Container | Imagem | Observações |
 | --- | --- | --- |
