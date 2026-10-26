@@ -3,10 +3,11 @@
 Cada informação vem da fonte mais adequada:
 
 * **SonarCloud** — qualidade do código. Duas entradas: os ``.json`` que o
-  ``metrics.yml`` de cada repositório publica em ``data/`` e o snapshot da API
-  do SonarCloud (``scripts/coleta_sonar.py`` → ``data/sonar/``), que traz o que
-  o pipeline não coleta (bugs, vulnerabilidades, code smells, hotspots, dívida
-  técnica, Quality Gate, histórico).
+  ``metrics.yml`` de cada repositório publica em ``data/`` (base da nota de
+  qualidade do notebook da disciplina) e o snapshot da API do SonarCloud
+  (``scripts/coleta_sonar.py`` → ``data/sonar/``, workflow ``coleta-dados.yml``),
+  com métricas agregadas, histórico, Quality Gate, issues e medidas por arquivo
+  (``api/measures/component_tree``).
 * **Zenhub** — sprints, pontos, backlog, épicos, releases
   (``scripts/coleta_velocity.py`` → ``data/zenhub/velocity/``).
 * **Planilha** — só o que nem o Sonar nem o Zenhub têm: custos, quem está no

@@ -227,11 +227,16 @@ def _analise(ctx, f, rec, serie, repos, rel, metrica):
 
 
     # ── cobertura por componente ──
-    comp = ctx.sonar_componentes
+    # cobertura por arquivo: .json do pipeline + árvore da API do SonarCloud (component_tree), para o gráfico
+    # não sumir em repositório sem .json recente do metrics.yml; a coleta mais recente de cada arquivo vale
+    partes = [x.assign(origem=o) for x, o in ((ctx.sonar_componentes, "pipeline"),
+                                               ((ctx.sonar_api or {}).get("arquivos", pd.DataFrame()), "api"))
+              if x is not None and not x.empty]
+    comp = pd.concat(partes, ignore_index=True) if partes else pd.DataFrame()
     if not comp.empty:
         comp = comp[comp["repositorio"].isin(repos)]
         if f["branch"]:
-            comp = comp[comp["branch"] == f["branch"]]
+            comp = comp[(comp["branch"] == f["branch"]) | (comp["origem"] == "api")]
         comp = comp[pd.to_datetime(comp["coleta"]) <= rec["fim"] + pd.Timedelta(days=1)]
         cob = (comp[comp["metrica"] == "coverage"].sort_values("coleta")
                .drop_duplicates(["repositorio", "componente"], keep="last"))
@@ -246,7 +251,7 @@ def _analise(ctx, f, rec, serie, repos, rel, metrica):
             rot = barras.mark_text(align="left", dx=4, fontSize=11, color=theme.INK["secondary"]).encode(
                 text=alt.Text("valor:Q", format=".0f"))
             charts.mostrar(barras + rot, "Os 15 componentes com menor cobertura",
-                           "cobertura de testes (%) · última coleta do pipeline",
+                           "cobertura de testes (%) · última coleta do pipeline ou da API do SonarCloud",
                            cob[["repo", "componente", "valor"]].rename(columns={"valor": "cobertura (%)"}),
                            altura=charts.altura_categorias(len(cob), 24))
 

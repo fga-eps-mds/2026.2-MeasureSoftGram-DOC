@@ -128,6 +128,6 @@ existem no snapshot mais recente da API (sem histórico): num período que termi
   sprints, avisando.
 - Métricas do SonarCloud que o `metrics.yml` não pede (bugs, vulnerabilidades, code smells, hotspots, dívida,
   Quality Gate) dependem do snapshot da API (`scripts/coleta_sonar.py`).
-- Repositórios sem projeto no SonarCloud (ex.: AI) não têm métrica de qualidade.
+- Repositórios sem projeto no SonarCloud não têm métrica de qualidade.
 - Médias entre repositórios são simples (não ponderadas por linhas de código).
 """)
