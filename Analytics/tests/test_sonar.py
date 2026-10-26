@@ -67,6 +67,11 @@ def respostas_ok():
         "api/issues/search": api.Resposta(200, {"total": 7, "facets": [
             {"property": "severities", "values": [{"val": "MAJOR", "count": 5}, {"val": "MINOR", "count": 2}]},
             {"property": "types", "values": [{"val": "BUG", "count": 3}]}]}),
+        "api/measures/component_tree": lambda p: api.Resposta(200, {
+            "paging": {"pageIndex": p["p"], "pageSize": 500, "total": 501},
+            "components": [{"path": f"src/a{p['p']}.py", "qualifier": "FIL", "measures": [
+                {"metric": "complexity", "value": "12"}, {"metric": "functions", "value": "3"},
+                {"metric": "blocker_violations", "value": "0"}, {"metric": "critical_violations", "value": "1"}]}]}),
     }
 
 
@@ -88,6 +93,13 @@ class ClienteTest(unittest.TestCase):
         self.assertEqual(tab["medidas"].set_index("metrica").loc["bugs", "valor"], 3.0)
         self.assertEqual(tab["severidades"]["quantidade"].sum(), 7)
         self.assertEqual(tab["quality_gate"].iloc[0]["repositorio"], "2026.2-MeasureSoftGram-Core")
+        # medidas por arquivo: paginadas (501 itens = 2 páginas) e compactas
+        self.assertEqual([x[0] for x in p["arquivos"]["linhas"]], ["src/a1.py", "src/a2.py"])
+        arq = tab["arquivos"]
+        self.assertEqual(set(arq["metrica"]), {"complexity", "functions", "blocker_violations", "critical_violations"})
+        self.assertEqual(arq[(arq["componente"] == "src/a1.py") & (arq["metrica"] == "critical_violations")]
+                         ["valor"].iloc[0], 1.0)
+        self.assertTrue((arq["tipo"] == "FIL").all())
 
     def test_erro_de_um_projeto_nao_derruba_os_outros(self):
         r = respostas_ok()

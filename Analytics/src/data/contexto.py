@@ -86,6 +86,8 @@ class Contexto:
     # GITHUB
     gh_issues: pd.DataFrame = field(default_factory=pd.DataFrame)
     gh_runs: pd.DataFrame = field(default_factory=pd.DataFrame)
+    gh_issues_coleta: pd.DataFrame = field(default_factory=pd.DataFrame)   # issues-*.json (corpo, labels, milestone)
+    gh_commits: pd.DataFrame = field(default_factory=pd.DataFrame)         # um arquivo alterado por linha
     # ZENHUB
     zh_snap: dict | None = None
     zh_arquivo: str = ""
@@ -112,6 +114,7 @@ class Contexto:
     zh_filtro: object = None                               # filtro de issue do recorte (None = todas)
     base: object = None                                    # contexto sem recorte (comparações com o Zenhub)
     recortes: dict = field(default_factory=dict)
+    repos_ignorados: dict = field(default_factory=dict)    # fonte -> repositórios fora do projeto (não entram)
     calendario: pd.DataFrame = field(default_factory=pd.DataFrame)
 
     def fonte(self, nome: str) -> list[Fonte]:
@@ -136,7 +139,8 @@ def _sonar(pastas: tuple[str, ...], marca_arquivos: tuple):
 @st.cache_data(show_spinner="Lendo os dados do GitHub...")
 def _github(pastas: tuple[str, ...], marca_arquivos: tuple):
     p = [Path(x) for x in pastas]
-    return github.carregar_issues(p), github.carregar_runs(p)
+    return (github.carregar_issues(p), github.carregar_runs(p), github.carregar_issues_coleta(p),
+            github.carregar_commits(p))
 
 
 @st.cache_data(show_spinner="Lendo o snapshot do Zenhub...")
@@ -165,6 +169,28 @@ def _planilha(urls: dict):
 
 # ───────────────────────── montagem ─────────────────────────
 
+def do_projeto(repo) -> bool:
+    """O repositório é do projeto 2026.2? (``config.PREFIXO_REPOS_PROJETO``; vazio = todos)."""
+    prefixo = getattr(config, "PREFIXO_REPOS_PROJETO", "")
+    return not prefixo or str(repo).startswith(prefixo)
+
+
+def filtro_projeto(issue) -> bool:
+    """Issue do Zenhub de um repositório do projeto (as dos repositórios centrais ficam de fora)."""
+    return bool(issue) and do_projeto(config.APELIDOS_REPO.get(issue.get("repository") or "",
+                                                               issue.get("repository") or ""))
+
+
+def _so_do_projeto(ctx: "Contexto", fonte: str, df: pd.DataFrame) -> pd.DataFrame:
+    """Tira as linhas de repositórios fora do projeto e anota quais foram ignorados."""
+    if df is None or df.empty or "repositorio" not in df:
+        return df
+    fora = ~df["repositorio"].map(do_projeto)
+    if fora.any():
+        ctx.repos_ignorados.setdefault(fonte, set()).update(df.loc[fora, "repositorio"].unique())
+    return df[~fora].reset_index(drop=True)
+
+
 def _registrar_erro(ctx: Contexto, fonte: str, entrada: str, erro: Exception) -> None:
     ctx.fontes.append(Fonte(fonte, entrada, "erro", mensagem=f"{erro.__class__.__name__}: {erro}"[:240]))
 
@@ -176,8 +202,10 @@ def carregar() -> Contexto:
     # SONAR ────────────────────────────────────────────
     try:
         agregado, comp, erros, snap, nome = _sonar(pastas, _marca(PASTAS_PIPELINE + [sonar.PASTA_API]))
+        agregado, comp, erros = (_so_do_projeto(ctx, "SONAR", agregado), _so_do_projeto(ctx, "SONAR", comp),
+                                 _so_do_projeto(ctx, "SONAR", erros))
         ctx.sonar_pipeline, ctx.sonar_componentes, ctx.sonar_erros = agregado, comp, erros
-        ctx.sonar_api_snap, ctx.sonar_api = snap, sonar.snapshot_para_tabelas(snap)
+        ctx.sonar_api_snap, ctx.sonar_api = snap, sonar.snapshot_para_tabelas(snap, f"data/sonar/{nome}")
         ctx.sonar_serie = sonar.serie_temporal(agregado, ctx.sonar_api["historico"])
         atual = [x for x in (sonar.ultimo_por_repo(agregado), ctx.sonar_api["medidas"]) if not x.empty]
         ctx.sonar_atual = (sonar.ultimo_por_repo(pd.concat(atual, ignore_index=True)) if atual
@@ -211,8 +239,12 @@ def carregar() -> Contexto:
 
     # GITHUB ───────────────────────────────────────────
     try:
-        ctx.gh_issues, ctx.gh_runs = _github(pastas, _marca(PASTAS_PIPELINE, "GitHub_API-*.json")
-                                                 + _marca([github.PASTA_COLETA], "runs-*.json"))
+        ctx.gh_issues, ctx.gh_runs, ctx.gh_issues_coleta, ctx.gh_commits = _github(
+            pastas, _marca(PASTAS_PIPELINE, "GitHub_API-*.json") + _marca([github.PASTA_COLETA], "*.json"))
+        ctx.gh_issues_coleta = _so_do_projeto(ctx, "GITHUB", ctx.gh_issues_coleta)
+        ctx.gh_commits = _so_do_projeto(ctx, "GITHUB", ctx.gh_commits)
+        ctx.gh_issues, ctx.gh_runs = _so_do_projeto(ctx, "GITHUB", ctx.gh_issues), _so_do_projeto(ctx, "GITHUB",
+                                                                                                   ctx.gh_runs)
         r = ctx.gh_runs
         if r.empty:
             ctx.fontes.append(Fonte("GITHUB", "API do GitHub (GitHub_API-Runs-*.json)", "sem dados",
@@ -252,13 +284,18 @@ def carregar() -> Contexto:
             ctx.fontes.append(Fonte("ZENHUB", "API GraphQL do Zenhub (data/zenhub/velocity/)", "sem dados",
                                     mensagem="Nenhum snapshot: rode python scripts/coleta_velocity.py."))
         else:
+            # só issues dos repositórios do projeto: pontos, sprints, velocity e EVM sem os repositórios centrais
+            ctx.zh_filtro = filtro_projeto
             ctx.zh_sprints = velocity.calculate_velocity(snap, ctx.zh_regras, ctx.agora_utc, linhas,
-                                                         incluir_futuras=True)
+                                                         incluir_futuras=True, filtro_issue=filtro_projeto)
             ctx.zh_issues, ctx.zh_backlog_completo = agile.universo_issues(snap, ctx.zh_regras.tipos_pontuados)
+            ctx.zh_issues = _so_do_projeto(ctx, "ZENHUB", ctx.zh_issues)
             s = ctx.zh_sprints
             periodo = (_para_brt(s["start_date"].min()), _para_brt(s["end_date"].max())) if not s.empty else None
             avisos = snap.get("avisos") or []
             msg = f"{len(s)} sprints, {len(ctx.zh_issues)} issues"
+            if ctx.repos_ignorados.get("ZENHUB"):
+                msg += f" · {len(ctx.repos_ignorados['ZENHUB'])} repositório(s) fora do projeto ignorado(s)"
             if not ctx.zh_backlog_completo:
                 msg += " · backlog completo não coletado (só issues que passaram por sprints)"
             if avisos:
@@ -304,7 +341,7 @@ def com_recorte(ctx: Contexto, repos) -> Contexto:
     escolhidos = set(repos)
 
     def filtro(issue) -> bool:
-        return bool(issue) and nome_curto(issue.get("repository") or "") in escolhidos
+        return filtro_projeto(issue) and nome_curto(issue.get("repository") or "") in escolhidos
 
     sprints = velocity.calculate_velocity(ctx.zh_snap, ctx.zh_regras, ctx.agora_utc, ctx.zh_linhas,
                                           incluir_futuras=True, filtro_issue=filtro)

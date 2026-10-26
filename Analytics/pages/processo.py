@@ -19,6 +19,13 @@ COR = alt.Scale(domain=[ROT[c] for c in CONCLUSOES],
                 range=[theme.STATUS["good"], theme.STATUS["critical"], theme.NEUTRO, theme.NEUTRO_CLARO])
 
 
+ESCOPO = {
+    "release": "define o período padrão",
+    "periodo": "execuções criadas no período",
+    "repos": "repositórios cujas execuções entram",
+}
+
+
 def _tabela_repos(todas, r, f) -> None:
     """Uma linha por repositório: contagem por resultado, até quando há dado e de onde veio, com link."""
     linhas = []
@@ -86,6 +93,19 @@ def pagina():
                             "rodar o `metrics.yml` nos repositórios.")
         return
     r = filters.por_periodo(filters.por_repo(runs, f["repos"]), "criado_em", f["periodo"])
+    caixa = filters.da_pagina(f, ESCOPO)
+    wfs = sorted(r["workflow"].dropna().unique())
+    sel_wf = caixa.multiselect("Workflow", wfs, key="ci_workflow", placeholder="Todos",
+                               help="nome do workflow do GitHub Actions (CI, deploy, métricas...)")
+    if sel_wf:
+        r = r[r["workflow"].isin(sel_wf)]
+    branches = sorted(r["branch"].dropna().unique())
+    sel_br = caixa.multiselect("Branch da execução", branches, key="ci_branch", placeholder="Todas")
+    if sel_br:
+        r = r[r["branch"].isin(sel_br)]
+    st.caption(f"Recorte: {filters.resumo_ativos(f, ESCOPO)}"
+               + (f" · workflow: {', '.join(sel_wf)}" if sel_wf else "")
+               + (f" · branch: {', '.join(sel_br)}" if sel_br else ""))
     conc = r[r["conclusao"].isin(["success", "failure"])]
     if conc.empty:
         layout.indisponivel("Sem execuções concluídas no período", "ajuste o período ou os repositórios.")

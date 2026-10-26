@@ -73,8 +73,16 @@ SONAR_BUSCA = "2026.2-MeasureSoftGram"
 # Repositórios cujas execuções de CI o dashboard coleta direto da API do GitHub
 # (scripts/coleta_github.py). Execuções criadas a partir de INICIO_SEMESTRE.
 GITHUB_ORG = "fga-eps-mds"
-GITHUB_REPOS: list[str] = [k.split("_", 1)[1] for k in SONAR_PROJETOS] + [
-    "2026.2-MeasureSoftGram-DOC", "2026.2-MeasureSoftGram-docs-eps"]
+# O repositório 2026.2-MeasureSoftGram-docs-eps foi renomeado para -DOC: a API do GitHub redireciona o nome
+# antigo, então coletar os dois duplicava todas as execuções da documentação. Fica só o nome novo.
+GITHUB_REPOS: list[str] = [k.split("_", 1)[1] for k in SONAR_PROJETOS] + ["2026.2-MeasureSoftGram-DOC"]
+
+# Repositórios do projeto: só os do semestre 2026.2 entram no painel. Os .json que chegam em data/ de
+# outros repositórios (ex.: os centrais fga-eps-mds/MeasureSoftGram-*, cujo metrics.yml também grava aqui)
+# e as issues do Zenhub desses repositórios ficam fora de TODAS as métricas (Sonar, GitHub, Zenhub, EVM e
+# qualidade); aparecem só em "Metodologia e Fontes" como ignorados. Vazio = não filtra.
+PREFIXO_REPOS_PROJETO = "2026.2-MeasureSoftGram-"
+APELIDOS_REPO = {"2026.2-MeasureSoftGram-docs-eps": "2026.2-MeasureSoftGram-DOC"}   # nome antigo -> atual
 
 # ───────────────────────── calendário e metas ─────────────────────────
 # Datas de entrega do plano de ensino (EPS 2026.2).
@@ -98,3 +106,48 @@ META_TAXA_CONCLUSAO = 80.0     # % de SP concluídos ÷ planejados nas sprints c
 LIMITE_TAXA_CRITICO = 60.0     # abaixo disso = crítico
 META_CI_SUCESSO = 80.0   # % de execuções da CI com sucesso
 LIMITE_CI_CRITICO = 60.0 # abaixo disso = crítico
+
+# ───────────────────────── modelo de qualidade Q-Rapids ─────────────────────────
+# Base: notebook da disciplina (fga-eps-mds/Analytics, internal_quality_analysis-sonarqube.ipynb), que
+# implementa o "Q-Rapids Quality Model" (abril/2019, q-rapids model-doc.pdf). Os limiares e pesos abaixo
+# são os do notebook; "justificativa" é o texto que o time apresenta (a R2 pede métricas interpretadas
+# pelo time) e aparece na página Qualidade (Q-Rapids) ao lado de cada número.
+QRAPIDS = {
+    # linguagem dos arquivos de código que entram no cálculo de cada repositório (como repos_language
+    # no notebook). Arquivos de outra linguagem (yaml, css, shell...) ficam de fora.
+    "linguagem": {
+        "2026.2-MeasureSoftGram-AI": "py", "2026.2-MeasureSoftGram-Action": "ts",
+        "2026.2-MeasureSoftGram-CLI": "py", "2026.2-MeasureSoftGram-Core": "py",
+        "2026.2-MeasureSoftGram-Front": "ts", "2026.2-MeasureSoftGram-Parser": "py",
+        "2026.2-MeasureSoftGram-Plugin": "ts", "2026.2-MeasureSoftGram-Service": "py",
+    },
+    "limiares": {
+        "complexidade_por_funcao": 10,      # arquivo complexo: complexidade ciclomática / funções >= 10
+        "comentarios_min": 10,              # arquivo comentado: 10% < densidade de comentários < 30%
+        "comentarios_max": 30,
+        "duplicacao_max": 5,                # arquivo sem duplicação: densidade de duplicação < 5%
+        "cobertura_min": 60,                # arquivo coberto: cobertura > 60%
+        "teste_rapido_ms": 300_000,         # suíte de teste rápida: < 5 minutos
+        # métricas de processo (model-doc): limiares "definidos pelo usuário"
+        "build_rapido_min": 10,             # execução de CI rápida: até 10 minutos
+        "resolucao_dias": 14,               # issue resolvida dentro do prazo: até 1 sprint (14 dias)
+        "issue_antiga_dias": 28,            # issue aberta há mais de 2 sprints = antiga
+        "correcao_bug_dias": 7,             # bug corrigido rápido: até 7 dias
+        "revisao_pr_horas": 48,             # PR revisado e fechado em até 48 h
+    },
+    # pesos do notebook (pm = métrica, psc = fator, pc = aspecto)
+    "pesos": {
+        "complexidade": 0.33, "comentarios": 0.33, "duplicacao": 0.33,          # → Qualidade do código
+        "testes_passando": 0.25, "testes_rapidos": 0.25, "cobertura": 0.5,       # → Situação dos testes
+        "qualidade_codigo": 1.0, "situacao_testes": 1.0,                          # psc1, psc2
+        "manutenibilidade": 0.5, "confiabilidade": 0.5,                           # pc1, pc2 → nota total
+    },
+    "justificativa": {
+        "complexidade_por_funcao": "a preencher pelo time",
+        "comentarios_min": "a preencher pelo time",
+        "duplicacao_max": "a preencher pelo time",
+        "cobertura_min": "a preencher pelo time",
+        "teste_rapido_ms": "a preencher pelo time",
+        "pesos": "a preencher pelo time",
+    },
+}

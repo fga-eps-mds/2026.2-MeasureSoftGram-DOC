@@ -137,7 +137,8 @@ def conferencia(ctx, f, snap, todas, d):
 
 def comparacao_zenhub(ctx, f, snap, todas, d):
     layout.secao("Comparação com o Zenhub", "Por que o concluído do painel difere do Zenhub?", ["ZENHUB", "CALCULADO"])
-    comp, difs = vel.comparar_com_zenhub(snap, ctx.zh_iniciadas, ctx.zh_regras, ctx.agora_utc)
+    comp, difs = vel.comparar_com_zenhub(snap, ctx.zh_iniciadas, ctx.zh_regras, ctx.agora_utc,
+                                         filtro_issue=ctx.zh_filtro)
     if comp.empty:
         layout.indisponivel("Comparação indisponível", "nenhuma sprint iniciada no snapshot.")
     else:

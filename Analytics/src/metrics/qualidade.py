@@ -1,97 +1,199 @@
-"""Modelo de qualidade agregado (base para o DA-R2).
+"""Nota de qualidade do produto — cálculo do notebook da disciplina, com rastreabilidade.
 
-Adaptado do dashboard de 2026.1 (estilo Q-Rapids / MeasureSoftGram): cada
-métrica do SonarCloud vira a *proporção de arquivos dentro de um limiar*
-(normalização para 0 a 1), as proporções são ponderadas em fatores e os
-fatores em uma nota total.
+Reproduz ``internal_quality_analysis-sonarqube.ipynb`` (fga-eps-mds/Analytics), que implementa o
+modelo Q-Rapids (``q-rapids model-doc.pdf``, abril/2019) para os dados do SonarCloud:
 
-    Complexidade      arquivos com complexity/functions < 10
-    Comentários       arquivos com 10 < comment_lines_density < 30
-    Duplicação        arquivos com duplicated_lines_density < 5
-    Cobertura         arquivos com coverage > 60
-    Sucesso de testes (tests - errors - failures) / tests
-    Testes rápidos    suítes com test_execution_time < 300000 ms
+    dado bruto (arquivo)  →  métrica (0 a 1)  →  fator  →  aspecto  →  nota total
 
-    Manutenibilidade  = média(complexidade, comentários, duplicação)
-    Confiabilidade    = 0,25 sucesso + 0,25 rápidos + 0,5 cobertura
-    Total             = 0,5 manutenibilidade + 0,5 confiabilidade
+    Qualidade do código   = (0,33·complexidade + 0,33·comentários + 0,33·duplicação) · psc1
+    Situação dos testes   = (0,25·testes que passam + 0,25·testes rápidos + 0,5·cobertura) · psc2
+    Manutenibilidade      = Qualidade do código · pc1 (0,5)
+    Confiabilidade        = Situação dos testes · pc2 (0,5)
+    Nota total            = Manutenibilidade + Confiabilidade
 
-Limiares e pesos são os de 2026.1. A disciplina pede que o time os valide e
-justifique na R2 (ATP4, 19/10); por isso ficam aqui como constantes nomeadas.
+Regras do notebook mantidas de propósito (para o número ser o mesmo):
+
+* entram só os arquivos de código (FIL) **da linguagem do repositório** com ``ncloc > 0``;
+* as três métricas de código e a cobertura usam **o mesmo conjunto de arquivos**: os que têm as cinco
+  medidas (functions, complexity, comment_lines_density, duplicated_lines_density, coverage);
+* "testes que passam" usa a pasta (DIR) com mais testes;
+* "testes rápidos" conta as suítes (UTS); suíte sem tempo de execução conta como 0 ms (rápida);
+* métrica que não pode ser calculada (sem arquivos, sem testes) **vale 0** — e aqui fica marcada
+  como "0 por falta de dado", para não ser confundida com 0 medido.
+
+Cada métrica devolve, além do valor, o numerador, o denominador, a regra e a lista de arquivos com
+"passa / não passa" — é o que a página Qualidade (Q-Rapids) mostra em cada nível.
 """
 
 from __future__ import annotations
 
 import pandas as pd
 
-LIMIARES = {
-    "complexidade_por_funcao": 10,
-    "comentarios_min": 10,
-    "comentarios_max": 30,
-    "duplicacao_max": 5,
-    "cobertura_min": 60,
-    "teste_rapido_ms": 300_000,
+import config
+
+Q = config.QRAPIDS
+LIMIARES, PESOS = Q["limiares"], Q["pesos"]
+CINCO = ["functions", "complexity", "comment_lines_density", "duplicated_lines_density", "coverage"]
+
+# chave → (nome, fator, aspecto, regra legível, fórmula)
+METRICAS = {
+    "complexidade": ("Complexidade (arquivos não complexos)", "qualidade_codigo", "manutenibilidade",
+                     f"complexidade ciclomática ÷ funções < {LIMIARES['complexidade_por_funcao']}",
+                     "arquivos não complexos ÷ total de arquivos"),
+    "comentarios": ("Comentários (arquivos comentados)", "qualidade_codigo", "manutenibilidade",
+                    f"{LIMIARES['comentarios_min']}% < densidade de comentários < {LIMIARES['comentarios_max']}%",
+                    "arquivos comentados ÷ total de arquivos"),
+    "duplicacao": ("Duplicação (arquivos sem duplicação)", "qualidade_codigo", "manutenibilidade",
+                   f"densidade de linhas duplicadas < {LIMIARES['duplicacao_max']}%",
+                   "arquivos sem duplicação ÷ total de arquivos"),
+    "testes_passando": ("Testes que passam", "situacao_testes", "confiabilidade",
+                        "testes − (erros + falhas), na pasta com mais testes",
+                        "(testes − (erros + falhas)) ÷ testes"),
+    "testes_rapidos": ("Testes rápidos", "situacao_testes", "confiabilidade",
+                       f"tempo de execução da suíte < {LIMIARES['teste_rapido_ms'] / 60000:g} min",
+                       "suítes rápidas ÷ total de suítes"),
+    "cobertura": ("Cobertura de testes", "situacao_testes", "confiabilidade",
+                  f"cobertura do arquivo > {LIMIARES['cobertura_min']}%",
+                  "arquivos com cobertura acima do limiar ÷ total de arquivos"),
 }
-PESOS = {
-    "manutenibilidade": {"complexidade": 1 / 3, "comentarios": 1 / 3, "duplicacao": 1 / 3},
-    "confiabilidade": {"sucesso_testes": 0.25, "testes_rapidos": 0.25, "cobertura": 0.5},
-    "total": {"manutenibilidade": 0.5, "confiabilidade": 0.5},
+FATORES = {
+    "qualidade_codigo": ("Qualidade do código", "manutenibilidade", ["complexidade", "comentarios", "duplicacao"]),
+    "situacao_testes": ("Situação dos testes", "confiabilidade", ["testes_passando", "testes_rapidos", "cobertura"]),
 }
+ASPECTOS = {"manutenibilidade": ("Manutenibilidade", "qualidade_codigo"),
+            "confiabilidade": ("Confiabilidade", "situacao_testes")}
 
 
-def _proporcao(mascara: pd.Series) -> float:
-    return float(mascara.mean()) if len(mascara) else float("nan")
+def linguagem(repo: str, comp: pd.DataFrame | None = None) -> str | None:
+    """Linguagem do repositório (config; se faltar, a mais comum entre os arquivos de código)."""
+    lg = Q["linguagem"].get(repo)
+    if lg or comp is None or comp.empty or "linguagem" not in comp:
+        return lg
+    fil = comp[comp["tipo"] == "FIL"]["linguagem"].dropna()
+    return fil.mode().iloc[0] if not fil.empty else None
 
 
-def _pondera(valores: dict, pesos: dict) -> float:
-    soma = peso = 0.0
-    for chave, p in pesos.items():
-        v = valores.get(chave)
-        if v is not None and pd.notna(v):
-            soma += v * p
-            peso += p
-    return soma / peso if peso else float("nan")
+def _largo(comp: pd.DataFrame) -> pd.DataFrame:
+    """Uma linha por componente (arquivo, pasta ou suíte), uma coluna por métrica."""
+    idx = ["componente", "tipo"] + (["linguagem"] if "linguagem" in comp else [])
+    c = comp.copy()
+    if "linguagem" in c:
+        c["linguagem"] = c["linguagem"].fillna("")
+    w = c.pivot_table(index=idx, columns="metrica", values="valor", aggfunc="last").reset_index()
+    for m in CINCO + ["ncloc", "tests", "test_errors", "test_failures", "test_execution_time"]:
+        if m not in w:
+            w[m] = float("nan")
+    return w
 
 
-def calcular(componentes: pd.DataFrame, agregado: pd.DataFrame) -> pd.DataFrame:
-    """Uma linha por repositório × coleta com os fatores normalizados (0 a 1)."""
-    if componentes.empty:
+def _resultado(chave, valor, num, den, itens=None, falta=None):
+    nome, fator, aspecto, regra, formula = METRICAS[chave]
+    return {"chave": chave, "nome": nome, "fator": fator, "aspecto": aspecto, "regra": regra, "formula": formula,
+            "valor": float(valor) if valor is not None else 0.0, "numerador": num, "denominador": den,
+            "zero_por_falta": falta, "peso": PESOS[chave],
+            "itens": itens if itens is not None else pd.DataFrame()}
+
+
+def avaliar(comp: pd.DataFrame, repo: str) -> dict:
+    """Avaliação de UMA coleta de UM repositório (componentes do .json do pipeline).
+
+    Devolve ``{"metricas": {chave: resultado}, "fatores": {...}, "aspectos": {...}, "total": float,
+    "arquivos_base": int, "arquivos_codigo": int, "linguagem": str}``.
+    """
+    lg = linguagem(repo, comp)
+    w = _largo(comp)
+    fil = w[(w["tipo"] == "FIL") & (w["ncloc"] > 0)]
+    if lg and "linguagem" in fil:
+        fil = fil[fil["linguagem"] == lg]
+    base = fil.dropna(subset=CINCO).copy()                        # get_files_df do notebook
+    n = len(base)
+    falta_arq = None if n else "nenhum arquivo com as cinco medidas (functions, complexity, comentários, " \
+                               "duplicação, cobertura)"
+    res = {}
+
+    def por_arquivo(chave, passa, coluna_valor):
+        itens = base[["componente"]].assign(valor=coluna_valor, passa=passa).sort_values(["passa", "valor"])
+        k = int(passa.sum())
+        return _resultado(chave, k / n if n else 0.0, k, n, itens, falta_arq)
+
+    razao = base["complexity"] / base["functions"]
+    res["complexidade"] = por_arquivo("complexidade", razao < LIMIARES["complexidade_por_funcao"], razao)
+    cld = base["comment_lines_density"]
+    res["comentarios"] = por_arquivo("comentarios", (cld > LIMIARES["comentarios_min"])
+                                     & (cld < LIMIARES["comentarios_max"]), cld)
+    dld = base["duplicated_lines_density"]
+    res["duplicacao"] = por_arquivo("duplicacao", dld < LIMIARES["duplicacao_max"], dld)
+    cov = base["coverage"]
+    res["cobertura"] = por_arquivo("cobertura", cov > LIMIARES["cobertura_min"], cov)
+
+    # testes que passam: pasta com mais testes (get_dir_df)
+    dirs = w[(w["tipo"] == "DIR") & w["tests"].notna()]
+    if dirs.empty:
+        res["testes_passando"] = _resultado("testes_passando", 0.0, None, None, None,
+                                            "nenhuma pasta com testes no .json (o repositório não publica o "
+                                            "relatório de testes no SonarCloud)")
+    else:
+        d = dirs.loc[dirs["tests"].idxmax()]
+        t, e, fl = d["tests"], d["test_errors"], d["test_failures"]
+        if pd.isna(e) or pd.isna(fl) or not t:
+            res["testes_passando"] = _resultado("testes_passando", 0.0, None, t, None,
+                                                "pasta de testes sem test_errors/test_failures")
+        else:
+            itens = pd.DataFrame([{"componente": d["componente"], "testes": t, "erros": e, "falhas": fl}])
+            res["testes_passando"] = _resultado("testes_passando", (t - (e + fl)) / t, t - (e + fl), t, itens)
+
+    # testes rápidos: suítes (get_uts_df: fillna(0))
+    uts = w[w["tipo"] == "UTS"].copy()
+    if uts.empty:
+        res["testes_rapidos"] = _resultado("testes_rapidos", 0.0, None, None, None,
+                                           "nenhuma suíte de teste (UTS) no .json")
+    else:
+        sem_tempo = int(uts["test_execution_time"].isna().sum())
+        uts["test_execution_time"] = uts["test_execution_time"].fillna(0)
+        passa = uts["test_execution_time"] < LIMIARES["teste_rapido_ms"]
+        itens = uts[["componente"]].assign(valor=uts["test_execution_time"], passa=passa,
+                                           sem_tempo=w.loc[uts.index, "test_execution_time"].isna())
+        r = _resultado("testes_rapidos", passa.mean(), int(passa.sum()), len(uts), itens.sort_values("valor"))
+        r["observacao"] = (f"{sem_tempo} suíte(s) sem tempo de execução contam como 0 ms (regra do notebook)"
+                           if sem_tempo else "")
+        res["testes_rapidos"] = r
+
+    fatores, aspectos = {}, {}
+    for f, (nome, aspecto, metricas) in FATORES.items():
+        v = sum(res[m]["valor"] * PESOS[m] for m in metricas) * PESOS[f]
+        fatores[f] = {"chave": f, "nome": nome, "valor": v, "metricas": metricas, "peso": PESOS[f],
+                      "formula": " + ".join(f"{PESOS[m]:g}·{METRICAS[m][0].split(' (')[0].lower()}"
+                                            for m in metricas) + f" (× {PESOS[f]:g})"}
+    for a, (nome, f) in ASPECTOS.items():
+        aspectos[a] = {"chave": a, "nome": nome, "valor": fatores[f]["valor"], "peso": PESOS[a],
+                       "contribuicao": fatores[f]["valor"] * PESOS[a], "fator": f}
+    total = sum(x["contribuicao"] for x in aspectos.values())
+    return {"metricas": res, "fatores": fatores, "aspectos": aspectos, "total": total, "arquivos_base": n,
+            "arquivos_codigo": len(fil), "linguagem": lg}
+
+
+def serie(componentes: pd.DataFrame) -> pd.DataFrame:
+    """Uma linha por repositório × coleta (cada .json do pipeline), como o ``metrics_df`` do notebook."""
+    if componentes is None or componentes.empty:
         return pd.DataFrame()
     linhas = []
-    chaves = ["repositorio", "branch", "coleta"]
-    for (repo, branch, coleta), comp in componentes.groupby(chaves):
-        arq = comp[comp["tipo"] == "FIL"].pivot_table(
-            index="componente", columns="metrica", values="valor", aggfunc="last")
-        uts = comp[comp["tipo"] == "UTS"].pivot_table(
-            index="componente", columns="metrica", values="valor", aggfunc="last")
-        base = agregado[(agregado["repositorio"] == repo) & (agregado["branch"] == branch)
-                        & (agregado["coleta"] == coleta)].set_index("metrica")["valor"]
+    chaves = ["repositorio", "branch", "coleta", "arquivo"] if "arquivo" in componentes else \
+        ["repositorio", "branch", "coleta"]
+    for k, comp in componentes.groupby(chaves, sort=True):
+        k = dict(zip(chaves, k))
+        a = avaliar(comp, k["repositorio"])
+        linhas.append({**k, **{m: r["valor"] for m, r in a["metricas"].items()},
+                       **{f: x["valor"] for f, x in a["fatores"].items()},
+                       **{x: y["valor"] for x, y in a["aspectos"].items()}, "total": a["total"],
+                       "arquivos": a["arquivos_base"],
+                       "zeros_por_falta": ", ".join(m for m, r in a["metricas"].items() if r["zero_por_falta"])})
+    return pd.DataFrame(linhas).sort_values(["repositorio", "coleta"]).reset_index(drop=True)
 
-        f = {}
-        if {"complexity", "functions"} <= set(arq.columns):
-            a = arq.dropna(subset=["complexity", "functions"])
-            a = a[a["functions"] > 0]
-            f["complexidade"] = _proporcao(a["complexity"] / a["functions"]
-                                           < LIMIARES["complexidade_por_funcao"])
-        if "comment_lines_density" in arq:
-            c = arq["comment_lines_density"].dropna()
-            f["comentarios"] = _proporcao((c > LIMIARES["comentarios_min"]) & (c < LIMIARES["comentarios_max"]))
-        if "duplicated_lines_density" in arq:
-            f["duplicacao"] = _proporcao(arq["duplicated_lines_density"].dropna() < LIMIARES["duplicacao_max"])
-        if "coverage" in arq:
-            f["cobertura"] = _proporcao(arq["coverage"].dropna() > LIMIARES["cobertura_min"])
-        testes = base.get("tests")
-        if testes and testes > 0:
-            erros = (base.get("test_errors") or 0) + (base.get("test_failures") or 0)
-            f["sucesso_testes"] = max(0.0, (testes - erros) / testes)
-        if "test_execution_time" in uts:
-            f["testes_rapidos"] = _proporcao(uts["test_execution_time"].dropna() < LIMIARES["teste_rapido_ms"])
 
-        f["manutenibilidade"] = _pondera(f, PESOS["manutenibilidade"])
-        f["confiabilidade"] = _pondera(f, PESOS["confiabilidade"])
-        f["total"] = _pondera(f, PESOS["total"])
-        linhas.append({"repositorio": repo, "branch": branch, "coleta": coleta, **f})
-    return pd.DataFrame(linhas).sort_values(["repositorio", "coleta"])
+# compatibilidade com a prévia antiga (página Qualidade técnica)
+def calcular(componentes: pd.DataFrame, agregado: pd.DataFrame | None = None) -> pd.DataFrame:
+    s = serie(componentes)
+    return s.rename(columns={"manutenibilidade": "manutenibilidade", "confiabilidade": "confiabilidade"})
 
 
 def nota(valor: float) -> str:

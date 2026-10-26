@@ -113,7 +113,8 @@ def carregar_sonar(pastas) -> tuple[pd.DataFrame, pd.DataFrame]:
         for componente in dados.get("components") or []:
             for medida in componente.get("measures", []):
                 linhas_comp.append({**base, "componente": componente.get("path") or componente.get("name"),
-                                    "tipo": componente.get("qualifier"), "metrica": medida.get("metric"),
+                                    "tipo": componente.get("qualifier"), "linguagem": componente.get("language"),
+                                    "metrica": medida.get("metric"),
                                     "valor": _num(medida.get("value"))})
     return pd.DataFrame(linhas_repo), pd.DataFrame(linhas_comp)
 
@@ -167,16 +168,16 @@ def _repo_do_projeto(p: dict) -> str:
     return p.get("repositorio") or (chave.split("_", 1)[1] if "_" in chave else chave)
 
 
-def snapshot_para_tabelas(snap: dict | None) -> dict[str, pd.DataFrame]:
+def snapshot_para_tabelas(snap: dict | None, snap_nome: str = "") -> dict[str, pd.DataFrame]:
     """Snapshot da API -> tabelas planas (vazias quando não há snapshot)."""
     vazio = {"medidas": pd.DataFrame(), "historico": pd.DataFrame(), "quality_gate": pd.DataFrame(),
              "condicoes": pd.DataFrame(), "severidades": pd.DataFrame(), "tipos": pd.DataFrame(),
-             "linguagens": pd.DataFrame(), "erros": pd.DataFrame()}
+             "linguagens": pd.DataFrame(), "erros": pd.DataFrame(), "arquivos": pd.DataFrame()}
     if not snap:
         return vazio
     coleta = pd.to_datetime(snap.get("coletado_em"), utc=True, errors="coerce")
     coleta = coleta.tz_convert(None) if pd.notna(coleta) else pd.NaT
-    med, hist, qg, cond, sev, tip, lang, err = [], [], [], [], [], [], [], []
+    med, hist, qg, cond, sev, tip, lang, err, arq = [], [], [], [], [], [], [], [], []
     for p in snap.get("projetos", []):
         repo = _repo_do_projeto(p)
         branch = p.get("branch") or snap.get("branch") or ""
@@ -202,6 +203,17 @@ def snapshot_para_tabelas(snap: dict | None) -> dict[str, pd.DataFrame]:
             sev.append({"repositorio": repo, "severidade": s, "quantidade": _num(n) or 0.0})
         for t, n in ((p.get("issues") or {}).get("tipos") or {}).items():
             tip.append({"repositorio": repo, "tipo": t, "quantidade": _num(n) or 0.0})
+        a = p.get("arquivos") or {}
+        nomes = a.get("metricas") or []
+        n_fixas = len(a.get("colunas") or ["path", "qualifier"])
+        for linha in a.get("linhas") or []:
+            caminho, tipo = linha[0], linha[1]
+            linguagem = linha[2] if n_fixas > 2 else None
+            for metrica, valor in zip(nomes, linha[n_fixas:]):
+                if valor is not None:
+                    arq.append({"repositorio": repo, "branch": branch, "coleta": coleta, "componente": caminho,
+                                "tipo": tipo, "linguagem": linguagem, "metrica": metrica, "valor": _num(valor),
+                                "arquivo": snap_nome})
         for linguagem, n in (p.get("linguagens") or {}).items():
             lang.append({"repositorio": repo, "linguagem": linguagem, "ncloc": _num(n) or 0.0})
     h = pd.DataFrame(hist)
@@ -210,7 +222,7 @@ def snapshot_para_tabelas(snap: dict | None) -> dict[str, pd.DataFrame]:
         h = h.dropna(subset=["coleta", "valor"])
     return {"medidas": pd.DataFrame(med), "historico": h, "quality_gate": pd.DataFrame(qg),
             "condicoes": pd.DataFrame(cond), "severidades": pd.DataFrame(sev), "tipos": pd.DataFrame(tip),
-            "linguagens": pd.DataFrame(lang), "erros": pd.DataFrame(err)}
+            "linguagens": pd.DataFrame(lang), "erros": pd.DataFrame(err), "arquivos": pd.DataFrame(arq)}
 
 
 def serie_temporal(pipeline: pd.DataFrame, historico_api: pd.DataFrame) -> pd.DataFrame:
