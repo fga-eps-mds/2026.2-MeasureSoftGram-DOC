@@ -1,4 +1,4 @@
-"""Agile EVM — prazo e custo da release: pontos do ZENHUB + orçamento e horas da PLANILHA.
+"""Agile EVM — prazo e custo da release: pontos do ZENHUB + custo do time da PLANILHA.
 
 Método de Sulaiman, Barton & Blackburn (2006). A página vai do resumo ao dado de origem:
 
@@ -7,10 +7,12 @@ Método de Sulaiman, Barton & Blackburn (2006). A página vai do resumo ao dado 
 3. indicadores de prazo e de custo — cada cartão diz a fórmula e linka a fonte;
 4. legenda das siglas;
 5. evolução (PV × EV × AC, PPC × APC, SPI × CPI, burndown da release);
-6. rastreabilidade: as stories que formam o escopo e o entregue, as horas por sprint e o
+6. rastreabilidade: as stories que formam o escopo e o entregue, o custo do time por sprint e o
    orçamento por semana, com link para a issue e para a aba da planilha.
 
-Nenhum valor é estimado: sem horas, o custo real e o que depende dele ficam indisponíveis.
+Estimativa em Story Points e custo pelo custo do time (run rate), como na literatura de EVM ágil:
+nenhuma hora é estimada nem apontada. Sem o custo do time na aba Planejamento, o custo real e o que
+depende dele ficam indisponíveis.
 """
 
 from __future__ import annotations
@@ -54,8 +56,10 @@ LEGENDA = {
     "APC": ("% do escopo entregue", "quanto do escopo já foi concluído", "RPC ÷ PRP", [ZENHUB]),
     "PV": ("Valor planejado", "quanto do orçamento deveria ter virado entrega até agora", "PPC × BAC", [CALC]),
     "EV": ("Valor agregado", "quanto do orçamento de fato virou entrega", "APC × BAC", [CALC]),
-    "AC": ("Custo real", "quanto já foi gasto, pelas horas registradas", "horas registradas × custo por hora",
-           [_aba("horas"), _aba("custos")]),
+    "AC": ("Custo real", "quanto já foi gasto com o time nas sprints iniciadas da release",
+           "Σ custo do time em cada sprint (integrantes ativos × custo de um integrante por semana + infraestrutura)"
+           " — sem horas: na literatura de EVM ágil o custo é o do time, não o de horas apontadas",
+           [_aba("planejamento"), _aba("custos")]),
     "SV": ("Variação de prazo (R$)", "negativo = entrega atrasada em relação ao plano", "EV − PV", [CALC]),
     "CV": ("Variação de custo (R$)", "negativo = gastou mais do que entregou", "EV − AC", [CALC]),
     "SPI": ("Índice de prazo", "1,0 = no ritmo planejado; abaixo de 1 = atrasado", "EV ÷ PV", [CALC]),
@@ -77,7 +81,7 @@ def _nota(sigla: str, extra: str = "") -> str:
 
 def _motivo_ac(u) -> str:
     o = str(u.get("origem_do_ac") or "")
-    return o.replace("indisponível: ", "") if o.startswith("indisponível") else "sem horas registradas"
+    return o.replace("indisponível: ", "") if o.startswith("indisponível") else "sem custo do time na planilha"
 
 
 # ───────────────────────── blocos ─────────────────────────
@@ -164,7 +168,6 @@ def _menus(ctx):
          rastreio.codigo()),
         ("Abaixo disso é crítico", f"< {num(config.LIMITE_INDICE_CRITICO, 2)}", "config.py · LIMITE_INDICE_CRITICO",
          rastreio.codigo()),
-        ("Custo por hora", brl(c.get("custo_hora")), "aba Custos · custo_hora", planilha.link_aba("custos")),
         ("Custo de um integrante por semana", brl(c.get("custo_membro_semana")), "aba Custos · custo_membro_semana",
          planilha.link_aba("custos")),
         *[(f"Entrega da {k}", data_br(pd.Timestamp(v)), "config.py · RELEASES", rastreio.codigo())
@@ -239,20 +242,20 @@ def _graficos(rel, feitas, u):
                                                scale=alt.Scale(domain=dom, range=[[1, 0], [6, 4], [2, 2]])),
                      tooltip=[alt.Tooltip("sprint:O"), alt.Tooltip("nome:N", title="Série"),
                               alt.Tooltip("pontos:Q", title="SP", format=".0f")]))
-        charts.mostrar(g, f"Burndown da release — {rel}", "Story Points no fim de cada sprint", altura=240,
+        charts.mostrar(g, f"Burndown da release {rel}", "Story Points no fim de cada sprint", altura=240,
                        nota="Se o escopo total sobe, entrou trabalho novo na release e o que falta sobe junto, mesmo com "
                             "o time entregando. Burndown dia a dia de cada sprint: página Gestão ágil.")
 
 
 def _rastreabilidade(ctx, rel, d, u):
-    """De onde vem cada número: stories (Zenhub), horas por sprint e orçamento por semana (planilha)."""
+    """De onde vem cada número: stories (Zenhub), custo do time por sprint e orçamento por semana (planilha)."""
     ate = d[(d["n"] <= u["n"]) & d["PRP"].notna()]
     ids = set(ctx.zh_iniciadas.loc[(ctx.zh_iniciadas["release_name"] == rel)
                                    & ctx.zh_iniciadas["sprint_label"].isin(ate["sprint"]), "sprint_id"])
     linhas = ga.stories_por_sprint(ctx.zh_snap, ctx.zh_iniciadas, ctx.zh_issues, ctx.zh_regras)
     x = linhas[linhas["sprint_id"].isin(ids)].sort_values("ordem_sprint")
     t1, t2, t3 = st.tabs([f"Stories do escopo (PRP {num(u['PRP'])} SP · RPC {num(u['RPC'])} SP)",
-                          "Horas e custo real por sprint (AC)", "Orçamento por semana (BAC)"])
+                          "Custo do time por sprint (AC)", "Orçamento por semana (BAC)"])
     with t1:
         if x.empty:
             st.caption("Sem stories nas sprints da release.")
@@ -284,26 +287,17 @@ def _rastreabilidade(ctx, rel, d, u):
                                links=("issue_l", "titulo_l", "epico_l"), numericas=("sp",))
             st.caption("SP = estimativa atual (a mesma do PRP). Uma story que passou por várias sprints conta uma vez.")
     with t2:
-        h = ctx.horas
-        if h is None or h.empty:
-            layout.indisponivel("Aba Horas não lida", _motivo_ac(u))
-        else:
-            reg = []
-            for r in ate.itertuples():
-                numero = int(r.sprint.lstrip("S")) if r.sprint.lstrip("S").isdigit() else None
-                hs = h[h["sprint"] == numero] if numero is not None else h.iloc[0:0]
-                reg.append({"sprint": r.sprint, "horas": r.horas_reais,
-                            "integrantes": f"{int(r.integrantes_com_horas)} de {num(r.integrantes_ativos)}"
-                            if not vazio(r.integrantes_ativos) else f"{int(r.integrantes_com_horas)}",
-                            "custo": r.horas_reais * ctx.custo["custo_hora"] if ctx.custo.get("custo_hora")
-                            and r.horas_reais else None,
-                            "situacao": str(r.origem_do_ac), "linhas": len(hs)})
-            layout.tabela_html(pd.DataFrame(reg), {"sprint": "Sprint", "horas": "Horas registradas",
-                                                   "integrantes": "Integrantes com horas / ativos",
-                                                   "custo": "Custo real da sprint (R$)", "situacao": "Situação"},
-                               numericas=("horas", "custo"), altura=None)
-            st.markdown(f"Custo por hora: **{brl(ctx.custo.get('custo_hora'))}** (chave `custo_hora`) · fontes: "
-                        f"[aba Horas]({planilha.link_aba('horas')}) · [aba Custos]({planilha.link_aba('custos')})")
+        reg = [{"sprint": r.sprint, "integrantes": r.integrantes_ativos, "custo": r.SC, "acumulado": r.AC,
+                "situacao": str(r.origem_do_ac)} for r in ate.itertuples()]
+        layout.tabela_html(pd.DataFrame(reg), {"sprint": "Sprint", "integrantes": "Integrantes ativos",
+                                               "custo": "Custo do time na sprint (R$)",
+                                               "acumulado": "AC acumulado (R$)", "situacao": "Origem"},
+                           numericas=("integrantes", "custo", "acumulado"), altura=None)
+        st.markdown(f"Custo de um integrante por semana: **{brl(ctx.custo.get('custo_membro_semana'))}** (chave "
+                    f"`custo_membro_semana`) · fontes: [aba Planejamento]({planilha.link_aba('planejamento')}) · "
+                    f"[aba Custos]({planilha.link_aba('custos')})")
+        st.caption("Sem horas: o custo real é o custo de quem estava no time em cada semana. Se alguém sai ou entra, "
+                   "atualize os integrantes da semana na aba Planejamento e o AC muda junto.")
     with t3:
         p = ctx.plano
         if p is None or p.empty:
@@ -323,12 +317,12 @@ def _rastreabilidade(ctx, rel, d, u):
 
 def _tabela_completa(d):
     cols = {"sprint": "Sprint", "status": "Situação", "PPC": "PPC", "PRP": "PRP (SP)", "RPC": "RPC (SP)",
-            "APC": "APC", "BAC": "BAC", "PV": "PV", "EV": "EV", "horas_reais": "Horas", "AC": "AC",
+            "APC": "APC", "BAC": "BAC", "PV": "PV", "EV": "EV", "SC": "Custo da sprint", "AC": "AC",
             "SV": "SV", "CV": "CV", "SPI": "SPI", "CPI": "CPI", "ETC": "ETC", "EAC": "EAC",
             "origem_do_ac": "Origem do AC"}
     t = d[[c for c in cols if c in d]].rename(columns=cols)
-    fmt = {c: st.column_config.NumberColumn(c, format="R$ %.0f") for c in ("BAC", "PV", "EV", "AC", "SV", "CV", "ETC",
-                                                                          "EAC")}
+    fmt = {c: st.column_config.NumberColumn(c, format="R$ %.0f") for c in ("BAC", "PV", "EV", "Custo da sprint", "AC",
+                                                                          "SV", "CV", "ETC", "EAC")}
     fmt.update({c: st.column_config.NumberColumn(c, format="%.2f") for c in ("SPI", "CPI")})
     fmt.update({c: st.column_config.NumberColumn(c, format="%.2f") for c in ("PPC", "APC")})
     st.dataframe(t, use_container_width=True, hide_index=True, column_config=fmt)
@@ -341,7 +335,7 @@ def _tabela_completa(d):
 ESCOPO = {
     "release": "release analisada no EVM (com 'Semestre inteiro', escolha a release aqui)",
     "periodo": "situação ao fim da última sprint concluída que termina até o fim do período",
-    "repos": "pontos, sprints e SPI só das issues desses repositórios (orçamento, horas, custo e CPI são do "
+    "repos": "pontos, sprints e SPI só das issues desses repositórios (orçamento, custo e CPI são do "
              "time inteiro)",
 }
 
@@ -349,11 +343,11 @@ ESCOPO = {
 def pagina():
     ctx, f = layout.estado()
     ctx = contexto.com_recorte(ctx, f["repos"])
-    layout.titulo_pagina("Agile EVM", "Prazo e custo da release: entregas do Zenhub × orçamento e horas da planilha.",
+    layout.titulo_pagina("Agile EVM", "Prazo e custo da release: entregas do Zenhub × custo do time da planilha.",
                          ["ZENHUB", "PLANILHA", "CALCULADO"])
     if ctx.repos_recorte:
         layout.alerta("neutral", "Filtro de repositórios ativo (" + ", ".join(ctx.repos_recorte) + "): pontos, sprints, "
-                      "velocity e SPI são só desses repositórios. Orçamento, horas, custo e CPI são do time inteiro "
+                      "velocity e SPI são só desses repositórios. Orçamento, custo e CPI são do time inteiro "
                       "(não dependem de repositório).")
     _menus(ctx)
     e = ctx.evm
@@ -387,7 +381,7 @@ def pagina():
     escolhida = caixa.selectbox("Situação ao fim da sprint", opcoes, index=opcoes.index(padrao_sprint),
                                 format_func=rotulos.get, key=f"evm_sprint_{rel}",
                                 help="Por padrão a última concluída até o fim do período: a sprint em andamento "
-                                     "ainda não tem horas.")
+                                     "ainda está com a entrega parcial.")
     u = feitas[feitas["sprint"] == escolhida].iloc[-1]
     parcial = u["status"] == vel.STATUS_ANDAMENTO
 
@@ -403,7 +397,7 @@ def pagina():
         layout.alerta("warning", f"Nada foi estimado na planning da 1ª sprint da {rel}; todo o escopo "
                                  f"({num(u['PRP'])} SP) entrou depois.")
 
-    layout.secao("Dado bruto", "Quais stories, horas e semanas formam o EVM?", ["ZENHUB", "PLANILHA"])
+    layout.secao("Dado bruto", "Quais stories e semanas formam o EVM?", ["ZENHUB", "PLANILHA"])
     _rastreabilidade(ctx, rel, d, u)
 
     layout.secao("Análise", "Como prazo, custo e escopo evoluíram sprint a sprint?", ["CALCULADO"])

@@ -48,7 +48,7 @@ em **Filtros desta página**, os filtros próprios da página aberta e o resumo 
 | Visão Executiva | metas e release em foco | situação no fim do período | Sonar, Zenhub, SPI, CI | Sonar | — |
 | Gestão ágil | período padrão | sprints que terminam no período | stories do repositório | — | sprint, épico, pessoa, issue, sprint do burndown |
 | Agile EVM | release analisada | sprint concluída até o fim do período | prazo (SPI); custo é do time | — | release (só com *Semestre inteiro*), sprint |
-| Custos | período padrão | semanas e horas do período | não se aplica (custo do time) | — | sprint, integrante |
+| Custos | período padrão | semanas do período | não se aplica (custo do time) | — | sprint |
 | Riscos | período padrão | identificados até o fim; revisões no período | não se aplica | — | status, nível, categoria, responsável |
 | Decisões | meta da release | tabela no período; meta acumulada até o fim | não se aplica | — | tipo, status, indicador |
 | Qualidade técnica | metas | situação no fim do período; evolução no período | repositórios | coletas do pipeline | Quality Gate, linguagem, métrica do gráfico |
@@ -66,7 +66,7 @@ existem no snapshot mais recente da API (sem histórico): num período que termi
 |---|---|---|---|---|
 | **SonarCloud** | {layout.etiqueta('SONAR')} | qualidade técnica: cobertura, duplicação, bugs, vulnerabilidades, code smells, hotspots, dívida técnica, ratings, Quality Gate, testes; medidas por arquivo (complexidade, comentários, duplicação, cobertura, violações bloqueantes/críticas) para o modelo Q-Rapids | `metrics.yml` de cada repositório → `data/*.json`; API do SonarCloud → `scripts/coleta_sonar.py` → `data/sonar/` | a cada execução do pipeline; API diária (workflow `coleta-dados.yml`) |
 | **Zenhub** | {layout.etiqueta('ZENHUB')} | gestão ágil: sprints, story points, velocity, backlog, pipelines, épicos, releases, throughput | API GraphQL → `scripts/coleta_velocity.py` → `data/zenhub/velocity/` | diária (workflow `coleta-dados.yml`) ou botão na página do Zenhub |
-| **Planilha** | {layout.etiqueta('PLANILHA')} | só o que não existe nas outras: custos, time por semana, horas, riscos, monitoramento, decisões | abas publicadas no Google em CSV (`config.PLANILHAS`); sem cópia local | a cada {config.CACHE_PLANILHAS_S // 60} min (local) ou a cada deploy (GitHub Pages) |
+| **Planilha** | {layout.etiqueta('PLANILHA')} | só o que não existe nas outras: custos, time por semana, riscos, monitoramento, decisões | abas publicadas no Google em CSV (`config.PLANILHAS`); sem cópia local | a cada {config.CACHE_PLANILHAS_S // 60} min (local) ou a cada deploy (GitHub Pages) |
 | **GitHub** | {layout.etiqueta('GITHUB')} | processo: execuções e resultado da CI; issues (labels, descrição, milestone) e commits com arquivos alterados para o modelo Q-Rapids | API do GitHub → `scripts/coleta_github.py` → `data/github/` (`runs-`, `issues-`, `commits-`); `metrics.yml` → `GitHub_API-Runs-*.json` | 3 vezes por dia (workflow `coleta-dados.yml`) e a cada execução do pipeline |
 | **Calculado** | {layout.etiqueta('CALCULADO')} | indicadores derivados (EVM, variações, status) | `src/metrics/` — funções puras, com testes em `tests/` | a cada abertura do painel |
 """, unsafe_allow_html=True)
@@ -106,9 +106,9 @@ existem no snapshot mais recente da API (sem histórico): num período que termi
 - **Nenhum valor é inventado, estimado ou trocado por outra métrica.** Um indicador sem insumo aparece como
   *Indisponível*, com o motivo e o que seria preciso para calculá-lo (ex.: *CPI indisponível: Actual Cost não foi
   fornecido*).
-- **Custo real (AC) só com horas registradas de todo o time.** Sem horas na aba Horas, ou com horas de só parte dos
-  integrantes ativos da aba Planejamento, AC, CPI, CV, ETC e EAC ficam indisponíveis — o custo planejado não substitui
-  o real e um AC parcial deixaria o CPI melhor do que é.
+- **Custo real (AC) é o custo do time, sem horas.** Como na literatura de EVM ágil (Sulaiman et al., 2006;
+  Cohn), ninguém estima nem aponta horas: o custo de cada semana é o dos integrantes ativos na aba Planejamento.
+  Semana sem custo na planilha deixa AC, CPI, CV, ETC e EAC indisponíveis — o custo nunca é inventado.
 - **Planejado da sprint só pelo histórico do Zenhub.** Sem histórico de escopo, o planejado fica indisponível; issue
   sem estimativa conta 0 SP e é listada nas observações.
 - **Fonte fora do ar não derruba o painel:** ela aparece como *Erro* ou *Sem dados* na tabela acima e as páginas que

@@ -180,17 +180,22 @@ def _filtros(ctx, f, linhas: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, 
 
 # ───────────────────────── 2. KPIs ─────────────────────────
 
-def _horas_por_sprint(ctx, concl: pd.DataFrame) -> dict:
-    h = ctx.horas
-    if h is None or h.empty or "horas" not in h or concl.empty:
-        return {"media": None, "nota": "Indisponível: sem horas na aba Horas para as sprints concluídas do recorte."}
-    numeros = [int(x.lstrip("S")) for x in concl["sprint"] if x.lstrip("S").isdigit()]
-    por = h[h["sprint"].isin(numeros)].groupby("sprint")["horas"].sum()
-    por = por[por > 0]
-    if por.empty:
-        return {"media": None, "nota": "Indisponível: nenhuma hora registrada nessas sprints (aba Horas)."}
-    return {"media": float(por.mean()), "nota": f"média de horas da equipe nas {len(por)} sprint(s); a planilha "
-                                                "não tem capacidade em SP"}
+def _capacidade_em_sp(ctx, concl: pd.DataFrame) -> dict:
+    """Capacidade em Story Points por integrante: SP realizados ÷ integrantes ativos (aba Planejamento).
+
+    É a capacidade como a literatura ágil propõe (pela velocity, em pontos), sem estimar nem apontar horas.
+    """
+    from src.metrics import evm
+    if concl.empty or ctx.plano is None or ctx.plano.empty:
+        return {"valor": None, "nota": "Indisponível: sem sprints concluídas ou sem a aba Planejamento."}
+    ini, fim = evm._data_local(concl["sprint_inicio"]), evm._data_local(concl["sprint_fim"])
+    pessoas = [evm.integrantes_planejados(i, f, ctx.plano) for i, f in zip(ini, fim)]
+    pares = [(sp, p) for sp, p in zip(concl["sp_realizado"], pessoas) if p and not pd.isna(p)]
+    if not pares:
+        return {"valor": None, "nota": "Indisponível: a aba Planejamento não tem integrantes nessas sprints."}
+    por = [sp / p for sp, p in pares]
+    return {"valor": sum(por) / len(por), "nota": f"SP realizados ÷ integrantes ativos, média de {len(por)} "
+                                                  "sprint(s) · capacidade em pontos, sem horas"}
 
 
 def _kpis(ctx, R: pd.DataFrame, d: pd.DataFrame, desc: dict) -> None:
@@ -229,9 +234,9 @@ def _kpis(ctx, R: pd.DataFrame, d: pd.DataFrame, desc: dict) -> None:
             "CALCULADO", nota="SP planejados por sprint concluída" if not concl.empty else
             "Indisponível: nenhuma sprint concluída no recorte.")
     with k2[1]:
-        horas = _horas_por_sprint(ctx, concl)
-        kpi("Capacidade registrada por sprint", f"{num(horas['media'])} h" if horas["media"] else None, "PLANILHA",
-            nota=horas["nota"])
+        cap = _capacidade_em_sp(ctx, concl)
+        kpi("SP por integrante por sprint", num(cap["valor"], 1) if cap["valor"] is not None else None, "CALCULADO",
+            nota=cap["nota"])
     with k2[2]:
         dif = (real_c - plan_c) if not concl.empty and not pd.isna(plan_c) else None
         kpi("Variação realizado − planejado", f"{dif:+.0f} SP" if dif is not None else None, "CALCULADO",
@@ -311,7 +316,7 @@ def _realizado(R, d, rel, desc):
                                      scale=alt.Scale(domain=ordem_o, range=[COR_REAL, COR_EXTRA])),
                      tooltip=[alt.Tooltip("sprint:N"), alt.Tooltip("origem:N", title="Origem"),
                               alt.Tooltip("sp:Q", title="SP", format=".0f")]))
-        charts.mostrar(b, "SP realizados por sprint", "stories fechadas dentro da sprint · do plano ou adicionadas",
+        charts.mostrar(b, "Velocity — SP realizados por sprint", "stories fechadas dentro da sprint · do plano ou adicionadas",
                        altura=220)
     with dd:
         st.markdown("**Por release**")
@@ -392,7 +397,7 @@ def _comparacao(R, d, rel):
                      color=alt.Color("serie:N", title=None, scale=ESCALA_PR, sort=SERIES_PR),
                      tooltip=[alt.Tooltip("dia:T", format="%d/%m/%Y"), alt.Tooltip("serie:N"),
                               alt.Tooltip("valor:Q", format=".0f")]))
-    charts.mostrar(linha, "Por período", "planejado acumulado (sobe no início de cada sprint) × realizado acumulado "
+    charts.mostrar(linha, "Burnup — planejado × realizado acumulado", "planejado acumulado (sobe no início de cada sprint) × realizado acumulado "
                                          "(sobe na data de conclusão)", altura=220)
     st.markdown("**Por story**")
     x = d.assign(diferenca=d["sp_realizado"].fillna(0) - d["sp_planejado"].fillna(0))
@@ -434,7 +439,7 @@ def _velocity(ctx, R, d):
                f"Média indisponível: exige {ctx.zh_regras.min_sprints_media} sprints concluídas. ")
             + (f"Tendência {tend['sentido']} ({'+' if tend['valor'] >= 0 else '−'}{num(abs(tend['valor']), 1)} SP por sprint, {tend['n']} sprints)."
                if tend["valor"] is not None else f"Tendência indisponível: {tend['motivo']}."))
-    charts.mostrar(camadas, "Planejado, realizado e velocity por sprint", "Story Points", nota=nota, altura=260)
+    charts.mostrar(camadas, "Velocity — planejado × realizado por sprint", "Story Points", nota=nota, altura=260)
     t = R[["sprint", "sprint_nome", "release", "sprint_status", "sp_planejado", "sp_realizado", "diferenca", "taxa",
            "stories_planejadas", "stories_concluidas", "stories_adicionadas", "stories_removidas",
            "stories_levadas"]]
@@ -507,7 +512,7 @@ def _burndown(ctx, sprints_rec: pd.DataFrame, alvo: str | None):
     sub = (f"{s['sprint_name']} · {data_br(b['inicio'])} a {data_br(b['fim'])}"
            + (f" · contagem até {b['prazo']:%d/%m %H:%M}" if b.get("prazo") is not None else "")
            + (f" · restante no último dia com dado: {num(ultimo['restante'].iloc[0])} SP" if not ultimo.empty else ""))
-    charts.mostrar(linha + regra + texto, f"Burndown da {alvo}", sub, dados, altura=260, nota=(
+    charts.mostrar(linha + regra + texto, f"Burndown da sprint {alvo}", sub, dados, altura=260, nota=(
         "Dados verificáveis usados: planejado da planning, entradas e saídas do histórico scopeChange (com data e "
         "hora) e a data de fechamento de cada issue. Restante = escopo no fim do dia − SP das stories fechadas até "
         "ali. Fora do cálculo: mudança de estimativa no meio da sprint (o Zenhub não guarda esse histórico) — quem "
@@ -567,7 +572,7 @@ def pagina():
     layout.titulo_pagina("Gestão ágil", "Planejado × realizado em Story Points, do resumo até cada issue.", ["ZENHUB"])
     if ctx.repos_recorte:
         layout.alerta("neutral", "Filtro de repositórios ativo (" + ", ".join(ctx.repos_recorte) + "): pontos, sprints, "
-                      "velocity e SPI são só desses repositórios. Orçamento, horas, custo e CPI são do time inteiro "
+                      "velocity e SPI são só desses repositórios. Orçamento, custo e CPI são do time inteiro "
                       "(não dependem de repositório).")
     snap = ctx.zh_snap
     topo_e, topo_d = st.columns([3, 1])
@@ -593,7 +598,8 @@ def pagina():
         ("Conclusão", "cálculo", "SP realizados ÷ SP planejados das sprints concluídas do recorte"),
         ("Velocity média e tendência", "cálculo", f"média das sprints concluídas (≥ {r.min_sprints_media}); "
          "tendência = inclinação da reta de mínimos quadrados (≥ 3 sprints)"),
-        ("Capacidade registrada", "PLANILHA — aba Horas", "média das horas registradas por sprint concluída"),
+        ("SP por integrante por sprint", "ZENHUB + PLANILHA — aba Planejamento", "SP realizados ÷ integrantes "
+         "ativos na sprint, média das sprints concluídas (capacidade em pontos, sem horas)"),
         ("Burndown", "cálculo", "escopo no fim de cada dia (histórico) − SP fechados até ali; ideal = planejado → 0"),
         ("Filtros", "—", "release, sprint, período (último dia da sprint), épico e issue se combinam; todos os "
          "blocos usam o mesmo recorte"),

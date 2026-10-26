@@ -1,9 +1,9 @@
 """AgileEVM por release com os pontos do Zenhub e os custos da planilha.
 
 Método de Sulaiman, Barton & Blackburn (2006), o mesmo da planilha de 2026.1.
-Tudo o que é ponto vem do Zenhub (``src/metrics/velocity.py``); da planilha vêm só o que
-o Zenhub não tem: o custo planejado de cada semana (abas Custos e Planejamento)
-e as horas reais (aba Horas).
+Tudo o que é ponto vem do Zenhub (``src/metrics/velocity.py``); da planilha vem só o que
+o Zenhub não tem: quem está no time em cada semana e quanto isso custa (abas Custos e
+Planejamento). Horas não entram: a estimativa é em Story Points e o custo é o do time.
 
 Para cada sprint ``n`` de uma release com ``L`` sprints:
 
@@ -14,11 +14,12 @@ Para cada sprint ``n`` de uma release com ``L`` sprints:
 * **APC** = RPC ÷ PRP · **PPC** = semanas decorridas ÷ semanas da release.
 * **BAC** = custo planejado das semanas da release · **PV** = PPC × BAC ·
   **EV** = APC × BAC.
-* **AC**: horas reais (aba Horas) × custo/hora (aba Custos), acumulado. Se
-  alguma sprint iniciada da release não tem horas registradas, o AC fica
-  **indisponível** a partir dela (também quando só parte dos integrantes ativos da aba
-  Planejamento registrou horas, porque o AC sairia subestimado) — nunca é trocado pelo custo planejado — e
-  CPI, CV, ETC e EAC ficam indisponíveis junto. ``origem_do_ac`` diz o motivo.
+* **AC** (custo real) = custo do time nas sprints já iniciadas, acumulado: em cada semana, integrantes
+  ativos (aba Planejamento) × custo de um integrante por semana + infraestrutura. É o "run rate" do time,
+  como na literatura de EVM ágil (Sulaiman et al., 2006; Cohn, *Agile Estimating and Planning*): ninguém
+  estima nem aponta horas; o custo muda quando a composição do time muda. Sprint sem custo na aba
+  Planejamento deixa o AC **indisponível** a partir dela (nunca é inventado), e CPI, CV, ETC e EAC junto.
+  Com o time estável, AC acompanha o PV e o CPI fica próximo do SPI — é o esperado nesse método.
 * **SPI** = EV ÷ PV · **CPI** = EV ÷ AC · **CV**, **SV**, **ETC** = (BAC − EV) ÷ CPI,
   **EAC** = AC + ETC · **RD** = início + duração ÷ SPI.
 """
@@ -57,19 +58,6 @@ def custo_da_sprint(inicio: pd.Timestamp, fim: pd.Timestamp, plano: pd.DataFrame
     return float(semanas["custo"].sum()) if not semanas.empty else NAN
 
 
-def integrantes_com_horas(label: str, inicio: pd.Timestamp, horas: pd.DataFrame) -> int:
-    """Quantos integrantes têm horas (> 0) registradas na sprint (aba Horas)."""
-    if horas is None or horas.empty or "horas" not in horas or "integrante" not in horas:
-        return 0
-    h = horas[pd.to_numeric(horas["horas"], errors="coerce").fillna(0) > 0]
-    if "inicio_da_sprint" in h and h["inicio_da_sprint"].notna().any():
-        h = h[h["inicio_da_sprint"] == inicio]
-    else:
-        numero = int(label.lstrip("S")) if label.lstrip("S").isdigit() else None
-        h = h[h["sprint"] == numero] if numero is not None and "sprint" in h else h.iloc[0:0]
-    return int(h["integrante"].astype(str).str.strip().nunique())
-
-
 def integrantes_planejados(inicio: pd.Timestamp, fim: pd.Timestamp, plano: pd.DataFrame) -> float:
     """Maior número de integrantes ativos (aba Planejamento) nas semanas da sprint."""
     if plano is None or plano.empty or "integrantes" not in plano:
@@ -78,28 +66,18 @@ def integrantes_planejados(inicio: pd.Timestamp, fim: pd.Timestamp, plano: pd.Da
     return float(p.max()) if not p.empty else NAN
 
 
-def horas_da_sprint(label: str, inicio: pd.Timestamp, horas: pd.DataFrame) -> float:
-    """Horas da aba Horas: pela data de início da sprint, ou pelo número (S3 = sprint 3)."""
-    if horas is None or horas.empty or "horas" not in horas:
-        return 0.0
-    h = horas.dropna(subset=["horas"])
-    if "inicio_da_sprint" in h and h["inicio_da_sprint"].notna().any():
-        return float(h.loc[h["inicio_da_sprint"] == inicio, "horas"].sum())
-    numero = int(label.lstrip("S")) if label.lstrip("S").isdigit() else None
-    return float(h.loc[h["sprint"] == numero, "horas"].sum()) if numero is not None and "sprint" in h else 0.0
-
-
 # lado de custo do EVM: não depende de quais repositórios estão no filtro
-COLUNAS_CUSTO = ("BAC", "SC", "PV", "EV", "AC", "CV", "SV", "CPI", "ETC", "EAC", "horas_reais", "origem_do_ac",
-                 "integrantes_com_horas", "integrantes_ativos")
+COLUNAS_CUSTO = ("BAC", "SC", "PV", "EV", "AC", "CV", "SV", "CPI", "ETC", "EAC", "origem_do_ac", "integrantes_ativos")
 
 
-def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: pd.DataFrame,
-              custo_hora: float | None, recorte: str | None = None,
+def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: pd.DataFrame | None = None,
+              custo_hora: float | None = None, recorte: str | None = None,
               time: pd.DataFrame | None = None) -> pd.DataFrame:
     """Uma linha por sprint de cada release (inclusive as futuras, com valores vazios).
 
     ``sprints`` é a saída de ``velocity.calculate_velocity(..., incluir_futuras=True)``.
+    ``horas`` e ``custo_hora`` não são mais usados (o AC é o custo do time); ficam na assinatura só para
+    não quebrar quem chama.
     ``recorte`` (ex.: filtro de repositórios): os pontos e o prazo (PPC, APC, SPI) são do recorte, mas
     orçamento e horas não dependem de repositório. Com ``time`` (o EVM do time inteiro) os valores em R$ e o
     CPI vêm dele e ``escopo_custo`` diz isso; sem ``time`` ficam indisponíveis.
@@ -137,7 +115,7 @@ def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: p
                      "PPC": ppc, "BAC": bac, "SC": sc, "PV": ppc * bac if not math.isnan(bac) else NAN,
                      "prp_linha_de_base": prp_base}
             if not iniciou:
-                linhas.append({**linha, **{k: NAN for k in ("PP", "PC", "PA", "PRP", "RPC", "APC", "horas_reais", "AC",
+                linhas.append({**linha, **{k: NAN for k in ("PP", "PC", "PA", "PRP", "RPC", "APC", "AC",
                                                               "EV", "CV", "SV", "CPI", "SPI", "ETC", "EAC")},
                                "origem_do_ac": "", "RD": pd.NaT, "issues": 0})
                 continue
@@ -148,25 +126,16 @@ def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: p
             pa = prp - prp_ant if n > 1 else prp - prp_base
             prp_ant = prp
             apc = _div(rpc, prp)
-            h = horas_da_sprint(r.sprint_label, r.inicio, horas)
-            com_horas = integrantes_com_horas(r.sprint_label, r.inicio, horas)
             ativos = integrantes_planejados(r.inicio, r.fim, plano)
-            if h > 0 and custo_hora and not math.isnan(ativos) and com_horas < ativos:
-                # horas de só parte do time: o AC sairia subestimado e o CPI melhor do que é
-                custo_real, origem = NAN, (f"indisponível: horas de {com_horas} de {ativos:.0f} integrantes ativos na "
-                                           f"{r.sprint_label} (aba Horas × aba Planejamento)")
-            elif h > 0 and custo_hora:
-                custo_real, origem = h * custo_hora, "horas reais × custo/hora"
-            elif not custo_hora:
-                custo_real, origem = NAN, "indisponível: custo/hora não informado (aba Custos)"
-            else:
-                custo_real, origem = NAN, f"indisponível: sem horas registradas na {r.sprint_label} (aba Horas)"
-            if math.isnan(custo_real):
+            # custo real = custo do time na sprint (run rate), acumulado na release
+            if math.isnan(sc):
                 ac_completo = False
-            if ac_completo:
-                ac_acum += custo_real
-            elif not math.isnan(custo_real):
-                origem = "indisponível: sprint anterior da release sem horas registradas"
+                origem = (f"indisponível: a aba Planejamento não tem o custo das semanas da {r.sprint_label}")
+            elif not ac_completo:
+                origem = "indisponível: sprint anterior da release sem custo na aba Planejamento"
+            else:
+                ac_acum += sc
+                origem = "custo do time na sprint (integrantes ativos × custo por semana + infraestrutura)"
             ev = apc * bac if not math.isnan(bac) else NAN
             pv = linha["PV"]
             spi = _div(apc, ppc)          # = EV ÷ PV, e não depende do custo
@@ -176,13 +145,14 @@ def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: p
             duracao = (grupo["fim"].iloc[-1] - grupo["inicio"].iloc[0]).days + 1
             rd = (grupo["inicio"].iloc[0] + pd.Timedelta(days=duracao / spi)) if spi and not math.isnan(spi) else pd.NaT
             linhas.append({**linha, "PP": r.planned_story_points, "PC": r.completed_story_points, "PA": pa,
-                           "PRP": prp, "RPC": rpc, "APC": apc, "horas_reais": h, "AC": ac,
+                           "PRP": prp, "RPC": rpc, "APC": apc, "AC": ac,
                            "origem_do_ac": origem, "EV": ev, "CV": ev - ac, "SV": ev - pv, "CPI": cpi,
-                           "SPI": spi, "integrantes_com_horas": com_horas, "integrantes_ativos": ativos, "ETC": etc, "EAC": ac + etc if not math.isnan(etc) else NAN, "RD": rd,
+                           "SPI": spi, "integrantes_ativos": ativos, "ETC": etc,
+                           "EAC": ac + etc if not math.isnan(etc) else NAN, "RD": rd,
                            "issues": len(escopo)})
     df = pd.DataFrame(linhas)
     if recorte and not df.empty:
-        # Pontos são do recorte; orçamento e horas são do time inteiro. Misturar os dois (EV do recorte ÷ AC
+        # Pontos são do recorte; orçamento e custo são do time inteiro. Misturar os dois (EV do recorte ÷ AC
         # do time) daria um CPI sem sentido, então o lado de custo vem inteiro do EVM do time.
         custo = [c for c in COLUNAS_CUSTO if c in df]
         if time is not None and not time.empty:
@@ -193,7 +163,7 @@ def agile_evm(sprints: pd.DataFrame, issues: dict, plano: pd.DataFrame, horas: p
             df["escopo_custo"] = "time inteiro (orçamento e horas não dependem do filtro de repositórios)"
         else:
             for col in custo:
-                if col not in ("origem_do_ac", "integrantes_com_horas", "integrantes_ativos"):
+                if col not in ("origem_do_ac", "integrantes_ativos"):
                     df[col] = NAN
             df["origem_do_ac"] = f"indisponível: {recorte}"
             df["motivo_valor"] = recorte
