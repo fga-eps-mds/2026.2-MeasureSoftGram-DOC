@@ -371,9 +371,13 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
             em_sprint = {(nq_nome(a), int(b)) for a, b, s in zip(z["repositorio"], z["number"], z["sprints"])
                          if isinstance(s, list) and s}
         g["com_descricao"] = g["body_chars"].fillna(0) > 0
-        g["com_prazo"] = g["milestone"].notna() | [(nq_nome(a), int(b)) in em_sprint
-                                                   for a, b in zip(g["repositorio"], g["number"])]
+        no_sprint = pd.Series([(nq_nome(a), int(b)) in em_sprint for a, b in zip(g["repositorio"], g["number"])],
+                              index=g.index, dtype=bool)
+        g["com_prazo"] = g["milestone"].notna() | no_sprint
         g["bem_definida"] = g["com_descricao"] & g["com_prazo"]
+        r.motivo = ("prazo = milestone do GitHub ou sprint no Zenhub"
+                    + (f"; {aviso_zh}" if aviso_zh else "")
+                    + ("; nenhuma issue tem milestone" if g["milestone"].isna().all() else ""))
         r.itens = g[["repositorio", "number", "title", "com_descricao", "com_prazo", "bem_definida"]]
         _razao(r, int(g["bem_definida"].sum()), len(g))
 

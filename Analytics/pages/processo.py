@@ -127,7 +127,7 @@ def pagina():
         ult = r.sort_values("criado_em").iloc[-1]
         dur = conc["duracao_min"].dropna()
         kpi("Última execução", data_br(ult["criado_em"], True), "GITHUB",
-            nota=f"{nome_curto(ult['repositorio'])} · {ult['workflow']} · {ult['conclusao'] or 'em andamento'}"
+            nota=f"{nome_curto(ult['repositorio'])} · {ult['workflow']} · {ult['conclusao'] if isinstance(ult['conclusao'], str) and ult['conclusao'] else 'em andamento'}"
                  + (f" · feedback mediano {num(dur.median(), 1)} min" if not dur.empty else ""),
             origem=[("abrir a execução", ult.get("url"))] if isinstance(ult.get("url"), str) else None)
 

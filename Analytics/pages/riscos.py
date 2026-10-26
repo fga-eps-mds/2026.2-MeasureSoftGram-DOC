@@ -27,7 +27,7 @@ ENCERRADO = ("encerr", "mitigad", "fechad")
 
 ESCOPO = {
     "release": "define o período padrão",
-    "periodo": "riscos identificados até o fim do período e revisões (aba Monitoramento) feitas no período; "
+    "periodo": "riscos identificados e revisões (aba Monitoramento) feitas até o fim do período; "
                "P, I e status são os da avaliação mais recente da aba Riscos",
 }
 FILTROS = [("status", "Status"), ("nivel", "Nível"), ("categoria", "Categoria"), ("responsavel", "Responsável")]
@@ -71,7 +71,7 @@ def pagina():
     mon = ctx.monitoramento
     if mon is not None and not mon.empty and "data_da_revisao" in mon:
         d = pd.to_datetime(mon["data_da_revisao"], errors="coerce")
-        mon = mon[d.isna() | ((d >= pd.Timestamp(f["periodo"][0])) & (d < fim))]
+        mon = mon[d.isna() | (d < fim)]   # a evolução precisa do histórico: todas as revisões até o fim
     caixa = filters.da_pagina(f, ESCOPO)
     escolhas = []
     for campo, rot in FILTROS:

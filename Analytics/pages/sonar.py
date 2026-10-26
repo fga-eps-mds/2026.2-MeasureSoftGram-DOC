@@ -238,7 +238,7 @@ def _analise(ctx, f, rec, serie, repos, rel, metrica):
         if f["branch"]:
             comp = comp[(comp["branch"] == f["branch"]) | (comp["origem"] == "api")]
         comp = comp[pd.to_datetime(comp["coleta"]) <= rec["fim"] + pd.Timedelta(days=1)]
-        cob = (comp[comp["metrica"] == "coverage"].sort_values("coleta")
+        cob = (comp[(comp["metrica"] == "coverage") & (comp["tipo"] == "FIL")].sort_values("coleta")
                .drop_duplicates(["repositorio", "componente"], keep="last"))
         if not cob.empty:
             cob = cob.nsmallest(15, "valor").assign(repo=lambda d: d["repositorio"].map(sn.nome_curto))
