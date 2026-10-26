@@ -124,14 +124,14 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [],
         "milestone": null,
         "comments": 1,
         "created_at": "2026-10-24T00:39:25Z",
-        "updated_at": "2026-10-24T00:41:48Z",
-        "closed_at": null,
+        "updated_at": "2026-10-26T01:28:39Z",
+        "closed_at": "2026-10-26T01:28:39Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -143,10 +143,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/75",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/75.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/75.patch",
-            "merged_at": null
+            "merged_at": "2026-10-26T01:28:39Z"
         },
         "body": "# Onboarding n\u00e3o grava mais m\u00e9tricas mock quando o workflow do GitHub n\u00e3o \u00e9 disparado\n\n## Descri\u00e7\u00e3o\n\nCorrige o onboarding de reposit\u00f3rios. Quando o workflow do GitHub Actions n\u00e3o era disparado no cadastro, a aplica\u00e7\u00e3o gerava m\u00e9tricas fict\u00edcias e as gravava como se fossem uma coleta real.\n\nAgora, se o workflow n\u00e3o \u00e9 disparado, o reposit\u00f3rio fica sem m\u00e9tricas at\u00e9 a primeira coleta real, e o onboarding s\u00f3 registra um aviso no log:\n\n```\nNo GitHub Actions triggered for <reposit\u00f3rio>. The repository stays without metrics until the first real collection.\n```\n\n[[BUG05.03] Onboarding grava m\u00e9tricas mock como dados reais quando o workflow do GitHub n\u00e3o \u00e9 disparado](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/150)\n\n### Commits\n\n- `fix(organizations)`: remove de `onboard_repository_async` o fallback que montava o payload mock e gravava m\u00e9tricas, medidas, subcaracter\u00edsticas, caracter\u00edsticas e TSQMI. Os testes do onboarding passam a esperar que nada seja gravado.\n- `chore(organizations)`: remove `get_default_mock_payload`, que ficou sem uso, e o teste dela.\n- `test(organizations)`: regress\u00e3o para os casos sem credenciais, ou seja, usu\u00e1rio sem `github_access_token` e reposit\u00f3rio sem `github_full_name`.\n- `test(organizations)`: regress\u00e3o para os casos em que o GitHub n\u00e3o dispara o workflow: listagem de workflows com erro, nenhum workflow, dispatch recusado e exce\u00e7\u00e3o na chamada.\n\nTodos os testes de regress\u00e3o verificam tr\u00eas coisas: o aviso no log, que as 5 camadas (`CollectedMetric`, `CalculatedMeasure`, `CalculatedSubCharacteristic`, `CalculatedCharacteristic` e `TSQMI`) continuam vazias e se a API do GitHub foi chamada ou n\u00e3o. Rodados contra o c\u00f3digo do `develop`, antes da corre\u00e7\u00e3o, os 6 testes falham.\n\n## Porque este Pull Request \u00e9 necess\u00e1rio?\n\nBastava o disparo do workflow falhar para o reposit\u00f3rio aparecer com gr\u00e1ficos, caracter\u00edsticas e TSQMI calculados a partir de dados inventados. O disparo falha por falta de token do usu\u00e1rio, por o reposit\u00f3rio n\u00e3o ter a action do MeasureSoftGram ou por instabilidade na API do GitHub.\n\nIsso compromete a integridade do modelo de qualidade e descumpre o Cen\u00e1rio 2 da [TASK05.10] (#113): *\"vejo apenas dados reais ou uma mensagem de que ainda n\u00e3o h\u00e1 dados, e nunca dados mockados\"*. O comportamento veio da sincroniza\u00e7\u00e3o da branch 2026.1 (PR #60).\n\n### Fora do escopo deste PR\n\n- **Estado vazio nas telas do reposit\u00f3rio:** fica no `2026.2-MeasureSoftGram-Front`.\n- **Dados mock que j\u00e1 est\u00e3o gravados em produ\u00e7\u00e3o:** a estrat\u00e9gia ainda ser\u00e1 combinada com o time. Esses dados s\u00e3o identific\u00e1veis pelos caminhos fict\u00edcios `src/foo.py`, `src/bar.py`, `tests/foo_test.py` e `tests/bar_test.py`.\n- **Documenta\u00e7\u00e3o no reposit\u00f3rio DOC:** atualiza\u00e7\u00e3o do achado 11 da [TASK05.10] (#113).\n\n## Como testar\n\n1. Suba o Service com `make up` e crie um superusu\u00e1rio com `make superuser`. Esse usu\u00e1rio n\u00e3o tem token do GitHub.\n2. Acompanhe o log com `docker compose logs -f service`.\n3. Crie uma organiza\u00e7\u00e3o e um produto, e depois cadastre um reposit\u00f3rio em `POST /api/v1/organizations/<org>/products/<prod>/repositories/`.\n4. Confira:\n   - o log mostra o aviso `No GitHub Actions triggered for <reposit\u00f3rio>...`, e n\u00e3o mais `Generating mock metrics...`;\n   - `GET .../repositories/<id>/tsqmi/` e `GET .../repositories/<id>/metrics/` voltam sem dados.\n\nTestes automatizados: `make test`, ou s\u00f3 os do onboarding com `pytest src/organizations/tests/test_repositories_endpoints.py -k onboard`.\n\n## Crit\u00e9rios de aceita\u00e7\u00e3o\n\n1. [ ] Cadastrar um reposit\u00f3rio sem que o workflow seja disparado n\u00e3o grava m\u00e9tricas, medidas, subcaracter\u00edsticas, caracter\u00edsticas nem TSQMI.\n2. [ ] O onboarding registra no log um aviso de que o reposit\u00f3rio fica sem m\u00e9tricas at\u00e9 a primeira coleta real.\n3. [ ] O c\u00f3digo do payload mock (`get_default_mock_payload`) foi removido.\n4. [ ] H\u00e1 testes de regress\u00e3o para cada caso em que o workflow n\u00e3o \u00e9 disparado: sem token, sem `github_full_name`, listagem com erro, nenhum workflow, dispatch recusado e exce\u00e7\u00e3o.\n5. [ ] Quando o workflow \u00e9 disparado com sucesso, o comportamento continua o mesmo.\n6. [ ] O pipeline de CI passou (lint, testes e checagem de migrations).\n\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#150",
-        "closed_by": null,
+        "closed_by": {
+            "login": "MilenaFRocha",
+            "id": 104432227,
+            "node_id": "U_kgDOBjmCYw",
+            "avatar_url": "https://avatars.githubusercontent.com/u/104432227?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/MilenaFRocha",
+            "html_url": "https://github.com/MilenaFRocha",
+            "followers_url": "https://api.github.com/users/MilenaFRocha/followers",
+            "following_url": "https://api.github.com/users/MilenaFRocha/following{/other_user}",
+            "gists_url": "https://api.github.com/users/MilenaFRocha/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/MilenaFRocha/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/MilenaFRocha/subscriptions",
+            "organizations_url": "https://api.github.com/users/MilenaFRocha/orgs",
+            "repos_url": "https://api.github.com/users/MilenaFRocha/repos",
+            "events_url": "https://api.github.com/users/MilenaFRocha/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/MilenaFRocha/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/75/reactions",
             "total_count": 0,
@@ -3251,7 +3271,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "closed",
+        "state": "open",
         "locked": false,
         "assignees": [
             {
@@ -3279,8 +3299,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-10-20T00:40:50Z",
-        "updated_at": "2026-10-25T21:28:24Z",
-        "closed_at": "2026-10-25T21:28:24Z",
+        "updated_at": "2026-10-25T21:46:38Z",
+        "closed_at": null,
         "assignee": {
             "login": "zzzBECK",
             "id": 82113486,
@@ -3327,27 +3347,7 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nRegra combinada com o PO: o MeasureSoftGram mostra **exatamente o que o usu\u00e1rio logado v\u00ea no GitHub/GitLab**. O owner de uma organiza\u00e7\u00e3o v\u00ea tudo; quem foi convidado s\u00f3 para alguns reposit\u00f3rios v\u00ea s\u00f3 esses.\n\nInvestiga\u00e7\u00e3o do erro **\"N\u00e3o foi poss\u00edvel carregar o dashboard.\"** que um *membro* da organiza\u00e7\u00e3o recebia ao abrir um reposit\u00f3rio: a mensagem s\u00f3 existe na vers\u00e3o com Grafana, em que o proxy (`grafana_proxy/permissions.py`) liberava s\u00f3 o admin da org (`product__organization__admin` / `organization__admin`). Membros tomavam 403 no dashboard. O Grafana foi removido em `develop` (Front #50, Service #58), mas esses commits ainda n\u00e3o est\u00e3o em `main`, ent\u00e3o produ\u00e7\u00e3o continua com a regra s\u00f3 de admin. Na vers\u00e3o atual, a p\u00e1gina do reposit\u00f3rio usa o escopo de membro e os ids da URL.\n\nRegress\u00f5es encontradas no teste manual da tela de importa\u00e7\u00e3o de reposit\u00f3rios:\n- **Reposit\u00f3rio n\u00e3o aparecia na busca:** a busca usava a Search API do GitHub, que ignora forks (ex.: `2026.2-MeasureSoftGram-Service`, `-Front`, `-Core`) e reposit\u00f3rios em que a pessoa \u00e9 s\u00f3 colaboradora.\n- **\"Importados\" vazio depois de importar e p\u00e1gina 1 com menos itens que a 2:** as abas filtravam no navegador s\u00f3 a p\u00e1gina de 10 que vinha do provedor. \"Importados\" mostrava s\u00f3 os importados que ca\u00edam na p\u00e1gina atual, e \"A Importar\" tirava os importados de cada p\u00e1gina, encolhendo a primeira.\n- **Atraso ao trocar de aba ou de p\u00e1gina:** cada troca refazia a chamada ao provedor, sem cache.\n\nBranch: `feat/paginacao-repos-github` (Service e Front), atualizada com a `develop` mais recente de cada reposit\u00f3rio (Service at\u00e9 #72, Front at\u00e9 #73). Os conflitos do rebase inicial foram em `accounts/views.py` e `accounts/tests.py` (Service, que ficaram com o refactor de `GitHubOrganizationsViewSet` da `develop`, mantendo `per_page=100` nas organiza\u00e7\u00f5es) e em `Products.tsx` (Front, que ficou com a estrutura nova da `develop` e a pagina\u00e7\u00e3o pelo servidor).\n\n## Lista de afazeres\n1. [x] Investigar a causa do erro do dashboard para membro (regra s\u00f3 de admin no proxy do Grafana, ainda em `main`).\n2. [x] GitLab, grupos: `GET /groups?min_access_level=10&per_page=100` seguindo `X-Next-Page` at\u00e9 o fim (antes vinha uma p\u00e1gina de 20 grupos).\n3. [x] GitLab, espa\u00e7o pessoal: trocar `/users/{id}/projects` por `/projects?membership=true&simple=true&order_by=path`, incluindo projetos em que a pessoa foi convidada.\n4. [x] GitLab: `per_page` de 50 para 10, igual ao GitHub.\n5. [x] GitHub, busca: filtrar pelo nome a lista completa da organiza\u00e7\u00e3o (`/orgs/{org}/repos?type=all`) ou do espa\u00e7o pessoal (`/user/repos?affiliation=owner,collaborator`) no servidor, em vez da Search API, para achar forks e reposit\u00f3rios de colaborador.\n6. [x] Criar `sync_provider_memberships(user)` e cham\u00e1-la no login GitHub/GitLab: entra e sai das organiza\u00e7\u00f5es pelo `github_org_id`/`gitlab_group_id` e registra os reposit\u00f3rios em que o usu\u00e1rio \u00e9 s\u00f3 colaborador. Falha do provedor n\u00e3o derruba o login.\n7. [x] Criar o modelo `RepositoryAccess` e `Organization.gitlab_group_id` (migra\u00e7\u00e3o `0016`).\n8. [x] `UserScopedMixin`: n\u00e3o-membro com acesso no provedor l\u00ea o reposit\u00f3rio (checagem em `GET /repos/{full_name}` ou `GET /projects/{id}`, validade de 10 minutos); sem acesso responde 404; escrita continua exigindo ser membro (403). Listagens de organiza\u00e7\u00e3o, produto e reposit\u00f3rio mostram s\u00f3 o que foi liberado.\n9. [x] Criar `POST /organizations/import-gitlab/`: importa o grupo GitLab como organiza\u00e7\u00e3o compartilhada (`get_or_create` por `gitlab_group_id`, valida o acesso com o token do usu\u00e1rio), de modo que o 2\u00ba usu\u00e1rio do grupo reaproveita a mesma organiza\u00e7\u00e3o.\n10. [x] Front: `importOrg` do GitLab usa o novo endpoint para grupos; a p\u00e1gina do reposit\u00f3rio mostra \"Voc\u00ea n\u00e3o tem acesso a este reposit\u00f3rio no GitHub/GitLab\" quando `getRepository` responde 404.\n11. [x] Service: par\u00e2metro `exclude_product` em `github-repos/` e `gitlab-projects/` para a aba \"A Importar\": a lista inteira do provedor sem os reposit\u00f3rios do produto, em p\u00e1ginas sempre de 10. Produto de outra organiza\u00e7\u00e3o responde 404.\n12. [x] Service: a lista completa do provedor \u00e9 buscada de 100 em 100, com as p\u00e1ginas depois da 1\u00aa em paralelo, e fica em cache por 5 minutos por usu\u00e1rio e organiza\u00e7\u00e3o (a `fga-eps-mds` tem 655 reposit\u00f3rios, 7 chamadas s\u00f3 na primeira vez).\n13. [x] Front: as listas da tela de importa\u00e7\u00e3o passam a usar SWR. \"Importados\" vem dos reposit\u00f3rios do produto no MeasureSoftGram, com busca e p\u00e1ginas de 10; \"Todos\" e \"A Importar\" v\u00eam do provedor, guardados por p\u00e1gina e aba (`keepPreviousData`), com uma barra fina enquanto atualizam. Depois de importar, o item vira \"Importado\" na hora e as listas do produto e do provedor s\u00e3o buscadas de novo. A busca espera 400 ms depois da digita\u00e7\u00e3o.\n14. [x] Testes do Service: novos em `test_provider_visibility.py` e `test_provider_listing.py` cobrindo grupos GitLab em 2 p\u00e1ginas, espa\u00e7o pessoal com `membership=true`, busca pessoal do GitHub achando reposit\u00f3rio de colaborador na 2\u00aa p\u00e1gina, busca da org achando fork, \"A Importar\" com p\u00e1ginas cheias e cache, `exclude_product` de outra org, `sync_provider_memberships` adicionando e removendo membros, leitura com acesso do provedor, 404 sem acesso, escrita bloqueada e importa\u00e7\u00e3o por um 2\u00ba usu\u00e1rio.\n15. [x] Testes do Front: `importGitlabGroup`, `importOrg` do GitLab, mensagem de sem acesso e as abas da importa\u00e7\u00e3o (\"Importados\" de 10 em 10 sem depender do provedor, \"A Importar\" pedindo `exclude_product`, reposit\u00f3rio importado aparecendo em \"Importados\").\n16. [x] Fazer commit, rebase sobre a `develop` mais recente de cada reposit\u00f3rio e publicar a branch `feat/paginacao-repos-github`.\n17. [x] Fazer commit e publicar as corre\u00e7\u00f5es da tela de importa\u00e7\u00e3o (itens 5, 11, 12, 13 e os testes correspondentes).\n18. [x] Abrir os PRs de `feat/paginacao-repos-github` para `develop` no Service e no Front.\n19. [ ] Promover `develop` para `main` no Front e no Service (PRs de release com #50/#58 e a pagina\u00e7\u00e3o) e rodar `deploy-prod.yml`.\n20. [x] Verifica\u00e7\u00e3o manual com `docker compose up` e 3 contas (owner da org, membro, colaborador externo de 1 reposit\u00f3rio), repetindo com um grupo GitLab e um projeto em que a pessoa foi convidada.\n21. [x] Review do PR do Front (#71): \"Importado\" marcado por organiza\u00e7\u00e3o e produto (n\u00e3o passa para outro produto); a lista do provedor de outra sele\u00e7\u00e3o n\u00e3o aparece nem fica clic\u00e1vel enquanto a nova carrega; \"Importar\" desabilitado at\u00e9 a lista de importados do produto chegar; `normalizeRepoUrl` sem regex; `Products` dividido em `ImportRepoList`, `ReauthorizePanel` e `useImportList`; `importOrg` dividido por provedor; `fetchOrganizations` tipado como `Promise<void>`. Testes de troca de produto e de organiza\u00e7\u00e3o.\n22. [x] Review do PR do Service (#69), acesso por reposit\u00f3rio: o colaborador continua vendo o produto (o Front precisa dele para chegar ao reposit\u00f3rio), mas os endpoints do produto s\u00f3 trazem os reposit\u00f3rios que ele v\u00ea: `release-dashboard`, `entity-analysis` (inclusive `matrix/`), `analysis-distribution`, `correlation`, `repositories_ids` da lista de releases, `analysis_data` e `planeed-x-accomplished`.\n23. [x] Review do PR do Service (#69), TTL: as listagens de organiza\u00e7\u00e3o, produto e reposit\u00f3rio s\u00f3 consideram acessos checados nos \u00faltimos 10 minutos; os vencidos s\u00e3o revalidados no provedor uma vez por requisi\u00e7\u00e3o (renovados se o provedor libera, apagados se revogou, ocultos se o provedor falha).\n24. [x] Falhas antigas corrigidas junto: `analysis_data` e `planeed-x-accomplished` liam qualquer release por id; `PUT release/{id}/update-end-at/` deixava qualquer usu\u00e1rio logado alterar qualquer release; `all/goal?release_id=` lia goal de outro produto.\n25. [ ] Publicar a atualiza\u00e7\u00e3o com a `develop` e as corre\u00e7\u00f5es do review do Service e responder as threads dos dois PRs.\n\n#### Observa\u00e7\u00f5es\n- A su\u00edte do Service dependia de um seed de caracter\u00edsticas/subcaracter\u00edsticas que falhava neste ambiente (`MissingSupportedMeasureException`). Com o seed contornado s\u00f3 para a execu\u00e7\u00e3o local, os 198 testes de `organizations` e `accounts` passam. Vale conferir no CI.\n- Depois do review: 372 testes de `organizations`, `accounts`, `releases` e `goals` passam (17 novos em `test_provider_scope.py`); `flake8` limpo e `makemigrations --check` sem mudan\u00e7as. A imagem Docker local era anterior ao `msgram-core==1.5.5rc4` do `pyproject.toml`, ent\u00e3o \u00e9 preciso rebuildar antes de subir a stack.\n- Front: os 35 testes de `Products.spec` passam; em `src/pages/products` s\u00f3 falham os 3 snapshots que j\u00e1 falhavam antes (`ProductsCreation`, `ReleasesList`, `TreeViewFilter`).\n- Organiza\u00e7\u00f5es criadas pelo seed (ex.: \"fga-eps-mds\" com `id=1`) n\u00e3o t\u00eam `github_org_name`/`github_org_id`, e a tela de Produtos as associa pelo nome sem importar, o que faz `github-repos/` responder 400. No ambiente local foi corrigido definindo `github_org_name` direto no banco.\n",
-        "closed_by": {
-            "login": "luciano-freitas-melo",
-            "id": 88516249,
-            "node_id": "MDQ6VXNlcjg4NTE2MjQ5",
-            "avatar_url": "https://avatars.githubusercontent.com/u/88516249?v=4",
-            "gravatar_id": "",
-            "url": "https://api.github.com/users/luciano-freitas-melo",
-            "html_url": "https://github.com/luciano-freitas-melo",
-            "followers_url": "https://api.github.com/users/luciano-freitas-melo/followers",
-            "following_url": "https://api.github.com/users/luciano-freitas-melo/following{/other_user}",
-            "gists_url": "https://api.github.com/users/luciano-freitas-melo/gists{/gist_id}",
-            "starred_url": "https://api.github.com/users/luciano-freitas-melo/starred{/owner}{/repo}",
-            "subscriptions_url": "https://api.github.com/users/luciano-freitas-melo/subscriptions",
-            "organizations_url": "https://api.github.com/users/luciano-freitas-melo/orgs",
-            "repos_url": "https://api.github.com/users/luciano-freitas-melo/repos",
-            "events_url": "https://api.github.com/users/luciano-freitas-melo/events{/privacy}",
-            "received_events_url": "https://api.github.com/users/luciano-freitas-melo/received_events",
-            "type": "User",
-            "user_view_type": "public",
-            "site_admin": false
-        },
+        "closed_by": null,
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/48/reactions",
             "total_count": 0,
@@ -3362,7 +3362,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/48/timeline",
         "performed_via_github_app": null,
-        "state_reason": "completed",
+        "state_reason": "reopened",
         "pinned_comment": null
     },
     {
