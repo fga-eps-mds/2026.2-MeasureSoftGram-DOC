@@ -22,6 +22,7 @@ const sidebars: SidebarsConfig = {
         'produto/visao-do-produto',
         'produto/arquitetura',
         'produto/repositorios',
+        'produto/rastreabilidade-us130',
       ],
     },
     {
