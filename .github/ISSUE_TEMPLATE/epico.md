@@ -74,6 +74,7 @@ Como saberemos que este épico funcionou? (ex: métricas de tempo de resposta, e
 ## 6. Definição de Pronto (DoD de Épico)
 
 - [ ] 100% dos itens filhos vinculados (US, Tasks e Bugs) concluídos e fechados no ZenHub
+- [ ] Incremento integrado no `develop` do repositório central e, na release, na `main` com tag
 - [ ] Fluxo integrado ponta a ponta validado sem regressões no ambiente de homologação (`develop`)
 - [ ] **Demonstração e homologação do fluxo completo aprovadas pelo Product Owner** (para Épico de Funcionalidade)
 - [ ] **Atingimento das metas técnicas comprovado por métricas** (para Épico de Correção)

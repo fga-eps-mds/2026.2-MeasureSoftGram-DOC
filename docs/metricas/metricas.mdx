@@ -3,6 +3,7 @@ id: metricas
 slug: /metricas
 title: Métricas
 sidebar_position: 1
+sidebar_label: Métricas
 ---
 
 # Métricas
@@ -13,7 +14,7 @@ de **produto** (qualidade do que é entregue).
 
 As três dimensões alimentam o **Dashboard Gerencial e Analítico**, que vale 20%
 da nota final e é avaliado em cada release — ver
-[Avaliação](/docs/disciplina/avaliacao#dashboard-gerencial-e-analítico).
+[Avaliação](/docs/disciplina#composição-da-nota).
 
 ## Origem dos dados
 
@@ -28,7 +29,7 @@ flowchart LR
   PD --> DASH
 ```
 
-:::tip Onde ver o dashboard
+:::tip[Onde ver o dashboard]
 **[Abrir o Dashboard de Gestão de Projeto](https://20262-measuresoftgram-doc.streamlit.app/)** — publicado no Streamlit
 Community Cloud a partir de `Analytics/app.py`. Comece pela tela
 **Visão Executiva**: ela resume entrega, qualidade, custo e riscos contra as metas da
@@ -38,7 +39,7 @@ burndown, EVM, riscos, custos e decisões). Se o app estiver
 dormindo (dias sem acesso), clique em *Yes, get this app back up* e aguarde uns 30 segundos.
 :::
 
-:::info Requisito da disciplina
+:::info[Requisito da disciplina]
 O dashboard deve ser feito em **Streamlit**, ficar no repositório de documentação
 e **consumir diretamente os arquivos `.json`** gerados automaticamente pelo
 pipeline a partir do SonarCloud — não vale colar números à mão.
@@ -57,7 +58,7 @@ Fonte: GitHub e ZenHub.
 | Burndown | Trabalho restante ao longo da sprint | Tendência descendente | Por sprint |
 | Distribuição de contribuições | Commits/PRs por integrante | Sem concentração excessiva | Por release |
 
-:::tip Por que a distribuição importa
+:::tip[Por que a distribuição importa]
 A R2 exige **contribuições rastreáveis equilibradas entre os membros**. Essa
 métrica é também a evidência de que o modelo de
 [squads por release](/docs/planejamento/squads) está de fato resolvendo o
@@ -76,7 +77,7 @@ Fonte: planilha de EVM-Ágil (horas reais individuais) e planilha de riscos.
 | Riscos abertos por severidade | Contagem da matriz de riscos | Sem risco alto sem resposta |
 
 Ver [Riscos](/docs/planejamento/riscos). O conteúdo teórico de EVM entra na
-[semana 5, 14/09](/docs/disciplina/cronograma).
+[semana 5, 14/09](/docs/disciplina#prazos).
 
 ## Métricas de produto
 
@@ -92,7 +93,7 @@ referência cruzada.
 | Dívida técnica (SQALE) | Tempo estimado de remediação | Não crescer entre releases | Reduzir em relação à R2 |
 | Vulnerabilidades e security hotspots | Contagem do SonarCloud | 0 críticas | 0 críticas |
 
-:::caution Limiares precisam ser validados
+:::caution[Limiares precisam ser validados]
 A escolha do modelo de qualidade e dos limiares aceitáveis é decisão do time
 **com o professor** (semana 8, 19/10). As metas marcadas como *a definir* devem
 ser preenchidas até a R2, com justificativa baseada em benchmark da literatura ou
@@ -120,4 +121,5 @@ análise, decisão e resultado.
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
-| 1.0 | 10/09/2026 | Inclusão das dimensões de projeto e das metas do plano de ensino | [@MilenaFRocha](https://github.com/MilenaFRocha) | |
+| 1.0 | 10/09/2026 | Inclusão das dimensões de projeto e das metas do plano de ensino | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.1 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

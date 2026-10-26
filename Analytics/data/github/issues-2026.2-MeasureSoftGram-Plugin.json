@@ -1,0 +1,155 @@
+{
+ "fonte": "API do GitHub (issues)",
+ "coletado_em": "2026-10-26T11:25:00+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-Plugin",
+ "desde": "2026-08-24",
+ "issues": [
+  {
+   "number": 8,
+   "title": "fix(test): corrida entre a montagem da interface e o §3 do teste de integração",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-19T14:56:21Z",
+   "closed_at": "2026-10-19T14:59:19Z",
+   "updated_at": "2026-10-19T14:59:28Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1750,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/8",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 7,
+   "title": "fix(ci): validar baseComponent.measures no parser.py",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-19T14:31:30Z",
+   "closed_at": "2026-10-19T14:34:20Z",
+   "updated_at": "2026-10-19T14:34:41Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1002,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/7",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 6,
+   "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-10-17T22:23:25Z",
+   "closed_at": null,
+   "updated_at": "2026-10-21T20:23:54Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4198,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/6",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 5,
+   "title": "Correção plugin a partir de diagnostico",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-09T02:54:51Z",
+   "closed_at": "2026-10-19T14:25:36Z",
+   "updated_at": "2026-10-19T14:26:19Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4441,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/5",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 4,
+   "title": "fix(ci): corrigir SHAs das actions e padronizar gatilhos no Release Please",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-29T22:39:56Z",
+   "closed_at": "2026-10-03T23:35:39Z",
+   "updated_at": "2026-10-09T13:17:52Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1459,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/4",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 3,
+   "title": "fix: rótulo TSQMI na sidebar e referências a lappis",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T22:41:26Z",
+   "closed_at": "2026-09-28T23:36:52Z",
+   "updated_at": "2026-09-28T23:36:58Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1462,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/3",
+   "author": "henriquecq"
+  },
+  {
+   "number": 2,
+   "title": "fix: corrige syntax de secrets no release e atualiza versao da action",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T19:45:45Z",
+   "closed_at": "2026-09-27T19:55:06Z",
+   "updated_at": "2026-09-27T19:55:09Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "antonioleaojr"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1372,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/2",
+   "author": "antonioleaojr"
+  },
+  {
+   "number": 1,
+   "title": "feat(ci): implementar SonarCloud desacoplado e automação de release com Google Release Please",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T07:03:59Z",
+   "closed_at": "2026-09-27T19:01:08Z",
+   "updated_at": "2026-09-27T19:01:08Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2862,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/1",
+   "author": "luciano-freitas-melo"
+  }
+ ]
+}

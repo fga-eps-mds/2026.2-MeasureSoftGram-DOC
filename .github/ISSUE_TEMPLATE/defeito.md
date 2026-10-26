@@ -17,6 +17,8 @@ Exemplo: Para o 1º bug vinculado ao Épico 01 [MSG01]:
 -> [BUG01.01] Correção de piscamento no menu lateral
 Para um defeito geral:
 -> [BUG00.01] Falha de autenticação ao recarregar a página
+Branch: fix/BUG01.01-piscamento-menu-lateral
+Fluxo de branch, commit e PR: https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/processo/fluxo-de-trabalho/
 ================================================================================
 -->
 
@@ -113,8 +115,9 @@ Checklist obrigatório de qualidade para mover este card para Closed / Done:
 - [ ] Defeito corrigido e verificado: não mais se reproduz seguindo os passos descritos
 - [ ] Teste automatizado de regressão implementado para garantir que a falha não reapareça
 - [ ] Código aderente aos padrões de linter e arquitetura
-- [ ] Pipeline de CI/CD executado com sucesso no repositório central
-- [ ] Pull Request (PR) revisado e aprovado por pelo menos um integrante
+- [ ] Quality gate do SonarCloud aprovado, sem problemas novos de severidade alta
+- [ ] PRs seguindo o fluxo (fork → develop do fork → develop central), com CI verde
+- [ ] Pull Request (PR) revisado e aprovado por pelo menos um integrante que não é o autor
 - [ ] Código integrado à branch `develop` do repositório central
 - [ ] Documentação técnica ou guias atualizados no `2026.2-Docs` e/ou `Docs` (quando aplicável)
 

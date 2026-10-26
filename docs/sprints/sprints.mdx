@@ -2,118 +2,59 @@
 id: sprints
 slug: /sprints
 title: Sprints
-sidebar_position: 1
+sidebar_label: Visão geral
+description: Índice das sprints do semestre, com período, release e situação do registro.
 ---
 
 # Sprints
 
-Registro de cada sprint do semestre. Adicione uma nova página em
-`docs/sprints/` por sprint e liste-a aqui, ou use o modelo abaixo diretamente
-nesta página enquanto o volume for pequeno.
+Uma página por sprint, com objetivo, planejado × realizado, issues pontuadas e
+retrospectiva. O calendário é o do Zenhub
+([decisão D1](/docs/planejamento/decisoes#d1-calendário-oficial-de-sprints)):
+sprints 1 e 2 de duas semanas, semanais a partir de 21/09.
 
 ## Índice
 
-| Sprint | Período | Objetivo | Status |
-| --- | --- | --- | --- |
-| [Sprint 1](#sprint-1---1708-a-0409) | 17/08 a 04/09/2026 | Conhecer o projeto e diagnosticar o estado do ecossistema | Em andamento |
+| Sprint | Período | Release | Pontos no escopo | Pontos concluídos | Retrospectiva |
+| --- | --- | --- | --- | --- | --- |
+| [Sprint 1](/docs/sprints/sprint-1) | 24/08–06/09 | R1 | 5 | 0¹ | ❌ falta |
+| [Sprint 2](/docs/sprints/sprint-2) | 07/09–20/09 | R1 | 10 | 0¹ | ❌ falta |
+| [Sprint 3](/docs/sprints/sprint-3) | 21/09–27/09 | R1 | 160 | 52 | ❌ falta |
+| [Sprint 4](/docs/sprints/sprint-4) | 28/09–04/10 | R2 | 102 | 29 | ❌ falta |
+| [Sprint 5](/docs/sprints/sprint-5) | 05/10–11/10 | R2 | 104 | 5² | ❌ falta |
+| [Sprint 6](/docs/sprints/sprint-6) | 12/10–18/10 | R2 | 104 | 13² | ❌ falta |
+| [Sprint 7](/docs/sprints/sprint-7) | 19/10–25/10 | R2 | 104 | em andamento | — |
+| Sprint 8 | 26/10–01/11 | R3 | | | |
+| Sprint 9 | 02/11–08/11 | R3 | | | |
+| Sprint 10 | 09/11–15/11 | R3 | | | |
+| Sprint 11 | 16/11–22/11 | R3 | | | |
+| Sprint 12 | 23/11–29/11 | R3 | | | |
 
----
+¹ Issues fechadas fora do pipeline Done não contavam como feitas até a
+[decisão D2](/docs/planejamento/decisoes#d2-critério-de-feito-e-níveis-pontuados).
+² Valor calculado em 21/10: a coleta automática do Zenhub
+(`Analytics/data/zenhub/velocity`) parou em 07/10, então o valor oficial do
+fechamento dessas sprints não foi gravado.
 
-## Sprint 1 - 17/08 a 04/09
+:::warning[Problema no uso do quadro]
+Issues abertas são carregadas de uma sprint para a outra sem sair da anterior, e
+issues já fechadas continuam listadas nas sprints seguintes (ex.:
+[DOC#50](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/50) aparece
+fechada da Sprint 3 à 7). Isso infla o escopo de cada sprint e deixa a velocity
+pouco confiável. Ação sugerida para a planning: remover das sprints antigas as
+issues não concluídas e não mover issues fechadas.
+:::
 
-### Objetivo
+## Como registrar uma sprint
 
-Primeiro contato da equipe com o projeto e com o Product Owner, e levantamento do
-estado técnico em que o MeasureSoftGram chegou a este semestre.
+Copie o [modelo de sprint](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/sprint.mdx)
+para `docs/sprints/sprint-N.mdx`, preencha na planning (objetivo e escopo) e na
+review/retrospectiva (resultado e retrospectiva) e adicione a linha nesta tabela.
+Ver [Guia de documentação](/docs/equipe/guia-documentacao).
 
-### O que foi feito
+## Histórico de versão
 
-**Diagnóstico técnico dos repositórios.** A equipe fez um pente-fino nos **sete
-repositórios** do projeto, avaliando arquitetura, integridade do modelo de
-qualidade, segurança, cobertura de testes e integração contínua. O resultado
-está em [Diagnóstico do ecossistema](/docs/diagnostico) e foi convertido em um
-[backlog técnico de 41 itens](/docs/diagnostico/backlog-tecnico), cada um
-redigido para virar issue.
-
-Os achados mais relevantes:
-
-- O **motor de cálculo publicado não corresponde ao código versionado** - a nota
-  de qualidade do projeto não é reproduzível hoje.
-- **Três versões do Core** em circulação simultanea.
-- **Três itens quebrados agora**, incluindo um endpoint público que expõe o
-  e-mail de todos os usuários.
-- **Nenhum portão de qualidade e bloqueante** em nenhum repositório.
-
-**Reunião com o Product Owner**, em que ele apresentou a **metodologia matemática
-do projeto** - a base de cálculo do modelo de qualidade. O registro está em
-[Reuniões](/docs/reunioes#reunião-1---apresentação-da-metodologia-matemática).
-
-**Organização da equipe:**
-
-- Definição dos acessos e ferramentas (Zenhub, Figma, Notion, Discord e
-  Telegram) - veja [Links e acessos](/docs/equipe/links).
-- Organização dos forks dos repositórios, conforme o
-  [guia da equipe](https://hackmd.io/@luciano-freitas-melo/fork-repositorios).
-- Criação deste site de documentação.
-
-### Pendências para a próxima sprint
-
-A reunião com o PO foi expositiva e a equipe ainda **não tem clareza sobre o
-objetivo do semestre**. A próxima reunião com ele precisa ser conduzida pela
-equipe, com pauta preparada, para alinhar objetivo, prioridades e critérios de
-aceitação.
-
-### Retrospectiva
-
-**O que foi bem**
-
--
-
-**O que pode melhorar**
-
--
-
-**Ações para a próxima sprint**
-
-- Preparar a pauta de perguntas para a reunião com o PO.
-
----
-
-## Modelo de registro de sprint
-
-### Sprint N - dd/mm a dd/mm
-
-#### Objetivo
-
-> O que a sprint pretende alcançar, em uma frase.
-
-#### Planejamento
-
-| Tarefa | Responsável | Estimativa | Status |
-| --- | --- | --- | --- |
-| | | | |
-
-#### Quadro de burndown
-
-> Anexe ou incorpore o gráfico de burndown da sprint.
-
-#### Resultados
-
-| Métrica | Planejado | Realizado |
-| --- | --- | --- |
-| Pontos entregues | | |
-| Tarefas concluídas | | |
-
-#### Retrospectiva
-
-**O que foi bem**
-
--
-
-**O que pode melhorar**
-
--
-
-**Ações para a próxima sprint**
-
--
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 31/08/2026 | Criação com o registro da Sprint 1 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 2.0 | 21/10/2026 | Uma página por sprint, sprints 2 a 7 registradas a partir do Zenhub | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

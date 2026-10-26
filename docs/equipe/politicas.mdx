@@ -2,49 +2,47 @@
 id: politicas
 title: Políticas de trabalho
 sidebar_position: 2
+sidebar_label: Políticas de trabalho
 ---
 
 # Políticas de trabalho
 
-## Política de branches
+## Branches, commits e pull requests
 
-| Branch | Propósito | Origem | Destino |
-| --- | --- | --- | --- |
-| `main` | Código estável, publicado | - | - |
-| `devel` | Integração do trabalho da sprint | `main` | `main` |
-| `feat/<nome>` | Nova funcionalidade | `devel` | `devel` |
-| `fix/<nome>` | Correção de defeito | `devel` | `devel` |
-| `docs/<nome>` | Alteração de documentação | `devel` | `devel` |
-
-Nomes de branch em minúsculas, palavras separadas por hífen.
-
-## Política de commits
-
-A equipe adota [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
-<tipo>(<escopo opcional>): <descricao no imperativo>
-```
-
-| Tipo | Uso |
-| --- | --- |
-| `feat` | Nova funcionalidade |
-| `fix` | Correção de defeito |
-| `docs` | Somente documentação |
-| `test` | Adição ou ajuste de testes |
-| `refactor` | Mudança sem alterar comportamento |
-| `chore` | Tarefas de manutenção e build |
-
-Commits com mais de um autor devem usar `Co-authored-by:`.
+O padrão de branches (`feat/`, `fix/`, `task/`, `docs/`), commits (Conventional
+Commits) e o caminho branch → `develop` do fork → `develop` central → `main`
+estão no [Fluxo de trabalho](/docs/processo/fluxo-de-trabalho).
 
 ## Política de code review
 
 - Todo Pull Request precisa de aprovação de ao menos um outro integrante.
-- O PR deve descrever o que muda e como testar.
+- O PR segue o [template](/docs/processo#pull-request): o que muda e
+  por quê, como testar, evidências e impacto na qualidade.
 - O autor não faz merge do próprio PR sem aprovação.
-- A CI precisa estar verde antes do merge.
+- A CI precisa estar verde antes da revisão e do merge.
+- Primeira revisão em até 2 dias úteis; PR parado vira bloqueio na daily.
+- A revisão é humana: não pode ser feita por IA.
 
 ## Código de conduta
 
 A equipe segue o código de conduta da organização fga-eps-mds. Comportamentos
 que violem o código devem ser comunicados aos monitores da disciplina.
+
+## Uso de IA
+
+O uso de IA generativa pela equipe segue a [política da disciplina](/docs/disciplina#política-de-ia) e os [combinados da equipe](/docs/equipe/uso-de-ia):
+
+- **Sinalização:** commits com código ou artefatos gerados por IA usam `Co-authored-by:` e o autor assinala o checklist no PR.
+- **Revisão humana obrigatória:** a IA não pode revisar nem aprovar Pull Requests; o autor precisa saber explicar qualquer trecho em revisão síncrona.
+- **Memorando de Decisão:** cada integrante mantém seu MD individualmente e realiza o envio diretamente pelo Aprender 3.
+- **Vedações:** atas com o PO, decisões gerenciais da R3, defesas orais e aprovação de PRs nunca passam por IA.
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 31/08/2026 | docs: estrutura inicial do site de documentacao da EPS 2026.2 | [@LuizaMaluf](https://github.com/LuizaMaluf) | [@DiegoCarlito](https://github.com/DiegoCarlito) |
+| 1.1 | 02/09/2026 | docs: adiciona acentuacao no texto visivel da documentacao | [@LuizaMaluf](https://github.com/LuizaMaluf) | [@DiegoCarlito](https://github.com/DiegoCarlito) |
+| 1.2 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) | [@DiegoCarlito](https://github.com/DiegoCarlito) |
+| 1.3 | 21/10/2026 | Branches e commits movidos para o Fluxo de trabalho (corrige `devel` → `develop` e inclui o repositório central); regras de revisão | [@MilenaFRocha](https://github.com/MilenaFRocha) | [@DiegoCarlito](https://github.com/DiegoCarlito) |
+| 1.4 | 24/10/2026 | Adiciona seção sobre uso de IA e governança da equipe | [@DiegoCarlito](https://github.com/DiegoCarlito) |  |

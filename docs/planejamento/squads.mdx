@@ -2,9 +2,10 @@
 id: squads
 title: Squads por release
 sidebar_position: 4
+sidebar_label: Squads por release
 ---
 
-# Organização em squads por feature/release
+# Squads por release
 
 ## A decisão
 
@@ -54,7 +55,7 @@ flowchart TB
 3. **Cada squad tem um responsável de squad.** Não é um cargo: é quem responde
    pelo andamento da fatia, acompanha as issues no ZenHub e leva os bloqueios
    para a reunião do time. O papel gira junto com a
-   [rotatividade de lideranças](/docs/disciplina#rotatividade-das-lideranças)
+   [rotatividade de lideranças](/docs/equipe#liderança-das-quinzenas)
    exigida pela disciplina.
 4. **Cada repositório tem pelo menos um *conhecedor* alocado.** Ver
    [Como mitigamos o risco](#como-mitigamos-o-risco).
@@ -63,45 +64,46 @@ flowchart TB
 
 ## Alocação por release
 
-> Preencher após a definição da EAP e do planejamento de releases.
-
 ### Release 1 — 28/09
 
-| Squad | Fatia de funcionalidade (o que entrega) | Repositórios envolvidos | Responsável | Integrantes |
-| --- | --- | --- | --- | --- |
-| Squad A | | | | |
-| Squad B | | | | |
-| Squad C | | | | |
+Na R1 a equipe se dividiu em frentes ligadas a épicos do Zenhub (mesma
+distribuição registrada em [Equipe](/docs/equipe#distribuição-de-responsabilidades)).
 
-**Dependências entre squads**
-
-| De | Para | O que | Prazo acordado |
+| Squad / frente | Fatia (o que entrega) | Épico | Integrantes |
 | --- | --- | --- | --- |
-| | | | |
+| Gestão e planejamento | Planejamento, EAP, riscos, custos, dashboard | [#2](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/2) · [#16](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/16) | Luiza Maluf, Guilherme Storch, Milena Fernandes Rocha |
+| Infraestrutura, CI/CD e deploys | Deploys e saneamento dos repositórios | [MSG03 #35](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/35) | Antonio Jose Magalhaes Leao Junior, Luciano Freitas |
+| Estabilização e bugs | Correções de segurança e defeitos | [MSG05 #37](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/37) | Kathlyn Lara Murussi, Nathan Benigno Ponce de Abreu, Henrique Camelo Quenino, Diogo Rodrigues Barboza, Marcos Antonio Teles de Castilhos |
+| Migração dos gráficos | Gráficos em React e desacoplamento do Grafana | [#48](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/48) | Gabriel Marques de Souza, Manoel Felipe Teixeira Neto |
+| MSG-01 Dívida técnica | Medição de dívida técnica (CLI e Front) | [MSG01 #41](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/41) | Gustavo Roberto Silva de Melo, Lucas Bottino, Gabriel Moura, Wallyson Souza |
+| MSG-02 Carregamento do frontend | Fluxo de carregamento sem travamentos | [MSG02 #42](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/42) | Alexandre de Santana Beck, Diego Carlito Rodrigues de Souza, Pedro Sena Barbosa Holtz Yen, Daniel Ferreira Santos Rabelo |
 
 ### Release 2 — 26/10
 
-| Squad | Fatia de funcionalidade (o que entrega) | Repositórios envolvidos | Responsável | Integrantes |
-| --- | --- | --- | --- | --- |
-| | | | | |
+Na R2 a equipe passou a trabalhar em **squads por release**, cada um com um responsável.
 
-**Dependências entre squads**
+| Squad | Responsável | Integrantes |
+| --- | --- | --- |
+| Squad 1 | Lucas Bottino | Lucas Bottino, Luiza Maluf, Wallyson Souza, Gustavo Roberto Silva de Melo, Gabriel Moura, Henrique Camelo Quenino |
+| Squad 2 | Guilherme Storch | Milena Fernandes Rocha, Guilherme Storch, Diogo Rodrigues Barboza, Diego Carlito Rodrigues de Souza, Daniel Ferreira Santos Rabelo |
+| Squad 3 | Luciano Freitas | Luciano Freitas, Nathan Benigno Ponce de Abreu, Alexandre de Santana Beck, Marcos Antonio Teles de Castilhos |
 
-| De | Para | O que | Prazo acordado |
-| --- | --- | --- | --- |
-| | | | |
+:::caution[A preencher]
+- Fatia de funcionalidade (histórias) de cada squad na R2.
+- Integrantes que não aparecem em nenhum squad: Antonio Jose Magalhaes Leao Junior,
+  Kathlyn Lara Murussi, Gabriel Marques de Souza, Manoel Felipe Teixeira Neto e
+  Pedro Sena Barbosa Holtz Yen. Registrar em que squad ou frente cada um está.
+:::
 
 ### Release 3 — 30/11
 
-| Squad | Fatia de funcionalidade (o que entrega) | Repositórios envolvidos | Responsável | Integrantes |
+:::caution[A preencher na planning de 26/10]
+Formar os squads da onda 3 (AHP, CI/CD GitLab, alerta antes do merge, segurança).
+:::
+
+| Squad | Fatia (o que entrega) | Histórias | Responsável | Integrantes |
 | --- | --- | --- | --- | --- |
 | | | | | |
-
-**Dependências entre squads**
-
-| De | Para | O que | Prazo acordado |
-| --- | --- | --- | --- |
-| | | | |
 
 ## Como mitigamos o risco
 
@@ -116,7 +118,7 @@ repositório em que vão mexer. As contramedidas combinadas pela equipe:
 | **Revisão cruzada obrigatória** | Todo PR precisa de aprovação de alguém de fora do squad autor. | A definir |
 | **Quadro de conhecimento** | Matriz pessoa × repositório atualizada a cada release, para enxergar concentração de conhecimento e planejar a rotação. É exigência da R1. | A definir |
 
-:::tip Registre o efeito, não só a intenção
+:::tip[Registre o efeito, não só a intenção]
 Este modelo é uma decisão gerencial: ele rende **Memorando de Decisão**. Ao final
 de cada release, registre em [Sprints](/docs/sprints) o que a troca de squads
 custou (retrabalho, PRs parados, tempo de rampa) e o que ela rendeu (distribuição
@@ -129,9 +131,13 @@ opinião.
 Matriz de quem já trabalhou em cada repositório. Atualizar ao final de cada
 release. Legenda: 🟢 confortável · 🟡 já mexeu · ⚪ nunca mexeu.
 
-| Integrante | Core | Parser | Service | Front | CLI | Action | Docs |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| | | | | | | | |
+:::caution[A preencher — critério da R1 não atendido]
+Cada integrante marca os repositórios em que já trabalhou. Atualizar ao final de cada release.
+:::
+
+| Integrante | Core | Parser | Service | Front | CLI | Action | AI | Docs |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| | | | | | | | | |
 
 O mapeamento de competências gerais fica na aba **habilidades** da
 [planilha da equipe](https://docs.google.com/spreadsheets/d/1iucrFAgDsj8adfkzzcUfnMIkJwoAVVHPLkpdJ8lDSHc/edit?usp=sharing).
@@ -151,4 +157,6 @@ O mapeamento de competências gerais fica na aba **habilidades** da
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
-| 1.0 | 10/09/2026 | Criação do documento com o modelo de squads por feature/release | [@MilenaFRocha](https://github.com/MilenaFRocha) | |
+| 1.0 | 10/09/2026 | Criação do documento com o modelo de squads por feature/release | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.1 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.2 | 22/10/2026 | Squads da Release 2 com responsável e integrantes | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

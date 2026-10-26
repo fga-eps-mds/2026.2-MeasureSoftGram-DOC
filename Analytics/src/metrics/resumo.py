@@ -44,20 +44,22 @@ def release_em_foco(ctx, release: str | None) -> tuple[str | None, pd.DataFrame]
 
 
 def indicadores(ctx, filtros) -> pd.DataFrame:
+    """Indicadores no recorte global: período (situação no fim dele), repositórios, branch e release."""
+    from src.components import filters as flt   # import tardio: filtros dependem do Streamlit
     rel_meta = filtros["release_metas"]
-    repos = [r for r in ctx.sonar_atual["repositorio"].unique()] if not ctx.sonar_atual.empty else []
-    if filtros["repos"]:
-        repos = [r for r in repos if sn.nome_curto(r) in filtros["repos"]]
+    ini, fim = pd.Timestamp(filtros["periodo"][0]), pd.Timestamp(filtros["periodo"][1]) + pd.Timedelta(days=1)
+    rec = flt.sonar(ctx, filtros)
+    repos, atual, serie = rec["repos"], rec["atual"], rec["serie_ate"]
     out = []
 
     # ── Qualidade (SONAR) ──
-    cob = sn.atual_e_anterior(ctx.sonar_serie, "coverage", repos)
+    cob = sn.atual_e_anterior(serie, "coverage", repos)
     meta_c = config.METAS["coverage"][rel_meta]
     if cob["atual"] is None:
         out.append(_item("Qualidade", "Cobertura de testes", None, "unavailable",
                          "sem métricas do SonarCloud", "Qualidade técnica", "SONAR"))
     else:
-        ult = ctx.sonar_atual[(ctx.sonar_atual["metrica"] == "coverage") & ctx.sonar_atual["repositorio"].isin(repos)]
+        ult = atual[(atual["metrica"] == "coverage") & atual["repositorio"].isin(repos)]
         abaixo = sorted(sn.nome_curto(r) for r in ult.loc[ult["valor"] < meta_c, "repositorio"])
         # A meta vale por repositório: a média pode passar com repositórios abaixo, então o status
         # é o do pior repositório (a média fica só como valor de referência).
@@ -67,15 +69,14 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
                          f"meta ≥ {num(meta_c)}% em cada repositório · {len(abaixo)} de {len(ult)} abaixo: "
                          f"{', '.join(abaixo)}" if abaixo else f"meta ≥ {num(meta_c)}% · todos os repositórios na meta",
                          "Qualidade técnica", "SONAR"))
-    dup = ctx.sonar_atual[(ctx.sonar_atual["metrica"] == "duplicated_lines_density")
-                          & ctx.sonar_atual["repositorio"].isin(repos)]
+    dup = atual[(atual["metrica"] == "duplicated_lines_density") & atual["repositorio"].isin(repos)]
     if not dup.empty:
         pior = dup.loc[dup["valor"].idxmax()]
         meta_d = config.METAS["duplicated_lines_density"][rel_meta]
         out.append(_item("Qualidade", "Duplicação (pior repositório)", f"{num(pior['valor'], 1)}%",
                          status_meta("duplicated_lines_density", pior["valor"], rel_meta, False),
                          f"{sn.nome_curto(pior['repositorio'])} · meta ≤ {num(meta_d)}%", "Qualidade técnica", "SONAR"))
-    qg = (ctx.sonar_api or {}).get("quality_gate", pd.DataFrame())
+    qg = (ctx.sonar_api or {}).get("quality_gate", pd.DataFrame()) if rec["api_no_periodo"] else pd.DataFrame()
     if qg is not None and not qg.empty:
         q = qg[qg["repositorio"].isin(repos)] if repos else qg
         reprov = sorted(sn.nome_curto(r) for r in q.loc[q["status"] != "OK", "repositorio"])
@@ -83,17 +84,39 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
                          "good" if not reprov else ("warning" if len(reprov) <= len(q) / 2 else "critical"),
                          f"reprovados: {', '.join(reprov)}" if reprov else "todos aprovados", "Qualidade técnica",
                          "SONAR"))
-        bugs = sn.atual_e_anterior(ctx.sonar_serie, "bugs", repos)
+        bugs = sn.atual_e_anterior(serie, "bugs", repos)
         if bugs["atual"] is not None:
             out.append(_item("Qualidade", "Bugs abertos", num(bugs["atual"]),
                              "good" if bugs["atual"] == 0 else "warning", "soma dos repositórios (SonarCloud)",
                              "Qualidade técnica", "SONAR"))
+    elif not rec["api_no_periodo"] and (ctx.sonar_api or {}).get("quality_gate") is not None \
+            and not ctx.sonar_api["quality_gate"].empty:
+        out.append(_item("Qualidade", "Quality Gate", None, "neutral",
+                         "sem histórico: o snapshot da API é posterior ao fim do período", "Qualidade técnica",
+                         "SONAR"))
     else:
         out.append(_item("Qualidade", "Quality Gate, bugs e vulnerabilidades", None, "unavailable",
                          "não coletados: rodar scripts/coleta_sonar.py", "Qualidade técnica", "SONAR"))
+    try:   # nota de qualidade do notebook (Q-Rapids), média dos repositórios
+        from src.metrics import qrapids
+        rq = {**rec, "repos": [r for r in repos if r in config.QRAPIDS["linguagem"]]}
+        notas = qrapids.notas_por_repo(ctx, filtros, rq)
+        if notas:
+            media, fora = qrapids.media_repos(notas, lambda a: a["total"])
+            tot = {sn.nome_curto(r): n["avaliacao"]["total"] for r, n in notas.items()
+                   if sn.nome_curto(r) not in fora}
+            if tot:
+                pior = min(tot, key=tot.get)
+                out.append(_item("Qualidade", "Nota de qualidade Q-Rapids (média)", num(media, 2),
+                                 "good" if media >= 0.7 else ("warning" if media >= 0.5 else "critical"),
+                                 f"0 a 1 · {len(tot)} repositórios · pior: {pior} ({num(tot[pior], 2)})"
+                                 + (f" · sem dado no pipeline: {', '.join(fora)}" if fora else ""),
+                                 "Qualidade (Q-Rapids)", "SONAR"))
+    except Exception:  # noqa: BLE001 — a nota não derruba a visão executiva
+        pass
     if not ctx.sonar_erros.empty:
         sem = sorted({sn.nome_curto(r) for r in ctx.sonar_erros["repositorio"]}
-                     - {sn.nome_curto(r) for r in ctx.sonar_atual["repositorio"]})
+                     - {sn.nome_curto(r) for r in atual["repositorio"]})
         if sem:
             out.append(_item("Qualidade", "Repositórios sem projeto no SonarCloud", str(len(sem)), "warning",
                              ", ".join(sem), "Qualidade técnica", "SONAR"))
@@ -121,6 +144,10 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
                              else "crescimento do escopo desde a linha de base (≤ +20%)", "Agile EVM", "ZENHUB"))
     v = ctx.zh_iniciadas
     concl = v[v["status"] == vel.STATUS_CONCLUIDA] if not v.empty else v
+    cal = ctx.calendario
+    if not concl.empty and cal is not None and not cal.empty:   # sprints que terminam no período
+        no_per = set(cal.loc[(cal["fim"] >= ini) & (cal["fim"] < fim), "sprint"])
+        concl = concl[concl["sprint_label"].isin(no_per)]
     if not concl.empty:
         plan, feito = concl["planned_story_points"].sum(min_count=1), concl["completed_story_points"].sum(min_count=1)
         taxa = vel.calculate_completion_rate(plan, feito)
@@ -154,10 +181,9 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
                              "Agile EVM",
                              "PLANILHA"))
         else:
-            h = float(feitas["horas_reais"].fillna(0).sum())
             out.append(_item("Custo", "CPI (custo)", num(u["CPI"], 2), status_indice(u["CPI"]),
-                             f"EV {brl(u['EV'], 0)} ÷ AC {brl(u['AC'], 0)} ({num(h)} h registradas na aba Horas até a "
-                             f"{u['sprint']}) · meta ≥ {num(config.META_INDICE_EVM, 2)}"
+                             f"EV {brl(u['EV'], 0)} ÷ AC {brl(u['AC'], 0)} (custo do time até a {u['sprint']}, "
+                             f"sem horas) · meta ≥ {num(config.META_INDICE_EVM, 2)}"
                              + (" · time inteiro, independe do filtro de repositórios"
                                 if isinstance(u.get("escopo_custo"), str) else ""), "Agile EVM", "CALCULADO"))
 
@@ -180,7 +206,11 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
             out.append(_item("Riscos", "Riscos só no Monitoramento", ", ".join(faltam), "warning",
                              "aparecem na aba Monitoramento e não na aba Riscos: cadastrar na aba Riscos",
                              "Riscos", "PLANILHA"))
-    n_dec = len(ctx.decisoes) if ctx.decisoes is not None else 0
+    dec = ctx.decisoes if ctx.decisoes is not None else pd.DataFrame()
+    if not dec.empty and "data" in dec:   # a meta é acumulada: conta tudo até o fim do período
+        d = pd.to_datetime(dec["data"], dayfirst=True, errors="coerce")
+        dec = dec[d.isna() | (d < fim)]
+    n_dec = len(dec)
     meta_dec = config.METAS_DECISOES.get(rel_meta)
     out.append(_item("Riscos", "Decisões baseadas em dados", num(n_dec),
                      "neutral" if not meta_dec else ("good" if n_dec >= meta_dec else "warning"),
@@ -191,7 +221,7 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
     # ── Processo (GITHUB) ──
     runs = ctx.gh_runs
     if runs is not None and not runs.empty:
-        c = runs[runs["conclusao"].isin(["success", "failure"])]
+        c = flt.por_periodo(runs[runs["conclusao"].isin(["success", "failure"])], "criado_em", filtros["periodo"])
         if filtros["repos"]:
             c = c[c["repositorio"].map(sn.nome_curto).isin(filtros["repos"])]
         if not c.empty:

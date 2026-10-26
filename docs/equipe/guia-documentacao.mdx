@@ -1,0 +1,122 @@
+---
+id: guia-documentacao
+title: Guia de documentação
+sidebar_label: Guia de documentação
+description: Padrão de página, onde registrar cada tipo de informação e checklist de revisão da documentação.
+---
+
+# Guia de documentação
+
+Regras para que todas as páginas sigam o mesmo padrão e qualquer pessoa (o
+professor, o PO, um colega de outra frente) encontre a informação e a evidência
+em poucos cliques.
+
+## Princípios
+
+1. **Cada página tem um objetivo.** O primeiro parágrafo diz o que o leitor
+   encontra e para que a equipe usa aquilo. Se não dá para escrever esse
+   parágrafo, a página não deveria existir.
+2. **Escreva o que a equipe fez ou decidiu, não a teoria.** Teoria vira uma
+   frase com a referência. O conteúdo é a nossa decisão, o nosso dado e a nossa
+   evidência.
+3. **Toda afirmação importante tem evidência.** Link para issue, PR, ata, tela do
+   dashboard ou planilha.
+4. **Nada inventado.** Dado que ainda não existe fica num bloco "A preencher",
+   com o responsável e o prazo.
+5. **Uma informação, um lugar.** Datas da disciplina ficam em
+   [A disciplina](/docs/disciplina); o calendário de sprints, na
+   [decisão D1](/docs/planejamento/decisoes). As outras páginas apontam para lá
+   em vez de copiar.
+6. **Detalhe técnico de implementação** (nomes de arquivos, queries, variáveis de
+   configuração) vai no README do código (`Analytics/README.md`), não aqui.
+
+## Modelos
+
+Todos os templates da equipe (issues, PR, reuniões e documentação) estão listados em
+[Templates e fluxos](/docs/processo).
+
+Os modelos ficam em [`docs/_modelos/`](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/tree/main/docs/_modelos)
+(pastas com `_` não são publicadas). Copie o modelo e preencha.
+
+| Modelo | Use para | Onde salvar | Quando |
+| --- | --- | --- | --- |
+| [`pagina.mdx`](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/pagina.mdx) | Qualquer página nova | Pasta da seção | — |
+| [`sprint.mdx`](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/sprint.mdx) | Registro de sprint | `docs/sprints/sprint-N.mdx` | Planning (objetivo) e review/retro (resultado) |
+| [`ata.mdx`](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/ata.mdx) | Reunião com o PO, interna ou com monitores | `docs/reunioes/ata-po-dd-mm.mdx` | Até 2 dias após a reunião |
+| [`decisao.mdx`](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/decisao.mdx) | Decisão gerencial ou técnica baseada em dado | Bloco em `docs/planejamento/decisoes.mdx` + aba Decisões | Quando a decisão é tomada; resultado na sprint seguinte |
+| [`release.mdx`](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/release.mdx) | Critérios e evidências de uma release | `docs/releases/release-N.mdx` | Início da release; revisar antes da apresentação |
+| [`atividade-lean-inception.mdx`](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/atividade-lean-inception.mdx) | Atividade de inception | `docs/lean-inception/` | — |
+
+## Padrão de página
+
+```mdx
+---
+title: Título da página          # igual ao sidebar_label
+sidebar_label: Título da página
+description: Uma frase dizendo para que serve a página.
+---
+
+# Título da página
+
+Objetivo em 1–2 frases.
+
+## Seções de conteúdo
+
+## Evidências
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | dd/mm/aaaa | Criação | [@autor](https://github.com/autor) | [@revisor](https://github.com/revisor) |
+```
+
+### Convenções
+
+| Item | Padrão |
+| --- | --- |
+| Nome de arquivo | minúsculas, com hífen: `ata-po-07-10.mdx`, `sprint-8.mdx` |
+| Datas | `dd/mm/aaaa` no texto; `dd/mm` em tabelas de calendário |
+| Nomes de ferramentas | Zenhub, SonarCloud, GitHub, Figma, Streamlit |
+| Pessoas | Nome completo na primeira menção; `@usuario` do GitHub em histórico e responsáveis |
+| Caixas de aviso | Sempre com colchetes: `:::tip[Título]`. **Com espaço (`:::tip Título`) a caixa não renderiza.** |
+| Pendência | `:::caution[A preencher]` com o que falta, quem preenche e até quando |
+| Situação de critério | ✅ atendido · 🟡 parcial · ❌ não atendido · ⏳ a verificar |
+| Histórico de versão | Uma linha por mudança relevante; **Revisor** é quem aprovou o PR |
+
+## Fluxo
+
+1. Branch `docs/<assunto>` a partir da `main` (ver [Fluxo de trabalho](/docs/processo/fluxo-de-trabalho)).
+2. Commit no padrão Conventional Commits (`docs(sprints): registra sprint 8`).
+3. PR com o template, revisado por **outra pessoa**; o revisor entra na coluna
+   Revisor do histórico.
+4. Antes de pedir revisão, rode `npm run build`: link quebrado falha o build.
+
+## Checklist de revisão
+
+- [ ] O primeiro parágrafo diz o objetivo da página.
+- [ ] Não há teoria copiada, nem texto que poderia estar em qualquer projeto.
+- [ ] Datas e números batem com a fonte (Zenhub, SonarCloud, planilha, ata).
+- [ ] Cada afirmação importante tem link de evidência.
+- [ ] Pendências estão em "A preencher" com responsável.
+- [ ] Título igual ao item da barra lateral.
+- [ ] Caixas de aviso renderizadas (sem `:::` aparecendo na página).
+- [ ] Histórico de versão atualizado, com revisor.
+- [ ] Nenhum conteúdo proibido por IA (atas com o PO, decisões gerenciais do relatório).
+
+## Quem atualiza o quê
+
+| Página | Responsável | Quando |
+| --- | --- | --- |
+| Sprint da semana | Líderes da quinzena | Planning (segunda) e review/retro |
+| Ata com o PO | Relator da reunião | Até sexta da mesma semana |
+| Decisões | Quem propôs a decisão | Na decisão e na sprint seguinte (resultado) |
+| Release em andamento | Líderes da quinzena | Toda planning e antes da apresentação |
+| Riscos e custos | Responsáveis na planilha | Toda planning |
+| Equipe e squads | Líderes da quinzena | Início de cada release |
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 21/10/2026 | Criação do guia e dos modelos em `docs/_modelos/` | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

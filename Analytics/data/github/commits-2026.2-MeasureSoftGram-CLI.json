@@ -1,0 +1,1409 @@
+{
+ "fonte": "API do GitHub (commits)",
+ "coletado_em": "2026-10-26T11:25:00+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-CLI",
+ "desde": "2026-08-24",
+ "branch": "develop",
+ "commits": [
+  {
+   "sha": "1e81255e1f7cd919d3a6166c9f397ea8fbf136f8",
+   "date": "2026-10-25T17:57:26Z",
+   "author": "DiegoCarlito",
+   "message": "fix(calculate): filtra medidas pela configuração do msgram.json em todos os formatos de saída (#19)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/commands/cmd_demo.py",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/resources/measure.py",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit/test_config_edits.py",
+     "status": "modified",
+     "additions": 91,
+     "deletions": 9
+    },
+    {
+     "filename": "tests/unit/test_demo_github_measures.py",
+     "status": "added",
+     "additions": 68,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "08798a02925445524e1e11b2fc3953dd97506b1a",
+   "date": "2026-10-25T14:32:08Z",
+   "author": "DiegoCarlito",
+   "message": "fix: empacota dataset de exemplo para execucao do msgram demo (#18)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/cli/commands/cmd_demo.py",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 7
+    },
+    {
+     "filename": "src/cli/resources/demo_data/fga-eps-mds-2022-2-MeasureSoftGram-CLI-01-11-2023-21-59-03-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/system/test_demo.py",
+     "status": "modified",
+     "additions": 124,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "d69ad30dfbd44e55fb7e42f0886e6275a61005ae",
+   "date": "2026-10-19T02:22:34Z",
+   "author": "gusrberto",
+   "message": "fix(cli): remove codigo morto e resquicios de versoes anteriores (#16)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/exceptions/__init__.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 3
+    },
+    {
+     "filename": "src/cli/exceptions/exceptions.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 51
+    },
+    {
+     "filename": "src/config/settings.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 17
+    },
+    {
+     "filename": "src/config/setup_log.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 12
+    },
+    {
+     "filename": "src/logs/debug.log",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/system/test_list.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 25
+    },
+    {
+     "filename": "tests/unit/test_setup_log.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "63269dd169b42deaf46f51a49d4568aac7fd7b15",
+   "date": "2026-10-17T22:33:13Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados (#9)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 25
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 41,
+     "deletions": 24
+    }
+   ]
+  },
+  {
+   "sha": "50a54c320971125ceb4fd83598c67f7117152c81",
+   "date": "2026-10-17T19:56:54Z",
+   "author": "gusrberto",
+   "message": "Merge pull request #15 from fga-eps-mds/refactor/show-tree-complexidade",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "src/cli/commands/cmd_calculate.py",
+     "status": "modified",
+     "additions": 33,
+     "deletions": 24
+    }
+   ]
+  },
+  {
+   "sha": "f6af9d4fed3a82874208a567a0c62c0cbe3bca9f",
+   "date": "2026-10-17T19:49:55Z",
+   "author": "bottinolucas",
+   "message": "refactor(calculate): reduz a complexidade cognitiva do show_tree",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/commands/cmd_calculate.py",
+     "status": "modified",
+     "additions": 33,
+     "deletions": 24
+    }
+   ]
+  },
+  {
+   "sha": "218896411f07f008be38adaa2bb2873919b8f0fd",
+   "date": "2026-10-17T19:48:38Z",
+   "author": "MilenaFRocha",
+   "message": "Merge pull request #14 from fga-eps-mds/fix/cli-respeita-msgram-json",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/cli/commands/cmd_calculate.py",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 5
+    },
+    {
+     "filename": "src/cli/commands/cmd_demo.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 6
+    },
+    {
+     "filename": "tests/unit/test_calculate.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 2
+    },
+    {
+     "filename": "tests/unit/test_config_edits.py",
+     "status": "added",
+     "additions": 103,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "cddde11c8b22eedbe442b943d449ebae630dd09e",
+   "date": "2026-10-17T19:34:13Z",
+   "author": "bottinolucas",
+   "message": "Merge branch 'develop' into fix/cli-respeita-msgram-json",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/cli/commands/cmd_extract.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 18
+    },
+    {
+     "filename": "src/cli/jsonReader/jsonReader.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 6
+    },
+    {
+     "filename": "src/cli/parsers.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 9
+    },
+    {
+     "filename": "src/config/setup_log.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 19
+    }
+   ]
+  },
+  {
+   "sha": "115ece284d827e971f228e0c10aa17a1a17f094e",
+   "date": "2026-10-17T19:18:12Z",
+   "author": "bottinolucas",
+   "message": "Merge pull request #13 from fga-eps-mds/fix/task05.08-varredura-resquicios",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/cli/commands/cmd_extract.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 18
+    },
+    {
+     "filename": "src/cli/jsonReader/jsonReader.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 6
+    },
+    {
+     "filename": "src/cli/parsers.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 9
+    },
+    {
+     "filename": "src/config/setup_log.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 19
+    }
+   ]
+  },
+  {
+   "sha": "f3bf0c231e93c1541c4a18d9f2bc513d05eaf28c",
+   "date": "2026-10-17T19:01:42Z",
+   "author": "bottinolucas",
+   "message": "chore(release): prepara 3.4.1rc2 com msgram-core 1.5.5rc3",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "593484daaa91b87db3a7db721228bc8c947b3a4a",
+   "date": "2026-10-17T19:01:42Z",
+   "author": "bottinolucas",
+   "message": "fix(calculate): respeita as edições do msgram.json na demo e na saída em árvore",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/commands/cmd_calculate.py",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 5
+    },
+    {
+     "filename": "src/cli/commands/cmd_demo.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 6
+    },
+    {
+     "filename": "tests/unit/test_calculate.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 2
+    },
+    {
+     "filename": "tests/unit/test_config_edits.py",
+     "status": "added",
+     "additions": 103,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "26cbbb262833a763625a501a7da7694e752c59a0",
+   "date": "2026-10-14T19:49:57Z",
+   "author": "gusrberto",
+   "message": "Remove codigo comentado e funcoes sem uso",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/cli/commands/cmd_extract.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 18
+    },
+    {
+     "filename": "src/cli/jsonReader/jsonReader.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 6
+    },
+    {
+     "filename": "src/cli/parsers.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 9
+    },
+    {
+     "filename": "src/config/setup_log.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 19
+    }
+   ]
+  },
+  {
+   "sha": "29ced333f8c33c52a58894872686c0f2f7f06848",
+   "date": "2026-10-07T22:37:10Z",
+   "author": "bottinolucas",
+   "message": "Merge pull request #12 from fga-eps-mds/fix/sonar-pr-de-fork",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "d69f1649bdd9c1fd221926f6c724deebb5c5a2e9",
+   "date": "2026-10-07T22:34:55Z",
+   "author": "bottinolucas",
+   "message": "ci(sonar): pula o scan quando o SONAR_TOKEN não está disponível",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "bad8140cfce7d6ab8233db2e913ba4c30e9e373e",
+   "date": "2026-10-07T22:21:13Z",
+   "author": "bottinolucas",
+   "message": "Merge pull request #11 from fga-eps-mds/chore/release-3.4.1rc1",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    },
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "6f919995b90435524a3fc5c48d407ac5e6fc36b2",
+   "date": "2026-10-07T22:18:20Z",
+   "author": "LuizaMaluf",
+   "message": "Merge branch 'develop' into chore/release-3.4.1rc1",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "8eb600eb12ce27615fa3eac450a083bf649dc348",
+   "date": "2026-10-07T21:49:19Z",
+   "author": "LuizaMaluf",
+   "message": "Merge pull request #10 from fga-eps-mds/ci/restringe-publicacao-ao-central",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "e8bb3e2376fb364f351c865c44429e4554b12921",
+   "date": "2026-10-07T21:26:15Z",
+   "author": "bottinolucas",
+   "message": "build: depende do msgram-core 1.5.5rc2 publicado no PyPI",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "81388fef547a5066da2d7eea1530ed96020fe77a",
+   "date": "2026-10-07T21:22:22Z",
+   "author": "bottinolucas",
+   "message": "ci: restringe a publicação no PyPI ao repositório central",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "15c328f5cc9958eff50b15eff9c332a0908f4f2f",
+   "date": "2026-09-26T05:00:54Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(release): bump version to 3.4.1rc1",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "66d1a71db9bf593eed349d16e767e0c0c6d39f6a",
+   "date": "2026-10-06T23:53:44Z",
+   "author": "Diogo-Barboza",
+   "message": "chore(ci): configurar dependabot, auto-merge e pinning de github actions (#7)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/dependabot.yml",
+     "status": "added",
+     "additions": 19,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/dependabot-automerge.yml",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 8
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "a63109093ed83d42cee17cd77668ed222b23157a",
+   "date": "2026-10-06T23:51:01Z",
+   "author": "henriquecq",
+   "message": "Merge pull request #8 from fga-eps-mds/fix/108-cli-help-formats",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "src/cli/parsers.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "tests/unit/test_parser.py",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "5e93afa51bddbec0f25ad9d80814f798bd8b41c9",
+   "date": "2026-09-28T22:18:41Z",
+   "author": "henriquecq",
+   "message": "fix(parsers): usar AVAILABLE_GEN_FORMATS no help do calculate",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/parsers.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "9463eee2e0a2df85ff530d1a88bc316666bb8189",
+   "date": "2026-09-28T22:18:34Z",
+   "author": "henriquecq",
+   "message": "test(parsers): cobre lista completa de formatos no help do calculate",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "tests/unit/test_parser.py",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "3302837b8e3eb39a73e2bd124638da8f53bad1b3",
+   "date": "2026-09-28T00:15:12Z",
+   "author": "nateejpg",
+   "message": "Merge pull request #4 from fga-eps-mds/fix/50-msgram-core-1.5.4",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit/test_cli_theme.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "3ac36feae2170e904ebe72376fcc421a879ccaf2",
+   "date": "2026-09-27T23:38:47Z",
+   "author": "nateejpg",
+   "message": "fix: integra develop e fixa referencia do Core",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/cli/aggregate_metrics.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/commands/cmd_list.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/resources/measure.py",
+     "status": "modified",
+     "additions": 50,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/resources/metrics.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/config/settings.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_aggregate.py",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_calculate.py",
+     "status": "modified",
+     "additions": 53,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit/test_list.py",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_measures.py",
+     "status": "modified",
+     "additions": 64,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_subcharacteristic.py",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "33f153f862dd40b325c795c714b2d14c4b5c41b0",
+   "date": "2026-09-27T16:37:47Z",
+   "author": "bottinolucas",
+   "message": "Merge pull request #6 from fga-eps-mds/feature/technical-debt-ratio",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/cli/aggregate_metrics.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/commands/cmd_list.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/resources/measure.py",
+     "status": "modified",
+     "additions": 50,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/resources/metrics.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/config/settings.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_aggregate.py",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_calculate.py",
+     "status": "modified",
+     "additions": 53,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit/test_list.py",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_measures.py",
+     "status": "modified",
+     "additions": 64,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_subcharacteristic.py",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "b1c54ab78b442c01a75205c8f129acc737bb3d4b",
+   "date": "2026-09-27T15:40:10Z",
+   "author": "gusrberto",
+   "message": "refactor: evita criar lista para obter a chave da medida suportada",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/resources/measure.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "d4a9d9e58e8ccc9a7f2a2978e65131b3dc525311",
+   "date": "2026-09-27T15:24:03Z",
+   "author": "gusrberto",
+   "message": "build: aponta msgram-core para o develop do Core da disciplina",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "b9d8b25fc5caebe6f3d668ad210ac0f67dd04989",
+   "date": "2026-09-27T14:58:26Z",
+   "author": "gusrberto",
+   "message": "feat: avisa quando uma medida configurada nao pode ser calculada",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/resources/measure.py",
+     "status": "modified",
+     "additions": 49,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_calculate.py",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_measures.py",
+     "status": "modified",
+     "additions": 47,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "1fc322ac32e2abcec253c148b321fa932d9da70a",
+   "date": "2026-09-27T14:49:28Z",
+   "author": "gusrberto",
+   "message": "feat: adiciona medida technical_debt_ratio na CLI",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/aggregate_metrics.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/commands/cmd_list.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/resources/metrics.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/config/settings.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_aggregate.py",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_calculate.py",
+     "status": "modified",
+     "additions": 29,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit/test_list.py",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_measures.py",
+     "status": "modified",
+     "additions": 17,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_subcharacteristic.py",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "d745b6c16413e0f7a855a94a59db4cea2ca99178",
+   "date": "2026-09-27T03:42:47Z",
+   "author": "nateejpg",
+   "message": "fix: fixa msgram-core em 1.5.4 e isola testes de tema",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit/test_cli_theme.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "c7caf2c931f54386922376126d15480a95da2edb",
+   "date": "2026-09-24T01:52:14Z",
+   "author": "zzzBECK",
+   "message": "Merge pull request #2 from fga-eps-mds/MilenaFRocha-patch-1",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "0d6818760385439d4dfb71d38f8f19d0d9591df2",
+   "date": "2026-09-24T01:29:18Z",
+   "author": "MilenaFRocha",
+   "message": "fix: Update repository branch in metrics workflow",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "05be4994e106a84d1896b1e0b2fde4b2367cf33d",
+   "date": "2026-09-13T01:02:04Z",
+   "author": "zzzBECK",
+   "message": "ci: configura SonarCloud de 2026.2 e corrige suíte de testes para o msgram-core 1.5.4 (#1)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 3
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 11
+    },
+    {
+     "filename": "pytest.ini",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "tests/unit/data/calc_msgram_exp_github_output.csv",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit/data/calc_msgram_exp_github_output.json",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    },
+    {
+     "filename": "tests/unit/test_calculate.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "68e895c8b295e5e9d46d06893182c81ab432f7e6",
+   "date": "2026-09-01T15:12:09Z",
+   "author": "zzzBECK",
+   "message": "docs: padroniza README e governança do repositório central (#56)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "CONTRIBUTING.MD",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 44
+    },
+    {
+     "filename": "CONTRIBUTING.md",
+     "status": "added",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 84,
+     "deletions": 139
+    },
+    {
+     "filename": "code_of_conduct.md",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 130
+    }
+   ]
+  },
+  {
+   "sha": "8d5439b483c01e65e141cb2cce935c4c1a42a490",
+   "date": "2026-08-31T15:05:04Z",
+   "author": "zzzBECK",
+   "message": "fix: migra analise do SonarCloud para o CI e torna repo agnostico de semestre (#55)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/build.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 37
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 3
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 18
+    },
+    {
+     "filename": "CONTRIBUTING.MD",
+     "status": "modified",
+     "additions": 43,
+     "deletions": 43
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 17,
+     "deletions": 16
+    },
+    {
+     "filename": "codecov.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8
+    },
+    {
+     "filename": "junittest.xml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 13
+    }
+   ]
+  },
+  {
+   "sha": "c2f6a5908f3526bce34303c7a0f1ce5c1f04df10",
+   "date": "2026-08-24T14:33:37Z",
+   "author": "zzzBECK",
+   "message": "Sincronização de repositório - 2026.1 (#54)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/build.yml",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 11
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 8
+    },
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 133,
+     "deletions": 17
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 7
+    },
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "CONTRIBUTING.MD",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 4
+    },
+    {
+     "filename": "Makefile",
+     "status": "added",
+     "additions": 23,
+     "deletions": 0
+    },
+    {
+     "filename": "PUBLISHING.md",
+     "status": "added",
+     "additions": 197,
+     "deletions": 0
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 127,
+     "deletions": 38
+    },
+    {
+     "filename": "env-vars/.env.example",
+     "status": "added",
+     "additions": 4,
+     "deletions": 0
+    },
+    {
+     "filename": "env-vars/.env.local",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 9
+    },
+    {
+     "filename": "env-vars/.env.production",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8
+    },
+    {
+     "filename": "env-vars/.env.staging",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8
+    },
+    {
+     "filename": "examples/README.md",
+     "status": "added",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "examples/analytics-raw-data/fga-eps-mds-2022-2-MeasureSoftGram-CLI-01-11-2023-21-59-03-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "main.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 110,
+     "deletions": 6
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 13
+    },
+    {
+     "filename": "src/cli/aggregate_metrics.py",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 11
+    },
+    {
+     "filename": "src/cli/cli.py",
+     "status": "modified",
+     "additions": 23,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/commands/cmd_calculate.py",
+     "status": "modified",
+     "additions": 91,
+     "deletions": 51
+    },
+    {
+     "filename": "src/cli/commands/cmd_demo.py",
+     "status": "added",
+     "additions": 108,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/commands/cmd_diff.py",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 15
+    },
+    {
+     "filename": "src/cli/commands/cmd_extract.py",
+     "status": "modified",
+     "additions": 23,
+     "deletions": 24
+    },
+    {
+     "filename": "src/cli/commands/cmd_init.py",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 14
+    },
+    {
+     "filename": "src/cli/commands/cmd_list.py",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 25
+    },
+    {
+     "filename": "src/cli/commands/cmd_norm_diff.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 7
+    },
+    {
+     "filename": "src/cli/jsonReader/jsonReader.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 9
+    },
+    {
+     "filename": "src/cli/parsers.py",
+     "status": "modified",
+     "additions": 74,
+     "deletions": 1
+    },
+    {
+     "filename": "src/cli/resources/perf_eff_parser.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/cli/utils.py",
+     "status": "modified",
+     "additions": 277,
+     "deletions": 59
+    },
+    {
+     "filename": "src/config/settings.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/config/setup_log.py",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 7
+    },
+    {
+     "filename": "tests/system/test_demo.py",
+     "status": "added",
+     "additions": 38,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/cli_output.py",
+     "status": "added",
+     "additions": 8,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_aggregate.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit/test_calculate.py",
+     "status": "modified",
+     "additions": 94,
+     "deletions": 10
+    },
+    {
+     "filename": "tests/unit/test_calculate_regression.py",
+     "status": "added",
+     "additions": 27,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_cli_theme.py",
+     "status": "added",
+     "additions": 439,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_diff.py",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 16
+    },
+    {
+     "filename": "tests/unit/test_extract.py",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_list.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 11
+    },
+    {
+     "filename": "tests/unit/test_norm_diff.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 3
+    },
+    {
+     "filename": "tests/unit/test_parser.py",
+     "status": "modified",
+     "additions": 17,
+     "deletions": 0
+    }
+   ]
+  }
+ ],
+ "detalhes_novos": 0
+}

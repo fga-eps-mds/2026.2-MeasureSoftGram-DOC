@@ -65,40 +65,39 @@ class AgileEvmTest(unittest.TestCase):
         self.assertEqual(r1.loc[0, "BAC"], 300)                        # 3 semanas × 100
         self.assertAlmostEqual(r1.loc[0, "PPC"], 2 / 3)
         self.assertAlmostEqual(r1.loc[1, "SPI"], (15 / 20) / 1)
-        # sem horas registradas o AC não é estimado: fica indisponível, e com ele CPI, CV, ETC e EAC
-        self.assertTrue(r1.loc[1, "origem_do_ac"].startswith("indisponível"))
-        for col in ("AC", "CPI", "CV", "ETC", "EAC"):
-            self.assertTrue(math.isnan(r1.loc[1, col]), col)
+        # AC = custo do time nas sprints iniciadas: S1 (2 semanas) + S2 (1 semana) a 100 por semana
+        self.assertEqual(list(r1["AC"]), [200, 300])
+        self.assertTrue(r1.loc[1, "origem_do_ac"].startswith("custo do time"))
         self.assertAlmostEqual(r1.loc[1, "SV"], r1.loc[1, "EV"] - r1.loc[1, "PV"])
 
-    def test_horas_reais_viram_ac(self):
+    def test_ac_e_o_custo_do_time_sem_horas(self):
+        # horas e custo/hora não mudam nada: o método não usa horas
         horas = pd.DataFrame({"sprint": [1, 2], "horas": [2.0, 1.0]})
-        r1 = self.calc(horas, custo_hora=10.0)
-        r1 = r1[r1["release"] == "R1"].reset_index(drop=True)
-        self.assertEqual(list(r1["AC"]), [20, 30])
-        self.assertEqual(r1.loc[0, "origem_do_ac"], "horas reais × custo/hora")
+        a = self.calc()
+        b = self.calc(horas, custo_hora=10.0)
+        pd.testing.assert_series_equal(a["AC"], b["AC"])
+        self.assertNotIn("horas_reais", a)
 
-    def test_sprint_sem_horas_interrompe_o_ac(self):
-        horas = pd.DataFrame({"sprint": [1], "horas": [2.0]})           # S2 sem horas
-        r1 = self.calc(horas, custo_hora=10.0)
+    def test_time_menor_custa_menos(self):
+        # alguém saiu do time na S2: a semana dela custa 50 e o AC acompanha
+        self.plano.loc[2, "custo"] = 50.0
+        r1 = self.calc()
         r1 = r1[r1["release"] == "R1"].reset_index(drop=True)
-        self.assertEqual(r1.loc[0, "AC"], 20)
-        self.assertAlmostEqual(r1.loc[0, "CPI"], r1.loc[0, "EV"] / 20)
+        self.assertEqual(list(r1["AC"]), [200, 250])
+        self.assertAlmostEqual(r1.loc[1, "CPI"], r1.loc[1, "EV"] / 250)
+
+    def test_semana_sem_custo_deixa_ac_indisponivel(self):
+        self.plano = self.plano[self.plano["semana"] != pd.Timestamp("2026-09-21")]    # semana da S2
+        r1 = self.calc()
+        r1 = r1[r1["release"] == "R1"].reset_index(drop=True)
+        self.assertEqual(r1.loc[0, "AC"], 200)
         self.assertTrue(math.isnan(r1.loc[1, "AC"]))
         self.assertIn("S2", r1.loc[1, "origem_do_ac"])
-
-    def test_horas_de_parte_do_time_nao_viram_ac(self):
-        self.plano["integrantes"] = 2.0                                  # 2 ativos por semana
-        horas = pd.DataFrame({"sprint": [1, 1, 2], "integrante": ["Ana", "Bia", "Ana"], "horas": [2.0, 3.0, 1.0]})
-        r1 = self.calc(horas, custo_hora=10.0)
-        r1 = r1[r1["release"] == "R1"].reset_index(drop=True)
-        self.assertEqual(r1.loc[0, "AC"], 50)                            # S1: os 2 registraram
-        self.assertTrue(math.isnan(r1.loc[1, "AC"]))                     # S2: só 1 de 2
-        self.assertIn("1 de 2 integrantes", r1.loc[1, "origem_do_ac"])
+        for col in ("CPI", "CV", "ETC", "EAC"):
+            self.assertTrue(math.isnan(r1.loc[1, col]), col)
 
     def test_recorte_mantem_prazo_e_tira_valores_em_reais(self):
-        horas = pd.DataFrame({"sprint": [1, 2], "horas": [2.0, 1.0]})
-        d = evm.agile_evm(self.vel, self.issues, self.plano, horas, 10.0, recorte="só alguns repositórios")
+        d = evm.agile_evm(self.vel, self.issues, self.plano, recorte="só alguns repositórios")
         r1 = d[d["release"] == "R1"].reset_index(drop=True)
         self.assertAlmostEqual(r1.loc[1, "SPI"], 0.75)                     # prazo continua
         for col in ("BAC", "PV", "EV", "AC", "CPI", "EAC"):
@@ -106,9 +105,8 @@ class AgileEvmTest(unittest.TestCase):
         self.assertIn("só alguns repositórios", r1.loc[1, "origem_do_ac"])
 
     def test_recorte_com_time_usa_custo_do_time_inteiro(self):
-        horas = pd.DataFrame({"sprint": [1, 2], "horas": [2.0, 1.0]})
-        time = evm.agile_evm(self.vel, self.issues, self.plano, horas, 10.0)
-        d = evm.agile_evm(self.vel, self.issues, self.plano, horas, 10.0, recorte="só alguns", time=time)
+        time = evm.agile_evm(self.vel, self.issues, self.plano)
+        d = evm.agile_evm(self.vel, self.issues, self.plano, recorte="só alguns", time=time)
         a, b = d[d["release"] == "R1"].reset_index(drop=True), time[time["release"] == "R1"].reset_index(drop=True)
         for col in ("BAC", "AC", "CPI", "EAC"):
             self.assertEqual(a.loc[1, col], b.loc[1, col], col)
@@ -116,8 +114,7 @@ class AgileEvmTest(unittest.TestCase):
         self.assertNotIn("motivo_valor", d)
 
     def test_formulas_basicas(self):
-        horas = pd.DataFrame({"sprint": [1, 2], "horas": [2.0, 1.0]})
-        u = self.calc(horas, custo_hora=10.0).iloc[1]
+        u = self.calc().iloc[1]
         self.assertAlmostEqual(u["SV"], u["EV"] - u["PV"])
         self.assertAlmostEqual(u["CV"], u["EV"] - u["AC"])
         self.assertAlmostEqual(u["SPI"], u["EV"] / u["PV"])

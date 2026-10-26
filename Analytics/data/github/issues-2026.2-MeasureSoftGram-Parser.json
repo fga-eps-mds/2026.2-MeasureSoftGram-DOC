@@ -1,0 +1,307 @@
+{
+ "fonte": "API do GitHub (issues)",
+ "coletado_em": "2026-10-26T11:25:00+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-Parser",
+ "desde": "2026-08-24",
+ "issues": [
+  {
+   "number": 16,
+   "title": "ci(release): alinha as versões das actions do release.yml às do Core e da CLI",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-17T20:05:56Z",
+   "closed_at": "2026-10-21T01:19:32Z",
+   "updated_at": "2026-10-21T01:19:32Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 873,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/16",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 15,
+   "title": "fix: corrige tratamento de erro na requisição à API do GitHub",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-14T19:58:12Z",
+   "closed_at": "2026-10-16T21:39:08Z",
+   "updated_at": "2026-10-16T21:39:08Z",
+   "labels": [
+    "task",
+    "parser"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1262,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/15",
+   "author": "gusrberto"
+  },
+  {
+   "number": 14,
+   "title": "chore(release): prepara 1.2.4rc1 e limita pandas abaixo da 3",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T22:19:44Z",
+   "closed_at": "2026-10-07T22:24:51Z",
+   "updated_at": "2026-10-07T22:24:51Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1250,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/14",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 13,
+   "title": "fix(ci): fixa gh-action-pypi-publish no SHA da v1.12.4",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T22:03:48Z",
+   "closed_at": "2026-10-07T22:08:16Z",
+   "updated_at": "2026-10-07T22:08:16Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 880,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/13",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 12,
+   "title": "ci: restringe a publicação no PyPI ao repositório central",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T21:22:21Z",
+   "closed_at": "2026-10-07T21:44:03Z",
+   "updated_at": "2026-10-07T21:44:03Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1217,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/12",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 11,
+   "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-30T17:56:25Z",
+   "closed_at": "2026-10-15T21:14:05Z",
+   "updated_at": "2026-10-15T21:14:05Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3500,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/11",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 10,
+   "title": "feat(ci): adicionar publicação atômica no PyPI e Gate de Segurança ao Release Please",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T01:19:47Z",
+   "closed_at": "2026-10-03T23:37:31Z",
+   "updated_at": "2026-10-09T13:09:39Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2838,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/10",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 9,
+   "title": "chore(ci): configurar dependabot, auto-merge e pinning de github actions",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T19:15:45Z",
+   "closed_at": "2026-09-28T23:31:16Z",
+   "updated_at": "2026-09-28T23:31:16Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "Diogo-Barboza"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1421,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/9",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 8,
+   "title": "feat: CI Automation and Decoupled SonarCloud",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T04:58:43Z",
+   "closed_at": "2026-09-27T07:54:35Z",
+   "updated_at": "2026-09-27T08:13:51Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1098,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/8",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 7,
+   "title": "chore: refactor unit tests for SonarQube metric extraction",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T00:30:44Z",
+   "closed_at": "2026-09-27T20:12:16Z",
+   "updated_at": "2026-09-27T20:12:25Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 605,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/7",
+   "author": "pedrosena21"
+  },
+  {
+   "number": 6,
+   "title": "[TASK01.02] Processar as métricas da medida de dívida técnica (Parser)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-26T22:36:19Z",
+   "closed_at": "2026-09-27T20:12:17Z",
+   "updated_at": "2026-10-15T00:51:54Z",
+   "labels": [
+    "task",
+    "parser"
+   ],
+   "type": null,
+   "assignees": [
+    "pedrosena21"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2471,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/issues/6",
+   "author": "gusrberto"
+  },
+  {
+   "number": 4,
+   "title": "chore(sync): sincroniza develop com upstream central (v1.2.3rc1 e badges)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-26T03:26:44Z",
+   "closed_at": "2026-09-26T03:29:23Z",
+   "updated_at": "2026-09-26T03:29:58Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 193,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/4",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 3,
+   "title": "fix: Update repository URL in metrics workflow",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-24T03:04:48Z",
+   "closed_at": "2026-09-25T03:01:30Z",
+   "updated_at": "2026-09-25T03:01:30Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 46,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/3",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 5,
+   "title": "[TASK01.02] Processar métricas de dívida técnica (Parser)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-24T01:05:37Z",
+   "closed_at": "2026-10-23T23:45:10Z",
+   "updated_at": "2026-10-23T23:45:10Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "pedrosena21"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 0,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/issues/5",
+   "author": "pedrosena21"
+  },
+  {
+   "number": 2,
+   "title": "fix(ci): corrige envio de cobertura para o SonarCloud e execucao via tox",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-22T13:18:55Z",
+   "closed_at": "2026-09-22T13:25:36Z",
+   "updated_at": "2026-09-22T13:25:43Z",
+   "labels": [
+    "devops"
+   ],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1686,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/2",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 1,
+   "title": "Padronização do repositório do fork parser",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-08-31T20:19:21Z",
+   "closed_at": "2026-09-14T17:49:16Z",
+   "updated_at": "2026-09-14T17:49:20Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 83,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/1",
+   "author": "GabrielMS00"
+  }
+ ]
+}

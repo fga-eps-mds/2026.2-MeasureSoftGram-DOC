@@ -1,0 +1,484 @@
+{
+ "fonte": "API do GitHub (issues)",
+ "coletado_em": "2026-10-26T11:25:00+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-Core",
+ "desde": "2026-08-24",
+ "issues": [
+  {
+   "number": 25,
+   "title": "feat(core): [US130] valida comparação experimental de complexidade por arquivo",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-10-24T16:56:50Z",
+   "closed_at": null,
+   "updated_at": "2026-10-26T04:12:01Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "nateejpg"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5025,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/25",
+   "author": "nateejpg"
+  },
+  {
+   "number": 24,
+   "title": "Título: [SPIKE US23.01] Validar comparação de uma métrica por arquivo",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-24T16:29:48Z",
+   "closed_at": null,
+   "updated_at": "2026-10-24T17:04:23Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "nateejpg"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 786,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/issues/24",
+   "author": "nateejpg"
+  },
+  {
+   "number": 23,
+   "title": "feat(transformations): função de correlação f_sigma e prepara 1.5.5rc4",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-22T14:46:48Z",
+   "closed_at": "2026-10-22T15:37:07Z",
+   "updated_at": "2026-10-22T15:37:10Z",
+   "labels": [
+    "task",
+    "core"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1850,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/23",
+   "author": "gusrberto"
+  },
+  {
+   "number": 22,
+   "title": "[TASK21.04.03] Função f_σ de correlação entre as características (Core)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-22T13:51:15Z",
+   "closed_at": "2026-10-22T15:37:09Z",
+   "updated_at": "2026-10-22T15:37:09Z",
+   "labels": [
+    "task",
+    "core"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2597,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/issues/22",
+   "author": "gusrberto"
+  },
+  {
+   "number": 21,
+   "title": "[TASK23.01.01] Expor o valor de cada arquivo nas medidas calculadas por arquivo (Core)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:40:11Z",
+   "closed_at": "2026-10-21T01:57:34Z",
+   "updated_at": "2026-10-21T01:57:34Z",
+   "labels": [
+    "task",
+    "core"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1996,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/issues/21",
+   "author": "gusrberto"
+  },
+  {
+   "number": 20,
+   "title": "ci(release): lê o nome do pacote do pyproject.toml no gate do PyPI",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-17T20:05:26Z",
+   "closed_at": "2026-10-21T01:16:31Z",
+   "updated_at": "2026-10-21T01:16:33Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 734,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/20",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 19,
+   "title": "chore: integra a develop do repositório central (dependabot #60)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-17T19:26:33Z",
+   "closed_at": "2026-10-17T19:28:37Z",
+   "updated_at": "2026-10-17T19:28:39Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1488,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/19",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 18,
+   "title": "fix(config): remove performance_efficiency da pré-configuração e prepara 1.5.5rc3",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-17T19:02:22Z",
+   "closed_at": "2026-10-17T19:26:01Z",
+   "updated_at": "2026-10-17T19:26:03Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1299,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/18",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 17,
+   "title": "chore: remove codigo comentado e TODO esquecido",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-14T20:04:39Z",
+   "closed_at": "2026-10-16T01:10:07Z",
+   "updated_at": "2026-10-16T01:10:10Z",
+   "labels": [
+    "task",
+    "core"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 738,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/17",
+   "author": "gusrberto"
+  },
+  {
+   "number": 16,
+   "title": "fix(ci): fixa gh-action-pypi-publish no SHA da v1.12.4",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T22:03:46Z",
+   "closed_at": "2026-10-07T22:08:19Z",
+   "updated_at": "2026-10-07T22:08:21Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1267,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/16",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 15,
+   "title": "chore(release): bump version to 1.5.5rc2",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T21:22:42Z",
+   "closed_at": "2026-10-07T21:43:56Z",
+   "updated_at": "2026-10-07T21:43:59Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1004,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/15",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 14,
+   "title": "ci: restringe a publicação no PyPI ao repositório central",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T21:22:16Z",
+   "closed_at": "2026-10-07T21:43:50Z",
+   "updated_at": "2026-10-07T21:43:53Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1434,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/14",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 13,
+   "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-30T17:49:52Z",
+   "closed_at": "2026-10-15T21:17:49Z",
+   "updated_at": "2026-10-15T21:17:51Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3600,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/13",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 12,
+   "title": "feat(ci): esteira de release automatizada com Release Please e Gate PyPI",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-29T20:57:13Z",
+   "closed_at": "2026-10-03T23:43:39Z",
+   "updated_at": "2026-10-03T23:47:03Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2023,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/12",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 11,
+   "title": "Chore/dependabot automerge sha pinning",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T19:52:06Z",
+   "closed_at": "2026-09-29T00:02:26Z",
+   "updated_at": "2026-09-29T00:02:27Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "Diogo-Barboza"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1818,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/11",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 10,
+   "title": "chore(deps): bump marshmallow from 3.21.0 to 3.26.2 in the pip group across 1 directory",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T18:41:08Z",
+   "closed_at": null,
+   "updated_at": "2026-10-22T15:39:44Z",
+   "labels": [
+    "dependencies",
+    "python"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5204,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/10",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 9,
+   "title": "chore(core): Resolução de Dívidas Técnicas (MSG-37, MSG-38)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-26T23:11:07Z",
+   "closed_at": "2026-09-27T01:08:43Z",
+   "updated_at": "2026-09-27T01:35:36Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "antonioleaojr"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1513,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/9",
+   "author": "antonioleaojr"
+  },
+  {
+   "number": 8,
+   "title": "[TASK01.09] Atualizar pré-configuração com a medida de dívida técnica (Core)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-26T22:35:45Z",
+   "closed_at": "2026-09-27T16:54:30Z",
+   "updated_at": "2026-10-15T00:51:55Z",
+   "labels": [
+    "task",
+    "core"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1361,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/issues/8",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 7,
+   "title": "[TASK01.08] Integrar medida de dívida técnica ao modelo de qualidade (Core)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-26T22:35:44Z",
+   "closed_at": "2026-09-27T16:54:27Z",
+   "updated_at": "2026-10-15T00:51:56Z",
+   "labels": [
+    "task",
+    "core"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1376,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/issues/7",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 5,
+   "title": "feat: implementa medida technical_debt_ratio",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-26T22:02:14Z",
+   "closed_at": "2026-09-26T22:52:06Z",
+   "updated_at": "2026-09-26T23:34:17Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3434,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/5",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 4,
+   "title": "chore(release): bump version to 1.5.5rc1",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-26T04:01:18Z",
+   "closed_at": "2026-09-26T04:44:27Z",
+   "updated_at": "2026-09-26T04:44:27Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 807,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/4",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 3,
+   "title": "Update metrics workflow to clone new repository branch",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-25T17:43:09Z",
+   "closed_at": "2026-09-26T18:34:16Z",
+   "updated_at": "2026-09-26T18:34:16Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 70,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/3",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 6,
+   "title": "[TASK01.03] Calcular medida de dívida técnica (Core)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-24T01:06:08Z",
+   "closed_at": "2026-09-27T16:54:28Z",
+   "updated_at": "2026-10-15T00:51:55Z",
+   "labels": [
+    "task",
+    "core"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1762,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/issues/6",
+   "author": "pedrosena21"
+  },
+  {
+   "number": 2,
+   "title": "Altera linter para buildar no pipeline",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-23T22:58:17Z",
+   "closed_at": "2026-09-23T23:05:44Z",
+   "updated_at": "2026-09-23T23:05:44Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 88,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/2",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 1,
+   "title": "chore(docs): padroniza README, CONTRIBUTING e code_of_conduct; remove build.yml redundante",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-22T17:05:34Z",
+   "closed_at": "2026-09-23T23:14:55Z",
+   "updated_at": "2026-09-25T11:15:12Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1326,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/1",
+   "author": "devwallyson"
+  }
+ ]
+}

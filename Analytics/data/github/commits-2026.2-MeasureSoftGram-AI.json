@@ -1,0 +1,455 @@
+{
+ "fonte": "API do GitHub (commits)",
+ "coletado_em": "2026-10-26T11:25:00+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-AI",
+ "desde": "2026-08-24",
+ "branch": "develop",
+ "commits": [
+  {
+   "sha": "231eeb58a97f96e930544885ae42ae0deb8bb83e",
+   "date": "2026-10-15T21:35:10Z",
+   "author": "luciano-freitas-melo",
+   "message": "Merge pull request #3 from fga-eps-mds/chore/ci-governance-cleanup",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".flake8",
+     "status": "added",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 82
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "added",
+     "additions": 65,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/tests.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 71
+    },
+    {
+     "filename": "src/msgram_mcp/server.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/msgram_mcp/tools/historical_values.py",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 10
+    },
+    {
+     "filename": "src/msgram_mcp/tools/latest_values.py",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 10
+    },
+    {
+     "filename": "src/msgram_mcp/tools/releases.py",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 7
+    },
+    {
+     "filename": "src/msgram_mcp/tools/repositories.py",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 5
+    },
+    {
+     "filename": "tests/msgram_mcp/tools/test_releases.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 7
+    }
+   ]
+  },
+  {
+   "sha": "51447295e71533783f896c138d741b256b3b23aa",
+   "date": "2026-09-28T23:09:47Z",
+   "author": "Diogo-Barboza",
+   "message": "Merge pull request #2 from fga-eps-mds/chore/dependabot-automerge-sha-pinning",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/dependabot.yml",
+     "status": "added",
+     "additions": 28,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/dependabot-automerge.yml",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/docker-publish-homolog.yml",
+     "status": "added",
+     "additions": 27,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".gitignore",
+     "status": "added",
+     "additions": 32,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "692178fa26f492d5b85d0c1909c7932658d99604",
+   "date": "2026-09-28T23:05:46Z",
+   "author": "Diogo-Barboza",
+   "message": "chore(fix): sync SHA com pagina de release",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/dependabot-automerge.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/docker-publish-homolog.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "f14d0400678be0cbea73becf78ad21fc41b657d3",
+   "date": "2026-09-27T19:58:47Z",
+   "author": "Diogo-Barboza",
+   "message": "fix: docker-publisher and test",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 15
+    },
+    {
+     "filename": ".github/workflows/tests.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 13
+    }
+   ]
+  },
+  {
+   "sha": "edb4841ca8f94608378bf8797a4e648baa0a34b0",
+   "date": "2026-09-27T19:44:27Z",
+   "author": "Diogo-Barboza",
+   "message": "fix: resolve conflitos",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "modified",
+     "additions": 26,
+     "deletions": 6
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "added",
+     "additions": 82,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/tests.yml",
+     "status": "modified",
+     "additions": 52,
+     "deletions": 3
+    },
+    {
+     "filename": "Dockerfile",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 1
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "352d2857136586d259461945d17d628cf27b1bb3",
+   "date": "2026-09-27T19:37:11Z",
+   "author": "Diogo-Barboza",
+   "message": "cria gitignore",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".gitignore",
+     "status": "added",
+     "additions": 32,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "01100db100af5886c3a69ecb1e49a00969c532d8",
+   "date": "2026-09-27T19:36:10Z",
+   "author": "Diogo-Barboza",
+   "message": "chore(ci): configurar dependabot, auto-merge e pinning de github actions",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/dependabot.yml",
+     "status": "added",
+     "additions": 28,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/dependabot-automerge.yml",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/docker-publish-homolog.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/tests.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "fb3dff2404130d44374b659111f682c9454ca7f1",
+   "date": "2026-09-27T08:08:01Z",
+   "author": "luciano-freitas-melo",
+   "message": "Merge pull request #1 from fga-eps-mds/feat/ci-automation",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/docker-publish-homolog.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 27
+    },
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 10
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "added",
+     "additions": 82,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/tests.yml",
+     "status": "modified",
+     "additions": 43,
+     "deletions": 7
+    },
+    {
+     "filename": "Dockerfile",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 1
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "b5d8d5f0c1c906eb568606c0c50d66a1fac51fb9",
+   "date": "2026-09-27T07:32:34Z",
+   "author": "luciano-freitas-melo",
+   "message": "fix(deps): pin mcp<2 to maintain compatibility with FastMCP v1",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "e135db89fdac48f999bb04e0308a2ceb8a3453fa",
+   "date": "2026-09-27T07:13:01Z",
+   "author": "luciano-freitas-melo",
+   "message": "ci: remove dinamic sonar organization property",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/tests.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "1a70cae01cff6df8250e8d182e1b1e6cf0277087",
+   "date": "2026-09-27T06:21:06Z",
+   "author": "luciano-freitas-melo",
+   "message": "ci: padroniza esteiras de testes, sonarcloud desacoplado e build docker oficial",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/docker-publish-homolog.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 27
+    },
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 10
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "added",
+     "additions": 84,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/tests.yml",
+     "status": "modified",
+     "additions": 44,
+     "deletions": 7
+    },
+    {
+     "filename": "Dockerfile",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "70e88c6901d75033a644ceac7e1613b9c79ddef1",
+   "date": "2026-09-24T02:33:29Z",
+   "author": "MilenaFRocha",
+   "message": "fix: remove API token diagnostic from metrics workflow",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 9
+    }
+   ]
+  },
+  {
+   "sha": "de4790390df945b22d82e881f55f2f0f686667a4",
+   "date": "2026-09-24T02:01:12Z",
+   "author": "MilenaFRocha",
+   "message": "Implement token diagnostic check in metrics.yml",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "32baf197a6d9470f8040d47e5ac3e4707779812c",
+   "date": "2026-09-24T01:32:51Z",
+   "author": "MilenaFRocha",
+   "message": "fix: Update repository URL in metrics workflow",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  }
+ ],
+ "detalhes_novos": 0
+}

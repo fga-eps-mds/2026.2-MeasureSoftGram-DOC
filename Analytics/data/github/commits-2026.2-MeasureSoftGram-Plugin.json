@@ -1,0 +1,1103 @@
+{
+ "fonte": "API do GitHub (commits)",
+ "coletado_em": "2026-10-26T11:25:00+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-Plugin",
+ "desde": "2026-08-24",
+ "branch": "develop",
+ "commits": [
+  {
+   "sha": "9966b1d7b2fee176399c5bec89eacf9fbfa098c3",
+   "date": "2026-10-19T14:59:18Z",
+   "author": "bottinolucas",
+   "message": "fix(test): esperar o request_score inicial da interface antes dos fluxos (#8)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/tests/integration/flows.integration.test.ts",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "ad36e00a8ba47b8872505e8b2c441ce4d7ce4220",
+   "date": "2026-10-19T14:34:20Z",
+   "author": "bottinolucas",
+   "message": "fix(ci): validar baseComponent.measures na resposta do SonarCloud (#7)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "ee4c01d54100106332670fa21e7ef5427a8611a6",
+   "date": "2026-10-19T14:25:36Z",
+   "author": "LuizaMaluf",
+   "message": "Correção plugin a partir de diagnostico (#5)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 11
+    },
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 25,
+     "deletions": 8
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 14
+    },
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 1
+    },
+    {
+     "filename": ".vscode-test.mjs",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 1
+    },
+    {
+     "filename": ".vscodeignore",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 3
+    },
+    {
+     "filename": "CHANGELOG.md",
+     "status": "added",
+     "additions": 58,
+     "deletions": 0
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 45,
+     "deletions": 10
+    },
+    {
+     "filename": "diagnostico-2026-2.md",
+     "status": "added",
+     "additions": 315,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/SECRETS.md",
+     "status": "added",
+     "additions": 36,
+     "deletions": 0
+    },
+    {
+     "filename": "package-lock.json",
+     "status": "modified",
+     "additions": 531,
+     "deletions": 819
+    },
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 191,
+     "deletions": 15
+    },
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 40,
+     "deletions": 11
+    },
+    {
+     "filename": "resources/docker/compose.yml",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 1
+    },
+    {
+     "filename": "src/activator.ts",
+     "status": "modified",
+     "additions": 109,
+     "deletions": 13
+    },
+    {
+     "filename": "src/config/settings.ts",
+     "status": "added",
+     "additions": 219,
+     "deletions": 0
+    },
+    {
+     "filename": "src/extension.ts",
+     "status": "modified",
+     "additions": 56,
+     "deletions": 2
+    },
+    {
+     "filename": "src/panels/measureSoftGramBase.ts",
+     "status": "modified",
+     "additions": 531,
+     "deletions": 90
+    },
+    {
+     "filename": "src/panels/measureSoftGramPanel.ts",
+     "status": "modified",
+     "additions": 48,
+     "deletions": 124
+    },
+    {
+     "filename": "src/panels/measureSoftGramSidebar.ts",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 149
+    },
+    {
+     "filename": "src/panels/messages.ts",
+     "status": "added",
+     "additions": 131,
+     "deletions": 0
+    },
+    {
+     "filename": "src/services/actRunner.ts",
+     "status": "added",
+     "additions": 256,
+     "deletions": 0
+    },
+    {
+     "filename": "src/services/httpClient.ts",
+     "status": "added",
+     "additions": 145,
+     "deletions": 0
+    },
+    {
+     "filename": "src/services/msgramApi.ts",
+     "status": "modified",
+     "additions": 282,
+     "deletions": 187
+    },
+    {
+     "filename": "src/services/registerRepo.ts",
+     "status": "added",
+     "additions": 122,
+     "deletions": 0
+    },
+    {
+     "filename": "src/services/repoResolver.ts",
+     "status": "added",
+     "additions": 110,
+     "deletions": 0
+    },
+    {
+     "filename": "src/statusbar/msgramStatusBar.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 1
+    },
+    {
+     "filename": "src/tests/activator.test.ts",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 3
+    },
+    {
+     "filename": "src/tests/config/settings.test.ts",
+     "status": "added",
+     "additions": 229,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/integration/extension.integration.test.ts",
+     "status": "added",
+     "additions": 75,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/integration/flows.integration.test.ts",
+     "status": "added",
+     "additions": 197,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/panels/measureSoftGramBase.test.ts",
+     "status": "modified",
+     "additions": 579,
+     "deletions": 19
+    },
+    {
+     "filename": "src/tests/panels/measureSoftGramPanel.test.ts",
+     "status": "modified",
+     "additions": 74,
+     "deletions": 16
+    },
+    {
+     "filename": "src/tests/panels/measureSoftGramSidebar.test.ts",
+     "status": "modified",
+     "additions": 67,
+     "deletions": 48
+    },
+    {
+     "filename": "src/tests/services/actRunner.test.ts",
+     "status": "added",
+     "additions": 235,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/services/httpClient.test.ts",
+     "status": "added",
+     "additions": 157,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/services/msgramApi.contract.test.ts",
+     "status": "added",
+     "additions": 380,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/services/msgramApi.test.ts",
+     "status": "modified",
+     "additions": 82,
+     "deletions": 128
+    },
+    {
+     "filename": "src/tests/services/registerRepo.test.ts",
+     "status": "added",
+     "additions": 107,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/services/repoResolver.test.ts",
+     "status": "added",
+     "additions": 116,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/statusbar/msgramStatusBar.test.ts",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 2
+    },
+    {
+     "filename": "src/tests/utilities/workspaceRepo.test.ts",
+     "status": "added",
+     "additions": 73,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/views/qualityTree.test.ts",
+     "status": "added",
+     "additions": 221,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/vscode.mock.ts",
+     "status": "modified",
+     "additions": 47,
+     "deletions": 0
+    },
+    {
+     "filename": "src/utilities/log.ts",
+     "status": "added",
+     "additions": 31,
+     "deletions": 0
+    },
+    {
+     "filename": "src/utilities/workspaceRepo.ts",
+     "status": "added",
+     "additions": 120,
+     "deletions": 0
+    },
+    {
+     "filename": "src/views/qualityTree.ts",
+     "status": "added",
+     "additions": 469,
+     "deletions": 0
+    },
+    {
+     "filename": "webview-ui/eslint.config.js",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "webview-ui/index.html",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 4
+    },
+    {
+     "filename": "webview-ui/package-lock.json",
+     "status": "modified",
+     "additions": 442,
+     "deletions": 2361
+    },
+    {
+     "filename": "webview-ui/package.json",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 7
+    },
+    {
+     "filename": "webview-ui/src/App.css",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 185
+    },
+    {
+     "filename": "webview-ui/src/App.tsx",
+     "status": "modified",
+     "additions": 123,
+     "deletions": 17
+    },
+    {
+     "filename": "webview-ui/src/components/DashboardView.tsx",
+     "status": "modified",
+     "additions": 114,
+     "deletions": 61
+    },
+    {
+     "filename": "webview-ui/src/components/GrafanaView.tsx",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 10
+    },
+    {
+     "filename": "webview-ui/src/components/NotConfiguredView.tsx",
+     "status": "added",
+     "additions": 83,
+     "deletions": 0
+    },
+    {
+     "filename": "webview-ui/src/components/SettingsView.tsx",
+     "status": "modified",
+     "additions": 145,
+     "deletions": 82
+    },
+    {
+     "filename": "webview-ui/src/components/Sidebar.tsx",
+     "status": "modified",
+     "additions": 58,
+     "deletions": 99
+    },
+    {
+     "filename": "webview-ui/src/components/Tabs.tsx",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 5
+    },
+    {
+     "filename": "webview-ui/src/components/action/ActionView.tsx",
+     "status": "modified",
+     "additions": 58,
+     "deletions": 5
+    },
+    {
+     "filename": "webview-ui/src/components/action/CopyButton.tsx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "webview-ui/src/components/action/RunButton.tsx",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 5
+    },
+    {
+     "filename": "webview-ui/src/components/action/SaveButton.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "webview-ui/src/index.css",
+     "status": "modified",
+     "additions": 334,
+     "deletions": 143
+    },
+    {
+     "filename": "webview-ui/src/main.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "webview-ui/src/tests/App.test.tsx",
+     "status": "modified",
+     "additions": 136,
+     "deletions": 7
+    },
+    {
+     "filename": "webview-ui/src/tests/components/Dashboard.test.tsx",
+     "status": "modified",
+     "additions": 110,
+     "deletions": 84
+    },
+    {
+     "filename": "webview-ui/src/tests/components/Grafana.test.tsx",
+     "status": "added",
+     "additions": 113,
+     "deletions": 0
+    },
+    {
+     "filename": "webview-ui/src/tests/components/NotConfigured.test.tsx",
+     "status": "added",
+     "additions": 60,
+     "deletions": 0
+    },
+    {
+     "filename": "webview-ui/src/tests/components/Settings.test.tsx",
+     "status": "modified",
+     "additions": 119,
+     "deletions": 111
+    },
+    {
+     "filename": "webview-ui/src/tests/components/Sidebar.test.tsx",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 8
+    },
+    {
+     "filename": "webview-ui/src/tests/components/Tabs.test.tsx",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    },
+    {
+     "filename": "webview-ui/src/tests/components/action/ActionView.test.tsx",
+     "status": "modified",
+     "additions": 46,
+     "deletions": 5
+    },
+    {
+     "filename": "webview-ui/src/tests/components/action/RunButton.test.tsx",
+     "status": "modified",
+     "additions": 33,
+     "deletions": 17
+    },
+    {
+     "filename": "webview-ui/src/tests/components/action/SaveButton.test.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "webview-ui/src/tests/setup.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "webview-ui/src/tests/theme.test.ts",
+     "status": "added",
+     "additions": 42,
+     "deletions": 0
+    },
+    {
+     "filename": "webview-ui/src/tests/utils/defaultWorkflow.test.ts",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 1
+    },
+    {
+     "filename": "webview-ui/src/tests/utils/validation.test.ts",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 8
+    },
+    {
+     "filename": "webview-ui/src/tests/utils/workflowYaml.test.ts",
+     "status": "modified",
+     "additions": 22,
+     "deletions": 13
+    },
+    {
+     "filename": "webview-ui/src/types/index.ts",
+     "status": "modified",
+     "additions": 111,
+     "deletions": 45
+    },
+    {
+     "filename": "webview-ui/src/utils/defaultWorkflow.ts",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 7
+    },
+    {
+     "filename": "webview-ui/src/utils/helpers.ts",
+     "status": "modified",
+     "additions": 23,
+     "deletions": 1
+    },
+    {
+     "filename": "webview-ui/src/utils/validation.ts",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 11
+    },
+    {
+     "filename": "webview-ui/src/utils/workflowYaml.ts",
+     "status": "modified",
+     "additions": 26,
+     "deletions": 22
+    },
+    {
+     "filename": "webview-ui/tsconfig.app.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "webview-ui/vitest.config.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "df74f57d2cd39cb0f9afa9591ee4b604f88dab8c",
+   "date": "2026-10-03T23:35:39Z",
+   "author": "bottinolucas",
+   "message": "Merge pull request #4 from fga-eps-mds/fix/release-please-workflow",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "3c77fa85834ce9f1e93daf41229c0b5c9a67bcb4",
+   "date": "2026-09-29T22:37:34Z",
+   "author": "luciano-freitas-melo",
+   "message": "fix(ci): corrigir SHAs das actions e padronizar gatilhos no Release Please",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "d854bacd1fd47347923f645727427872d28a162e",
+   "date": "2026-09-28T23:36:52Z",
+   "author": "henriquecq",
+   "message": "Merge pull request #3 from fga-eps-mds/fix/109-plugin-tsqmi-label-lappis",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "webview-ui/src/components/Sidebar.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "webview-ui/src/tests/components/Sidebar.test.tsx",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "a6b43d0755df3758151489b54bbd885d90d1416d",
+   "date": "2026-09-28T22:19:56Z",
+   "author": "henriquecq",
+   "message": "fix(docs): remover referências residuais a lappis",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "ad61f59eb9f97390f7dd86162f07a635bf0a1ffa",
+   "date": "2026-09-28T22:19:35Z",
+   "author": "henriquecq",
+   "message": "fix(sidebar): trocar rótulo \"Nota do Produto\" por TSQMI",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "webview-ui/src/components/Sidebar.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "b90032a223367baa28128e87ead8c3d52bb0ad6e",
+   "date": "2026-09-28T22:19:13Z",
+   "author": "henriquecq",
+   "message": "test(sidebar): cobre rótulo TSQMI no lugar de \"Nota do Produto\"",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "webview-ui/src/tests/components/Sidebar.test.tsx",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "abd7e3f527b7e97a91dcb5e553a9f10147de0987",
+   "date": "2026-09-27T19:55:05Z",
+   "author": "antonioleaojr",
+   "message": "fix: corrige syntax de secrets no release e atualiza versao da action (#2)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "4c01b03bcabfa23810a486ec840fb8b1402befd3",
+   "date": "2026-09-27T19:01:08Z",
+   "author": "antonioleaojr",
+   "message": "Merge pull request #1 from fga-eps-mds/feat/ci-automation",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "added",
+     "additions": 65,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "added",
+     "additions": 85,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 55,
+     "deletions": 12
+    },
+    {
+     "filename": ".vscodeignore",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "package-lock.json",
+     "status": "added",
+     "additions": 3299,
+     "deletions": 0
+    },
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "785d934f773760775f062f2fcf3e968f8deaffe6",
+   "date": "2026-09-27T06:58:28Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat(ci): update MeasureSoftGram-Action version and adjust SonarCloud organization configuration",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "5825d8eccc8d6ec5fd629ee79f4512a074db809b",
+   "date": "2026-09-27T06:58:21Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat(ci): refactor release workflow to use Google Release Please and streamline publishing steps",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 28,
+     "deletions": 120
+    }
+   ]
+  },
+  {
+   "sha": "fb9555f3568bee5ba3f070718675b30bcd4800a3",
+   "date": "2026-09-27T06:18:08Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat(ci): implementar esteiras desacopladas de SonarCloud e automacao de release",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "added",
+     "additions": 157,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "added",
+     "additions": 85,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 56,
+     "deletions": 12
+    },
+    {
+     "filename": ".vscodeignore",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "package-lock.json",
+     "status": "added",
+     "additions": 3299,
+     "deletions": 0
+    },
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "77e69213466bd328f10132288573b72b780084ed",
+   "date": "2026-09-18T17:12:04Z",
+   "author": "nateejpg",
+   "message": "Ajustando Docs central para DOC fork!",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "97f59a6e06086d3f7ef000acf5f835a1dc559298",
+   "date": "2026-09-14T17:14:01Z",
+   "author": "nateejpg",
+   "message": "Fix: Ajustando todas as issues do sonar de reliability!",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "webview-ui/src/components/DashboardView.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "webview-ui/src/components/GrafanaView.tsx",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 11
+    },
+    {
+     "filename": "webview-ui/src/components/SettingsView.tsx",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 6
+    },
+    {
+     "filename": "webview-ui/src/index.css",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "4a7fb6dbb67ef4aece4ee6b5fd7a4edcb6b848aa",
+   "date": "2026-09-14T16:54:35Z",
+   "author": "nateejpg",
+   "message": "Fix: Ajustando último arquivo para passar green gate do Sonar!",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "webview-ui/src/components/DashboardView.tsx",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 2
+    },
+    {
+     "filename": "webview-ui/src/tests/components/Dashboard.test.tsx",
+     "status": "modified",
+     "additions": 32,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "0e5aaee46c7b7ffadb5ab74666a44362c5e70a7a",
+   "date": "2026-09-14T16:44:26Z",
+   "author": "nateejpg",
+   "message": "fix: Ajustando arquivos para passar testes do Sonar!",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": "webview-ui/package-lock.json",
+     "status": "added",
+     "additions": 5961,
+     "deletions": 0
+    },
+    {
+     "filename": "webview-ui/package.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "webview-ui/src/components/action/YamlEditor.tsx",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "ab9e7ce530b0a9f80ec23d7f7a475076bcf1e0de",
+   "date": "2026-09-14T16:12:47Z",
+   "author": "nateejpg",
+   "message": "Adicionando nova secret!",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "bfdcaa40e1456a5d7d22498e5ab0d08b180e61bf",
+   "date": "2026-09-14T15:49:25Z",
+   "author": "nateejpg",
+   "message": "Ajustando erro de barra no metrics para testes.",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "a83b3721ac1c31e1b889a41e5f564b2c46e51e20",
+   "date": "2026-09-10T17:35:46Z",
+   "author": "nateejpg",
+   "message": "Merge pull request #18 from fga-eps-mds/chore/remover-referencias-2026-1",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 8
+    }
+   ]
+  },
+  {
+   "sha": "4ee6fe7771b87f251516cb24710f31425d749621",
+   "date": "2026-09-08T20:00:41Z",
+   "author": "nateejpg",
+   "message": "Fix: Ajustando dependências.",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 8
+    }
+   ]
+  },
+  {
+   "sha": "e7c238548291f1274b933bda67f57c687b285c24",
+   "date": "2026-09-07T15:46:20Z",
+   "author": "bottinolucas",
+   "message": "Merge pull request #17 from fga-eps-mds/chore/centralizar-configuracoes",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "6727bf66eaf11e1e6651337fef2f456e4b205da3",
+   "date": "2026-09-03T20:03:16Z",
+   "author": "nateejpg",
+   "message": "ci: torna configuração do Sonar agnóstica de semestre",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 2
+    }
+   ]
+  }
+ ],
+ "detalhes_novos": 0
+}

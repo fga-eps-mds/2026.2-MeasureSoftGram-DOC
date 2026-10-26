@@ -1,0 +1,71 @@
+---
+id: templates
+slug: /processo
+title: Templates e fluxos
+sidebar_label: Visão geral
+description: Onde estão todos os templates da equipe (issues, PR, reuniões, documentação) e os fluxos de trabalho.
+---
+
+# Templates e fluxos
+
+Ponto único para encontrar os templates e os fluxos da equipe. Os templates do
+GitHub aparecem sozinhos ao criar uma issue ou um PR no repositório
+[2026.2-MeasureSoftGram-DOC](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/new/choose).
+Os da documentação ficam em `docs/_modelos/`.
+
+## Fluxos
+
+| Fluxo | O que define |
+| --- | --- |
+| [Fluxo de trabalho](/docs/processo/fluxo-de-trabalho) | Branch → `develop` do fork → `develop` central → `main`, nomes de branch, Conventional Commits, PR, revisão e CI |
+| [História de usuário](/docs/processo/historia-de-usuario#ciclo-de-vida-da-us) | Ciclo da US do rascunho à validação do PO, com critérios INVEST, DoR e DoD |
+| [Gestão do backlog](/docs/planejamento/backlog) | Taxonomia (épico, US, task, bug), regra de validação com o PO, DoR e DoD por tipo |
+| [Guia de documentação](/docs/equipe/guia-documentacao) | Padrão de página, onde registrar cada coisa e checklist de revisão |
+
+## Issues (GitHub e Zenhub)
+
+| Template | Título | Use para |
+| --- | --- | --- |
+| [Épico](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/.github/ISSUE_TEMPLATE/epico.md) | `[MSGXX] Nome` | Entrega macro de valor ou de correção |
+| [História de usuário](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/.github/ISSUE_TEMPLATE/historia-de-usuario.md) | `[USXX.YY] Nome` | Funcionalidade percebida pela persona ([guia](/docs/processo/historia-de-usuario)) |
+| [Task técnica](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/.github/ISSUE_TEMPLATE/tarefa.md) | `[TASKXX.YY] Nome` | Infra, CI, refatoração, sustentação |
+| [Defeito](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/.github/ISSUE_TEMPLATE/defeito.md) | `[BUGXX.YY] Nome` | Falha em comportamento já existente |
+
+`XX` é o número do épico pai; use `00` para itens transversais.
+
+## Pull request
+
+O [template de PR](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/.github/pull_request_template.md)
+pede a issue, a etapa do fluxo, o que muda e por quê, como testar, evidências,
+o impacto na qualidade e dois checklists (autor e revisor). Os critérios de um
+bom PR estão no [Fluxo de trabalho](/docs/processo/fluxo-de-trabalho#4-pull-request).
+
+:::caution[Repositórios do produto]
+Os repositórios `2026.2-*` (Core, Parser, Service, Front, CLI) ainda usam
+templates antigos de 2026.1, e AI, Action e Plugin não têm templates. Copiar a
+pasta `.github/ISSUE_TEMPLATE/` e o `pull_request_template.md` deste repositório
+para eles (task de saneamento, épico MSG03).
+:::
+
+## Reuniões
+
+| Template | Use para |
+| --- | --- |
+| [Pauta da reunião diária](/docs/processo/pauta-reuniao-diaria) | Reunião diária da equipe: andamento, bloqueios, qualidade, decisões e prazos |
+| [Ata](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/ata.mdx) | Reunião com o PO, interna ou com monitores ([Reuniões](/docs/reunioes)) |
+
+## Documentação
+
+| Template | Use para |
+| --- | --- |
+| [Página](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/pagina.mdx) | Qualquer página nova do site |
+| [Sprint](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/sprint.mdx) | Registro de sprint ([Sprints](/docs/sprints)) |
+| [Release](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/release.mdx) | Critérios e evidências de uma release |
+| [Decisão](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/decisao.mdx) | Decisão baseada em dado ([Decisões](/docs/planejamento/decisoes)) |
+| [Atividade da Lean Inception](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/atividade-lean-inception.mdx) | Página de atividade de inception |
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 21/10/2026 | Criação do índice de templates e fluxos | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

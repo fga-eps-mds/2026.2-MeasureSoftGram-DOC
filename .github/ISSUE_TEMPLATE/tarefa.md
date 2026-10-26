@@ -17,6 +17,8 @@ Exemplo: Para a 2ª tarefa técnica vinculada ao Épico 01 [MSG01]:
 -> [TASK01.02] Otimizar requisições SWR no frontend
 Para uma tarefa transversal/geral:
 -> [TASK00.01] Atualizar dependências globais do repositório
+Branch: task/TASK01.02-otimizar-requisicoes-swr
+Fluxo de branch, commit e PR: https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/processo/fluxo-de-trabalho/
 ================================================================================
 -->
 
@@ -98,8 +100,9 @@ Checklist obrigatório de qualidade para mover este card para Closed / Done:
 - [ ] Código implementado estritamente aderente aos Critérios Técnicos acordados
 - [ ] Conformidade com linter, padrões de código e diretrizes arquiteturais
 - [ ] Testes automatizados cobrindo a alteração implementados e aprovados
-- [ ] Pipeline de CI/CD executado com sucesso no repositório central
-- [ ] Pull Request (PR) revisado e aprovado por pelo menos um integrante
+- [ ] Quality gate do SonarCloud aprovado, sem problemas novos de severidade alta
+- [ ] PRs seguindo o fluxo (fork → develop do fork → develop central), com CI verde
+- [ ] Pull Request (PR) revisado e aprovado por pelo menos um integrante que não é o autor
 - [ ] Código integrado à branch `develop` do repositório central
 - [ ] Documentação técnica ou de governança atualizada no `2026.2-Docs` e/ou `Docs` (quando aplicável)
 

@@ -2,6 +2,7 @@
 id: arquitetura
 title: Arquitetura
 sidebar_position: 2
+sidebar_label: Arquitetura
 ---
 
 # Arquitetura
@@ -10,13 +11,18 @@ Este documento descreve a arquitetura do MeasureSoftGram no semestre 2026.2: os 
 do ecossistema, as tecnologias de cada um, como se comunicam em tempo de execução, como são
 implantados e como os dados são modelados.
 
-:::info Base e verificação
-
+:::info[Base e verificação]
 Este documento parte do
 [documento de arquitetura de 2026.1](https://github.com/fga-eps-mds/2026.1-MeasureSoftGram-DOC/blob/main/docs/planejamento/arquitetura.md)
 e foi conferido em **27/09/2026** contra a branch `develop` dos repositórios `2026.2-*`, que
 são a linha de desenvolvimento ativa (ver [Diagnóstico](../diagnostico/diagnostico.mdx)).
 Onde o código atual diverge do documento anterior, vale o código.
+
+Em **20/10/2026** o documento foi atualizado para refletir a retirada do Grafana (US07.01).
+
+Em **25/10/2026** o documento passou a incluir o repositório
+[2026.2-MeasureSoftGram-Platform](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Platform),
+que reúne os demais como submódulos e sobe o ambiente integrado de desenvolvimento.
 
 :::
 
@@ -39,9 +45,12 @@ arquiteturais, o impacto do MVP de 2026.2, as metas e restrições e as decisõe
   matemático e é importado por quem precisa calcular (Service e CLI). Não há chamada de rede
   para calcular.
 - **O Service é o ponto de acesso aos dados.** Front, Plugin, Action e MCP falam com o
-  Service por HTTP. A exceção é o Grafana, que lê o banco diretamente.
+  Service por HTTP.
 - **A coleta acontece fora do Service.** As métricas são extraídas no CI do usuário (Action)
   ou na máquina do usuário (CLI), a partir do SonarQube e do GitHub.
+- **O ambiente de desenvolvimento é um só.** O Platform reúne os repositórios como submódulos
+  e sobe a stack a partir do código deles, com hot reload. Ele não faz parte do deploy de
+  produção.
 
 ## Componentes e tecnologias
 
@@ -49,17 +58,16 @@ arquiteturais, o impacto do MVP de 2026.2, as metas e restrições e as decisõe
 | --- | --- | --- | --- |
 | Core | Modelo matemático de qualidade: medidas, subcaracterísticas, características e TSQMI | Python 3.10+, pandas, numpy, marshmallow | PyPI `msgram_core` (1.5.5rc1 no `develop`) |
 | Parser | Extração e normalização de métricas do SonarQube (estático) e do GitHub (dinâmico), por plugins | Python 3.9+, pandas, requests | PyPI `msgram-parser` (1.2.3rc1) |
-| Service | API REST, autenticação, persistência, cálculo via Core, job diário de releases e autorização dos dashboards | Django 5.2, DRF 3.18, django-allauth, APScheduler, gunicorn, Python 3.12, uv | Imagem Docker própria (DockerHub) |
-| Front | Interface web: organizações, produtos, repositórios, releases e dashboards | Next.js 12.2, React 18, MUI 5, ECharts, TypeScript, pnpm | Imagem Docker própria (DockerHub) |
+| Service | API REST, autenticação, persistência, cálculo via Core, job diário de releases e dados dos dashboards por release | Django 5.2, DRF 3.18, django-allauth, APScheduler, gunicorn, Python 3.12, uv | Imagem Docker própria (DockerHub) |
+| Front | Interface web: organizações, produtos, repositórios, releases e dashboards nativos (ECharts) | Next.js 12.2, React 18, MUI 5, ECharts, TypeScript, pnpm | Imagem Docker própria (DockerHub) |
 | CLI | Extração e cálculo local, sem acesso ao Service | Python 3.9+ | PyPI `msgram` (3.3.1rc2) |
 | Action | Coleta métricas no CI do usuário, envia ao Service e comenta o resultado no PR | TypeScript, `@actions/*`, octokit, axios, runtime node20 | GitHub Action |
 | Plugin | Painel de qualidade, dashboards e execução local da Action dentro do VS Code | TypeScript (extension host) + React e Vite (webview) | Extensão VS Code (1.0.2) |
 | AI (MCP) | Expõe os dados do Service a clientes de IA pelo protocolo MCP | Python 3.11+, SDK `mcp` (FastMCP), httpx | Imagem Docker `measuresoftgram/ai` |
-| Grafana | Dashboards analíticos lidos direto do banco e incorporados por iframe | Grafana com plugin `volkovlabs-echarts-panel` | Container de terceiros |
 | PostgreSQL | Persistência do Service | PostgreSQL 18 (`postgres:18-alpine`) | Container |
+| Platform | Ambiente integrado de desenvolvimento: reúne os demais repositórios como submódulos (branch `develop`) e os sobe com hot reload, escolhidos por profiles, atrás de um proxy nginx único | Git submodules, Docker Compose v2, nginx 1.27, GNU Make, shell, GitHub Actions (smoke test) | Não é publicado: `git clone --recurse-submodules` |
 
-:::warning Versões do Core desalinhadas
-
+:::warning[Versões do Core desalinhadas]
 Cada consumidor usa uma versão diferente do Core: o Service fixa `msgram-core==1.4.9`, a CLI
 declara `msgram-core~=1.5.3` e o Core está em `1.5.5rc1`. Por isso o Service mantém um
 substituto provisório da medida `technical_debt_ratio` (`utils/core_compat.py`), a ser
@@ -69,15 +77,16 @@ removido quando ele for atualizado para o Core 1.5.5 ou superior.
 
 ### Infraestrutura do Service
 
-A stack do Service é orquestrada por dois arquivos Docker Compose: `docker-compose.yml`
-(desenvolvimento) e `deploy/docker-compose.prod.yml` (produção).
+No repositório do Service, a stack é orquestrada por dois arquivos Docker Compose:
+`docker-compose.yml` (desenvolvimento do Service isolado) e `deploy/docker-compose.prod.yml`
+(produção). O ambiente que sobe todos os componentes juntos fica no Platform (ver
+[Ambiente integrado de desenvolvimento](#ambiente-integrado-de-desenvolvimento-platform)).
 
 | Container | Imagem | Observações |
 | --- | --- | --- |
 | `db` | `postgres:18-alpine` | Volume `service_postgres_data`. Em desenvolvimento publica a porta 5432 só em `127.0.0.1`; em produção não publica porta. |
 | `service` | Dev: build local (multi-stage, builder com uv e runtime `python:3.12-slim-bookworm`). Prod: imagem do DockerHub. | gunicorn com `GUNICORN_WORKERS` (padrão 3). Healthcheck controla a ordem de subida. |
 | `front` | Imagem do DockerHub (só no compose de produção) | Sobe junto com a stack em produção. |
-| `grafana` | `grafana/grafana:latest` | Volume `grafana_data`; dashboards e datasource provisionados por arquivo. |
 | `proxy` | `nginx:1.27-alpine` (só em produção) | Único container que publica porta no host (`80:80`). |
 
 Em produção, os containers ficam na rede bridge `msgram`. O nginx interno fica atrás de um
@@ -87,31 +96,68 @@ caminho:
 | Rota | Destino |
 | --- | --- |
 | `/api/`, `/swagger/`, `/admin/`, `/static/` | `service:8080` (Django) |
-| `/grafana/` | `grafana:3000`, com upgrade para WebSocket |
 | `/` | `front` (Next.js) |
 
-### Integração com o Grafana
+### Ambiente integrado de desenvolvimento (Platform)
 
-O Grafana consulta o **mesmo PostgreSQL do Service diretamente**, sem passar pela API. Para
-ser incorporado por iframe, ele roda com acesso anônimo somente leitura
-(`GF_AUTH_ANONYMOUS_ENABLED`, papel `Viewer`) e `GF_SECURITY_ALLOW_EMBEDDING=true`.
+O repositório Platform sobe o produto inteiro a partir do código dos submódulos, em modo de
+desenvolvimento e com hot reload: editar o código de um submódulo recarrega o serviço
+correspondente, sem rebuild. A configuração fica toda em um único `.env` na raiz, e a variável
+`COMPOSE_PROFILES` (editada à mão ou pelo `make select`) escolhe o que sobe. O padrão do
+`.env.example` é `service,front`.
 
-Como o Grafana é aberto para leitura, o controle de acesso fica no Service, no app
-`grafana_proxy`:
+| Profile | Containers | Porta no host | Observações |
+| --- | --- | --- | --- |
+| `service` | `db`, `service`, `proxy` | `80` (proxy), `5432` (db) | O `service` monta `src/` do submódulo e roda `docker/service/dev-entrypoint.sh`: aguarda o banco, migra, carrega os dados iniciais (`load_initial_data`), coleta os estáticos e termina com `runserver` (reload nativo do Django). |
+| `front` | `front` + os do profile `service` | `3000` | Imagem `node:20-alpine` com o submódulo montado, rodando `pnpm dev` (HMR). |
+| `ai` | `ai`, `mcp-inspector` + `db` e `service` | `8000` (MCP), `6274` (inspector) | Stage `dev` do Dockerfile do AI, com `watchfiles`. O inspector é um cliente web para testar o MCP. |
+| `docs` | `docs` | `3001` | Docusaurus deste repositório de documentação, com hot reload. |
+| `tools` | `cli`, `action`, `plugin` | — | Não sobem com `up`: rodam sob demanda (`docker compose run --rm`, ou `make cli`, `make action-test`, `make plugin`). O `cli` instala Core, Parser e CLI em modo editável. |
 
-- `GET /api/v1/grafana/dashboards/` lista os dashboards disponíveis.
-- `GET /api/v1/grafana/dashboard/<uid>/` valida se o usuário tem acesso ao produto e ao
-  repositório informados e devolve a URL do dashboard já filtrada, usada como `src` do iframe.
+Todos os containers ficam na rede bridge `msgram`. O `proxy` (`nginx:1.27-alpine`, porta 80)
+usa uma cópia do `deploy/nginx/default.conf` do Service e roteia como em produção, com uma
+rota a mais:
 
-Front e Plugin nunca chamam o Grafana para autorização: sempre pedem a URL ao Service.
+| Rota | Destino |
+| --- | --- |
+| `/health/` | `service:8080`, usada pelo smoke test |
+| `/api/`, `/swagger/`, `/admin/`, `/static/` | `service:8080` (Django) |
+| `/` | `front:3000` (Next.js, com websocket do HMR) |
 
-:::note Retirada do Grafana
+Como `service` e `front` são opcionais, o nginx resolve os destinos em tempo de execução pelo
+DNS do Docker: se um backend não está no ar, a rota dele responde 502 e o proxy continua de pé.
 
-A retirada do Grafana está planejada para o MVP de 2026.2 (ver
-[Impacto do MVP na arquitetura](#impacto-do-mvp-na-arquitetura)). Enquanto isso não
-acontece, esta seção descreve o estado vigente.
+O workflow `compose-smoke` (GitHub Actions) roda em cada pull request e em push para `main`
+e `develop`: faz checkout com os submódulos, sobe os profiles padrão e executa
+`scripts/smoke-test.sh`.
 
-:::
+### Dashboards por release
+
+Os dashboards são gráficos nativos do Front (ECharts) que leem a API do Service. Não há iframe
+nem acesso direto ao banco: a autorização é a do resto da API, e **qualquer membro da
+organização** vê os dashboards dos produtos dela, não só o administrador (quem não é membro
+recebe 404).
+
+**Regra do valor por release.** O valor de uma entidade (característica, subcaracterística,
+medida, métrica ou TSQMI) em uma release é o do **último cálculo feito entre o dia de `start_at`
+e o dia de `end_at`**, ambos inclusive, a mesma regra do gráfico de pulso. Release sem análise
+aparece como "sem dado", e não como zero. Por isso os valores podem diferir dos do Grafana, que
+usava a média dos últimos 7 dias (planejado × realizado) e dos últimos 30 dias (radar).
+
+Os endpoints ficam em `/api/v1/organizations/{org}/products/{produto}/`:
+
+| Rota | O que devolve | Usada em |
+| --- | --- | --- |
+| `release-dashboard/summary/?release_id=` | Totais da release: características, subcaracterísticas, medidas e métricas da configuração da release (contados como entidades, e não como linhas do histórico), repositórios com análise na janela e arquivos distintos analisados | Visão Geral de Qualidade |
+| `release-dashboard/characteristics/?release_id=` | Valor de cada característica por repositório (radar), meta da release, média e desvio entre os repositórios (planejado × realizado) e TSQMI por repositório | Visão Geral de Qualidade |
+| `repositories/{repo}/historical-values/{nível}/` | Histórico do repositório, com os 100 registros mais recentes de cada entidade. `{nível}` é `characteristics`, `subcharacteristics`, `measures` ou `metrics`; o de métricas aceita `?qualifier=TRK` para trazer só o valor do repositório | Evolução Temporal e tela do repositório |
+| `repositories/{repo}/release-history/?level=&keys=` | Um ponto por release para cada entidade do nível, da mais antiga para a mais nova | Disponível, ainda sem tela |
+
+O `release_id` é obrigatório nas rotas `release-dashboard/*` (400 sem ele; 404 se a release não
+for do produto). Os repositórios considerados são os da release, sempre restritos ao produto;
+se a release não escolheu nenhum, valem todos os do produto. A configuração da release segue a
+regra da árvore do modelo. O detalhe de cada rota está em `src/endpoints.md`, no repositório do
+Service.
 
 ## Visão lógica
 
@@ -127,11 +173,8 @@ flowchart TB
         RP["nginx<br/>(proxy interno)"]
         SVC["Service<br/>(Django + Core como biblioteca)"]
         DB[("PostgreSQL 18")]
-        GF["Grafana"]
         RP -->|"/api /swagger /admin /static"| SVC
-        RP -->|"/grafana"| GF
         SVC --> DB
-        GF -->|"SQL direto"| DB
     end
 
     subgraph CI["CI do usuário"]
@@ -148,8 +191,6 @@ flowchart TB
 
     FE <-->|HTTPS| RP
     VSC <-->|"HTTPS (token)"| RP
-    FE -.->|"iframe (URL resolvida pelo Service)"| GF
-    VSC -.->|"iframe (URL resolvida pelo Service)"| GF
     IA <-->|MCP| MCP
     MCP <-->|"HTTP/REST (token)"| RP
     ACT -->|"HTTPS (token)"| RP
@@ -172,6 +213,8 @@ Pontos centrais da visão lógica:
 - **Autenticação:** usuários entram via OAuth do GitHub (django-allauth). A API REST usa
   `TokenAuthentication` do DRF, que também é o mecanismo usado pela Action, pelo Plugin e pelo
   MCP.
+- **Platform** não aparece no diagrama porque não participa da execução: só reúne e sobe os
+  componentes acima no ambiente de desenvolvimento.
 
 ## Visão de processo
 
@@ -184,7 +227,6 @@ existente roda dentro do processo do Service.
 | Processo | Natureza | Comunicação |
 | --- | --- | --- |
 | Service | gunicorn (WSGI síncrono), modelo prefork com `GUNICORN_WORKERS` processos (padrão 3) | HTTP/REST síncrono |
-| Grafana | Container com ciclo de vida próprio | SQL direto no PostgreSQL |
 | Servidor MCP | Container HTTP (porta 8000) | Recebe chamadas MCP e as traduz em chamadas HTTP síncronas ao Service |
 | Front | Servidor Next.js | Chama a API do Service |
 
@@ -254,7 +296,10 @@ sequenceDiagram
 
 Cada módulo vive em um repositório próprio na organização
 [fga-eps-mds](https://github.com/fga-eps-mds). A linha ativa é a dos repositórios `2026.2-*`
-(ver [Repositórios](./repositorios.mdx)).
+(ver [Repositórios](./repositorios.mdx)). O repositório
+[2026.2-MeasureSoftGram-Platform](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Platform)
+reúne todos eles como git submodules, cada um apontando para a branch `develop`, e é o ponto
+de entrada para quem desenvolve: um único clone traz o código de todos os módulos.
 
 ### Core
 
@@ -305,11 +350,10 @@ Projeto Django em `src/`, com um app por entidade do domínio:
 | `measures`, `subcharacteristics`, `characteristics` | Entidades suportadas e valores calculados de cada nível do modelo; matriz de balanceamento |
 | `tsqmi` | Nota final de qualidade |
 | `goals` | Metas de qualidade (equalizador) |
-| `releases` | Releases e job diário de cálculo |
+| `releases` | Releases, job diário de cálculo e dados dos dashboards por release |
 | `release_configuration` | Configuração do modelo por produto |
 | `math_model` | Endpoint de cálculo usado pela Action |
 | `entity_trees` | Árvore de relacionamento entre entidades de qualidade |
-| `grafana_proxy` | Autorização e resolução de URLs dos dashboards |
 | `utils` | Utilitários e compatibilidade com o Core |
 
 ### Front
@@ -321,6 +365,20 @@ src/
 ├── mocks/
 └── shared/       # components, contexts, hooks, layouts, services, utils, customTypes
 ```
+
+Os dashboards da US07.01 ficam em `src/pages/products/[product]/dashboards/` e na tela do repositório:
+
+| Tela | Rota do Front | Conteúdo |
+| --- | --- | --- |
+| Visão Geral de Qualidade | `dashboards/overview` | Totais da release, TSQMI por repositório, radar das características de um repositório e planejado × realizado por característica; seletor de release que abre na atual |
+| Evolução Temporal | `dashboards/temporal` | Quatro gráficos (características, subcaracterísticas, medidas e métricas) do repositório escolhido, com um ponto por release |
+| Repositório | `repositories/[repository]` | Evolução das características do repositório, com um ponto por release |
+
+Os componentes compartilhados ficam em `src/shared/`: `DashboardCard` (estados de carregamento,
+sem dados e erro com "Tentar novamente"), `ReleaseEvolutionChart` (linhas por release),
+`ReleaseSelect` e `dashboardColors` (paleta dos gráficos). Os dashboards do Metamodelo
+(`dashboards/metamodelo`) e da Análise por Entidade (`dashboards/entidade`) pertencem às US21.01
+e US21.02.
 
 ### Action
 
@@ -356,7 +414,7 @@ flowchart TB
     subgraph Webview["webview-ui/ (React + Vite)"]
         APP["App.tsx"]
         DASH["DashboardView"]
-        GRAF["GrafanaView (iframe)"]
+        GRAF["GrafanaView (iframe, sem efeito)"]
         SETV["SettingsView"]
         ACTIONV["action/"]
     end
@@ -378,6 +436,13 @@ flowchart TB
 
 Para executar a Action localmente, o Plugin salva o workflow no workspace do usuário e sobe
 um `docker compose` empacotado na extensão (`resources/docker`) em um terminal do VS Code.
+
+:::note[Plugin e Grafana]
+O Plugin do `develop` ainda tem a tela `GrafanaView`, que pede a URL do dashboard em
+`/api/v1/grafana/`. Esse endpoint saiu do Service com a US07.01, então a tela não funciona
+mais. O Plugin está fora do escopo do semestre (ata do PO de 07/10/2026) e não foi alterado.
+
+:::
 
 ### Servidor MCP (AI)
 
@@ -402,18 +467,66 @@ A autenticação usa uma conta de serviço fixa (`SERVICE`, `MSGRAM_USER`, `MSGR
 o token é obtido uma vez na subida e reaproveitado por todas as tools. O MCP não repassa a
 identidade de quem usa o agente de IA.
 
-### Grafana
+### Platform
 
-O Grafana não tem código próprio: é provisionado por arquivos no repositório do Service.
+O Platform não tem código de produto: guarda os submódulos e a configuração que os sobe juntos.
 
 ```
-grafana/
-├── dashboards/            # dashboards em JSON
-├── provisioning/
-│   ├── datasources/       # datasource PostgreSQL (mesmo banco do Service)
-│   └── dashboards/        # provider que carrega os JSONs
-└── seed_planejado_vs_realizado.sql
+.
+├── docker-compose.yml          # serviços, profiles, volumes e rede msgram
+├── .env.example                # configuração única da stack (copiada para .env)
+├── Makefile                    # atalhos: select, up, down, logs, seed, cli, testes
+├── nginx/default.conf          # proxy único (cópia do deploy do Service + /health/)
+├── docker/
+│   ├── service/dev-entrypoint.sh   # migra, semeia e roda runserver
+│   └── cli/Dockerfile              # Core, Parser e CLI instalados em modo editável
+├── scripts/                    # select, smoke-test, grant-access, set-github-token
+├── workspace/                  # pasta de trabalho montada no container da CLI
+├── .github/workflows/compose-smoke.yml
+└── MeasureSoftGram-*/          # submódulos (Service, Front, Core, Parser, CLI,
+                                #   Action, Plugin, AI, DOC)
 ```
+
+Cada submódulo é montado no container que o executa, o que dá o hot reload:
+
+```mermaid
+flowchart LR
+    subgraph Sub["Submódulos"]
+        S_SVC["Service"]
+        S_FE["Front"]
+        S_AI["AI"]
+        S_DOC["DOC"]
+        S_CORE["Core"]
+        S_PAR["Parser"]
+        S_CLI["CLI"]
+        S_ACT["Action"]
+        S_PLG["Plugin"]
+    end
+
+    subgraph Cont["Containers (rede msgram)"]
+        C_SVC["service"]
+        C_FE["front"]
+        C_AI["ai"]
+        C_DOC["docs"]
+        C_CLI["cli"]
+        C_ACT["action"]
+        C_PLG["plugin"]
+    end
+
+    S_SVC --> C_SVC
+    S_FE --> C_FE
+    S_AI --> C_AI
+    S_DOC --> C_DOC
+    S_CORE --> C_CLI
+    S_PAR --> C_CLI
+    S_CLI --> C_CLI
+    S_ACT --> C_ACT
+    S_PLG --> C_PLG
+```
+
+O Plugin não é desenvolvido pelo container: o hot reload dele é o do próprio VS Code (F5). O
+container `plugin` serve só para instalar dependências, rodar testes e empacotar o `.vsix` sem
+Node na máquina.
 
 ## Visão física
 
@@ -432,17 +545,12 @@ flowchart TB
             NG["proxy<br/>nginx:1.27-alpine :80"]
             SV["service<br/>gunicorn"]
             FR["front"]
-            GR["grafana"]
             PG["db<br/>postgres:18-alpine"]
             V1[("service_postgres_data")]
-            V2[("grafana_data")]
             NG --> SV
             NG --> FR
-            NG --> GR
             SV --> PG
-            GR --> PG
             PG --- V1
-            GR --- V2
         end
         OR --> NG
     end
@@ -458,11 +566,17 @@ flowchart TB
     MC -->|HTTP/REST| OR
 ```
 
-Em desenvolvimento não há nginx nem openresty: o Service publica a porta 8080, o Grafana
-publica a porta 5000 mapeada para 3000, e o banco fica só em `127.0.0.1:5432`.
+Em desenvolvimento não há openresty. O que muda depende de como a stack é levantada:
 
-:::note Ambiente de produção
+- **Compose do próprio Service** (Service isolado): sem nginx; o Service publica a porta 8080
+  e o banco fica só em `127.0.0.1:5432`.
+- **Platform** (ambiente integrado): tudo roda na máquina de quem desenvolve, com o nginx na
+  porta 80 e as demais portas descritas em
+  [Ambiente integrado de desenvolvimento](#ambiente-integrado-de-desenvolvimento-platform). O
+  banco é publicado na porta `POSTGRES_PUBLIC_PORT` (padrão 5432) **em todas as interfaces de
+  rede**, e não só em `127.0.0.1`.
 
+:::note[Ambiente de produção]
 A topologia acima é a descrita em `deploy/docker-compose.prod.yml`. O diagnóstico de 19/09
 registra que o ambiente de produção em execução não pôde ser verificado (item MSG-40).
 
@@ -536,7 +650,7 @@ flowchart LR
 
 O modelo abaixo foi extraído dos `models.py` do Service. Tabelas de infraestrutura de
 terceiros (autenticação do Django, `authtoken`, `allauth`, `django_apscheduler`) ficam fora do
-escopo. Os apps `grafana_proxy`, `entity_trees` e `math_model` não têm modelos próprios. Para
+escopo. Os apps `entity_trees` e `math_model` não têm modelos próprios. Para
 legibilidade, o diagrama mostra os atributos das entidades principais.
 
 ```mermaid
@@ -677,11 +791,14 @@ O MER textual completo e o diagrama lógico gerado por `graph_models` estão no
 | --- | --- | --- |
 | Três gerações de repositórios públicas (centrais, `2026.1-*`, `2026.2-*`) sem decisão registrada | Correções precisam escolher onde entram; repositórios abandonados continuam com defeitos conhecidos | MSG-39 |
 | Versões do Core divergentes entre Service, CLI e Core | Resultados podem diferir entre o fluxo hospedado e a CLI; exige código de compatibilidade no Service | MSG-05 |
-| Grafana lê o banco direto e roda com acesso anônimo | A autorização depende do `grafana_proxy`; uma URL de dashboard vazada é acessível sem login | Visão lógica |
 | MCP autentica com conta de serviço fixa | Todas as consultas via IA usam a mesma identidade, sem controle de acesso por usuário | MSG-50 |
 | Thread de onboarding sem fila nem retentativa | Falhas silenciosas se o worker reiniciar | Visão de processo |
 | Métricas coletadas sem vínculo com release | Planejado × realizado depende de janela de tempo, não de vínculo explícito | Modelo de dados |
 | Pacotes do Core com nomes genéricos (`core`, `util`, `resources`) | Risco de conflito de nomes com outros pacotes do ambiente | Visão de desenvolvimento |
+| Submódulos do Platform fixados em commits | O clone traz o commit registrado no Platform, não o último do `develop`; sem atualização periódica (`git submodule update --remote`), o ambiente integrado fica defasado | Visão de desenvolvimento |
+| `nginx/default.conf` do Platform é cópia do `deploy/nginx` do Service | Mudanças de rota em produção não chegam sozinhas ao ambiente de desenvolvimento, e os dois podem divergir | Ambiente integrado de desenvolvimento |
+| `dev-entrypoint.sh` do Platform refaz o setup do `start_service.sh` do Service | Mudanças no setup do Service (migrações, seed, estáticos) precisam ser replicadas no Platform | Ambiente integrado de desenvolvimento |
+| PostgreSQL de desenvolvimento publicado em todas as interfaces | Com as credenciais padrão (`postgres`/`postgres`), o banco fica acessível a outras máquinas da rede local | Visão física |
 
 Os itens MSG estão detalhados no [Backlog técnico](../diagnostico/backlog-tecnico.mdx).
 
@@ -693,7 +810,7 @@ arquitetura nestes pontos:
 | Frente do MVP | Componentes afetados | Mudança esperada |
 | --- | --- | --- |
 | GitLab como alternativa ao GitHub | Service, Front, Plugin, Action | Autenticação via GitLab (OAuth2/OIDC), importação de repositórios pela API do GitLab, pipeline de CI análoga à Action e nomenclatura adaptada (merge request em vez de pull request). O campo `platform` de `Repository` já aceita `gitlab`. |
-| Retirada do Grafana | Service, Front, Plugin, infraestrutura | Gráficos recriados no Front e no Plugin; remoção do container, do `grafana_proxy` e do acesso direto ao banco. |
+| Retirada do Grafana | Service, Front, infraestrutura | Concluída na US07.01: gráficos nativos no Front e remoção do container, do `grafana_proxy` e do acesso direto ao banco. O Plugin saiu do semestre e ainda referencia o Grafana. |
 | Rastreabilidade da degradação e alerta antes do merge | Action, Service, Front | Uso de `path` das métricas coletadas para ligar indicadores a arquivos; alerta no PR quando a qualidade cair. |
 | Característica de segurança e medida de Dívida Técnica | Core, Parser, Action, Service | Novas métricas (SAST, DAST, SCM e chaves de dívida técnica do SonarQube) e novas medidas no modelo. |
 | Pesos qualitativos (AHP) | Core, Service, Front | Cálculo de pesos das entidades de qualidade a partir de comparações par a par. |
@@ -718,6 +835,7 @@ arquitetura nestes pontos:
 | --- | --- |
 | Conectividade | O Front exige conexão com a internet; a CLI precisa de rede apenas para extrair dados do GitHub |
 | Plataforma | Web, linha de comando, extensão VS Code e MCP |
+| Ambiente de desenvolvimento | Docker com Compose v2 e git; GNU Make é opcional (os alvos são atalhos para `docker compose`) |
 | Fontes de métricas | Coleta dependente do SonarQube e da API do GitHub |
 | Público | Times de desenvolvimento, líderes técnicos e pesquisadores de qualidade de software |
 | Idioma do código | Inglês, pela integração com plataformas que já usam esse idioma |
@@ -726,9 +844,9 @@ arquitetura nestes pontos:
 
 ## Decisões arquiteturais
 
-Nenhuma decisão arquitetural foi registrada formalmente até esta versão. As propostas abaixo
-foram levantadas no [Diagnóstico](../diagnostico/diagnostico.mdx) e na Lean Inception e
-**aguardam decisão da equipe**.
+As ADRs 002 (US07.01) e 004 foram aceitas e implementadas. As ADRs 001 e 003 foram
+levantadas no [Diagnóstico](../diagnostico/diagnostico.mdx) e na Lean Inception e **aguardam
+decisão da equipe**.
 
 ### ADR 001 - Repositórios `2026.2-*` como conjunto canônico
 
@@ -745,16 +863,19 @@ foram levantadas no [Diagnóstico](../diagnostico/diagnostico.mdx) e na Lean Inc
 
 ### ADR 002 - Retirada do Grafana
 
-- **Status:** Proposta
-- **Contexto:** O Grafana roda como container separado, lê o banco diretamente e precisa de
+- **Status:** Aceita e implementada (US07.01)
+- **Contexto:** O Grafana rodava como container separado, lia o banco diretamente e precisava de
   acesso anônimo para ser incorporado por iframe no Front e no Plugin. A retirada foi mapeada
-  na revisão técnica da Lean Inception.
-- **Decisão proposta:** Substituir os dashboards do Grafana por gráficos implementados no
-  Front e no Plugin, consumindo a API do Service.
+  na revisão técnica da Lean Inception e a estratégia foi validada pelo PO em 23/09/2026.
+- **Decisão:** Substituir os dashboards do Grafana por gráficos implementados no Front,
+  consumindo a API do Service, com o valor de cada release definido pela última análise dentro
+  do período da release (ver [Dashboards por release](#dashboards-por-release)).
 - **Alternativas consideradas:** Manter o Grafana com autenticação própria; manter o Grafana
   apenas para uso interno.
-- **Consequências:** Remove um container, o `grafana_proxy` e o acesso direto ao banco. Exige
-  recriar todos os gráficos e definir a unidade de referência dos dados.
+- **Consequências:** Saíram um container, o `grafana_proxy` e o acesso direto ao banco, e
+  qualquer membro da organização passa a ver os dashboards. Os valores podem diferir dos
+  antigos, que usavam médias de 7 e de 30 dias. O Plugin, fora do escopo do semestre, não foi
+  migrado.
 
 ### ADR 003 - Vínculo explícito entre métricas coletadas e release
 
@@ -768,6 +889,24 @@ foram levantadas no [Diagnóstico](../diagnostico/diagnostico.mdx) e na Lean Inc
 - **Consequências:** Consultas por release ficam diretas e auditáveis. Exige migração de dados
   e ajuste na Action e no job diário.
 
+### ADR 004 - Repositório guarda-chuva com submódulos para o ambiente de desenvolvimento
+
+- **Status:** Aceita e implementada
+- **Contexto:** O produto é formado por nove repositórios. Para rodá-lo inteiro, cada
+  integrante precisava clonar os repositórios um a um, configurar cada um e subir os serviços
+  com o compose de cada repositório, sem um proxy comum e sem garantia de que todos estavam na
+  mesma linha de desenvolvimento.
+- **Decisão:** Criar o repositório `2026.2-MeasureSoftGram-Platform`, que reúne os demais como
+  git submodules (branch `develop`) e traz um `docker-compose.yml` de desenvolvimento com hot
+  reload, profiles para escolher o que sobe, proxy nginx único e um `.env` único (ver
+  [Ambiente integrado de desenvolvimento](#ambiente-integrado-de-desenvolvimento-platform)).
+- **Alternativas consideradas:** Unificar o código em um monorepo; manter um compose em cada
+  repositório e documentar a ordem de subida.
+- **Consequências:** Um único clone e um único comando sobem o produto, e o smoke test no CI
+  verifica a stack integrada. Os repositórios continuam independentes, mas os submódulos ficam
+  fixados em commits e precisam ser atualizados, e a configuração do nginx e o setup do Service
+  ficam duplicados no Platform (ver [Pontos de atenção](#pontos-de-atenção-arquiteturais)).
+
 ## Referências
 
 - KRUCHTEN, Philippe. *Architectural Blueprints: The "4+1" View Model of Software
@@ -776,5 +915,18 @@ foram levantadas no [Diagnóstico](../diagnostico/diagnostico.mdx) e na Lean Inc
 - [Documento de arquitetura de 2026.1](https://github.com/fga-eps-mds/2026.1-MeasureSoftGram-DOC/blob/main/docs/planejamento/arquitetura.md)
 - [Documentação do produto MeasureSoftGram](https://fga-eps-mds.github.io/MeasureSoftGram-Docs/)
 - [Diagnóstico do ecossistema](../diagnostico/diagnostico.mdx)
+- [Repositório 2026.2-MeasureSoftGram-Platform](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Platform)
 - [Django](https://www.djangoproject.com), [Next.js](https://nextjs.org),
-  [PostgreSQL](https://www.postgresql.org), [Model Context Protocol](https://modelcontextprotocol.io)
+  [PostgreSQL](https://www.postgresql.org), [Model Context Protocol](https://modelcontextprotocol.io),
+  [Docker Compose](https://docs.docker.com/compose/), [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 31/08/2026 | docs: estrutura inicial do site de documentacao da EPS 2026.2 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.1 | 02/09/2026 | docs: adiciona acentuacao no texto visivel da documentacao | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.2 | 27/09/2026 | adicionando arquitetura revisada | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.3 | 20/10/2026 | docs(arquitetura): remove o Grafana da arquitetura | [@henriquecq](https://github.com/henriquecq) |  |
+| 1.4 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.5 | 25/10/2026 | docs(arquitetura): inclui o repositório Platform (ambiente integrado de desenvolvimento e ADR 004) | [@storch7](https://github.com/storch7) |  |
