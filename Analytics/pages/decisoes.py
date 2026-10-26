@@ -22,8 +22,8 @@ CAMINHO = re.compile(r"((?:docs|Analytics)/[\w./-]+\.\w+)")
 
 ESCOPO = {
     "release": "meta de decisões da release",
-    "periodo": "a tabela mostra as decisões com data no período; o total contra a meta conta todas até o fim do "
-               "período (a meta é acumulada)",
+    "periodo": "decisões registradas até o fim do período (a meta é acumulada); a coluna 'No período' marca as "
+               "tomadas dentro dele",
 }
 
 
@@ -59,7 +59,8 @@ def pagina():
     ini, fim = pd.Timestamp(f["periodo"][0]), pd.Timestamp(f["periodo"][1]) + pd.Timedelta(days=1)
     ate_fim = dec[dec["_data"].isna() | (dec["_data"] < fim)]
     caixa = filters.da_pagina(f, ESCOPO)
-    no_periodo = ate_fim[ate_fim["_data"].isna() | (ate_fim["_data"] >= ini)]
+    # a meta é acumulada: a tabela mostra todas as decisões até o fim do período e marca as do período
+    no_periodo = ate_fim.assign(no_periodo=ate_fim["_data"].isna() | (ate_fim["_data"] >= ini))
     escolhas = []
     for campo, rot in (("tipo", "Tipo"), ("status", "Status"), ("indicador", "Indicador")):
         if campo in no_periodo:
@@ -69,7 +70,8 @@ def pagina():
                 no_periodo = no_periodo[no_periodo[campo].astype(str).str.strip().isin(sel)]
                 escolhas.append(f"{rot.lower()}: {', '.join(sel)}")
     st.caption(f"Recorte: {filters.resumo_ativos(f, ESCOPO)}" + (" · " + " · ".join(escolhas) if escolhas else "")
-               + f" · {len(no_periodo)} decisão(ões) na tabela · {len(ate_fim)} registradas até "
+               + f" · {len(no_periodo)} decisão(ões) na tabela, {int(no_periodo['no_periodo'].sum())} no período · "
+                 f"{len(ate_fim)} registradas até "
                  f"{fim - pd.Timedelta(days=1):%d/%m/%Y}")
     medidas = int((ate_fim.get("resultado", pd.Series(dtype=str)).astype(str).str.strip().replace("nan", "")
                    != "").sum())
@@ -87,8 +89,9 @@ def pagina():
 
     layout.secao("Dado bruto", "O que foi decidido, com base em quê, e como saber se deu certo?", ["PLANILHA"])
     t = no_periodo.copy()
-    t["evidencia_html"] = t.get("evidencia", pd.Series([""] * len(t))).map(_evidencia)
-    cols = {"data": "Data", "sprint": "Sprint", "tipo": "Tipo", "indicador": "Indicador",
+    t["evidencia_html"] = t.get("evidencia", pd.Series([""] * len(t), index=t.index)).map(_evidencia)
+    t["no_periodo_txt"] = t["no_periodo"].map({True: "sim", False: "não"})
+    cols = {"data": "Data", "no_periodo_txt": "No período", "sprint": "Sprint", "tipo": "Tipo", "indicador": "Indicador",
             "contexto_e_dado": "Contexto e dado", "decisao": "Decisão", "evidencia_html": "Evidência",
             "criterio_de_sucesso": "Critério de sucesso", "resultado": "Resultado", "status": "Status"}
     cab = "".join(f"<th>{html.escape(v)}</th>" for c, v in cols.items() if c in t)

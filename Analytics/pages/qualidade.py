@@ -355,6 +355,19 @@ def _parametros(ctx, f, rec, res):
                               "observacao": "O que falta"}, altura=None)
 
 
+def _seguro(bloco: str, fn, *args):
+    """Roda um bloco da página; se ele falhar, mostra o erro só nele e o resto da página continua."""
+    try:
+        return fn(*args)
+    except Exception as erro:  # noqa: BLE001 — um dado inesperado não derruba a página inteira
+        import traceback
+        traceback.print_exc()   # vai para o log do Streamlit Cloud (Manage app)
+        layout.indisponivel(f"{bloco}: erro ao calcular",
+                            f"{erro.__class__.__name__}: {str(erro)[:300]}",
+                            "avise quem mantém o painel; os outros blocos continuam valendo.")
+        return None
+
+
 def pagina():
     ctx, f = layout.estado()
     layout.titulo_pagina("Qualidade (Q-Rapids)", "Nota de qualidade do produto pelo modelo Q-Rapids: do arquivo "
@@ -378,11 +391,13 @@ def pagina():
             layout.indisponivel("Sem nota de qualidade", "nenhuma coleta do pipeline até o fim do período para os "
                                 "repositórios escolhidos.", "rodar o metrics.yml nos repositórios.")
         else:
-            _notebook(notas, sel)
-    res = qrapids.calcular(ctx, f, rec)
+            _seguro("Nota do notebook", _notebook, notas, sel)
+    res = _seguro("Modelo Q-Rapids completo", qrapids.calcular, ctx, f, rec)
     with t2:
-        _completo(res)
+        if res is not None:
+            _seguro("Modelo Q-Rapids completo", _completo, res)
     with t3:
-        _evolucao(ctx, f, rec)
+        _seguro("Evolução e releases", _evolucao, ctx, f, rec)
     with t4:
-        _parametros(ctx, f, rec, res)
+        if res is not None:
+            _seguro("Parâmetros e dados", _parametros, ctx, f, rec, res)
