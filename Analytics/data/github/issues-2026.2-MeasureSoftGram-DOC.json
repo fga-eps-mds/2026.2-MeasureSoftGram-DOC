@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-10-26T01:58:14+00:00",
+ "coletado_em": "2026-10-26T02:10:37+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 171,
+   "title": "feat(evm): custo real pelo custo do time, sem horas; nomes velocity e…",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-26T02:09:58Z",
+   "closed_at": "2026-10-26T02:10:07Z",
+   "updated_at": "2026-10-26T02:10:26Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2923,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/171",
+   "author": "MilenaFRocha"
+  },
   {
    "number": 170,
    "title": "feat(dashboard): filtros padronizados, página Qualidade (Q-Rapids) e …",
@@ -1165,7 +1182,7 @@
    "is_pull_request": true,
    "created_at": "2026-09-30T03:11:15Z",
    "closed_at": null,
-   "updated_at": "2026-10-26T01:57:58Z",
+   "updated_at": "2026-10-26T02:07:33Z",
    "labels": [],
    "type": null,
    "assignees": [

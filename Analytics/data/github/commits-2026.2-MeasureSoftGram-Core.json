@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-10-26T01:58:14+00:00",
+ "coletado_em": "2026-10-26T02:10:37+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Core",
  "desde": "2026-08-24",
@@ -2676,5 +2676,5 @@
    ]
   }
  ],
- "detalhes_novos": 68
+ "detalhes_novos": 0
 }
