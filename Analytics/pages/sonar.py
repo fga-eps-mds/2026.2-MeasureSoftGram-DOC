@@ -11,18 +11,20 @@ from src import theme
 from src.components import charts, filters, layout, rastreio
 from src.components.kpi import kpi
 from src.data import sonar as sn
-from src.metrics import qualidade
+
 from src.metrics.calculations import data_br, num, status_meta, variacao
 
 SEM_API = ("o metrics.yml não traz esta métrica e a coleta da API do SonarCloud ainda não rodou",
            "rodar o workflow \"Coleta de dados do dashboard\" no GitHub Actions (ou "
            "`python scripts/coleta_sonar.py`), que grava `Analytics/data/sonar/`")
 
-def _repos_completos(ctx, curtos: list[str]) -> list[str]:
-    todos = set(ctx.sonar_atual["repositorio"]) if not ctx.sonar_atual.empty else set()
-    if not ctx.sonar_serie.empty:
-        todos |= set(ctx.sonar_serie["repositorio"])
-    return sorted(r for r in todos if not curtos or sn.nome_curto(r) in curtos)
+ESCOPO = {
+    "release": "metas de cobertura e duplicação da release",
+    "periodo": "situação no fim do período (última coleta até lá); o gráfico de evolução mostra as coletas do "
+               "período",
+    "repos": "repositórios analisados",
+    "branch": "coletas do pipeline desta branch (o snapshot da API é sempre da develop)",
+}
 
 
 def _menus(f):
@@ -53,8 +55,8 @@ def _menus(f):
     ], fontes=["SONAR", "CALCULADO"])
 
 
-def _resumo(ctx, serie, repos, qg, rel):
-    atual = ctx.sonar_atual[ctx.sonar_atual["repositorio"].isin(repos)]
+def _resumo(atual, serie, repos, qg, rel):
+    atual = atual[atual["repositorio"].isin(repos)]
     k = st.columns(5)
     with k[0]:
         cob = atual[atual["metrica"] == "coverage"]
@@ -117,7 +119,7 @@ def _placar(ctx, api, atual, qg, repos):
     st.download_button("Baixar CSV", placar.assign(Repositório=[sn.nome_curto(r) for r in placar.index])
                        .to_csv(index=False).encode("utf-8-sig"), file_name="sonar_por_repositorio.csv",
                        mime="text/csv", key="csv_sonar")
-    cond = api.get("condicoes", pd.DataFrame())
+    cond = api.get("condicoes", pd.DataFrame()) if not qg.empty else pd.DataFrame()
     if not cond.empty:
         falhas = cond[(cond["status"] == "ERROR") & cond["repositorio"].isin(repos)]
         if not falhas.empty:
@@ -138,26 +140,33 @@ def pagina():
                             "rodar o workflow `metrics.yml` em cada repositório ou `scripts/coleta_sonar.py`.")
         return
 
-    # ── filtros da página ──
-    serie = ctx.sonar_serie
-    atual = ctx.sonar_atual
-    if f["branch"]:
-        serie = serie[(serie["branch"] == f["branch"]) | (serie["origem"] == "api")]
-    serie = filters.por_periodo(serie, "coleta", f["periodo"])
-    qg = api.get("quality_gate", pd.DataFrame())
+    # ── filtros: globais (período, repositórios, branch) + os da página, todos na barra lateral ──
+    rec = filters.sonar(ctx, f)
+    serie, atual = rec["serie"], rec["atual"]
+    qg = api.get("quality_gate", pd.DataFrame()) if rec["api_no_periodo"] else pd.DataFrame()
     lang = api.get("linguagens", pd.DataFrame())
-    cols = st.columns(3)
-    repos = _repos_completos(ctx, f["repos"])
+    caixa = filters.da_pagina(f, ESCOPO)
+    repos = rec["repos"]
     if not qg.empty:
         estados = sorted(qg["status"].unique())
-        sel_qg = cols[0].multiselect("Quality Gate", estados, key="sonar_qg", placeholder="Todos")
+        sel_qg = caixa.multiselect("Quality Gate", estados, key="sonar_qg", placeholder="Todos")
         if sel_qg:
             repos = [r for r in repos if r in set(qg.loc[qg["status"].isin(sel_qg), "repositorio"])]
     if not lang.empty:
-        sel_l = cols[1].multiselect("Linguagem", sorted(lang["linguagem"].unique()), key="sonar_lang",
-                                    placeholder="Todas")
+        sel_l = caixa.multiselect("Linguagem", sorted(lang["linguagem"].unique()), key="sonar_lang",
+                                  placeholder="Todas")
         if sel_l:
             repos = [r for r in repos if r in set(lang.loc[lang["linguagem"].isin(sel_l), "repositorio"])]
+    disponiveis = [m for m in sn.METRICAS if m in set(serie["metrica"])] if not serie.empty else []
+    metrica = None
+    if disponiveis:
+        padrao = "coverage" if "coverage" in disponiveis else disponiveis[0]
+        metrica = caixa.selectbox("Métrica do gráfico de evolução", disponiveis, index=disponiveis.index(padrao),
+                                  key="sonar_metrica", format_func=lambda m: sn.METRICAS[m][0])
+    if not rec["api_no_periodo"] and api.get("quality_gate") is not None and not api["quality_gate"].empty:
+        st.caption(f"Quality Gate e problemas por severidade não aparecem: o snapshot da API é posterior ao fim "
+                   f"do período ({data_br(rec['fim'])}) e não tem histórico.")
+    st.caption(f"Situação no fim do período ({data_br(rec['fim'])}) · {filters.resumo_ativos(f, ESCOPO)}")
     if not repos:
         st.info("Nenhum repositório com métricas do Sonar para os filtros selecionados.")
         return
@@ -173,21 +182,22 @@ def pagina():
     # ── resumo ──
     layout.secao("Resumo", "Como está a qualidade técnica agora, e mudou desde a última coleta?", ["SONAR"])
     rel = f["release_metas"]
-    _resumo(ctx, serie, repos, qg, rel)
+    _resumo(atual, rec["serie_ate"], repos, qg, rel)
 
     # ── dado bruto ──
     layout.secao("Dado bruto", "Qual é a situação de cada repositório?", ["SONAR"])
     _placar(ctx, api, atual, qg, repos)
 
     layout.secao("Análise", "A qualidade está melhorando, e onde o teste rende mais?", ["SONAR"])
+    _analise(ctx, f, rec, serie, repos, rel, metrica)
+    st.caption("A nota de qualidade (modelo Q-Rapids, do arquivo à nota) está na página **Qualidade (Q-Rapids)**.")
+
+
+def _analise(ctx, f, rec, serie, repos, rel, metrica):
     # ── evolução ──
-    disponiveis = [m for m in sn.METRICAS if m in set(serie["metrica"])]
-    if not disponiveis:
+    if not metrica:
         layout.indisponivel("Sem série temporal no período", "nenhuma coleta do Sonar no período selecionado.")
     else:
-        padrao = "coverage" if "coverage" in disponiveis else disponiveis[0]
-        metrica = st.selectbox("Métrica", disponiveis, index=disponiveis.index(padrao), key="sonar_metrica",
-                               format_func=lambda m: sn.METRICAS[m][0])
         nome, unidade, _ = sn.METRICAS[metrica]
         ag = sn.serie_agregada(serie, metrica, repos)
         agreg = {"mean": "média simples", "sum": "soma", "max": "pior valor"}[sn.agregacao(metrica)]
@@ -222,6 +232,7 @@ def pagina():
         comp = comp[comp["repositorio"].isin(repos)]
         if f["branch"]:
             comp = comp[comp["branch"] == f["branch"]]
+        comp = comp[pd.to_datetime(comp["coleta"]) <= rec["fim"] + pd.Timedelta(days=1)]
         cob = (comp[comp["metrica"] == "coverage"].sort_values("coleta")
                .drop_duplicates(["repositorio", "componente"], keep="last"))
         if not cob.empty:
@@ -239,19 +250,3 @@ def pagina():
                            cob[["repo", "componente", "valor"]].rename(columns={"valor": "cobertura (%)"}),
                            altura=charts.altura_categorias(len(cob), 24))
 
-        # ── modelo de qualidade (prévia DA-R2) ──
-        pipeline = ctx.sonar_pipeline[ctx.sonar_pipeline["repositorio"].isin(repos)]
-        mq = qualidade.calcular(comp, pipeline)
-        if not mq.empty:
-          with st.expander("Prévia do modelo de qualidade agregado (DA-R2)"):
-            st.caption("Cada métrica vira a proporção de arquivos dentro de um limiar (0 a 1), ponderada em "
-                       "Manutenibilidade e Confiabilidade; total = 0,5 × M + 0,5 × C. Limiares e pesos herdados "
-                       "de 2026.1 (`src/metrics/qualidade.py`) — a R2 pede que o time os valide e justifique.")
-            ult = mq.sort_values("coleta").groupby("repositorio").tail(1).copy()
-            ult["nota"] = ult["total"].map(qualidade.nota)
-            ult["repositorio"] = ult["repositorio"].map(sn.nome_curto)
-            st.dataframe(ult[["repositorio", "nota", "total", "manutenibilidade", "confiabilidade", "coleta"]]
-                         .round({"total": 2, "manutenibilidade": 2, "confiabilidade": 2}), use_container_width=True, hide_index=True,
-                         column_config={"total": st.column_config.ProgressColumn("Total (0 a 1)", min_value=0,
-                                                                                 max_value=1, format="%.2f"),
-                                        "coleta": st.column_config.DatetimeColumn("Coleta", format="DD/MM/YYYY")})

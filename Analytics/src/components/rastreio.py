@@ -9,12 +9,12 @@ import streamlit as st
 import config
 from src.data import planilha
 
-REPO_DOCS = "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-docs-eps/blob/main/Analytics/"
+REPO_DOCS = "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/Analytics/"
 
 PAGINAS = {
     "Visão Executiva": "./visao-executiva", "Agile EVM": "./agile-evm", "Gestão ágil": "./zenhub",
     "Qualidade técnica": "./sonar", "Custos": "./custos", "Riscos": "./riscos", "Decisões": "./decisoes",
-    "Integração contínua": "./processo", "Metodologia": "./metodologia",
+    "Integração contínua": "./processo", "Metodologia": "./metodologia", "Qualidade (Q-Rapids)": "./qualidade",
 }
 
 

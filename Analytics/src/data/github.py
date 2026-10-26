@@ -14,7 +14,10 @@ from pathlib import Path
 
 import pandas as pd
 
+import config
+
 ORG = "fga-eps-mds"
+APELIDOS = dict(getattr(config, "APELIDOS_REPO", {}))   # nome antigo do repositório -> atual
 # Coleta própria (scripts/coleta_github.py): um arquivo por repositório, com todas as execuções do semestre.
 PASTA_COLETA = Path(__file__).resolve().parents[2] / "data" / "github"
 _ISSUES = re.compile(r"^GitHub_API-Issues-(?P<prefixo>.+)\.json$")
@@ -49,7 +52,7 @@ def carregar_issues(pastas) -> pd.DataFrame:
             if not isinstance(item, dict):
                 continue
             linhas.append({
-                "repositorio": _repo(casado.group("prefixo")),
+                "repositorio": APELIDOS.get(_repo(casado.group("prefixo")), _repo(casado.group("prefixo"))),
                 "numero": item.get("number"),
                 "titulo": item.get("title"),
                 "estado": item.get("state"),
@@ -106,10 +109,57 @@ def carregar_runs(pastas) -> pd.DataFrame:
         return df
     # O mesmo run aparece em várias coletas; fica a versão mais recente dele.
     # A coleta própria vem por último na ordenação de empate e ganha (é a mais completa e recente).
+    # O id do run é único no GitHub: deduplicar só por ele junta também o repositório renomeado
+    # (docs-eps -> DOC), que a API devolve com os mesmos runs nos dois nomes.
+    df["repositorio"] = df["repositorio"].replace(APELIDOS)
     df["_ordem"] = (df["origem"] == "coleta do dashboard").astype(int)
-    df = df.sort_values(["atualizado_em", "_ordem"]).drop_duplicates(["repositorio", "id"], keep="last")
+    df = df.sort_values(["atualizado_em", "_ordem"]).drop_duplicates(["id"], keep="last")
     df = df.drop(columns="_ordem")
     df["duracao_min"] = (df["atualizado_em"] - df["iniciado_em"]).dt.total_seconds() / 60
     return df.drop(columns=["id"])
 
 
+
+
+# ───────────────────────── issues e commits da coleta própria ─────────────────────────
+
+def carregar_issues_coleta(pastas) -> pd.DataFrame:
+    """Issues e PRs de ``data/github/issues-<repo>.json`` (scripts/coleta_github.py)."""
+    linhas = []
+    for p in _pastas(pastas):
+        pasta = p / "github" if (p / "github").is_dir() else p
+        for arquivo in sorted(pasta.glob("issues-*.json")):
+            try:
+                dados = json.loads(arquivo.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                continue
+            repo = APELIDOS.get(dados.get("repositorio") or arquivo.stem[7:], dados.get("repositorio")
+                                or arquivo.stem[7:])
+            for x in dados.get("issues") or []:
+                linhas.append({**x, "repositorio": repo,
+                               "created_at": pd.to_datetime(x.get("created_at"), errors="coerce", utc=True),
+                               "closed_at": pd.to_datetime(x.get("closed_at"), errors="coerce", utc=True)})
+    return pd.DataFrame(linhas)
+
+
+def carregar_commits(pastas) -> pd.DataFrame:
+    """Uma linha por arquivo alterado em cada commit (``data/github/commits-<repo>.json``)."""
+    linhas = []
+    for p in _pastas(pastas):
+        pasta = p / "github" if (p / "github").is_dir() else p
+        for arquivo in sorted(pasta.glob("commits-*.json")):
+            try:
+                dados = json.loads(arquivo.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                continue
+            repo = APELIDOS.get(dados.get("repositorio") or arquivo.stem[8:], dados.get("repositorio")
+                                or arquivo.stem[8:])
+            for c in dados.get("commits") or []:
+                quando = pd.to_datetime(c.get("date"), errors="coerce", utc=True)
+                for f in c.get("files") or []:
+                    linhas.append({"repositorio": repo, "sha": c.get("sha"), "data": quando,
+                                   "autor": c.get("author"), "merge": (c.get("parents") or 1) > 1,
+                                   "mensagem": c.get("message") or "",
+                                   "arquivo": f.get("filename"), "status": f.get("status"),
+                                   "adicoes": f.get("additions"), "remocoes": f.get("deletions")})
+    return pd.DataFrame(linhas)

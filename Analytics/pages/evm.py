@@ -22,7 +22,7 @@ import streamlit as st
 import config
 from src import theme
 from src.data import contexto
-from src.components import charts, layout, rastreio
+from src.components import charts, filters, layout, rastreio
 from src.components.kpi import kpi
 from src.data import planilha
 from src.metrics import gestao_agil as ga
@@ -338,6 +338,14 @@ def _tabela_completa(d):
 
 # ───────────────────────── página ─────────────────────────
 
+ESCOPO = {
+    "release": "release analisada no EVM (com 'Semestre inteiro', escolha a release aqui)",
+    "periodo": "situação ao fim da última sprint concluída que termina até o fim do período",
+    "repos": "pontos, sprints e SPI só das issues desses repositórios (orçamento, horas, custo e CPI são do "
+             "time inteiro)",
+}
+
+
 def pagina():
     ctx, f = layout.estado()
     ctx = contexto.com_recorte(ctx, f["repos"])
@@ -355,23 +363,31 @@ def pagina():
         return
     rels = list(dict.fromkeys(e["release"]))
     iniciadas = e.dropna(subset=["PRP"])
-    padrao = resumo.release_em_foco(ctx, f["release"])[0] or (iniciadas["release"].iloc[-1] if not iniciadas.empty
-                                                              else rels[0])
-    c1, c2 = st.columns([1, 1.4])
-    rel = c1.radio("Release", rels, index=rels.index(padrao) if padrao in rels else 0, horizontal=True,
-                   key="evm_release")
+    caixa = filters.da_pagina(f, ESCOPO)
+    if f["release"]:
+        rel = resumo.release_em_foco(ctx, f["release"])[0]
+        caixa.caption(f"Release do EVM: **{rel}** (a {f['release']} da barra lateral).")
+    else:
+        padrao = iniciadas["release"].iloc[-1] if not iniciadas.empty else rels[0]
+        rel = caixa.selectbox("Release do EVM", rels, index=rels.index(padrao) if padrao in rels else 0,
+                              key="evm_release", help="Com 'Semestre inteiro' na barra lateral, escolha a release aqui.")
     d = e[e["release"] == rel]
     feitas = d.dropna(subset=["PRP"])
     if feitas.empty:
         layout.indisponivel(f"A {rel} ainda não começou", "nenhuma sprint dela foi iniciada.")
         return
-    opcoes = list(feitas["sprint"])
-    concluidas = feitas[feitas["status"] == vel.STATUS_CONCLUIDA]
+    # Situação no fim do período: só sprints que terminam até lá (se nenhuma, todas as iniciadas).
+    fim = pd.Timestamp(f["periodo"][1]) + pd.Timedelta(days=1)
+    ate = feitas[pd.to_datetime(feitas["fim_da_sprint"]) <= fim]
+    candidatas = ate if not ate.empty else feitas
+    opcoes = list(candidatas["sprint"])
+    concluidas = candidatas[candidatas["status"] == vel.STATUS_CONCLUIDA]
     padrao_sprint = concluidas["sprint"].iloc[-1] if not concluidas.empty else opcoes[-1]
     rotulos = {r.sprint: f"{r.sprint} ({r.status}, até {data_br(r.fim_da_sprint)})" for r in feitas.itertuples()}
-    escolhida = c2.selectbox("Situação ao fim da sprint", opcoes, index=opcoes.index(padrao_sprint),
-                             format_func=rotulos.get, key=f"evm_sprint_{rel}",
-                             help="Por padrão a última concluída: a sprint em andamento ainda não tem horas.")
+    escolhida = caixa.selectbox("Situação ao fim da sprint", opcoes, index=opcoes.index(padrao_sprint),
+                                format_func=rotulos.get, key=f"evm_sprint_{rel}",
+                                help="Por padrão a última concluída até o fim do período: a sprint em andamento "
+                                     "ainda não tem horas.")
     u = feitas[feitas["sprint"] == escolhida].iloc[-1]
     parcial = u["status"] == vel.STATUS_ANDAMENTO
 
