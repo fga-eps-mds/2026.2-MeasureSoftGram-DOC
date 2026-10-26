@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-10-26T14:44:00+00:00",
+ "coletado_em": "2026-10-26T17:21:34+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 20,
+   "title": "ci: corrige falhas do pipeline (Node 24, dist do Dependabot e publish no GHCR)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-10-26T15:05:31Z",
+   "closed_at": null,
+   "updated_at": "2026-10-26T15:06:31Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1059,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/20",
+   "author": "bottinolucas"
+  },
   {
    "number": 19,
    "title": "build(deps): bump follow-redirects from 1.16.0 to 1.16.1",

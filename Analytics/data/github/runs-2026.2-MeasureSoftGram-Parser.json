@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-26T14:44:00+00:00",
+ "coletado_em": "2026-10-26T17:21:34+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Parser",
  "desde": "2026-08-24",
- "total_count": 141,
+ "total_count": 143,
  "workflow_runs": [
+  {
+   "id": 40361513587,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "v2.0.0",
+   "event": "push",
+   "created_at": "2026-10-26T16:41:24Z",
+   "run_started_at": "2026-10-26T16:41:24Z",
+   "updated_at": "2026-10-26T16:41:45Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/actions/runs/40361513587",
+   "run_number": 20,
+   "workflow_id": 346919941
+  },
+  {
+   "id": 40361513785,
+   "name": "Publicar pacote",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "v2.0.0",
+   "event": "push",
+   "created_at": "2026-10-26T16:41:24Z",
+   "run_started_at": "2026-10-26T16:41:24Z",
+   "updated_at": "2026-10-26T16:41:25Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/actions/runs/40361513785",
+   "run_number": 2,
+   "workflow_id": 346919946
+  },
   {
    "id": 39526650444,
    "name": "Rodar Testes",

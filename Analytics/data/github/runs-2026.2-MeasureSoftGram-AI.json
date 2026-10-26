@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-26T14:44:00+00:00",
+ "coletado_em": "2026-10-26T17:21:34+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-AI",
  "desde": "2026-08-24",
- "total_count": 56,
+ "total_count": 58,
  "workflow_runs": [
+  {
+   "id": 40361815671,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "v2.0.0",
+   "event": "push",
+   "created_at": "2026-10-26T16:43:19Z",
+   "run_started_at": "2026-10-26T16:43:19Z",
+   "updated_at": "2026-10-26T16:43:40Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-AI/actions/runs/40361815671",
+   "run_number": 12,
+   "workflow_id": 365651330
+  },
+  {
+   "id": 40361815792,
+   "name": "Publish Docker Image",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "v2.0.0",
+   "event": "push",
+   "created_at": "2026-10-26T16:43:19Z",
+   "run_started_at": "2026-10-26T16:43:19Z",
+   "updated_at": "2026-10-26T16:43:41Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-AI/actions/runs/40361815792",
+   "run_number": 3,
+   "workflow_id": 365651329
+  },
   {
    "id": 40219898627,
    "name": "Export de métricas",

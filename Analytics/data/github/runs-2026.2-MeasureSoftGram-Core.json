@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-26T14:44:00+00:00",
+ "coletado_em": "2026-10-26T17:21:34+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Core",
  "desde": "2026-08-24",
- "total_count": 239,
+ "total_count": 241,
  "workflow_runs": [
+  {
+   "id": 40361292480,
+   "name": "Publicar pacote",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "v3.0.0",
+   "event": "push",
+   "created_at": "2026-10-26T16:40:00Z",
+   "run_started_at": "2026-10-26T16:40:00Z",
+   "updated_at": "2026-10-26T16:40:02Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/actions/runs/40361292480",
+   "run_number": 2,
+   "workflow_id": 357187132
+  },
+  {
+   "id": 40361291902,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "v3.0.0",
+   "event": "push",
+   "created_at": "2026-10-26T16:40:00Z",
+   "run_started_at": "2026-10-26T16:40:00Z",
+   "updated_at": "2026-10-26T16:40:25Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/actions/runs/40361291902",
+   "run_number": 34,
+   "workflow_id": 357187129
+  },
   {
    "id": 40115719764,
    "name": "Dependabot Auto-merge",
