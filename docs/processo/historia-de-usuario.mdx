@@ -22,8 +22,9 @@ flowchart LR
   B -->|DoR ok| C[Sprint backlog]
   C --> D[Em desenvolvimento<br/>branch feat/USxx.yy]
   D --> E[PR revisado<br/>CI verde]
-  E --> F[Homologação<br/>develop central]
-  F -->|PO valida · DoD ok| G[Fechada]
+  E --> F[Aguardando aprovação<br/>do PO - DoD]
+  F -->|PO aprova| G[Done<br/>issue fechada]
+  F -->|impedimento| H[Icebox]
 ```
 
 ## Modelo
@@ -104,10 +105,11 @@ Também verificar:
 - [ ] Interface conforme o protótipo do Figma (se aplicável).
 - [ ] **Validada pelo PO na homologação.**
 - [ ] Documentação afetada atualizada.
-- [ ] Issue fechada no Zenhub (fechada = feita, [D2](/docs/planejamento/decisoes)).
+- [ ] Issue movida para **Done [Em Homolog]** e fechada só depois da aprovação do PO ([quadro do Zenhub](/docs/processo/fluxo-de-trabalho#7-a-issue-no-quadro-do-zenhub)).
 
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
 | 1.0 | 21/10/2026 | Criação: modelo de US, critérios INVEST, DoR e DoD | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.1 | 22/10/2026 | Ciclo de vida com aprovação do PO, Done e Icebox | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
