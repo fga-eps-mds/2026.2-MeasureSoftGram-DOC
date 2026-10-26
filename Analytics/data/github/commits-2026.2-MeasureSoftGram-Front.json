@@ -1,11 +1,74 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-10-26T02:10:37+00:00",
+ "coletado_em": "2026-10-26T11:25:00+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "1e76be33e9bbd16c05b3b2067b7874f4fd6049e8",
+   "date": "2026-10-26T09:23:37Z",
+   "author": "thegm445",
+   "message": "Feature/issue 79 exportacao csv metamodelo (#89)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "public/locales/en/breadcrumb.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "public/locales/pt/breadcrumb.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/metamodelo/MetamodeloDashboard.tsx",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 3
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/metamodelo/tests/MetamodeloDashboard.spec.tsx",
+     "status": "modified",
+     "additions": 165,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/components/Layout/SideMenu/SideMenu.tsx",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/components/Layout/SideMenu/tests/SideMenuDashboards.spec.tsx",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/utils/formatMetamodelCsv.ts",
+     "status": "added",
+     "additions": 66,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/tests/formatMetamodelCsv.spec.ts",
+     "status": "added",
+     "additions": 149,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "b71e34d2dbf59cd8c318310b8393b65689cf47c4",
    "date": "2026-10-26T01:33:35Z",
@@ -10927,5 +10990,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }

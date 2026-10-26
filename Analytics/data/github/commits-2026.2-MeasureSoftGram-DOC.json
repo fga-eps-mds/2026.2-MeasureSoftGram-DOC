@@ -1,11 +1,311 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-10-26T02:10:37+00:00",
+ "coletado_em": "2026-10-26T11:25:00+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "branch": "(padrão)",
  "commits": [
+  {
+   "sha": "7b7b3c11926c4c4f7eac09c872410f9f29e42528",
+   "date": "2026-10-26T10:22:52Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório MeasureSoftGram-Front main",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 254,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-22-43.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-22-43-main.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "3f263ee3df478f52c5627f6b9227374b4a622bed",
+   "date": "2026-10-26T10:14:50Z",
+   "author": "dependabot[bot]",
+   "message": "build(deps): bump actions/setup-python (#172)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/coleta-dados.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "6abf5b1d91693a19999ff2ddc6ccbcb2fb82e6c5",
+   "date": "2026-10-26T10:10:37Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório MeasureSoftGram-Service main",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 360,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-26-2026-10-10-28.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-26-2026-10-10-28-main.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "b013ddfead6856ceb1fb642ea498e17f4a757368",
+   "date": "2026-10-26T10:04:02Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 232,
+     "deletions": 6
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-03-50.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-03-50-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "52a08b5f638e8ec87565322f7a67f0a58f9dab18",
+   "date": "2026-10-26T09:24:08Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 196,
+     "deletions": 24
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-10-26-2026-09-23-53.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-10-26-2026-09-23-53-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "531b5dbd5c3355ebcc8da395a6c032af10097216",
+   "date": "2026-10-26T02:12:41Z",
+   "author": "github-actions[bot]",
+   "message": "chore(dados): coleta automática do Zenhub, SonarCloud e GitHub Actions",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 8306,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 64,
+     "deletions": 8
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T0210.json",
+     "status": "added",
+     "additions": 21083,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "fa724f01c9161b5726c7e45aa86c7bcf64c0a809",
    "date": "2026-10-26T02:10:06Z",
@@ -21865,5 +22165,5 @@
    ]
   }
  ],
- "detalhes_novos": 184
+ "detalhes_novos": 6
 }

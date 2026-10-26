@@ -1,18 +1,35 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-10-26T02:10:37+00:00",
+ "coletado_em": "2026-10-26T11:25:00+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "issues": [
   {
-   "number": 89,
-   "title": "Feature/issue 79 exportacao csv metamodelo",
+   "number": 90,
+   "title": "feat(docker): adiciona hot-reload ao ambiente de desenvolvimento",
    "state": "open",
    "is_pull_request": true,
-   "created_at": "2026-10-25T20:14:07Z",
+   "created_at": "2026-10-26T04:22:27Z",
    "closed_at": null,
-   "updated_at": "2026-10-25T20:16:38Z",
+   "updated_at": "2026-10-26T04:29:08Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2105,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/90",
+   "author": "Marcosatc147"
+  },
+  {
+   "number": 89,
+   "title": "Feature/issue 79 exportacao csv metamodelo",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-25T20:14:07Z",
+   "closed_at": "2026-10-26T09:23:38Z",
+   "updated_at": "2026-10-26T09:23:40Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -27,11 +44,11 @@
   {
    "number": 88,
    "title": "Renomeia o dashboard do Metamodelo e o quadro da árvore conforme revisão do PO (US21.01) (#37)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-10-25T20:01:27Z",
-   "closed_at": null,
-   "updated_at": "2026-10-25T20:04:53Z",
+   "closed_at": "2026-10-26T09:15:46Z",
+   "updated_at": "2026-10-26T09:15:54Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -199,11 +216,11 @@
   {
    "number": 79,
    "title": "[TASK21.01.03] Exportação de CSV do Metamodelo (Front)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-23T19:08:35Z",
-   "closed_at": null,
-   "updated_at": "2026-10-23T19:09:56Z",
+   "closed_at": "2026-10-26T09:23:40Z",
+   "updated_at": "2026-10-26T09:23:40Z",
    "labels": [
     "task",
     "frontend"
