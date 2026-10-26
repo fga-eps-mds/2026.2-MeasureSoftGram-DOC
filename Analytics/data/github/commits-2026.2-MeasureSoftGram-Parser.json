@@ -1,0 +1,1868 @@
+{
+ "fonte": "API do GitHub (commits)",
+ "coletado_em": "2026-10-26T01:58:14+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-Parser",
+ "desde": "2026-08-24",
+ "branch": "develop",
+ "commits": [
+  {
+   "sha": "3c92f54229bfedfb388ea1c47a17c27658208f74",
+   "date": "2026-10-21T01:19:31Z",
+   "author": "bottinolucas",
+   "message": "ci(release): alinha as versões das actions do release.yml às do Core e da CLI (#16)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "d8e54e6e18753af0718110ff1fec59e639a035bd",
+   "date": "2026-10-16T21:39:07Z",
+   "author": "bottinolucas",
+   "message": "Merge pull request #15 from fga-eps-mds/fix/task05.08-varredura-resquicios",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "genericparser/plugins/dinamic/github.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit_tests/test_github_parser_metrics.py",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "2865bd2305a5bd257661adb499f0dd66d953b46c",
+   "date": "2026-10-15T21:14:04Z",
+   "author": "Diogo-Barboza",
+   "message": "Merge pull request #11 from fga-eps-mds/chore/ci-governance-cleanup",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 26
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 82
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 34,
+     "deletions": 41
+    }
+   ]
+  },
+  {
+   "sha": "a246bb3a23ad707f2f2077bc35b58cbcb1c93f87",
+   "date": "2026-10-15T20:07:58Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(ci): wait for sonarqube quality gate evaluation",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "3d88df4c819e1ba627e63be0a10f8671fd66dac4",
+   "date": "2026-10-15T00:44:13Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(ci): refine sonar condition for dependabot and multiline readability",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "dee8d8161e54fbe42d961eab244d01ea5d1c1516",
+   "date": "2026-10-14T19:40:51Z",
+   "author": "gusrberto",
+   "message": "Corrige tratamento de erro na requisicao a API do GitHub",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "genericparser/plugins/dinamic/github.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit_tests/test_github_parser_metrics.py",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "fc2430405ab03ffc96565d943bdfb7f569bc3fb6",
+   "date": "2026-10-14T18:49:35Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(ci): expurgar step legado de sed no coverage.xml",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "a976d2fa8e2a6794c1316376dfe17a4c8856e38a",
+   "date": "2026-10-14T18:12:01Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(ci): pin GitHub Actions to full commit SHAs in test.yml",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "d95a48d26e43e17580c8fd9efcb2f726a509c313",
+   "date": "2026-10-14T15:21:59Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(ci): remover workflow msgram.yml conforme alinhamento com PO",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 26
+    }
+   ]
+  },
+  {
+   "sha": "21a0b3417f835427fb5b49080fc134250c4b1842",
+   "date": "2026-09-30T17:56:18Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(ci): consolidate CI workflows with Linter, Build, Tox and SonarCloud",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 26
+    },
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "added",
+     "additions": 26,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 82
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 40
+    }
+   ]
+  },
+  {
+   "sha": "dfa5feb1fc8dcea611bee5fc09ab6ada25cd7bbb",
+   "date": "2026-10-07T22:24:50Z",
+   "author": "thegm445",
+   "message": "Merge pull request #14 from fga-eps-mds/chore/bump-version-1.2.4rc1",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "1fd4a4200349414052fcf37b5025cc8809621871",
+   "date": "2026-10-07T22:19:06Z",
+   "author": "bottinolucas",
+   "message": "chore(release): bump version to 1.2.4rc1",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "f5571bc0e1f35485f8a2ba844ccf65ae31b310f9",
+   "date": "2026-10-07T22:18:56Z",
+   "author": "bottinolucas",
+   "message": "fix(deps): limita pandas a versões abaixo da 3",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "71e05e258508d1c7c1ce27359f435651af663692",
+   "date": "2026-10-07T22:08:16Z",
+   "author": "thegm445",
+   "message": "Merge pull request #13 from fga-eps-mds/fix/pin-pypi-publish-v1.12.4",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "226f020b1e7d2cdbd22cfcfaeb9aeedbf18f3b1c",
+   "date": "2026-10-07T22:03:25Z",
+   "author": "bottinolucas",
+   "message": "fix(ci): fixa gh-action-pypi-publish no SHA da v1.12.4",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "c8d126cbb9e8c7d038a0c80c4bff6007336d819e",
+   "date": "2026-10-07T21:44:02Z",
+   "author": "bottinolucas",
+   "message": "Merge pull request #12 from fga-eps-mds/ci/restringe-publicacao-ao-central",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "c7faab32b5fb62592f67c1e42ce96fbf9d7f5d42",
+   "date": "2026-10-07T21:22:17Z",
+   "author": "bottinolucas",
+   "message": "ci: restringe a publicação no PyPI ao repositório central",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "be2cae00a08d0e59b77e35200db9dec755a9ce8b",
+   "date": "2026-10-03T23:37:31Z",
+   "author": "bottinolucas",
+   "message": "Merge pull request #10 from fga-eps-mds/feat/auto-pypi-publish-release-please",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 66,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "32b63a365b6c05b824b45637fc0c9eb0c5f8eb99",
+   "date": "2026-09-29T23:21:26Z",
+   "author": "luciano-freitas-melo",
+   "message": "fix(ci): update pypa/gh-action-pypi-publish to verified v1.12.4 SHA",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "bc77849d8f8d39abc720eb8f69198695aa4b7dde",
+   "date": "2026-09-29T21:30:25Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat(ci): add pypi safety gate and workflow_dispatch to release workflow",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 60,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "09a2cf64dad8e31295608e0a6ed7906b96379b06",
+   "date": "2026-09-29T21:27:30Z",
+   "author": "luciano-freitas-melo",
+   "message": "Merge remote-tracking branch 'fork/develop' into feat/auto-pypi-publish-release-please",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/dependabot.yml",
+     "status": "added",
+     "additions": 19,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/dependabot-automerge.yml",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 8
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "d842241f08762bf6459f8f9fbd16d5c3a22e907b",
+   "date": "2026-09-28T23:31:15Z",
+   "author": "Diogo-Barboza",
+   "message": "Merge pull request #9 from fga-eps-mds/chore/dependabot-automerge-sha-pinning",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/dependabot.yml",
+     "status": "added",
+     "additions": 19,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/dependabot-automerge.yml",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 8
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "ba5d4199b1646842a79506214eac8219dae57939",
+   "date": "2026-09-28T23:28:11Z",
+   "author": "Diogo-Barboza",
+   "message": "Merge branch 'chore/dependabot-automerge-sha-pinning' of github.com:fga-eps-mds/2026.2-MeasureSoftGram-Parser into chore/dependabot-automerge-sha-pinning",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "added",
+     "additions": 46,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "added",
+     "additions": 82,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 46,
+     "deletions": 8
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 11
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "fa0c1738c2a9ccc2f43977afcd52be4100bfeab6",
+   "date": "2026-09-28T23:27:21Z",
+   "author": "Diogo-Barboza",
+   "message": "chore(fix): sync sha com pagina de release",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/dependabot-automerge.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 6
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "fab1f773148b83cf114f50c44938b394c408b66a",
+   "date": "2026-09-28T01:19:08Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat(ci): automate pypi publishing directly in release please workflow",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "1a78458e5fff8ebfe852c03a1d7728080d6b181f",
+   "date": "2026-09-28T01:11:02Z",
+   "author": "luciano-freitas-melo",
+   "message": "Merge remote-tracking branch 'fork/develop' into develop",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 28,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/mockfiles/extracted.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2194
+    },
+    {
+     "filename": "tests/mockfiles/to_extract.json",
+     "status": "modified",
+     "additions": 6709,
+     "deletions": 4527
+    },
+    {
+     "filename": "tests/unit_tests/test_extract_metric_sonarqbe.py",
+     "status": "modified",
+     "additions": 92,
+     "deletions": 5
+    }
+   ]
+  },
+  {
+   "sha": "5513a2dbea5fd558c161e5d9f96e3d77b0263cb9",
+   "date": "2026-09-28T01:10:07Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(sync): back-merge main into develop after release 1.2.3",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "CHANGELOG.md",
+     "status": "added",
+     "additions": 35,
+     "deletions": 0
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "279f32af6ce353ab118d5cac1f3ebaf7dc7da34a",
+   "date": "2026-09-28T01:03:08Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(main): release 1.2.3",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "CHANGELOG.md",
+     "status": "added",
+     "additions": 35,
+     "deletions": 0
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "2d434fa9a987c2eb4f2915c14b0d7ae18b0e8a4d",
+   "date": "2026-09-28T00:56:19Z",
+   "author": "github-actions[bot]",
+   "message": "chore(main): release 1.2.3",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "CHANGELOG.md",
+     "status": "added",
+     "additions": 35,
+     "deletions": 0
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "ada763eb334e81421e5e5bdf59a85fc6aafcb68e",
+   "date": "2026-09-28T00:55:06Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(release): configure release-please target-branch to main",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "101503c8764407aa7017536c48778bd4f16d368e",
+   "date": "2026-09-27T20:12:15Z",
+   "author": "gusrberto",
+   "message": "Merge pull request #7 from fga-eps-mds/feat/operacionalizar-divida-tecnica",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 28,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/mockfiles/extracted.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2194
+    },
+    {
+     "filename": "tests/mockfiles/to_extract.json",
+     "status": "modified",
+     "additions": 6709,
+     "deletions": 4527
+    },
+    {
+     "filename": "tests/unit_tests/test_extract_metric_sonarqbe.py",
+     "status": "modified",
+     "additions": 92,
+     "deletions": 5
+    }
+   ]
+  },
+  {
+   "sha": "765f7b960d3e2f8865e825022785c79a9cafc860",
+   "date": "2026-09-27T19:17:29Z",
+   "author": "Diogo-Barboza",
+   "message": "Merge branch 'develop' into chore/dependabot-automerge-sha-pinning",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "added",
+     "additions": 46,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "added",
+     "additions": 82,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 46,
+     "deletions": 8
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 11
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "af6d513faa8f4c0f57b8d904717d7c439b554d8d",
+   "date": "2026-09-27T19:10:47Z",
+   "author": "Diogo-Barboza",
+   "message": "chore(ci): configurar dependabot, auto-merge e pinning de github actions",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/dependabot.yml",
+     "status": "added",
+     "additions": 19,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/dependabot-automerge.yml",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 8
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "a5328757a5a9290012c3011f5119c248be0e9baa",
+   "date": "2026-09-27T08:31:40Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore: teste do CI de automação de release (deploy) (#34)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "added",
+     "additions": 46,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "added",
+     "additions": 82,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 71,
+     "deletions": 47
+    },
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/mockfiles/expected_return_values.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "d95eca8bd4046f44f8dd75febb51b1de34297cc0",
+   "date": "2026-09-27T07:54:35Z",
+   "author": "luciano-freitas-melo",
+   "message": "Merge pull request #8 from fga-eps-mds/feat/ci-automation",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "added",
+     "additions": 46,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "added",
+     "additions": 82,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 48,
+     "deletions": 10
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "a86dbebdc03096dadc9694d7428b52c1e53a7d41",
+   "date": "2026-09-27T07:46:43Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat(ci): adopt google release please",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 99
+    }
+   ]
+  },
+  {
+   "sha": "d5b1109633fb51df15d91f92dd79262b6a13af69",
+   "date": "2026-09-27T07:46:09Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat(ci): remove dynamic organization from SonarCloud configuration",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "f2293e1e6847f76f1388d4f556d44041df87d730",
+   "date": "2026-09-27T05:57:11Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat(ci): align workflows with Core golden standard",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "modified",
+     "additions": 102,
+     "deletions": 19
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 7
+    }
+   ]
+  },
+  {
+   "sha": "dde8942b55c06de896c1c889bc6db24c80c90fa7",
+   "date": "2026-09-27T04:57:01Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat: implement decoupled SonarCloud CI and release automation",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "added",
+     "additions": 43,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "added",
+     "additions": 84,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 37,
+     "deletions": 4
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "8e8d9343556429c1d9d2367293cffda5c3aab067",
+   "date": "2026-09-27T00:38:50Z",
+   "author": "pedrosena21",
+   "message": "chore: refactor unit tests for SonarQube metric extraction",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 28,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/mockfiles/extracted.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2194
+    },
+    {
+     "filename": "tests/mockfiles/to_extract.json",
+     "status": "modified",
+     "additions": 6709,
+     "deletions": 4527
+    },
+    {
+     "filename": "tests/unit_tests/test_extract_metric_sonarqbe.py",
+     "status": "modified",
+     "additions": 92,
+     "deletions": 5
+    }
+   ]
+  },
+  {
+   "sha": "a0c3c9468e0e4a0f9bdcbba67628b69dddcc4967",
+   "date": "2026-09-26T03:22:46Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs: aponta badges do SonarCloud para o repositorio central (#31)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 11
+    }
+   ]
+  },
+  {
+   "sha": "6131eede6e3a4cf500c9f22c222e785d0041731b",
+   "date": "2026-09-26T02:32:02Z",
+   "author": "luciano-freitas-melo",
+   "message": "Merge pull request #30 from fga-eps-mds/chore/bump-version-1.2.3rc1",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 33,
+     "deletions": 47
+    },
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 11
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/mockfiles/expected_return_values.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "e25ec50bfc02b62fb490fd385671b1be80545339",
+   "date": "2026-09-26T02:24:33Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(release): bump version to 1.2.3rc1",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "507ce280b5f606829cc949c136615b4a5430d111",
+   "date": "2026-09-26T00:28:15Z",
+   "author": "luciano-freitas-melo",
+   "message": "Merge pull request #29 from fga-eps-mds/develop",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".flake8",
+     "status": "added",
+     "additions": 15,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 8
+    },
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 134,
+     "deletions": 17
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 4
+    },
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 0
+    },
+    {
+     "filename": "CODE_OF_CONDUCT.md",
+     "status": "added",
+     "additions": 6,
+     "deletions": 0
+    },
+    {
+     "filename": "CONTRIBUTING.md",
+     "status": "added",
+     "additions": 6,
+     "deletions": 0
+    },
+    {
+     "filename": "LICENSE",
+     "status": "modified",
+     "additions": 70,
+     "deletions": 83
+    },
+    {
+     "filename": "Makefile",
+     "status": "added",
+     "additions": 13,
+     "deletions": 0
+    },
+    {
+     "filename": "PUBLISHING.md",
+     "status": "added",
+     "additions": 172,
+     "deletions": 0
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 37,
+     "deletions": 39
+    },
+    {
+     "filename": "genericparser/__init__.py",
+     "status": "added",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "genericparser/accept_plugins.py",
+     "status": "added",
+     "additions": 4,
+     "deletions": 0
+    },
+    {
+     "filename": "genericparser/genericparser.py",
+     "status": "renamed",
+     "additions": 17,
+     "deletions": 15
+    },
+    {
+     "filename": "genericparser/plugins/__init__.py",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "genericparser/plugins/dinamic/__init__.py",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "genericparser/plugins/dinamic/github.py",
+     "status": "added",
+     "additions": 163,
+     "deletions": 0
+    },
+    {
+     "filename": "genericparser/plugins/domain/generic_class.py",
+     "status": "renamed",
+     "additions": 26,
+     "deletions": 8
+    },
+    {
+     "filename": "genericparser/plugins/statics/__init__.py",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "genericparser/plugins/statics/sonarqube.py",
+     "status": "added",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "genericparser/services/__init__.py",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 109,
+     "deletions": 22
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 7
+    },
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 7
+    },
+    {
+     "filename": "settings.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "src/plugins.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3
+    },
+    {
+     "filename": "src/plugins/statics/sonarqube.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 30
+    },
+    {
+     "filename": "tests/mockfiles/expected_return_values.py",
+     "status": "added",
+     "additions": 35,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/mockfiles/extracted.json",
+     "status": "added",
+     "additions": 2194,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/mockfiles/response_api_github_ci_feedback_times.json",
+     "status": "added",
+     "additions": 6605,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/mockfiles/response_api_github_general.json",
+     "status": "added",
+     "additions": 131,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/mockfiles/response_api_github_throughput.json",
+     "status": "added",
+     "additions": 3263,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/mockfiles/to_extract.json",
+     "status": "added",
+     "additions": 10272,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/tests_main_file.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "tests/unit_tests/__init__.py",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit_tests/test_extract_metric_sonarqbe.py",
+     "status": "added",
+     "additions": 12,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit_tests/test_generic_static_abc_contract.py",
+     "status": "added",
+     "additions": 16,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit_tests/test_genericparser_main_file.py",
+     "status": "added",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit_tests/test_github_parser_metrics.py",
+     "status": "added",
+     "additions": 123,
+     "deletions": 0
+    },
+    {
+     "filename": "tox.ini",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "1da8754701655c9c340211deaa8b93dac495023d",
+   "date": "2026-09-25T03:01:29Z",
+   "author": "MilenaFRocha",
+   "message": "fix: Update repository URL in metrics workflow (#3)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "d12c0c52d72df21c67498538b0be6605a1569358",
+   "date": "2026-09-22T13:25:36Z",
+   "author": "luciano-freitas-melo",
+   "message": "fix(ci): corrige envio de cobertura para o SonarCloud e execucao via tox (#2)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 5
+    },
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "5ce17413f8d6ddfbb2ccebb283eb60b8bec78cf5",
+   "date": "2026-09-14T17:49:16Z",
+   "author": "GabrielMS00",
+   "message": "Padronização do repositório do fork parser (#1)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 34,
+     "deletions": 47
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 11
+    },
+    {
+     "filename": "tests/mockfiles/expected_return_values.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "a9c4dabc06d66d097d39a4dbb95f8dcaf45a3145",
+   "date": "2026-08-31T19:09:12Z",
+   "author": "GabrielMS00",
+   "message": "docs(readme): corrige erros ortograficos",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "ec1c8fde15ddb194b90b84b335853e59c4358495",
+   "date": "2026-08-31T19:05:37Z",
+   "author": "GabrielMS00",
+   "message": "docs(readme): atualiza urls dos badges do sonarcloud",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 12
+    }
+   ]
+  },
+  {
+   "sha": "0f76aed9d9dca6fac5a4fe0e93085b4b235b957d",
+   "date": "2026-08-26T12:26:05Z",
+   "author": "GabrielMS00",
+   "message": "Merge pull request #25 from fga-eps-mds/ci_config",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/build.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 16
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 0
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "fb08b14b4af06bf98d09b46482ae9bead17662a1",
+   "date": "2026-08-25T22:19:07Z",
+   "author": "GabrielMS00",
+   "message": "ci(workflows): remove arquivo redundante build.yml",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/build.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 16
+    }
+   ]
+  },
+  {
+   "sha": "34d6c2fe6b35d57fe337629eb5e1ae1526f7ed7f",
+   "date": "2026-08-25T22:05:43Z",
+   "author": "GabrielMS00",
+   "message": "ci: adiciona SonarCloud Scan ao workflow e ajusta chave do projeto no sonar-project.properties",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 0
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "550b02c3dba595ff9cba8847c6381183b439bdb6",
+   "date": "2026-08-25T21:14:31Z",
+   "author": "GabrielMS00",
+   "message": "docs(contributing): atualiza o link para a documentação oficial do guia de contribuição",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "CONTRIBUTING.md",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "a76e8534455709edac9120e3209d24986f5246e0",
+   "date": "2026-08-25T21:13:02Z",
+   "author": "GabrielMS00",
+   "message": "docs(code-of-conduct): atualiza o link para a documentação oficial do código de conduta",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "CODE_OF_CONDUCT.md",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "91abd0260b716061a9d9f937454e417466d89f99",
+   "date": "2026-08-25T21:11:52Z",
+   "author": "GabrielMS00",
+   "message": "docs(readme): atualiza a introdução, badges e o propósito do repositório",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 34,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "4914af73ee764d5bc5a2b1cdd2f67979c2f4a1c5",
+   "date": "2026-08-24T22:24:01Z",
+   "author": "GabrielMS00",
+   "message": "Merge pull request #24 from fga-eps-mds/develop",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".flake8",
+     "status": "added",
+     "additions": 15,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/build.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 5
+    },
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 8
+    },
+    {
+     "filename": ".github/workflows/python-publish.yml",
+     "status": "modified",
+     "additions": 133,
+     "deletions": 18
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 7
+    },
+    {
+     "filename": "CODE_OF_CONDUCT.md",
+     "status": "added",
+     "additions": 6,
+     "deletions": 0
+    },
+    {
+     "filename": "CONTRIBUTING.md",
+     "status": "added",
+     "additions": 6,
+     "deletions": 0
+    },
+    {
+     "filename": "LICENSE",
+     "status": "modified",
+     "additions": 70,
+     "deletions": 83
+    },
+    {
+     "filename": "Makefile",
+     "status": "added",
+     "additions": 13,
+     "deletions": 0
+    },
+    {
+     "filename": "PUBLISHING.md",
+     "status": "added",
+     "additions": 172,
+     "deletions": 0
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 39
+    },
+    {
+     "filename": "genericparser/plugins/dinamic/github.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "genericparser/plugins/domain/generic_class.py",
+     "status": "modified",
+     "additions": 22,
+     "deletions": 18
+    },
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 109,
+     "deletions": 21
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit_tests/test_generic_static_abc_contract.py",
+     "status": "added",
+     "additions": 16,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit_tests/test_github_parser_metrics.py",
+     "status": "modified",
+     "additions": 71,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "bf5e97af4e870c2871238a104aaec237593484ab",
+   "date": "2026-08-24T22:08:22Z",
+   "author": "GabrielMS00",
+   "message": "chore(sonar): ajusta projectKey para o repositorio central",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "da372bb14fec558fa903946ebb1ae8695aa6a8d9",
+   "date": "2026-08-24T22:04:16Z",
+   "author": "GabrielMS00",
+   "message": "docs(readme): adequa readme para o repositorio central",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 63
+    }
+   ]
+  },
+  {
+   "sha": "097de7c2d5633a39e97a9cb53042e528056a4415",
+   "date": "2026-08-24T21:31:59Z",
+   "author": "GabrielMS00",
+   "message": "git commit -m docs: centraliza código de conduta no repositório de documentação",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "CONTRIBUTING.md",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 34
+    }
+   ]
+  },
+  {
+   "sha": "9b25fd8a097a12711c08f5595e3ef89fe4e8a922",
+   "date": "2026-08-24T21:28:57Z",
+   "author": "GabrielMS00",
+   "message": "docs: centraliza código de conduta no repositório de documentação",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "CODE_OF_CONDUCT.md",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 128
+    }
+   ]
+  },
+  {
+   "sha": "f9bc01ce2d0af8edec13c71bf8bd9dbc4efb084f",
+   "date": "2026-08-24T21:15:08Z",
+   "author": "GabrielMS00",
+   "message": "test: remove prefixo de semestre nos mocks de repositorio",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "tests/unit_tests/test_github_parser_metrics.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 6
+    }
+   ]
+  },
+  {
+   "sha": "a663cad439b14f7c8300c36daa187ea1f6b91c65",
+   "date": "2026-08-24T21:07:21Z",
+   "author": "GabrielMS00",
+   "message": "ci(test): remove sonarcloud e torna nomenclatura do codecov agnostica",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 7
+    }
+   ]
+  },
+  {
+   "sha": "3f06c8b584c5e24e6af22d944786938560ab484c",
+   "date": "2026-08-24T20:39:51Z",
+   "author": "giovanniacg",
+   "message": "chore: bump 1.2.2rc2",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "f72bc817afaeb212b6c68790806f568f9b6c6a09",
+   "date": "2026-08-24T20:53:29Z",
+   "author": "GabrielMS00",
+   "message": "ci(metrics): torna repositório de doc agnóstico e ajusta secrets",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "093f456e21eed3f7c2acc2423c6612b96136a54a",
+   "date": "2026-08-24T20:39:01Z",
+   "author": "GabrielMS00",
+   "message": "fix: remove etapa do SonarCloud no CI",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/build.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 5
+    }
+   ]
+  }
+ ],
+ "detalhes_novos": 65
+}

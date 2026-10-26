@@ -1,0 +1,382 @@
+{
+ "fonte": "API do GitHub (issues)",
+ "coletado_em": "2026-10-26T01:58:14+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-Action",
+ "desde": "2026-08-24",
+ "issues": [
+  {
+   "number": 19,
+   "title": "build(deps): bump follow-redirects from 1.16.0 to 1.16.1",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-10-25T03:25:45Z",
+   "closed_at": null,
+   "updated_at": "2026-10-25T03:25:47Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2517,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/19",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 18,
+   "title": "feat(sonarqube): busca todas as páginas do component_tree (TASK21.03.03)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-21T01:25:01Z",
+   "closed_at": "2026-10-21T01:37:02Z",
+   "updated_at": "2026-10-21T01:37:04Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1566,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/18",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 17,
+   "title": "[TASK21.03.03] Buscar todos os componentes do SonarQube, com paginação (Action)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-20T02:02:02Z",
+   "closed_at": null,
+   "updated_at": "2026-10-22T02:43:56Z",
+   "labels": [
+    "task",
+    "action"
+   ],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1720,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/issues/17",
+   "author": "gusrberto"
+  },
+  {
+   "number": 16,
+   "title": "build(deps): bump axios from 1.18.0 to 1.20.0",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-10-19T21:51:14Z",
+   "closed_at": null,
+   "updated_at": "2026-10-19T21:51:17Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 20294,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/16",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 15,
+   "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-17T21:09:46Z",
+   "closed_at": "2026-10-19T21:50:06Z",
+   "updated_at": "2026-10-19T21:50:09Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4121,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/15",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 14,
+   "title": "build(deps): bump minimatch from 3.1.2 to 3.1.5",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T23:52:54Z",
+   "closed_at": "2026-09-28T23:53:08Z",
+   "updated_at": "2026-09-28T23:53:17Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3442,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/14",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 13,
+   "title": "build(deps): bump flatted from 3.2.7 to 3.4.4",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T23:51:28Z",
+   "closed_at": "2026-09-28T23:51:42Z",
+   "updated_at": "2026-09-28T23:51:49Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3822,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/13",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 12,
+   "title": "build(deps): bump picomatch from 2.3.1 to 2.3.2",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T23:50:13Z",
+   "closed_at": "2026-09-28T23:50:25Z",
+   "updated_at": "2026-09-28T23:50:34Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5118,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/12",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 11,
+   "title": "build(deps): bump @babel/core from 7.22.1 to 7.29.7",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T23:48:39Z",
+   "closed_at": "2026-09-28T23:49:04Z",
+   "updated_at": "2026-09-28T23:49:13Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 8084,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/11",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 10,
+   "title": "build(deps): bump browserslist from 4.21.7 to 4.29.2",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T23:46:13Z",
+   "closed_at": "2026-09-28T23:46:27Z",
+   "updated_at": "2026-09-28T23:46:34Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 9743,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/10",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 9,
+   "title": "build(deps): bump brace-expansion from 1.1.11 to 1.1.21",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T23:46:00Z",
+   "closed_at": "2026-09-28T23:46:11Z",
+   "updated_at": "2026-09-28T23:46:20Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4527,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/9",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 8,
+   "title": "build(deps): bump follow-redirects from 1.15.2 to 1.16.0",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T01:46:35Z",
+   "closed_at": "2026-09-28T23:49:25Z",
+   "updated_at": "2026-09-28T23:49:26Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3809,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/8",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 7,
+   "title": "build(deps): bump axios from 1.4.0 to 1.18.0",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T01:46:27Z",
+   "closed_at": "2026-09-28T23:47:10Z",
+   "updated_at": "2026-09-28T23:47:18Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 16138,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/7",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 6,
+   "title": "build(deps): bump @babel/traverse from 7.22.4 to 7.29.8",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T01:46:14Z",
+   "closed_at": "2026-09-28T23:50:34Z",
+   "updated_at": "2026-09-28T23:50:36Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 6044,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/6",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 5,
+   "title": "build(deps): bump braces from 3.0.2 to 3.0.3",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T01:46:12Z",
+   "closed_at": "2026-09-28T23:47:23Z",
+   "updated_at": "2026-09-28T23:47:32Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2282,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/5",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 4,
+   "title": "Chore/dependabot automerge sha pinning",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T01:41:59Z",
+   "closed_at": "2026-09-28T23:44:47Z",
+   "updated_at": "2026-09-28T23:44:49Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "Diogo-Barboza"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1346,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/4",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 2,
+   "title": "feat: collect SonarQube technical debt ratio",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-26T15:54:55Z",
+   "closed_at": "2026-09-27T21:36:20Z",
+   "updated_at": "2026-09-27T21:36:24Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 173,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/2",
+   "author": "pedrosena21"
+  },
+  {
+   "number": 1,
+   "title": "[TASK01.01] Disponibilizar medida de dívida técnica (Action)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-26T15:53:01Z",
+   "closed_at": "2026-09-27T21:36:21Z",
+   "updated_at": "2026-10-15T00:51:54Z",
+   "labels": [
+    "task",
+    "action"
+   ],
+   "type": null,
+   "assignees": [
+    "pedrosena21"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1085,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/issues/1",
+   "author": "pedrosena21"
+  },
+  {
+   "number": 3,
+   "title": "[TASK01.01] Coletar métricas de dívida técnica (Action)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-24T01:05:20Z",
+   "closed_at": "2026-10-23T23:48:36Z",
+   "updated_at": "2026-10-23T23:48:36Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 0,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/issues/3",
+   "author": "pedrosena21"
+  }
+ ]
+}

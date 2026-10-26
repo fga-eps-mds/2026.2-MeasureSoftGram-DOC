@@ -1,0 +1,1297 @@
+{
+ "fonte": "API do GitHub (issues)",
+ "coletado_em": "2026-10-26T01:58:14+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-Service",
+ "desde": "2026-08-24",
+ "issues": [
+  {
+   "number": 77,
+   "title": "fix(seed): load_initial_data não altera dados de usuários reais (BUG0…",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-25T19:13:01Z",
+   "closed_at": "2026-10-25T20:47:44Z",
+   "updated_at": "2026-10-25T20:47:45Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3454,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/77",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 75,
+   "title": "Fix/150 onboarding sem mock",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-24T00:39:25Z",
+   "closed_at": "2026-10-26T01:28:39Z",
+   "updated_at": "2026-10-26T01:28:39Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4190,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/75",
+   "author": "storch7"
+  },
+  {
+   "number": 74,
+   "title": "Feat/67 historico tsqmi por release v2",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-23T18:32:18Z",
+   "closed_at": "2026-10-24T15:15:42Z",
+   "updated_at": "2026-10-24T15:15:42Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "storch7"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3849,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/74",
+   "author": "storch7"
+  },
+  {
+   "number": 73,
+   "title": "fix(releases): remove do release-dashboard o que ficou sem uso com as correções do PO (US07.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-23T18:02:58Z",
+   "closed_at": "2026-10-23T20:10:37Z",
+   "updated_at": "2026-10-23T20:10:43Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2594,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/73",
+   "author": "devwallyson"
+  },
+  {
+   "number": 72,
+   "title": "feat(releases): mapa de calor da análise por entidade, com a contribuição para o TSQMI (TASK21.02.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-23T16:31:58Z",
+   "closed_at": "2026-10-23T16:59:14Z",
+   "updated_at": "2026-10-23T19:22:47Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3227,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/72",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 71,
+   "title": "feat(releases): correlação entre as características ao longo das releases (TASK21.04.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-22T20:03:05Z",
+   "closed_at": "2026-10-22T20:12:53Z",
+   "updated_at": "2026-10-23T16:11:35Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3902,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/71",
+   "author": "gusrberto"
+  },
+  {
+   "number": 70,
+   "title": "chore(seed): métricas do GitHub por análise no seed_demo_data (TASK21.03.07)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-22T18:21:08Z",
+   "closed_at": "2026-10-22T18:28:32Z",
+   "updated_at": "2026-10-22T18:28:32Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3297,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/70",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 69,
+   "title": "Feat/paginacao repos GitHub",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-22T17:23:02Z",
+   "closed_at": "2026-10-25T21:28:22Z",
+   "updated_at": "2026-10-25T21:28:28Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3084,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/69",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 68,
+   "title": "[TASK21.03.07] Dados locais com métricas por análise para validar o nível Métrica (Service)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-22T14:08:41Z",
+   "closed_at": null,
+   "updated_at": "2026-10-22T14:08:41Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 885,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/68",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 67,
+   "title": "feat: distribuição estatística entre as análises (TASK21.03.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-22T11:46:59Z",
+   "closed_at": "2026-10-22T12:01:37Z",
+   "updated_at": "2026-10-22T12:01:37Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3217,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/67",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 66,
+   "title": "fix(accounts): retorna 409 em token revogado do GitHub para manter se…",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-21T11:42:45Z",
+   "closed_at": "2026-10-21T16:51:18Z",
+   "updated_at": "2026-10-21T16:51:18Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2021,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/66",
+   "author": "DanielFsR"
+  },
+  {
+   "number": 65,
+   "title": "fix(math-model): alinha por arquivo as métricas usadas juntas no cálculo das medidas",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-21T00:36:35Z",
+   "closed_at": "2026-10-21T00:58:37Z",
+   "updated_at": "2026-10-21T00:58:38Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1523,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/65",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 64,
+   "title": "fix(metrics): distribuição usa um único created_at por coleta",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-21T00:07:23Z",
+   "closed_at": "2026-10-21T00:33:52Z",
+   "updated_at": "2026-10-21T00:33:52Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1561,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/64",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 63,
+   "title": "perf(dev): debug-toolbar só nas páginas HTML",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T21:57:29Z",
+   "closed_at": "2026-10-21T00:26:44Z",
+   "updated_at": "2026-10-21T00:26:44Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1252,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/63",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 62,
+   "title": "perf(valores): latest-values e historical-values sem uma consulta por entidade",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T20:46:44Z",
+   "closed_at": "2026-10-21T00:21:41Z",
+   "updated_at": "2026-10-21T00:21:41Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2453,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/62",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 61,
+   "title": "fix: erros 500 em concorrência (CacheManager), analysis_data com meta zerada e gunicorn com threads",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T19:13:08Z",
+   "closed_at": "2026-10-21T00:16:39Z",
+   "updated_at": "2026-10-21T00:16:40Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3090,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/61",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 60,
+   "title": "perf(medidas): não pré-carregar as medidas calculadas de todos os repositórios",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T17:16:51Z",
+   "closed_at": "2026-10-20T17:38:35Z",
+   "updated_at": "2026-10-20T17:38:35Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1479,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/60",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 59,
+   "title": "refactor(sonar): resolve as issues do Sonar abertas nos PRs e otimiza o job de fechamento da release",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T17:09:17Z",
+   "closed_at": "2026-10-20T20:10:07Z",
+   "updated_at": "2026-10-20T20:10:07Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3676,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/59",
+   "author": "devwallyson"
+  },
+  {
+   "number": 58,
+   "title": "refactor(grafana): remove o Grafana do Service (US07.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T05:08:29Z",
+   "closed_at": "2026-10-20T13:46:50Z",
+   "updated_at": "2026-10-20T13:56:11Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 6397,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/58",
+   "author": "henriquecq"
+  },
+  {
+   "number": 57,
+   "title": "fix(config): aceita requisições de até 50 MiB no cálculo do modelo (TASK21.03.03.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T04:29:12Z",
+   "closed_at": "2026-10-20T04:32:30Z",
+   "updated_at": "2026-10-20T04:32:30Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2389,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/57",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 56,
+   "title": "[TASK21.03.03.01] Aceitar requisições maiores que 2,5 MiB no cálculo do modelo (Service)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-20T04:14:10Z",
+   "closed_at": null,
+   "updated_at": "2026-10-21T01:12:54Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2204,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/56",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 55,
+   "title": "feat(metrics): endpoint de distribuição das métricas por arquivo (US21.03)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T02:51:39Z",
+   "closed_at": "2026-10-20T03:00:40Z",
+   "updated_at": "2026-10-21T01:17:37Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4127,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/55",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 54,
+   "title": "feat(releases): endpoints dos dashboards por release (US07.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T02:20:56Z",
+   "closed_at": "2026-10-20T02:34:27Z",
+   "updated_at": "2026-10-20T02:34:27Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3866,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/54",
+   "author": "devwallyson"
+  },
+  {
+   "number": 53,
+   "title": "fix(historico): devolve os registros mais recentes e filtra métricas por qualifier",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T02:18:48Z",
+   "closed_at": "2026-10-20T02:31:17Z",
+   "updated_at": "2026-10-20T02:31:17Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2466,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/53",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 52,
+   "title": "[TASK21.02.03] Listar no nível métrica só as métricas com valor por repositório (Service)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-20T02:00:37Z",
+   "closed_at": "2026-10-20T02:12:10Z",
+   "updated_at": "2026-10-20T02:12:10Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1065,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/52",
+   "author": "gusrberto"
+  },
+  {
+   "number": 51,
+   "title": "[TASK07.01.09] Calcular no fechamento da release todas as características da configuração (Service)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-20T01:58:19Z",
+   "closed_at": null,
+   "updated_at": "2026-10-20T01:58:50Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1453,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/51",
+   "author": "gusrberto"
+  },
+  {
+   "number": 50,
+   "title": "fix(releases): ajustes da Análise por Entidade (vazamento de repositório e nível métrica)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T01:56:33Z",
+   "closed_at": "2026-10-20T02:12:08Z",
+   "updated_at": "2026-10-20T02:12:08Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2964,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/50",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 49,
+   "title": "Feature/importar repo gitlab",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T01:41:44Z",
+   "closed_at": "2026-10-20T01:52:42Z",
+   "updated_at": "2026-10-20T01:52:42Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/49",
+   "author": "thegm445"
+  },
+  {
+   "number": 48,
+   "title": "[TASK] Investigar e corrigir o bug de regressão na paginação/importação de repositórios da organização",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-20T00:40:50Z",
+   "closed_at": null,
+   "updated_at": "2026-10-25T21:46:38Z",
+   "labels": [],
+   "type": "Task",
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 8820,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/48",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 47,
+   "title": "feat(releases): endpoint de valores por entidade e repositório (US21.02)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T00:05:05Z",
+   "closed_at": "2026-10-20T01:14:26Z",
+   "updated_at": "2026-10-20T01:14:26Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2843,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/47",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 46,
+   "title": "[TASK23.01.02] Endpoint de arquivos por medida (Service)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:41:14Z",
+   "closed_at": "2026-10-21T01:57:36Z",
+   "updated_at": "2026-10-21T01:57:36Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2054,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/46",
+   "author": "gusrberto"
+  },
+  {
+   "number": 45,
+   "title": "[TASK21.04.01] Endpoint de correlação entre as características (Service)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:37:31Z",
+   "closed_at": "2026-10-22T20:12:55Z",
+   "updated_at": "2026-10-22T20:12:55Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2494,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/45",
+   "author": "gusrberto"
+  },
+  {
+   "number": 44,
+   "title": "[TASK21.03.01] Endpoint de distribuição das métricas por arquivo (Service)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:34:31Z",
+   "closed_at": "2026-10-22T17:23:20Z",
+   "updated_at": "2026-10-22T17:23:20Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5531,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/44",
+   "author": "gusrberto"
+  },
+  {
+   "number": 43,
+   "title": "[TASK21.02.01] Endpoint de valores por entidade e repositório (Service)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:28:55Z",
+   "closed_at": "2026-10-23T16:59:16Z",
+   "updated_at": "2026-10-23T16:59:16Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3876,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/43",
+   "author": "gusrberto"
+  },
+  {
+   "number": 42,
+   "title": "[TASK21.01.01] Endpoint da árvore do modelo de qualidade por release (Service)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:26:35Z",
+   "closed_at": "2026-10-20T00:21:36Z",
+   "updated_at": "2026-10-20T01:02:51Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1394,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/42",
+   "author": "gusrberto"
+  },
+  {
+   "number": 41,
+   "title": "[TASK07.01.06] Remover o Grafana do Service (Service)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:20:09Z",
+   "closed_at": "2026-10-20T13:46:52Z",
+   "updated_at": "2026-10-20T13:46:52Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1651,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/41",
+   "author": "gusrberto"
+  },
+  {
+   "number": 40,
+   "title": "[TASK07.01.01] Expor por API os dados dos dashboards atuais (Service)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:10:17Z",
+   "closed_at": "2026-10-23T20:17:50Z",
+   "updated_at": "2026-10-23T20:17:50Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2985,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/40",
+   "author": "gusrberto"
+  },
+  {
+   "number": 39,
+   "title": "Fix/card#125 analysis data todas caracteristicas",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-19T21:10:31Z",
+   "closed_at": "2026-10-19T21:25:02Z",
+   "updated_at": "2026-10-19T21:25:03Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2142,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/39",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 38,
+   "title": "fix(ci): espera o Service ficar healthy antes do smoke test do deploy",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-19T03:02:38Z",
+   "closed_at": "2026-10-19T03:08:37Z",
+   "updated_at": "2026-10-19T04:16:38Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1985,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/38",
+   "author": "henriquecq"
+  },
+  {
+   "number": 37,
+   "title": "fix(accounts): separa o token da Action do token de sessão",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-18T23:47:21Z",
+   "closed_at": "2026-10-19T02:29:32Z",
+   "updated_at": "2026-10-19T02:29:32Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2907,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/37",
+   "author": "henriquecq"
+  },
+  {
+   "number": 36,
+   "title": "fix(core): atualiza para 1.5.5rc2 e remove adaptação provisória",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-16T19:48:04Z",
+   "closed_at": "2026-10-16T21:36:18Z",
+   "updated_at": "2026-10-16T21:36:18Z",
+   "labels": [
+    "bug"
+   ],
+   "type": null,
+   "assignees": [
+    "nateejpg"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1132,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/36",
+   "author": "nateejpg"
+  },
+  {
+   "number": 35,
+   "title": "fix(gitlab): distingue falhas de rede de token inválido",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-16T19:36:27Z",
+   "closed_at": "2026-10-20T01:30:30Z",
+   "updated_at": "2026-10-20T01:30:31Z",
+   "labels": [
+    "bug"
+   ],
+   "type": null,
+   "assignees": [
+    "nateejpg"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 843,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/35",
+   "author": "nateejpg"
+  },
+  {
+   "number": 34,
+   "title": "[TASK US12.01] Corrigir tratamento de falhas de comunicação com o GitLab",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-15T03:50:31Z",
+   "closed_at": null,
+   "updated_at": "2026-10-20T00:17:46Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "nateejpg",
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1309,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/34",
+   "author": "nateejpg"
+  },
+  {
+   "number": 33,
+   "title": "chore: remove prints de depuração, código morto e arquivos obsoletos (#148)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-14T19:11:33Z",
+   "closed_at": "2026-10-14T19:26:14Z",
+   "updated_at": "2026-10-14T19:26:14Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "bottinolucas",
+    "thegm445",
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2456,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/33",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 32,
+   "title": "fix(accounts): responde 400 no login GitHub com e-mail já cadastrado",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-13T22:48:44Z",
+   "closed_at": "2026-10-14T21:34:01Z",
+   "updated_at": "2026-10-14T21:34:07Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2702,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/32",
+   "author": "henriquecq"
+  },
+  {
+   "number": 31,
+   "title": "Feat/card#112 login gitlab",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-13T13:50:16Z",
+   "closed_at": "2026-10-13T13:51:07Z",
+   "updated_at": "2026-10-13T13:51:07Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 33,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/31",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 30,
+   "title": "feat(auth): adiciona suporte a autenticacao via gitlab (US11.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-13T11:56:02Z",
+   "closed_at": "2026-10-13T13:40:26Z",
+   "updated_at": "2026-10-13T13:40:26Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK",
+    "DanielFsR"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3020,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/30",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 29,
+   "title": "[TASK11.01.01] Implementar autenticação OAuth2 com GitLab (Service)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-08T11:43:40Z",
+   "closed_at": null,
+   "updated_at": "2026-10-20T01:00:55Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2575,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/29",
+   "author": "gusrberto"
+  },
+  {
+   "number": 28,
+   "title": "ci(sonar): pula o scan quando o SONAR_TOKEN não está disponível",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T22:52:42Z",
+   "closed_at": "2026-10-07T23:01:06Z",
+   "updated_at": "2026-10-07T23:01:06Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 708,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/28",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 27,
+   "title": "ci(deploy): alinha publicação e deploy com o central e restringe ao repositório central",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T21:24:05Z",
+   "closed_at": "2026-10-07T21:48:17Z",
+   "updated_at": "2026-10-07T21:48:17Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2069,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/27",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 26,
+   "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-30T17:43:08Z",
+   "closed_at": "2026-10-15T22:04:25Z",
+   "updated_at": "2026-10-15T22:04:25Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3089,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/26",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 25,
+   "title": "fix: apagar token de autenticação no logout",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T22:40:09Z",
+   "closed_at": "2026-10-14T03:00:57Z",
+   "updated_at": "2026-10-14T03:01:10Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 820,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/25",
+   "author": "henriquecq"
+  },
+  {
+   "number": 24,
+   "title": "fix: timeouts no GitHub, tratamento 401 e otimizações de N+1, Grafana e banco",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T21:17:00Z",
+   "closed_at": "2026-09-28T00:49:01Z",
+   "updated_at": "2026-09-28T01:17:05Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "DiegoCarlito"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5646,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/24",
+   "author": "DiegoCarlito"
+  },
+  {
+   "number": 23,
+   "title": "Chore/dependabot automerge sha pinning",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T21:07:10Z",
+   "closed_at": null,
+   "updated_at": "2026-10-18T01:57:00Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "Diogo-Barboza"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1397,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/23",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 22,
+   "title": "fix(security): proteger dados de usuários e tokens OAuth",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T03:46:26Z",
+   "closed_at": "2026-09-28T03:09:33Z",
+   "updated_at": "2026-09-28T03:09:33Z",
+   "labels": [
+    "bug",
+    "task"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5406,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/22",
+   "author": "Marcosatc147"
+  },
+  {
+   "number": 21,
+   "title": "feat: disponibiliza medida technical_debt_ratio no Service",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-26T23:37:14Z",
+   "closed_at": "2026-09-27T21:45:43Z",
+   "updated_at": "2026-09-27T21:50:48Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4458,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/21",
+   "author": "devwallyson"
+  },
+  {
+   "number": 20,
+   "title": "[TASK01.05] Integrar medida de Dívida Técnica ao modelo de qualidade do MSGRAM (Service)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-26T21:58:16Z",
+   "closed_at": "2026-09-27T16:54:31Z",
+   "updated_at": "2026-10-15T00:51:55Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 110,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/20",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 19,
+   "title": "fix: adapta Service ao msgram-core 1.5.4",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-26T17:47:27Z",
+   "closed_at": "2026-09-28T04:11:47Z",
+   "updated_at": "2026-09-28T04:11:47Z",
+   "labels": [
+    "bug"
+   ],
+   "type": null,
+   "assignees": [
+    "nateejpg"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3855,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/19",
+   "author": "nateejpg"
+  },
+  {
+   "number": 18,
+   "title": "Resolução de Dívidas Técnicas (MSG-15, MSG-16, MSG-32, MSG-36)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-25T16:25:10Z",
+   "closed_at": "2026-09-26T12:25:20Z",
+   "updated_at": "2026-09-26T15:25:32Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "antonioleaojr"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2274,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/18",
+   "author": "antonioleaojr"
+  },
+  {
+   "number": 17,
+   "title": "[TASK] MSG-02.5 | Front: atualização de dependências de baixo risco",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-24T02:55:05Z",
+   "closed_at": "2026-10-07T17:59:19Z",
+   "updated_at": "2026-10-07T17:59:19Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 0,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/17",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 15,
+   "title": "[TASK02.04] Service: consultas ao banco e chamadas ao GitHub e ao Grafana",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-24T02:54:23Z",
+   "closed_at": "2026-09-28T00:49:03Z",
+   "updated_at": "2026-09-28T01:14:49Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": "Task",
+   "assignees": [
+    "DiegoCarlito"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 8657,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/15",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 11,
+   "title": "[TASK01.04] Disponibilizar medida de dívida técnica (Service)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-24T01:06:20Z",
+   "closed_at": "2026-09-27T21:45:44Z",
+   "updated_at": "2026-10-15T00:51:53Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1860,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/11",
+   "author": "pedrosena21"
+  },
+  {
+   "number": 6,
+   "title": "[TASK01.05] Disponibilizar medida de dívida técnica no Service",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-24T00:55:54Z",
+   "closed_at": "2026-09-27T22:00:41Z",
+   "updated_at": "2026-10-15T00:51:53Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 954,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/6",
+   "author": "pedrosena21"
+  },
+  {
+   "number": 4,
+   "title": "Atualiza o Django para a versão 5.2 LTS",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-14T22:02:18Z",
+   "closed_at": "2026-09-22T15:03:04Z",
+   "updated_at": "2026-09-22T15:11:15Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3984,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/4",
+   "author": "Marcosatc147"
+  },
+  {
+   "number": 3,
+   "title": "[BACKEND] Atualizar Django para a versão 5.2 LTS",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-14T16:00:33Z",
+   "closed_at": "2026-09-27T16:54:19Z",
+   "updated_at": "2026-09-27T16:54:19Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [
+    "Marcosatc147"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2756,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/3",
+   "author": "Marcosatc147"
+  },
+  {
+   "number": 2,
+   "title": "build(deps): upgrade django to 5.2 lts",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-12T01:15:09Z",
+   "closed_at": "2026-09-14T16:07:18Z",
+   "updated_at": "2026-09-14T16:07:18Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3989,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/2",
+   "author": "Marcosatc147"
+  },
+  {
+   "number": 1,
+   "title": "Refatoração da pipeline de CI/Testes, padronização de formatação e otimização de dependências",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-08-26T03:33:40Z",
+   "closed_at": "2026-08-26T03:41:39Z",
+   "updated_at": "2026-08-26T03:41:46Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2792,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/1",
+   "author": "luciano-freitas-melo"
+  }
+ ]
+}

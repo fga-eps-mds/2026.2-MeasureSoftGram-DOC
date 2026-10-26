@@ -1,0 +1,1711 @@
+{
+ "fonte": "API do GitHub (issues)",
+ "coletado_em": "2026-10-26T01:58:14+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-Front",
+ "desde": "2026-08-24",
+ "issues": [
+  {
+   "number": 89,
+   "title": "Feature/issue 79 exportacao csv metamodelo",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-10-25T20:14:07Z",
+   "closed_at": null,
+   "updated_at": "2026-10-25T20:16:38Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3273,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/89",
+   "author": "thegm445"
+  },
+  {
+   "number": 88,
+   "title": "Renomeia o dashboard do Metamodelo e o quadro da árvore conforme revisão do PO (US21.01) (#37)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-10-25T20:01:27Z",
+   "closed_at": null,
+   "updated_at": "2026-10-25T20:04:53Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2184,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/88",
+   "author": "thegm445"
+  },
+  {
+   "number": 87,
+   "title": "Feat/67 pulso tsqmi por release",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-25T13:16:24Z",
+   "closed_at": "2026-10-26T01:33:36Z",
+   "updated_at": "2026-10-26T01:33:38Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4633,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/87",
+   "author": "storch7"
+  },
+  {
+   "number": 86,
+   "title": "feat(dashboards): exportação de CSV e .zip da Visão Geral, da Evolução Temporal e dos pulsos (TASK07.01.10)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-24T02:41:07Z",
+   "closed_at": "2026-10-24T02:54:40Z",
+   "updated_at": "2026-10-24T02:54:42Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3741,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/86",
+   "author": "henriquecq"
+  },
+  {
+   "number": 85,
+   "title": "feat(dashboards): exportação de CSV e .zip da Distribuição Estatística (US21.03)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-23T20:07:01Z",
+   "closed_at": "2026-10-23T21:10:12Z",
+   "updated_at": "2026-10-23T21:10:15Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5048,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/85",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 84,
+   "title": "fix(dashboards): ajustes da revisão da Análise por Entidade (TASK21.02.02)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-23T20:04:24Z",
+   "closed_at": "2026-10-23T20:25:03Z",
+   "updated_at": "2026-10-23T20:25:05Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2195,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/84",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 83,
+   "title": "feat(dashboards): exportação de CSV e .zip da Análise por Entidade (TASK21.02.04)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-23T19:28:47Z",
+   "closed_at": "2026-10-23T19:52:50Z",
+   "updated_at": "2026-10-23T19:52:52Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3451,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/83",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 82,
+   "title": "[TASK07.01.10] Exportação de CSV dos dashboards sem o Grafana (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-23T19:16:13Z",
+   "closed_at": "2026-10-24T02:54:41Z",
+   "updated_at": "2026-10-24T02:54:41Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3122,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/82",
+   "author": "gusrberto"
+  },
+  {
+   "number": 81,
+   "title": "[TASK21.03.08] Exportação de CSV da Distribuição Estatística (Front)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-23T19:14:04Z",
+   "closed_at": null,
+   "updated_at": "2026-10-23T19:14:43Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2363,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/81",
+   "author": "gusrberto"
+  },
+  {
+   "number": 80,
+   "title": "[TASK21.02.04] Exportação de CSV da Análise por Entidade (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-23T19:11:29Z",
+   "closed_at": "2026-10-23T19:52:52Z",
+   "updated_at": "2026-10-23T19:52:52Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2339,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/80",
+   "author": "gusrberto"
+  },
+  {
+   "number": 79,
+   "title": "[TASK21.01.03] Exportação de CSV do Metamodelo (Front)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-23T19:08:35Z",
+   "closed_at": null,
+   "updated_at": "2026-10-23T19:09:56Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1971,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/79",
+   "author": "gusrberto"
+  },
+  {
+   "number": 78,
+   "title": "build(deps): bump next from 12.2.2 to 15.5.28",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-10-23T19:08:34Z",
+   "closed_at": null,
+   "updated_at": "2026-10-23T19:08:37Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 6726,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/78",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 77,
+   "title": "fix(dashboards): correções do PO na Visão Geral de Qualidade (US07.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-23T18:25:26Z",
+   "closed_at": "2026-10-23T18:36:13Z",
+   "updated_at": "2026-10-23T18:36:15Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3843,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/77",
+   "author": "devwallyson"
+  },
+  {
+   "number": 76,
+   "title": "feat(dashboards): exportação de CSV e .zip das matrizes de correlação (US21.04)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-23T18:06:41Z",
+   "closed_at": "2026-10-23T18:58:04Z",
+   "updated_at": "2026-10-23T18:58:06Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3529,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/76",
+   "author": "gusrberto"
+  },
+  {
+   "number": 75,
+   "title": "fix(dashboards): ajustes da validação da Distribuição Estatística (US21.03)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-23T17:15:44Z",
+   "closed_at": "2026-10-23T17:31:34Z",
+   "updated_at": "2026-10-23T17:31:36Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4680,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/75",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 74,
+   "title": "feat(dashboards): Análise por Entidade com o mapa de calor, a contribuição e o ranking dos piores pares (TASK21.02.02)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-23T16:42:04Z",
+   "closed_at": "2026-10-23T19:40:49Z",
+   "updated_at": "2026-10-23T19:56:27Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3672,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/74",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 73,
+   "title": "fix(layout): coluna do menu lateral acompanha o menu e rola por dentro (US21.03)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-22T20:35:07Z",
+   "closed_at": "2026-10-23T16:33:27Z",
+   "updated_at": "2026-10-23T16:33:30Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 6591,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/73",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 72,
+   "title": "feat(dashboards): 6. Relações e Correlações entre as características (US21.04)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-22T19:59:19Z",
+   "closed_at": "2026-10-22T21:26:43Z",
+   "updated_at": "2026-10-22T21:26:46Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4745,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/72",
+   "author": "gusrberto"
+  },
+  {
+   "number": 71,
+   "title": "Feat/paginacao repos GitHub",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-22T17:23:44Z",
+   "closed_at": "2026-10-25T21:46:15Z",
+   "updated_at": "2026-10-25T21:46:17Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3723,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/71",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 70,
+   "title": "feat(dashboards): boxplot e percentis do nível na Distribuição Estatística (US21.03)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-22T17:12:14Z",
+   "closed_at": "2026-10-22T18:02:44Z",
+   "updated_at": "2026-10-22T18:02:48Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5295,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/70",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 69,
+   "title": "[TASK21.04.04] Exportação de CSV dos dashboards (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-22T14:20:57Z",
+   "closed_at": "2026-10-23T18:58:05Z",
+   "updated_at": "2026-10-23T18:58:05Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2124,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/69",
+   "author": "gusrberto"
+  },
+  {
+   "number": 68,
+   "title": "[TASK21.03.06] Coluna do menu lateral fixa em 328 px quebra o layout (Front)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-22T14:08:31Z",
+   "closed_at": null,
+   "updated_at": "2026-10-22T17:24:13Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1517,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/68",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 67,
+   "title": "feat(dashboards): curva de densidade e dispersão no tempo na Distribuição Estatística (US21.03)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-22T13:42:55Z",
+   "closed_at": "2026-10-22T14:32:24Z",
+   "updated_at": "2026-10-22T14:32:27Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4473,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/67",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 66,
+   "title": "feat(dashboards): 5. Distribuição Estatística entre as análises do repositório (US21.03)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-22T13:03:37Z",
+   "closed_at": "2026-10-22T13:24:34Z",
+   "updated_at": "2026-10-22T13:24:36Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4764,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/66",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 65,
+   "title": "[TASK21.03.05] Boxplot e percentis do nível na Distribuição Estatística (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-22T02:33:16Z",
+   "closed_at": "2026-10-22T18:02:45Z",
+   "updated_at": "2026-10-22T18:02:45Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1537,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/65",
+   "author": "gusrberto"
+  },
+  {
+   "number": 64,
+   "title": "[TASK21.03.04] Curva de densidade e dispersão no tempo na Distribuição Estatística (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-22T02:30:00Z",
+   "closed_at": "2026-10-22T17:23:38Z",
+   "updated_at": "2026-10-22T17:23:38Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1572,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/64",
+   "author": "gusrberto"
+  },
+  {
+   "number": 63,
+   "title": "feat(repositorio): pulso das características do repositório no lugar do ponto por release",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-21T21:18:12Z",
+   "closed_at": "2026-10-23T19:40:20Z",
+   "updated_at": "2026-10-23T19:40:23Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3329,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/63",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 62,
+   "title": "feat(temporal): Evolução Temporal com os filtros da hierarquia e o eixo em dias ou meses",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-21T21:12:51Z",
+   "closed_at": "2026-10-23T20:06:13Z",
+   "updated_at": "2026-10-23T20:06:15Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2669,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/62",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 61,
+   "title": "fix(products): trata 409 de organizacoes e exibe reautorizacao sem de…",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-21T11:45:27Z",
+   "closed_at": "2026-10-21T23:41:11Z",
+   "updated_at": "2026-10-21T23:41:14Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4799,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/61",
+   "author": "DanielFsR"
+  },
+  {
+   "number": 59,
+   "title": "fix: produto da URL no menu lateral e importação do GitHub só para usuários do GitHub",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T22:28:02Z",
+   "closed_at": "2026-10-21T01:05:45Z",
+   "updated_at": "2026-10-21T01:05:46Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2306,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/59",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 58,
+   "title": "perf: traduções no bundle e avisos só com o react-toastify",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T21:49:30Z",
+   "closed_at": "2026-10-21T00:54:08Z",
+   "updated_at": "2026-10-21T00:54:10Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1897,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/58",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 57,
+   "title": "perf: tela do repositório sem chamadas inúteis, Evolução Temporal pelo release-history e ECharts só nas páginas com gráficos",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T20:46:26Z",
+   "closed_at": "2026-10-21T00:37:46Z",
+   "updated_at": "2026-10-21T00:37:48Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3216,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/57",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 56,
+   "title": "perf(dev): next dev e Jest mais leves (compilação do MUI, RAM e dependências mortas)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T20:24:37Z",
+   "closed_at": "2026-10-21T15:42:40Z",
+   "updated_at": "2026-10-21T15:42:43Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3244,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/56",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 55,
+   "title": "perf: hidratação sem erro, lista de repositórios em cache e i18n sem recarga",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T18:42:01Z",
+   "closed_at": "2026-10-21T00:24:40Z",
+   "updated_at": "2026-10-21T00:24:44Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3845,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/55",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 54,
+   "title": "perf: ECharts enxuto e adiantado, prefetch das abas do menu e badge sem redirecionamento",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T17:17:12Z",
+   "closed_at": "2026-10-20T17:38:08Z",
+   "updated_at": "2026-10-20T18:41:32Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2866,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/54",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 53,
+   "title": "fix(dashboards): rótulos da árvore do Metamodelo e nível sem entidades na Análise por Entidade",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T15:48:59Z",
+   "closed_at": "2026-10-20T16:38:56Z",
+   "updated_at": "2026-10-20T16:38:58Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3344,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/53",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 52,
+   "title": "feat(dashboards): 5. Distribuição das Métricas (US21.03)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T13:37:40Z",
+   "closed_at": "2026-10-20T14:44:41Z",
+   "updated_at": "2026-10-20T14:44:45Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3745,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/52",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 51,
+   "title": "feat(dashboards): dashboard do Metamodelo, com a árvore do modelo de qualidade da release (US21.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T04:44:54Z",
+   "closed_at": "2026-10-20T12:40:23Z",
+   "updated_at": "2026-10-20T12:40:25Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3442,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/51",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 50,
+   "title": "refactor(dashboards): remove a integração com o Grafana do Front (US07.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T04:26:51Z",
+   "closed_at": "2026-10-20T04:35:25Z",
+   "updated_at": "2026-10-20T04:35:28Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4294,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/50",
+   "author": "henriquecq"
+  },
+  {
+   "number": 49,
+   "title": "Revert \"Feature/importar repo gitlab\"",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T04:25:43Z",
+   "closed_at": "2026-10-20T15:29:33Z",
+   "updated_at": "2026-10-20T15:29:36Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 51,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/49",
+   "author": "devwallyson"
+  },
+  {
+   "number": 48,
+   "title": "Feature/importar repo gitlab",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T04:03:49Z",
+   "closed_at": "2026-10-20T04:16:05Z",
+   "updated_at": "2026-10-20T04:16:07Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/48",
+   "author": "thegm445"
+  },
+  {
+   "number": 47,
+   "title": "feat(dashboards): Visão Geral de Qualidade nativa, por release (US07.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T03:25:37Z",
+   "closed_at": "2026-10-20T03:36:59Z",
+   "updated_at": "2026-10-20T03:37:02Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4429,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/47",
+   "author": "devwallyson"
+  },
+  {
+   "number": 46,
+   "title": "fix(auth): gera e valida o state do OAuth no login e na reautorização do GitHub",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T02:51:09Z",
+   "closed_at": "2026-10-20T03:10:08Z",
+   "updated_at": "2026-10-20T03:10:10Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5175,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/46",
+   "author": "henriquecq"
+  },
+  {
+   "number": 45,
+   "title": "feat(repositorio): tela do repositório nativa, com a evolução por release (US07.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T02:24:55Z",
+   "closed_at": "2026-10-20T02:44:36Z",
+   "updated_at": "2026-10-20T02:44:38Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1853,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/45",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 44,
+   "title": "Feature/importar repo gitlab",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T02:24:29Z",
+   "closed_at": "2026-10-20T03:55:09Z",
+   "updated_at": "2026-10-20T03:55:12Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/44",
+   "author": "thegm445"
+  },
+  {
+   "number": 43,
+   "title": "feat(dashboards): Evolução Temporal nativa, com um ponto por release (US07.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T02:23:06Z",
+   "closed_at": "2026-10-20T02:51:49Z",
+   "updated_at": "2026-10-20T02:51:52Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2118,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/43",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 42,
+   "title": "feat(dashboards): dashboard de Análise por Entidade (US21.02)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-20T00:05:37Z",
+   "closed_at": "2026-10-20T12:27:48Z",
+   "updated_at": "2026-10-20T12:27:51Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3293,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/42",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 41,
+   "title": "[TASK23.01.03] Lista de arquivos por medida na tela do repositório (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:42:16Z",
+   "closed_at": "2026-10-21T01:57:37Z",
+   "updated_at": "2026-10-21T01:57:37Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1311,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/41",
+   "author": "gusrberto"
+  },
+  {
+   "number": 40,
+   "title": "[TASK21.04.02] Dashboard de Relações e Correlações (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:38:28Z",
+   "closed_at": "2026-10-22T21:26:45Z",
+   "updated_at": "2026-10-22T21:26:45Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2202,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/40",
+   "author": "gusrberto"
+  },
+  {
+   "number": 39,
+   "title": "[TASK21.03.02] Dashboard de Distribuição das Métricas (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:35:23Z",
+   "closed_at": "2026-10-22T13:24:36Z",
+   "updated_at": "2026-10-22T13:24:36Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4208,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/39",
+   "author": "gusrberto"
+  },
+  {
+   "number": 38,
+   "title": "[TASK21.02.02] Dashboard de Análise por Entidade (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:32:50Z",
+   "closed_at": "2026-10-23T19:40:51Z",
+   "updated_at": "2026-10-23T19:40:51Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3851,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/38",
+   "author": "gusrberto"
+  },
+  {
+   "number": 37,
+   "title": "[TASK21.01.02] Dashboard do Metamodelo (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:27:50Z",
+   "closed_at": "2026-10-25T19:52:06Z",
+   "updated_at": "2026-10-25T19:52:06Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3035,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/37",
+   "author": "gusrberto"
+  },
+  {
+   "number": 36,
+   "title": "[TASK07.01.05] Remover a integração com o Grafana do Front (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:17:59Z",
+   "closed_at": "2026-10-20T04:35:26Z",
+   "updated_at": "2026-10-20T04:35:26Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 689,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/36",
+   "author": "gusrberto"
+  },
+  {
+   "number": 35,
+   "title": "[TASK07.01.04] Refazer os gráficos do repositório e da release sem o Grafana (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:16:32Z",
+   "closed_at": "2026-10-26T01:59:08Z",
+   "updated_at": "2026-10-26T01:59:08Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2505,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/35",
+   "author": "gusrberto"
+  },
+  {
+   "number": 34,
+   "title": "[TASK07.01.03] Refazer a Evolução Temporal sem o Grafana (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:14:30Z",
+   "closed_at": "2026-10-26T01:59:11Z",
+   "updated_at": "2026-10-26T01:59:11Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2644,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/34",
+   "author": "gusrberto"
+  },
+  {
+   "number": 33,
+   "title": "[TASK07.01.02] Refazer a Visão Geral de Qualidade sem o Grafana (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:12:22Z",
+   "closed_at": "2026-10-23T18:36:14Z",
+   "updated_at": "2026-10-23T18:36:15Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3878,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/33",
+   "author": "gusrberto"
+  },
+  {
+   "number": 32,
+   "title": "Feat/card#125 equalizador planejado realizado",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-19T21:11:34Z",
+   "closed_at": "2026-10-19T22:37:46Z",
+   "updated_at": "2026-10-19T22:37:48Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3224,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/32",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 31,
+   "title": "fix: corrige os bugs e a cobertura que reprovam o quality gate do Sonar",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-18T23:47:28Z",
+   "closed_at": "2026-10-19T02:26:05Z",
+   "updated_at": "2026-10-19T02:26:08Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3065,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/31",
+   "author": "henriquecq"
+  },
+  {
+   "number": 30,
+   "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-16T16:44:28Z",
+   "closed_at": "2026-10-17T19:59:09Z",
+   "updated_at": "2026-10-17T19:59:12Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4074,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/30",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 29,
+   "title": "chore(utils): remove logs de depuração dos formatadores de gráfico",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-13T00:33:00Z",
+   "closed_at": "2026-10-13T00:37:33Z",
+   "updated_at": "2026-10-13T00:37:35Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "bottinolucas",
+    "LuizaMaluf",
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1719,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/29",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 28,
+   "title": "fix(auth): corrige configuração e fluxo OAuth do GitHub",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-12T03:40:08Z",
+   "closed_at": "2026-10-14T22:20:15Z",
+   "updated_at": "2026-10-15T22:47:51Z",
+   "labels": [
+    "bug"
+   ],
+   "type": null,
+   "assignees": [
+    "henriquecq",
+    "DiegoCarlito",
+    "Marcosatc147"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1458,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/28",
+   "author": "Marcosatc147"
+  },
+  {
+   "number": 27,
+   "title": "[US11.03] Como usuário do GitLab, quero ver os termos do GitLab (merge request), para não me confundi",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-10T23:37:22Z",
+   "closed_at": "2026-10-13T11:50:45Z",
+   "updated_at": "2026-10-14T22:14:05Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1081,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/27",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 26,
+   "title": "[TASK11.01.02] Adicionar login com GitLab na tela de login (Front)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-08T11:45:08Z",
+   "closed_at": null,
+   "updated_at": "2026-10-20T01:01:17Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2408,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/26",
+   "author": "gusrberto"
+  },
+  {
+   "number": 25,
+   "title": "ci(sonar): pula o scan quando o SONAR_TOKEN não está disponível",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T22:52:37Z",
+   "closed_at": "2026-10-07T22:57:39Z",
+   "updated_at": "2026-10-07T22:57:42Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 706,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/25",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 24,
+   "title": "ci(deploy): alinha publicação e deploy com o central e restringe ao repositório central",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T21:24:00Z",
+   "closed_at": "2026-10-07T21:46:56Z",
+   "updated_at": "2026-10-07T21:46:58Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1761,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/24",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 23,
+   "title": "build(deps): bump next from 12.2.2 to 15.5.28",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-05T01:17:04Z",
+   "closed_at": "2026-10-23T19:08:42Z",
+   "updated_at": "2026-10-23T19:08:47Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5060,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/23",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 22,
+   "title": "build(deps): bump axios from 0.27.2 to 0.34.0",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-10-05T01:17:00Z",
+   "closed_at": null,
+   "updated_at": "2026-10-23T19:00:51Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 8487,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/22",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 21,
+   "title": "build(deps): bump requests from 2.32.3 to 2.33.0",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-10-05T01:16:57Z",
+   "closed_at": null,
+   "updated_at": "2026-10-05T01:16:58Z",
+   "labels": [
+    "dependencies",
+    "python"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 9878,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/21",
+   "author": "dependabot[bot]"
+  },
+  {
+   "number": 20,
+   "title": "[BUG] useQuery dispara loadProduct/loadRepositories em cada componente (menu lateral) e loga 'eu ein'",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-03T22:14:40Z",
+   "closed_at": "2026-10-13T00:11:51Z",
+   "updated_at": "2026-10-20T01:04:14Z",
+   "labels": [
+    "bug",
+    "frontend"
+   ],
+   "type": "Bug",
+   "assignees": [
+    "storch7"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2057,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/20",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 19,
+   "title": "fix: corrige NoReleasesState ausente e CI quebrado após a #12",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-01T00:49:29Z",
+   "closed_at": "2026-10-01T00:54:04Z",
+   "updated_at": "2026-10-01T00:54:07Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2393,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/19",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 18,
+   "title": "fix: sincronizar lista de repositórios quando fica vazia",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T22:40:30Z",
+   "closed_at": "2026-09-29T02:11:11Z",
+   "updated_at": "2026-09-29T02:11:14Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1655,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/18",
+   "author": "henriquecq"
+  },
+  {
+   "number": 17,
+   "title": "Fix/msg02x deps swc swr",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T20:01:42Z",
+   "closed_at": "2026-10-05T01:14:55Z",
+   "updated_at": "2026-10-05T01:14:57Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1580,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/17",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 16,
+   "title": "chore(ci): configurar dependabot, auto-merge e pinning de github actions",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T01:27:41Z",
+   "closed_at": "2026-10-06T23:35:59Z",
+   "updated_at": "2026-10-06T23:36:01Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "Diogo-Barboza"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1402,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/16",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 15,
+   "title": "feat: exibe a medida technical_debt_ratio no Front",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T00:52:26Z",
+   "closed_at": "2026-09-28T01:15:10Z",
+   "updated_at": "2026-09-28T01:15:21Z",
+   "labels": [
+    "enhancement",
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4323,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/15",
+   "author": "gusrberto"
+  },
+  {
+   "number": 14,
+   "title": "Fix/7 performance carregamento",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T00:03:10Z",
+   "closed_at": "2026-09-28T01:02:08Z",
+   "updated_at": "2026-10-07T21:16:10Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445",
+    "DanielFsR"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3542,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/14",
+   "author": "DanielFsR"
+  },
+  {
+   "number": 13,
+   "title": "fix(carregamento): estabiliza navegacao entre telas do produto (MSG02)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T22:21:29Z",
+   "closed_at": "2026-10-07T15:24:29Z",
+   "updated_at": "2026-10-07T15:24:32Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5105,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/13",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 12,
+   "title": "Feat/67 68 pulse chart",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T21:50:27Z",
+   "closed_at": "2026-09-28T01:55:23Z",
+   "updated_at": "2026-09-28T23:25:37Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2187,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/12",
+   "author": "storch7"
+  },
+  {
+   "number": 11,
+   "title": "fix: estabilização da tela de produtos e integração com o GitHub",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T21:28:13Z",
+   "closed_at": "2026-09-28T00:48:56Z",
+   "updated_at": "2026-10-07T21:16:32Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "DiegoCarlito"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3654,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/11",
+   "author": "DiegoCarlito"
+  },
+  {
+   "number": 10,
+   "title": "Feat/issue 69 orientacao sem releases",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T20:06:07Z",
+   "closed_at": "2026-10-07T22:13:03Z",
+   "updated_at": "2026-10-07T22:13:06Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2615,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/10",
+   "author": "storch7"
+  },
+  {
+   "number": 5,
+   "title": "[TASK01.07] Exibir a medida de dívida técnica (Front)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-26T22:21:52Z",
+   "closed_at": "2026-09-28T01:15:12Z",
+   "updated_at": "2026-10-15T00:50:54Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1322,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/5",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 4,
+   "title": "Chore: adição no gitignore",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-26T16:39:54Z",
+   "closed_at": "2026-09-26T18:19:22Z",
+   "updated_at": "2026-09-26T18:19:27Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "antonioleaojr"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 466,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/4",
+   "author": "antonioleaojr"
+  },
+  {
+   "number": 3,
+   "title": "refactor: pip install command in metrics.yml",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-25T17:36:35Z",
+   "closed_at": "2026-09-25T18:02:34Z",
+   "updated_at": "2026-10-07T21:19:39Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 62,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/3",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 2,
+   "title": "chore: ignora diretório .envs/ no controle de versão",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-25T10:53:13Z",
+   "closed_at": "2026-09-25T17:42:52Z",
+   "updated_at": "2026-09-25T17:42:59Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "antonioleaojr"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 376,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/2",
+   "author": "antonioleaojr"
+  },
+  {
+   "number": 9,
+   "title": "[TASK02.05] Front: atualização de dependências de baixo risco",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-24T02:54:48Z",
+   "closed_at": "2026-10-05T13:29:34Z",
+   "updated_at": "2026-10-05T13:29:34Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5008,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/9",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 8,
+   "title": "[TASK02.03] Front: navegação entre telas e painéis de gráficos",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-24T02:53:52Z",
+   "closed_at": "2026-10-07T18:00:33Z",
+   "updated_at": "2026-10-07T18:00:33Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 8225,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/8",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 7,
+   "title": "[TASK02.02] Front: carregamento após o login",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-24T02:51:53Z",
+   "closed_at": "2026-09-28T01:06:07Z",
+   "updated_at": "2026-09-28T01:06:07Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [
+    "thegm445",
+    "DanielFsR"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 7149,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/7",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 6,
+   "title": "[TASK02.01] Front: tela Produtos e integração com o GitHub",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-24T02:50:59Z",
+   "closed_at": "2026-09-28T00:48:57Z",
+   "updated_at": "2026-09-28T01:15:27Z",
+   "labels": [
+    "task",
+    "frontend",
+    "service"
+   ],
+   "type": "Task",
+   "assignees": [
+    "DiegoCarlito"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 6901,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/6",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 1,
+   "title": "Atualiza README, conduta, contribuição",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-02T19:27:54Z",
+   "closed_at": "2026-09-02T19:28:04Z",
+   "updated_at": "2026-10-07T21:19:37Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 68,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/1",
+   "author": "Diogo-Barboza"
+  }
+ ]
+}

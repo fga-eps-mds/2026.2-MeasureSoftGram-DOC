@@ -1,0 +1,66 @@
+{
+ "fonte": "API do GitHub (issues)",
+ "coletado_em": "2026-10-26T01:58:14+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-AI",
+ "desde": "2026-08-24",
+ "issues": [
+  {
+   "number": 3,
+   "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-30T18:07:11Z",
+   "closed_at": "2026-10-15T21:35:11Z",
+   "updated_at": "2026-10-15T21:35:11Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3885,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-AI/pull/3",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 2,
+   "title": "Chore/dependabot automerge sha pinning",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T19:39:20Z",
+   "closed_at": "2026-09-28T23:09:47Z",
+   "updated_at": "2026-09-28T23:09:48Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "Diogo-Barboza"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1745,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-AI/pull/2",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 1,
+   "title": "ci: padronização canônica de CI/CD, SonarCloud desacoplado e build DockerHub",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T07:19:41Z",
+   "closed_at": "2026-09-27T08:08:01Z",
+   "updated_at": "2026-09-27T08:14:59Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3803,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-AI/pull/1",
+   "author": "luciano-freitas-melo"
+  }
+ ]
+}

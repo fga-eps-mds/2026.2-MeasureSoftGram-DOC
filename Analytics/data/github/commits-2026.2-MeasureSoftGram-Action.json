@@ -1,0 +1,938 @@
+{
+ "fonte": "API do GitHub (commits)",
+ "coletado_em": "2026-10-26T01:58:14+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-Action",
+ "desde": "2026-08-24",
+ "branch": "develop",
+ "commits": [
+  {
+   "sha": "0782292dc27a95f885f6052c4a10def96a9a6386",
+   "date": "2026-10-21T01:37:01Z",
+   "author": "LuizaMaluf",
+   "message": "feat(sonarqube): busca todas as páginas do component_tree (TASK21.03.03) (#18)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "__tests__/sonarqube.test.ts",
+     "status": "modified",
+     "additions": 142,
+     "deletions": 7
+    },
+    {
+     "filename": "dist/index.js",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 5
+    },
+    {
+     "filename": "dist/index.js.map",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/sonarqube.ts",
+     "status": "modified",
+     "additions": 29,
+     "deletions": 12
+    }
+   ]
+  },
+  {
+   "sha": "617cb46b42a4537749e69a71191f7d50d247a5f0",
+   "date": "2026-10-19T21:50:05Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados (#15)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 26
+    },
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 26
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 25,
+     "deletions": 12
+    },
+    {
+     "filename": "dist/index.js",
+     "status": "modified",
+     "additions": 10519,
+     "deletions": 5207
+    },
+    {
+     "filename": "dist/index.js.map",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "dist/licenses.txt",
+     "status": "modified",
+     "additions": 356,
+     "deletions": 25
+    }
+   ]
+  },
+  {
+   "sha": "ef89f0727aa1b17661da7260fd77ea92b8af2f04",
+   "date": "2026-09-28T23:53:08Z",
+   "author": "dependabot[bot]",
+   "message": "build(deps): bump minimatch from 3.1.2 to 3.1.5 (#14)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "yarn.lock",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "90499c18a934b2d124b26a427994fdf2d18f3796",
+   "date": "2026-09-28T23:51:41Z",
+   "author": "dependabot[bot]",
+   "message": "build(deps): bump flatted from 3.2.7 to 3.4.4 (#13)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "yarn.lock",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "2f4f4c63951abf8d8a2f31c1aef5631147ad8119",
+   "date": "2026-09-28T23:50:24Z",
+   "author": "dependabot[bot]",
+   "message": "build(deps): bump picomatch from 2.3.1 to 2.3.2 (#12)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "yarn.lock",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "4f19bce0db270cc5dd3aeca102286aadbf5d7e98",
+   "date": "2026-09-28T23:49:04Z",
+   "author": "dependabot[bot]",
+   "message": "build(deps): bump @babel/core from 7.22.1 to 7.29.7 (#11)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "yarn.lock",
+     "status": "modified",
+     "additions": 179,
+     "deletions": 83
+    }
+   ]
+  },
+  {
+   "sha": "d614c72cc8c7066e5ba770f5bf9e3244e725c18d",
+   "date": "2026-09-28T23:47:23Z",
+   "author": "dependabot[bot]",
+   "message": "build(deps): bump braces from 3.0.2 to 3.0.3 (#5)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "yarn.lock",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 8
+    }
+   ]
+  },
+  {
+   "sha": "2a18c5dcb80443f4bb6bc678f7923507452cf286",
+   "date": "2026-09-28T23:47:10Z",
+   "author": "dependabot[bot]",
+   "message": "build(deps): bump axios from 1.4.0 to 1.18.0 (#7)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "yarn.lock",
+     "status": "modified",
+     "additions": 154,
+     "deletions": 22
+    }
+   ]
+  },
+  {
+   "sha": "e89c9b3557f4e4b886e5e62b97fab8aacb7a0dd7",
+   "date": "2026-09-28T23:46:26Z",
+   "author": "dependabot[bot]",
+   "message": "build(deps): bump browserslist from 4.21.7 to 4.29.2 (#10)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "yarn.lock",
+     "status": "modified",
+     "additions": 40,
+     "deletions": 29
+    }
+   ]
+  },
+  {
+   "sha": "11cc1fe78da57536926c9efc82a07731ba996a1e",
+   "date": "2026-09-28T23:46:11Z",
+   "author": "dependabot[bot]",
+   "message": "build(deps): bump brace-expansion from 1.1.11 to 1.1.21 (#9)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "yarn.lock",
+     "status": "modified",
+     "additions": 39,
+     "deletions": 57
+    }
+   ]
+  },
+  {
+   "sha": "3f1a2f4f90c8a6c017ce2d3a65a4a5757558d8f4",
+   "date": "2026-09-28T23:44:46Z",
+   "author": "Diogo-Barboza",
+   "message": "Merge pull request #4 from fga-eps-mds/chore/dependabot-automerge-sha-pinning",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/dependabot.yml",
+     "status": "added",
+     "additions": 19,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/dependabot-automerge.yml",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "added",
+     "additions": 31,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "yarn.lock",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 14
+    }
+   ]
+  },
+  {
+   "sha": "90cb247b4f53a8f575a97ed6bd5accd2bdbe51af",
+   "date": "2026-09-28T23:43:11Z",
+   "author": "Diogo-Barboza",
+   "message": "chore(fix): sync SHA com pagina de release",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "f229764a7c8a80e13220bcfaf84b119a77ccff90",
+   "date": "2026-09-28T01:40:14Z",
+   "author": "Diogo-Barboza",
+   "message": "merge Develop into chore/dependabot-automerge-sha-pinning",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "added",
+     "additions": 135,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 0
+    },
+    {
+     "filename": "Makefile",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 7
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 2
+    },
+    {
+     "filename": "__tests__/sonarqube.test.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "dist/index.js",
+     "status": "modified",
+     "additions": 1298,
+     "deletions": 1297
+    },
+    {
+     "filename": "dist/index.js.map",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "env-vars-example/.action.env",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 4
+    },
+    {
+     "filename": "src/service/request-service.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/sonarqube.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "42ea9103f8b51abe1f88995085a44e3d92a798aa",
+   "date": "2026-09-28T01:36:30Z",
+   "author": "Diogo-Barboza",
+   "message": "chore(ci): configurar dependabot, auto-merge e pinning de github actions",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/dependabot.yml",
+     "status": "added",
+     "additions": 19,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/dependabot-automerge.yml",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "yarn.lock",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 14
+    }
+   ]
+  },
+  {
+   "sha": "1b32054b14ba616dd8c1463c7c4c74fa71d3e143",
+   "date": "2026-09-28T00:55:44Z",
+   "author": "MilenaFRocha",
+   "message": "Fix path for copying analytics raw data",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "e70fb5f5412ea001a3cc7210dacfa8acf310f771",
+   "date": "2026-09-27T21:36:19Z",
+   "author": "gusrberto",
+   "message": "Merge pull request #2 from fga-eps-mds/feat/operacionalizar-divida-tecnica",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "__tests__/sonarqube.test.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "dist/index.js",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "dist/index.js.map",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/service/request-service.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/sonarqube.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "f649667f0e975a91003cd5c6a3dcc68f40fb2e7b",
+   "date": "2026-09-26T15:33:02Z",
+   "author": "pedrosena21",
+   "message": "feat: collect SonarQube technical debt ratio",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "__tests__/sonarqube.test.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "dist/index.js",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "dist/index.js.map",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/service/request-service.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/sonarqube.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "a5a8ba4387a0cd4bc278e78dcb9b5805b84b7ed4",
+   "date": "2026-09-27T01:10:37Z",
+   "author": "luciano-freitas-melo",
+   "message": "ci(release): configurar workflow de release semantica com bundle ncc e tag flutuante v1",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 30
+    },
+    {
+     "filename": ".github/workflows/release.yml",
+     "status": "added",
+     "additions": 135,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 2
+    },
+    {
+     "filename": "Makefile",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 7
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 2
+    },
+    {
+     "filename": "dist/index.js",
+     "status": "modified",
+     "additions": 1297,
+     "deletions": 1297
+    },
+    {
+     "filename": "dist/index.js.map",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "env-vars-example/.action.env",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "c114805332ba88df5a120c19ed93760b264e3e49",
+   "date": "2026-09-25T18:18:18Z",
+   "author": "MilenaFRocha",
+   "message": "fix: Update metrics workflow to change data directory",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "ced7f26639d021f215a3bdeb20f470e7f94dcaf1",
+   "date": "2026-09-14T18:31:03Z",
+   "author": "MilenaFRocha",
+   "message": "fix: ajusta nome do repo de documentação",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "51cd7472325ea553f4539a2499040b5b09737cd4",
+   "date": "2026-09-03T00:41:49Z",
+   "author": "MilenaFRocha",
+   "message": "ci: volta para usar variáveis como usuario e senha para exportar métricas",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "6c49eda77cba751c92dbf1038fe91541f44b4500",
+   "date": "2026-09-03T00:38:25Z",
+   "author": "MilenaFRocha",
+   "message": "ci: teste na action de exportar metricas com usuário bot",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "022edf59c490e02d373015937e25ec82c5168092",
+   "date": "2026-09-02T23:37:32Z",
+   "author": "MilenaFRocha",
+   "message": "docs: ajuste do espaço no guia de contribuição",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "CONTRIBUTING.md",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "0b39cff56dd1a309746b0bdf093f47833c259c8f",
+   "date": "2026-08-31T21:03:00Z",
+   "author": "luciano-freitas-melo",
+   "message": "Sincronizacao repositorio 2026.1 #25",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/build.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 32
+    },
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "added",
+     "additions": 30,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/linter.yml",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 6
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 5
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 17,
+     "deletions": 22
+    },
+    {
+     "filename": "CONTRIBUTING.md",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": "Dockerfile",
+     "status": "added",
+     "additions": 18,
+     "deletions": 0
+    },
+    {
+     "filename": "LICENSE",
+     "status": "added",
+     "additions": 661,
+     "deletions": 0
+    },
+    {
+     "filename": "Makefile",
+     "status": "added",
+     "additions": 36,
+     "deletions": 0
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 64,
+     "deletions": 26
+    },
+    {
+     "filename": "action.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "assets/images/MeasureSoftwareGram.png:Zone.Identifier",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3
+    },
+    {
+     "filename": "assets/images/resultado_msgram.png:Zone.Identifier",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": "code_of_conduct.md",
+     "status": "added",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "dist/index.js",
+     "status": "modified",
+     "additions": 8791,
+     "deletions": 8791
+    },
+    {
+     "filename": "dist/index.js.map",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "docker-compose.yml",
+     "status": "added",
+     "additions": 36,
+     "deletions": 0
+    },
+    {
+     "filename": "env-vars-example/.action.env",
+     "status": "added",
+     "additions": 8,
+     "deletions": 0
+    },
+    {
+     "filename": "env-vars-example/.postgres.env",
+     "status": "added",
+     "additions": 5,
+     "deletions": 0
+    },
+    {
+     "filename": "env-vars-example/.service.env",
+     "status": "added",
+     "additions": 8,
+     "deletions": 0
+    },
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 6
+    },
+    {
+     "filename": "parser.py",
+     "status": "modified",
+     "additions": 89,
+     "deletions": 8
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 17
+    },
+    {
+     "filename": "src/service/request-service.ts",
+     "status": "modified",
+     "additions": 150,
+     "deletions": 151
+    },
+    {
+     "filename": "yarn.lock",
+     "status": "modified",
+     "additions": 69,
+     "deletions": 51
+    }
+   ]
+  },
+  {
+   "sha": "22acfff6d66b5dd26f77577063b71155a3d3d7e3",
+   "date": "2026-08-31T20:53:22Z",
+   "author": "MilenaFRocha",
+   "message": "docs: code_of_conduct passa a referenciar a documentacao oficial",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "code_of_conduct.md",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 127
+    }
+   ]
+  },
+  {
+   "sha": "687d5c93a5337bb577b31b87f548d0a3a96d9151",
+   "date": "2026-08-31T18:01:59Z",
+   "author": "MilenaFRocha",
+   "message": "ci: aponta o export de metricas para o docs de 2026.2 e usa o GITHUB_TOKEN nativo",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "ed59a2af258eea3b3a100cd36f2bf4577ad4b1c9",
+   "date": "2026-08-31T02:13:06Z",
+   "author": "MilenaFRocha",
+   "message": "ci: concentra analise do SonarQube Cloud no workflow de testes",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/build.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 32
+    },
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 23
+    },
+    {
+     "filename": "CONTRIBUTING.md",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "action.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "dist/index.js",
+     "status": "added",
+     "additions": 18110,
+     "deletions": 0
+    },
+    {
+     "filename": "dist/index.js.map",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "dist/licenses.txt",
+     "status": "added",
+     "additions": 915,
+     "deletions": 0
+    },
+    {
+     "filename": "dist/sourcemap-register.js",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 17
+    }
+   ]
+  }
+ ],
+ "detalhes_novos": 27
+}

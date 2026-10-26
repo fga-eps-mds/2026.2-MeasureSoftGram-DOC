@@ -1,0 +1,373 @@
+{
+ "fonte": "API do GitHub (issues)",
+ "coletado_em": "2026-10-26T01:58:14+00:00",
+ "organizacao": "fga-eps-mds",
+ "repositorio": "2026.2-MeasureSoftGram-CLI",
+ "desde": "2026-08-24",
+ "issues": [
+  {
+   "number": 19,
+   "title": "fix(calculate): filtra medidas pela configuração do msgram.json em todos os formatos de saída",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-24T23:50:38Z",
+   "closed_at": "2026-10-25T17:57:27Z",
+   "updated_at": "2026-10-25T17:57:29Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "DiegoCarlito"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1682,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/19",
+   "author": "DiegoCarlito"
+  },
+  {
+   "number": 18,
+   "title": "fix: empacota dataset de exemplo para execucao do msgram demo",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-24T17:35:47Z",
+   "closed_at": "2026-10-25T14:32:09Z",
+   "updated_at": "2026-10-25T14:32:11Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "DiegoCarlito"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2353,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/18",
+   "author": "DiegoCarlito"
+  },
+  {
+   "number": 17,
+   "title": "[TASK23.01.04] Comando para listar os arquivos de uma medida (CLI)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-10-19T22:43:32Z",
+   "closed_at": "2026-10-21T01:57:39Z",
+   "updated_at": "2026-10-21T01:57:39Z",
+   "labels": [
+    "task",
+    "cli"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1264,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/issues/17",
+   "author": "gusrberto"
+  },
+  {
+   "number": 16,
+   "title": "fix(cli): remove codigo morto e resquicios de versoes anteriores",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-19T00:56:24Z",
+   "closed_at": "2026-10-19T02:22:35Z",
+   "updated_at": "2026-10-19T02:22:38Z",
+   "labels": [
+    "task",
+    "cli"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1907,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/16",
+   "author": "gusrberto"
+  },
+  {
+   "number": 15,
+   "title": "refactor(calculate): reduz a complexidade cognitiva do show_tree (Sonar S3776)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-17T19:49:59Z",
+   "closed_at": "2026-10-17T19:56:55Z",
+   "updated_at": "2026-10-17T19:56:58Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1177,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/15",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 14,
+   "title": "fix(calculate): respeita as edições do msgram.json e prepara 3.4.1rc2",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-17T19:02:27Z",
+   "closed_at": "2026-10-17T19:48:39Z",
+   "updated_at": "2026-10-17T19:48:41Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1992,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/14",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 13,
+   "title": "chore: remove codigo comentado e funcoes sem uso",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-14T20:02:38Z",
+   "closed_at": "2026-10-17T19:18:12Z",
+   "updated_at": "2026-10-17T19:18:14Z",
+   "labels": [
+    "task",
+    "cli"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1339,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/13",
+   "author": "gusrberto"
+  },
+  {
+   "number": 12,
+   "title": "ci(sonar): pula o scan quando o SONAR_TOKEN não está disponível",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T22:34:59Z",
+   "closed_at": "2026-10-07T22:37:10Z",
+   "updated_at": "2026-10-07T22:37:13Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 746,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/12",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 11,
+   "title": "chore(release): prepara 3.4.1rc1 com msgram-core 1.5.5rc2",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T21:26:20Z",
+   "closed_at": "2026-10-07T22:21:13Z",
+   "updated_at": "2026-10-07T22:21:16Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1514,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/11",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 10,
+   "title": "ci: restringe a publicação no PyPI ao repositório central",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-07T21:22:26Z",
+   "closed_at": "2026-10-07T21:49:20Z",
+   "updated_at": "2026-10-07T21:49:22Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 986,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/10",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 9,
+   "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-30T17:59:27Z",
+   "closed_at": "2026-10-17T22:33:14Z",
+   "updated_at": "2026-10-17T22:33:16Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3482,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/9",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 8,
+   "title": "fix: listar todos os formatos no help do calculate",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-28T22:40:50Z",
+   "closed_at": "2026-10-06T23:51:02Z",
+   "updated_at": "2026-10-06T23:51:04Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 927,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/8",
+   "author": "henriquecq"
+  },
+  {
+   "number": 7,
+   "title": "chore(ci): configurar dependabot, auto-merge e pinning de github actions",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T19:24:16Z",
+   "closed_at": "2026-10-06T23:53:45Z",
+   "updated_at": "2026-10-06T23:53:46Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "Diogo-Barboza"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1334,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/7",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 6,
+   "title": "feat: exibe e calcula a medida de divida tecnica",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T15:27:56Z",
+   "closed_at": "2026-09-27T16:37:48Z",
+   "updated_at": "2026-09-27T19:59:36Z",
+   "labels": [
+    "enhancement",
+    "cli"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4860,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/6",
+   "author": "gusrberto"
+  },
+  {
+   "number": 5,
+   "title": "feat(ci): esteira de release automatizada com Release Please e Gate PyPI",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T04:59:54Z",
+   "closed_at": null,
+   "updated_at": "2026-10-17T20:06:34Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2259,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/5",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 4,
+   "title": "fix: fixa msgram-core em 1.5.4 e isola testes de tema",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-27T03:56:55Z",
+   "closed_at": "2026-09-28T00:15:13Z",
+   "updated_at": "2026-09-28T00:16:30Z",
+   "labels": [
+    "bug"
+   ],
+   "type": null,
+   "assignees": [
+    "nateejpg"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2308,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/4",
+   "author": "nateejpg"
+  },
+  {
+   "number": 3,
+   "title": "[TASK01.06] Exibir e calcular a medida de dívida técnica (CLI)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-09-26T22:21:51Z",
+   "closed_at": "2026-09-27T16:37:49Z",
+   "updated_at": "2026-10-15T00:51:56Z",
+   "labels": [
+    "task",
+    "cli"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1882,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/issues/3",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 2,
+   "title": "fix: Update repository branch in metrics workflow",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-24T01:31:26Z",
+   "closed_at": "2026-09-24T01:52:15Z",
+   "updated_at": "2026-09-24T01:52:22Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 95,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/2",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 1,
+   "title": "ci: configura SonarCloud de 2026.2 e corrige suíte de testes para o msgram-core 1.5.4",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-09-12T06:34:57Z",
+   "closed_at": "2026-09-13T01:02:04Z",
+   "updated_at": "2026-09-13T01:02:09Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4336,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/1",
+   "author": "zzzBECK"
+  }
+ ]
+}
