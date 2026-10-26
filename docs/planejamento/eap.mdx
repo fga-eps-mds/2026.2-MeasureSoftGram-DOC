@@ -1,7 +1,8 @@
 ---
 id: eap
-title: EAP
+title: Estrutura Analítica do Projeto (EAP)
 sidebar_position: 2
+sidebar_label: Estrutura Analítica do Projeto (EAP)
 ---
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
@@ -62,7 +63,7 @@ planejamento**, com critério e prazo de decomposição declarados — ver a
   </a>
 </p>
 
-:::info Fonte editável
+:::info[Fonte editável]
 O diagrama é um **SVG**, e o Figma e o FigJam o importam nativamente: ao arrastar o
 arquivo `static/img/eap-2026-2.svg` para dentro de um quadro, cada caixa vira um
 objeto editável — texto, cor e posição.
@@ -149,11 +150,12 @@ escopo decomposto, estimativas, custo, riscos, arquitetura e design.
 **Objetivo da fase:** entregar o incremento de produto de cada onda, implantado
 em ambiente de homologação e validado com o cliente.
 
-:::caution Decomposição parcial
+:::caution[Decomposição parcial]
 As **fatias verticais de funcionalidade** de cada onda dependem do sequenciador
-da Lean Inception (1.2.1.1), que ainda não fechou. Os pacotes abaixo marcados como
-*pacote de planejamento* serão decompostos assim que ele for validado — ver a
-[seção 6](#6-pacotes-de-planejamento).
+da Lean Inception (1.2.1.1), que fechou em 26–27/09 ([Sequenciador](/docs/lean-inception/sequenciador)).
+As fatias das ondas 1 e 2 já são épicos e histórias no Zenhub (ver
+[Roadmap](/docs/planejamento/roadmap#ondas-de-escopo)); os pacotes da onda 3 ainda
+precisam ser decompostos — ver a [seção 6](#6-pacotes-de-planejamento).
 
 Os demais pacotes desta fase **não dependem** da Lean Inception: são escopo já
 conhecido, derivado do diagnóstico do ecossistema e dos critérios de avaliação
@@ -233,12 +235,11 @@ mostra ao PO ao final da onda, atravessando quantos repositórios forem
 necessários — e não "mexer no Core". É essa forma que permite formar os
 [squads por release](/docs/planejamento/squads).
 
-:::warning Risco associado
-O sequenciador estava previsto para a semana 3 do
-[cronograma](/docs/disciplina/cronograma) (24/08) e ainda não fechou. A R1 é em
-28/09 e exige Visão do Produto validada, backlog priorizado e protótipos de alta
-fidelidade — todos a jusante dele. Este é um risco **já materializado** e está
-registrado em [Riscos](/docs/planejamento/riscos).
+:::warning[Risco associado]
+O sequenciador estava previsto para a semana 3 do cronograma (24/08) e só fechou
+em 26–27/09, véspera da R1. O risco se materializou (R10 em
+[Riscos](/docs/planejamento/riscos)): a R1 ficou sem linha de base de escopo e
+parte da onda 1 foi para a R2.
 :::
 
 ## 7. Rastreabilidade
@@ -280,8 +281,9 @@ Toda alteração estrutural entra no histórico de versão abaixo.
 - [EAP 2026.1](https://github.com/fga-eps-mds/2026.1-MeasureSoftGram-DOC/blob/main/docs/produto/eap.md) —
   versão do semestre anterior, mantida como registro da evolução do documento.
 
-## 10. Histórico de versão
+## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
 | 1.0 | 10/09/2026 | Criação da EAP 2026.2 em quatro fases, com codificação numérica e pacotes de planejamento para as ondas do MVP | [@MilenaFRocha](https://github.com/MilenaFRocha) | |
+| 1.1 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

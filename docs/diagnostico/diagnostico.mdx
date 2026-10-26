@@ -3,6 +3,7 @@ id: diagnostico
 slug: /diagnostico
 title: Diagnóstico do ecossistema
 sidebar_position: 1
+sidebar_label: Diagnóstico do ecossistema
 ---
 
 # Diagnóstico do ecossistema
@@ -82,7 +83,7 @@ fonte da verdade.**
 ## Ritmo de desenvolvimento
 
 Três repositórios estão vivos, três congelados e um é novo. Há um **hiato de
-dezessete meses** - de setembro de 2024 a marco de 2026 - comum a todos.
+dezessete meses** - de setembro de 2024 a março de 2026 - comum a todos.
 
 | Repositório | Último commit | Commits | Situação |
 | --- | --- | --- | --- |
@@ -195,7 +196,7 @@ SHA, Postgres 18 nos testes, Docker multi-estágio, deploy resiliente,
 `setup-node@v3`, `setup-python@v4`), action do SonarCloud arquivada e fixada em
 `@master`, e chaves do Sonar divergindo em três padrões diferentes.
 
-:::warning[Nenhum portão de qualidade e bloqueante]
+:::warning[Nenhum portão de qualidade é bloqueante]
 Os quatro arquivos `codecov.yml` marcam `informational: true`, e o `.coveragerc`
 do Service não define `fail_under`. Na prática, **a cobertura de testes nunca
 reprova um pull request** - num projeto cuja finalidade é justamente medir
@@ -270,3 +271,12 @@ leitura de código e configuração.
 ---
 
 *Diagnóstico técnico - MeasureSoftGram - Ciclo 2026.1 - UnB/FGA, 25 de agosto de 2026.*
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 31/08/2026 | docs: adiciona diagnostico do ecossistema e backlog tecnico da sprint 1 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.1 | 02/09/2026 | docs: adiciona acentuacao no texto visivel da documentacao | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.2 | 14/09/2026 | task: adiciona templates das issues | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.3 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

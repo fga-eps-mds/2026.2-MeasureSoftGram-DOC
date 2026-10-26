@@ -12,10 +12,16 @@ import pandas as pd
 import streamlit as st
 
 from src import theme
-from src.components import charts, layout, rastreio
+from src.components import charts, filters, layout, rastreio
 from src.components.kpi import kpi
 from src.data import planilha as pl
 from src.metrics.calculations import brl, data_br, num, vazio
+
+
+ESCOPO = {
+    "release": "define o período padrão",
+    "periodo": "semanas planejadas que começam no período e horas das sprints dessas semanas",
+}
 
 
 def _menus(c):
@@ -50,21 +56,41 @@ def pagina():
         layout.indisponivel("Aba Custos não lida", ctx.origem_planilha.get("custos", "não lida").replace("**", ""),
                             "publicar a aba Custos e colar o link em `config.PLANILHAS`.")
         return
-    plano = ctx.plano.dropna(subset=["custo"]) if not ctx.plano.empty else ctx.plano
+    plano_todo = ctx.plano.dropna(subset=["custo"]) if not ctx.plano.empty else ctx.plano
     horas = ctx.horas.dropna(subset=["horas"]) if not ctx.horas.empty and "horas" in ctx.horas else pd.DataFrame()
     horas = horas[horas["horas"] > 0] if not horas.empty else horas
+    # ── recorte: período global + sprint e integrante (filtros da página) ──
+    plano = filters.por_periodo(plano_todo, "semana", f["periodo"]) if not plano_todo.empty else plano_todo
+    caixa = filters.da_pagina(f, ESCOPO)
+    sprints = sorted(int(x) for x in plano["sprint"].dropna().unique()) if not plano.empty and "sprint" in plano \
+        else []
+    sel_s = caixa.multiselect("Sprint", sprints, key="custo_sprint", placeholder="Todas do período",
+                              format_func=lambda x: f"S{x}")
+    if sel_s:
+        plano = plano[plano["sprint"].isin(sel_s)]
+    if not horas.empty:
+        alvo = sel_s or sprints
+        horas = horas[horas["sprint"].isin(alvo)]
+        pessoas = sorted(horas["integrante"].dropna().unique())
+        sel_p = caixa.multiselect("Integrante (horas)", pessoas, key="custo_pessoa", placeholder="Todos",
+                                  help="recorta só as horas e o custo real; o orçamento é do time")
+        if sel_p:
+            horas = horas[horas["integrante"].isin(sel_p)]
+    st.caption(f"Recorte: {filters.resumo_ativos(f, ESCOPO)}" + (f" · sprints {', '.join(f'S{x}' for x in sel_s)}"
+                                                                  if sel_s else "")
+               + f" · orçamento do semestre inteiro: {brl(plano_todo['custo'].sum(), 0) if not plano_todo.empty else '—'}")
     custo_hora = c.get("custo_hora")
     gasto = float(horas["horas"].sum() * custo_hora) if not horas.empty and custo_hora else None
 
     layout.secao("Resumo", "Quanto foi orçado e quanto foi gasto?", ["PLANILHA", "CALCULADO"])
     k = st.columns(4)
     with k[0]:
-        kpi("Orçamento do semestre", brl(plano["custo"].sum(), 0) if not plano.empty else None, "PLANILHA",
+        kpi("Orçamento no período", brl(plano["custo"].sum(), 0) if not plano.empty else None, "PLANILHA",
             nota=f"{len(plano)} semanas planejadas", origem=[rastreio.aba("planejamento")])
     with k[1]:
         ate = plano[plano["semana"] <= ctx.hoje]["custo"].sum() if not plano.empty else None
-        kpi("Gasto até agora", brl(gasto, 0) if gasto is not None else None, "CALCULADO",
-            nota=(f"planejado até hoje: {brl(ate, 0)}" if gasto is not None else
+        kpi("Gasto no período", brl(gasto, 0) if gasto is not None else None, "CALCULADO",
+            nota=(f"planejado no período até hoje: {brl(ate, 0)}" if gasto is not None else
                   "Indisponível: nenhuma hora registrada na aba Horas."), origem=[rastreio.aba("horas")])
     with k[2]:
         kpi("Custo por hora", brl(custo_hora), "PLANILHA", nota=f"{num(c.get('horas_semana_total'))} h por semana",
@@ -143,10 +169,10 @@ def pagina():
             cat["texto"] = cat["valor"].map(lambda v: brl(v, 0))
             b = (alt.Chart(cat).mark_bar(cornerRadiusEnd=3, color=theme.SERIES[0])
                  .encode(y=alt.Y("categoria:N", sort="-x", title=None, axis=alt.Axis(labelLimit=240)),
-                         x=alt.X("valor:Q", title="R$ no semestre"),
+                         x=alt.X("valor:Q", title="R$ no período"),
                          tooltip=[alt.Tooltip("categoria:N"), alt.Tooltip("valor:Q", title="R$", format=",.2f")]))
             rot = b.mark_text(align="left", dx=4, fontSize=11, color=theme.INK["secondary"]).encode(text="texto:N")
-            charts.mostrar(b + rot, "Orçamento por categoria", "R$ no semestre", altura=charts.altura_categorias(len(cat)))
+            charts.mostrar(b + rot, "Orçamento por categoria", "R$ no período", altura=charts.altura_categorias(len(cat)))
 
     for chave in ("custos", "horas", "planejamento"):
         rastreio.aba_original(chave)

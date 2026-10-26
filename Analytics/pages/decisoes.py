@@ -12,12 +12,19 @@ import pandas as pd
 import streamlit as st
 
 import config
-from src.components import layout, rastreio
+from src.components import filters, layout, rastreio
 from src.components.kpi import kpi
 from src.metrics.calculations import num
 
-REPO = "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-docs-eps/blob/main/"
+REPO = "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/"
 CAMINHO = re.compile(r"((?:docs|Analytics)/[\w./-]+\.\w+)")
+
+
+ESCOPO = {
+    "release": "meta de decisões da release",
+    "periodo": "a tabela mostra as decisões com data no período; o total contra a meta conta todas até o fim do "
+               "período (a meta é acumulada)",
+}
 
 
 def _evidencia(texto) -> str:
@@ -45,21 +52,41 @@ def pagina():
         rastreio.aba_original("decisoes")
         return
     meta = metas.get(f["release_metas"])
-    medidas = int((dec.get("resultado", pd.Series(dtype=str)).astype(str).str.strip().replace("nan", "") != "").sum())
+    # ── recorte: período global + filtros da página ──
+    dec = dec.copy()
+    dec["_data"] = pd.to_datetime(dec.get("data", pd.Series([None] * len(dec), index=dec.index)), dayfirst=True,
+                                  errors="coerce")
+    ini, fim = pd.Timestamp(f["periodo"][0]), pd.Timestamp(f["periodo"][1]) + pd.Timedelta(days=1)
+    ate_fim = dec[dec["_data"].isna() | (dec["_data"] < fim)]
+    caixa = filters.da_pagina(f, ESCOPO)
+    no_periodo = ate_fim[ate_fim["_data"].isna() | (ate_fim["_data"] >= ini)]
+    escolhas = []
+    for campo, rot in (("tipo", "Tipo"), ("status", "Status"), ("indicador", "Indicador")):
+        if campo in no_periodo:
+            opcoes = sorted(v for v in no_periodo[campo].dropna().astype(str).str.strip().unique() if v and v != "nan")
+            sel = caixa.multiselect(rot, opcoes, key=f"dec_{campo}", placeholder="Todos")
+            if sel:
+                no_periodo = no_periodo[no_periodo[campo].astype(str).str.strip().isin(sel)]
+                escolhas.append(f"{rot.lower()}: {', '.join(sel)}")
+    st.caption(f"Recorte: {filters.resumo_ativos(f, ESCOPO)}" + (" · " + " · ".join(escolhas) if escolhas else "")
+               + f" · {len(no_periodo)} decisão(ões) na tabela · {len(ate_fim)} registradas até "
+                 f"{fim - pd.Timedelta(days=1):%d/%m/%Y}")
+    medidas = int((ate_fim.get("resultado", pd.Series(dtype=str)).astype(str).str.strip().replace("nan", "")
+                   != "").sum())
     layout.secao("Resumo", "Quantas decisões foram registradas e medidas?", ["PLANILHA"])
     k = st.columns(3)
     with k[0]:
-        kpi("Decisões registradas", num(len(dec)), "PLANILHA",
-            status=None if not meta else ("good" if len(dec) >= meta else "warning"),
+        kpi(f"Decisões registradas até {fim - pd.Timedelta(days=1):%d/%m}", num(len(ate_fim)), "PLANILHA",
+            status=None if not meta else ("good" if len(ate_fim) >= meta else "warning"),
             nota=f"meta da {f['release_metas']}: ≥ {meta}" if meta else
             "metas: " + ", ".join(f"≥ {v} na {k}" for k, v in metas.items()), origem=[rastreio.aba("decisoes")])
     with k[1]:
-        kpi("Com resultado medido", num(medidas), "PLANILHA", nota=f"de {len(dec)}")
+        kpi("Com resultado medido", num(medidas), "PLANILHA", nota=f"de {len(ate_fim)}")
     with k[2]:
-        kpi("Vigentes", num(int((dec.get("status", pd.Series(dtype=str)) == "Vigente").sum())), "PLANILHA")
+        kpi("Vigentes", num(int((ate_fim.get("status", pd.Series(dtype=str)) == "Vigente").sum())), "PLANILHA")
 
     layout.secao("Dado bruto", "O que foi decidido, com base em quê, e como saber se deu certo?", ["PLANILHA"])
-    t = dec.copy()
+    t = no_periodo.copy()
     t["evidencia_html"] = t.get("evidencia", pd.Series([""] * len(t))).map(_evidencia)
     cols = {"data": "Data", "sprint": "Sprint", "tipo": "Tipo", "indicador": "Indicador",
             "contexto_e_dado": "Contexto e dado", "decisao": "Decisão", "evidencia_html": "Evidência",

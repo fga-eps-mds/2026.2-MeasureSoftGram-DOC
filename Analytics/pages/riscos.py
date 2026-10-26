@@ -14,7 +14,7 @@ import streamlit as st
 import config
 
 from src import theme
-from src.components import charts, layout, rastreio
+from src.components import charts, filters, layout, rastreio
 from src.components.kpi import kpi
 from src.metrics import resumo
 from src.metrics.calculations import num, vazio
@@ -23,6 +23,14 @@ NIVEIS = ["Elevado", "Médio", "Baixo"]
 COR_NIVEL = alt.Scale(domain=NIVEIS, range=[theme.RISCO["Elevado"], theme.RISCO["Médio"], theme.RISCO["Baixo"]])
 ELEVADO, MEDIO = config.RISCO_ELEVADO, config.RISCO_MEDIO
 ENCERRADO = ("encerr", "mitigad", "fechad")
+
+
+ESCOPO = {
+    "release": "define o período padrão",
+    "periodo": "riscos identificados até o fim do período e revisões (aba Monitoramento) feitas no período; "
+               "P, I e status são os da avaliação mais recente da aba Riscos",
+}
+FILTROS = [("status", "Status"), ("nivel", "Nível"), ("categoria", "Categoria"), ("responsavel", "Responsável")]
 
 
 def _nivel(exposicao) -> str | None:
@@ -56,6 +64,30 @@ def pagina():
     r = r.copy()
     r["nivel"] = r["exposicao_atual"].map(_nivel)
     r["status"] = r["status"].astype(str).str.strip()
+    # ── recorte: período global + filtros da página (valem para a página inteira) ──
+    fim = pd.Timestamp(f["periodo"][1]) + pd.Timedelta(days=1)
+    if "identificado_em" in r:
+        r = r[pd.to_datetime(r["identificado_em"], errors="coerce").fillna(pd.Timestamp.min) < fim]
+    mon = ctx.monitoramento
+    if mon is not None and not mon.empty and "data_da_revisao" in mon:
+        d = pd.to_datetime(mon["data_da_revisao"], errors="coerce")
+        mon = mon[d.isna() | ((d >= pd.Timestamp(f["periodo"][0])) & (d < fim))]
+    caixa = filters.da_pagina(f, ESCOPO)
+    escolhas = []
+    for campo, rot in FILTROS:
+        if campo in r:
+            opcoes = sorted(v for v in r[campo].dropna().astype(str).str.strip().unique() if v and v != "nan")
+            sel = caixa.multiselect(rot, opcoes, key=f"risco_{campo}", placeholder="Todos")
+            if sel:
+                r = r[r[campo].astype(str).str.strip().isin(sel)]
+                escolhas.append(f"{rot.lower()}: {', '.join(sel)}")
+    if mon is not None and not mon.empty and "id_do_risco" in mon and escolhas:
+        mon = mon[mon["id_do_risco"].astype(str).str.strip().isin(set(r["id"].astype(str).str.strip()))]
+    st.caption(f"Recorte: riscos identificados até {fim - pd.Timedelta(days=1):%d/%m/%Y}"
+               + (" · " + " · ".join(escolhas) if escolhas else "") + f" · {len(r)} de {len(ctx.riscos)} riscos")
+    if r.empty:
+        layout.indisponivel("Nenhum risco no recorte", "os filtros escolhidos não deixaram nenhum risco.")
+        return
     baixo = r["status"].str.lower()
     ativos = r[~baixo.str.startswith(ENCERRADO)]
     cont = resumo.contagem_riscos(r)
@@ -84,14 +116,7 @@ def pagina():
                                  "não o conta até ser cadastrado lá.", link=(rid, rastreio.aba("monitoramento")[1]))
 
     layout.secao("Dado bruto", "Qual é o plano de resposta de cada risco?", ["PLANILHA"])
-    c = st.columns(3)
     t = r
-    for col, (campo, rot) in zip(c, [("status", "Status"), ("nivel", "Nível"), ("categoria", "Categoria")]):
-        if campo in t:
-            sel = col.multiselect(rot, sorted(v for v in t[campo].dropna().unique() if str(v).strip()),
-                                  key=f"risco_{campo}", placeholder="Todos")
-            if sel:
-                t = t[t[campo].isin(sel)]
     colunas = {"id": "ID", "risco": "Risco", "categoria": "Categoria", "probabilidade_atual": "P",
                "impacto_atual": "I", "exposicao_atual": "P × I", "nivel": "Nível", "status": "Status",
                "resposta": "Resposta", "acao_preventiva": "Ação preventiva", "contingencia": "Contingência",
@@ -102,7 +127,7 @@ def pagina():
                      "Risco": st.column_config.TextColumn(width="large"),
                      "Ação preventiva": st.column_config.TextColumn(width="large"),
                      "P × I": st.column_config.NumberColumn(format="%d")})
-    st.caption(f"{len(tt)} de {len(r)} riscos · ordenados pela exposição.")
+    st.caption(f"{len(tt)} riscos no recorte · ordenados pela exposição.")
 
     layout.secao("Análise", "Onde estão os riscos mais graves e a exposição está caindo?", ["PLANILHA"])
     e, d = st.columns([1.1, 1])
@@ -126,7 +151,7 @@ def pagina():
         charts.mostrar(fundo + txt, "Matriz probabilidade × impacto", "riscos não encerrados · avaliação mais recente",
                        altura=300)
     with d:
-        m = ctx.monitoramento
+        m = mon
         if m is None or m.empty or m["sprint"].dropna().empty:
             layout.indisponivel("Evolução indisponível", "a aba Monitoramento não tem avaliações.")
         else:

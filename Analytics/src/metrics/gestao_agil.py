@@ -156,13 +156,25 @@ def stories_por_sprint(snap: dict | None, sprints: pd.DataFrame, universo: pd.Da
 
 # ───────────────────────── agregados ─────────────────────────
 
+def _por_grupo(df: pd.DataFrame, chaves: list[str], func) -> pd.DataFrame:
+    """``groupby(chaves).apply(func)`` sem depender da versão do pandas.
+
+    ``include_groups`` só existe a partir do pandas 2.2; no 2.1 ou anterior ele quebra. ``func`` recebe o
+    grupo e a tupla da chave e devolve um dict; as chaves viram colunas.
+    """
+    linhas = []
+    for chave, x in df.groupby(chaves, dropna=False, sort=True):
+        chave = chave if isinstance(chave, tuple) else (chave,)
+        linhas.append({**dict(zip(chaves, chave)), **func(x, chave)})
+    return pd.DataFrame(linhas)
+
+
 def resumo_por_sprint(linhas: pd.DataFrame) -> pd.DataFrame:
     """Planejado × realizado por sprint, somando as linhas (é o que a velocity mostra)."""
     if linhas is None or linhas.empty:
         return pd.DataFrame()
-    g = linhas.groupby(["ordem_sprint", "sprint", "sprint_nome", "release", "sprint_status", "sprint_inicio",
-                        "sprint_fim"], dropna=False)
-    out = g.apply(lambda x: pd.Series({
+    chaves = ["ordem_sprint", "sprint", "sprint_nome", "release", "sprint_status", "sprint_inicio", "sprint_fim"]
+    out = _por_grupo(linhas, chaves, lambda x, _: {
         "stories_planejadas": int(x["planejada"].sum()),
         "sp_planejado": x["sp_planejado"].sum(min_count=1),
         "stories_concluidas": int(x["concluida"].sum()),
@@ -176,7 +188,7 @@ def resumo_por_sprint(linhas: pd.DataFrame) -> pd.DataFrame:
         "stories_levadas": int(x["levada_para"].notna().sum()),
         "sem_estimativa_na_planning": int(x["sem_estimativa_na_planning"].sum()),
         "sem_estimativa": int(x["sem_estimativa"].sum()),
-    }), include_groups=False).reset_index()
+    })
     out["diferenca"] = out["sp_realizado"] - out["sp_planejado"]
     out["taxa"] = out.apply(lambda r: r["sp_realizado"] / r["sp_planejado"] * 100
                             if r["sp_planejado"] and not pd.isna(r["sp_planejado"]) else None, axis=1)
@@ -199,13 +211,10 @@ def hierarquia(linhas: pd.DataFrame) -> pd.DataFrame:
     """Release → Sprint → Épico com planejado, realizado e as stories de cada nó."""
     if linhas is None or linhas.empty:
         return pd.DataFrame()
-    g = linhas.groupby(["ordem_sprint", "release", "sprint", "epico"], dropna=False).apply(
-        lambda x: pd.Series({"epico_link": [(x.name[3], x["epico_url"].iloc[0]
-                                             if isinstance(x["epico_url"].iloc[0], str) else None)],
-                             "stories": len(x), "sp_planejado": x["sp_planejado"].sum(min_count=1),
-                             "sp_realizado": x["sp_realizado"].fillna(0).sum(),
-                             "issues": _lista(x)}),
-        include_groups=False).reset_index()
+    g = _por_grupo(linhas, ["ordem_sprint", "release", "sprint", "epico"], lambda x, k: {
+        "epico_link": [(k[3], x["epico_url"].iloc[0] if isinstance(x["epico_url"].iloc[0], str) else None)],
+        "stories": len(x), "sp_planejado": x["sp_planejado"].sum(min_count=1),
+        "sp_realizado": x["sp_realizado"].fillna(0).sum(), "issues": _lista(x)})
     return g.sort_values(["ordem_sprint", "sp_realizado"], ascending=[True, False]).drop(columns="ordem_sprint")
 
 

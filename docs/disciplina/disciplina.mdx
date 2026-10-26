@@ -2,176 +2,95 @@
 id: disciplina
 slug: /disciplina
 title: A disciplina
-sidebar_position: 1
+sidebar_label: A disciplina
+description: Prazos, pesos e regras da disciplina que afetam o trabalho da equipe, com link para os documentos oficiais.
 ---
 
-# Engenharia de Produto de Software — 2026.2
+# A disciplina
 
-Esta seção reúne as regras da disciplina que governam o trabalho da equipe: o que
-é avaliado, quando, com que peso e sob quais restrições. Ela é a tradução do
-[plano de ensino](https://github.com/fga-eps-mds/A-Disciplina-MDS-EPS/blob/master/PlanosDeEnsino/EPS_Plano_de_Ensino.md)
-e do [cronograma](https://github.com/fga-eps-mds/A-Disciplina-MDS-EPS/blob/master/PlanosDeEnsino/EPS-cronograma-hrn.md)
-oficiais para dentro da documentação do projeto.
+Resumo do que a disciplina exige da equipe: prazos, pesos e as regras que mudam
+o nosso dia a dia. Os detalhes estão nos documentos oficiais, que **prevalecem
+sobre esta página**:
 
-:::info Fonte da verdade
-Os documentos oficiais no repositório da disciplina prevalecem sobre esta página.
-Se algo divergir, corrija aqui e registre no histórico de versão ao final.
+- [Plano de ensino EPS 2026.2](https://github.com/fga-eps-mds/A-Disciplina-MDS-EPS/blob/master/PlanosDeEnsino/EPS_Plano_de_Ensino.md)
+- [Cronograma 2026.2](https://github.com/fga-eps-mds/A-Disciplina-MDS-EPS/blob/master/PlanosDeEnsino/EPS-cronograma-hrn.md)
+- [`MD_Template.md`](https://github.com/fga-eps-mds/A-Disciplina-MDS-EPS/blob/master/PlanosDeEnsino/MD_Template.md) (Memorando de Decisão e rastreabilidade de IA)
+- [Aprender 3](https://aprender3.unb.br/course/view.php?id=29294) (entregas e bilhetes de entrada)
+
+Professor: Hilmer Rodrigues Neri · aulas às segundas, 10h00–13h30, sala MOCAP ·
+10/08 a 14/12/2026.
+
+## Prazos
+
+:::danger[Hora de corte]
+Toda entrega encerra às **06h00 (Brasília)** do dia marcado. Não há prorrogação implícita.
 :::
 
-## Identificação
+| Data | Entrega | Onde | Acompanhamento |
+| --- | --- | --- | --- |
+| 28/09 | Release **R1** + Dashboard **DA-R1** | Repositórios, homologação, Aprender 3 | [Release 1](/docs/releases/release-1) |
+| 29/09 | **MD-R1** individual | Aprender 3 | — |
+| 26/10 | Release **R2** + Dashboard **DA-R2** | Repositórios, homologação, Aprender 3 | [Release 2](/docs/releases/release-2) |
+| 27/10 | **MD-R2** individual | Aprender 3 | — |
+| 30/11 | Release **R3** + Dashboard **DA-R3** | Produção/homologação, Aprender 3 | [Release 3](/docs/releases/release-3) |
+| 07/12 | Release Final: testes de aceitação e defesas orais | Presencial | [Release 3](/docs/releases/release-3) |
+| 08/12 | **MD-R3** individual | Aprender 3 | — |
 
-| Item | Valor |
-| --- | --- |
-| Instituição | Universidade de Brasília — FCTE |
-| Curso | Engenharia de Software |
-| Semestre | 2026.2 |
-| Carga horária | 60h (2 créditos teórico/prático + 2 créditos de extensão) |
-| Horário | Segundas-feiras, 10h00–13h30 |
-| Sala | MOCAP |
-| Professor | Hilmer Rodrigues Neri |
-| Primeira aula | 10/08/2026 |
-| Última aula | 14/12/2026 |
+Sem aula: 21/09 (Semana Universitária), 12/10 e 02/11 (feriados). As sprints não param.
 
-## Ementa
+Apresentações: R1 e R2 com 20 min, R3 com 30 min, todos os membros presentes e
+gravação no Teams. **A release precisa estar em homologação no dia da apresentação.**
 
-Teorias que suportam o desenvolvimento de produtos de software. Diferenças e
-semelhanças entre a produção na manufatura e no software. Gestão de escopo,
-tempo, custos, qualidade, recursos, comunicações e riscos em paradigmas
-tradicionais e ágeis. Gestão estratégica de projetos: portfólios e programas.
-Engenharia de Software Contínua. Software Analytics e tomada de decisão orientada
-a dados. Qualidade de produto de software: modelos de referência e avaliação.
-Integração de ferramentas de IA generativa no ciclo de vida do desenvolvimento.
+:::caution[A conferir: releases minor]
+O plano de ensino de 2026.2 lista releases minor com datas de um semestre
+anterior (13/04 a 06/07). Confirmar com o professor se valem para 2026.2 e, se
+valerem, registrar as datas no [Roadmap](/docs/planejamento/roadmap#releases-minor).
+:::
 
-A disciplina tem **caráter extensionista**: os projetos são desenvolvidos para
-organizações públicas e representações da sociedade civil, com usuários e
-problemas reais.
+## Composição da nota
 
-## Objetivos
-
-**Geral.** Formar o aluno nos níveis intermediário e avançado do gerenciamento de
-produto de software em ambiente real, capacitando-o a tomar decisões gerenciais
-fundamentadas em teoria, dados e julgamento crítico — inclusive sobre o uso
-responsável de IA generativa.
-
-**Específicos.** Ao final da disciplina, o aluno deve ser capaz de:
-
-- Planejar, monitorar e controlar produto, processo e projeto em ciclos contínuos.
-- Aplicar as áreas de conhecimento de gerenciamento de projetos (escopo, tempo,
-  custo, qualidade, risco, comunicação, pessoas) em contextos ágeis e tradicionais.
-- Avaliar qualidade interna e externa com base em modelos de referência
-  (ISO 25010, Q-Rapids, Quamoco) e dados coletados automaticamente.
-- Construir e interpretar dashboards gerenciais e analíticos.
-- Integrar IA generativa de forma crítica e rastreável.
-- Liderar e participar de times com usuários reais.
-- Documentar e comunicar decisões gerenciais com fundamentação teórica explícita.
-
-## Formato das aulas
-
-A disciplina é presencial. A exceção são as reuniões com o PO, que podem ser
-remotas.
-
-| Bloco | Duração | O que acontece |
+| Componente | Peso | Cálculo |
 | --- | --- | --- |
-| **A — Sessão crítica** | 60–90 min | Discussão orientada pela leitura ou vídeo-aula feita previamente. |
-| **B — Reunião com o professor** | 30 min por time | O time apresenta resultados de planejamento e desenvolvimento; acompanhamento, revisão de entrega, retrospectiva e planning. |
-| **C — Trabalho no projeto** | 100 min | O time trabalha no projeto com suporte do professor. |
+| Projeto e Produto (releases) | 60% | R1 × 0,3 + R2 × 0,3 + R3 × 0,4 |
+| Dashboard Gerencial Analítico | 20% | DA-R1 × 0,3 + DA-R2 × 0,3 + DA-R3 × 0,4 |
+| Avaliação individual | 20% | MD-R1 × 0,2 + MD-R2 × 0,2 + MD-R3 × 0,3 + participação (PSD) × 0,3 |
 
-### Bilhete de entrada
+Não há provas. Os critérios de cada release estão nas páginas de
+[Releases](/docs/releases/release-1), com a situação e a evidência de cada item.
 
-Antes de cada sessão crítica com conteúdo novo, cada aluno registra **uma pergunta
-genuína e original** sobre a leitura no
-[Aprender 3](https://aprender3.unb.br/course/view.php?id=29294). **Sem registro,
-não há participação na discussão** — e a participação compõe 30% da nota
-individual (ver [Avaliação](/docs/disciplina/avaliacao)).
+## Regras que afetam a equipe
 
-## Organização do trabalho exigida
+| Regra | O que significa para nós | Onde aplicamos |
+| --- | --- | --- |
+| Rodízio de lideranças a cada duas semanas (projeto, processo e produto) | Os líderes da quinzena conduzem a reunião com o PO, planning e review/retro, mantêm Zenhub/GitHub/SonarCloud atualizados e apresentam o dashboard | [Equipe](/docs/equipe#liderança-das-quinzenas) |
+| Revisão de código síncrona | O autor de um PR precisa explicar qualquer trecho; PR com código não compreendido pelo revisor não é aprovado | [Políticas de trabalho](/docs/equipe/politicas) |
+| Organização no GitHub + Zenhub | Requisitos em issues, sub-issues, sprints e milestones, refletindo a EAP e as releases; todos os repositórios na organização `fga-eps-mds` | [Gestão do backlog](/docs/planejamento/backlog) |
+| Dashboard em Streamlit | Consome os `.json` gerados pela CI a partir do SonarCloud, mais EVM, riscos e GitHub/Zenhub; nada digitado à mão | [Métricas](/docs/metricas) |
+| Bilhete de entrada | Antes de cada sessão crítica com leitura, cada aluno registra uma pergunta no Aprender 3 | Individual |
+| Frequência mínima de 75% | Lista de presença em cada aula | Individual |
 
-Estas exigências vêm do plano de ensino e são verificadas nas releases:
+### Política de IA
 
-- Código e artefatos revisados via **pull requests**.
-- Requisitos e atividades organizados por **issues, sub-issues, sprints e
-  milestones** no GitHub + [ZenHub](https://app.zenhub.com/settings/o/fga-eps-mds/users),
-  refletindo a **EAP** e o **planejamento de releases**.
-- Requisitos, protótipos, testes e releases validados com os donos do produto.
-- Todos os repositórios mantidos na organização
-  [fga-eps-mds](https://github.com/fga-eps-mds).
-- Ambientes na mesma organização:
-  [SonarCloud](https://sonarcloud.io/organizations/fga-eps-mds-1/projects?sort=-analysis_date),
-  [Figma](https://www.figma.com/), [Discord](https://discord.com/).
-- A **divisão interna de papéis é definida pelo time** e deve estar visível na
-  documentação — é o que fazemos em [Equipe](/docs/equipe) e
-  [Squads por release](/docs/planejamento/squads).
+Resumo da política oficial (seção de IA do plano de ensino):
 
-## Normas gerais
+- **Encorajado:** rascunhos de artefatos, testes, scripts, configuração de CI,
+  documentação de código, mensagens de commit, análise preliminar de métricas.
+- **Com restrição** (revisão crítica e registro no `MD_Template.md`): análises do
+  dashboard, relatórios, priorização do backlog, código funcional, testes,
+  decisões de arquitetura.
+- **Não permitido:** atas de reuniões com o cliente, seção "Decisões gerenciais"
+  do Relatório de Encerramento, defesa oral, MD gerado integralmente por IA,
+  revisão de código, resolução de conflitos de merge, aprovação de PR e
+  publicação de release sem validação humana.
+- MD gerado por IA sem reflexão própria identificável é tratado como **plágio**.
+- Cada aluno mantém o próprio `MD_Template.md` com entradas semanais: ≥ 2 ciclos
+  na R1, ≥ 5 na R2 e ≥ 8 na R3.
 
-### Frequência
-
-Mínimo de **75%** de presença (Resolução CEPE/UnB), computada por lista em cada
-aula.
-
-### Rotatividade das lideranças
-
-**A cada duas semanas** o time alterna as lideranças de **projeto**, **processo** e
-**produto**. O critério é habilidade de liderança, não senioridade técnica.
-
-Os líderes da quinzena devem:
-
-- conduzir a reunião com o cliente parceiro;
-- organizar planning, retrospectiva e review das sprints;
-- garantir a atualização dos artefatos de gestão (ZenHub, GitHub, SonarCloud);
-- apresentar e discutir o Dashboard Gerencial Analítico com o time e o professor,
-  abordando o balanceamento entre decisões técnicas e gerenciais.
-
-O rodízio é registrado em [Equipe](/docs/equipe).
-
-### Revisão de código
-
-O autor de qualquer PR deve ser capaz de **explicar qualquer trecho do código** em
-revisão síncrona, independentemente de quem o escreveu. PRs com código
-incompreendido pelo revisor **não devem ser aprovados**.
-
-### Integridade acadêmica
-
-- Plágio em artefato avaliado: nota 0 no componente, com registro de ocorrência.
-- MD gerado integralmente por IA sem reflexão própria identificável é tratado como
-  plágio.
-- O uso de IA é encorajado; a ausência de reflexão crítica documentada é o
-  problema. Ver [Política de IA](/docs/disciplina/politica-ia).
-
-### Comunicação com a disciplina
-
-| Canal | Uso |
-| --- | --- |
-| Moodle / Aprender 3 e Teams | Materiais, avisos e entregas acadêmicas |
-| Discord | Comunicação do time e da turma sobre o projeto |
-
-:::warning
-O professor não responde mensagens privadas no Discord. Assuntos de projeto vão
-nos canais do projeto; assuntos pessoais, no Teams.
-:::
-
-### Critério extra
-
-Até **1 ponto** na nota final, a critério do professor:
-
-- contribuições para a disciplina (conteúdo, issues no repositório da disciplina,
-  tutoriais, correções de documentação);
-- contribuições para outros repositórios open source, com evidência rastreável;
-- participação em eventos acadêmicos com trabalho relacionado ao projeto.
-
-### Reposição
-
-Tratada individualmente conforme os normativos da UnB. Motivo de saúde exige
-atestado entregue no retorno.
-
-### Dados para pesquisa
-
-Dados de processo, produto e pessoas anonimizadas gerados no semestre podem ser
-usados em investigações científicas, conforme princípios éticos da pesquisa
-acadêmica.
+Como a equipe aplica isso: [Uso de IA na equipe](/docs/equipe/uso-de-ia).
 
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
-| 1.0 | 10/09/2026 | Criação da página a partir do plano de ensino 2026.2 | [@MilenaFRocha](https://github.com/MilenaFRocha) | |
+| 1.0 | 10/09/2026 | Criação da seção a partir do plano de ensino e do cronograma 2026.2 (4 páginas) | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 2.0 | 21/10/2026 | Seção reduzida a uma página: prazos, nota e regras que afetam a equipe; detalhes ficam nos documentos oficiais | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

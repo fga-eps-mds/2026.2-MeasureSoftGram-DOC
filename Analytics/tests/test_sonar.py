@@ -11,7 +11,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.data import sonar as sn  # noqa: E402
 from src.data import sonar_api as api  # noqa: E402
-from src.metrics import qualidade  # noqa: E402
 
 
 class SerieTest(unittest.TestCase):
@@ -57,22 +56,8 @@ def respostas_ok():
     return {
         "api/measures/component": lambda p: api.Resposta(404, {"errors": [{"msg": "Component 'x' on branch 'develop' not found"}]})
         if p.get("branch") else api.Resposta(200, {"component": {"measures": [
-            {"metric": "bugs", "value": "3"}, {"metric": "tests", "value": "10"},
-            {"metric": "test_errors", "value": "0"}, {"metric": "test_failures", "value": "0"},
-            {"metric": "alert_status", "value": "ERROR"},
+            {"metric": "bugs", "value": "3"}, {"metric": "alert_status", "value": "ERROR"},
             {"metric": "ncloc_language_distribution", "value": "py=1200;js=300"}]}}),
-        "api/measures/component_tree": api.Resposta(200, {"paging": {"total": 2}, "components": [
-            {"path": "src/main.py", "qualifier": "FIL", "measures": [
-                {"metric": "coverage", "value": "85.0"},
-                {"metric": "complexity", "value": "4"},
-                {"metric": "functions", "value": "2"},
-                {"metric": "comment_lines_density", "value": "15.0"},
-                {"metric": "duplicated_lines_density", "value": "0.0"},
-            ]},
-            {"path": "tests/test_main.py", "qualifier": "UTS", "measures": [
-                {"metric": "test_execution_time", "value": "120"},
-            ]},
-        ]}),
         "api/measures/search_history": api.Resposta(200, {"measures": [
             {"metric": "bugs", "history": [{"date": "2026-09-20T10:00:00+0000", "value": "5"},
                                            {"date": "2026-09-27T10:00:00+0000"}]}]}),
@@ -82,6 +67,11 @@ def respostas_ok():
         "api/issues/search": api.Resposta(200, {"total": 7, "facets": [
             {"property": "severities", "values": [{"val": "MAJOR", "count": 5}, {"val": "MINOR", "count": 2}]},
             {"property": "types", "values": [{"val": "BUG", "count": 3}]}]}),
+        "api/measures/component_tree": lambda p: api.Resposta(200, {
+            "paging": {"pageIndex": p["p"], "pageSize": 500, "total": 501},
+            "components": [{"path": f"src/a{p['p']}.py", "qualifier": "FIL", "measures": [
+                {"metric": "complexity", "value": "12"}, {"metric": "functions", "value": "3"},
+                {"metric": "blocker_violations", "value": "0"}, {"metric": "critical_violations", "value": "1"}]}]}),
     }
 
 
@@ -97,25 +87,19 @@ class ClienteTest(unittest.TestCase):
         self.assertEqual(p["linguagens"], {"py": 1200.0, "js": 300.0})
         self.assertEqual(p["quality_gate"]["status"], "ERROR")
         self.assertEqual(len(p["historico"]["bugs"]), 1)            # ponto sem valor descartado
-        self.assertEqual(len(p["componentes"]), 2)
         self.assertEqual(t.chamadas[0][2]["Authorization"], "Bearer segredo")
         self.assertNotIn("segredo", repr(c))
         tab = sn.snapshot_para_tabelas(snap)
         self.assertEqual(tab["medidas"].set_index("metrica").loc["bugs", "valor"], 3.0)
         self.assertEqual(tab["severidades"]["quantidade"].sum(), 7)
         self.assertEqual(tab["quality_gate"].iloc[0]["repositorio"], "2026.2-MeasureSoftGram-Core")
-        self.assertFalse(tab["componentes"].empty)
-        self.assertEqual(set(tab["componentes"]["origem"]), {"api"})
-        mq = qualidade.calcular(tab["componentes"], tab["medidas"])
-        self.assertEqual(len(mq), 1)
-        self.assertAlmostEqual(mq.iloc[0]["total"], 1.0)
-        # Combinação de pipeline + API ou branch None não quebra qualidade.calcular
-        dup = pd.concat([tab["medidas"], tab["medidas"]], ignore_index=True)
-        comp_sem_branch = tab["componentes"].assign(branch=None)
-        dup_sem_branch = dup.assign(branch=None)
-        mq2 = qualidade.calcular(comp_sem_branch, dup_sem_branch)
-        self.assertEqual(len(mq2), 1)
-        self.assertAlmostEqual(mq2.iloc[0]["total"], 1.0)
+        # medidas por arquivo: paginadas (501 itens = 2 páginas) e compactas
+        self.assertEqual([x[0] for x in p["arquivos"]["linhas"]], ["src/a1.py", "src/a2.py"])
+        arq = tab["arquivos"]
+        self.assertEqual(set(arq["metrica"]), {"complexity", "functions", "blocker_violations", "critical_violations"})
+        self.assertEqual(arq[(arq["componente"] == "src/a1.py") & (arq["metrica"] == "critical_violations")]
+                         ["valor"].iloc[0], 1.0)
+        self.assertTrue((arq["tipo"] == "FIL").all())
 
     def test_erro_de_um_projeto_nao_derruba_os_outros(self):
         r = respostas_ok()

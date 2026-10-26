@@ -118,39 +118,48 @@ def tabela_stories(df: pd.DataFrame, chave: str, arquivo: str, colunas: list[str
 
 # ───────────────────────── 1. filtros ─────────────────────────
 
+ESCOPO = {
+    "release": "define o período padrão (as sprints da release são as que terminam dentro dele)",
+    "periodo": "sprints cujo último dia cai no período; entregas no tempo usam a data de conclusão",
+    "repos": "stories desses repositórios (pontos, velocity e taxa de conclusão recalculados)",
+}
+
+
 def _filtros(ctx, f, linhas: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
-    """(sprints do recorte, linhas do recorte, descrição). Os filtros se combinam (E)."""
+    """(sprints do recorte, linhas do recorte, descrição). Globais + filtros da página, combinados (E).
+
+    Release e período vêm da barra lateral (filtros globais); sprint, épico, pessoa e issue são os
+    filtros desta página, também na barra lateral.
+    """
     sprints = ctx.zh_iniciadas.sort_values("start_date").copy()
     sprints["release_name"] = sprints["release_name"].fillna("Sem release")
     sprints["ultimo_dia"] = _brt(sprints["end_date"] - pd.Timedelta(seconds=1)).dt.normalize()
     sprints["primeiro_dia"] = _brt(sprints["start_date"]).dt.normalize()
     rotulo = {r.sprint_label: f"{r.sprint_label} · {data_br(r.primeiro_dia)} a {data_br(r.ultimo_dia)} · "
                               f"{r.release_name}" for r in sprints.itertuples()}
-    c = st.columns([1.0, 1.6, 1.3, 1.6, 1.5, 1.4])
-    rels = list(dict.fromkeys(sprints["release_name"]))
-    rel_sel = c[0].multiselect("Release", rels, key="ga_release", placeholder="Todas")
-    opc = sprints[sprints["release_name"].isin(rel_sel)] if rel_sel else sprints
-    spr_sel = c[1].multiselect("Sprint", list(opc["sprint_label"]), format_func=rotulo.get, key="ga_sprint",
-                               placeholder="Todas as da release" if rel_sel else "Todas")
-    per = c[2].date_input("Período", value=(f["periodo"][0].date(), f["periodo"][1].date()),
-                          format="DD/MM/YYYY", key="ga_periodo",
-                          help="Entram as sprints cujo último dia cai no período; as entregas no tempo usam a data "
-                               "de conclusão. Começa no período da barra lateral.")
-    ini, fim = (pd.Timestamp(per[0]), pd.Timestamp(per[1])) if isinstance(per, (tuple, list)) and len(per) == 2 \
-        else f["periodo"]
+    ini, fim = f["periodo"]
+    no_periodo = (sprints["ultimo_dia"] >= ini) & (sprints["ultimo_dia"] <= fim)
+    opc = sprints[no_periodo]
+    caixa = filters.da_pagina(f, ESCOPO)
+    spr_sel = caixa.multiselect("Sprint", list(opc["sprint_label"]), format_func=rotulo.get, key="ga_sprint",
+                                placeholder="Todas do período")
     s = opc[opc["sprint_label"].isin(spr_sel)] if spr_sel else opc
-    no_periodo = (s["ultimo_dia"] >= ini) & (s["ultimo_dia"] <= fim)
-    fora = list(s.loc[~no_periodo, "sprint_label"]) if spr_sel else []
-    s = s[no_periodo]
     base = filters.por_repo(linhas[linhas["sprint_id"].isin(s["sprint_id"])], f["repos"])
     epicos = sorted(base["epico"].dropna().unique(), key=lambda e: (e == "Sem épico", e))
-    ep_sel = c[3].multiselect("Épico", epicos, key="ga_epico", placeholder="Todos")
+    ep_sel = caixa.multiselect("Épico", epicos, key="ga_epico", placeholder="Todos")
     pessoas = sorted({p for ps in base["pessoas"] for p in ps},
                      key=lambda p: (p in ("Sem responsável", "Não coletado"), p.lower()))
-    pes_sel = c[4].multiselect("Pessoa", pessoas, key="ga_pessoa", placeholder="Todas",
-                               help="responsável (assignee) da story; story com várias pessoas entra inteira para "
-                                    "cada uma")
-    busca = c[5].text_input("Issue / Story", key="ga_issue", placeholder="número ou parte do título")
+    pes_sel = caixa.multiselect("Pessoa", pessoas, key="ga_pessoa", placeholder="Todas",
+                                help="responsável (assignee) da story; story com várias pessoas entra inteira para "
+                                     "cada uma")
+    burn = None
+    if not s.empty:
+        andamento = s[s["status"] == vel.STATUS_ANDAMENTO]
+        op_b = list(s["sprint_label"])
+        idx = op_b.index(andamento["sprint_label"].iloc[0]) if not andamento.empty else len(op_b) - 1
+        burn = caixa.selectbox("Sprint do burndown", op_b, index=idx, key="ga_burn", format_func=rotulo.get,
+                               help="o burndown é de uma sprint por vez")
+    busca = caixa.text_input("Issue / Story", key="ga_issue", placeholder="número ou parte do título")
     d = base[base["epico"].isin(ep_sel)] if ep_sel else base
     if pes_sel:
         d = d[d["pessoas"].map(lambda ps: bool(set(ps) & set(pes_sel)))]
@@ -158,10 +167,13 @@ def _filtros(ctx, f, linhas: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, 
         b = busca.strip().lstrip("#").lower()
         d = d[d["issue"].str.lower().str.endswith("#" + b)
               | d["titulo"].fillna("").str.lower().str.contains(b, regex=False)]
-    desc = {"sprints": s, "fora": fora, "parcial": bool(ep_sel or pes_sel or busca.strip()), "pessoas": pes_sel, "periodo": (ini, fim),
+    fora = list(sprints.loc[~no_periodo, "sprint_label"])
+    desc = {"sprints": s, "fora": [], "fora_periodo": fora, "parcial": bool(ep_sel or pes_sel or busca.strip()),
+            "pessoas": pes_sel, "periodo": (ini, fim), "burndown": burn,
             "texto": (f"**{len(s)} sprint(s)** · **{d['issue_id'].nunique()} stories** "
                       f"({len(d)} registros story × sprint) · sprints terminando de {data_br(ini)} a {data_br(fim)}"
                       + (f" · repositórios: {', '.join(f['repos'])}" if f["repos"] else "")
+                      + (f" · épico: {', '.join(ep_sel)}" if ep_sel else "")
                       + (f" · pessoa: {', '.join(pes_sel)}" if pes_sel else ""))}
     return s, d, desc
 
@@ -272,7 +284,7 @@ def _planejamento(R, d, rel):
         sem = int(R["sem_estimativa_na_planning"].sum())
         if sem:
             st.caption(f"{sem} story(ies) planejada(s) sem estimativa na planning contam 0 SP no planejado.")
-    alvo = st.selectbox("Stories planejadas de", ["Todas as sprints do recorte", *R["sprint"]], key="ga_plan_sprint")
+    alvo = "Todas as sprints do recorte"   # para ver uma sprint só, use o filtro Sprint na barra lateral
     x = d[d["planejada"]]
     if alvo != "Todas as sprints do recorte":
         x = x[x["sprint"] == alvo]
@@ -325,7 +337,7 @@ def _realizado(R, d, rel, desc):
                          tooltip=[alt.Tooltip("dia:T", format="%d/%m/%Y"), alt.Tooltip("acumulado:Q", format=".0f")]))
         charts.mostrar(alt.layer(barras, linha).resolve_scale(y="independent"), "Evolução das entregas",
                        "barras = SP concluídos no dia · linha = acumulado (horário de Brasília)", altura=220)
-    alvo = st.selectbox("Stories concluídas de", ["Todas as sprints do recorte", *R["sprint"]], key="ga_real_sprint")
+    alvo = "Todas as sprints do recorte"   # para ver uma sprint só, use o filtro Sprint na barra lateral
     x = d[d["concluida"]]
     if alvo != "Todas as sprints do recorte":
         x = x[x["sprint"] == alvo]
@@ -461,15 +473,12 @@ def _velocity(ctx, R, d):
 
 # ───────────────────────── 7. burndown ─────────────────────────
 
-def _burndown(ctx, sprints_rec: pd.DataFrame):
+def _burndown(ctx, sprints_rec: pd.DataFrame, alvo: str | None):
     layout.secao("Burndown", "Como o trabalho restante evoluiu ao longo da sprint?", ["ZENHUB", "CALCULADO"])
-    if sprints_rec.empty:
+    if sprints_rec.empty or alvo is None:
         layout.indisponivel("Burndown indisponível", "nenhuma sprint no recorte.")
         return
-    padrao = sprints_rec[sprints_rec["status"] == vel.STATUS_ANDAMENTO]
-    opcoes = list(sprints_rec["sprint_label"])
-    idx = opcoes.index(padrao["sprint_label"].iloc[0]) if not padrao.empty else len(opcoes) - 1
-    alvo = st.selectbox("Sprint do burndown", opcoes, index=idx, key="ga_burn")
+    st.caption(f"{alvo} · escolha a sprint em **Sprint do burndown**, na barra lateral.")
     s = sprints_rec[sprints_rec["sprint_label"] == alvo].iloc[0]
     b = ga.burndown(ctx.zh_snap, s, ctx.zh_regras, ctx.agora_utc, filtro_issue=ctx.zh_filtro)
     dados = b["dados"]
@@ -601,11 +610,11 @@ def pagina():
 
     linhas = ga.stories_por_sprint(snap, ctx.zh_iniciadas, ctx.zh_issues, ctx.zh_regras)
 
-    layout.secao("Filtros", "Qual recorte analisar?", ["ZENHUB"])          # 1
-    sprints_rec, d, desc = _filtros(ctx, f, linhas)
-    st.markdown(f"Encontrados: {desc['texto']}")
-    if desc["fora"]:
-        st.caption(f"Sprint(s) {', '.join(desc['fora'])} fora do período escolhido: amplie o período para incluí-la(s).")
+    sprints_rec, d, desc = _filtros(ctx, f, linhas)                       # 1 (barra lateral)
+    st.markdown(f"Recorte: {desc['texto']}")
+    if desc["fora_periodo"]:
+        st.caption(f"Fora do período da barra lateral: {', '.join(desc['fora_periodo'])}. Escolha outra release ou "
+                   "amplie o período para incluí-las.")
     R = ga.resumo_por_sprint(d)
     if R.empty:
         layout.indisponivel("Nenhuma story no recorte", "os filtros escolhidos não deixaram nenhuma story.",
@@ -623,7 +632,7 @@ def pagina():
     if desc.get("pessoas") or desc["parcial"]:
         st.caption("O burndown abaixo é da sprint inteira: ele usa o histórico da sprint e não segue os filtros de "
                    "épico, pessoa e issue.")
-    _burndown(ctx, sprints_rec)       # 7
+    _burndown(ctx, sprints_rec, desc["burndown"])       # 7
     _analises(R, d)                   # 8
     _detalhamento(d)                  # 9
 

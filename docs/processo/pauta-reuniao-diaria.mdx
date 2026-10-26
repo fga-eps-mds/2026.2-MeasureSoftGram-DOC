@@ -1,0 +1,84 @@
+---
+id: pauta-reuniao-diaria
+title: Pauta da reunião diária
+sidebar_label: Pauta da reunião diária
+description: Modelo de pauta da reunião diária do MeasureSoftGram 2026.2, com instruções de uso e o motivo de cada bloco.
+---
+
+# Pauta da reunião diária
+
+Modelo para preparar a reunião diária. A pauta mostra antes da reunião o que
+precisa ser decidido, e a mesma estrutura vira a ata depois.
+
+:::caution[A definir pela equipe]
+- Horário fixo da reunião e quem conduz em cada dia (rodízio?).
+- Relação com a daily assíncrona do Telegram ([Metodologia](/docs/planejamento/metodologia)):
+  esta pauta substitui a daily nos dias de reunião síncrona ou é só para a reunião semanal?
+:::
+
+## Como usar
+
+- **Quem conduz publica a pauta** no canal da equipe até **1 hora antes**; os
+  demais respondem na thread com bloqueios até o início.
+- Copie o modelo abaixo e troque o que está entre colchetes.
+- **Os números saem do Zenhub e do [Dashboard](https://20262-measuresoftgram-doc.streamlit.app/),
+  não da memória.**
+- Apague os itens que não se aplicam no dia, em vez de deixar "nada".
+- Depois da reunião, acrescente as decisões e os responsáveis: a pauta vira a
+  ata e os encaminhamentos alimentam a página da [sprint](/docs/sprints).
+
+## Modelo para copiar
+
+```markdown
+**Pauta — Reunião diária | [dd/mm/aaaa] — [hh:mm]**
+Local: [Discord/Teams/presencial] · Conduz: [nome] · Registra: [nome]
+
+**1. Contexto (1 min)**
+Sprint [n] ([dd/mm]–[dd/mm]) — dia [x] de [y] · Release alvo: [R2/R3] em [dd/mm]
+Story points: [fechados]/[planejados] (só conta issue fechada)
+
+**2. Andamento (1–2 min por pessoa)**
+- [nome]: fiz [repo#issue] · vou fazer [repo#issue] · bloqueio: [sim/não]
+
+**3. Bloqueios e riscos**
+- [descrição] — quem pode ajudar: [nome] — risco na planilha: [Rxx / novo]
+
+**4. Qualidade e integração**
+- Quality gate (SonarCloud) dos repositórios mexidos ontem: [passou / falhou em: repo]
+- Problemas novos introduzidos (bugs, vulnerabilidades, code smells): [nenhum / repo: o quê]
+- Tendência da qualidade no Dashboard: [melhorou / estável / piorou] — [observação]
+- CI (GitHub Actions): [verde / vermelho em: repo, workflow]
+- PRs aguardando revisão há mais de 2 dias: [repo#n, repo#n]
+
+**5. Decisões a tomar hoje**
+- [pergunta objetiva, com resposta sim/não ou escolha entre opções]
+
+**6. Prazos próximos (disciplina e release)**
+- [dd/mm] — [entrega] — responsável: [nome]
+
+**7. Encaminhamentos (preencher na reunião)**
+- [ ] [ação] — [responsável] — até [dd/mm]
+
+Responda nesta thread com bloqueios novos antes da reunião.
+```
+
+## Por que cada bloco existe
+
+A pauta é uma daily com dois acréscimos, decisões e prazos. No Scrum a daily tem
+15 minutos e olha só para a meta da sprint. Aqui ela também serve de evidência
+para as páginas de [Sprints](/docs/sprints) e [Reuniões](/docs/reunioes).
+
+| Bloco | Por quê |
+| --- | --- |
+| Contexto com story points fechados | Aplica o critério de feito do time ([D2](/docs/planejamento/decisoes)): se o número não anda no meio da sprint, o problema aparece cedo |
+| Andamento por issue | Citar `repo#issue` liga a fala ao Zenhub e ao commit; "estou mexendo no back" não é rastreável |
+| Bloqueios com quem ajuda | Na reunião só se aponta quem ajuda; a solução é discutida depois, só com quem precisa |
+| Qualidade e integração | Uma visão geral (gate, problemas novos, tendência, CI e PRs parados) evita que a dívida técnica acumule até a release sem prender a reunião num único número |
+| Decisões em forma de pergunta | Uma pergunta fechada sai com resposta; um tema aberto vira conversa |
+| Encaminhamentos com data | São o que a próxima pauta confere no bloco 2 |
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 21/10/2026 | Criação a partir do modelo da equipe; bloco de qualidade com visão geral no lugar do percentual de cobertura | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

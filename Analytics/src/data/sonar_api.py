@@ -7,7 +7,6 @@ Pages (onde não há token nem rede para o Sonar) e todo número é reprodutíve
 Endpoints (https://sonarcloud.io/web_api), todos de leitura:
 
 * ``api/measures/component``      valores atuais das métricas
-* ``api/measures/component_tree`` métricas por arquivo/suíte (cobertura por componente e modelo DA-R2)
 * ``api/measures/search_history`` série histórica de cada métrica
 * ``api/qualitygates/project_status`` situação do Quality Gate e condições
 * ``api/issues/search`` (``ps=1`` + ``facets``) problemas abertos por severidade e tipo
@@ -29,17 +28,24 @@ METRICAS_ATUAIS = [
     "bugs", "vulnerabilities", "code_smells", "security_hotspots", "sqale_index", "sqale_debt_ratio",
     "coverage", "duplicated_lines", "duplicated_lines_density", "ncloc", "reliability_rating",
     "security_rating", "sqale_rating", "tests", "test_errors", "test_failures", "test_success_density",
-    "test_execution_time", "comment_lines_density", "complexity", "files", "functions",
     "alert_status", "ncloc_language_distribution",
-]
-METRICAS_COMPONENTES = [
-    "files", "functions", "complexity", "comment_lines_density", "duplicated_lines_density",
-    "coverage", "ncloc", "tests", "test_errors", "test_failures", "test_execution_time",
-    "security_rating",
+    # modelo de qualidade (Q-Rapids): insumos que o metrics.yml às vezes não traz
+    "complexity", "functions", "files", "comment_lines_density", "test_execution_time",
+    "violations", "blocker_violations", "critical_violations",
 ]
 METRICAS_HISTORICO = [
     "bugs", "vulnerabilities", "code_smells", "security_hotspots", "sqale_index", "coverage",
     "duplicated_lines_density", "ncloc", "reliability_rating", "security_rating", "sqale_rating", "tests",
+    "test_errors", "test_failures", "test_execution_time", "complexity", "functions", "comment_lines_density",
+    "blocker_violations", "critical_violations",
+]
+# Medidas por arquivo (api/measures/component_tree). FIL = código; UTS = arquivo de teste.
+# São os dados brutos do modelo Q-Rapids: arquivos não complexos, comentados, sem duplicação, com
+# cobertura e sem violação bloqueante/crítica; testes que passam e testes rápidos.
+METRICAS_ARQUIVO = [
+    "ncloc", "complexity", "functions", "comment_lines_density", "duplicated_lines_density", "coverage",
+    "violations", "blocker_violations", "critical_violations",
+    "tests", "test_errors", "test_failures", "skipped_tests", "test_execution_time",
 ]
 
 
@@ -125,28 +131,6 @@ class SonarClient:
         comp = d.get("component") or {}
         return {m["metric"]: m.get("value") for m in comp.get("measures", []) if "metric" in m}
 
-    def componentes(self, projeto: str, branch: str | None, max_paginas: int = 10) -> list[dict]:
-        """Métricas por arquivo/suíte (api/measures/component_tree) para cobertura por arquivo e modelo DA-R2."""
-        itens, pagina = [], 1
-        while pagina <= max_paginas:
-            p = {"component": projeto, "metricKeys": ",".join(METRICAS_COMPONENTES),
-                 "qualifiers": "FIL,UTS", "ps": 500, "p": pagina}
-            if branch:
-                p["branch"] = branch
-            d = self.get("api/measures/component_tree", p)
-            lote = d.get("components") or []
-            for c in lote:
-                med = {m["metric"]: m.get("value") for m in c.get("measures", [])
-                       if "metric" in m and m.get("value") is not None}
-                if med:
-                    itens.append({"path": c.get("path") or c.get("name"),
-                                  "qualifier": c.get("qualifier"), "measures": med})
-            total = (d.get("paging") or {}).get("total", len(lote))
-            if len(lote) < 500 or pagina * 500 >= total:
-                break
-            pagina += 1
-        return itens
-
     def historico(self, projeto: str, branch: str | None) -> dict:
         p = {"component": projeto, "metrics": ",".join(METRICAS_HISTORICO), "ps": 1000}
         if branch:
@@ -176,6 +160,35 @@ class SonarClient:
                    for f in d.get("facets", [])}
         return {"total": d.get("total", (d.get("paging") or {}).get("total")),
                 "severidades": facetas.get("severities", {}), "tipos": facetas.get("types", {})}
+
+
+    def arquivos(self, projeto: str, branch: str | None, max_paginas: int = 20) -> dict:
+        """Medidas de cada arquivo (código e teste), compactas: ``{"metricas": [...], "linhas": [[path,
+        qualifier, language, v1, v2, ...]]}``. Valor ausente = None (o Sonar não mede aquilo naquele arquivo)."""
+        linhas, pagina = [], 1
+        while pagina <= max_paginas:
+            p = {"component": projeto, "qualifiers": "FIL,UTS", "metricKeys": ",".join(METRICAS_ARQUIVO),
+                 "ps": 500, "p": pagina, "strategy": "leaves"}
+            if branch:
+                p["branch"] = branch
+            d = self.get("api/measures/component_tree", p)
+            comps = d.get("components") or []
+            for c in comps:
+                med = {m.get("metric"): _float(m.get("value")) for m in c.get("measures", []) if "metric" in m}
+                linhas.append([c.get("path") or c.get("name"), c.get("qualifier"), c.get("language"),
+                               *[med.get(m) for m in METRICAS_ARQUIVO]])
+            total = (d.get("paging") or {}).get("total", 0)
+            if pagina * 500 >= total or not comps:
+                break
+            pagina += 1
+        return {"colunas": ["path", "qualifier", "language"], "metricas": list(METRICAS_ARQUIVO), "linhas": linhas}
+
+
+def _float(v):
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
 
 
 def _linguagens(texto) -> dict:
@@ -223,9 +236,12 @@ def coletar(cliente: SonarClient, projetos: list[str], branch: str | None, busca
             if not registro["quality_gate"].get("status") and status_gate:
                 registro["quality_gate"]["status"] = status_gate
             registro["issues"] = cliente.issues_abertas(chave, b)
-            registro["componentes"] = cliente.componentes(chave, b)
-            log(f"  {repo}: {len(medidas)} métricas, {len(registro['componentes'])} componentes, "
-                f"Quality Gate {registro['quality_gate'].get('status')}")
+            try:
+                registro["arquivos"] = cliente.arquivos(chave, b)
+            except SonarError as erro:   # sem a árvore, o resto do projeto continua valendo
+                avisos.append(f"{repo}: medidas por arquivo indisponíveis ({erro})")
+            log(f"  {repo}: {len(medidas)} métricas, {len((registro.get('arquivos') or {}).get('linhas', []))} "
+                f"arquivos, Quality Gate {registro['quality_gate'].get('status')}")
         except SonarAuthError:
             raise
         except SonarError as erro:

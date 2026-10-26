@@ -8,7 +8,7 @@ import streamlit as st
 
 from src import theme
 from src.data import contexto
-from src.components import layout, rastreio
+from src.components import filters, layout, rastreio
 from src.components.kpi import kpi
 from src.metrics import resumo
 from src.metrics.calculations import data_br, release_atual
@@ -21,9 +21,19 @@ CARTOES = [
 ]
 
 
+ESCOPO = {
+    "release": "metas e release em foco (SPI, escopo, orçamento)",
+    "periodo": "situação no fim do período: Sonar até a última coleta do período, sprints e execuções de CI do "
+               "período, decisões até o fim dele",
+    "repos": "Sonar, Zenhub, SPI e CI só desses repositórios (custo, riscos e decisões são do time)",
+    "branch": "coletas do Sonar desta branch",
+}
+
+
 def pagina():
     ctx, f = layout.estado()
     ctx = contexto.com_recorte(ctx, f["repos"])
+    filters.da_pagina(f, ESCOPO, tem_filtros=False)
     ind = resumo.indicadores(ctx, f)
     status, frase = resumo.situacao_geral(ind)
     rel_nome, entrega = release_atual(ctx.hoje)

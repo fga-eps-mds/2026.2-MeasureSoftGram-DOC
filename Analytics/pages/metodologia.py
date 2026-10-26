@@ -6,7 +6,7 @@ import pandas as pd
 import streamlit as st
 
 import config
-from src.components import layout
+from src.components import filters, layout
 from src.metrics.calculations import data_br
 
 STATUS_COLETA = {"ok": "Coletado", "parcial": "Parcial", "sem dados": "Sem dados", "erro": "Erro na leitura"}
@@ -14,6 +14,7 @@ STATUS_COLETA = {"ok": "Coletado", "parcial": "Parcial", "sem dados": "Sem dados
 
 def pagina():
     ctx, f = layout.estado()
+    filters.da_pagina(f, {}, tem_filtros=False)
     layout.titulo_pagina("Metodologia e Fontes", "Origem e atualização dos dados, regras que diferem das "
                          "ferramentas, limitações e o tratamento de dados ausentes.")
 
@@ -31,14 +32,42 @@ def pagina():
     st.caption(f"Período analisado nas páginas: {data_br(f['periodo'][0])} a {data_br(f['periodo'][1])} "
                f"(filtro global). Situação calculada em {data_br(ctx.hoje)}.")
 
+    if ctx.repos_ignorados:
+        st.caption("Repositórios ignorados por não serem do semestre 2026.2 (`config.PREFIXO_REPOS_PROJETO`): "
+                   + " · ".join(f"{fonte}: {', '.join(sorted(r))}" for fonte, r in ctx.repos_ignorados.items())
+                   + ". Os `.json` dos repositórios centrais chegam em `data/` pelo `metrics.yml` deles, e as issues "
+                     "deles aparecem no Zenhub, mas nada disso entra em nenhuma métrica do painel.")
+
+    layout.secao("Como os filtros funcionam", "Onde cada filtro da barra lateral vale?")
+    st.markdown("""
+Todos os filtros ficam na **barra lateral**. Em cima, os **filtros globais**, iguais em todas as páginas; embaixo,
+em **Filtros desta página**, os filtros próprios da página aberta e o resumo *Como os filtros globais valem aqui*.
+
+| Página | Release | Período | Repositórios | Branch | Filtros da página |
+|---|---|---|---|---|---|
+| Visão Executiva | metas e release em foco | situação no fim do período | Sonar, Zenhub, SPI, CI | Sonar | — |
+| Gestão ágil | período padrão | sprints que terminam no período | stories do repositório | — | sprint, épico, pessoa, issue, sprint do burndown |
+| Agile EVM | release analisada | sprint concluída até o fim do período | prazo (SPI); custo é do time | — | release (só com *Semestre inteiro*), sprint |
+| Custos | período padrão | semanas e horas do período | não se aplica (custo do time) | — | sprint, integrante |
+| Riscos | período padrão | identificados até o fim; revisões no período | não se aplica | — | status, nível, categoria, responsável |
+| Decisões | meta da release | tabela no período; meta acumulada até o fim | não se aplica | — | tipo, status, indicador |
+| Qualidade técnica | metas | situação no fim do período; evolução no período | repositórios | coletas do pipeline | Quality Gate, linguagem, métrica do gráfico |
+| Qualidade (Q-Rapids) | comparação entre releases | nota na última coleta até o fim do período; métricas de processo no período | repositórios avaliados | coletas do pipeline | repositório do detalhamento |
+| Integração contínua | período padrão | execuções criadas no período | repositórios | — | workflow, branch da execução |
+
+**Situação no fim do período**: com a R1 escolhida, a página mostra o valor de cada métrica na última coleta até
+28/09 — é assim que dá para comparar R1 × R2 sem misturar coletas. O Quality Gate e os problemas por severidade só
+existem no snapshot mais recente da API (sem histórico): num período que termina antes dele, ficam de fora.
+""")
+
     layout.secao("Fontes e responsabilidades", "Por que cada informação vem de onde vem?")
     st.markdown(f"""
 | Fonte | Cor | Usada para | Como chega ao painel | Atualização |
 |---|---|---|---|---|
-| **SonarCloud** | {layout.etiqueta('SONAR')} | qualidade técnica: cobertura, duplicação, bugs, vulnerabilidades, code smells, hotspots, dívida técnica, ratings, Quality Gate, testes e métricas por componente (DA-R2) | API do SonarCloud → `scripts/coleta_sonar.py` → `data/sonar/` (compatível com `data/*.json` legados) | 3 vezes por dia e a cada push na `main` (workflow `coleta-dados.yml`) |
+| **SonarCloud** | {layout.etiqueta('SONAR')} | qualidade técnica: cobertura, duplicação, bugs, vulnerabilidades, code smells, hotspots, dívida técnica, ratings, Quality Gate, testes; medidas por arquivo (complexidade, comentários, duplicação, cobertura, violações bloqueantes/críticas) para o modelo Q-Rapids | `metrics.yml` de cada repositório → `data/*.json`; API do SonarCloud → `scripts/coleta_sonar.py` → `data/sonar/` | a cada execução do pipeline; API diária (workflow `coleta-dados.yml`) |
 | **Zenhub** | {layout.etiqueta('ZENHUB')} | gestão ágil: sprints, story points, velocity, backlog, pipelines, épicos, releases, throughput | API GraphQL → `scripts/coleta_velocity.py` → `data/zenhub/velocity/` | diária (workflow `coleta-dados.yml`) ou botão na página do Zenhub |
 | **Planilha** | {layout.etiqueta('PLANILHA')} | só o que não existe nas outras: custos, time por semana, horas, riscos, monitoramento, decisões | abas publicadas no Google em CSV (`config.PLANILHAS`); sem cópia local | a cada {config.CACHE_PLANILHAS_S // 60} min (local) ou a cada deploy (GitHub Pages) |
-| **GitHub** | {layout.etiqueta('GITHUB')} | processo: execuções e resultado da CI | API do GitHub → `scripts/coleta_github.py` → `data/github/`; `metrics.yml` → `GitHub_API-Runs-*.json` | 3 vezes por dia (workflow `coleta-dados.yml`) e a cada execução do pipeline |
+| **GitHub** | {layout.etiqueta('GITHUB')} | processo: execuções e resultado da CI; issues (labels, descrição, milestone) e commits com arquivos alterados para o modelo Q-Rapids | API do GitHub → `scripts/coleta_github.py` → `data/github/` (`runs-`, `issues-`, `commits-`); `metrics.yml` → `GitHub_API-Runs-*.json` | 3 vezes por dia (workflow `coleta-dados.yml`) e a cada execução do pipeline |
 | **Calculado** | {layout.etiqueta('CALCULADO')} | indicadores derivados (EVM, variações, status) | `src/metrics/` — funções puras, com testes em `tests/` | a cada abertura do painel |
 """, unsafe_allow_html=True)
     st.markdown("A planilha **não repete** nenhum dado do Sonar ou do Zenhub: nenhum ponto, sprint ou métrica de "
@@ -97,8 +126,8 @@ def pagina():
 - A coleta do **backlog completo** (todos os pipelines, prioridade e responsável) usa queries novas que precisam ser
   conferidas com `python scripts/diagnostico_zenhub.py`; se falharem, a coleta segue e o painel usa só as issues das
   sprints, avisando.
-- As métricas do SonarCloud (agregadas, histórico, Quality Gate, issues e `component_tree` por arquivo/suíte) são
-  coletadas pelo snapshot da API (`scripts/coleta_sonar.py` no workflow `coleta-dados.yml`).
+- Métricas do SonarCloud que o `metrics.yml` não pede (bugs, vulnerabilidades, code smells, hotspots, dívida,
+  Quality Gate) dependem do snapshot da API (`scripts/coleta_sonar.py`).
 - Repositórios sem projeto no SonarCloud não têm métrica de qualidade.
 - Médias entre repositórios são simples (não ponderadas por linhas de código).
 """)

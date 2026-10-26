@@ -2,93 +2,46 @@
 id: reunioes
 slug: /reunioes
 title: Reuniões
-sidebar_position: 1
+sidebar_label: Visão geral
+description: Índice das reuniões da equipe com o PO, internas e com os monitores.
 ---
 
 # Reuniões
 
-Registro das reuniões da equipe: com o Product Owner, internas e com os
-monitores da disciplina. Cada entrada guarda o que foi tratado, o que ficou
-decidido e o que precisa acontecer até a próxima.
+Índice de todas as reuniões registradas. Cada ata traz o resultado em destaque,
+as decisões e as ações com responsável e prazo.
+
+A reunião semanal com o PO é às quartas, 19h30. Pela
+[Política de IA da disciplina](/docs/disciplina#política-de-ia), atas com o cliente
+não podem ser geradas por IA.
 
 ## Índice
 
-| Data | Tipo | Assunto | Registro |
-| --- | --- | --- | --- |
-| Sprint 1 | Com o PO | Apresentação da metodologia matemática do projeto | [Ver](#reunião-1---apresentação-da-metodologia-matemática) |
-| 02/09/2026 | Com o PO | Alinhamento de objetivo do semestre e decisões críticas | [Pauta](/docs/reunioes/pauta-po-02-09) · [Ata](/docs/reunioes/ata-po-02-09) |
-| 23/09/2026 | Com o PO | Validação de escopo, decisões técnicas e acordos de entrega | [Ata](/docs/reunioes/ata-po-23-09) |
+| Data | Tipo | Assunto | Registro | Ações em aberto |
+| --- | --- | --- | --- | --- |
+| Sprint 1 (data não registrada) | Com o PO | Apresentação da metodologia matemática | [Registro](/docs/reunioes/reuniao-po-1) | — |
+| 02/09/2026 | Com o PO | Objetivo do semestre e decisões críticas do diagnóstico | [Pauta](/docs/reunioes/pauta-po-02-09) · [Ata](/docs/reunioes/ata-po-02-09) | ver ata |
+| 23/09/2026 | Com o PO | Validação de escopo, decisões técnicas e acordos de entrega | [Ata](/docs/reunioes/ata-po-23-09) | ver ata |
+| 07/10/2026 | Com o PO | Critérios de aceitação da sprint, retirada do plugin do VS Code e status da R1 | [Ata](/docs/reunioes/ata-po-07-10) | ver ata |
+| 21/10/2026 | Com o PO | Validação dos protótipos da R2, rastreabilidade adiada para a R3 | [Ata](/docs/reunioes/ata-po-21-10) | ver ata |
 
----
-
-## Reunião 1 - Apresentação da metodologia matemática
-
-**Sprint:** 1
-**Tipo:** Reunião com o Product Owner
-
-### Pauta
-
-Primeiro contato da equipe com o Product Owner no semestre.
-
-### O que foi tratado
-
-O PO apresentou a **metodologia matemática do projeto** - a base de cálculo que
-sustenta o modelo de qualidade do MeasureSoftGram. A reunião foi expositiva:
-serviu para a equipe conhecer o embasamento teórico por trás do produto.
-
-### Encaminhamentos
-
-A equipe saiu da reunião com o entendimento da metodologia, mas **ainda sem
-clareza sobre o objetivo do semestre** e sobre o que o PO espera como entrega.
-
-Por isso, a próxima reunião precisa ser **conduzida pela equipe**, e não apenas
-recebida. O objetivo é sair dela sabendo:
-
-- Qual é o **objetivo do PO** para o produto neste semestre.
-- Quais entregas ele considera prioritarias e por que.
-- Como ele vai **avaliar** se o trabalho da equipe atendeu a expectativa.
-- Quais restrições existem (técnicas, de escopo, de prazo).
-
-:::tip[Preparação para a próxima reunião]
-Levar uma **lista de perguntas escrita** e definir quem conduz. Uma reunião
-direcionada por pauta rende mais do que uma reunião aberta, principalmente
-quando o objetivo é alinhar expectativa e não receber conteúdo.
+:::caution[A preencher]
+Há reuniões semanais com o PO entre 09/09 e 21/10 sem ata (09/09, 16/09, 30/09,
+14/10). Se aconteceram, registrar ao menos resultado e decisões; se não
+aconteceram, anotar aqui "não houve reunião". Reuniões internas e com os
+monitores também entram neste índice.
 :::
 
-### Ações
+## Como registrar uma reunião
 
-| Ação | Responsável | Prazo |
-| --- | --- | --- |
-| Montar a pauta de perguntas para a próxima reunião com o PO | | Concluído |
-| Definir quem conduz a próxima reunião | | |
-| Agendar a próxima reunião com o PO | | |
+Copie o [modelo de ata](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/ata.mdx)
+para `docs/reunioes/ata-po-dd-mm.mdx`, publique em até dois dias e adicione a
+linha nesta tabela. Ver [Guia de documentação](/docs/equipe/guia-documentacao).
 
----
+## Histórico de versão
 
-## Modelo de registro de reunião
-
-> Copie o bloco abaixo ao registrar uma nova reunião e adicione uma linha no
-> índice no topo da página.
-
-### Reunião N - Título
-
-**Data:** dd/mm/aaaa
-**Sprint:** N
-**Tipo:** Com o PO / Interna / Com os monitores
-**Participantes:**
-
-#### Pauta
-
--
-
-#### O que foi tratado
-
-#### Decisões
-
--
-
-#### Ações
-
-| Ação | Responsável | Prazo |
-| --- | --- | --- |
-| | | |
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 31/08/2026 | Criação com o registro da Reunião 1 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 2.0 | 21/10/2026 | Índice completo (inclui 07/10), Reunião 1 em página própria, modelo movido para `docs/_modelos` | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 2.1 | 22/10/2026 | Adiciona a ata de 21/10 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |

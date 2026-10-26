@@ -459,7 +459,7 @@ def calculate_completion_rate(planned, completed) -> float | None:
 # ───────────────────────── comparação com o Zenhub ─────────────────────────
 
 def comparar_com_zenhub(snapshot: dict, sprints: pd.DataFrame, regras: Regras | None = None,
-                        agora: datetime | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+                        agora: datetime | None = None, filtro_issue=None) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Reproduz o "concluído" do Zenhub e explica, issue por issue, a diferença para o painel.
 
     Regra do Zenhub (``Sprint.completedPoints`` da API, sem estimativas presumidas): soma a
@@ -505,7 +505,9 @@ def comparar_com_zenhub(snapshot: dict, sprints: pd.DataFrame, regras: Regras | 
                 continue   # sem estimativa: 0 SP nos dois lados
             quando = _dt(i.get("closed_at"))
             if iid in zh:
-                if i.get("is_pull_request"):
+                if filtro_issue is not None and not filtro_issue(i):
+                    motivo = "repositório fora do projeto (repositório central): o painel só conta os do 2026.2"
+                elif i.get("is_pull_request"):
                     motivo = "pull request: o painel conta só issues"
                 elif anterior is not None and quando is not None and quando <= anterior:
                     motivo = "fechada no prazo de fechamento da sprint anterior: o painel conta nela"

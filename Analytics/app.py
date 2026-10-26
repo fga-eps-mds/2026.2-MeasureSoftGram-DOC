@@ -26,7 +26,8 @@ import streamlit as st  # noqa: E402
 st.set_page_config(page_title="MeasureSoftGram — Dashboard de Gestão de Projeto", layout="wide",
                    initial_sidebar_state="expanded")
 
-from pages import custos, decisoes, evm, metodologia, processo, riscos, sonar, visao_executiva, zenhub  # noqa: E402
+from pages import (custos, decisoes, evm, metodologia, processo, qualidade, riscos, sonar,  # noqa: E402
+                   visao_executiva, zenhub)
 from src.components import filters, layout  # noqa: E402
 from src.data import contexto  # noqa: E402
 
@@ -46,6 +47,7 @@ navegacao = st.navigation({
         st.Page(decisoes.pagina, title="Decisões", url_path="decisoes", icon=":material/gavel:"),
     ],
     "Qualidade e processo": [
+        st.Page(qualidade.pagina, title="Qualidade (Q-Rapids)", url_path="qualidade", icon=":material/verified:"),
         st.Page(sonar.pagina, title="Qualidade técnica", url_path="sonar", icon=":material/code:"),
         st.Page(processo.pagina, title="Integração contínua", url_path="processo", icon=":material/sync:"),
     ],
