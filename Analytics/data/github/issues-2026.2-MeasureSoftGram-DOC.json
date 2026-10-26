@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-10-26T14:23:45+00:00",
+ "coletado_em": "2026-10-26T14:44:00+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 173,
+   "title": "fix(dashboard): abas do Q-Rapids quebradas com os dados novos e ajust…",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-26T14:43:12Z",
+   "closed_at": "2026-10-26T14:43:24Z",
+   "updated_at": "2026-10-26T14:43:59Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3230,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/173",
+   "author": "MilenaFRocha"
+  },
   {
    "number": 172,
    "title": "build(deps): bump actions/setup-python from 7.0.0 to 7.1.0 in the github-actions-dependencies group",
