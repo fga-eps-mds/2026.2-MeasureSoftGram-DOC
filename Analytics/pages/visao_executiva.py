@@ -45,7 +45,7 @@ def pagina():
                          ["SONAR", "ZENHUB", "PLANILHA", "GITHUB"])
     if ctx.repos_recorte:
         layout.alerta("neutral", "Filtro de repositórios ativo (" + ", ".join(ctx.repos_recorte) + "): pontos, sprints, "
-                      "velocity e SPI são só desses repositórios. Orçamento, horas, custo e CPI são do time inteiro "
+                      "velocity e SPI são só desses repositórios. Orçamento, custo e CPI são do time inteiro "
                       "(não dependem de repositório).")
     layout.menus([
         ("Status geral", "a pior situação entre os indicadores com meta", "Crítico se algum indicador é crítico; "
