@@ -1,5 +1,77 @@
 [
     {
+        "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/90",
+        "repository_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front",
+        "labels_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/90/labels{/name}",
+        "comments_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/90/comments",
+        "events_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/90/events",
+        "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/90",
+        "id": 6033284223,
+        "node_id": "PR_kwDOULOMpc8AAAABKr0LrA",
+        "number": 90,
+        "title": "feat(docker): adiciona hot-reload ao ambiente de desenvolvimento",
+        "user": {
+            "login": "Marcosatc147",
+            "id": 130991577,
+            "node_id": "U_kgDOB87F2Q",
+            "avatar_url": "https://avatars.githubusercontent.com/u/130991577?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/Marcosatc147",
+            "html_url": "https://github.com/Marcosatc147",
+            "followers_url": "https://api.github.com/users/Marcosatc147/followers",
+            "following_url": "https://api.github.com/users/Marcosatc147/following{/other_user}",
+            "gists_url": "https://api.github.com/users/Marcosatc147/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/Marcosatc147/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/Marcosatc147/subscriptions",
+            "organizations_url": "https://api.github.com/users/Marcosatc147/orgs",
+            "repos_url": "https://api.github.com/users/Marcosatc147/repos",
+            "events_url": "https://api.github.com/users/Marcosatc147/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/Marcosatc147/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "labels": [],
+        "state": "open",
+        "locked": false,
+        "assignees": [],
+        "milestone": null,
+        "comments": 1,
+        "created_at": "2026-10-26T04:22:27Z",
+        "updated_at": "2026-10-26T04:29:08Z",
+        "closed_at": null,
+        "assignee": null,
+        "author_association": "NONE",
+        "issue_field_values": [],
+        "type": null,
+        "active_lock_reason": null,
+        "draft": false,
+        "pull_request": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/pulls/90",
+            "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/90",
+            "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/90.diff",
+            "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/90.patch",
+            "merged_at": null
+        },
+        "body": "## Motiva\u00e7\u00e3o\r\n\r\nO Dockerfile principal utiliza um build multi-stage otimizado para produ\u00e7\u00e3o e executa o frontend com `pnpm start`. Esse comportamento impede o hot-reload do Next.js quando o c\u00f3digo-fonte \u00e9 montado como volume durante o desenvolvimento local.\r\n\r\nEste PR adiciona um ambiente Docker espec\u00edfico para desenvolvimento, permitindo que altera\u00e7\u00f5es no c\u00f3digo sejam detectadas e recompiladas automaticamente, sem rebuild da imagem.\r\n\r\n## Mudan\u00e7as\r\n\r\n- Adiciona o `Dockerfile.dev` baseado em `node:20-alpine`.\r\n- Instala `libc6-compat` e `pnpm@9.0.0`.\r\n- Instala as depend\u00eancias utilizando `pnpm-lock.yaml` e `--frozen-lockfile`.\r\n- Executa o frontend em modo de desenvolvimento com `pnpm dev`.\r\n- Habilita `WATCHPACK_POLLING=true` para detectar altera\u00e7\u00f5es em bind mounts.\r\n- Configura o `docker-compose-dev.yml` para usar o `Dockerfile.dev`.\r\n- Preserva os volumes de `/usr/src/node_modules` e `/usr/src/.next`.\r\n- Adiciona `/.git/` ao `.dockerignore`, reduzindo o contexto de build de aproximadamente 137 MB para 63 KB.\r\n\r\n## Status Checklist\r\n\r\n- [x] Test\r\n- [ ] Lint\r\n- [x] Development\r\n\r\n## Screenshots\r\n\r\nN\u00e3o se aplica. Este PR altera somente a infraestrutura do ambiente de desenvolvimento.\r\n\r\n## Valida\u00e7\u00e3o\r\n\r\n- Imagem constru\u00edda com sucesso.\r\n- Next.js iniciado na porta 3000.\r\n- Hot-reload validado sem rebuild:\r\n  1. P\u00e1gina tempor\u00e1ria respondeu `HOT_RELOAD_PROBE_V1`.\r\n  2. O arquivo foi alterado no host.\r\n  3. O mesmo cont\u00eainer recompilou e respondeu `HOT_RELOAD_PROBE_V2`.\r\n- Recompila\u00e7\u00e3o observada em aproximadamente 343\u2013473 ms.\r\n- 158 su\u00edtes e 1.108 testes passaram.\r\n- P\u00e1gina tempor\u00e1ria e cont\u00eainer de valida\u00e7\u00e3o removidos.\r\n\r\n## Execu\u00e7\u00e3o\r\n\r\nPara iniciar todo o ambiente:\r\n\r\n```bash\r\ndocker compose -f docker-compose-dev.yml up --build front\r\n```\r\n\r\nCaso `service` e `db` j\u00e1 estejam executando:\r\n\r\n```bash\r\ndocker compose -f docker-compose-dev.yml up --build --no-deps front\r\n```\r\n\r\nAcesse:\r\n\r\n```text\r\nhttp://localhost:3000\r\n```\r\n\r\nAltere e salve um arquivo em `src/`. A mudan\u00e7a dever\u00e1 ser recompilada sem reconstruir a imagem Docker.\r\n\r\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#70",
+        "closed_by": null,
+        "reactions": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/90/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/90/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null
+    },
+    {
         "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/89",
         "repository_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front",
         "labels_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/89/labels{/name}",
@@ -32,7 +104,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -60,8 +132,8 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-10-25T20:14:07Z",
-        "updated_at": "2026-10-25T20:16:38Z",
-        "closed_at": null,
+        "updated_at": "2026-10-26T09:23:40Z",
+        "closed_at": "2026-10-26T09:23:38Z",
         "assignee": {
             "login": "thegm445",
             "id": 110239666,
@@ -93,10 +165,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/89",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/89.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/89.patch",
-            "merged_at": null
+            "merged_at": "2026-10-26T09:23:38Z"
         },
         "body": "## Motiva\u00e7\u00e3o\n\nImplementar a exporta\u00e7\u00e3o de CSV no dashboard **\"3. Estrutura das Medidas e Indicadores (Metamodelo)\"** (parte `[Front]` da [US21.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/126), Issue #79), seguindo a decis\u00e3o do PO de disponibilizar o bot\u00e3o **\"Exportar .csv\"** no cabe\u00e7alho do quadro da \u00e1rvore de configura\u00e7\u00e3o da release usando a base compartilhada de exporta\u00e7\u00e3o (`exportCsv.ts` e `ExportCsvButton`).\n\nComo a p\u00e1gina possui apenas um quadro (**\"Configura\u00e7\u00e3o do modelo de qualidade da release\"**), a exporta\u00e7\u00e3o \u00e9 feita exclusivamente pelo bot\u00e3o do card (`msgram-metamodelo-arvore-<data>.csv`), sem bot\u00e3o `.zip` no topo.\n\n## Mudan\u00e7as\n\n- Criado o formatador `formatMetamodelCsv` (`src/shared/utils/formatMetamodelCsv.ts`), que percorre a \u00e1rvore da release escolhida em pr\u00e9-ordem e gera uma linha por n\u00f3 com as colunas `Release`, `N\u00edvel`, `Chave`, `Nome`, `Entidade pai`, `Peso (%)`, `M\u00ednimo` e `M\u00e1ximo`.\n- Mantidos os pesos sem arredondar no CSV (com `Peso (%)` vazio na raiz `TSQMI`), todos os n\u00f3s exportados mesmo com ramos colapsados na tela, `M\u00ednimo` e `M\u00e1ximo` preenchidos apenas nas medidas e m\u00e9tricas compartilhadas repetidas sob cada medida que as utiliza.\n- Adicionado o `<ExportCsvButton>` em `headerAction` e `emptyHeaderAction` do `DashboardCard` **\"Configura\u00e7\u00e3o do modelo de qualidade da release\"** em `MetamodeloDashboard.tsx`, ficando desabilitado no estado vazio e oculto durante carregamento ou erro.\n- Criados os testes unit\u00e1rios do formatador (`src/shared/utils/tests/formatMetamodelCsv.spec.ts`) e da exporta\u00e7\u00e3o na p\u00e1gina (`src/pages/products/[product]/dashboards/metamodelo/tests/MetamodeloDashboard.spec.tsx`, cobrindo release atual, troca de release e estados vazio, carregando e erro).\n- Documentada a exporta\u00e7\u00e3o do dashboard Metamodelo na se\u00e7\u00e3o **\"Exporta\u00e7\u00e3o de CSV dos dashboards\"** do `README.md`.\n\n## Status Checklist\n\n- [x] Test\n- [x] Lint\n- [x] Development\n\n## Screenshots\n\n| Before                                               | After                                                |\n| ---------------------------------------------------- | ---------------------------------------------------- |\n| Quadro \"Configura\u00e7\u00e3o do modelo de qualidade da release\" sem a\u00e7\u00e3o de exporta\u00e7\u00e3o no cabe\u00e7alho | Bot\u00e3o **\"Exportar .csv\"** no cabe\u00e7alho do quadro (habilitado com \u00e1rvore carregada e desabilitado no estado vazio) |\n\n## Execu\u00e7\u00e3o\n\n- Suba o ambiente (`make up` ou `pnpm dev`) e acesse `/products/<id-produto>/dashboards/metamodelo`.\n- No quadro **\"Configura\u00e7\u00e3o do modelo de qualidade da release\"**, clique em **\"Exportar .csv\"** e verifique o download do arquivo `msgram-metamodelo-arvore-<data>.csv` contendo todos os n\u00edveis da \u00e1rvore da release selecionada (inclusive os n\u00f3s colapsados), com os pesos sem arredondar e os limiares m\u00ednimo/m\u00e1ximo nas medidas.\n- Troque a release no seletor **Release**, exporte novamente e verifique que a coluna `Release` e a estrutura refletem a release escolhida.\n- Em um produto sem release (ou release sem modelo configurado), verifique que o bot\u00e3o **\"Exportar .csv\"** permanece vis\u00edvel e desabilitado.\n- Para rodar os testes:\n  - `pnpm test src/shared/utils/tests/formatMetamodelCsv.spec.ts src/pages/products/[product]/dashboards/metamodelo/tests/MetamodeloDashboard.spec.tsx`",
-        "closed_by": null,
+        "closed_by": {
+            "login": "gusrberto",
+            "id": 79723182,
+            "node_id": "MDQ6VXNlcjc5NzIzMTgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/79723182?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusrberto",
+            "html_url": "https://github.com/gusrberto",
+            "followers_url": "https://api.github.com/users/gusrberto/followers",
+            "following_url": "https://api.github.com/users/gusrberto/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusrberto/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusrberto/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusrberto/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusrberto/orgs",
+            "repos_url": "https://api.github.com/users/gusrberto/repos",
+            "events_url": "https://api.github.com/users/gusrberto/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusrberto/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/89/reactions",
             "total_count": 0,
@@ -146,7 +238,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -174,8 +266,8 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-10-25T20:01:27Z",
-        "updated_at": "2026-10-25T20:04:53Z",
-        "closed_at": null,
+        "updated_at": "2026-10-26T09:15:54Z",
+        "closed_at": "2026-10-26T09:15:46Z",
         "assignee": {
             "login": "thegm445",
             "id": 110239666,
@@ -210,7 +302,27 @@
             "merged_at": null
         },
         "body": "## Contexto\n\nAplica as corre\u00e7\u00f5es solicitadas pelo PO na revis\u00e3o de 21/10 para o dashboard da **US21.01** (\"3. Estrutura das Medidas e Indicadores (Metamodelo)\").\n\nCloses #37  \nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#126\n\n---\n\n## O que foi feito\n\n- **T\u00edtulo e cabe\u00e7alho do dashboard (CA1):**\n  - Renomeia `TITLE` em `MetamodeloDashboard.tsx` de `\"3. Metamodelo\"` para `\"3. Estrutura das Medidas e Indicadores (Metamodelo)\"` (`<title>` e `<h1>`).\n- **Submenu de Dashboards e layout do item longo (`SideMenu.tsx`) (CA1):**\n  - Atualiza `text` e `tooltip` do item 3 em `dashboardSubItems` para `\"3. Estrutura das Medidas e Indicadores (Metamodelo)\"`.\n  - Ajusta o container do subitem (`dashboard-subitem`) para respeitar `100%` da largura \u00fatil com o recuo de `20px` (`box-sizing: border-box`) e ter altura flex\u00edvel (`min-height: 45px`, `height: auto`, `padding: 6px 4px`), permitindo que o nome longo quebre em duas linhas sem cortar a borda direita no menu aberto e apare\u00e7a inteiro no tooltip com o menu recolhido.\n- **Breadcrumb (`public/locales/{pt,en}/breadcrumb.json`) (CA1):**\n  - Atualiza a chave `\"metamodelo\"` para `\"3. Estrutura das Medidas e Indicadores (Metamodelo)\"` (PT) e `\"3. Measures and Indicators Structure (Metamodel)\"` (EN).\n- **Quadro da \u00e1rvore (CA2):**\n  - Renomeia o `title` do `DashboardCard` de `\"Modelo de qualidade da release\"` para `\"Configura\u00e7\u00e3o do modelo de qualidade da release\"`.\n- **Testes automatizados:**\n  - Atualiza `SideMenuDashboards.spec.tsx` (incluindo verifica\u00e7\u00e3o do tooltip no menu recolhido e do estilo de largura/altura do subitem) e `MetamodeloDashboard.spec.tsx` (verificando o novo `h1` e o t\u00edtulo da regi\u00e3o do card).\n\n---\n\n## Como verificar\n\n1. Rodar as su\u00edtes de testes e o linter:\n   ```bash\n   pnpm ci:test\n   pnpm lint\n   ```\n2. No navegador, acessar um produto e abrir **Dashboards \u2192 3. Estrutura das Medidas e Indicadores (Metamodelo)**:\n   - Conferir que o item cabe no submenu aberto (quebrando em 2 linhas sem corte lateral) e exibe o nome completo no tooltip quando o menu lateral est\u00e1 recolhido.\n   - Conferir o breadcrumb, o t\u00edtulo `h1` da p\u00e1gina e o t\u00edtulo do quadro **\"Configura\u00e7\u00e3o do modelo de qualidade da release\"**.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "gusrberto",
+            "id": 79723182,
+            "node_id": "MDQ6VXNlcjc5NzIzMTgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/79723182?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusrberto",
+            "html_url": "https://github.com/gusrberto",
+            "followers_url": "https://api.github.com/users/gusrberto/followers",
+            "following_url": "https://api.github.com/users/gusrberto/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusrberto/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusrberto/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusrberto/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusrberto/orgs",
+            "repos_url": "https://api.github.com/users/gusrberto/repos",
+            "events_url": "https://api.github.com/users/gusrberto/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusrberto/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/88/reactions",
             "total_count": 0,
@@ -1251,7 +1363,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -1279,8 +1391,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-10-23T19:08:35Z",
-        "updated_at": "2026-10-23T19:09:56Z",
-        "closed_at": null,
+        "updated_at": "2026-10-26T09:23:40Z",
+        "closed_at": "2026-10-26T09:23:40Z",
         "assignee": {
             "login": "thegm445",
             "id": 110239666,
@@ -1319,7 +1431,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nUsar a exporta\u00e7\u00e3o de CSV dos dashboards, criada na TASK21.04.04 (#69), no dashboard \"3. Estrutura das Medidas e Indicadores (Metamodelo)\". \u00c9 parte `[Front]` da [US21.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/126) e segue a decis\u00e3o do PO na reuni\u00e3o de 21/10: um bot\u00e3o \"Exportar .csv\" em cada gr\u00e1fico.\n\n> **Antes de come\u00e7ar:** esta task s\u00f3 pode ser implementada depois que o dashboard estiver pronto, com as corre\u00e7\u00f5es do PO da TASK21.01.02 (#37) integradas na `develop`. O CSV segue o que a tela mostra, ent\u00e3o mudan\u00e7as no quadro mudam as colunas.\n\nA base j\u00e1 existe: `toCsv`, `downloadCsv` e `downloadCsvZip` em `src/shared/utils/exportCsv.ts`, os bot\u00f5es `ExportCsvButton` e `ExportAllCsvButton` em `src/shared/components/ExportCsvButton/`, e a se\u00e7\u00e3o \"Exporta\u00e7\u00e3o de CSV dos dashboards\" do README. O exemplo completo \u00e9 o dashboard \"6. Rela\u00e7\u00f5es e Correla\u00e7\u00f5es\" (`formatCorrelationCsv`). O CSV \u00e9 montado com os dados que a p\u00e1gina j\u00e1 carregou, ent\u00e3o o Service n\u00e3o muda.\n\nA p\u00e1gina tem um quadro s\u00f3, a \u00e1rvore da configura\u00e7\u00e3o. Por isso, o bot\u00e3o do topo (`.zip`) n\u00e3o entra: ele geraria um `.zip` com um \u00fanico arquivo, igual ao do bot\u00e3o do quadro.\n\n## Lista de afazeres\n1. [ ] Criar a fun\u00e7\u00e3o que monta o CSV da \u00e1rvore da release escolhida: uma linha por n\u00f3, com as colunas Release, N\u00edvel, Chave, Nome, Entidade pai, Peso (%), M\u00ednimo e M\u00e1ximo. M\u00ednimo e M\u00e1ximo ficam vazios fora das medidas. Uma m\u00e9trica usada por mais de uma medida aparece uma vez para cada uma, como na \u00e1rvore.\n2. [ ] Colocar o `ExportCsvButton` no `headerAction` do quadro \"Configura\u00e7\u00e3o do modelo de qualidade da release\", com o nome `msgram-metamodelo-arvore-<data>.csv`.\n3. [ ] Exportar a configura\u00e7\u00e3o da release escolhida, com os pesos sem arredondar, mesmo com n\u00f3s colapsados na tela.\n4. [ ] Deixar o bot\u00e3o desabilitado nos estados de carregamento, vazio e erro.\n5. [ ] Criar os testes da fun\u00e7\u00e3o do CSV e do bot\u00e3o na p\u00e1gina (troca de release e estado vazio).",
-        "closed_by": null,
+        "closed_by": {
+            "login": "gusrberto",
+            "id": 79723182,
+            "node_id": "MDQ6VXNlcjc5NzIzMTgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/79723182?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusrberto",
+            "html_url": "https://github.com/gusrberto",
+            "followers_url": "https://api.github.com/users/gusrberto/followers",
+            "following_url": "https://api.github.com/users/gusrberto/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusrberto/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusrberto/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusrberto/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusrberto/orgs",
+            "repos_url": "https://api.github.com/users/gusrberto/repos",
+            "events_url": "https://api.github.com/users/gusrberto/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusrberto/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/79/reactions",
             "total_count": 0,
@@ -1334,7 +1466,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/79/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -6466,7 +6598,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -6494,8 +6626,8 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-10-19T22:16:32Z",
-        "updated_at": "2026-10-21T15:39:14Z",
-        "closed_at": null,
+        "updated_at": "2026-10-26T01:59:08Z",
+        "closed_at": "2026-10-26T01:59:08Z",
         "assignee": {
             "login": "bottinolucas",
             "id": 101297130,
@@ -6534,7 +6666,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nTrocar o iframe da tela do reposit\u00f3rio (`repositories/[repository]/Repository.tsx`, dashboard `saude-qualidade-repo`) por um gr\u00e1fico nativo. \u00c9 parte da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131) e segue o [prot\u00f3tipo do Figma](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6804-1011&page-id=617%3A1923&starting-point-node-id=6804%3A1011&show-proto-sidebar=1).\n\nA tela da release saiu desta task: a [US22.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/125) j\u00e1 trocou o gr\u00e1fico de linhas do Grafana pelo equalizador.\n\nEsta task monta a estrutura da nova tela do reposit\u00f3rio. A TASK23.01.03 (lista de arquivos por medida) acrescenta a lista de medidas nessa mesma tela e depende desta task.\n\n**Corre\u00e7\u00f5es do PO (21/10):** a primeira entrega desenhou um gr\u00e1fico de linhas com um ponto por release. O painel do Grafana que a tela mostrava (\"Indicador das Caracter\u00edsticas por reposit\u00f3rio\", em `grafana/dashboards/dashboard-saude-qualidade-repositorio.json`) era um pulso com uma linha por caracter\u00edstica. O PO pediu para manter essa met\u00e1fora do eletrocardiograma e seguir o gr\u00e1fico de pulso do produto da [US06.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/67) (`PulseChart`, `toPulseSeries` e `formatPulseChart`). Depende das faixas de cor da TASK07.01.02.\n\n## Lista de afazeres\n1. [x] Montar a nova tela do reposit\u00f3rio, j\u00e1 com espa\u00e7o para a lista de medidas da TASK23.01.03.\n2. [x] Desenhar a evolu\u00e7\u00e3o das caracter\u00edsticas do reposit\u00f3rio (CA3).\n3. [x] Tratar os estados de carregamento, sem dados e erro (CA4) e aplicar a paleta das telas atuais do produto (CA7).\n4. [x] Criar os testes da tela do reposit\u00f3rio.\n\n### Corre\u00e7\u00f5es do PO (21/10)\n5. [ ] Buscar todas as medi\u00e7\u00f5es das caracter\u00edsticas do reposit\u00f3rio em `historical-values/characteristics`.\n6. [ ] Trocar o gr\u00e1fico de linhas por release por uma faixa de pulso por caracter\u00edstica, com a mesma altura do pulso do produto (`gridHeight` de `PulseChart.tsx`), os marcadores das releases e as cores das faixas da TASK07.01.02 (CA3).\n7. [ ] Incluir o filtro de per\u00edodo e o bot\u00e3o \"Exportar .csv\", como em `PulseChartFilters` (CA3).\n8. [ ] Aplicar as observa\u00e7\u00f5es do PO na US06.01: tag da vers\u00e3o + nome da release na etiqueta, sem linhas horizontais e sem etiquetas sobrepostas.\n9. [ ] Usar nos estados de sem dados e erro as mensagens do guia de IDV (CA4).\n10. [ ] Atualizar os testes da tela do reposit\u00f3rio.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "gusrberto",
+            "id": 79723182,
+            "node_id": "MDQ6VXNlcjc5NzIzMTgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/79723182?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusrberto",
+            "html_url": "https://github.com/gusrberto",
+            "followers_url": "https://api.github.com/users/gusrberto/followers",
+            "following_url": "https://api.github.com/users/gusrberto/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusrberto/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusrberto/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusrberto/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusrberto/orgs",
+            "repos_url": "https://api.github.com/users/gusrberto/repos",
+            "events_url": "https://api.github.com/users/gusrberto/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusrberto/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/35/reactions",
             "total_count": 0,
@@ -6549,7 +6701,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/35/timeline",
         "performed_via_github_app": null,
-        "state_reason": "reopened",
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -6608,7 +6760,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -6636,8 +6788,8 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-10-19T22:14:30Z",
-        "updated_at": "2026-10-21T15:38:16Z",
-        "closed_at": null,
+        "updated_at": "2026-10-26T01:59:11Z",
+        "closed_at": "2026-10-26T01:59:11Z",
         "assignee": {
             "login": "bottinolucas",
             "id": 101297130,
@@ -6676,7 +6828,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nTrocar o iframe da Evolu\u00e7\u00e3o Temporal (`dashboards/temporal/TemporalDashboard.tsx`) por gr\u00e1ficos nativos. \u00c9 parte da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131) e segue o [prot\u00f3tipo do Figma](https://www.figma.com/proto/JtBAA8wQL88OvtRPAFr4Nu/MeasureSoftwareGram-Prototipos-GUI?node-id=6804-1011&page-id=617%3A1923&starting-point-node-id=6804%3A1011&show-proto-sidebar=1).\n\n**Corre\u00e7\u00f5es do PO (21/10):** a primeira entrega desenhou os 4 gr\u00e1ficos em grade 2\u00d72, com um ponto por release (`useReleaseEvolution` e `release-history`) e s\u00f3 o filtro de reposit\u00f3rio. O PO pediu para manter os gr\u00e1ficos, os filtros e as regras do dashboard do Grafana, incluir o filtro de m\u00e9trica e mostrar o tempo em dias, com op\u00e7\u00e3o de meses.\n\nO dashboard do Grafana (`grafana/dashboards/dashboard-evolucao.json`, removido no Service #58) tinha:\n- 4 gr\u00e1ficos de linha (caracter\u00edstica, subcaracter\u00edsticas, medidas e m\u00e9tricas), um abaixo do outro, com o tempo no eixo X (\u00faltimos 6 meses);\n- os filtros Reposit\u00f3rio, Caracter\u00edstica (uma), Subcaracter\u00edstica (v\u00e1rias, com \"Todas\") e Medida (v\u00e1rias, com \"Todas\"), em cascata: as op\u00e7\u00f5es de cada filtro s\u00e3o as filhas do que foi escolhido no anterior;\n- em cada gr\u00e1fico, s\u00f3 as entidades filtradas.\n\nOs dados j\u00e1 existem no Service: `historical-values/{characteristics,subcharacteristics,measures,metrics}` do reposit\u00f3rio, com `start_at` e `end_at`.\n\n## Lista de afazeres\n1. [x] Consumir os dados do reposit\u00f3rio escolhido e a lista de releases do produto (`productQuery.getReleaseList`).\n2. [x] Desenhar os 4 gr\u00e1ficos, mantendo o seletor de reposit\u00f3rio que j\u00e1 existe (CA2).\n3. [x] Tratar os estados de carregamento, sem dados e erro (CA4) e aplicar a paleta das telas atuais do produto (CA7).\n\n### Corre\u00e7\u00f5es do PO (21/10)\n4. [ ] Montar os filtros Reposit\u00f3rio, Caracter\u00edstica, Subcaracter\u00edstica, Medida e M\u00e9trica (novo), em cascata, a partir da configura\u00e7\u00e3o do produto. Avaliar se o `TreeViewFilter` da tela do reposit\u00f3rio serve (CA2).\n5. [ ] No n\u00edvel m\u00e9trica, listar s\u00f3 as m\u00e9tricas com valor por reposit\u00f3rio (as do GitHub), a mesma regra da An\u00e1lise por Entidade (US21.02).\n6. [ ] Desenhar os 4 gr\u00e1ficos um abaixo do outro, com os valores de `historical-values/*` e o tempo no eixo X, no lugar do ponto por release (CA2).\n7. [ ] Mostrar o eixo X em dias por padr\u00e3o, com a op\u00e7\u00e3o de trocar para meses (CA2).\n8. [ ] Usar nos estados de sem dados e erro as mensagens do guia de IDV (CA4).\n9. [ ] Remover `ReleaseEvolutionChart` e `useReleaseEvolution`, se ficarem sem uso depois da TASK07.01.04.\n10. [ ] Criar testes da cascata dos filtros, da troca dias/meses e dos estados.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "gusrberto",
+            "id": 79723182,
+            "node_id": "MDQ6VXNlcjc5NzIzMTgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/79723182?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusrberto",
+            "html_url": "https://github.com/gusrberto",
+            "followers_url": "https://api.github.com/users/gusrberto/followers",
+            "following_url": "https://api.github.com/users/gusrberto/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusrberto/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusrberto/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusrberto/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusrberto/orgs",
+            "repos_url": "https://api.github.com/users/gusrberto/repos",
+            "events_url": "https://api.github.com/users/gusrberto/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusrberto/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/34/reactions",
             "total_count": 0,
@@ -6691,7 +6863,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/34/timeline",
         "performed_via_github_app": null,
-        "state_reason": "reopened",
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
