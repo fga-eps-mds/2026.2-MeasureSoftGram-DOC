@@ -1543,7 +1543,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -1571,8 +1571,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-09-24T01:05:37Z",
-        "updated_at": "2026-09-27T17:56:32Z",
-        "closed_at": null,
+        "updated_at": "2026-10-23T23:45:10Z",
+        "closed_at": "2026-10-23T23:45:10Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -1590,7 +1590,27 @@
             "total_blocking": 0
         },
         "body": null,
-        "closed_by": null,
+        "closed_by": {
+            "login": "DiegoCarlito",
+            "id": 118839301,
+            "node_id": "U_kgDOBxVYBQ",
+            "avatar_url": "https://avatars.githubusercontent.com/u/118839301?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/DiegoCarlito",
+            "html_url": "https://github.com/DiegoCarlito",
+            "followers_url": "https://api.github.com/users/DiegoCarlito/followers",
+            "following_url": "https://api.github.com/users/DiegoCarlito/following{/other_user}",
+            "gists_url": "https://api.github.com/users/DiegoCarlito/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/DiegoCarlito/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/DiegoCarlito/subscriptions",
+            "organizations_url": "https://api.github.com/users/DiegoCarlito/orgs",
+            "repos_url": "https://api.github.com/users/DiegoCarlito/repos",
+            "events_url": "https://api.github.com/users/DiegoCarlito/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/DiegoCarlito/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Parser/issues/5/reactions",
             "total_count": 0,
@@ -1605,7 +1625,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Parser/issues/5/timeline",
         "performed_via_github_app": null,
-        "state_reason": "reopened",
+        "state_reason": "duplicate",
         "pinned_comment": null
     },
     {
