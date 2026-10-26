@@ -1,11 +1,794 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-10-26T17:21:34+00:00",
+ "coletado_em": "2026-10-26T23:18:55+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "branch": "(padrão)",
  "commits": [
+  {
+   "sha": "885010247745647d89efa359d103db2ceb2c52e8",
+   "date": "2026-10-26T22:02:03Z",
+   "author": "MilenaFRocha",
+   "message": "Merge pull request #174 from fga-eps-mds/feat/dashboard-enxuto",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-MeasureSoftGram-CLI.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 7238
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-MeasureSoftGram-Front.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 12164
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-MeasureSoftGram-Service.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 9328
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-CLI-10-07-2026-22-39-50.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-CLI-10-07-2026-22-40-38.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-CLI-10-17-2026-19-50-44.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-CLI-10-17-2026-19-50-55.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-CLI-10-26-2026-00-14-59.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-13-2026-14-10-19.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-17-2026-20-17-16.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-17-2026-20-32-09.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-19-2026-03-21-57.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-19-2026-03-38-12.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-03-50.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-22-43.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-13-2026-14-09-29.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-17-2026-20-16-53.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-19-2026-02-37-33.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-19-2026-03-39-08.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-19-2026-22-37-20.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-26-2026-10-10-28.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-CLI-10-07-2026-22-39-50-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-CLI-10-07-2026-22-40-38-v3.4.1rc1.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-CLI-10-17-2026-19-50-44-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-CLI-10-17-2026-19-50-55-v3.4.1rc2.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-CLI-10-26-2026-00-14-59-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-09-27-2026-02-03-51-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-07-2026-21-59-13-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-07-2026-22-01-44-v1.5.5rc2.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-07-2026-22-05-58-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-07-2026-22-06-47-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-07-2026-22-12-21-v1.5.5rc2.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-17-2026-19-30-19-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-17-2026-19-30-32-v1.5.5rc3.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-22-2026-17-36-27-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-22-2026-17-40-50-v1.5.5rc4.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-13-2026-14-10-19-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-17-2026-20-17-16-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-17-2026-20-32-09-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-19-2026-03-21-57-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-19-2026-03-38-12-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-03-50-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-22-43-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-13-2026-14-09-29-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-17-2026-20-16-53-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-19-2026-02-37-33-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-19-2026-03-39-08-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-19-2026-22-37-20-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-26-2026-10-10-28-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "95d0d4a58224ac0e94eb0a571c6ac7b97977b46e",
+   "date": "2026-10-26T21:58:49Z",
+   "author": "MilenaFRocha",
+   "message": "perf(dashboard): reduz memória e enxuga páginas",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-MeasureSoftGram-CLI.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 7238
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-MeasureSoftGram-Front.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 12164
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-MeasureSoftGram-Service.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 9328
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-CLI-10-07-2026-22-39-50.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-CLI-10-07-2026-22-40-38.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-CLI-10-17-2026-19-50-44.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-CLI-10-17-2026-19-50-55.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-CLI-10-26-2026-00-14-59.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-13-2026-14-10-19.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-17-2026-20-17-16.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-17-2026-20-32-09.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-19-2026-03-21-57.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-19-2026-03-38-12.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-03-50.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-22-43.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-13-2026-14-09-29.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-17-2026-20-16-53.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-19-2026-02-37-33.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-19-2026-03-39-08.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-19-2026-22-37-20.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Service-10-26-2026-10-10-28.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-CLI-10-07-2026-22-39-50-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-CLI-10-07-2026-22-40-38-v3.4.1rc1.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-CLI-10-17-2026-19-50-44-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-CLI-10-17-2026-19-50-55-v3.4.1rc2.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-CLI-10-26-2026-00-14-59-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-09-27-2026-02-03-51-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-07-2026-21-59-13-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-07-2026-22-01-44-v1.5.5rc2.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-07-2026-22-05-58-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-07-2026-22-06-47-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-07-2026-22-12-21-v1.5.5rc2.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-17-2026-19-30-19-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-17-2026-19-30-32-v1.5.5rc3.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-22-2026-17-36-27-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-10-22-2026-17-40-50-v1.5.5rc4.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-13-2026-14-10-19-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-17-2026-20-17-16-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-17-2026-20-32-09-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-19-2026-03-21-57-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-19-2026-03-38-12-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-03-50-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Front-10-26-2026-10-22-43-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-13-2026-14-09-29-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-17-2026-20-16-53-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-19-2026-02-37-33-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-19-2026-03-39-08-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-19-2026-22-37-20-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Service-10-26-2026-10-10-28-main.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "3da0116e093312ba973a8b21990781eaaec0cac2",
+   "date": "2026-10-26T17:23:35Z",
+   "author": "github-actions[bot]",
+   "message": "chore(dados): coleta automática do Zenhub, SonarCloud e GitHub Actions",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 344,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 7
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 72,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 124,
+     "deletions": 12
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T1721.json",
+     "status": "added",
+     "additions": 21201,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "2788a4bb4ea6c485999bae85bd2f608e8964b6c5",
    "date": "2026-10-26T16:43:35Z",
@@ -27361,5 +28144,5 @@
    ]
   }
  ],
- "detalhes_novos": 8
+ "detalhes_novos": 3
 }

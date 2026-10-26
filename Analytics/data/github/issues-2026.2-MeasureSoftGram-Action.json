@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-10-26T17:21:34+00:00",
+ "coletado_em": "2026-10-26T23:18:55+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
@@ -12,7 +12,7 @@
    "is_pull_request": true,
    "created_at": "2026-10-26T15:05:31Z",
    "closed_at": null,
-   "updated_at": "2026-10-26T15:06:31Z",
+   "updated_at": "2026-10-26T18:13:06Z",
    "labels": [],
    "type": null,
    "assignees": [],

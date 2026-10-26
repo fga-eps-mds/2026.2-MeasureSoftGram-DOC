@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-10-26T17:21:34+00:00",
+ "coletado_em": "2026-10-26T23:18:55+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 174,
+   "title": "perf(dashboard): reduz memória e enxuga páginas",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-26T22:00:54Z",
+   "closed_at": "2026-10-26T22:02:03Z",
+   "updated_at": "2026-10-26T22:02:06Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2318,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/174",
+   "author": "MilenaFRocha"
+  },
   {
    "number": 173,
    "title": "fix(dashboard): abas do Q-Rapids quebradas com os dados novos e ajust…",
