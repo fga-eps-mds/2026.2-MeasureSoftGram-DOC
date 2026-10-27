@@ -1,10 +1,29 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-10-27T17:24:10+00:00",
+ "coletado_em": "2026-10-27T23:14:39+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 175,
+   "title": "[MSG30] Configuração Dinâmica dos Intervalos e Faixas de Qualidade dos Indicadores",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-10-27T20:10:49Z",
+   "closed_at": null,
+   "updated_at": "2026-10-27T20:10:49Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2618,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/175",
+   "author": "luciano-freitas-melo"
+  },
   {
    "number": 174,
    "title": "perf(dashboard): reduz memória e enxuga páginas",
