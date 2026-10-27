@@ -22,6 +22,8 @@ APELIDOS = dict(getattr(config, "APELIDOS_REPO", {}))   # nome antigo do reposit
 PASTA_COLETA = Path(__file__).resolve().parents[2] / "data" / "github"
 _ISSUES = re.compile(r"^GitHub_API-Issues-(?P<prefixo>.+)\.json$")
 _RUNS = re.compile(r"^GitHub_API-Runs-(?P<prefixo>.+?)-\d{2}-\d{2}-\d{4}-\d{2}-\d{2}-\d{2}\.json$")
+_RUNS_DATA = re.compile(r"^GitHub_API-Runs-(?P<prefixo>.+?)-(?P<m>\d{2})-(?P<d>\d{2})-(?P<a>\d{4})-"
+                        r"(?P<h>\d{2})-(?P<mi>\d{2})-(?P<s>\d{2})\.json$")
 
 
 def _pastas(entrada) -> list[Path]:
@@ -34,13 +36,44 @@ def _repo(prefixo: str) -> str:
     return prefixo[len(ORG) + 1:] if prefixo.startswith(ORG + "-") else prefixo
 
 
+def _do_projeto(repo: str) -> bool:
+    """Só repositórios do semestre (``config.PREFIXO_REPOS_PROJETO``) são lidos. Os centrais
+    (fga-eps-mds/MeasureSoftGram-*) também gravam .json aqui, mas nunca entram no painel: ler e
+    descartar depois só gastava memória."""
+    prefixo = getattr(config, "PREFIXO_REPOS_PROJETO", "")
+    repo = APELIDOS.get(repo, repo)
+    return not prefixo or repo.startswith(prefixo)
+
+
+def _mais_recente_por_repo(arquivos: list[Path]) -> list[Path]:
+    """Um arquivo GitHub_API-Runs por repositório: o da coleta mais recente.
+
+    Cada arquivo do metrics.yml repete as últimas 250 execuções do repositório. Ler todos (171
+    arquivos, ~330 MB em 26/10/2026) estourava a memória do Streamlit Cloud. O histórico completo
+    vem da coleta própria (data/github/runs-*.json); do metrics.yml basta o mais novo.
+    """
+    escolhido: dict[str, tuple[str, Path]] = {}
+    for arquivo in arquivos:
+        casado = _RUNS_DATA.match(arquivo.name)
+        if not casado:
+            continue
+        repo = _repo(casado.group("prefixo"))
+        if not _do_projeto(repo):
+            continue
+        m, d, a, h, mi, se = casado.group("m", "d", "a", "h", "mi", "s")
+        chave = f"{a}{m}{d}{h}{mi}{se}"
+        if repo not in escolhido or chave > escolhido[repo][0]:
+            escolhido[repo] = (chave, arquivo)
+    return [arq for _, arq in sorted(escolhido.values(), key=lambda x: x[1].name)]
+
+
 def carregar_issues(pastas) -> pd.DataFrame:
     """Lê as issues coletadas pela API do GitHub."""
     linhas = []
     for arquivo in [a for p in _pastas(pastas)
                     for a in sorted(p.glob("GitHub_API-Issues-*.json"))]:
         casado = _ISSUES.match(arquivo.name)
-        if not casado:
+        if not casado or not _do_projeto(_repo(casado.group("prefixo"))):
             continue
         try:
             dados = json.loads(arquivo.read_text(encoding="utf-8"))
@@ -69,18 +102,17 @@ def carregar_issues(pastas) -> pd.DataFrame:
 def _linha_run(repo: str, item: dict, origem: str, coletado_em) -> dict:
     return {"repositorio": repo, "workflow": item.get("name"), "status": item.get("status"),
             "conclusao": item.get("conclusion"), "branch": item.get("head_branch"),
-            "criado_em": pd.to_datetime(item.get("created_at"), errors="coerce", utc=True),
-            "iniciado_em": pd.to_datetime(item.get("run_started_at"), errors="coerce", utc=True),
-            "atualizado_em": pd.to_datetime(item.get("updated_at"), errors="coerce", utc=True),
+            "criado_em": item.get("created_at"), "iniciado_em": item.get("run_started_at"),
+            "atualizado_em": item.get("updated_at"),
             "evento": item.get("event"), "id": item.get("id"), "url": item.get("html_url"),
-            "origem": origem, "coletado_em": pd.to_datetime(coletado_em, errors="coerce", utc=True)}
+            "origem": origem, "coletado_em": coletado_em}
 
 
 def carregar_runs(pastas) -> pd.DataFrame:
     """Lê as execuções de workflow coletadas pela API do GitHub."""
     linhas = []
-    for arquivo in [a for p in _pastas(pastas)
-                    for a in sorted(p.glob("GitHub_API-Runs-*.json"))]:
+    for arquivo in _mais_recente_por_repo([a for p in _pastas(pastas)
+                                           for a in sorted(p.glob("GitHub_API-Runs-*.json"))]):
         casado = _RUNS.match(arquivo.name)
         if not casado:
             continue
@@ -101,12 +133,16 @@ def carregar_runs(pastas) -> pd.DataFrame:
                 dados = json.loads(arquivo.read_text(encoding="utf-8"))
             except (json.JSONDecodeError, OSError):
                 continue
+            repo = dados.get("repositorio") or arquivo.stem[5:]
+            if not _do_projeto(repo):
+                continue
             for item in dados.get("workflow_runs") or []:
-                linhas.append(_linha_run(dados.get("repositorio") or arquivo.stem[5:], item, "coleta do dashboard",
-                                         dados.get("coletado_em")))
+                linhas.append(_linha_run(repo, item, "coleta do dashboard", dados.get("coletado_em")))
     df = pd.DataFrame(linhas)
     if df.empty:
         return df
+    for col in ("criado_em", "iniciado_em", "atualizado_em", "coletado_em"):   # de uma vez, não linha a linha
+        df[col] = pd.to_datetime(df[col], errors="coerce", utc=True)
     # O mesmo run aparece em várias coletas; fica a versão mais recente dele.
     # A coleta própria vem por último na ordenação de empate e ganha (é a mais completa e recente).
     # O id do run é único no GitHub: deduplicar só por ele junta também o repositório renomeado

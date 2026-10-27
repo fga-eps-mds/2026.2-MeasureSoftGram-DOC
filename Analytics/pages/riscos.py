@@ -115,20 +115,6 @@ def pagina():
         layout.alerta("warning", f"{rid} tem avaliação na aba Monitoramento, mas não existe na aba Riscos: o painel "
                                  "não o conta até ser cadastrado lá.", link=(rid, rastreio.aba("monitoramento")[1]))
 
-    layout.secao("Dado bruto", "Qual é o plano de resposta de cada risco?", ["PLANILHA"])
-    t = r
-    colunas = {"id": "ID", "risco": "Risco", "categoria": "Categoria", "probabilidade_atual": "P",
-               "impacto_atual": "I", "exposicao_atual": "P × I", "nivel": "Nível", "status": "Status",
-               "resposta": "Resposta", "acao_preventiva": "Ação preventiva", "contingencia": "Contingência",
-               "responsavel": "Responsável", "ultima_sprint_avaliada": "Última sprint avaliada"}
-    tt = t.sort_values("exposicao_atual", ascending=False)
-    st.dataframe(tt[[x for x in colunas if x in tt]].rename(columns=colunas), use_container_width=True,
-                 hide_index=True, column_config={
-                     "Risco": st.column_config.TextColumn(width="large"),
-                     "Ação preventiva": st.column_config.TextColumn(width="large"),
-                     "P × I": st.column_config.NumberColumn(format="%d")})
-    st.caption(f"{len(tt)} riscos no recorte · ordenados pela exposição.")
-
     layout.secao("Análise", "Onde estão os riscos mais graves e a exposição está caindo?", ["PLANILHA"])
     e, d = st.columns([1.1, 1])
     with e:
@@ -169,5 +155,19 @@ def pagina():
                            nota="Só há uma revisão: cada nova avaliação na planning vira uma coluna."
                            if m["sprint"].nunique() < 2 else None)
 
-    for chave in ("riscos", "monitoramento"):
-        rastreio.aba_original(chave)
+    if layout.detalhes("riscos", "Mostrar o plano de resposta de cada risco"):
+        layout.secao("Dado bruto", "Qual é o plano de resposta de cada risco?", ["PLANILHA"])
+        t = r
+        colunas = {"id": "ID", "risco": "Risco", "categoria": "Categoria", "probabilidade_atual": "P",
+                   "impacto_atual": "I", "exposicao_atual": "P × I", "nivel": "Nível", "status": "Status",
+                   "resposta": "Resposta", "acao_preventiva": "Ação preventiva", "contingencia": "Contingência",
+                   "responsavel": "Responsável", "ultima_sprint_avaliada": "Última sprint avaliada"}
+        tt = t.sort_values("exposicao_atual", ascending=False)
+        st.dataframe(tt[[x for x in colunas if x in tt]].rename(columns=colunas), use_container_width=True,
+                     hide_index=True, column_config={
+                         "Risco": st.column_config.TextColumn(width="large"),
+                         "Ação preventiva": st.column_config.TextColumn(width="large"),
+                         "P × I": st.column_config.NumberColumn(format="%d")})
+        st.caption(f"{len(tt)} riscos no recorte · ordenados pela exposição.")
+        for chave in ("riscos", "monitoramento"):
+            rastreio.aba_original(chave)

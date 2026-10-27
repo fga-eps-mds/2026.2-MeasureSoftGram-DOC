@@ -90,6 +90,15 @@ def titulo_pagina(titulo: str, subtitulo: str, fontes=()) -> None:
     st.caption(subtitulo)
 
 
+def detalhes(chave: str, rotulo: str = "Mostrar dados detalhados") -> bool:
+    """Interruptor do conteúdo secundário (tabelas brutas, conferências, gráficos de apoio).
+
+    A página abre só com o resumo e os gráficos principais. O que fica atrás do interruptor nem é
+    montado enquanto ninguém pede, o que deixa a leitura mais rápida e economiza memória no servidor.
+    """
+    return st.toggle(rotulo, value=False, key=f"detalhes_{chave}")
+
+
 def secao(titulo: str, pergunta: str | None = None, fontes=()) -> None:
     """Título do bloco + a pergunta gerencial que ele responde."""
     p = f"<div class='msg-pergunta'>{html.escape(pergunta)}</div>" if pergunta else ""

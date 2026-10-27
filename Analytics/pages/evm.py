@@ -397,11 +397,11 @@ def pagina():
         layout.alerta("warning", f"Nada foi estimado na planning da 1ª sprint da {rel}; todo o escopo "
                                  f"({num(u['PRP'])} SP) entrou depois.")
 
-    layout.secao("Dado bruto", "Quais stories e semanas formam o EVM?", ["ZENHUB", "PLANILHA"])
-    _rastreabilidade(ctx, rel, d, u)
-
     layout.secao("Análise", "Como prazo, custo e escopo evoluíram sprint a sprint?", ["CALCULADO"])
     _graficos(rel, feitas, u)
 
-    with st.expander("Tabela completa do Agile EVM (todas as sprints da release)"):
-        _tabela_completa(d)
+    if layout.detalhes("evm", "Mostrar stories, semanas e a tabela completa do EVM"):
+        layout.secao("Dado bruto", "Quais stories e semanas formam o EVM?", ["ZENHUB", "PLANILHA"])
+        _rastreabilidade(ctx, rel, d, u)
+        with st.expander("Tabela completa do Agile EVM (todas as sprints da release)"):
+            _tabela_completa(d)

@@ -33,19 +33,25 @@ def _evidencia(texto) -> str:
     return CAMINHO.sub(lambda m: f"<a href='{REPO}{m.group(1)}' target='_blank' rel='noopener'>{m.group(1)}</a>", t)
 
 
-def pagina():
+def pagina(embutida: bool = False):
+    """``embutida``: desenhada no fim da página Riscos (o painel enxuto juntou as duas)."""
     ctx, f = layout.estado()
-    layout.titulo_pagina("Decisões", "Decisões de gestão tomadas a partir dos dados, com evidência e critério de "
-                         "sucesso.", ["PLANILHA"])
+    if embutida:
+        st.divider()
+        layout.secao("Decisões", "Que decisões de gestão tomamos a partir dos dados, e deram certo?", ["PLANILHA"])
+    else:
+        layout.titulo_pagina("Decisões", "Decisões de gestão tomadas a partir dos dados, com evidência e critério de "
+                             "sucesso.", ["PLANILHA"])
     metas = config.METAS_DECISOES
-    layout.menus([
-        ("Decisão baseada em dados", "escolha do time justificada por um número do painel ou da planilha",
-         "uma linha na aba Decisões: contexto e dado → decisão → evidência → critério de sucesso → resultado",
-         [rastreio.aba("decisoes")]),
-        ("Com resultado medido", "decisão cujo critério de sucesso já foi conferido", "coluna Resultado preenchida",
-         [rastreio.aba("decisoes")]),
-    ], [(f"Meta de decisões na {k}", f"≥ {v}", "config.py · METAS_DECISOES", rastreio.codigo())
-        for k, v in metas.items()], fontes=["PLANILHA"])
+    if not embutida:
+        layout.menus([
+            ("Decisão baseada em dados", "escolha do time justificada por um número do painel ou da planilha",
+             "uma linha na aba Decisões: contexto e dado → decisão → evidência → critério de sucesso → resultado",
+             [rastreio.aba("decisoes")]),
+            ("Com resultado medido", "decisão cujo critério de sucesso já foi conferido", "coluna Resultado preenchida",
+             [rastreio.aba("decisoes")]),
+        ], [(f"Meta de decisões na {k}", f"≥ {v}", "config.py · METAS_DECISOES", rastreio.codigo())
+            for k, v in metas.items()], fontes=["PLANILHA"])
     dec = ctx.decisoes
     if dec is None or dec.empty:
         layout.indisponivel("Nenhuma decisão registrada", "a aba Decisões está vazia ou não foi lida.")
@@ -58,7 +64,8 @@ def pagina():
                                   errors="coerce")
     ini, fim = pd.Timestamp(f["periodo"][0]), pd.Timestamp(f["periodo"][1]) + pd.Timedelta(days=1)
     ate_fim = dec[dec["_data"].isna() | (dec["_data"] < fim)]
-    caixa = filters.da_pagina(f, ESCOPO)
+    caixa = filters.da_pagina(f, ESCOPO, titulo="Filtros de decisões", resumo=False) if embutida \
+        else filters.da_pagina(f, ESCOPO)
     # a meta é acumulada: a tabela mostra todas as decisões até o fim do período e marca as do período
     no_periodo = ate_fim.assign(no_periodo=ate_fim["_data"].isna() | (ate_fim["_data"] >= ini))
     escolhas = []

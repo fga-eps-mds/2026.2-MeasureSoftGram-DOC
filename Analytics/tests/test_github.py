@@ -23,16 +23,32 @@ class RunsTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             d = Path(d)
             # arquivo antigo do metrics.yml com 2 runs; coleta do dashboard com 3 (um repetido)
-            (d / "GitHub_API-Runs-fga-eps-mds-Repo-09-10-2026-10-00-00.json").write_text(
+            (d / "GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Repo-09-10-2026-10-00-00.json").write_text(
                 json.dumps({"total_count": 2, "workflow_runs": [run(1, "success"), run(2, "failure")]}))
             (d / "github").mkdir()
-            (d / "github" / "runs-Repo.json").write_text(json.dumps({
-                "repositorio": "Repo", "coletado_em": "2026-09-28T12:00:00+00:00",
+            (d / "github" / "runs-2026.2-MeasureSoftGram-Repo.json").write_text(json.dumps({
+                "repositorio": "2026.2-MeasureSoftGram-Repo", "coletado_em": "2026-09-28T12:00:00+00:00",
                 "workflow_runs": [run(1, "success"), run(2, "failure"), run(3, "cancelled")]}))
             r = github.carregar_runs([d])
         self.assertEqual(len(r), 3)
         self.assertEqual(set(r["origem"]), {"coleta do dashboard"})
         self.assertEqual(r["conclusao"].value_counts().to_dict(), {"success": 1, "failure": 1, "cancelled": 1})
+
+
+    def test_le_so_o_arquivo_mais_recente_e_ignora_repos_centrais(self):
+        # cada arquivo do metrics.yml repete as últimas execuções: basta o mais novo de cada repositório
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            nome = "GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Repo-{}.json"
+            (d / nome.format("09-10-2026-10-00-00")).write_text(
+                json.dumps({"workflow_runs": [run(1, "failure")]}))
+            (d / nome.format("10-02-2026-09-00-00")).write_text(
+                json.dumps({"workflow_runs": [run(1, "success"), run(2, "success")]}))
+            (d / "GitHub_API-Runs-fga-eps-mds-MeasureSoftGram-Core-10-02-2026-09-00-00.json").write_text(
+                json.dumps({"workflow_runs": [run(9, "success")]}))
+            r = github.carregar_runs([d])
+        self.assertEqual(sorted(r["conclusao"]), ["success", "success"])
+        self.assertEqual(set(r["repositorio"]), {"2026.2-MeasureSoftGram-Repo"})
 
 
 class ResponsaveisTest(unittest.TestCase):

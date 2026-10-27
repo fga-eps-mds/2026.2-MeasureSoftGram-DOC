@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -78,6 +79,18 @@ def _repo(prefixo: str) -> str:
     return prefixo[len(ORG) + 1:] if prefixo.startswith(ORG + "-") else prefixo
 
 
+def _do_projeto(repo: str) -> bool:
+    """Só os repositórios do semestre entram (os centrais fga-eps-mds/MeasureSoftGram-* ficam de fora já na leitura)."""
+    import config  # import local: este módulo também é usado pelos scripts de coleta
+    prefixo = getattr(config, "PREFIXO_REPOS_PROJETO", "")
+    repo = dict(getattr(config, "APELIDOS_REPO", {})).get(repo, repo)
+    return not prefixo or repo.startswith(prefixo)
+
+
+def _txt(valor):
+    return sys.intern(valor) if isinstance(valor, str) else valor
+
+
 def _num(valor):
     try:
         return float(valor)
@@ -89,13 +102,16 @@ def _num(valor):
 
 def carregar_sonar(pastas) -> tuple[pd.DataFrame, pd.DataFrame]:
     """(agregado por repositório, detalhe por componente) dos .json do pipeline."""
-    linhas_repo, linhas_comp = [], []
+    linhas_repo = []
+    # componentes em colunas (listas), não em dicionários por linha: o pico de memória cai bastante
+    cols_comp: dict[str, list] = {c: [] for c in ("repositorio", "branch", "coleta", "arquivo", "componente",
+                                                   "tipo", "linguagem", "metrica", "valor")}
     arquivos = [a for pasta in _pastas(pastas) for a in sorted(pasta.glob("*.json"))]
     for arquivo in arquivos:
         if arquivo.name.startswith("GitHub_API-"):
             continue
         casado = _SONAR.match(arquivo.name)
-        if not casado:
+        if not casado or not _do_projeto(_repo(casado.group("prefixo"))):
             continue
         g = casado.groupdict()
         try:
@@ -110,13 +126,23 @@ def carregar_sonar(pastas) -> tuple[pd.DataFrame, pd.DataFrame]:
         for medida in (dados.get("baseComponent") or {}).get("measures", []):
             linhas_repo.append({**base, "metrica": medida.get("metric"), "valor": _num(medida.get("value")),
                                 "origem": "pipeline"})
+        # ~390 mil linhas (cada coleta repete todos os arquivos do repositório). Os textos se repetem muito:
+        # sys.intern faz linhas iguais apontarem para a mesma string, o que reduz a memória no Streamlit Cloud
+        # e o tamanho do cache (o pickle do st.cache_data também reaproveita o objeto repetido).
+        base_c = {k: (sys.intern(v) if isinstance(v, str) else v) for k, v in base.items()}
         for componente in dados.get("components") or []:
+            nome_c = _txt(componente.get("path") or componente.get("name"))
+            tipo, ling = _txt(componente.get("qualifier")), _txt(componente.get("language"))
             for medida in componente.get("measures", []):
-                linhas_comp.append({**base, "componente": componente.get("path") or componente.get("name"),
-                                    "tipo": componente.get("qualifier"), "linguagem": componente.get("language"),
-                                    "metrica": medida.get("metric"),
-                                    "valor": _num(medida.get("value"))})
-    return pd.DataFrame(linhas_repo), pd.DataFrame(linhas_comp)
+                for chave in ("repositorio", "branch", "coleta", "arquivo"):
+                    cols_comp[chave].append(base_c[chave])
+                cols_comp["componente"].append(nome_c)
+                cols_comp["tipo"].append(tipo)
+                cols_comp["linguagem"].append(ling)
+                cols_comp["metrica"].append(_txt(medida.get("metric")))
+                cols_comp["valor"].append(_num(medida.get("value")))
+    comp = pd.DataFrame(cols_comp) if cols_comp["valor"] else pd.DataFrame()
+    return pd.DataFrame(linhas_repo), comp
 
 
 def coletas_com_erro(pastas) -> pd.DataFrame:
@@ -127,7 +153,7 @@ def coletas_com_erro(pastas) -> pd.DataFrame:
             if arquivo.name.startswith("GitHub_API-"):
                 continue
             casado = _SONAR.match(arquivo.name)
-            if not casado:
+            if not casado or not _do_projeto(_repo(casado.group("prefixo"))):
                 continue
             try:
                 dados = json.loads(arquivo.read_text(encoding="utf-8"))

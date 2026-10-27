@@ -356,14 +356,9 @@ def _comparacao(R, d, rel):
     layout.secao("Planejado × realizado", "Onde a execução se afastou do planejamento?", ["ZENHUB", "CALCULADO"])
     longo = pd.concat(ignore_index=True, objs=[R.assign(serie="Planejado", sp=R["sp_planejado"]),
                                                R.assign(serie="Realizado", sp=R["sp_realizado"])])
-    e, dd = st.columns(2)
-    with e:
-        b = (alt.Chart(longo).mark_bar(size=16, cornerRadiusTopLeft=3, cornerRadiusTopRight=3)
-             .encode(x=alt.X("sprint:N", sort=list(R["sprint"]), title="Sprint", axis=alt.Axis(labelAngle=0)),
-                     xOffset=alt.XOffset("serie:N", sort=SERIES_PR), y=alt.Y("sp:Q", title="Story Points"),
-                     color=alt.Color("serie:N", title=None, scale=ESCALA_PR, sort=SERIES_PR),
-                     tooltip=[alt.Tooltip("sprint:N"), alt.Tooltip("serie:N"), alt.Tooltip("sp:Q", format=".0f")]))
-        charts.mostrar(b, "Por sprint", "SP planejados × realizados", altura=220)
+    # "Por sprint" (planejado × realizado) saiu: repetia o gráfico de velocity logo acima.
+    del longo
+    dd = st.container()
     with dd:
         comp = d.assign(sp=d["sp_atual"].map(lambda v: 0 if v is None or pd.isna(v) else v))
         g = comp.groupby(["sprint", "resultado"], as_index=False).agg(sp=("sp", "sum"), stories=("issue", "count"))
@@ -631,16 +626,21 @@ def pagina():
     layout.secao("Resumo", "Quanto foi planejado, quanto foi entregue e como está o ritmo?",   # 2
                  ["ZENHUB", "CALCULADO"])
     _kpis(ctx, R, d, desc)
-    _planejamento(R, d, rel)          # 3
-    _realizado(R, d, rel, desc)       # 4
-    _comparacao(R, d, rel)            # 5
-    _velocity(ctx, R, d)              # 6
+    _velocity(ctx, R, d)              # 3
     if desc.get("pessoas") or desc["parcial"]:
         st.caption("O burndown abaixo é da sprint inteira: ele usa o histórico da sprint e não segue os filtros de "
                    "épico, pessoa e issue.")
-    _burndown(ctx, sprints_rec, desc["burndown"])       # 7
-    _analises(R, d)                   # 8
-    _detalhamento(d)                  # 9
+    _burndown(ctx, sprints_rec, desc["burndown"])       # 4
+    _comparacao(R, d, rel)            # 5
+
+    # Painel enxuto: planejamento e realizado por story, análises, issues e conferências com o Zenhub
+    # ficam atrás do interruptor (a velocity e o burnup acima já mostram planejado × realizado).
+    if not layout.detalhes("zenhub", "Mostrar planejamento, realizado, análises e conferência dos dados"):
+        return
+    _planejamento(R, d, rel)
+    _realizado(R, d, rel, desc)
+    _analises(R, d)
+    _detalhamento(d)
 
     layout.secao("Confiabilidade dos dados", "Os números batem com o Zenhub e o cadastro está consistente?",
                  ["ZENHUB"])

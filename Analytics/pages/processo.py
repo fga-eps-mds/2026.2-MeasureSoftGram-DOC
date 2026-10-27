@@ -131,9 +131,6 @@ def pagina():
                  + (f" · feedback mediano {num(dur.median(), 1)} min" if not dur.empty else ""),
             origem=[("abrir a execução", ult.get("url"))] if isinstance(ult.get("url"), str) else None)
 
-    layout.secao("Dado bruto", "Os números batem com a aba Actions de cada repositório?", ["GITHUB"])
-    _tabela_repos(runs, r, f)
-
     layout.secao("Análise", "A estabilidade da CI está melhorando?", ["GITHUB"])
     sem = conc.assign(semana=lambda x: x["criado_em"].dt.tz_convert(None).dt.to_period("W").dt.start_time)
     s = sem.groupby("semana").agg(execucoes=("conclusao", "size"),
@@ -148,3 +145,7 @@ def pagina():
     charts.mostrar(g + charts.regra_horizontal(config.META_CI_SUCESSO, f"meta {num(config.META_CI_SUCESSO)}%",
                                                theme.STATUS["critical"]),
                    "Taxa de sucesso da CI por semana", "% de execuções com sucesso · semanas com execução", s, altura=240)
+
+    if layout.detalhes("processo", "Mostrar execuções por repositório"):
+        layout.secao("Dado bruto", "Os números batem com a aba Actions de cada repositório?", ["GITHUB"])
+        _tabela_repos(runs, r, f)

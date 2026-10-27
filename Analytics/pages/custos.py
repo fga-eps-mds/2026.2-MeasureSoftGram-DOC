@@ -48,12 +48,19 @@ def _menus(c):
     ], fontes=["PLANILHA", "CALCULADO"])
 
 
-def pagina():
+def pagina(embutida: bool = False):
+    """``embutida``: desenhada no fim da página Agile EVM (o painel enxuto juntou as duas)."""
     ctx, f = layout.estado()
-    layout.titulo_pagina("Custos", "Quanto o projeto deve custar, quanto já custou e de onde vem cada valor.",
-                         ["PLANILHA"])
+    if embutida:
+        st.divider()
+        layout.secao("Custos", "Quanto o projeto deve custar, quanto já custou e de onde vem cada valor?",
+                     ["PLANILHA"])
+    else:
+        layout.titulo_pagina("Custos", "Quanto o projeto deve custar, quanto já custou e de onde vem cada valor.",
+                             ["PLANILHA"])
     c = ctx.custo
-    _menus(c)
+    if not embutida:
+        _menus(c)
     if not c:
         layout.indisponivel("Aba Custos não lida", ctx.origem_planilha.get("custos", "não lida").replace("**", ""),
                             "publicar a aba Custos e colar o link em `config.PLANILHAS`.")
@@ -61,7 +68,8 @@ def pagina():
     plano_todo = ctx.plano.dropna(subset=["custo"]) if not ctx.plano.empty else ctx.plano
     # ── recorte: período global + sprint (filtro da página) ──
     plano = filters.por_periodo(plano_todo, "semana", f["periodo"]) if not plano_todo.empty else plano_todo
-    caixa = filters.da_pagina(f, ESCOPO)
+    caixa = filters.da_pagina(f, ESCOPO, titulo="Filtros de custos", resumo=False) if embutida \
+        else filters.da_pagina(f, ESCOPO)
     sprints = sorted(int(x) for x in plano["sprint"].dropna().unique()) if not plano.empty and "sprint" in plano \
         else []
     sel_s = caixa.multiselect("Sprint", sprints, key="custo_sprint", placeholder="Todas do período",
@@ -92,31 +100,6 @@ def pagina():
     with k[3]:
         kpi("Custo de um integrante por semana", brl(c.get("custo_membro_semana")), "PLANILHA",
             nota="premissa da aba Custos", origem=[rastreio.aba("custos")])
-
-    layout.secao("Dado bruto", "De onde sai cada valor?", ["PLANILHA"])
-    t1, t3 = st.tabs(["Premissas (aba Custos)", "Custo do time por semana (aba Planejamento)"])
-    with t1:
-        df = ctx.custos_df
-        if df.empty:
-            st.caption("Aba Custos vazia.")
-        else:
-            cols = [x for x in ("item", "valor", "unidade", "calculo", "fonte", "chave") if x in df]
-            st.dataframe(df[cols].rename(columns={"item": "Item", "valor": "Valor", "unidade": "Unidade",
-                                                  "calculo": "Como é calculado", "fonte": "Fonte", "chave": "Chave"}),
-                         use_container_width=True, hide_index=True)
-    with t3:
-        if plano.empty:
-            st.caption("Aba Planejamento sem custo por semana.")
-        else:
-            w = plano[["semana", "release", "sprint", "integrantes", "custo"]].copy()
-            w["situacao"] = ["gasto" if x <= ctx.hoje else "a gastar" for x in w["semana"]]
-            w["semana"] = w["semana"].map(data_br)
-            layout.tabela_html(w, {"semana": "Semana de", "release": "Release", "sprint": "Sprint",
-                                   "integrantes": "Integrantes ativos", "custo": "Custo do time (R$)",
-                                   "situacao": "Situação"},
-                               numericas=("sprint", "integrantes", "custo"))
-            st.caption("Se alguém entrar ou sair do time, atualize os integrantes da semana na aba Planejamento: o "
-                       "gasto e o custo real do EVM mudam junto.")
 
     layout.secao("Análise", "Quanto custa cada sprint, e do que o custo é feito?", ["CALCULADO"])
     e, d = st.columns(2)
@@ -156,5 +139,30 @@ def pagina():
             rot = b.mark_text(align="left", dx=4, fontSize=11, color=theme.INK["secondary"]).encode(text="texto:N")
             charts.mostrar(b + rot, "Orçamento por categoria", "R$ no período", altura=charts.altura_categorias(len(cat)))
 
-    for chave in ("custos", "planejamento"):
-        rastreio.aba_original(chave)
+    if layout.detalhes("custos", "Mostrar premissas e custo por semana"):
+        layout.secao("Dado bruto", "De onde sai cada valor?", ["PLANILHA"])
+        t1, t3 = st.tabs(["Premissas (aba Custos)", "Custo do time por semana (aba Planejamento)"])
+        with t1:
+            df = ctx.custos_df
+            if df.empty:
+                st.caption("Aba Custos vazia.")
+            else:
+                cols = [x for x in ("item", "valor", "unidade", "calculo", "fonte", "chave") if x in df]
+                st.dataframe(df[cols].rename(columns={"item": "Item", "valor": "Valor", "unidade": "Unidade",
+                                                      "calculo": "Como é calculado", "fonte": "Fonte", "chave": "Chave"}),
+                             use_container_width=True, hide_index=True)
+        with t3:
+            if plano.empty:
+                st.caption("Aba Planejamento sem custo por semana.")
+            else:
+                w = plano[["semana", "release", "sprint", "integrantes", "custo"]].copy()
+                w["situacao"] = ["gasto" if x <= ctx.hoje else "a gastar" for x in w["semana"]]
+                w["semana"] = w["semana"].map(data_br)
+                layout.tabela_html(w, {"semana": "Semana de", "release": "Release", "sprint": "Sprint",
+                                       "integrantes": "Integrantes ativos", "custo": "Custo do time (R$)",
+                                       "situacao": "Situação"},
+                                   numericas=("sprint", "integrantes", "custo"))
+                st.caption("Se alguém entrar ou sair do time, atualize os integrantes da semana na aba Planejamento: o "
+                           "gasto e o custo real do EVM mudam junto.")
+        for chave in ("custos", "planejamento"):
+            rastreio.aba_original(chave)

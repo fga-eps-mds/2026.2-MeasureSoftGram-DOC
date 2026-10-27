@@ -16,7 +16,10 @@ from src.metrics.calculations import data_br, release_atual
 # (tema, prefixo do indicador em resumo.indicadores, fonte)
 CARTOES = [
     ("Prazo", "SPI da", "CALCULADO"), ("Custo", "CPI (custo)", "CALCULADO"),
-    ("Entrega", "Taxa de conclusão das sprints", "ZENHUB"), ("Qualidade", "Cobertura", "SONAR"),
+    # Qualidade: nota agregada do Q-Rapids (normalizada, ponderada e agregada, como a R2 pede); a cobertura
+    # sozinha não representa a qualidade e vira só reserva quando a nota não puder ser calculada.
+    ("Entrega", "Taxa de conclusão das sprints", "ZENHUB"),
+    ("Qualidade", ("Nota de qualidade Q-Rapids", "Cobertura"), "SONAR"),
     ("Riscos", "Riscos elevados", "PLANILHA"), ("Integração contínua", "Sucesso da CI", "GITHUB"),
 ]
 
@@ -70,7 +73,9 @@ def pagina():
     for n, (tema, prefixo, fonte) in enumerate(CARTOES):
         if n % 3 == 0:
             cols = st.columns(3)   # uma linha por vez: os cartões de cada linha ficam com a mesma altura
-        m = ind[ind["indicador"].str.startswith(prefixo)]
+        prefixos = prefixo if isinstance(prefixo, tuple) else (prefixo,)   # o 1º que existir vale
+        m = next((x for x in (ind[ind["indicador"].str.startswith(p)] for p in prefixos) if not x.empty),
+                 ind.iloc[0:0])
         with cols[n % 3]:
             if m.empty:
                 kpi(tema, None, fonte, nota="Indisponível: indicador não calculado (fonte não lida).")

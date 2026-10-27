@@ -36,15 +36,28 @@ ctx = contexto.carregar()
 filtros = filters.barra_lateral(ctx)
 st.session_state["ctx"], st.session_state["filtros"] = ctx, filtros
 
+def _evm_e_custos():
+    """Agile EVM e Custos numa página só: o custo do time é o AC do EVM."""
+    evm.pagina()
+    custos.pagina(embutida=True)
+
+
+def _riscos_e_decisoes():
+    """Riscos e Decisões numa página só: as decisões respondem aos riscos e aos indicadores."""
+    riscos.pagina()
+    decisoes.pagina(embutida=True)
+
+
+# Painel enxuto (26/10/2026): 8 páginas em vez de 10. Custos entrou no Agile EVM e Decisões em Riscos;
+# tabelas brutas e conferências ficam atrás do interruptor "Mostrar ..." de cada página.
 navegacao = st.navigation({
     "Gestão": [
         st.Page(visao_executiva.pagina, title="Visão Executiva", url_path="visao-executiva",
                 icon=":material/dashboard:", default=True),
         st.Page(zenhub.pagina, title="Gestão ágil", url_path="zenhub", icon=":material/view_kanban:"),
-        st.Page(evm.pagina, title="Agile EVM", url_path="agile-evm", icon=":material/stacked_line_chart:"),
-        st.Page(custos.pagina, title="Custos", url_path="custos", icon=":material/payments:"),
-        st.Page(riscos.pagina, title="Riscos", url_path="riscos", icon=":material/warning:"),
-        st.Page(decisoes.pagina, title="Decisões", url_path="decisoes", icon=":material/gavel:"),
+        st.Page(_evm_e_custos, title="Agile EVM e custos", url_path="agile-evm",
+                icon=":material/stacked_line_chart:"),
+        st.Page(_riscos_e_decisoes, title="Riscos e decisões", url_path="riscos", icon=":material/warning:"),
     ],
     "Qualidade e processo": [
         st.Page(qualidade.pagina, title="Qualidade (Q-Rapids)", url_path="qualidade", icon=":material/verified:"),

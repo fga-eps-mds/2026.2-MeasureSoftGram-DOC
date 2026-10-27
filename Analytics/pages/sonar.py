@@ -226,11 +226,16 @@ def _analise(ctx, f, rec, serie, repos, rel, metrica):
                        altura=280)
 
 
-    # ── cobertura por componente ──
+    # ── cobertura por componente (sob demanda) ──
+    if not layout.detalhes("sonar", "Mostrar os 15 componentes com menor cobertura"):
+        return
     # cobertura por arquivo: .json do pipeline + árvore da API do SonarCloud (component_tree), para o gráfico
-    # não sumir em repositório sem .json recente do metrics.yml; a coleta mais recente de cada arquivo vale
-    partes = [x.assign(origem=o) for x, o in ((ctx.sonar_componentes, "pipeline"),
-                                               ((ctx.sonar_api or {}).get("arquivos", pd.DataFrame()), "api"))
+    # não sumir em repositório sem .json recente do metrics.yml; a coleta mais recente de cada arquivo vale.
+    # Filtra a métrica antes de juntar: a tabela de componentes tem ~390 mil linhas e copiá-la inteira a
+    # cada interação pesava na memória.
+    partes = [x[x["metrica"] == "coverage"].assign(origem=o) if "metrica" in x else x.assign(origem=o)
+              for x, o in ((ctx.sonar_componentes, "pipeline"),
+                           ((ctx.sonar_api or {}).get("arquivos", pd.DataFrame()), "api"))
               if x is not None and not x.empty]
     comp = pd.concat(partes, ignore_index=True) if partes else pd.DataFrame()
     if not comp.empty:

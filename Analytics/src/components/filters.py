@@ -83,7 +83,8 @@ def barra_lateral(ctx) -> dict:
             "periodo": (ini, fim), "repos": repos_sel, "branch": branch}
 
 
-def da_pagina(f: dict, aplica: dict[str, str | None], tem_filtros: bool = True):
+def da_pagina(f: dict, aplica: dict[str, str | None], tem_filtros: bool = True,
+              titulo: str = "Filtros desta página", resumo: bool = True):
     """Abre a seção "Filtros desta página" na barra lateral.
 
     ``aplica``: para cada filtro global (``release``, ``periodo``, ``repos``, ``branch``), como ele vale
@@ -92,8 +93,10 @@ def da_pagina(f: dict, aplica: dict[str, str | None], tem_filtros: bool = True):
     """
     sb = st.sidebar
     sb.divider()
-    sb.subheader("Filtros desta página")
+    sb.subheader(titulo)
     caixa = sb.container()
+    if not resumo:          # bloco embutido em outra página: o resumo dos filtros globais já apareceu
+        return caixa
     if not tem_filtros:
         caixa.caption("Esta página não tem filtros próprios.")
     linhas = []
