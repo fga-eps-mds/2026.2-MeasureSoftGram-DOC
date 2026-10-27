@@ -1,10 +1,29 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-10-26T23:18:55+00:00",
+ "coletado_em": "2026-10-27T11:22:10+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 91,
+   "title": "fix(i18n): aplica a terminologia do GitLab em toda a interface (US114)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-10-27T00:20:38Z",
+   "closed_at": "2026-10-27T01:03:24Z",
+   "updated_at": "2026-10-27T01:03:26Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1419,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/91",
+   "author": "zzzBECK"
+  },
   {
    "number": 90,
    "title": "feat(docker): adiciona hot-reload ao ambiente de desenvolvimento",
@@ -172,11 +191,11 @@
   {
    "number": 81,
    "title": "[TASK21.03.08] Exportação de CSV da Distribuição Estatística (Front)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-23T19:14:04Z",
-   "closed_at": null,
-   "updated_at": "2026-10-23T19:14:43Z",
+   "closed_at": "2026-10-26T23:43:55Z",
+   "updated_at": "2026-10-26T23:43:55Z",
    "labels": [
     "task",
     "frontend"
@@ -427,11 +446,11 @@
   {
    "number": 68,
    "title": "[TASK21.03.06] Coluna do menu lateral fixa em 328 px quebra o layout (Front)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-22T14:08:31Z",
-   "closed_at": null,
-   "updated_at": "2026-10-22T17:24:13Z",
+   "closed_at": "2026-10-26T23:43:12Z",
+   "updated_at": "2026-10-26T23:43:12Z",
    "labels": [
     "task",
     "frontend"

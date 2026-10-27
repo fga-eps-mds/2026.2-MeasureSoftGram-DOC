@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-10-26T23:18:55+00:00",
+ "coletado_em": "2026-10-27T11:22:10+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
@@ -155,11 +155,11 @@
   {
    "number": 68,
    "title": "[TASK21.03.07] Dados locais com métricas por análise para validar o nível Métrica (Service)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-22T14:08:41Z",
-   "closed_at": null,
-   "updated_at": "2026-10-22T14:08:41Z",
+   "closed_at": "2026-10-26T23:43:23Z",
+   "updated_at": "2026-10-26T23:43:23Z",
    "labels": [
     "task",
     "service"

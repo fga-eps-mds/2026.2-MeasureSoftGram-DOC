@@ -1,11 +1,32 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-10-26T23:18:55+00:00",
+ "coletado_em": "2026-10-27T11:22:10+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "2f5f7f567706958fc8b1eb3a25c3cc8bb2bdeb1d",
+   "date": "2026-10-27T01:03:23Z",
+   "author": "zzzBECK",
+   "message": "fix(i18n): aplica a terminologia do GitLab em toda a interface (US114) (#91)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/shared/hooks/tests/useProviderTranslation.spec.tsx",
+     "status": "added",
+     "additions": 75,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/hooks/useProviderTranslation.ts",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 1
+    }
+   ]
+  },
   {
    "sha": "1e76be33e9bbd16c05b3b2067b7874f4fd6049e8",
    "date": "2026-10-26T09:23:37Z",
@@ -10990,5 +11011,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }
