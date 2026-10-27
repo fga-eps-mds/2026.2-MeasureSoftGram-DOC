@@ -105,7 +105,21 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
             media, fora = qrapids.media_repos(notas, lambda a: a["total"])
             tot = {sn.nome_curto(r): n["avaliacao"]["total"] for r, n in notas.items()
                    if sn.nome_curto(r) not in fora}
-            if tot:
+            media_seg, sem_seg, vetados = qrapids.media_seguranca(notas)
+            if tot and media_seg is not None:
+                # cartão da Visão Executiva: nota com segurança (extensão do time); a oficial vai na leitura
+                tseg = {sn.nome_curto(r): n["avaliacao"]["total_seguranca"] for r, n in notas.items()
+                        if n["avaliacao"]["total_seguranca"] is not None}
+                pior = min(tseg, key=tseg.get)
+                status = "critical" if vetados else ("good" if media_seg >= 0.7 else
+                                                     ("warning" if media_seg >= 0.5 else "critical"))
+                out.append(_item("Qualidade", "Nota de qualidade Q-Rapids com segurança (média)", num(media_seg, 2),
+                                 status,
+                                 (f"segurança D/E: {', '.join(vetados)} · " if vetados else "")
+                                 + f"oficial (notebook): {num(media, 2)} · pior: {pior} ({num(tseg[pior], 2)})"
+                                 + (f" · sem nota de segurança: {', '.join(sem_seg)}" if sem_seg else ""),
+                                 "Qualidade (Q-Rapids)", "SONAR"))
+            elif tot:
                 pior = min(tot, key=tot.get)
                 out.append(_item("Qualidade", "Nota de qualidade Q-Rapids (média)", num(media, 2),
                                  "good" if media >= 0.7 else ("warning" if media >= 0.5 else "critical"),

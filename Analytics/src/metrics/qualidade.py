@@ -33,6 +33,10 @@ import config
 
 Q = config.QRAPIDS
 LIMIARES, PESOS = Q["limiares"], Q["pesos"]
+SEG = Q.get("seguranca", {})
+PESOS_SEG = SEG.get("pesos", {"manutenibilidade": 0.4, "confiabilidade": 0.4, "seguranca": 0.2})
+RATING_VETO = SEG.get("rating_veto", 4)
+LETRA = {1: "A", 2: "B", 3: "C", 4: "D", 5: "E"}
 CINCO = ["functions", "complexity", "comment_lines_density", "duplicated_lines_density", "coverage"]
 
 # chave → (nome, fator, aspecto, regra legível, fórmula)
@@ -172,19 +176,54 @@ def avaliar(comp: pd.DataFrame, repo: str) -> dict:
             "arquivos_codigo": len(fil), "linguagem": lg}
 
 
-def serie(componentes: pd.DataFrame) -> pd.DataFrame:
+# ───────────────────────── segurança (extensão do time) ─────────────────────────
+
+def nota_seguranca(rating) -> float | None:
+    """security_rating do SonarCloud (1 = A … 5 = E) em 0 a 1: (5 − rating) ÷ 4. Sem dado → None."""
+    if rating is None or pd.isna(rating):
+        return None
+    return max(0.0, min(1.0, (5 - float(rating)) / 4))
+
+
+def com_seguranca(avaliacao: dict, rating=None, vulnerabilidades=None, coleta=None) -> dict:
+    """Acrescenta à avaliação do notebook o aspecto Segurança, a nota com segurança e o veto.
+
+    A nota oficial (``total``) não muda: ela é a do notebook. ``total_seguranca`` =
+    Σ peso × aspecto com ``PESOS_SEG``; ``veto_seguranca`` = rating ≥ ``RATING_VETO`` (D ou E).
+    Sem security_rating, a segurança fica "sem dado" e a nota com segurança não é calculada (nunca vira 0).
+    """
+    s = nota_seguranca(rating)
+    avaliacao["seguranca"] = {
+        "valor": s, "rating": None if s is None else float(rating),
+        "letra": None if s is None else LETRA.get(int(round(float(rating)))),
+        "vulnerabilidades": vulnerabilidades, "coleta": coleta,
+        "sem_dado": None if s is not None else "sem security_rating do SonarCloud até o fim do período"}
+    man = avaliacao["aspectos"]["manutenibilidade"]["valor"]
+    con = avaliacao["aspectos"]["confiabilidade"]["valor"]
+    avaliacao["total_seguranca"] = None if s is None else (
+        PESOS_SEG["manutenibilidade"] * man + PESOS_SEG["confiabilidade"] * con + PESOS_SEG["seguranca"] * s)
+    avaliacao["veto_seguranca"] = s is not None and float(rating) >= RATING_VETO
+    return avaliacao
+
+
+def serie(componentes: pd.DataFrame, agregado: pd.DataFrame | None = None) -> pd.DataFrame:
     """Uma linha por repositório × coleta (cada .json do pipeline), como o ``metrics_df`` do notebook."""
     if componentes is None or componentes.empty:
         return pd.DataFrame()
     linhas = []
     chaves = ["repositorio", "branch", "coleta", "arquivo"] if "arquivo" in componentes else \
         ["repositorio", "branch", "coleta"]
+    rating = {}
+    if agregado is not None and not agregado.empty and "arquivo" in agregado:
+        x = agregado[agregado["metrica"] == "security_rating"]
+        rating = dict(zip(x["arquivo"], x["valor"]))
     for k, comp in componentes.groupby(chaves, sort=True):
         k = dict(zip(chaves, k))
-        a = avaliar(comp, k["repositorio"])
+        a = com_seguranca(avaliar(comp, k["repositorio"]), rating.get(k.get("arquivo")))
         linhas.append({**k, **{m: r["valor"] for m, r in a["metricas"].items()},
                        **{f: x["valor"] for f, x in a["fatores"].items()},
                        **{x: y["valor"] for x, y in a["aspectos"].items()}, "total": a["total"],
+                       "seguranca": a["seguranca"]["valor"], "total_seguranca": a["total_seguranca"],
                        "arquivos": a["arquivos_base"],
                        "zeros_por_falta": ", ".join(m for m, r in a["metricas"].items() if r["zero_por_falta"])})
     return pd.DataFrame(linhas).sort_values(["repositorio", "coleta"]).reset_index(drop=True)

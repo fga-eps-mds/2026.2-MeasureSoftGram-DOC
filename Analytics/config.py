@@ -143,7 +143,17 @@ QRAPIDS = {
         "qualidade_codigo": 1.0, "situacao_testes": 1.0,                          # psc1, psc2
         "manutenibilidade": 0.5, "confiabilidade": 0.5,                           # pc1, pc2 → nota total
     },
+    # Segurança: extensão do time (27/10/2026). O notebook só tem Manutenibilidade e Confiabilidade, então uma
+    # nota de segurança E no SonarCloud não mudava a nota. A nota oficial (do notebook) fica igual; ao lado dela
+    # o painel mostra a "nota com segurança", e uma nota de segurança ruim rebaixa o repositório (veto).
+    #   Segurança = (5 − security_rating) ÷ 4   →  A = 1 · B = 0,75 · C = 0,5 · D = 0,25 · E = 0
+    "seguranca": {
+        "pesos": {"manutenibilidade": 0.4, "confiabilidade": 0.4, "seguranca": 0.2},
+        "rating_veto": 4,   # security_rating ≥ 4 (D ou E) → repositório crítico, seja qual for a nota
+    },
     "justificativa": {
+        "seguranca_pesos": "a preencher pelo time",
+        "seguranca_veto": "a preencher pelo time",
         "complexidade_por_funcao": "a preencher pelo time",
         "comentarios_min": "a preencher pelo time",
         "duplicacao_max": "a preencher pelo time",

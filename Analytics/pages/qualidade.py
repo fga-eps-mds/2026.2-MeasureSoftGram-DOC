@@ -73,9 +73,15 @@ def _tabela_repos(notas: dict) -> pd.DataFrame:
     linhas = []
     for repo, n in sorted(notas.items()):
         a = n["avaliacao"]
+        sg = a["seguranca"]
         linhas.append({"Repositório": nome_curto(repo), "Nota total": a["total"],
+                       "Nota com segurança": a["total_seguranca"],
                        "Manutenibilidade": a["aspectos"]["manutenibilidade"]["valor"],
                        "Confiabilidade": a["aspectos"]["confiabilidade"]["valor"],
+                       "Segurança": sg["valor"],
+                       "Nota de segurança (Sonar)": (sg["letra"] or "—") + (" · crítico (veto)" if a["veto_seguranca"]
+                                                                              else ""),
+                       "Vulnerabilidades": sg["vulnerabilidades"],
                        **{nq.METRICAS[m][0].split(" (")[0]: r["valor"] for m, r in a["metricas"].items()},
                        "Arquivos na base": a["arquivos_base"], "Linguagem": a["linguagem"],
                        "Zeros por falta de dado": ", ".join(nq.METRICAS[m][0].split(" (")[0]
@@ -96,10 +102,17 @@ def _notebook(notas: dict, sel: str | None):
     total = val(lambda a: a["total"])
     man = val(lambda a: a["aspectos"]["manutenibilidade"]["valor"])
     con = val(lambda a: a["aspectos"]["confiabilidade"]["valor"])
+    if a_sel:
+        seg, total_seg = a_sel["seguranca"]["valor"], a_sel["total_seguranca"]
+        vetados = [nome_curto(sel)] if a_sel["veto_seguranca"] else []
+    else:
+        seg = qrapids.media_seguranca(notas, "seguranca")[0]
+        total_seg, _, vetados = qrapids.media_seguranca(notas)
+    ps = nq.PESOS_SEG
     alvo = nome_curto(sel) if sel else f"média de {len(notas) - len(fora)} repositórios"
     layout.secao("Nota de qualidade", f"Qual é a qualidade do produto ({alvo}) e de onde vem a nota?",
                  ["SONAR", "CALCULADO"])
-    k = st.columns(3)
+    k = st.columns(5)
     with k[0]:
         kpi("Nota total", _n(total), "CALCULADO", status=_status(total),
             nota=f"{PESOS['manutenibilidade']:g} × Manutenibilidade + {PESOS['confiabilidade']:g} × Confiabilidade"
@@ -108,6 +121,18 @@ def _notebook(notas: dict, sel: str | None):
         kpi("Manutenibilidade", _n(man), "CALCULADO", status=_status(man), nota="= Qualidade do código")
     with k[2]:
         kpi("Confiabilidade", _n(con), "CALCULADO", status=_status(con), nota="= Situação dos testes")
+    with k[3]:
+        kpi("Segurança", _n(seg), "SONAR", status="critical" if vetados else _status(seg),
+            nota="(5 − nota de segurança do Sonar) ÷ 4 · A = 1 … E = 0"
+                 + (f" · crítico: {', '.join(vetados)}" if vetados else ""))
+    with k[4]:
+        kpi("Nota com segurança", _n(total_seg), "CALCULADO", status="critical" if vetados else _status(total_seg),
+            nota=f"{ps['manutenibilidade']:g} × Manut. + {ps['confiabilidade']:g} × Conf. + {ps['seguranca']:g} × "
+                 "Segurança · extensão do time")
+    if vetados:
+        layout.alerta("critical", f"Nota de segurança D ou E no SonarCloud: {', '.join(vetados)}. Pela regra de veto, "
+                                  "o repositório é crítico mesmo com nota total alta. Ver vulnerabilidades no "
+                                  "SonarCloud.")
     if fora and not sel:
         layout.alerta("warning", f"Fora da média por não terem nenhum dado no .json do pipeline: {', '.join(fora)}. "
                                  "No notebook a nota deles seria 0 (regra: métrica sem dado vale 0). Ver o motivo na "
@@ -115,12 +140,15 @@ def _notebook(notas: dict, sel: str | None):
     st.caption("Escala de 0 a 1 (1 = melhor). Status: ≥ 0,7 conforme · 0,5 a 0,7 atenção · < 0,5 crítico "
                "(faixas de leitura do painel, não do notebook). No notebook, Manutenibilidade e Confiabilidade já "
                "saem multiplicadas por 0,5; aqui elas aparecem de 0 a 1 e o 0,5 entra na nota total — o total é o "
-               "mesmo.")
+               "mesmo. **Nota total** = a do notebook (oficial da disciplina). **Nota com segurança** = extensão do "
+               "time: o notebook não tem segurança, e uma nota E no Sonar não mudava a nota. Pesos e veto em "
+               "config.py · QRAPIDS['seguranca'].")
 
     layout.secao("Por repositório", "Como cada repositório se sai e de qual coleta veio o número?", ["SONAR"])
     t = _tabela_repos(notas)
     num = {c: st.column_config.ProgressColumn(c, min_value=0, max_value=1, format="%.2f")
-           for c in ("Nota total", "Manutenibilidade", "Confiabilidade")}
+           for c in ("Nota total", "Nota com segurança", "Manutenibilidade", "Confiabilidade", "Segurança")}
+    num["Vulnerabilidades"] = st.column_config.NumberColumn(format="%d")
     num.update({nq.METRICAS[m][0].split(" (")[0]: st.column_config.NumberColumn(format="%.2f") for m in nq.METRICAS})
     st.dataframe(t, use_container_width=True, hide_index=True, column_config={
         **num, "Coleta": st.column_config.DatetimeColumn("Coleta", format="DD/MM/YYYY HH:mm"),
@@ -164,6 +192,25 @@ def _notebook(notas: dict, sel: str | None):
             for aba, m in zip(abas, metricas):
                 with aba:
                     _dado_bruto(notas, sel, m)
+
+    # Segurança (extensão do time): repo a repo, a nota A–E do Sonar convertida em 0 a 1
+    reps = [sel] if sel else sorted(notas)
+    seg_t = pd.DataFrame([{"Repositório": nome_curto(r), "Nota de segurança (Sonar)": notas[r]["avaliacao"]["seguranca"]["letra"] or "—",
+                           "Segurança (0 a 1)": notas[r]["avaliacao"]["seguranca"]["valor"],
+                           "Vulnerabilidades": notas[r]["avaliacao"]["seguranca"]["vulnerabilidades"],
+                           "Veto": "crítico" if notas[r]["avaliacao"]["veto_seguranca"] else "",
+                           "Avaliada em": notas[r]["avaliacao"]["seguranca"]["coleta"]} for r in reps])
+    with st.expander(f"Segurança = {_n(seg)}  ·  (5 − nota do Sonar) ÷ 4 · extensão do time, fora da nota oficial",
+                     expanded=True):
+        st.dataframe(seg_t, use_container_width=True, hide_index=True, column_config={
+            "Segurança (0 a 1)": st.column_config.ProgressColumn("Segurança (0 a 1)", min_value=0, max_value=1,
+                                                                 format="%.2f"),
+            "Vulnerabilidades": st.column_config.NumberColumn(format="%d"),
+            "Avaliada em": st.column_config.DatetimeColumn("Avaliada em", format="DD/MM/YYYY HH:mm")})
+        st.caption("A nota de segurança do SonarCloud depende da vulnerabilidade mais grave: A = nenhuma, B = menor, "
+                   "C = maior, D = crítica, E = bloqueante. Vem da última avaliação até o fim do período (pipeline "
+                   f"ou API), que pode ser mais recente que a coleta da nota. Veto: nota ≥ {nq.LETRA[nq.RATING_VETO]} "
+                   "→ repositório crítico.")
 
 
 def _dado_bruto(notas, sel, m):
@@ -277,11 +324,14 @@ def _evolucao(ctx, f, rec):
                          tooltip=[alt.Tooltip("repo:N", title="Repositório"),
                                   alt.Tooltip("dia:T", title="Data", format="%d/%m/%Y"),
                                   alt.Tooltip("total:Q", title="Nota", format=".2f"),
+                                  alt.Tooltip("total_seguranca:Q", title="Nota com segurança", format=".2f"),
+                                  alt.Tooltip("seguranca:Q", title="Segurança", format=".2f"),
                                   alt.Tooltip("manutenibilidade:Q", format=".2f"),
                                   alt.Tooltip("confiabilidade:Q", format=".2f")]))
         charts.mostrar(linha + charts.marcos_release(d["dia"].min(), d["dia"].max()),
                        "Nota total por repositório", "última coleta de cada dia · pontilhado: entregas das releases",
-                       d[["repo", "dia", "total", "manutenibilidade", "confiabilidade", *nq.METRICAS, "arquivo"]],
+                       d[["repo", "dia", "total", "total_seguranca", "manutenibilidade", "confiabilidade", "seguranca",
+                          *nq.METRICAS, "arquivo"]],
                        altura=300)
 
     layout.secao("Comparação entre releases", "A nota melhorou da R1 para a R2?", ["SONAR", "CALCULADO"])
@@ -296,7 +346,9 @@ def _evolucao(ctx, f, rec):
             a = n["avaliacao"]
             linhas.append({"release": rel, "repositorio": nome_curto(repo), "total": a["total"],
                            "manutenibilidade": a["aspectos"]["manutenibilidade"]["valor"],
-                           "confiabilidade": a["aspectos"]["confiabilidade"]["valor"], "coleta": n["coleta"]})
+                           "confiabilidade": a["aspectos"]["confiabilidade"]["valor"],
+                           "seguranca": a["seguranca"]["valor"], "total com segurança": a["total_seguranca"],
+                           "coleta": n["coleta"]})
     if not linhas:
         layout.indisponivel("Sem releases com coleta", "nenhuma release com .json do pipeline até a entrega.")
         return
@@ -324,6 +376,12 @@ def _parametros(ctx, f, rec, res):
                "Justificativa do time": j.get(k, "a preencher pelo time")} for k, v in LIM.items()]
     linhas += [{"Parâmetro": f"peso · {k}", "Valor": v, "Origem": "notebook da disciplina",
                 "Justificativa do time": j.get("pesos", "a preencher pelo time")} for k, v in PESOS.items()]
+    linhas += [{"Parâmetro": f"segurança · peso {k}", "Valor": v, "Origem": "definido pelo time (extensão)",
+                "Justificativa do time": j.get("seguranca_pesos", "a preencher pelo time")}
+               for k, v in nq.PESOS_SEG.items()]
+    linhas.append({"Parâmetro": "segurança · veto (security_rating ≥)", "Valor": nq.RATING_VETO,
+                   "Origem": "definido pelo time (extensão)",
+                   "Justificativa do time": j.get("seguranca_veto", "a preencher pelo time")})
     t = pd.DataFrame(linhas)
     st.dataframe(t, use_container_width=True, hide_index=True,
                  column_config={"Justificativa do time": st.column_config.TextColumn(width="large")})
