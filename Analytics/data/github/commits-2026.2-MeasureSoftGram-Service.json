@@ -1,11 +1,32 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-10-27T23:14:39+00:00",
+ "coletado_em": "2026-10-28T11:16:11+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "19463ada18203bcc3296d0e002cba4ab62790a88",
+   "date": "2026-10-28T03:23:33Z",
+   "author": "henriquecq",
+   "message": "fix(releases): calcula no fechamento da release todas as características da configuração (US07.01) (#78)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/releases/jobs.py",
+     "status": "modified",
+     "additions": 36,
+     "deletions": 39
+    },
+    {
+     "filename": "src/releases/tests/test_release_results_job.py",
+     "status": "modified",
+     "additions": 87,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "29fc1152c853851a98e1f37d8a99a69d5432473c",
    "date": "2026-10-26T01:28:39Z",
@@ -3264,5 +3285,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }
