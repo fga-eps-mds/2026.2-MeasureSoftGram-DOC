@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-10-28T23:15:18+00:00",
+ "coletado_em": "2026-10-29T11:15:51+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 21,
+   "title": "fix(index): marca com void a chamada de run() no fim do entrypoint",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-10-29T00:44:07Z",
+   "closed_at": null,
+   "updated_at": "2026-10-29T00:52:01Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1005,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/21",
+   "author": "bottinolucas"
+  },
   {
    "number": 20,
    "title": "ci: corrige falhas do pipeline (Node 24, dist do Dependabot e publish no GHCR)",

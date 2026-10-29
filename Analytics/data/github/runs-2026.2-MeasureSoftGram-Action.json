@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-10-28T23:15:18+00:00",
+ "coletado_em": "2026-10-29T11:15:51+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
- "total_count": 160,
+ "total_count": 162,
  "workflow_runs": [
+  {
+   "id": 40795987138,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "fix/sonar-promise-run",
+   "event": "pull_request",
+   "created_at": "2026-10-29T00:44:11Z",
+   "run_started_at": "2026-10-29T00:44:11Z",
+   "updated_at": "2026-10-29T00:44:12Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/40795987138",
+   "run_number": 20,
+   "workflow_id": 368691716
+  },
+  {
+   "id": 40795986994,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "fix/sonar-promise-run",
+   "event": "pull_request",
+   "created_at": "2026-10-29T00:44:11Z",
+   "run_started_at": "2026-10-29T00:44:11Z",
+   "updated_at": "2026-10-29T00:45:29Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/40795986994",
+   "run_number": 38,
+   "workflow_id": 348865699
+  },
   {
    "id": 40358921034,
    "name": "Release & Dist Bundle",
