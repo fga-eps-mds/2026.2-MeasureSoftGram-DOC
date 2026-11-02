@@ -1,0 +1,280 @@
+---
+id: ata-po-28-10
+title: Ata – Reunião com o PO (28/10/2026) — Entrega da Release 2
+sidebar_position: 7
+sidebar_label: Ata PO 28/10 (R2)
+description: Apresentação dos resultados da Release 2, coleta de feedbacks de avaliação do professor e plano de ação da equipe.
+---
+
+# Ata de Reunião — Feedback da Entrega da Release 2
+
+- **Data:** 28/10/2026
+- **Horário:** 19h30 *(Duração registrada na gravação: 02h11min40s)*
+- **Participantes:**
+  - **Professor(a):** Hilmer Rodrigues Neri (atuando nos papéis de Product Owner e Professor)
+  - **Equipe:** Gustavo Roberto Silva De Melo, Milena Fernandes Rocha, Lucas (Lucas Bottino), Luciano De Freitas Melo, Guilherme Storch De Oliveira, Henrique Camelo Quenino, Gabriel Moura, Diogo Rodrigues Barboza e Alexandre De Santana Beck (presente no início da reunião, mas caiu/saiu antes do término).
+- **Objetivo da Reunião:** Apresentação dos resultados da Release 2 e coleta de feedbacks de avaliação do professor.
+
+---
+
+## 1. Resumo Executivo da Avaliação
+
+:::tip[Percepção Geral da Release 2]
+No papel de **Product Owner (PO)**, o professor Hilmer manifestou grande satisfação e alívio com a entrega da Release 2, destacando um sentimento inverso ao de frustração ocorrido na Release 1. A disponibilização do produto implantado em ambiente de homologação, a implementação funcional dos novos dashboards sem a dependência do Grafana e a reorganização da equipe em três squads nas últimas duas semanas foram fortemente elogiadas.
+
+Contudo, no papel de **Professor**, Hilmer pontuou que diversos problemas críticos apontados na Release 1 permaneceram sem solução na Release 2. Os principais pontos de atenção recaem sobre a ausência de um planejamento formal de qualidade de produto (a equipe continua guiada apenas por métricas isoladas do SonarQube), a falta de testes funcionais automatizados (*end-to-end*), a desatualização da EAP e do documento de Metodologia no repositório, além de ajustes conceituais e de distribuição de conhecimento nos dashboards gerenciais. Diante do risco crítico de qualidade do MVP, o professor propôs discutir na próxima semana a possibilidade de reduzir o escopo funcional da Release 3 para priorizar testes e estabilidade.
+:::
+
+---
+
+## 2. Pontos Positivos e Questões Já Resolvidas / Alinhadas
+
+### 2.1. Pontos Positivos Destacados
+- **Entrega Funcional e Produto Implantado:** Diferente da R1, a equipe entregou a release implantada em homologação e realizou a demonstração ao vivo do produto funcionando dentro do tempo estipulado de 20 minutos.
+- **Remoção do Grafana e Melhoria de Usabilidade/Performance:** A substituição do Grafana eliminou o *overhead* de carregamento (que antes travava ou levava vários segundos por página) e resolveu vulnerabilidades explícitas de credenciais/admin associadas a ele.
+- **Novos Gráficos e Exportação CSV:** Implementação bem-sucedida dos novos dashboards de qualidade (Pulso, Equalizador Planejado vs. Realizado, Estrutura do Metamodelo, Mapa de Calor/Análise por Entidade, Distribuição Estatística com Histograma/Boxplot e Correlação) e da funcionalidade de exportação para CSV em todos os gráficos.
+- **Reorganização em Squads e Aumento de Produtividade:** A divisão do time (atualmente com 14 membros ativos) em 3 squads com líderes fixos nas últimas duas semanas gerou um salto nítido de produtividade, destravou entregas e melhorou a comunicação com o PO.
+- **Maturidade no Fluxo de Branches e Automação de Releases:** O fluxo estruturado entre os repositórios do semestre (*fork*) e os repositórios centrais (`develop` para homologação e `main` para produção), aliado ao uso do *Release Please* para versionamento semântico e publicação no PyPI, foi elogiado pela organização e maturidade.
+- **Evolução de DevOps e Cobertura Unitária:** A taxa de sucesso da pipeline de CI subiu (de ~50–71% na R1 para ~82% na R2), a cobertura de testes unitários superou a meta de 85% em quase todos os repositórios ativos (exceto `action`), os bugs no Sonar caíram e ajustes de segurança em IPs, Nginx e chaves SSH nas Actions foram aplicados.
+- **Registro de Defeitos:** A equipe passou a documentar os defeitos encontrados (prática inexistente na R1).
+- **Evolução Estrutural do Dashboard Gerencial:** O painel analítico do projeto (Streamlit) evoluiu visualmente e estruturalmente, sendo novamente elogiado pelo professor.
+- **Recuperação de Membros sem Commits:** Integrantes que estavam com zero commits na R1 saíram da estagnação (com um deles chegando ao *top 3* de contribuidores na R2).
+
+### 2.2. Questões Tratadas e Resolvidas (Fora do Plano de Ação)
+- **Uso de Lista de Critérios de Aceitação vs. BDD (Tratado com o PO):** Durante a reunião, o professor comentou sobre a transição do BDD para o formato de lista/checklist (que inicialmente havia gerado histórias antigas em BDD e novas em lista) e refletiu sobre o uso de BDD frente a testes de sistema. A questão foi diretamente tratada e alinhada com o professor: a equipe assegurou o uso padronizado de **lista de critérios de aceitação**, formato considerado mais direto e intuitivo para validação pelo PO, não entrando como item de ação.
+- **Atualização Dinâmica de Submódulos no Repositório `platform` (Resolvida):** Ao inspecionar o repositório `platform`, o professor havia ficado com a dúvida se os submódulos Git estavam travados em um hash de commit específico de PR em vez de puxarem dinamicamente a última versão dos repositórios no `git clone`. Essa dúvida já foi verificada e resolvida pela equipe, não gerando pendência no plano de ação.
+
+---
+
+## 3. Plano de Ação Principal (Produto, Arquitetura, Qualidade e Gestão)
+
+> **Foco principal da ata:** Abaixo estão listadas todas as ações corretivas e de melhoria que a equipe precisa executar para a próxima etapa, acompanhadas do detalhamento de **todos os feedbacks e comentários feitos pelo professor** que originaram cada ação.
+
+### Ação 01 — Investigar e corrigir o erro intermitente de tela preta no frontend e garantir revisão local antes de abrir PRs
+- **Categoria:** Produto / Código / Qualidade
+- **Prioridade:** Alta
+- **Responsável:** Henrique Camelo / Gabriel Moura (correção do bug) e Toda a Equipe (processo de revisão)
+- **Prazo:** Imediato / Contínuo
+- **Feedbacks do professor relacionados:**
+  - **Erro intermitente de tela preta no navegador:** Durante a navegação de testes na véspera da reunião utilizando o navegador Firefox, o professor encontrou um erro intermitente de tela preta informando falha no browser ao acessar diferentes funcionalidades (resolvido temporariamente com *refresh*). Henrique confirmou na reunião que analisou o problema, constatou que não é exclusivo do Firefox e que foi introduzido por um PR entregue em cima da hora.
+  - **Falta de revisão própria de PRs e testes locais (quebra do DoD):** O professor destacou que a entrada de código quebrando funcionalidades existentes na véspera da entrega (como o bug da tela preta na R2 e o problema de login na R1, causados pela mesma pessoa segundo relato da equipe) demonstra falha de responsabilidade individual ao abrir PRs de última hora sem testar localmente ou revisar o próprio código.
+  - **Implementação antes da validação de requisitos (quebra do DoR):** A equipe também chegou a iniciar a codificação de histórias antes da aprovação formal dos protótipos/requisitos pelo PO, gerando risco elevado de retrabalho após os ajustes solicitados na validação.
+
+### Ação 02 — Deliberar internamente sobre o escopo da Release 3 vs. garantia de qualidade do MVP
+- **Categoria:** Produto / Escopo
+- **Prioridade:** Alta
+- **Responsável:** `[A definir]` (Líderes de Squad / Toda a Equipe)
+- **Prazo:** Próxima quarta-feira (04/11/2026)
+- **Feedbacks do professor relacionados:**
+  - **Risco crítico de qualidade e proposta de redução de escopo funcional na R3:** Diante da ausência de testes funcionais automatizados e das pendências de qualidade acumuladas, o professor declarou risco crítico no MVP e afirmou preferir parar ou cortar novas frentes funcionais na Release 3 para garantir a estabilidade, segurança, ponderação qualitativa e confiabilidade do que já foi implementado.
+
+### Ação 03 — Planejar e implementar testes funcionais automatizados (*end-to-end* / nível de sistema)
+- **Categoria:** Testes / Qualidade
+- **Prioridade:** Alta
+- **Responsável:** `[A definir]`
+- **Prazo:** `[A definir]` (Release 3)
+- **Feedbacks do professor relacionados:**
+  - **Inexistência de testes funcionais / *end-to-end* (Reiterado da R1):** O professor cobrou que o projeto chegou ao fim da R2 (70% do semestre concluído) contendo apenas testes unitários e de integração, sem nenhum teste funcional ou automatizado de nível de sistema (*end-to-end*) cobrindo os fluxos principais a partir do frontend.
+
+### Ação 04 — Elaborar o Planejamento Formal de Qualidade do Produto (ISO/IEC 25010 e Q-Rapids)
+- **Categoria:** Testes / Qualidade / Documentação
+- **Prioridade:** Alta
+- **Responsável:** `[A definir]`
+- **Prazo:** `[A definir]`
+- **Feedbacks do professor relacionados:**
+  - **Ausência de planejamento formal de qualidade do produto (Reiterado da R1):** O professor reiterou que a equipe continua confundindo qualidade de software com percentual de cobertura de código e métricas isoladas do SonarQube.
+  - **Necessidade de visão *multi-repo* com baseline e metas:** Não há um documento ou discussão estruturada de planejamento da qualidade na perspectiva de características da norma ISO/IEC 25010 e do modelo Q-Rapids que defina como medir manutenibilidade, segurança, confiabilidade, usabilidade e portabilidade do produto como um todo (*multi-repo*), explicitando fórmulas de cálculo e comparativo de metas (antes vs. depois).
+
+### Ação 05 — Auditar a arquitetura do banco de dados (MER), a rotina de *cron job* no `service` e atualizar o diagrama na documentação
+- **Categoria:** Código / Arquitetura / Documentação
+- **Prioridade:** Alta
+- **Responsável:** `[A definir — a equipe ainda definirá os membros que trabalharão nesta frente]`
+- **Prazo:** Próxima quarta-feira (04/11/2026)
+- **Feedbacks do professor relacionados:**
+  - **Relacionamento de chave estrangeira de `release` restrito à `característica`:** O professor questionou a decisão arquitetural onde a chave estrangeira da `release` se relaciona apenas com o nível de `característica`, deixando de amarrar diretamente `subcaracterística`, `medida` e `métrica`.
+  - **Agregação por datas e uso de *cron job* no fechamento da release:** O professor demonstrou forte preocupação com a agregação feita por intervalo de datas (início/fim) e com a rotina de *cron job* no `service` que replica o ID da release para os níveis inferiores apenas no fechamento da release, pedindo para esclarecer se isso foi herança de `2026.1` e qual a melhor solução arquitetural.
+  - **Ambiguidade do MER no documento de arquitetura:** O documento de arquitetura apresenta tanto um ponteiro para o MER de `2026.1` quanto uma nova imagem da equipe, deixando dúvida sobre qual diagrama reflete a realidade atual do banco de dados.
+
+### Ação 06 — Investigar e corrigir a inconsistência de dados no gráfico de Evolução Temporal (nível de métrica)
+- **Categoria:** Código / Produto
+- **Prioridade:** Alta
+- **Responsável:** Luciano Freitas / `[A definir]`
+- **Prazo:** Próxima quarta-feira (04/11/2026)
+- **Feedbacks do professor relacionados:**
+  - **Cálculo exibido nos níveis superiores sem dados na base (métrica):** Na demonstração da evolução temporal, o sistema exibiu valores para os três primeiros níveis (característica, subcaracterística e medida), mas apontou ausência de dados no nível de métrica.
+  - **Violação da lógica *bottom-up* do modelo matemático:** O professor ressaltou que, como o modelo matemático do MeasureSoftGram é *bottom-up* (a característica é calculada a partir da métrica extraída da ferramenta), é matematicamente impossível existir cálculo nos níveis superiores sem a métrica na base (a equipe deve confirmar se é bug de banco/código ou falha nos dados *mockados* de teste).
+
+### Ação 07 — Finalizar a configuração do login com GitLab em homologação e preparar massa de dados para os gráficos estatísticos e CLI
+- **Categoria:** Produto / Demo
+- **Prioridade:** Média
+- **Responsável:** Lucas Bottino / `[A definir]`
+- **Prazo:** `[A definir]`
+- **Feedbacks do professor relacionados:**
+  - **Fluxo de login do GitLab incompleto na demonstração:** Embora o provedor GitLab e a tradução de terminologias (ex.: *Merge Request* para *Pull Request*) tenham sido desenvolvidos, durante a demonstração foi utilizado o GitHub porque ainda faltava finalizar uma configuração no fluxo do GitLab em homologação.
+  - **Falta de densidade de dados nos gráficos 5 (Distribuição Estatística) e 6 (Correlação):** Durante a demonstração, algumas visualizações não renderizaram para determinados produtos por exigirem no mínimo três análises ou releases anteriores para cálculo de densidade.
+  - **Ausência de demonstração da CLI:** O professor notou que a demonstração focou apenas na aplicação Web, sem exibir a CLI em funcionamento (embora tenha reconhecido a evolução nas versões publicadas da CLI).
+
+### Ação 08 — Resolver as vulnerabilidades de segurança no `service` e elevar cobertura e confiabilidade no `action`
+- **Categoria:** Código / Testes / Qualidade
+- **Prioridade:** Alta
+- **Responsável:** `[A definir]`
+- **Prazo:** Release 3
+- **Feedbacks do professor relacionados:**
+  - **Classificação "C" de segurança no `service`:** O repositório `service` encontra-se com classificação "C" em segurança no SonarCloud (26 vulnerabilidades abertas), ponto cobrado nas metas de qualidade para a Release 3.
+  - **Cobertura e confiabilidade abaixo da meta no `action`:** O repositório `action` foi o único repositório ativo que permaneceu abaixo da meta de 85% de cobertura de testes unitários e sofreu queda no índice de confiabilidade na R2.
+
+### Ação 09 — Detalhar na documentação as etapas manuais vs. automáticas da pipeline e política de branches
+- **Categoria:** Documentação / DevOps
+- **Prioridade:** Alta
+- **Responsável:** Luciano Freitas / `[A definir]`
+- **Prazo:** `[A definir]`
+- **Feedbacks do professor relacionados:**
+  - **Documentação incompleta sobre gatilhos de promoção de código:** Embora a automação de CI/CD tenha sido elogiada, o professor apontou que a documentação da política de branches e fluxo de trabalho não explica claramente quais etapas são manuais e quais são automáticas na sincronização entre o *fork* do semestre (`develop`) e os repositórios centrais (`develop` para homologação e `main` para produção), sendo essencial documentar isso para a continuidade do projeto pelas próximas turmas.
+
+### Ação 10 — Substituir imediatamente a EAP no repositório de documentação e remover a entrega "Pós-MVP" do Roadmap no ZenHub
+- **Categoria:** Documentação / Gestão / Escopo
+- **Prioridade:** Alta
+- **Responsável:** Luciano Freitas / `[A definir]`
+- **Prazo:** Imediato
+- **Feedbacks do professor relacionados:**
+  - **EAP desatualizada no repositório (Reiterado da R1):** Apesar de a equipe ter refeito a EAP diversas vezes, o arquivo publicado no repositório de documentação continuava sendo a versão antiga e incorreta da R1 (orientada a fases e sem refletir as entregas e o escopo funcional do produto).
+  - **Inclusão indevida de "Pós-MVP" no Roadmap do ZenHub:** A equipe cadastrou no Roadmap do ZenHub uma entrega "Pós-MVP" contendo funcionalidades que ficaram fora do corte do MVP na Lean Inception. O professor explicou que tudo o que é colocado no Roadmap do ZenHub passa a ser declarado tecnicamente como escopo contratado do semestre, devendo ser removido ou isolado.
+
+### Ação 11 — Atualizar o documento de Metodologia e revisar a Matriz de Riscos (Pendências da R1)
+- **Categoria:** Documentação / Gestão
+- **Prioridade:** Alta
+- **Responsável:** `[A definir]`
+- **Prazo:** `[A definir]`
+- **Feedbacks do professor relacionados:**
+  - **Documento de Metodologia incompleto e desconectado (Reiterado da R1):** Nenhuma das correções solicitadas na R1 para o documento de metodologia foi aplicada na R2. O documento lista métodos isolados (Scrum, Kanban, Lean Inception, PMBOK) sem explicar como se articulam, omite práticas utilizadas (como XP), não explica a adaptação da gestão tradicional (PMBOK) ao contexto ágil e está desconectado dos novos diagramas de fluxo de trabalho e política de branches.
+  - **Inércia na Gestão de Riscos (Reiterado da R1):** Os apontamentos de risco da R1 não foram tratados (inconsistência entre planilha e Markdown verboso gerado por IA, falta de histórico de evolução temporal dos riscos e subestimação de riscos externos).
+  - **Aceitação passiva do risco de desbalanceamento da equipe:** O professor criticou fortemente o fato de a equipe ter mapeado o risco de "desbalanceamento de trabalho entre membros" e definido a estratégia como "Aceitar", sobrecarregando poucos integrantes enquanto outros trabalham menos.
+
+### Ação 12 — Redistribuir tarefas de codificação, Code Review e comunicação para os membros com baixa participação
+- **Categoria:** Gestão / Equipe
+- **Prioridade:** Alta
+- **Responsável:** Líderes de Squad
+- **Prazo:** Imediato
+- **Feedbacks do professor relacionados:**
+  - **Contribuição crítica de 3 integrantes em código-fonte:** Embora ninguém mais esteja com zero commits, 3 membros continuam com contribuição em código-fonte muito abaixo da média da equipe (sendo que 2 deles também não se comunicam em aula, reunião ou Discord), correndo risco real de reprovação individual.
+  - **Concentração de *Code Reviews*:** Os mesmos poucos membros que mais codificam são os que mais revisam PRs.
+  - **Concentração de comunicação e quebra de cadência:** A comunicação verbal e no Discord ainda é concentrada em poucas pessoas; quando a liderança muda ou um membro-chave falta, há quebra na cadência e outros integrantes não sabem responder dúvidas do projeto.
+
+### Ação 13 — Investigar a origem dos commits em nome dos ex-alunos "Juan" e "Thiago" no repositório de documentação
+- **Categoria:** Gestão / Repositório
+- **Prioridade:** Alta
+- **Responsável:** `[A definir]`
+- **Prazo:** Próxima quarta-feira (04/11/2026)
+- **Feedbacks do professor relacionados:**
+  - **Commits estranhos de ex-alunos formados há 4 anos:** O professor identificou commits recentes no repositório de documentação assinados por "Juan" e "Thiago" (alunos da primeira turma do MeasureSoftGram) com mensagens genéricas ("adicionando métricas") e exigiu que a equipe investigue e o lembre de inspecionar isso na próxima quarta-feira.
+
+### Ação 14 — Sanar divergências residuais no Documento de Arquitetura, DevOps e Canvas MVP (Pente-fino da R1)
+- **Categoria:** Documentação / Arquitetura / DevOps
+- **Prioridade:** Média
+- **Responsável:** `[A definir]`
+- **Prazo:** Release 3
+- **Feedbacks do professor relacionados:**
+  - **Divergência residual de versões na Arquitetura:** Apesar da grande melhoria em relação à R1, ainda restou uma pequena divergência entre as versões de tecnologias descritas no documento de arquitetura e o que está efetivamente no código.
+  - **Pendências do Documento de Arquitetura (R1):** Verificar a remoção completa da "Visão de Casos de Uso" (já que o projeto usa Histórias de Usuário), substituir diagramas gerados automaticamente por diagramas que explicitem protocolos e tecnologias entre microsserviços e incluir menção/proposta sobre o notebook do IDV compartilhado pelo professor.
+  - **Pendências de DevOps/GCS (R1):** Verificar ausência de licença no repositório `platform`, necessidade de `docker-compose` próprio no `platform`, tags de pacotes Python para reconhecimento pelo SonarCloud, remoção de workflow antigo no `service` e garantia de execução da suíte de testes antes do deploy no `frontend`.
+  - **Pendências de Escopo e Canvas MVP (R1):** Incluir informações de custo e cronograma no Canvas MVP, tornar mensuráveis as métricas de hipóteses de negócio do Canvas MVP e garantir o fatiamento das histórias de usuário segundo o princípio INVEST.
+
+---
+
+### Tabela Resumo — Plano de Ação Principal
+
+| ID | Ação / Tarefa Necessária | Categoria | Prioridade | Responsável | Prazo |
+| :---: | :--- | :---: | :---: | :---: | :---: |
+| **01** | Corrigir bug de tela preta no frontend e garantir cumprimento estrito do DoR e DoD (teste e revisão local antes do PR) | Produto / Qualidade | Alta | Henrique Camelo / Gabriel Moura / Equipe | Imediato / Contínuo |
+| **02** | Deliberar sobre escopo da R3 vs. redução funcional para foco em qualidade e testes | Produto / Escopo | Alta | `[A definir]` | 04/11/2026 |
+| **03** | Planejar e implementar testes funcionais automatizados (*end-to-end*) | Testes / Qualidade | Alta | `[A definir]` | Release 3 |
+| **04** | Elaborar o Planejamento Formal de Qualidade do Produto (ISO/IEC 25010 e Q-Rapids *multi-repo*) | Testes / Qualidade | Alta | `[A definir]` | `[A definir]` |
+| **05** | Auditar arquitetura do banco de dados (MER), rotina de *cron job* no `service` e atualizar diagrama no documento de arquitetura | Código / Arquitetura | Alta | `[A definir]` | 04/11/2026 |
+| **06** | Investigar e corrigir ausência de dados no nível de métrica no gráfico de Evolução Temporal | Código / Produto | Alta | Luciano Freitas / `[A definir]` | 04/11/2026 |
+| **07** | Finalizar configuração do login GitLab em homologação e preparar massa de dados para gráficos 5, 6 e demo da CLI | Produto / Demo | Média | Lucas Bottino / `[A definir]` | `[A definir]` |
+| **08** | Resolver 26 vulnerabilidades de segurança no `service` (nota C) e elevar cobertura (>85%) e confiabilidade no `action` | Código / Qualidade | Alta | `[A definir]` | Release 3 |
+| **09** | Documentar etapas manuais vs. automáticas na política de branches e promoção de código | Documentação / DevOps | Alta | Luciano Freitas / `[A definir]` | `[A definir]` |
+| **10** | Atualizar a EAP publicada no repositório e remover a entrega "Pós-MVP" do Roadmap no ZenHub | Documentação / Gestão | Alta | Luciano Freitas / `[A definir]` | Imediato |
+| **11** | Atualizar o documento de Metodologia e revisar a Matriz de Riscos (evolução histórica e resposta ao desbalanceamento) | Documentação / Gestão | Alta | `[A definir]` | `[A definir]` |
+| **12** | Redistribuir tarefas de código, *Code Review* e comunicação para os 3 membros com baixa contribuição | Gestão / Equipe | Alta | Líderes de Squad | Imediato |
+| **13** | Investigar commits em nome dos ex-alunos "Juan" e "Thiago" no repositório de documentação | Gestão / Repositório | Alta | `[A definir]` | 04/11/2026 |
+| **14** | Sanar divergências residuais de Arquitetura, DevOps e Canvas MVP apontadas no pente-fino da R1 | Geral (R1) | Média | `[A definir]` | Release 3 |
+
+---
+
+## 4. Frente à Parte — Dashboard Gerencial e Métricas do Projeto
+
+:::info[Nota sobre o andamento desta frente]
+Os apontamentos referentes ao **Dashboard Gerencial (Streamlit) e às métricas ágeis/qualidade da disciplina** foram agrupados separadamente abaixo, pois a equipe já estava atuando paralelamente na refatoração e resolução de parte dessas questões durante a transição da entrega.
+:::
+
+### Ação D01 — Adequar a aba do modelo Q-Rapids no dashboard gerencial
+- **Categoria:** Dashboard / Qualidade
+- **Prioridade:** Alta
+- **Responsável:** Milena Fernandes / `[A definir]`
+- **Prazo:** `[A definir]`
+- **Feedbacks do professor relacionados:**
+  - **Inclusão indevida de "Segurança" na visualização intitulada Q-Rapids:** No painel de qualidade, a equipe rotulou como "Q-Rapids" uma visualização que inclui a característica de "Segurança" extraída diretamente do SonarQube. O professor alertou que o modelo Q-Rapids original (disponibilizado no notebook da disciplina) não possui a característica de segurança definida daquela forma, orientando a corrigir a nomenclatura/modelagem ou separar Segurança como métrica complementar do Sonar.
+
+### Ação D02 — Ajustar o cálculo da Velocity e do Agile EVM para considerar exclusivamente Story Points de User Stories aceitas
+- **Categoria:** Dashboard / Métricas Ágeis
+- **Prioridade:** Alta
+- **Responsável:** Milena Fernandes / `[A definir]`
+- **Prazo:** `[A definir]`
+- **Feedbacks do professor relacionados:**
+  - **Contabilização indevida de tasks técnicas e bugs na Velocity e no EVM (Reiterado da R1):** O professor apontou que a equipe continuou pontuando e incluindo *issues* técnicas (tasks, documentação e bugs) no cálculo de *Velocity* e de SPI/CPI do Agile EVM para não deixar o gráfico zerado. Ele reforçou que *Velocity* e *Agile EVM* devem considerar **exclusivamente *Story Points* de Histórias de Usuário (escopo funcional) concluídas e aceitas pelo PO** (lógica binária: 0% enquanto não aceita, 100% após aceita).
+  - **Abandono do controle de produtividade por horas trabalhadas:** O professor criticou o uso de registro de horas trabalhadas para cálculo de produtividade corrente ("pensamento de 1970"), explicando que no Agile EVM as horas servem apenas no planejamento inicial para estimar o orçamento total (BAC).
+
+### Ação D03 — Corrigir a plotagem do gráfico do Agile EVM e adicionar análises críticas textuais aos indicadores
+- **Categoria:** Dashboard / Métricas Ágeis
+- **Prioridade:** Alta
+- **Responsável:** Milena Fernandes / `[A definir]`
+- **Prazo:** `[A definir]`
+- **Feedbacks do professor relacionados:**
+  - **Estrutura visual do gráfico de EVM:** O professor apontou que o gráfico do EVM no dashboard precisava apresentar corretamente as curvas/retas clássicas do EVM (Valor Planejado, Valor Agregado e Custo Real) e a discussão de Valor Agregado.
+  - **Ausência de análise crítica e interpretação dos dados:** Os gráficos do painel gerencial apresentavam números e curvas sem análise crítica textual explicando o que os dados significam para a tomada de decisão sobre custo, prazo, risco e qualidade.
+
+### Ação D04 — Implementar métricas de fluxo de trabalho (*Throughput*, *Lead Time* e *Cycle Time*) para monitorar tasks e bugs
+- **Categoria:** Dashboard / Métricas de Fluxo
+- **Prioridade:** Média
+- **Responsável:** `[A definir]`
+- **Prazo:** `[A definir]`
+- **Feedbacks do professor relacionados:**
+  - **Separação entre métricas de valor (Scrum/EVM) e métricas de fluxo (Kanban):** O professor explicou que, para monitorar a vazão de tarefas técnicas, documentação e correção de bugs que não entram na *Velocity*, a equipe deve utilizar métricas de fluxo de trabalho (*Throughput*, *Lead Time* e *Cycle Time*).
+
+### Ação D05 — Descentralizar o desenvolvimento e o domínio teórico dos dashboards gerenciais entre toda a equipe
+- **Categoria:** Dashboard / Gestão de Equipe
+- **Prioridade:** Alta
+- **Responsável:** Toda a Equipe
+- **Prazo:** Imediato
+- **Feedbacks do professor relacionados:**
+  - **Concentração exclusiva do Dashboard Gerencial na integrante Milena (Alerta Crítico de Nota):** Assim como na R1, o professor observou que apenas a Milena implementou, comitou e demonstrou domínio teórico sobre o dashboard gerencial do projeto. Como este item compõe 30% da nota da disciplina e o restante da equipe não discutiu os indicadores na apresentação, o professor advertiu que poderá atribuir a nota dos 30% exclusivamente à Milena e zerar os demais membros caso toda a equipe não passe a estudar, manter e analisar os painéis em conjunto.
+
+---
+
+### Tabela Resumo — Ações do Dashboard Gerencial
+
+| ID | Ação / Tarefa no Dashboard | Prioridade | Responsável | Status / Observação |
+| :---: | :--- | :---: | :---: | :--- |
+| **D01** | Adequar o modelo Q-Rapids no dashboard (separando ou ajustando a característica de Segurança) | Alta | Milena Fernandes / `[A definir]` | Equipe já iniciou ajustes nas abas de qualidade |
+| **D02** | Filtrar Velocity e Agile EVM exclusivamente por *Story Points* de User Stories aceitas pelo PO (sem tasks/bugs e sem horas) | Alta | Milena Fernandes / `[A definir]` | Equipe já vinha trabalhando no ajuste de custo/EVM sem horas |
+| **D03** | Corrigir a plotagem das curvas do Agile EVM e incluir análises críticas textuais em todos os painéis | Alta | Milena Fernandes / `[A definir]` | Em andamento |
+| **D04** | Implementar métricas de fluxo (*Throughput*, *Lead Time*, *Cycle Time*) para acompanhamento de tasks e bugs | Média | `[A definir]` | Planejado |
+| **D05** | Compartilhar o domínio teórico e dividir a manutenção e análise dos dashboards entre todos os squads | Alta | Toda a Equipe | Imediato |
+
+---
+
+## 5. Dúvidas em Aberto / Decisões Pendentes
+- **Definição do Escopo da Release 3 vs. Foco em Qualidade/Testes:** Na reunião de quarta-feira (04/11), a equipe e o professor decidirão se mantêm todos os 6 épicos planejados para a R3 (Sequenciador, CI/CD no GitLab, Alerta antes do merge, Configuração dinâmica de intervalos/cores, Rastreabilidade, Frente de Segurança e Ponderação Qualitativa) ou se removem épicos funcionais para dedicar capacidade à criação de testes funcionais *end-to-end* e estabilização do produto.
+- **Arquitetura do Banco de Dados (MER) e *Cron Job* de Releases:** Definir os membros responsáveis pela auditoria do banco e esclarecer com o professor por que apenas a tabela de `característica` possui chave estrangeira para `release`, se o uso do *cron job* para preencher o ID da release nos níveis inferiores veio do legado de `2026.1`, e qual é a melhor solução arquitetural.
+- **Causa da Falha de Métricas no Gráfico de Evolução Temporal:** Confirmar se o comportamento onde os níveis superiores aparecem calculados sem a existência da métrica na base é causado apenas por dados fictícios (*mockados*) incompletos ou por bug na estrutura do banco/código.
+- **Autoria dos Commits de "Juan" e "Thiago":** Lembrar o professor na reunião de quarta-feira para inspecionar os commits de ex-alunos de 4 anos atrás no repositório de documentação e identificar o que os gerou.
+- **Acesso às Contas Oficiais (VS Code Marketplace):** Permanece o *deadlock* quanto à obtenção das credenciais/códigos da conta oficial do MeasureSoftGram para remover o plugin descontinuado do VS Code Marketplace.
+
+---
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor(es) | Revisor(es) |
+| :---: | :---: | :--- | :--- | :--- |
+| `1.0` | 02/11/2026 | Criação da ata da avaliação da Release 2 | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) | Equipe MeasureSoftGram |
