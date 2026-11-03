@@ -1,108 +1,45 @@
 ---
 id: visao-do-produto
-title: Visão do produto
+title: Visão do Produto
 sidebar_position: 1
-sidebar_label: Visão do produto
 ---
 
-# Visão do produto
+# Visão do Produto
 
-## Problema
+Documento inicial de alinhamento sobre o propósito do MeasureSoftGram no semestre
+2026.2, combinando o [diagnóstico](/docs/diagnostico) dos repositórios legados, as
+definições da [Lean Inception](/docs/lean-inception/visao-geral) e a validação do
+Product Owner.
 
-Engenheiros e desenvolvedores de software, líderes técnicos, gerentes de produto e
-pesquisadores de qualidade de software não compreendem bem as relações múltiplas e mútuas
-entre as características de qualidade de um produto, e não contam com uma teoria e uma
-ferramenta que apoiem o **planejamento e a aferição dos objetivos de qualidade de uma
-release**. Ferramentas como SonarQube, Codacy, ESLint e Analizo observam a qualidade de
-forma unidimensional, o que restringe essa análise.
+## Propósito
 
-No contexto da disciplina, o produto chega a 2026.2 fragmentado: o
-[diagnóstico da Sprint 1](../diagnostico/diagnostico.mdx) encontrou duas versões paralelas
-do ecossistema sem fonte da verdade, três versões do Core em circulação, três repositórios
-congelados e cinco achados de segurança. Por isso, o semestre combina correções
-estruturais com a entrega de novas funcionalidades.
+O MeasureSoftGram é uma plataforma para **gestão contínua da qualidade de
+software**. Ele consolida métricas extraídas de ferramentas de análise estática
+(como o SonarQube) e as traduz em um modelo matemático hierárquico
+(características, subcaracterísticas e medidas), gerando o indicador global de
+qualidade **TSQMI** (*Total Software Quality Measure Index*).
 
-## Objetivo do semestre
-
-Melhorar a experiência de uso do MeasureSoftGram, resolvendo problemas do ecossistema e
-entregando novas funcionalidades, com o MVP concluído até **07/12/2026** e custo estimado
-de **252 horas**.
-
-## Público-alvo
-
-| Perfil | Necessidade | Como o produto atende |
-| --- | --- | --- |
-| Líder técnica de equipe de desenvolvimento (persona Valéria) | Fundamentar a liberação de releases com dados de qualidade e reportar resultados à diretoria técnica | Gráficos de realizado × planejado para comparar as metas de qualidade da release com o que foi desenvolvido |
-| Coordenadora de desenvolvimento (persona Helena) | Compreender rapidamente a saúde do software sem depender de relatórios manuais | Novos gráficos e indicadores no dashboard, com melhor performance e tempo de resposta |
-| Desenvolvedor (persona Miguel) | Encontrar a causa-raiz de uma queda de qualidade e receber feedback antes do merge | Rastreabilidade da degradação de métricas até arquivos e PRs, com alertas antes do merge |
-| Pesquisador em qualidade de software (persona Paulo) | Analisar e alterar a operacionalização de diferentes modelos de qualidade | Modelo algébrico multilinear e ponderação qualitativa de pesos (AHP); análise multimodelo fica fora do MVP |
-| Engenharia DevOps (persona Amanda) | Integrar a aferição de qualidade à pipeline de CI/CD e comparar releases | Integração com GitHub Actions e, no MVP, pipeline de CI/CD para GitLab |
-
-O MVP foca nas personas **Valéria, Helena e Miguel**.
-
-## Proposta de valor
-
-O MeasureSoftGram é um software livre, focado no desenvolvimento contínuo, que agrega
-métricas de diferentes ferramentas de análise estática e dinâmica em um modelo algébrico
-multilinear. Diferente das alternativas, ele observa a qualidade de forma multidimensional e
+Para a disciplina de Engenharia de Produto de Software (2026.2), o produto
 compara os objetivos de qualidade planejados com o que foi desenvolvido em cada release,
 apoiando a decisão de aceitação da release dentro do fluxo de trabalho do time (web, CLI,
 plugin para VS Code e MCP). O plugin do VS Code saiu do escopo de 2026.2 por decisão do PO em
-[07/10/2026](/docs/reunioes/ata-po-07-10).
+[07/10/2026](/docs/reunioes/reunioes-po/ata-po-07-10).
 
 ## Escopo
 
-### Dentro do escopo
+O escopo do semestre foi fechado na [Lean Inception](/docs/lean-inception/visao-geral):
 
-**Funcionalidades do MVP**
-
-- Uso do GitLab como alternativa ao GitHub: autenticação, importação de repositórios e
-  pipeline de CI/CD análoga à GitHub Action
-- Novos gráficos e indicadores, incluindo realizado × planejado sobre o equalizador da qualidade
-- Observabilidade e rastreabilidade da degradação de métricas: rastreabilidade entre arquivos
-  de código-fonte, métricas e medidas, e alerta de decaimento da qualidade antes do merge
-- Operacionalização da característica de segurança e da medida de Dívida Técnica
-- Definição qualitativa dos pesos das entidades de qualidade (AHP)
-- Melhoria de performance e tempo de resposta (revisão do fluxo de carregamento do frontend)
-- Proteção de rotas e adequação à LGPD
-- Adequação dos gráficos de pulso e dashboards à identidade visual
-
-**Correções estruturais** (a partir do [Backlog técnico](../diagnostico/backlog-tecnico.mdx))
-
-- Deploy e saneamento dos repositórios, com melhoria da experiência de desenvolvimento (DX)
-- Correção dos bugs de segurança, unificação das versões do Core e atualização automática de dependências
-- Retirada do Grafana, com recriação dos gráficos no frontend (o plugin do VS Code saiu do semestre)
-- Refatoração do frontend (testes frágeis e erros de lint) e testes E2E
-
-### Fora do escopo
-
-- Funcionalidades posteriores ao MVP: relatório de release, publicação do relatório como
-  nota de release, diferença de indicadores entre releases, gráficos de pulso,
-  operacionalização da qualidade em uso e identificação de PR e causa raiz da degradação
-  entre dois períodos
-- Análise e comparação entre diferentes modelos de qualidade
-- Configuração de release e execução de Actions via LLM
-- Deploy de aplicações, sugestões ou correções automáticas de código e predições de qualidade
-- Substituir a interpretação dos desenvolvedores ou o code review
-
-## Critérios de sucesso
-
-Em validação com usuários, pelo menos **4 de 5** conseguem, sem ajuda:
-
-| Métrica | Critério |
-| --- | --- |
-| Taxa de Decisão Fundamentada em Dados (TDFD) | Identificar quais metas de qualidade não foram atingidas e explicar a conclusão usando os dados da ferramenta |
-| Taxa de Rastreabilidade e Localização de Falhas (TRLF) | Identificar uma métrica que piorou e encontrar as evidências dos PRs que podem estar relacionados à piora |
-| Taxa de Eficácia e Tempo Médio de Interpretação (TMI) | Usar os gráficos para identificar o que melhorou e o que piorou entre dois períodos |
-| Taxa de Conclusão de Jornada sem Falhas Bloqueantes (TCJ) | Selecionar o produto, consultar os indicadores e concluir a análise sem erro ou travamento |
-
-Critérios definidos no Canvas MVP da [Lean Inception](/docs/lean-inception/canvas-mvp).
+- **MVP 1 (Release 1):** estabilização do ecossistema, CI/CD confiável, fim do
+  Grafana e primeira versão do cálculo de dívida técnica.
+- **MVP 2 (Release 2):** suporte a repositórios do GitLab, novas visualizações
+  nativas e consolidação dos gráficos gerenciais.
+- **MVP 3 (Release 3):** refinamento do modelo matemático, alertas de
+  decaimento de qualidade e preparação para adoção contínua.
 
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
-| 1.0 | 31/08/2026 | docs: estrutura inicial do site de documentacao da EPS 2026.2 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
-| 1.1 | 02/09/2026 | docs: adiciona acentuacao no texto visivel da documentacao | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
-| 1.2 | 27/09/2026 | docs: adiciona visão de produto | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
-| 1.3 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.0 | 02/09/2026 | Criação a partir do diagnóstico e da Reunião 2 com o PO | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.1 | 21/10/2026 | Atualização com decisões da Lean Inception e saída do plugin | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.2 | 02/11/2026 | Atualiza link da ata de 07/10 para `reunioes-po` | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) |  |

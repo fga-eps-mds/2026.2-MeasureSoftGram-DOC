@@ -92,39 +92,150 @@ Core**, e que é uma evolução que muda bastante e precisa ser pensada com calm
 
 :::info[Fora do horizonte]
 **Emancipação do projeto** — tornar-se software livre para além da disciplina.
-O PO prefere manter o MeasureSoftGram como projeto de EPS/MDS, onde novas turmas
-exercitam engenharia de software real em cima de código legado.
+O PO registrou que não está no horizonte deste semestre nem do seguinte.
 :::
 
 ---
 
-## 4. O que a equipe precisa do PO
+## 4. Melhorias solicitadas
 
-| Item | Situação | Encaminhamento |
-| --- | --- | --- |
-| Retorno sobre as dúvidas da pauta (bloco 3) | Em aberto | PO responde por escrito ou na próxima reunião |
-| Documento de formalização matemática do modelo | Não enviado | PO vai disponibilizar à equipe |
-| Apresentação da R1 anterior (vídeo/gravação) | Não enviada | PO vai disponibilizar à equipe |
-| Informações sobre os autores do modelo | Não enviadas | PO vai disponibilizar |
-| Referência dos quatro dashboards novos | Não enviada | PO vai enviar os requisitos |
-| Esclarecimento sobre o deploy em produção | Não esclarecido | Acesso ao servidor de produção ainda pendente |
+O PO distinguiu explicitamente **melhoria** de **defeito**: são implementações
+que funcionam, mas precisam mudar.
+
+- **Identidade visual** — os gráficos passaram a usar cores que destoam da
+  paleta prevista. O PO enviará o material de IDV.
+- **Gráfico planejado × realizado** — "nunca ficou da forma como eu gostaria".
+  Referência: retas de planejado e realizado sobre o equalizador.
+- **Grafana** — decisão em aberto sobre manter ou remover. O responsável pela
+  implementação anterior considera que há mais contras que prós. **O PO depende
+  da análise técnica da equipe para decidir.**
+- **Componente de carregamento** — possível causa da lentidão percebida nas
+  páginas; problema herdado de semestres anteriores.
+- **Defeito no login** — exibe mensagem de erro de autenticação indevidamente.
+- **Unidade de referência** — hoje os pontos dos gráficos são gerados por pull
+  request; deveriam ser por **release**.
+
+> "Na indústria, esse ponto de controle de versão seria release. O que
+> interessa para a gente analisar é release... a unidade nossa de referência
+> deveria ser release."
+>
+> — Hilmer Rodrigues Neri, 36:56
 
 ---
 
-## 5. Encaminhamentos
+## 5. MCP - investigação prioritária
+
+Ao encerrar, o PO trouxe um ponto fora da pauta que qualifica o item de
+auditoria do módulo MCP.
+
+:::danger[Causa da quebra do MCP]
+O MCP aponta para o endereço de um **deploy provisório em servidor pessoal**
+de um integrante do semestre passado. O servidor foi tirado do ar, e por isso
+o MCP está quebrando.
+:::
+
+> "Será que a gente não tem como definir esse endereço com variável de
+> ambiente, para não botar o endereço do Lappis lá e todo mundo que for usar o
+> MCP ficar puxando o Lappis? Isso é uma coisa que eu não quero que aconteça."
+>
+> — Hilmer Rodrigues Neri, 01:05:12
+
+A orientação é explícita: **não substituir uma URL fixa por outra**. O objetivo
+é remover a dependência de endereço codificado, usando variável de ambiente —
+o que está implantado no laboratório não é ambiente de produção.
+
+### Specs e skills
+
+O card "criação de specs" foi inicialmente tratado pelo PO como contemplado
+pela implementação do MCP. A equipe esclareceu que são as **especificações que
+as skills utilizam** para gerar a especificação do produto, e que não são
+necessariamente produzidas pelo MCP. O PO acatou e pediu inclusão no checklist
+de verificação.
+
+> "Eu gostaria de vocês colocando o chapéu: se eu fosse usar essa ferramenta e
+> quisesse usar esse MCP, o que ele poderia ter além do que ele já tem hoje?"
+>
+> — Hilmer Rodrigues Neri, 59:07
+
+---
+
+## 6. Orientação metodológica
+
+Ao revisar o quadro de funcionalidades do semestre anterior, o PO criticou a
+organização por repositório e orientou a equipe a não reproduzi-la na
+construção da visão de produto.
+
+> "Eu sei que no fim das contas a gente vai chegar no repositório, mas aqui a
+> gente está construindo a visão do produto — então vamos olhar mais para
+> persona e jornada de usuário do que para repositório de código-fonte."
+>
+> — Hilmer Rodrigues Neri, 45:03
+
+A implicação prática: o agrupamento por repositório permanece válido como
+**estrutura de execução**, mas a Lean Inception e a apresentação ao PO devem
+ser organizadas por **jornada de usuário**.
+
+---
+
+## 7. Priorização acordada
+
+Apresentada pela equipe ao final e validada pelo PO.
+
+| # | Frente | Conteúdo |
+| --- | --- | --- |
+| 1 | Destravar o que está quebrado | Parser no `develop`, versionamento do Core e CLI |
+| 2 | Segurança | Endpoint de usuários, tokens, frameworks sem suporte |
+| 3 | Integridade do modelo | Padronizar a versão do Core em todos os módulos |
+| 4 | Gargalos | Consultas em cascata e otimizações de performance |
+| 5 | Investigações bloqueantes | MCP, Front em produção, Grafana, stack |
+| 6 | Governança | Política de merge, repositórios, templates |
+| 7 | Funcionalidades novas | Modelo de referência, HP, qualidade em uso, segurança, GitLab |
+
+Em paralelo, a equipe segue com as etapas da Lean Inception — objetivo do
+produto, personas e jornadas — e com o estudo da metodologia de cálculo do Core.
+
+---
+
+## 8. Encaminhamentos
+
+### Pendências do Product Owner
+
+Cinco entregas são **bloqueantes** para a equipe avançar em frentes específicas.
+
+| Item | Bloqueia |
+| --- | --- |
+| Material de identidade visual (IDV) | Reimplementação dos gráficos |
+| Artigo do método HP | Ponderação qualitativa de pesos |
+| TCC de Arthur Sena (repositório) | HP e qualidade em uso |
+| TCC de Chinua | Característica de segurança |
+| Modelo matemático do Core | Implementação de medidas novas |
+
+### Ações da equipe
 
 | Ação | Responsável | Prazo |
 | --- | --- | --- |
-| Iniciar a correção do Parser (`develop`) | Time do Parser | Imediato |
-| Investigar a origem do `msgram-core 1.5.4` no PyPI | Time do Core | Sprint 2 |
-| Fechar o endpoint `/users/` com autenticação | Time do Service | Sprint 2 |
-| Consolidar o backlog priorizado da Sprint 2 com base nas decisões | Equipe | 04/09 |
-| Cobrar do PO os materiais pendentes (seção 4) | Condutor da reunião | 04/09 |
+| Investigar a causa das três versões do Core | | |
+| Investigar a exposição do endpoint de usuários | | |
+| Auditar o repositório do MCP — incluindo o endereço hardcoded | | |
+| Análise de prós e contras: manter ou remover o Grafana | | |
+| Análise de prós e contras: atualizar ou trocar a stack do Front | | |
+| Resolver o pull request aberto na CLI desde o semestre passado | | |
+| Concluir a migração dos repositórios centrais e renomear os do semestre | | |
+| Registrar o escopo no template da Lean Inception para validação assíncrona | | |
+| Montar cronograma e issues da primeira fase | | |
+
+:::warning[Ponto de atenção]
+As análises de **Grafana** e **stack do Front** são entregas de investigação
+com decisão pendente do PO, não tarefas de implementação. Ambas precisam de
+responsável e prazo definidos, porque bloqueiam escopo: a do Grafana condiciona
+os quatro dashboards novos; a do Front condiciona o trabalho de identidade
+visual.
+:::
 
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
-| 1.0 | 02/09/2026 | docs(reunioes): adiciona ata da reuniao com o PO de 02/09/2026 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.0 | 02/09/2026 | docs(reunioes): adiciona ata e registra pauta da reuniao 2 com o PO | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
 | 1.1 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
 | 1.2 | 02/11/2026 | Migração para a pasta `reunioes/reunioes-po/` | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) |  |
