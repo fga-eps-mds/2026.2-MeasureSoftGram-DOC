@@ -1,19 +1,19 @@
 ---
-id: sprint-2
 title: Sprint 2
-sidebar_position: 2
+sidebar_label: Sprint 2 (07/09–20/09)
+description: Planejamento, resultado e retrospectiva da Sprint 2.
 ---
 
-# Sprint 2 (07/09 a 20/09/2026)
+# Sprint 2
 
-| Período | Duração | Release | Metodologia |
+| Período | Release | Líderes da quinzena | Status |
 | --- | --- | --- | --- |
-| 07/09 a 20/09/2026 | 2 semanas | Release 1 | Scrum / Kanban |
+| 07/09 a 20/09/2026 | R1 | Guilherme Storch, Luciano Freitas | Concluída |
 
 ## Objetivo
 
-Executar as investigações prioritárias e correções acordadas na [reunião com o PO de 02/09](/docs/reunioes/reunioes-po/ata-po-02-09):
-destravar o Parser, investigar a exposição do endpoint de usuários, a causa das três versões do Core e o módulo MCP.
+Alinhar com o PO o objetivo do semestre, organizar os repositórios do semestre e
+iniciar a Lean Inception e o planejamento (EAP, riscos, custos).
 
 :::note[Objetivo reconstituído]
 A sprint não teve objetivo registrado na época. O texto acima foi escrito em
@@ -23,16 +23,35 @@ os líderes da quinzena devem confirmar ou corrigir.
 
 ## Planejado × realizado
 
-| Item | Tipo | Responsável | Situação |
+| Indicador | Valor |
+| --- | --- |
+| Pontos no escopo da sprint (Zenhub) | 10 |
+| Pontos concluídos (Zenhub, no fechamento) | 0 — as issues foram fechadas fora do pipeline Done ([decisão D2](/docs/planejamento/decisoes#d2-critério-de-feito-e-níveis-pontuados)) |
+
+## Principais entregas
+
+| Issue | O que entregou | Responsáveis |
+| --- | --- | --- |
+| [DOC#14](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/14) e sub-issues #5–#13 | Migração de Core, Service, Front, CLI, Parser, Action, AI e Plugin para os forks 2026.2 e organização do repositório de documentação | @MilenaFRocha, @bottinolucas, @devwallyson, @luciano-freitas-melo, @Diogo-Barboza, @zzzBECK, @GabrielMS00, @thegm445, @nateejpg, @LuizaMaluf |
+| [Service#3](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/3) | Django atualizado para 5.2 LTS | @Marcosatc147 |
+| [CLI#1](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/1) | SonarCloud de 2026.2 configurado na CLI e testes corrigidos para o msgram-core 1.5.4 | @zzzBECK |
+| [DOC#39](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/39) | Template de PR | — |
+| Reunião com o PO de 02/09 | Direção do semestre validada ([ata](/docs/reunioes/reunioes-po/ata-po-02-09)) | Luiza Maluf, Lucas Bottino, Gabriel Moura, Alexandre Beck |
+
+## Retrospectiva
+
+:::caution[A preencher na review/retrospectiva]
+Não houve registro de retrospectiva desta sprint. Os líderes da quinzena
+(Guilherme Storch, Luciano Freitas) preenchem a tabela; se a retrospectiva não
+aconteceu, registrar isso explicitamente.
+:::
+
+| O que foi bem | O que pode melhorar | Ação para a próxima sprint | Responsável |
 | --- | --- | --- | --- |
-| [DOC#39](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/39) | Template de PR | — | Concluído |
-| Reunião com o PO de 02/09 | Direção do semestre validada ([ata](/docs/reunioes/reunioes-po/ata-po-02-09)) | Luiza Maluf, Lucas Bottino, Gabriel Moura, Alexandre Beck | Concluída |
-| [DOC#40](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/40) | Documentação de metodologia | Luiza Maluf | Concluído |
-| [DOC#41](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/41) | Template de issue | — | Concluído |
+| | | | |
 
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
-| 1.0 | 21/10/2026 | Reconstituição a partir das issues e commits | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
-| 1.1 | 02/11/2026 | Atualiza links da ata de 02/09 para `reunioes-po` | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) |  |
+| 1.0 | 21/10/2026 | Registro da sprint a partir do Zenhub | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |

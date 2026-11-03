@@ -1,36 +1,30 @@
 ---
-id: e-nao-e-faz-nao-faz
-title: É - Não é - Faz - Não faz
+title: 2. É / Não é / Faz / Não faz
+sidebar_label: 2. É / Não é / Faz / Não faz
 sidebar_position: 3
+description: Resultado da atividade "2. É / Não é / Faz / Não faz" da Lean Inception 2026.2.
 ---
 
-# É — Não é — Faz — Não faz
+# 2. É / Não é / Faz / Não faz
 
-Classificação construída na Lean Inception para definir fronteiras claras do
-MeasureSoftGram em 2026.2, evitar desvios de escopo e concentrar o esforço no
-que agrega valor ao usuário.
+Delimita o produto em quatro quadrantes para reduzir ambiguidades de escopo. Referência: CAROLI, P. *Lean Inception: como alinhar pessoas e construir o produto certo*.
 
-## Matriz
+## Resultado
 
-| É | Não é |
-| --- | --- |
-| Plataforma de gestão contínua da qualidade de software | Ferramenta de análise estática de código (não substitui o SonarQube) |
-| Integrador de métricas com modelo matemático hierárquico | Sistema de gerenciamento de tarefas ou chamados |
-| Calculador do indicador global de qualidade (TSQMI) | Substituto de pipelines de CI/CD (consome, não executa) |
-| Ferramenta para apoio à tomada de decisão sobre releases | Ambiente de desenvolvimento (IDE) |
+![Quadro É / Não é / Faz / Não faz](@site/static/img/Atv2.png)
 
----
+## O que decidimos
 
-| Faz | Não faz |
-| --- | --- |
-| Coleta métricas de ferramentas externas (SonarQube) | Análise estática diretamente no código-fonte |
-| Calcula índices ponderados por características e medidas | Gerenciamento de branches ou automação de git |
-| Suporta múltiplos provedores de código (GitHub e GitLab) | Armazenamento de credenciais ou tokens em texto plano |
-| Compara qualidade planejada versus realizada por release | Bloqueio direto de deploy sem integração configurada |
-
-## Ajustes de escopo
-
-- **Manter fora:** funcionalidades que pertencem a ferramentas parceiras (ex.:
+- **É:** software livre, multiplataforma, baseado em modelo algébrico
+  multilinear, multi-interface sobre um núcleo único e multiorganização/multiproduto.
+- **Não é:** IA generativa, ferramenta de nota (score), ferramenta de análise
+  estática/dinâmica nem de monitoramento de desenvolvedores; não é *plug-and-play*
+  sem configuração.
+- **Faz:** gerencia medidas, planeja releases, compara objetivos planejados com o
+  desenvolvido, agrega métricas de várias ferramentas, funciona como gatilho de
+  qualidade informativo na CI e permite consultar o histórico em linguagem natural
+  (agente de IA via MCP).
+- **Não faz:** deploy, sugestão ou correção automática de código, predições de
   qualidade, code review, certificação de conformidade, coleta de métricas por
   conta própria e gestão de projeto/backlog.
 - **Retirar:** disponibilização do plugin no VS Code. Confirmado pelo PO na
@@ -38,13 +32,12 @@ que agrega valor ao usuário.
 
 ## Impacto no projeto
 
-A definição estrita de fronteiras evita retrabalho e foca a capacidade do time
-nas histórias das ondas do [sequenciador](/docs/lean-inception/sequenciador).
+Seção "Fora do escopo" da [Visão do produto](/docs/produto/visao-do-produto#fora-do-escopo).
 
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
-| 1.0 | 04/09/2026 | Criação durante a dinâmica da Lean Inception | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
-| 1.1 | 21/10/2026 | Atualização com a retirada do plugin do VS Code | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
-| 1.2 | 02/11/2026 | Atualiza link da ata de 07/10 para `reunioes-po` | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) |  |
+| 1.0 | 31/08/2026 | Criação da página | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.1 | 26/09/2026 | Descrição da atividade e quadro do Figma | [@storch7](https://github.com/storch7) |  |
+| 2.0 | 21/10/2026 | Modelo padrão: teoria resumida, seção "O que decidimos" e impacto no projeto | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
