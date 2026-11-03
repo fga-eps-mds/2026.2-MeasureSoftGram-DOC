@@ -197,45 +197,46 @@ identificados ao executar o roteiro de testes da **CLI**:
 ## 5. Coleta de Métricas do Dashboard Gerencial da Disciplina
 
 Luciano apresentou a solução desenvolvida junto à Milena para centralizar a coleta de métricas do
-SonarQube e do GitHub diretamente pela pipeline do repositório de documentação da disciplina
-(`2026.2-MeasureSoftGram-DOC`), eliminando a necessidade de manter scripts de CI (`export-metrics`)
-espalhados em todos os repositórios do produto (cujos *parsers* estavam divergentes).
+projeto através da Action centralizadora:
 
-- **Questionamento do PO (Professor)**: O PO alertou que a coleta não pode ser feita a cada *commit*
-  comum nem por agendamento cego de tempo, pois isso polui a base de dados com pontos sem alteração
-  estatística (transformando o gráfico em uma reta). O gatilho metodológico correto da disciplina é
-  o **fechamento de Pull Request (merge) nas branches `develop` ou `main`**.
-- **Solução Acordada**:
-  1. Terminar de ativar a proteção de branches (*branch protection*) em todos os repositórios para
-     impedir commits diretos na `develop` e na `main`;
-  2. Padronizar o fechamento de PRs utilizando **Squash and Merge**, garantindo que cada Pull
-     Request fechado gere exatamente um único commit na branch de destino;
-  3. O script centralizado no repositório de documentação rodará periodicamente (ex.: diariamente)
-     verificando via API se houve novo PR/commit de merge na `develop` ou `main` e, somente nesse
-     caso, coletará e persistirá os dados do SonarQube.
-- A validação final dessa implementação ocorrerá na aula de segunda-feira (19/10).
+- **Evolução da Coleta**: A rotina agora baixa os artefatos de dados e os consolida diretamente na
+  pasta `Analytics/data`, permitindo que os scripts em Python do Streamlit consumam a massa de
+  dados atualizada de todos os microsserviços.
+- **Autorização do PO para *Squash Merge***: A equipe explicou que, ao abrir PRs com novos commits de
+  dados de métricas, o histórico do repositório de documentação ficava excessivamente poluído. O PO
+  autorizou que, **exclusivamente para a atualização automática de dados de métricas no repositório
+  de documentação**, a equipe utilize a estratégia de *Squash and Merge*, preservando o histórico
+  limpo na `main`.
 
 ---
 
-## 6. Encaminhamentos e Próximos Passos
+## 6. Encaminhamentos
 
 ### Pendências do Product Owner
 
 | Item | Descrição | Previsão |
-| :--- | :--- | :--- |
-| **Conta e Token do GitLab** | Criar a conta oficial do MeasureSoftGram no GitLab (vinculando e-mail pessoal como recuperação) e enviar o token para a equipe. | 15/10 (Quinta-feira) |
-| **Tentativa final no Gmail/GitHub** | Realizar últimas tentativas de recuperação das contas antigas e sincronizar envio de códigos de verificação quando solicitado pela equipe. | Até o fim de semana |
-| **Validação de Histórias e Aceite** | Validar os critérios e protótipos pendentes no ZenHub e realizar o aceite das histórias do GitLab (mediante entrega de deploy e formulário de teste). | Até 17/10 (Sábado) |
+| --- | --- | --- |
+| Conta no GitLab | Criar a conta oficial do MeasureSoftGram no GitLab com e-mail de recuperação e gerar o token | 15/10 |
+| Validação de Protótipos | Validar os protótipos restantes e as novas histórias no ZenHub | Até 17/10 (sábado) |
+| Códigos de Verificação | Repassar códigos de autenticação que chegarem ao Gmail do projeto mediante aviso prévio | Sob demanda |
 
 ### Ações da Equipe
 
 | Ação | Responsável | Prazo |
-| :--- | :--- | :--- |
-| Corrigir bug crítico da CLI que ignora edições no arquivo `.msgram` (URGENTE) | Lucas, Gustavo e Wallyson | Sprint atual |
-| Verificar se *Performance Efficiency* segue ativa no Core/Service | Gabriel Moura | Sprint atual |
-| Investigar e corrigir o bug de regressão na paginação/importação de repositórios da organização | Alexandre Beck | Sprint atual |
-| Documentar na issue do GitLab a necessidade de atrelar a plataforma à Organização/Grupo em vez do Repositório | Gustavo Roberto | Sprint atual |
-| Ajustar gráfico TSQMI (tag da versão + nome da release, correção de tags sobrepostas e intervalos *hardcoded* para a R2) | Milena e Guilherme | Sprint atual |
-| Atualizar protótipo do gráfico Planejado × Realizado (usar o mesmo componente do equalizador e remover escala vertical de 0 a 1) | Guilherme | Sprint atual |
-| Ajustar a coleta centralizada de métricas do repositório DOC (garantir proteção de branches, uso de *squash merge* e coleta restrita a PRs) | Luciano Melo | 19/10 (Segunda-feira) |
-| Reorganizar o ZenHub (mover LGPD para o fim do MVP, adicionar novo épico para configuração de intervalos de pontuação pelo usuário e atualizar o cronograma geral do projeto) | Gabriel Moura / Equipe EPS | 19/10 (Planning de segunda-feira) |
+| --- | --- | --- |
+| Investigar a falha crítica na CLI (arquivo `.msgram` ignorado) e o cálculo de Performance Efficiency | Gabriel Moura | 16/10 |
+| Corrigir a regressão na paginação de repositórios do usuário e da organização | Alexandre | 16/10 |
+| Atualizar a implantação de homologação com a correção do Erro 500 no login | Henrique Camelo | 15/10 |
+| Ajustar protótipo do Gráfico Histórico de TSQMI (remover tela redundante, ajustar tags de release) | Milena / Gabriel | 16/10 |
+| Implementar intervalos e cores fixos (*hardcoded*) na R2 e formalizar épico para R3 | Gabriel / Time de Front | Release 2 |
+| Ajustar componente do equalizador e remover escala lateral no gráfico Planejado × Realizado | Luciano / Alexandre | 16/10 |
+| Mover o épico de LGPD para o final do backlog no ZenHub | Luciano | 15/10 |
+| Atualizar o board e o planejamento de sprints no ZenHub com a nova capacidade da equipe | Luciano / Liderança | 17/10 |
+| Atualizar regras de restrição arquitetural da importação por provedores (GitHub vs. GitLab) | Gustavo | 16/10 |
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 15/10/2026 | Registro detalhado da reunião com o PO | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) | |
+| 1.1 | 02/11/2026 | Migração para a pasta `reunioes/reunioes-po/` | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) | |

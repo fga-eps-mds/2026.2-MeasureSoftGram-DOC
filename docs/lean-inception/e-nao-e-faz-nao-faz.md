@@ -28,7 +28,7 @@ Delimita o produto em quatro quadrantes para reduzir ambiguidades de escopo. Ref
   qualidade, code review, certificação de conformidade, coleta de métricas por
   conta própria e gestão de projeto/backlog.
 - **Retirar:** disponibilização do plugin no VS Code. Confirmado pelo PO na
-  [reunião de 07/10](/docs/reunioes/ata-po-07-10).
+  [reunião de 07/10](/docs/reunioes/reunioes-po/ata-po-07-10).
 
 ## Impacto no projeto
 
