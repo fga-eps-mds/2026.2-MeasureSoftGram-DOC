@@ -3,49 +3,77 @@ id: reunioes
 slug: /reunioes
 title: Reuniões
 sidebar_label: Visão geral
-description: Índice das reuniões da equipe com o PO, internas e com os monitores.
+description: Índice e organização das reuniões da equipe com o PO, feedbacks de release e alinhamentos internos do time.
 ---
 
 # Reuniões
 
-Índice de todas as reuniões registradas. Cada ata traz o resultado em destaque,
-as decisões e as ações com responsável e prazo.
+Índice central de todas as reuniões documentadas da equipe no semestre 2026.2. Para melhor navegação e acompanhamento do projeto, os registros e atas estão categorizados em três grandes frentes:
 
-A reunião semanal com o PO é às quartas, 19h30. Pela
-[Política de IA da disciplina](/docs/disciplina#política-de-ia), atas com o cliente
-não podem ser geradas por IA.
+1. **Reuniões com o PO:** Encontros semanais de alinhamento com o Product Owner às quartas-feiras, cobrindo validação de escopo, dúvidas de requisitos, protótipos e decisões arquiteturais.
+2. **Reuniões de Feedback de Release:** Avaliações formais de fechamento e entrega das releases com o professor e PO, levantando pontos positivos, críticas e o plano de ação corretivo da equipe.
+3. **Reuniões do Time:** Rituais internos da equipe (planning de sprint, alinhamentos técnicos entre squads, replanejamento de arquitetura e distribuição de tarefas).
 
-## Índice
+> **Aviso da disciplina:** A reunião semanal com o PO é às quartas, 19h30. Pela [Política de IA da disciplina](/docs/disciplina#política-de-ia), atas com o cliente não podem ser geradas por IA.
 
-| Data | Tipo | Assunto | Registro | Ações em aberto |
-| --- | --- | --- | --- | --- |
-| Sprint 1 (data não registrada) | Com o PO | Apresentação da metodologia matemática | [Registro](/docs/reunioes/reuniao-po-1) | — |
-| 02/09/2026 | Com o PO | Objetivo do semestre e decisões críticas do diagnóstico | [Pauta](/docs/reunioes/pauta-po-02-09) · [Ata](/docs/reunioes/ata-po-02-09) | ver ata |
-| 23/09/2026 | Com o PO | Validação de escopo, decisões técnicas e acordos de entrega | [Ata](/docs/reunioes/ata-po-23-09) | ver ata |
-| 07/10/2026 | Com o PO | Critérios de aceitação da sprint, retirada do plugin do VS Code e status da R1 | [Ata](/docs/reunioes/ata-po-07-10) | ver ata |
-| 14/10/2026 | Com o PO | Desbloqueio de contas, revisão de protótipos, falha na CLI e alinhamento de entregas | [Ata](/docs/reunioes/ata-po-14-10) | ver ata |
-| 21/10/2026 | Com o PO | Validação dos protótipos da R2, rastreabilidade adiada para a R3 | [Ata](/docs/reunioes/ata-po-21-10) | ver ata |
-| 28/10/2026 | Feedback de Entrega (R2) | Apresentação da Release 2, avaliação do professor e plano de ação para a R3 | [Ata](/docs/reunioes/ata-po-28-10) | ver ata |
-| 02/11/2026 | Interna / Planning | Planejamento da Sprint 8, reestruturação de escopo da R3, qualidade e squads | [Ata](/docs/reunioes/ata-planning-sprint-8) | ver ata |
+---
 
-:::caution[A preencher]
-Há reuniões semanais com o PO entre 09/09 e 21/10 sem ata (09/09, 16/09, 30/09).
-Se aconteceram, registrar ao menos resultado e decisões; se não aconteceram,
-anotar aqui "não houve reunião". Reuniões internas e com os monitores também
-entram neste índice.
+## 1. Reuniões com o Product Owner (PO)
+
+Encontros periódicos focados na validação contínua do produto, dos protótipos e das regras de negócio:
+
+| Data | Assunto Principal | Documentos | Situação das Ações |
+| :---: | :--- | :---: | :---: |
+| **Sprint 1** | Apresentação da metodologia matemática do MeasureSoftGram | [Registro](/docs/reunioes/reunioes-po/reuniao-po-1) | Concluído |
+| **02/09/2026** | Objetivo do semestre e decisões críticas do diagnóstico | [Pauta](/docs/reunioes/reunioes-po/pauta-po-02-09) · [Ata](/docs/reunioes/reunioes-po/ata-po-02-09) | Concluído |
+| **23/09/2026** | Validação de escopo (Dívida Técnica, TSQMI) e acordos de entrega | [Ata](/docs/reunioes/reunioes-po/ata-po-23-09) | Concluído |
+| **07/10/2026** | Critérios de aceitação da sprint, saída do plugin VS Code e status da R1 | [Ata](/docs/reunioes/reunioes-po/ata-po-07-10) | Concluído |
+| **14/10/2026** | Desbloqueio de contas oficiais, revisão de protótipos, falha na CLI e alinhamento de entregas | [Ata](/docs/reunioes/reunioes-po/ata-po-14-10) | Concluído |
+| **21/10/2026** | Validação dos protótipos da R2, adiamento da rastreabilidade para a R3 | [Ata](/docs/reunioes/reunioes-po/ata-po-21-10) | Concluído |
+
+:::caution[Reuniões sem ata registrada]
+Há semanas com o PO entre 09/09 e 21/10 sem ata formal publicada (09/09, 16/09 e 30/09). Se aconteceram, registrar ao menos resultado e decisões principais; caso não tenham ocorrido por feriado ou calendário acadêmico, anotar "não houve reunião".
 :::
 
-## Como registrar uma reunião
+---
 
-Copie o [modelo de ata](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/ata.mdx)
-para `docs/reunioes/ata-po-dd-mm.mdx`, publique em até dois dias e adicione a
-linha nesta tabela. Ver [Guia de documentação](/docs/equipe/guia-documentacao).
+## 2. Reuniões de Feedback de Release
+
+Sessões dedicadas à apresentação e avaliação dos incrementos entregues ao professor/PO ao final de cada ciclo de release:
+
+| Data | Release Avaliada | Assunto Principal | Registro |
+| :---: | :---: | :--- | :---: |
+| **28/10/2026** | **Release 2** | Demonstração em homologação, avaliação do professor, plano de ação e reorganização dos squads | [Ata de Feedback R2](/docs/reunioes/feedback-release/ata-feedback-r2) |
+
+---
+
+## 3. Reuniões do Time (Internas)
+
+Rituais de planejamento da sprint (Sprint Planning), retrospectivas, refinamentos técnicos e alinhamentos entre squads:
+
+| Data | Tipo de Ritual | Pauta e Deliberações | Registro |
+| :---: | :---: | :--- | :---: |
+| **02/11/2026** | **Sprint Planning (Sprint 8)** | Reestruturação do escopo da R3 (corte de rastreabilidade, foco em qualidade), plano de qualidade e divisão de tarefas entre Squads 1, 2 e 3 | [Ata Planning Sprint 8](/docs/reunioes/reunioes-time/ata-planning-sprint-8) |
+
+---
+
+## Como registrar uma nova reunião
+
+1. Copie o [modelo de ata](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/_modelos/ata.mdx);
+2. Salve o arquivo na pasta correspondente ao tipo de encontro:
+   - Reuniões com o PO: `docs/reunioes/reunioes-po/ata-po-dd-mm.mdx`;
+   - Feedback de Release: `docs/reunioes/feedback-release/ata-feedback-rX.mdx`;
+   - Reuniões do time: `docs/reunioes/reunioes-time/ata-planning-sprint-N.mdx` (ou nome apropriado);
+3. Adicione a referência na barra lateral (`sidebars.ts`) e inclua a linha correspondente nesta página de visão geral em até dois dias úteis. Consulte o [Guia de documentação](/docs/equipe/guia-documentacao).
+
+---
 
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
-| --- | --- | --- | --- | --- |
-| 1.0 | 31/08/2026 | Criação com o registro da Reunião 1 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
-| 2.0 | 21/10/2026 | Índice completo (inclui 07/10), Reunião 1 em página própria, modelo movido para `docs/_modelos` | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
-| 2.1 | 22/10/2026 | Adiciona a ata de 21/10 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
-| 2.2 | 02/11/2026 | Adiciona a ata de 28/10 (Feedback da Release 2) e ata de 02/11 (Planning Sprint 8) | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) |  |
+| :---: | :---: | :--- | :--- | :--- |
+| 1.0 | 31/08/2026 | Criação com o registro da Reunião 1 | [@LuizaMaluf](https://github.com/LuizaMaluf) | — |
+| 2.0 | 21/10/2026 | Índice completo (inclui 07/10), Reunião 1 em página própria, modelo movido para `docs/_modelos` | [@MilenaFRocha](https://github.com/MilenaFRocha) | — |
+| 2.1 | 22/10/2026 | Adiciona a ata de 21/10 | [@LuizaMaluf](https://github.com/LuizaMaluf) | — |
+| 2.2 | 02/11/2026 | Adiciona a ata de 28/10 (Feedback da Release 2) e ata de 02/11 (Planning Sprint 8) | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) | — |
+| 3.0 | 02/11/2026 | Reorganização das atas em pastas estruturadas (Reuniões PO, Feedback Release e Reuniões do Time) e atualização da visão geral | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) | Equipe MeasureSoftGram |

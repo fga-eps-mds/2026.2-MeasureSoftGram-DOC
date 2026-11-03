@@ -88,17 +88,39 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Reuniões',
+      collapsed: false,
       items: [
         'reunioes/reunioes',
-        'reunioes/reuniao-po-1',
-        'reunioes/pauta-po-02-09',
-        'reunioes/ata-po-02-09',
-        'reunioes/ata-po-23-09',
-        'reunioes/ata-po-07-10',
-        'reunioes/ata-po-14-10',
-        'reunioes/ata-po-21-10',
-        'reunioes/ata-po-28-10',
-        'reunioes/ata-planning-sprint-8',
+        {
+          type: 'category',
+          label: 'Reuniões com o PO',
+          collapsed: false,
+          items: [
+            'reunioes/reunioes-po/reuniao-po-1',
+            'reunioes/reunioes-po/pauta-po-02-09',
+            'reunioes/reunioes-po/ata-po-02-09',
+            'reunioes/reunioes-po/ata-po-23-09',
+            'reunioes/reunioes-po/ata-po-07-10',
+            'reunioes/reunioes-po/ata-po-14-10',
+            'reunioes/reunioes-po/ata-po-21-10',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Feedback de Release',
+          collapsed: false,
+          items: [
+            'reunioes/feedback-release/ata-feedback-r2',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Reuniões do Time',
+          collapsed: false,
+          items: [
+            'reunioes/reunioes-time/ata-planning-sprint-8',
+          ],
+        },
       ],
     },
     {
