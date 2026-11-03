@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-03T11:13:58+00:00",
+ "coletado_em": "2026-11-03T16:52:06+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
@@ -8,11 +8,11 @@
   {
    "number": 177,
    "title": "docs(reunioes): reorganiza atas em subpastas, adiciona feedback da R2 e planning da Sprint 8",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-02T23:09:30Z",
-   "closed_at": null,
-   "updated_at": "2026-11-03T02:31:02Z",
+   "closed_at": "2026-11-03T16:50:46Z",
+   "updated_at": "2026-11-03T16:50:49Z",
    "labels": [],
    "type": null,
    "assignees": [

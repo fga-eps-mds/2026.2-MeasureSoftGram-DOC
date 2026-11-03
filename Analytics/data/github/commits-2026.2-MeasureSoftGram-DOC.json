@@ -1,11 +1,479 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-03T11:13:58+00:00",
+ "coletado_em": "2026-11-03T16:52:06+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "branch": "(padrão)",
  "commits": [
+  {
+   "sha": "a65eef586811c328897af05ba61e5feb729bfd11",
+   "date": "2026-11-03T16:50:45Z",
+   "author": "LuizaMaluf",
+   "message": "Merge pull request #177 from fga-eps-mds/docs/ata-po-28-10",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "docs/lean-inception/e-nao-e-faz-nao-faz.md",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/processo/fluxo-de-trabalho.mdx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/processo/historia-de-usuario.mdx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/produto/repositorios.mdx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/produto/visao-do-produto.mdx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/releases/release-1.mdx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/releases/release-2.mdx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "docs/reunioes/feedback-release/ata-feedback-r2.mdx",
+     "status": "added",
+     "additions": 205,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/ata-po-02-09.mdx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/ata-po-07-10.mdx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/ata-po-14-10.mdx",
+     "status": "renamed",
+     "additions": 32,
+     "deletions": 31
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/ata-po-21-10.mdx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/ata-po-23-09.mdx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/pauta-po-02-09.mdx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/reuniao-po-1.mdx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/reunioes/reunioes-time/ata-planning-sprint-8.mdx",
+     "status": "added",
+     "additions": 89,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes.mdx",
+     "status": "modified",
+     "additions": 59,
+     "deletions": 27
+    },
+    {
+     "filename": "docs/sprints/sprint-1.mdx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "docs/sprints/sprint-2.mdx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "docs/sprints/sprint-4.mdx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "sidebars.ts",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 7
+    }
+   ]
+  },
+  {
+   "sha": "9358591d4b3ba87f0a4cfaccd484498b36893094",
+   "date": "2026-11-03T11:15:41Z",
+   "author": "github-actions[bot]",
+   "message": "chore(dados): coleta automática do Zenhub, SonarCloud e GitHub Actions",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 185,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 20
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 49
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 47,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-03T1113.json",
+     "status": "added",
+     "additions": 20260,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/linhas-de-base.json",
+     "status": "modified",
+     "additions": 29,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-03T1113.json",
+     "status": "added",
+     "additions": 8190,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "746b18fe5a4744aa9d01c4d0fd3da3df484c7ddb",
+   "date": "2026-11-03T02:21:56Z",
+   "author": "luciano-freitas-melo",
+   "message": "fix(docs): restaura arquivos de documentacao e corrige links quebrados",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/lean-inception/e-nao-e-faz-nao-faz.md",
+     "status": "modified",
+     "additions": 22,
+     "deletions": 29
+    },
+    {
+     "filename": "docs/processo/fluxo-de-trabalho.mdx",
+     "status": "modified",
+     "additions": 175,
+     "deletions": 48
+    },
+    {
+     "filename": "docs/processo/historia-de-usuario.mdx",
+     "status": "modified",
+     "additions": 91,
+     "deletions": 28
+    },
+    {
+     "filename": "docs/produto/repositorios.mdx",
+     "status": "modified",
+     "additions": 26,
+     "deletions": 6
+    },
+    {
+     "filename": "docs/produto/visao-do-produto.mdx",
+     "status": "modified",
+     "additions": 86,
+     "deletions": 23
+    },
+    {
+     "filename": "docs/releases/release-1.mdx",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/releases/release-2.mdx",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/reunioes/reunioes-time/ata-planning-sprint-8.mdx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 5
+    },
+    {
+     "filename": "docs/sprints/sprint-1.mdx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "docs/sprints/sprint-2.mdx",
+     "status": "modified",
+     "additions": 33,
+     "deletions": 14
+    },
+    {
+     "filename": "docs/sprints/sprint-4.mdx",
+     "status": "modified",
+     "additions": 49,
+     "deletions": 10
+    }
+   ]
+  },
+  {
+   "sha": "945e3066c158a89948f2f418ed3d465ae9f2f305",
+   "date": "2026-11-03T02:02:31Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs: atualiza todos os links internos para as novas subpastas de reunioes",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/lean-inception/e-nao-e-faz-nao-faz.md",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 23
+    },
+    {
+     "filename": "docs/processo/fluxo-de-trabalho.mdx",
+     "status": "modified",
+     "additions": 49,
+     "deletions": 176
+    },
+    {
+     "filename": "docs/processo/historia-de-usuario.mdx",
+     "status": "modified",
+     "additions": 29,
+     "deletions": 92
+    },
+    {
+     "filename": "docs/produto/repositorios.mdx",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 27
+    },
+    {
+     "filename": "docs/produto/visao-do-produto.mdx",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 87
+    },
+    {
+     "filename": "docs/releases/release-1.mdx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/releases/release-2.mdx",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 3
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/ata-po-02-09.mdx",
+     "status": "modified",
+     "additions": 128,
+     "deletions": 17
+    },
+    {
+     "filename": "docs/sprints/sprint-2.mdx",
+     "status": "modified",
+     "additions": 15,
+     "deletions": 34
+    },
+    {
+     "filename": "docs/sprints/sprint-4.mdx",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 50
+    }
+   ]
+  },
   {
    "sha": "09f059726ea74bda18332c2be515c21835ada72d",
    "date": "2026-11-03T01:59:58Z",
@@ -190,6 +658,81 @@
    ]
   },
   {
+   "sha": "19ad2b5387bca9f78b02dfb6c0e852aa6ed79143",
+   "date": "2026-11-03T01:58:17Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): remove ata-po-21-10 da raiz de docs/reunioes",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/ata-po-21-10.mdx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 177
+    }
+   ]
+  },
+  {
+   "sha": "54eadf1b05e8ce392cc0aa7114cc83e6a63bdb79",
+   "date": "2026-11-03T01:57:49Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): remove ata-po-14-10 da raiz de docs/reunioes",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/ata-po-14-10.mdx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 241
+    }
+   ]
+  },
+  {
+   "sha": "aaf8ada5bc00b161efc2b30b8cd81bfccd934540",
+   "date": "2026-11-03T01:57:36Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): remove ata-po-07-10 da raiz de docs/reunioes",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/ata-po-07-10.mdx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 232
+    }
+   ]
+  },
+  {
+   "sha": "d00440132308bd9b0c620c6d73e65000fa833e99",
+   "date": "2026-11-03T01:57:24Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): remove ata-po-23-09 da raiz de docs/reunioes",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/ata-po-23-09.mdx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 115
+    }
+   ]
+  },
+  {
+   "sha": "cdc43d89598a3bd43c6e0f73a966f3c4ab942bea",
+   "date": "2026-11-03T01:57:09Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): remove ata-po-02-09 da raiz de docs/reunioes",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/ata-po-02-09.mdx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 240
+    }
+   ]
+  },
+  {
    "sha": "070d47949d2907f7ec459222a894fd0efce05381",
    "date": "2026-11-03T01:57:06Z",
    "author": "storch7",
@@ -201,6 +744,198 @@
      "status": "modified",
      "additions": 115,
      "deletions": 162
+    }
+   ]
+  },
+  {
+   "sha": "9754df717c8c70a2e6c0b1e67716bf12103f8847",
+   "date": "2026-11-03T01:56:51Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): remove pauta-po-02-09 da raiz de docs/reunioes",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/pauta-po-02-09.mdx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 132
+    }
+   ]
+  },
+  {
+   "sha": "77ccc6446d93f64f40eecd9d715c44333e175f06",
+   "date": "2026-11-03T01:56:41Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): remove arquivos antigos da raiz de docs/reunioes que foram para reunioes-po",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/reuniao-po-1.mdx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 49
+    }
+   ]
+  },
+  {
+   "sha": "dc4566a4294ede8ba09bcf3da2baf207967b433f",
+   "date": "2026-11-03T01:56:31Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): move atas com PO para subpasta docs/reunioes/reunioes-po",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/reunioes-po/ata-po-02-09.mdx",
+     "status": "added",
+     "additions": 130,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/ata-po-07-10.mdx",
+     "status": "added",
+     "additions": 233,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/ata-po-14-10.mdx",
+     "status": "added",
+     "additions": 242,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/ata-po-21-10.mdx",
+     "status": "added",
+     "additions": 178,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/ata-po-23-09.mdx",
+     "status": "added",
+     "additions": 116,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/pauta-po-02-09.mdx",
+     "status": "added",
+     "additions": 133,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes-po/reuniao-po-1.mdx",
+     "status": "added",
+     "additions": 50,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "60e6ceac750553e922125ef84daf5d96604f7525",
+   "date": "2026-11-03T01:52:11Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): remove ata-planning-sprint-8 da raiz de reunioes apos migracao",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/ata-planning-sprint-8.mdx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 90
+    }
+   ]
+  },
+  {
+   "sha": "f4a0d248880a1e63cde08502525240983834320c",
+   "date": "2026-11-03T01:52:00Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): remove arquivos antigos da raiz de reunioes apos migracao para subpastas",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/ata-po-28-10.mdx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 204
+    }
+   ]
+  },
+  {
+   "sha": "a1a60f41c24ccea74bcea5c944a36e22871a08ea",
+   "date": "2026-11-03T01:51:49Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): organiza atas em subpastas por tipo e atualiza sidebar e visao geral",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/feedback-release/ata-feedback-r2.mdx",
+     "status": "added",
+     "additions": 205,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes-time/ata-planning-sprint-8.mdx",
+     "status": "added",
+     "additions": 91,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes.mdx",
+     "status": "modified",
+     "additions": 63,
+     "deletions": 35
+    },
+    {
+     "filename": "sidebars.ts",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 9
+    }
+   ]
+  },
+  {
+   "sha": "d18f18d2ecf5ca3e31bd6c68ca908d74806a03dc",
+   "date": "2026-11-03T01:39:20Z",
+   "author": "luciano-freitas-melo",
+   "message": "fix(docs): alinha id do documento ata-po-28-10 com sidebar e rotas",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/ata-po-28-10.mdx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "d3ec9532cce0ec26649f0c05b7027ad96ab105dd",
+   "date": "2026-11-03T01:35:16Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): reestrutura ata de feedback da R2 e adiciona ata da planning da Sprint 8",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/ata-planning-sprint-8.mdx",
+     "status": "added",
+     "additions": 90,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/ata-po-28-10.mdx",
+     "status": "modified",
+     "additions": 130,
+     "deletions": 206
+    },
+    {
+     "filename": "docs/reunioes/reunioes.mdx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "sidebars.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
     }
    ]
   },
@@ -383,6 +1118,33 @@
      "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-02T2312.json",
      "status": "added",
      "additions": 8598,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "0fee488a6b2d89365c5aedfd28ea19a8935e38bf",
+   "date": "2026-11-02T23:08:40Z",
+   "author": "luciano-freitas-melo",
+   "message": "docs(reunioes): adiciona ata da reuniao de entrega da Release 2 (28/10)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/ata-po-28-10.mdx",
+     "status": "added",
+     "additions": 280,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes.mdx",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 4
+    },
+    {
+     "filename": "sidebars.ts",
+     "status": "modified",
+     "additions": 1,
      "deletions": 0
     }
    ]
@@ -33223,5 +33985,5 @@
    ]
   }
  ],
- "detalhes_novos": 1
+ "detalhes_novos": 18
 }
