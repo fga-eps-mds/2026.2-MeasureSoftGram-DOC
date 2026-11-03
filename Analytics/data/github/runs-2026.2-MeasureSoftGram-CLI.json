@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-11-03T17:14:06+00:00",
+ "coletado_em": "2026-11-03T23:13:01+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-CLI",
  "desde": "2026-08-24",
@@ -133,20 +133,6 @@
    "workflow_id": 346797058
   },
   {
-   "id": 40144370935,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "fix/154-respeita-edicoes-msgram-json",
-   "event": "pull_request",
-   "created_at": "2026-10-24T23:50:43Z",
-   "run_started_at": "2026-10-24T23:50:43Z",
-   "updated_at": "2026-10-24T23:52:16Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/40144370935",
-   "run_number": 51,
-   "workflow_id": 346797058
-  },
-  {
    "id": 40144370933,
    "name": "Dependabot Auto-merge",
    "status": "completed",
@@ -161,18 +147,18 @@
    "workflow_id": 368530720
   },
   {
-   "id": 40116841766,
-   "name": "Dependabot Auto-merge",
+   "id": 40144370935,
+   "name": "Rodar Testes",
    "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "fix/155-empacotar-dataset-demo",
+   "conclusion": "success",
+   "head_branch": "fix/154-respeita-edicoes-msgram-json",
    "event": "pull_request",
-   "created_at": "2026-10-24T17:35:51Z",
-   "run_started_at": "2026-10-24T17:35:51Z",
-   "updated_at": "2026-10-24T17:35:51Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/40116841766",
-   "run_number": 22,
-   "workflow_id": 368530720
+   "created_at": "2026-10-24T23:50:43Z",
+   "run_started_at": "2026-10-24T23:50:43Z",
+   "updated_at": "2026-10-24T23:52:16Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/40144370935",
+   "run_number": 51,
+   "workflow_id": 346797058
   },
   {
    "id": 40116841826,
@@ -187,6 +173,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/40116841826",
    "run_number": 50,
    "workflow_id": 346797058
+  },
+  {
+   "id": 40116841766,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "fix/155-empacotar-dataset-demo",
+   "event": "pull_request",
+   "created_at": "2026-10-24T17:35:51Z",
+   "run_started_at": "2026-10-24T17:35:51Z",
+   "updated_at": "2026-10-24T17:35:51Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/40116841766",
+   "run_number": 22,
+   "workflow_id": 368530720
   },
   {
    "id": 39189665650,
@@ -245,20 +245,6 @@
    "workflow_id": 346797058
   },
   {
-   "id": 39075545713,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-17T22:33:17Z",
-   "run_started_at": "2026-10-17T22:33:17Z",
-   "updated_at": "2026-10-17T22:35:13Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39075545713",
-   "run_number": 47,
-   "workflow_id": 346797058
-  },
-  {
    "id": 39075545882,
    "name": "Export de métricas",
    "status": "completed",
@@ -271,6 +257,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39075545882",
    "run_number": 17,
    "workflow_id": 346797056
+  },
+  {
+   "id": 39075545713,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-17T22:33:17Z",
+   "run_started_at": "2026-10-17T22:33:17Z",
+   "updated_at": "2026-10-17T22:35:13Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39075545713",
+   "run_number": 47,
+   "workflow_id": 346797058
   },
   {
    "id": 39075388323,
@@ -301,18 +301,18 @@
    "workflow_id": 346797058
   },
   {
-   "id": 39065176519,
-   "name": "Linter",
+   "id": 39065176790,
+   "name": "Rodar Testes",
    "status": "completed",
    "conclusion": "success",
    "head_branch": "feat/ci-automation",
    "event": "pull_request",
    "created_at": "2026-10-17T20:04:37Z",
    "run_started_at": "2026-10-17T20:04:37Z",
-   "updated_at": "2026-10-17T20:04:48Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39065176519",
-   "run_number": 40,
-   "workflow_id": 346797055
+   "updated_at": "2026-10-17T20:06:35Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39065176790",
+   "run_number": 45,
+   "workflow_id": 346797058
   },
   {
    "id": 39065176684,
@@ -329,45 +329,17 @@
    "workflow_id": 368530720
   },
   {
-   "id": 39065176790,
-   "name": "Rodar Testes",
+   "id": 39065176519,
+   "name": "Linter",
    "status": "completed",
    "conclusion": "success",
    "head_branch": "feat/ci-automation",
    "event": "pull_request",
    "created_at": "2026-10-17T20:04:37Z",
    "run_started_at": "2026-10-17T20:04:37Z",
-   "updated_at": "2026-10-17T20:06:35Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39065176790",
-   "run_number": 45,
-   "workflow_id": 346797058
-  },
-  {
-   "id": 39064631749,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-17T19:56:58Z",
-   "run_started_at": "2026-10-17T19:56:58Z",
-   "updated_at": "2026-10-17T19:58:55Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064631749",
-   "run_number": 44,
-   "workflow_id": 346797058
-  },
-  {
-   "id": 39064631768,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-17T19:56:58Z",
-   "run_started_at": "2026-10-17T19:56:58Z",
-   "updated_at": "2026-10-17T19:57:10Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064631768",
-   "run_number": 39,
+   "updated_at": "2026-10-17T20:04:48Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39065176519",
+   "run_number": 40,
    "workflow_id": 346797055
   },
   {
@@ -385,17 +357,31 @@
    "workflow_id": 346797056
   },
   {
-   "id": 39064148902,
+   "id": 39064631768,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-17T19:56:58Z",
+   "run_started_at": "2026-10-17T19:56:58Z",
+   "updated_at": "2026-10-17T19:57:10Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064631768",
+   "run_number": 39,
+   "workflow_id": 346797055
+  },
+  {
+   "id": 39064631749,
    "name": "Rodar Testes",
    "status": "completed",
    "conclusion": "success",
-   "head_branch": "refactor/show-tree-complexidade",
-   "event": "pull_request",
-   "created_at": "2026-10-17T19:50:02Z",
-   "run_started_at": "2026-10-17T19:50:02Z",
-   "updated_at": "2026-10-17T19:51:54Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064148902",
-   "run_number": 43,
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-17T19:56:58Z",
+   "run_started_at": "2026-10-17T19:56:58Z",
+   "updated_at": "2026-10-17T19:58:55Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064631749",
+   "run_number": 44,
    "workflow_id": 346797058
   },
   {
@@ -427,6 +413,20 @@
    "workflow_id": 346797055
   },
   {
+   "id": 39064148902,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "refactor/show-tree-complexidade",
+   "event": "pull_request",
+   "created_at": "2026-10-17T19:50:02Z",
+   "run_started_at": "2026-10-17T19:50:02Z",
+   "updated_at": "2026-10-17T19:51:54Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064148902",
+   "run_number": 43,
+   "workflow_id": 346797058
+  },
+  {
    "id": 39064057143,
    "name": "Graph Update: pip in /. #1633357852",
    "status": "completed",
@@ -441,18 +441,18 @@
    "workflow_id": 368531461
   },
   {
-   "id": 39064052046,
-   "name": "Rodar Testes",
+   "id": 39064052040,
+   "name": "Linter",
    "status": "completed",
    "conclusion": "success",
    "head_branch": "develop",
    "event": "push",
    "created_at": "2026-10-17T19:48:42Z",
    "run_started_at": "2026-10-17T19:48:42Z",
-   "updated_at": "2026-10-17T19:50:24Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064052046",
-   "run_number": 42,
-   "workflow_id": 346797058
+   "updated_at": "2026-10-17T19:48:53Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064052040",
+   "run_number": 37,
+   "workflow_id": 346797055
   },
   {
    "id": 39064052044,
@@ -469,18 +469,18 @@
    "workflow_id": 346797056
   },
   {
-   "id": 39064052040,
-   "name": "Linter",
+   "id": 39064052046,
+   "name": "Rodar Testes",
    "status": "completed",
    "conclusion": "success",
    "head_branch": "develop",
    "event": "push",
    "created_at": "2026-10-17T19:48:42Z",
    "run_started_at": "2026-10-17T19:48:42Z",
-   "updated_at": "2026-10-17T19:48:53Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064052040",
-   "run_number": 37,
-   "workflow_id": 346797055
+   "updated_at": "2026-10-17T19:50:24Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39064052046",
+   "run_number": 42,
+   "workflow_id": 346797058
   },
   {
    "id": 39063035957,
@@ -525,6 +525,20 @@
    "workflow_id": 368530720
   },
   {
+   "id": 39061873172,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-17T19:18:15Z",
+   "run_started_at": "2026-10-17T19:18:15Z",
+   "updated_at": "2026-10-17T19:18:34Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39061873172",
+   "run_number": 14,
+   "workflow_id": 346797056
+  },
+  {
    "id": 39061873075,
    "name": "Rodar Testes",
    "status": "completed",
@@ -551,34 +565,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39061873077",
    "run_number": 35,
    "workflow_id": 346797055
-  },
-  {
-   "id": 39061873172,
-   "name": "Export de métricas",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-17T19:18:15Z",
-   "run_started_at": "2026-10-17T19:18:15Z",
-   "updated_at": "2026-10-17T19:18:34Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39061873172",
-   "run_number": 14,
-   "workflow_id": 346797056
-  },
-  {
-   "id": 39060723249,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "fix/cli-respeita-msgram-json",
-   "event": "pull_request",
-   "created_at": "2026-10-17T19:02:30Z",
-   "run_started_at": "2026-10-17T19:31:30Z",
-   "updated_at": "2026-10-17T19:33:30Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39060723249",
-   "run_number": 39,
-   "workflow_id": 346797058
   },
   {
    "id": 39060723303,
@@ -609,17 +595,17 @@
    "workflow_id": 346797055
   },
   {
-   "id": 38799287344,
+   "id": 39060723249,
    "name": "Rodar Testes",
    "status": "completed",
    "conclusion": "success",
-   "head_branch": "chore/ci-governance-cleanup",
+   "head_branch": "fix/cli-respeita-msgram-json",
    "event": "pull_request",
-   "created_at": "2026-10-15T20:06:36Z",
-   "run_started_at": "2026-10-15T20:06:36Z",
-   "updated_at": "2026-10-15T20:08:42Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38799287344",
-   "run_number": 38,
+   "created_at": "2026-10-17T19:02:30Z",
+   "run_started_at": "2026-10-17T19:31:30Z",
+   "updated_at": "2026-10-17T19:33:30Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/39060723249",
+   "run_number": 39,
    "workflow_id": 346797058
   },
   {
@@ -635,6 +621,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38799287312",
    "run_number": 15,
    "workflow_id": 368530720
+  },
+  {
+   "id": 38799287344,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "chore/ci-governance-cleanup",
+   "event": "pull_request",
+   "created_at": "2026-10-15T20:06:36Z",
+   "run_started_at": "2026-10-15T20:06:36Z",
+   "updated_at": "2026-10-15T20:08:42Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38799287344",
+   "run_number": 38,
+   "workflow_id": 346797058
   },
   {
    "id": 38661362313,
@@ -665,20 +665,6 @@
    "workflow_id": 346797058
   },
   {
-   "id": 38628731382,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "fix/task05.08-varredura-resquicios",
-   "event": "pull_request",
-   "created_at": "2026-10-14T20:02:42Z",
-   "run_started_at": "2026-10-14T20:02:42Z",
-   "updated_at": "2026-10-14T20:04:35Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38628731382",
-   "run_number": 36,
-   "workflow_id": 346797058
-  },
-  {
    "id": 38628731363,
    "name": "Dependabot Auto-merge",
    "status": "completed",
@@ -691,6 +677,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38628731363",
    "run_number": 13,
    "workflow_id": 368530720
+  },
+  {
+   "id": 38628731382,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "fix/task05.08-varredura-resquicios",
+   "event": "pull_request",
+   "created_at": "2026-10-14T20:02:42Z",
+   "run_started_at": "2026-10-14T20:02:42Z",
+   "updated_at": "2026-10-14T20:04:35Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38628731382",
+   "run_number": 36,
+   "workflow_id": 346797058
   },
   {
    "id": 38628731664,
@@ -707,20 +707,6 @@
    "workflow_id": 346797055
   },
   {
-   "id": 38618262972,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "chore/ci-governance-cleanup",
-   "event": "pull_request",
-   "created_at": "2026-10-14T18:48:17Z",
-   "run_started_at": "2026-10-14T18:48:17Z",
-   "updated_at": "2026-10-14T18:48:18Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38618262972",
-   "run_number": 12,
-   "workflow_id": 368530720
-  },
-  {
    "id": 38618262991,
    "name": "Rodar Testes",
    "status": "completed",
@@ -733,6 +719,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38618262991",
    "run_number": 35,
    "workflow_id": 346797058
+  },
+  {
+   "id": 38618262972,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "chore/ci-governance-cleanup",
+   "event": "pull_request",
+   "created_at": "2026-10-14T18:48:17Z",
+   "run_started_at": "2026-10-14T18:48:17Z",
+   "updated_at": "2026-10-14T18:48:18Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/38618262972",
+   "run_number": 12,
+   "workflow_id": 368530720
   },
   {
    "id": 38615969446,
@@ -763,20 +763,6 @@
    "workflow_id": 346797058
   },
   {
-   "id": 37697334176,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-07T22:37:13Z",
-   "run_started_at": "2026-10-07T22:37:13Z",
-   "updated_at": "2026-10-07T22:37:25Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37697334176",
-   "run_number": 32,
-   "workflow_id": 346797055
-  },
-  {
    "id": 37697334174,
    "name": "Export de métricas",
    "status": "completed",
@@ -789,6 +775,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37697334174",
    "run_number": 13,
    "workflow_id": 346797056
+  },
+  {
+   "id": 37697334176,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-07T22:37:13Z",
+   "run_started_at": "2026-10-07T22:37:13Z",
+   "updated_at": "2026-10-07T22:37:25Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37697334176",
+   "run_number": 32,
+   "workflow_id": 346797055
   },
   {
    "id": 37697334161,
@@ -805,20 +805,6 @@
    "workflow_id": 346797058
   },
   {
-   "id": 37697105518,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "fix/sonar-pr-de-fork",
-   "event": "pull_request",
-   "created_at": "2026-10-07T22:35:03Z",
-   "run_started_at": "2026-10-07T22:35:03Z",
-   "updated_at": "2026-10-07T22:35:14Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37697105518",
-   "run_number": 31,
-   "workflow_id": 346797055
-  },
-  {
    "id": 37697105346,
    "name": "Dependabot Auto-merge",
    "status": "completed",
@@ -831,6 +817,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37697105346",
    "run_number": 10,
    "workflow_id": 368530720
+  },
+  {
+   "id": 37697105518,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "fix/sonar-pr-de-fork",
+   "event": "pull_request",
+   "created_at": "2026-10-07T22:35:03Z",
+   "run_started_at": "2026-10-07T22:35:03Z",
+   "updated_at": "2026-10-07T22:35:14Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37697105518",
+   "run_number": 31,
+   "workflow_id": 346797055
   },
   {
    "id": 37697105566,
@@ -861,6 +861,20 @@
    "workflow_id": 368531461
   },
   {
+   "id": 37695630220,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-07T22:21:17Z",
+   "run_started_at": "2026-10-07T22:21:17Z",
+   "updated_at": "2026-10-07T22:23:18Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37695630220",
+   "run_number": 31,
+   "workflow_id": 346797058
+  },
+  {
    "id": 37695630164,
    "name": "Linter",
    "status": "completed",
@@ -889,18 +903,18 @@
    "workflow_id": 346797056
   },
   {
-   "id": 37695630220,
-   "name": "Rodar Testes",
+   "id": 37695320762,
+   "name": "Linter",
    "status": "completed",
    "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-07T22:21:17Z",
-   "run_started_at": "2026-10-07T22:21:17Z",
-   "updated_at": "2026-10-07T22:23:18Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37695630220",
-   "run_number": 31,
-   "workflow_id": 346797058
+   "head_branch": "chore/release-3.4.1rc1",
+   "event": "pull_request",
+   "created_at": "2026-10-07T22:18:25Z",
+   "run_started_at": "2026-10-07T22:18:25Z",
+   "updated_at": "2026-10-07T22:18:36Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37695320762",
+   "run_number": 29,
+   "workflow_id": 346797055
   },
   {
    "id": 37695320696,
@@ -915,20 +929,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37695320696",
    "run_number": 9,
    "workflow_id": 368530720
-  },
-  {
-   "id": 37695320762,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "chore/release-3.4.1rc1",
-   "event": "pull_request",
-   "created_at": "2026-10-07T22:18:25Z",
-   "run_started_at": "2026-10-07T22:18:25Z",
-   "updated_at": "2026-10-07T22:18:36Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37695320762",
-   "run_number": 29,
-   "workflow_id": 346797055
   },
   {
    "id": 37695320557,
@@ -987,18 +987,18 @@
    "workflow_id": 346797058
   },
   {
-   "id": 37689878395,
-   "name": "Rodar Testes",
+   "id": 37689878369,
+   "name": "Dependabot Auto-merge",
    "status": "completed",
-   "conclusion": "success",
+   "conclusion": "skipped",
    "head_branch": "chore/release-3.4.1rc1",
    "event": "pull_request",
    "created_at": "2026-10-07T21:30:21Z",
-   "run_started_at": "2026-10-07T22:14:30Z",
-   "updated_at": "2026-10-07T22:16:24Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37689878395",
-   "run_number": 28,
-   "workflow_id": 346797058
+   "run_started_at": "2026-10-07T21:30:21Z",
+   "updated_at": "2026-10-07T21:30:32Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37689878369",
+   "run_number": 8,
+   "workflow_id": 368530720
   },
   {
    "id": 37689878406,
@@ -1015,32 +1015,18 @@
    "workflow_id": 346797055
   },
   {
-   "id": 37689878369,
-   "name": "Dependabot Auto-merge",
+   "id": 37689878395,
+   "name": "Rodar Testes",
    "status": "completed",
-   "conclusion": "skipped",
+   "conclusion": "success",
    "head_branch": "chore/release-3.4.1rc1",
    "event": "pull_request",
    "created_at": "2026-10-07T21:30:21Z",
-   "run_started_at": "2026-10-07T21:30:21Z",
-   "updated_at": "2026-10-07T21:30:32Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37689878369",
-   "run_number": 8,
-   "workflow_id": 368530720
-  },
-  {
-   "id": 37689871956,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "ci/restringe-publicacao-ao-central",
-   "event": "pull_request",
-   "created_at": "2026-10-07T21:30:18Z",
-   "run_started_at": "2026-10-07T21:30:18Z",
-   "updated_at": "2026-10-07T21:30:30Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37689871956",
-   "run_number": 26,
-   "workflow_id": 346797055
+   "run_started_at": "2026-10-07T22:14:30Z",
+   "updated_at": "2026-10-07T22:16:24Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37689878395",
+   "run_number": 28,
+   "workflow_id": 346797058
   },
   {
    "id": 37689872114,
@@ -1069,6 +1055,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37689872159",
    "run_number": 27,
    "workflow_id": 346797058
+  },
+  {
+   "id": 37689871956,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "ci/restringe-publicacao-ao-central",
+   "event": "pull_request",
+   "created_at": "2026-10-07T21:30:18Z",
+   "run_started_at": "2026-10-07T21:30:18Z",
+   "updated_at": "2026-10-07T21:30:30Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37689871956",
+   "run_number": 26,
+   "workflow_id": 346797055
   },
   {
    "id": 37689403737,
@@ -1113,20 +1113,6 @@
    "workflow_id": 368530720
   },
   {
-   "id": 37688934170,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "ci/restringe-publicacao-ao-central",
-   "event": "pull_request",
-   "created_at": "2026-10-07T21:22:30Z",
-   "run_started_at": "2026-10-07T21:22:30Z",
-   "updated_at": "2026-10-07T21:22:31Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37688934170",
-   "run_number": 5,
-   "workflow_id": 368530720
-  },
-  {
    "id": 37688933880,
    "name": "Linter",
    "status": "completed",
@@ -1139,6 +1125,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37688933880",
    "run_number": 24,
    "workflow_id": 346797055
+  },
+  {
+   "id": 37688934170,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "ci/restringe-publicacao-ao-central",
+   "event": "pull_request",
+   "created_at": "2026-10-07T21:22:30Z",
+   "run_started_at": "2026-10-07T21:22:30Z",
+   "updated_at": "2026-10-07T21:22:31Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37688934170",
+   "run_number": 5,
+   "workflow_id": 368530720
   },
   {
    "id": 37688933841,
@@ -1155,20 +1155,6 @@
    "workflow_id": 346797058
   },
   {
-   "id": 37549044036,
-   "name": "Export de métricas",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-06T23:53:47Z",
-   "run_started_at": "2026-10-06T23:53:47Z",
-   "updated_at": "2026-10-06T23:54:04Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37549044036",
-   "run_number": 10,
-   "workflow_id": 346797056
-  },
-  {
    "id": 37549043986,
    "name": "Linter",
    "status": "completed",
@@ -1181,6 +1167,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37549043986",
    "run_number": 23,
    "workflow_id": 346797055
+  },
+  {
+   "id": 37549044036,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-06T23:53:47Z",
+   "run_started_at": "2026-10-06T23:53:47Z",
+   "updated_at": "2026-10-06T23:54:04Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37549044036",
+   "run_number": 10,
+   "workflow_id": 346797056
   },
   {
    "id": 37549044031,
@@ -1197,18 +1197,18 @@
    "workflow_id": 346797058
   },
   {
-   "id": 37548833241,
-   "name": "Rodar Testes",
+   "id": 37548833203,
+   "name": "Linter",
    "status": "completed",
    "conclusion": "success",
    "head_branch": "chore/dependabot-automerge-sha-pinning",
    "event": "pull_request",
    "created_at": "2026-10-06T23:51:25Z",
    "run_started_at": "2026-10-06T23:51:25Z",
-   "updated_at": "2026-10-06T23:53:20Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37548833241",
-   "run_number": 23,
-   "workflow_id": 346797058
+   "updated_at": "2026-10-06T23:51:36Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37548833203",
+   "run_number": 22,
+   "workflow_id": 346797055
   },
   {
    "id": 37548833184,
@@ -1225,31 +1225,17 @@
    "workflow_id": 368530720
   },
   {
-   "id": 37548833203,
-   "name": "Linter",
+   "id": 37548833241,
+   "name": "Rodar Testes",
    "status": "completed",
    "conclusion": "success",
    "head_branch": "chore/dependabot-automerge-sha-pinning",
    "event": "pull_request",
    "created_at": "2026-10-06T23:51:25Z",
    "run_started_at": "2026-10-06T23:51:25Z",
-   "updated_at": "2026-10-06T23:51:36Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37548833203",
-   "run_number": 22,
-   "workflow_id": 346797055
-  },
-  {
-   "id": 37548802687,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-10-06T23:51:05Z",
-   "run_started_at": "2026-10-06T23:51:05Z",
-   "updated_at": "2026-10-06T23:53:06Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37548802687",
-   "run_number": 22,
+   "updated_at": "2026-10-06T23:53:20Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37548833241",
+   "run_number": 23,
    "workflow_id": 346797058
   },
   {
@@ -1279,6 +1265,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37548802704",
    "run_number": 9,
    "workflow_id": 346797056
+  },
+  {
+   "id": 37548802687,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-10-06T23:51:05Z",
+   "run_started_at": "2026-10-06T23:51:05Z",
+   "updated_at": "2026-10-06T23:53:06Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/37548802687",
+   "run_number": 22,
+   "workflow_id": 346797058
   },
   {
    "id": 36755349637,
@@ -1393,20 +1393,6 @@
    "workflow_id": 346797055
   },
   {
-   "id": 36513588024,
-   "name": "Publicar pacote",
-   "status": "completed",
-   "conclusion": "failure",
-   "head_branch": "v4.0.0",
-   "event": "push",
-   "created_at": "2026-09-29T02:39:05Z",
-   "run_started_at": "2026-09-29T02:39:05Z",
-   "updated_at": "2026-09-29T02:39:21Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36513588024",
-   "run_number": 1,
-   "workflow_id": 346797057
-  },
-  {
    "id": 36513588026,
    "name": "Export de métricas",
    "status": "completed",
@@ -1421,18 +1407,18 @@
    "workflow_id": 346797056
   },
   {
-   "id": 36497204477,
-   "name": "Dependabot Auto-merge",
+   "id": 36513588024,
+   "name": "Publicar pacote",
    "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "chore/dependabot-automerge-sha-pinning",
-   "event": "pull_request",
-   "created_at": "2026-09-28T23:17:28Z",
-   "run_started_at": "2026-09-28T23:17:28Z",
-   "updated_at": "2026-09-28T23:17:29Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36497204477",
-   "run_number": 3,
-   "workflow_id": 368530720
+   "conclusion": "failure",
+   "head_branch": "v4.0.0",
+   "event": "push",
+   "created_at": "2026-09-29T02:39:05Z",
+   "run_started_at": "2026-09-29T02:39:05Z",
+   "updated_at": "2026-09-29T02:39:21Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36513588024",
+   "run_number": 1,
+   "workflow_id": 346797057
   },
   {
    "id": 36497204323,
@@ -1449,6 +1435,20 @@
    "workflow_id": 346797055
   },
   {
+   "id": 36497204477,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "chore/dependabot-automerge-sha-pinning",
+   "event": "pull_request",
+   "created_at": "2026-09-28T23:17:28Z",
+   "run_started_at": "2026-09-28T23:17:28Z",
+   "updated_at": "2026-09-28T23:17:29Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36497204477",
+   "run_number": 3,
+   "workflow_id": 368530720
+  },
+  {
    "id": 36497204338,
    "name": "Rodar Testes",
    "status": "completed",
@@ -1461,20 +1461,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36497204338",
    "run_number": 17,
    "workflow_id": 346797058
-  },
-  {
-   "id": 36497038898,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "chore/dependabot-automerge-sha-pinning",
-   "event": "pull_request",
-   "created_at": "2026-09-28T23:15:40Z",
-   "run_started_at": "2026-09-28T23:15:40Z",
-   "updated_at": "2026-09-28T23:15:41Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36497038898",
-   "run_number": 2,
-   "workflow_id": 368530720
   },
   {
    "id": 36497038829,
@@ -1491,6 +1477,20 @@
    "workflow_id": 346797055
   },
   {
+   "id": 36497038898,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "chore/dependabot-automerge-sha-pinning",
+   "event": "pull_request",
+   "created_at": "2026-09-28T23:15:40Z",
+   "run_started_at": "2026-09-28T23:15:40Z",
+   "updated_at": "2026-09-28T23:15:41Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36497038898",
+   "run_number": 2,
+   "workflow_id": 368530720
+  },
+  {
    "id": 36497038726,
    "name": "Rodar Testes",
    "status": "completed",
@@ -1502,6 +1502,20 @@
    "updated_at": "2026-09-28T23:17:24Z",
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36497038726",
    "run_number": 16,
+   "workflow_id": 346797058
+  },
+  {
+   "id": 36493821231,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "fix/108-cli-help-formats",
+   "event": "pull_request",
+   "created_at": "2026-09-28T22:40:54Z",
+   "run_started_at": "2026-09-28T22:40:54Z",
+   "updated_at": "2026-09-28T22:42:33Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36493821231",
+   "run_number": 15,
    "workflow_id": 346797058
   },
   {
@@ -1519,20 +1533,6 @@
    "workflow_id": 346797055
   },
   {
-   "id": 36493821231,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "fix/108-cli-help-formats",
-   "event": "pull_request",
-   "created_at": "2026-09-28T22:40:54Z",
-   "run_started_at": "2026-09-28T22:40:54Z",
-   "updated_at": "2026-09-28T22:42:33Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36493821231",
-   "run_number": 15,
-   "workflow_id": 346797058
-  },
-  {
    "id": 36361528136,
    "name": "Graph Update: pip in /. #1593720867",
    "status": "completed",
@@ -1545,6 +1545,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36361528136",
    "run_number": 2,
    "workflow_id": 368531461
+  },
+  {
+   "id": 36361524768,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-09-28T00:15:15Z",
+   "run_started_at": "2026-09-28T00:15:15Z",
+   "updated_at": "2026-09-28T00:17:07Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36361524768",
+   "run_number": 14,
+   "workflow_id": 346797058
   },
   {
    "id": 36361524700,
@@ -1573,20 +1587,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36361524778",
    "run_number": 7,
    "workflow_id": 346797056
-  },
-  {
-   "id": 36361524768,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-09-28T00:15:15Z",
-   "run_started_at": "2026-09-28T00:15:15Z",
-   "updated_at": "2026-09-28T00:17:07Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/36361524768",
-   "run_number": 14,
-   "workflow_id": 346797058
   },
   {
    "id": 36359400172,
@@ -1883,20 +1883,6 @@
    "workflow_id": 346797056
   },
   {
-   "id": 35944799852,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-09-24T01:52:17Z",
-   "run_started_at": "2026-09-24T01:52:17Z",
-   "updated_at": "2026-09-24T01:54:28Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/35944799852",
-   "run_number": 5,
-   "workflow_id": 346797058
-  },
-  {
    "id": 35944799597,
    "name": "Linter",
    "status": "completed",
@@ -1923,6 +1909,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/35944799656",
    "run_number": 3,
    "workflow_id": 346797056
+  },
+  {
+   "id": 35944799852,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-09-24T01:52:17Z",
+   "run_started_at": "2026-09-24T01:52:17Z",
+   "updated_at": "2026-09-24T01:54:28Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/35944799852",
+   "run_number": 5,
+   "workflow_id": 346797058
   },
   {
    "id": 35943573734,
@@ -2037,20 +2037,6 @@
    "workflow_id": 346797058
   },
   {
-   "id": 34678506164,
-   "name": "Linter",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "ci/sonarcloud-2026-2",
-   "event": "pull_request",
-   "created_at": "2026-09-12T06:35:01Z",
-   "run_started_at": "2026-09-12T06:35:01Z",
-   "updated_at": "2026-09-12T06:35:09Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/34678506164",
-   "run_number": 1,
-   "workflow_id": 346797055
-  },
-  {
    "id": 34678506165,
    "name": "Rodar Testes",
    "status": "completed",
@@ -2063,6 +2049,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/34678506165",
    "run_number": 1,
    "workflow_id": 346797058
+  },
+  {
+   "id": 34678506164,
+   "name": "Linter",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "ci/sonarcloud-2026-2",
+   "event": "pull_request",
+   "created_at": "2026-09-12T06:35:01Z",
+   "run_started_at": "2026-09-12T06:35:01Z",
+   "updated_at": "2026-09-12T06:35:09Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/34678506164",
+   "run_number": 1,
+   "workflow_id": 346797055
   }
  ]
 }
