@@ -1,24 +1,26 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-03T01:58:14+00:00",
+ "coletado_em": "2026-11-03T11:13:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
   {
    "number": 177,
-   "title": "docs(reunioes): reestrutura ata de feedback da R2 e adiciona ata de planning da Sprint 8",
+   "title": "docs(reunioes): reorganiza atas em subpastas, adiciona feedback da R2 e planning da Sprint 8",
    "state": "open",
    "is_pull_request": true,
    "created_at": "2026-11-02T23:09:30Z",
    "closed_at": null,
-   "updated_at": "2026-11-03T01:58:48Z",
+   "updated_at": "2026-11-03T02:31:02Z",
    "labels": [],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 2161,
+   "body_chars": 5640,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/177",
    "author": "luciano-freitas-melo"
   },
@@ -184,25 +186,6 @@
    "milestone_due_on": null,
    "body_chars": 5832,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/168",
-   "author": "nateejpg"
-  },
-  {
-   "number": 167,
-   "title": "[TASK US23.01] Levantar granularidade das métricas e propor sua apresentação",
-   "state": "open",
-   "is_pull_request": false,
-   "created_at": "2026-10-24T16:25:33Z",
-   "closed_at": null,
-   "updated_at": "2026-10-24T17:04:08Z",
-   "labels": [],
-   "type": "Task",
-   "assignees": [
-    "nateejpg"
-   ],
-   "milestone": null,
-   "milestone_due_on": null,
-   "body_chars": 978,
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/167",
    "author": "nateejpg"
   },
   {
@@ -668,15 +651,13 @@
   {
    "number": 144,
    "title": "[TASK05.09] Varredura de workflows e actions obsoletas",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-09T19:46:43Z",
-   "closed_at": null,
-   "updated_at": "2026-10-23T14:30:08Z",
+   "closed_at": "2026-11-03T02:53:03Z",
+   "updated_at": "2026-11-03T02:53:03Z",
    "labels": [
-    "devops",
-    "task",
-    "all repos"
+    "duplicate"
    ],
    "type": "Task",
    "assignees": [
@@ -2096,25 +2077,6 @@
    "milestone_due_on": null,
    "body_chars": 2124,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/60",
-   "author": "luciano-freitas-melo"
-  },
-  {
-   "number": 59,
-   "title": "[EPIC] Experiência de Desenvolvimento (DevEx) e Separação Arquitetural",
-   "state": "open",
-   "is_pull_request": false,
-   "created_at": "2026-09-24T16:43:00Z",
-   "closed_at": null,
-   "updated_at": "2026-09-24T16:43:00Z",
-   "labels": [
-    "epic"
-   ],
-   "type": null,
-   "assignees": [],
-   "milestone": null,
-   "milestone_due_on": null,
-   "body_chars": 2124,
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/59",
    "author": "luciano-freitas-melo"
   },
   {
