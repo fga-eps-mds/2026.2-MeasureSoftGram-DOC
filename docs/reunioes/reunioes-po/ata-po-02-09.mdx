@@ -1,0 +1,130 @@
+---
+id: ata-po-02-09
+title: Ata – Reunião com o PO (02/09/2026)
+sidebar_position: 3
+sidebar_label: Ata PO 02/09
+---
+
+# Ata – Reunião com o PO (02/09/2026)
+
+**Data:** 02/09/2026 · 19h26 · **Duração:** 66 minutos
+**Tipo:** Reunião com o Product Owner
+**Participantes:** Hilmer Rodrigues Neri (PO), Luiza Maluf, Lucas Bottino,
+Gabriel Moura, Alexandre De Santana Beck
+
+:::tip[Resultado]
+A equipe apresentou o diagnóstico dos sete repositórios e propôs uma
+priorização de frentes. O PO **validou a abordagem**, acrescentou o
+levantamento de funcionalidades novas e registrou pendências de material
+de sua parte.
+:::
+
+---
+
+## 1. Direção validada
+
+As quatro frentes propostas pela equipe — **o que está quebrado, integridade
+do modelo, gargalos e segurança** — foram aceitas para execução em paralelo,
+com uma ressalva do PO.
+
+> "Gostaria, como PO, que a release não fosse só correção de defeito. Mas não
+> tem como a gente avançar se não corrigir defeito — defeito é prioridade."
+>
+> — Hilmer Rodrigues Neri, 23:19
+
+A definição final do MVP acontece no **sequenciador**, onde se decide se entra
+alguma feature nova ou se a release será majoritariamente correção.
+
+---
+
+## 2. Achados apresentados
+
+| Achado | Severidade | Encaminhamento |
+| --- | --- | --- |
+| Três versões do Core em circulação (Service 1.4.9 · CLI 1.5.4 · repo 1.5.3) | Crítico | PO desconhecia. Hipótese dele: falta de deploy no fim do semestre passado. **Causa ainda em aberto** — equipe investiga |
+| `GET /users/` expõe e-mail de todos sem autenticação | Crítico | PO questionou como burla o nginx. Verificado depois: o nginx só faz `proxy_pass`; falta `DEFAULT_PERMISSION_CLASSES` no DRF |
+| Token do GitHub em texto plano e tráfego sem criptografia | Alto | Aguardando investigação |
+| Django 4.0.6 (sem suporte desde abr/2023) e Next.js desatualizado | Alto | PO autoriza mudança, mas **exige análise de prós e contras** antes de decidir |
+| Codecov apenas informativo — CI não barra merge | Alto | Entra na priorização técnica |
+| Parser quebrado na branch `develop` | Crítico | Correção imediata |
+| Actions desatualizadas (versões de Node divergentes) | Médio | PO: já havia sido apontado ao time anterior e não foi corrigido |
+| Dockerfile do Front constrói para produção e roda servidor de desenvolvimento | Médio | Levantada a hipótese de ser causa da lentidão relatada |
+| Excesso de squash nos PRs — perda de auditoria e rollback | Médio | Equipe acorda não usar squash sem certeza do código |
+
+:::note[Pontos fortes reconhecidos]
+Solidez e cobertura do **Core** — apontado pelo PO como o repositório mais bem
+estruturado do projeto; qualidade dos comentários e navegabilidade do código;
+a **nova documentação** como onboarding eficaz; e a governança de projeto open
+source. O PO registrou que o Core chegou a esse estado por trabalho acumulado
+de vários semestres.
+:::
+
+---
+
+## 3. Funcionalidades novas
+
+Escopo indicado pelo Product Owner.
+
+| Item | Detalhamento | Referência |
+| --- | --- | --- |
+| **Medida de dívida técnica** | Extraída do SonarQube. **Ressalva:** o valor precisa ser racional entre 0 e 1 (ou percentual) para a interpolação — não as horas de remediação. Verificar como o Sonar retorna no JSON | — |
+| **Ponderação qualitativa de pesos (método HP)** | Usuário escolhe a priorização de forma qualitativa, não só quantitativa. Impacto concentrado no **Front**; o Service já trabalha com representação numérica | TCC Arthur Sena |
+| **Visão de qualidade em uso** | Muda a lógica de coleta — não existe hoje. Exige release implantada e em uso por período (ex.: 15 dias) para observar satisfação, eficácia, número de cliques | TCC Arthur Sena |
+| **Característica de segurança** | Não existe hoje. Parte mensurável estaticamente; parte (SAST/DAST) só com o sistema em uso. Aceitável começar apenas pelo estático | TCC Chinua |
+| **Operacionalização de modelos de referência** | Permitir modelos de qualidade distintos nas visões de produto e de uso | — |
+| **Novas fontes de informação — GitLab** | Hoje só GitHub e SonarQube. Todo o fluxo existente deve funcionar para outras ferramentas de controle de versão, incluindo autenticação. Começa pelo Parser | — |
+| **Ferramenta de pré-commit** | Desenvolvedor visualiza medidas e gráficos ainda em tempo de desenvolvimento, antes de abrir o PR — possivelmente no VS Code | — |
+| **Quatro dashboards novos** | Dois existem hoje; mais quatro previstos. **Depende da decisão sobre o Grafana** | — |
+
+### Por que a operacionalização de modelos é necessária
+
+O PO explicou o motivo técnico: a qualidade em uso **não tem valores de
+referência**, e a lógica de interpolação numérica atual não contempla medidas
+sem esse valor.
+
+> "Eu não quero que o MeasureSoftGram restrinja quem quiser usá-lo a forçar a
+> usar esse tipo de lógica."
+>
+> — Hilmer Rodrigues Neri, 56:43
+
+Ele registrou que o mecanismo de operacionalização está **muito concentrado no
+Core**, e que é uma evolução que muda bastante e precisa ser pensada com calma.
+
+:::info[Fora do horizonte]
+**Emancipação do projeto** — tornar-se software livre para além da disciplina.
+O PO prefere manter o MeasureSoftGram como projeto de EPS/MDS, onde novas turmas
+exercitam engenharia de software real em cima de código legado.
+:::
+
+---
+
+## 4. O que a equipe precisa do PO
+
+| Item | Situação | Encaminhamento |
+| --- | --- | --- |
+| Retorno sobre as dúvidas da pauta (bloco 3) | Em aberto | PO responde por escrito ou na próxima reunião |
+| Documento de formalização matemática do modelo | Não enviado | PO vai disponibilizar à equipe |
+| Apresentação da R1 anterior (vídeo/gravação) | Não enviada | PO vai disponibilizar à equipe |
+| Informações sobre os autores do modelo | Não enviadas | PO vai disponibilizar |
+| Referência dos quatro dashboards novos | Não enviada | PO vai enviar os requisitos |
+| Esclarecimento sobre o deploy em produção | Não esclarecido | Acesso ao servidor de produção ainda pendente |
+
+---
+
+## 5. Encaminhamentos
+
+| Ação | Responsável | Prazo |
+| --- | --- | --- |
+| Iniciar a correção do Parser (`develop`) | Time do Parser | Imediato |
+| Investigar a origem do `msgram-core 1.5.4` no PyPI | Time do Core | Sprint 2 |
+| Fechar o endpoint `/users/` com autenticação | Time do Service | Sprint 2 |
+| Consolidar o backlog priorizado da Sprint 2 com base nas decisões | Equipe | 04/09 |
+| Cobrar do PO os materiais pendentes (seção 4) | Condutor da reunião | 04/09 |
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 02/09/2026 | docs(reunioes): adiciona ata da reuniao com o PO de 02/09/2026 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
+| 1.1 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.2 | 02/11/2026 | Migração para a pasta `reunioes/reunioes-po/` | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) |  |
