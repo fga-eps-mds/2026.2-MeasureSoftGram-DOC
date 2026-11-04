@@ -1,10 +1,70 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-03T23:13:01+00:00",
+ "coletado_em": "2026-11-04T17:13:19+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 81,
+   "title": "[TASK30.03.03] Remover os campos legados gaugeRedLimit e gaugeYellowLimit (Service)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-04T14:52:46Z",
+   "closed_at": null,
+   "updated_at": "2026-11-04T14:52:46Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 584,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/81",
+   "author": "devwallyson"
+  },
+  {
+   "number": 80,
+   "title": "[TASK30.03.01] Badge do repositório com as faixas do produto (Service)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-04T14:52:38Z",
+   "closed_at": null,
+   "updated_at": "2026-11-04T14:52:38Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 833,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/80",
+   "author": "devwallyson"
+  },
+  {
+   "number": 79,
+   "title": "[TASK30.01.01] Modelo, valores padrão e endpoint das faixas de qualidade do produto (Service)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-04T14:50:41Z",
+   "closed_at": null,
+   "updated_at": "2026-11-04T14:50:41Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1414,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/79",
+   "author": "devwallyson"
+  },
   {
    "number": 78,
    "title": "fix(releases): calcula no fechamento da release todas as características da configuração (US07.01)",

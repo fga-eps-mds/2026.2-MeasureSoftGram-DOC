@@ -1,10 +1,110 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-03T23:13:01+00:00",
+ "coletado_em": "2026-11-04T17:13:19+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 96,
+   "title": "[TASK30.03.02] Velocímetro da tela do repositório com as faixas do produto (Front)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-04T14:52:13Z",
+   "closed_at": null,
+   "updated_at": "2026-11-04T14:52:13Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 975,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/96",
+   "author": "devwallyson"
+  },
+  {
+   "number": 95,
+   "title": "[TASK30.02.03] Faixas do produto na Distribuição e na Análise por Entidade (Front)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-04T14:52:06Z",
+   "closed_at": null,
+   "updated_at": "2026-11-04T14:52:06Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 753,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/95",
+   "author": "devwallyson"
+  },
+  {
+   "number": 94,
+   "title": "[TASK30.02.02] Faixas do produto no gráfico de pulso e na Visão Geral, com CSV (Front)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-04T14:51:42Z",
+   "closed_at": null,
+   "updated_at": "2026-11-04T14:51:42Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 757,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/94",
+   "author": "devwallyson"
+  },
+  {
+   "number": 93,
+   "title": "[TASK30.02.01] Hook das faixas do produto e utilitários de faixa parametrizados (Front)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-04T14:51:34Z",
+   "closed_at": null,
+   "updated_at": "2026-11-04T14:51:34Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1028,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/93",
+   "author": "devwallyson"
+  },
+  {
+   "number": 92,
+   "title": "[TASK30.01.02] Tela de configurações do produto com a aba Faixas de qualidade (Front)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-04T14:51:10Z",
+   "closed_at": null,
+   "updated_at": "2026-11-04T14:51:10Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1170,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/92",
+   "author": "devwallyson"
+  },
   {
    "number": 91,
    "title": "fix(i18n): aplica a terminologia do GitLab em toda a interface (US114)",

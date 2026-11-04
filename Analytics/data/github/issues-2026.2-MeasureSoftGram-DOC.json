@@ -1,10 +1,73 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-03T23:13:01+00:00",
+ "coletado_em": "2026-11-04T17:13:19+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 180,
+   "title": "[US30.03] Como Miguel, quero que o badge e o velocímetro do repositório usem as faixas do produto",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-04T01:51:28Z",
+   "closed_at": null,
+   "updated_at": "2026-11-04T14:59:17Z",
+   "labels": [
+    "US"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5827,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/180",
+   "author": "devwallyson"
+  },
+  {
+   "number": 179,
+   "title": "[US30.02] Como Helena, quero que os gráficos e as legendas usem as faixas configuradas do produto",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-04T01:50:51Z",
+   "closed_at": null,
+   "updated_at": "2026-11-04T14:58:51Z",
+   "labels": [
+    "US"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 6371,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/179",
+   "author": "devwallyson"
+  },
+  {
+   "number": 178,
+   "title": "[US30.01] Como Valéria, quero ajustar os limites das faixas de qualidade do produto",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-04T01:50:08Z",
+   "closed_at": null,
+   "updated_at": "2026-11-04T14:53:34Z",
+   "labels": [
+    "US"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 7415,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/178",
+   "author": "devwallyson"
+  },
   {
    "number": 177,
    "title": "docs(reunioes): reorganiza atas em subpastas, adiciona feedback da R2 e planning da Sprint 8",
@@ -56,7 +119,8 @@
    ],
    "type": null,
    "assignees": [
-    "bottinolucas"
+    "bottinolucas",
+    "devwallyson"
    ],
    "milestone": null,
    "milestone_due_on": null,
@@ -849,15 +913,17 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:31Z",
    "closed_at": null,
-   "updated_at": "2026-10-07T20:40:32Z",
+   "updated_at": "2026-11-04T14:32:27Z",
    "labels": [
-    "US"
+    "US",
+    "service",
+    "action"
    ],
    "type": "Feature",
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 290,
+   "body_chars": 5283,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/136",
    "author": "MilenaFRocha"
   },
