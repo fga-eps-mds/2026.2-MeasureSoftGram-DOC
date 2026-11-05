@@ -1,10 +1,31 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-05T01:25:16+00:00",
+ "coletado_em": "2026-11-05T11:13:49+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 98,
+   "title": "[TASK] Adicionar tarja de aviso de ambiente acadêmico na Landing Page",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-05T01:36:33Z",
+   "closed_at": null,
+   "updated_at": "2026-11-05T01:36:33Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [
+    "storch7"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1891,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/98",
+   "author": "Diogo-Barboza"
+  },
   {
    "number": 97,
    "title": "fix(metrics): corrige exclusões do Sonar e adiciona violações e paginação no parser",
