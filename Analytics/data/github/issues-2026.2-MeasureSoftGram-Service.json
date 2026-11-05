@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-05T17:14:17+00:00",
+ "coletado_em": "2026-11-05T23:13:39+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 83,
+   "title": "fix(releases): inclui desvio padrão e variância no resumo da distribuição (US21.03)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-05T20:43:45Z",
+   "closed_at": "2026-11-05T20:53:04Z",
+   "updated_at": "2026-11-05T20:53:05Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1270,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/83",
+   "author": "LuizaMaluf"
+  },
   {
    "number": 82,
    "title": "[TASK] Adicionar tarja de aviso de ambiente acadêmico na Landing Page",

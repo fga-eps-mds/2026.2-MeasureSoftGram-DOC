@@ -1,27 +1,65 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-05T17:14:17+00:00",
+ "coletado_em": "2026-11-05T23:13:39+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "issues": [
   {
-   "number": 99,
-   "title": "[TASK] Atualizar o Front para Next 16 com App Router",
-   "state": "open",
-   "is_pull_request": false,
-   "created_at": "2026-11-05T17:05:03Z",
-   "closed_at": null,
-   "updated_at": "2026-11-05T17:05:03Z",
-   "labels": [
-    "task",
-    "frontend"
-   ],
+   "number": 101,
+   "title": "fix(dashboards): correções do PO na Distribuição Estatística (US21.03)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-05T21:16:42Z",
+   "closed_at": "2026-11-05T21:24:17Z",
+   "updated_at": "2026-11-05T21:24:20Z",
+   "labels": [],
    "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 1475,
+   "body_chars": 5049,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/101",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 100,
+   "title": "chore(front): [TASK08.01] migra para Next 16 com App Router e autenticação no servidor",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-05T17:19:30Z",
+   "closed_at": null,
+   "updated_at": "2026-11-05T21:22:27Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 7538,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/100",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 99,
+   "title": "[TASK08.01] Atualizar o Front para Next 16 com App Router e autenticação no servidor",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-05T17:05:03Z",
+   "closed_at": null,
+   "updated_at": "2026-11-05T19:15:10Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5775,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/99",
    "author": "zzzBECK"
   },
@@ -48,18 +86,20 @@
   },
   {
    "number": 97,
-   "title": "fix(metrics): corrige exclusões do Sonar e adiciona violações e paginação no parser",
+   "title": "fix(quality): remove exclusoes indevidas do Sonar e padroniza rotas como re-exports",
    "state": "open",
    "is_pull_request": true,
    "created_at": "2026-11-04T20:35:11Z",
    "closed_at": null,
-   "updated_at": "2026-11-04T20:38:16Z",
+   "updated_at": "2026-11-05T20:13:33Z",
    "labels": [],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 1469,
+   "body_chars": 2423,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/97",
    "author": "luciano-freitas-melo"
   },

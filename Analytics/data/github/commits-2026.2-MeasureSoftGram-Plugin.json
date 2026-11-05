@@ -1,11 +1,38 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-05T17:14:17+00:00",
+ "coletado_em": "2026-11-05T23:13:39+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Plugin",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "95aedabca32b3393d90c354a23babd2a89e73e75",
+   "date": "2026-11-05T22:55:03Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados (#6)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/msgram.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 33
+    },
+    {
+     "filename": ".github/workflows/sonar.yml",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 85
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 25,
+     "deletions": 34
+    }
+   ]
+  },
   {
    "sha": "9966b1d7b2fee176399c5bec89eacf9fbfa098c3",
    "date": "2026-10-19T14:59:18Z",
@@ -1099,5 +1126,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }

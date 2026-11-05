@@ -1,11 +1,44 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-05T17:14:17+00:00",
+ "coletado_em": "2026-11-05T23:13:39+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "754179912880d5188b77aab320f5d962e7c0b4ae",
+   "date": "2026-11-05T20:53:04Z",
+   "author": "LuizaMaluf",
+   "message": "fix(releases): inclui desvio padrão e variância no resumo da distribuição (US21.03) (#83)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "MSG.postman_collection.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "src/endpoints.md",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "src/releases/analysis_distribution.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 2
+    },
+    {
+     "filename": "src/releases/tests/test_analysis_distribution.py",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 2
+    }
+   ]
+  },
   {
    "sha": "19463ada18203bcc3296d0e002cba4ab62790a88",
    "date": "2026-10-28T03:23:33Z",
@@ -3285,5 +3318,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }

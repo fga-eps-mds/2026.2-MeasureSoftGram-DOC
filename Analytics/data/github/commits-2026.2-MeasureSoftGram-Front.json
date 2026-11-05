@@ -1,11 +1,140 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-05T17:14:17+00:00",
+ "coletado_em": "2026-11-05T23:13:39+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "38702cb322f95448852fa0e4f32626258ab46d6d",
+   "date": "2026-11-05T21:24:16Z",
+   "author": "LuizaMaluf",
+   "message": "fix(dashboards): correções do PO na Distribuição Estatística (US21.03) (#101)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/DistributionChart.tsx",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 3
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/DistributionDashboard.tsx",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 7
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/DistributionDensity.tsx",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 4
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/DistributionHistogram.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/DistributionScatter.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/DistributionSummary.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/tests/DistributionChart.spec.tsx",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/tests/DistributionDashboard.spec.tsx",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/tests/DistributionDensity.spec.tsx",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/tests/DistributionScatter.spec.tsx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/tests/DistributionSummary.spec.tsx",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 3
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/distribuicao/tests/fixtures.ts",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/customTypes/product.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/distributionSummary.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 4
+    },
+    {
+     "filename": "src/shared/utils/formatDistributionCharts.ts",
+     "status": "modified",
+     "additions": 43,
+     "deletions": 17
+    },
+    {
+     "filename": "src/shared/utils/formatDistributionCsv.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/utils/tests/distributionSummary.spec.ts",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 4
+    },
+    {
+     "filename": "src/shared/utils/tests/formatDistributionCharts.spec.ts",
+     "status": "modified",
+     "additions": 75,
+     "deletions": 15
+    },
+    {
+     "filename": "src/shared/utils/tests/formatDistributionCsv.spec.ts",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/tests/metricDistribution.spec.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "2f5f7f567706958fc8b1eb3a25c3cc8bb2bdeb1d",
    "date": "2026-10-27T01:03:23Z",
@@ -11011,5 +11140,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }
