@@ -1,10 +1,30 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-05T11:13:49+00:00",
+ "coletado_em": "2026-11-05T17:14:17+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 99,
+   "title": "[TASK] Atualizar o Front para Next 16 com App Router",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-05T17:05:03Z",
+   "closed_at": null,
+   "updated_at": "2026-11-05T17:05:03Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1475,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/99",
+   "author": "zzzBECK"
+  },
   {
    "number": 98,
    "title": "[TASK] Adicionar tarja de aviso de ambiente acadêmico na Landing Page",
