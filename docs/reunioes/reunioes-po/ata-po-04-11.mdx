@@ -1,0 +1,57 @@
+---
+title: Ata – Reunião com o PO (04/11/2026)
+sidebar_label: Ata PO 04/11
+description: Decisões e encaminhamentos da reunião com o PO de 04/11/2026.
+---
+
+# Ata – Reunião com o PO (04/11/2026)
+
+| Data e horário     | Duração | Canal | Condutor      | Relator                 |
+| ------------------ | ------- | ----- | ------------- | ----------------------- |
+| 04/11/2026 · 19:35 | 1h28min | Teams | Daniel Rabelo | Diogo Rodrigues Barboza |
+
+**Participantes:** Hilmer Rodrigues Neri (PO), Alexandre De Santana Beck, Daniel Ferreira Santos Rabelo, Diogo Rodrigues Barboza, Guilherme Storch De Oliveira, Henrique Camelo Quenino, Luciano De Freitas Melo, Marcos Antonio Teles De Castilhos, Milena Fernandes Rocha.
+
+:::tip[Resultado]
+Definida uma nova estratégia de testes de aceitação cruzados entre os membros da equipe para desafogar o PO na reta final do semestre, mantendo o envio dos formulários de forma separada no Discord à medida que ficarem prontos. No escopo da Release 3, foram cortados os épicos de Rastreabilidade de Arquivos (MSG23) e Emissão de Alerta (MSG24), priorizando a qualidade, testes funcionais, CI/CD do GitLab e configuração de intervalos, com nova reunião extra agendada para fechar o plano de qualidade e o escopo-tempo. Por fim, identificou-se uma falha crítica de interferência de métricas entre repositórios no banco de dados, que será analisada visualmente com o esquema do banco na aula de segunda-feira.
+:::
+
+## Pauta
+
+1. Feedback dos testes da Release anterior, bugs de login/importação e nova estratégia para Testes de Aceitação (formulários).
+2. Revisão do Plano de Qualidade, problemas na coleta do SonarQube e redefinição do Escopo da Release 3.
+3. Assuntos gerais: E-mail externo sobre licenciamento, commits de ex-alunos na pipeline, tarja de aviso acadêmico na Landing Page e organização do Figma.
+4. Esquema do Banco de Dados: associação de releases/análises e interferência de métricas entre repositórios.
+
+## Discussão e decisões
+
+| Tema                                                      | Decisão                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Quem decidiu  |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------- |
+| **Bugs de Login e Importação GitLab**                     | O PO relatou lentidão e redirecionamento indevido para a landing page após autenticação (GitHub/GitLab), além de erro 404 ao importar projetos no GitLab. Outro membro que não implementou a feature deverá testar e validar a correção.                                                                                                                                                                                                                                                                                                                     | PO / Equipe   |
+| **Estratégia de Testes de Aceitação e Formulários (R3)**  | Para evitar gargalo no fim do semestre, os testes sistemáticos serão feitos de forma cruzada pela equipe (duplas que não implementaram nem usaram a feature testam critério a critério). Os formulários para a R3 continuarão sendo enviados separadamente no Discord assim que concluídos. O PO fará um uso exploratório geral e só intervirá se notar algo grave fora dos requisitos. O PO segue aprovando o DoR (requisitos e protótipos) normalmente.                                                                                                    | PO / Equipe   |
+| **Plano de Qualidade e Coleta do SonarQube**              | Foi identificado que configurações herdadas do SonarQube excluíam pastas críticas (como dashboards no front-end e `server` no MCP), mascarando métricas. A equipe corrigirá a coleta e apresentará o plano de qualidade revisado e o replanejamento de escopo-tempo em reunião extra com o PO (quinta-feira à noite ou sábado às 11h/15h) antes da Planning de segunda-feira.                                                                                                                                                                                | PO / Equipe   |
+| **Corte da Rastreabilidade de Arquivos (MSG23)**          | O épico MSG23 foi removido da Release 3 devido ao alto risco arquitetural e impacto no modelo do Core e em toda a cadeia de repositórios. Luciano e Alexandre deverão documentar os aprendizados e análises matemáticas levantadas para a turma do próximo semestre.                                                                                                                                                                                                                                                                                         | PO / Equipe   |
+| **Corte de Emitir Alerta (MSG24) e Priorização R3**       | Concordou-se em remover o épico de Emitir Alerta sobre decaimento de qualidade (MSG24). Foram mantidos 100% os épicos de CI/CD do GitLab e Configuração Dinâmica de Intervalos (15 e 30). Entre Método AHP e Segurança (13 e 14), a viabilidade será batida após fechar o escopo técnico, focando em reforçar testes funcionais/E2E. Caso Segurança entre, o foco será estático em tempo de pipeline (SAST e SCM), utilizando os TCCs do Chaydson e do Arthur Sena como base. O PO também sugeriu avaliar a criação de consulta/edição de release planejada. | PO / Equipe   |
+| **E-mail externo sobre mudança de licença**               | Sobre o e-mail recebido por Alexandre de um projeto externo (aparentemente gerado por IA) pedindo para alterar commits específicos da licença GPLv3 para MIT, decidiu-se responder negativamente de forma explícita ("não autorizo"), protegendo o motor de cálculo e a licença do projeto.                                                                                                                                                                                                                                                                  | PO / Equipe   |
+| **Commits automáticos em nome de ex-alunos**              | Verificou-se que os commits automáticos de métricas em nome de Ruan e Thiago ocorrem porque um bot configurado em 2022 ainda utiliza um token/secret pessoal antigo no repositório Core. O PO e Henrique trocarão o secret pareando na aula de segunda-feira.                                                                                                                                                                                                                                                                                                | PO / Henrique |
+| **Tarja de projeto acadêmico na Landing Page**            | Criar uma issue e implementar uma tarja/aviso de destaque na Landing Page informando explicitamente que se trata de um ambiente acadêmico, recomendando não inserir dados reais/sensíveis e isentando garantias sobre os dados. O PO revisará o texto.                                                                                                                                                                                                                                                                                                       | PO / Equipe   |
+| **Esquema do Banco de Dados e Interferência de Métricas** | Marcos expôs que hoje o vínculo entre release e análise ocorre apenas por data (`created_at`) e chave opcional na característica. Além disso, identificou um bug grave onde o banco faz busca global pelo registro mais recente, fazendo com que a análise de um Repositório A possa puxar métricas do Repositório B. A equipe se reunirá para discutir o impacto da criação das tabelas `release` e `analysis_id` e levará o diagrama/esquema visual (via Postgres/imagens) para decisão definitiva com o PO na aula de segunda-feira.                      | PO / Equipe   |
+
+## Ações
+
+| Ação                                                                                                                                                   | Responsável                                             | Prazo       |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- | ----------- |
+| Realizar teste de aceitação cruzado das US pendentes (Operacionalizar Dívida Técnica e Nomenclaturas GitLab 11.3) e investigar erro 404/delay de login | Equipe                                                  | 09/11       |
+| Confirmar disponibilidade da equipe e agendar reunião extra com o PO (05/11 à noite ou 07/11) para validar Plano de Qualidade e Escopo-Tempo           | Luciano Melo e Guilherme Storch                         | 05/11       |
+| Corrigir exclusões indevidas no SonarQube e levantar impacto nos indicadores do Plano de Qualidade                                                     | Squad 3 (Luciano, Alexandre, Marcos) e Guilherme Storch | 07/11       |
+| Documentar estudos e restrições sobre Rastreabilidade de Arquivos (MSG23) para o próximo semestre                                                      | Luciano Melo e Alexandre Beck                           | Final da R3 |
+| Responder negativamente ao e-mail externo negando a mudança de licença GPLv3 para MIT                                                                  | Alexandre Beck                                          | 05/11       |
+| Criar issue e implementar tarja na Landing Page avisando sobre projeto acadêmico e uso de dados reais                                                  | Diogo Barboza / Equipe                                  | 09/11       |
+| Trocar o secret/token antigo de 2022 na pipeline do repositório Core                                                                                   | Hilmer Neri (PO) e Henrique Quenino                     | 09/11       |
+| Reunir a equipe para avaliar impacto no banco e levar fotos/esquema visual (Postgres) para resolver a interferência de métricas e vínculo de Release   | Marcos Castilhos / Equipe                               | 09/11       |
+
+## Histórico de versão
+
+| Versão | Data       | Descrição           | Autor                                              | Revisor |
+| ------ | ---------- | ------------------- | -------------------------------------------------- | ------- |
+| 1.0    | 04/11/2026 | Registro da reunião | [@Diogo-Barboza](https://github.com/Diogo-Barboza) | -       |
