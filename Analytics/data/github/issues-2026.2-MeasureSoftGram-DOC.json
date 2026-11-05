@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-04T23:13:24+00:00",
+ "coletado_em": "2026-11-05T01:25:16+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 181,
+   "title": "docs(reunioes): adiciona ata da reuniao com o PO de 04/11",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-05T01:16:05Z",
+   "closed_at": "2026-11-05T01:24:04Z",
+   "updated_at": "2026-11-05T01:24:07Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 363,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/181",
+   "author": "Diogo-Barboza"
+  },
   {
    "number": 180,
    "title": "[US30.03] Como Miguel, quero que o badge e o velocímetro do repositório usem as faixas do produto",
