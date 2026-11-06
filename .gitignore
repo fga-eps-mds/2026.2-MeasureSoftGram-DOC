@@ -33,5 +33,14 @@ yarn.lock
 Analytics/.env
 __pycache__/    
 Analytics/_sync.tgz
+.venv/
+*/.venv/
+venv/
+*/venv/
+uv.lock
+.uv/
+*.pyc
+*/__pycache__/
+.pytest_cache/
 
 # /static/dashboard/ só guarda o index.html que redireciona para o Streamlit Cloud
