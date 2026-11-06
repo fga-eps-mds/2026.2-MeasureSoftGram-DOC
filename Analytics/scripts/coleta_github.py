@@ -139,7 +139,10 @@ def _gravar(destino: Path, cabecalho: dict, dados: dict) -> None:
     destino.write_text(json.dumps({**cabecalho, **dados}, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
-def executar(pasta: Path = PASTA_COLETA, log=print) -> list[Path]:
+from scripts.verificar_novos_prs import normalizar_repositorios  # noqa: E402
+
+
+def executar(pasta: Path = PASTA_COLETA, repos: list[str] | str | None = None, log=print) -> list[Path]:
     import requests
 
     carregar_env(RAIZ / ".env")
@@ -152,7 +155,11 @@ def executar(pasta: Path = PASTA_COLETA, log=print) -> list[Path]:
     desde = str(config.INICIO_SEMESTRE)[:10]
     agora = datetime.now(timezone.utc).isoformat(timespec="seconds")
     gravados, falhas = [], 0
-    for repo in config.GITHUB_REPOS:
+
+    repos_alvo = normalizar_repositorios(repos)
+    log(f"Repositórios GitHub a coletar ({len(repos_alvo)}): {', '.join(repos_alvo)}")
+
+    for repo in repos_alvo:
         try:
             dados = coletar_repo(sessao, repo, desde)
         except Exception as erro:  # noqa: BLE001 — um repositório com erro não para os outros
@@ -195,5 +202,15 @@ def executar(pasta: Path = PASTA_COLETA, log=print) -> list[Path]:
     return gravados
 
 
+def main() -> int:
+    import argparse
+    parser = argparse.ArgumentParser(description="Coleta execuções de CI, issues e commits da API do GitHub.")
+    parser.add_argument("--repos", type=str, default="", help="Repositórios a coletar (ou 'todos')")
+    args = parser.parse_args()
+
+    executar(repos=args.repos)
+    return 0
+
+
 if __name__ == "__main__":
-    executar()
+    raise SystemExit(main())
