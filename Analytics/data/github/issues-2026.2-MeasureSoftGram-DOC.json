@@ -1,10 +1,48 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-06T17:13:13+00:00",
+ "coletado_em": "2026-11-06T23:12:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 197,
+   "title": "[MSG32] Revisão de pendencias do projeto",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T22:54:43Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T22:56:11Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 241,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/197",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 196,
+   "title": "feat(analytics): [DOC#192] centraliza coleta no docs e condiciona SonarCloud a novos PRs na develop",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-06T21:48:33Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T21:49:15Z",
+   "labels": [
+    "analytics"
+   ],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5602,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/196",
+   "author": "luciano-freitas-melo"
+  },
   {
    "number": 195,
    "title": "[DUPLICADA de #178] [US30.01] Como Valéria, quero ajustar os limites das faixas de qualidade do produto",
@@ -73,7 +111,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:12:06Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T00:26:08Z",
+   "updated_at": "2026-11-06T21:21:12Z",
    "labels": [
     "task"
    ],
@@ -206,11 +244,11 @@
   {
    "number": 185,
    "title": "[QUAL.01.1] Front: Saneamento de exclusões (dashboards, pages, subCharacteristics)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-06T00:08:08Z",
-   "closed_at": null,
-   "updated_at": "2026-11-06T00:34:10Z",
+   "closed_at": "2026-11-06T22:46:22Z",
+   "updated_at": "2026-11-06T22:46:22Z",
    "labels": [
     "subtask"
    ],
@@ -260,25 +298,6 @@
    "milestone_due_on": null,
    "body_chars": 1112,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/183",
-   "author": "luciano-freitas-melo"
-  },
-  {
-   "number": 182,
-   "title": "[1.2.2.5] [QUAL] Avaliação final da qualidade",
-   "state": "open",
-   "is_pull_request": false,
-   "created_at": "2026-11-06T00:06:31Z",
-   "closed_at": null,
-   "updated_at": "2026-11-06T00:06:33Z",
-   "labels": [
-    "epic"
-   ],
-   "type": null,
-   "assignees": [],
-   "milestone": null,
-   "milestone_due_on": null,
-   "body_chars": 1100,
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/182",
    "author": "luciano-freitas-melo"
   },
   {
@@ -530,11 +549,11 @@
   {
    "number": 168,
    "title": "docs(produto): [US130] levanta métricas e propõe rastreabilidade por granularidade",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-10-24T16:56:53Z",
-   "closed_at": null,
-   "updated_at": "2026-10-26T04:12:35Z",
+   "closed_at": "2026-11-06T20:05:20Z",
+   "updated_at": "2026-11-06T20:05:21Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -1291,30 +1310,6 @@
    "author": "MilenaFRocha"
   },
   {
-   "number": 130,
-   "title": "[US23.01] Como Miguel, quero ver quais arquivos influenciaram uma medida, para auditar o que puxou a nota para baixo",
-   "state": "open",
-   "is_pull_request": false,
-   "created_at": "2026-10-07T20:39:56Z",
-   "closed_at": null,
-   "updated_at": "2026-10-22T00:02:09Z",
-   "labels": [
-    "US"
-   ],
-   "type": "Feature",
-   "assignees": [
-    "zzzBECK",
-    "luciano-freitas-melo",
-    "nateejpg",
-    "Marcosatc147"
-   ],
-   "milestone": null,
-   "milestone_due_on": null,
-   "body_chars": 11228,
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/130",
-   "author": "MilenaFRocha"
-  },
-  {
    "number": 129,
    "title": "[US21.04] Como Helena, quero ver relações e correlações entre as características",
    "state": "open",
@@ -1444,12 +1439,12 @@
   },
   {
    "number": 121,
-   "title": "[MSG30] Reforço de segurança do produto",
+   "title": "[MSG31] Reforço de segurança do produto",
    "state": "open",
    "is_pull_request": false,
    "created_at": "2026-10-07T20:34:33Z",
    "closed_at": null,
-   "updated_at": "2026-10-07T20:34:33Z",
+   "updated_at": "2026-11-06T22:53:29Z",
    "labels": [],
    "type": null,
    "assignees": [],
@@ -1814,27 +1809,6 @@
    "author": "MilenaFRocha"
   },
   {
-   "number": 94,
-   "title": "[MSG23] Manter rastreabilidade dos arquivos de código-fonte entre as métricas e medidas",
-   "state": "open",
-   "is_pull_request": false,
-   "created_at": "2026-09-27T16:21:45Z",
-   "closed_at": null,
-   "updated_at": "2026-10-07T20:38:17Z",
-   "labels": [
-    "epic",
-    "service",
-    "cli"
-   ],
-   "type": null,
-   "assignees": [],
-   "milestone": null,
-   "milestone_due_on": null,
-   "body_chars": 795,
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/94",
-   "author": "MilenaFRocha"
-  },
-  {
    "number": 93,
    "title": "[MSG22] Visualizar o gráfico Planejado x Realizado sobre o equalizador da qualidade",
    "state": "open",
@@ -1880,28 +1854,6 @@
    "milestone_due_on": null,
    "body_chars": 1149,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/92",
-   "author": "MilenaFRocha"
-  },
-  {
-   "number": 91,
-   "title": "[MSG20] Adequar o produto à LGPD (requisito não funcional)",
-   "state": "open",
-   "is_pull_request": false,
-   "created_at": "2026-09-27T16:21:30Z",
-   "closed_at": null,
-   "updated_at": "2026-10-29T02:16:41Z",
-   "labels": [
-    "epic",
-    "all repos"
-   ],
-   "type": null,
-   "assignees": [
-    "storch7"
-   ],
-   "milestone": null,
-   "milestone_due_on": null,
-   "body_chars": 984,
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/91",
    "author": "MilenaFRocha"
   },
   {
@@ -1994,16 +1946,14 @@
    "is_pull_request": false,
    "created_at": "2026-09-27T16:08:40Z",
    "closed_at": null,
-   "updated_at": "2026-10-12T23:29:53Z",
+   "updated_at": "2026-11-06T22:28:15Z",
    "labels": [
     "epic",
     "frontend",
     "service"
    ],
    "type": null,
-   "assignees": [
-    "zzzBECK"
-   ],
+   "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 964,
@@ -2120,11 +2070,11 @@
   {
    "number": 74,
    "title": "[TASK03.04] Governança de Branches, Portões de CI e Gestão de Secrets nos Repositórios Centrais",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-26T18:49:54Z",
-   "closed_at": null,
-   "updated_at": "2026-10-17T22:29:18Z",
+   "closed_at": "2026-11-06T21:07:10Z",
+   "updated_at": "2026-11-06T21:07:10Z",
    "labels": [
     "task",
     "all repos"

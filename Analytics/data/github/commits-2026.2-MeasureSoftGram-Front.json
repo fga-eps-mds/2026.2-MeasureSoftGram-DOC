@@ -1,11 +1,62 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-06T17:13:13+00:00",
+ "coletado_em": "2026-11-06T23:12:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "ec0857b57c1d533f55fc9423c52c48fee32c4d65",
+   "date": "2026-11-06T22:45:29Z",
+   "author": "luciano-freitas-melo",
+   "message": "fix(quality): remove exclusoes indevidas do Sonar e padroniza rotas como re-exports (#97)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/pages/auth/AuthError.tsx",
+     "status": "added",
+     "additions": 80,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/auth/error.page.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 82
+    },
+    {
+     "filename": "src/pages/auth/test/AuthError.spec.tsx",
+     "status": "added",
+     "additions": 40,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/releases/[release]/Release.tsx",
+     "status": "added",
+     "additions": 154,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/releases/[release]/index.page.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 155
+    },
+    {
+     "filename": "src/pages/products/[product]/releases/[release]/tests/release.spec.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
   {
    "sha": "38702cb322f95448852fa0e4f32626258ab46d6d",
    "date": "2026-11-05T21:24:16Z",
@@ -11140,5 +11191,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }
