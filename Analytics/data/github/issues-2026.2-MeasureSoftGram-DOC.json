@@ -1,10 +1,263 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-05T23:13:39+00:00",
+ "coletado_em": "2026-11-06T11:13:36+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 194,
+   "title": "[DA-R3.03] Adequação do Dashboard com base no que for definido no Plano de Qualidade",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:13:30Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:13:33Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1352,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/194",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 193,
+   "title": "[DA-R3.02] Correções conceituais no Dashboard Analítico apontadas no feedback da R2",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:12:33Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:29:29Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2291,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/193",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 192,
+   "title": "[DA-R3.01] Vincular a coleta de métricas exclusivamente ao repositório do semestre (por PR)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:12:06Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:26:08Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1566,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/192",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 191,
+   "title": "[QUAL.03] Análise final da Qualidade e definição do plano de ação (Escopo da Release 3)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:11:39Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:11:42Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1628,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/191",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 190,
+   "title": "[QUAL.02] Elaboração do Plano de Qualidade do Projeto (Release 3)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:10:48Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:10:51Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1953,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/190",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 189,
+   "title": "[QUAL.01.5] Demais repositórios: Ajustes de relatórios e cobertura (Service, Action, Core)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:10:22Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:35:37Z",
+   "labels": [
+    "subtask"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1246,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/189",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 188,
+   "title": "[QUAL.01.4] Plugin: Reativação de metrics.yml e reporte de testes",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:09:25Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:35:22Z",
+   "labels": [
+    "subtask"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1316,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/188",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 187,
+   "title": "[QUAL.01.3] CLI: Saneamento de exclusões (cli.py e parsers.py)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:09:01Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:35:00Z",
+   "labels": [
+    "subtask"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1138,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/187",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 186,
+   "title": "[QUAL.01.2] AI: Saneamento de exclusões (server.py) e reporte de testes (junit.xml)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:08:31Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:34:41Z",
+   "labels": [
+    "subtask"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1376,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/186",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 185,
+   "title": "[QUAL.01.1] Front: Saneamento de exclusões (dashboards, pages, subCharacteristics)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:08:08Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:34:10Z",
+   "labels": [
+    "subtask"
+   ],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1318,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/185",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 184,
+   "title": "[QUAL.01] Saneamento da coleta de dados nos repositórios",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:07:34Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:07:37Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1595,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/184",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 183,
+   "title": "[1.2.2.5] [QUAL] Avaliação final da qualidade",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:06:46Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:36:13Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1112,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/183",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 182,
+   "title": "[1.2.2.5] [QUAL] Avaliação final da qualidade",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-06T00:06:31Z",
+   "closed_at": null,
+   "updated_at": "2026-11-06T00:06:33Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1100,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/182",
+   "author": "luciano-freitas-melo"
+  },
   {
    "number": 181,
    "title": "docs(reunioes): adiciona ata da reuniao com o PO de 04/11",
@@ -930,7 +1183,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:31Z",
    "closed_at": null,
-   "updated_at": "2026-11-04T14:32:27Z",
+   "updated_at": "2026-11-06T01:57:00Z",
    "labels": [
     "US",
     "service",
@@ -940,7 +1193,7 @@
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 5283,
+   "body_chars": 4848,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/136",
    "author": "MilenaFRocha"
   },

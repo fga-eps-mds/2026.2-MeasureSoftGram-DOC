@@ -1,25 +1,11 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-11-05T23:13:39+00:00",
+ "coletado_em": "2026-11-06T11:13:36+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "total_count": 646,
  "workflow_runs": [
-  {
-   "id": 42112337286,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-11-05T21:24:20Z",
-   "run_started_at": "2026-11-05T21:24:20Z",
-   "updated_at": "2026-11-05T21:32:04Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/42112337286",
-   "run_number": 233,
-   "workflow_id": 347831686
-  },
   {
    "id": 42112337277,
    "name": "Export de métricas",
@@ -35,17 +21,17 @@
    "workflow_id": 347831685
   },
   {
-   "id": 42111570669,
+   "id": 42112337286,
    "name": "Rodar Testes",
    "status": "completed",
    "conclusion": "success",
-   "head_branch": "chore/next-16-app-router",
-   "event": "pull_request",
-   "created_at": "2026-11-05T21:19:23Z",
-   "run_started_at": "2026-11-05T21:19:23Z",
-   "updated_at": "2026-11-05T21:26:18Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/42111570669",
-   "run_number": 232,
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-11-05T21:24:20Z",
+   "run_started_at": "2026-11-05T21:24:20Z",
+   "updated_at": "2026-11-05T21:32:04Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/42112337286",
+   "run_number": 233,
    "workflow_id": 347831686
   },
   {
@@ -61,6 +47,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/42111570636",
    "run_number": 146,
    "workflow_id": 368685720
+  },
+  {
+   "id": 42111570669,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "chore/next-16-app-router",
+   "event": "pull_request",
+   "created_at": "2026-11-05T21:19:23Z",
+   "run_started_at": "2026-11-05T21:19:23Z",
+   "updated_at": "2026-11-05T21:26:18Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/42111570669",
+   "run_number": 232,
+   "workflow_id": 347831686
   },
   {
    "id": 42111170263,
