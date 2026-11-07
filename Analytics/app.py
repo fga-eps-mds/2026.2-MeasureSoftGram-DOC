@@ -26,7 +26,7 @@ import streamlit as st  # noqa: E402
 st.set_page_config(page_title="MeasureSoftGram — Dashboard de Gestão de Projeto", layout="wide",
                    initial_sidebar_state="expanded")
 
-from pages import (custos, decisoes, evm, metodologia, processo, qualidade, riscos, sonar,  # noqa: E402
+from pages import (custos, decisoes, evm, fluxo, metodologia, processo, qualidade, riscos, sonar,  # noqa: E402
                    visao_executiva, zenhub)
 from src.components import filters, layout  # noqa: E402
 from src.data import contexto  # noqa: E402
@@ -48,7 +48,7 @@ def _riscos_e_decisoes():
     decisoes.pagina(embutida=True)
 
 
-# Painel enxuto (26/10/2026): 8 páginas em vez de 10. Custos entrou no Agile EVM e Decisões em Riscos;
+# Painel enxuto (26/10/2026): 8 páginas em vez de 10; Fluxo entrou em 06/11 (DA-R3.02). Custos entrou no Agile EVM e Decisões em Riscos;
 # tabelas brutas e conferências ficam atrás do interruptor "Mostrar ..." de cada página.
 navegacao = st.navigation({
     "Gestão": [
@@ -57,6 +57,7 @@ navegacao = st.navigation({
         st.Page(zenhub.pagina, title="Gestão ágil", url_path="zenhub", icon=":material/view_kanban:"),
         st.Page(_evm_e_custos, title="Agile EVM e custos", url_path="agile-evm",
                 icon=":material/stacked_line_chart:"),
+        st.Page(fluxo.pagina, title="Fluxo", url_path="fluxo", icon=":material/swap_horiz:"),
         st.Page(_riscos_e_decisoes, title="Riscos e decisões", url_path="riscos", icon=":material/warning:"),
     ],
     "Qualidade e processo": [

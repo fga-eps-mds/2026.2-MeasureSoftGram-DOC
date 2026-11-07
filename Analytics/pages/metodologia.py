@@ -82,8 +82,9 @@ existem no snapshot mais recente da API (sem histórico): num período que termi
     regras = ctx.zh_regras
     st.dataframe(pd.DataFrame([
         {"Regra": "Quem pontua", "Zenhub (completedPoints)": "toda issue ou PR com estimativa",
-         "Painel": f"só {', '.join(sorted(regras.tipos_pontuados))} sem filhas pontuáveis",
-         "Por quê": "PR, Épico e pai de Tasks repetem o trabalho das filhas: somar os dois conta duas vezes"},
+         "Painel": f"só {', '.join(sorted(regras.tipos_pontuados))} (US) fechada, depois do aceite do PO",
+         "Por quê": "feedback da R2 (ação C1.2): Velocity, SPI e CPI medem valor funcional aceito; Tasks, Bugs e "
+                    "PR não são valor de negócio e ficam nas métricas de fluxo"},
         {"Regra": "Até quando conta na sprint", "Zenhub (completedPoints)": "fechada até o fim da sprint",
          "Painel": (f"fechada até {regras.prazo_fechamento} (Brasília) do dia seguinte ao último dia"
                     if regras.prazo_fechamento else "fechada até o fim da sprint"),

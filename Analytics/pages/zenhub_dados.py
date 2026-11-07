@@ -103,8 +103,8 @@ def releases_e_epicos(ctx, f, snap, todas, d):
             "situacao": "Situação", "filhas": "Filhas", "concluidas": "Concluídas", "em_andamento": "Em andamento",
             "pontos": "SP", "pontos_concluidos": "SP concluídos",
             "progresso": st.column_config.ProgressColumn("Progresso", min_value=0, max_value=100, format="%.0f%%")})
-        st.caption("— = nenhuma filha pontuável com estimativa. Épico sem filhas aparece sem progresso (não é 0%). SP = só Features, Tasks e Bugs sem filhas "
-                   "(a mesma regra da velocity: uma US com Tasks não soma junto com as Tasks). Aqui entram todas as "
+        st.caption("— = nenhuma filha pontuável com estimativa. Épico sem filhas aparece sem progresso (não é 0%). SP = só Features (US), "
+                   "a mesma regra da velocity: Tasks, Sub-tasks e Bugs não somam SP. Aqui entram todas as "
                    "issues fechadas do épico, inclusive as da sprint em andamento; a velocity só soma as fechadas "
                    "dentro de sprints concluídas. Releases e épicos usam todas as issues (só o filtro de repositório vale aqui).")
 
@@ -129,8 +129,8 @@ def conferencia(ctx, f, snap, todas, d):
                 fora = fora.drop(columns="url")
             st.dataframe(fora, use_container_width=True, hide_index=True, column_config={
                 "title": layout.coluna_link("Issue", width="large")})
-        st.caption("Calculado a cada carga (`agile.conciliacao_sp`): total = issues Feature/Task/Bug sem filhas "
-                   "pontuáveis e fechadas. 'Itens concluídos' nos indicadores conta issues de todos os tipos, por "
+        st.caption("Calculado a cada carga (`agile.conciliacao_sp`): total = issues Feature (US) "
+                   "fechadas. 'Itens concluídos' nos indicadores conta issues de todos os tipos, por "
                    "isso não é comparável com SP. Fechada entre o fim de uma sprint e o início da próxima conta na "
                    "próxima. Só o filtro de repositório vale aqui.")
 

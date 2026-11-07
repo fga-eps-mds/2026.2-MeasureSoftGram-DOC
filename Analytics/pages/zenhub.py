@@ -581,8 +581,8 @@ def pagina():
                        "feito = issue fechada.")
     r = ctx.zh_regras
     layout.metodologia([
-        ("Story", "ZENHUB", f"issue {', '.join(sorted(r.tipos_pontuados))} sem filhas pontuáveis (PR, Épico, "
-         "Sub-task e pai de Tasks não pontuam, para não contar o mesmo trabalho duas vezes)"),
+        ("Story", "ZENHUB", f"US ({', '.join(sorted(r.tipos_pontuados))}) aceita pelo PO, isto é, fechada. Task, Sub-task, Bug, PR e "
+         "Épico não pontuam: o trabalho técnico e os defeitos são acompanhados pelas métricas de fluxo (página Fluxo)"),
         ("SP planejados", "ZENHUB — `Sprint.scopeChange`", "stories na sprint ao fim da janela de planning "
          f"({r.janela_planning.total_seconds() / 3600:.0f} h), com a estimativa daquele momento; quem já estava na "
          "sprint no início entra com a estimativa atual; congelado em `linhas-de-base.json`"),

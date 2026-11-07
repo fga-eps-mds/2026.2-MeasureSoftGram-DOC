@@ -186,3 +186,67 @@ def sumario(evm: pd.DataFrame) -> pd.DataFrame:
                     "ac": u["AC"] if u is not None else NAN, "spi": u["SPI"] if u is not None else NAN,
                     "cpi": u["CPI"] if u is not None else NAN, "RD": u["RD"] if u is not None else pd.NaT})
     return pd.DataFrame(out)
+
+
+# ───────────────────────── análise crítica dos gráficos ─────────────────────────
+
+def _fila_aceite(aceite: dict | None) -> str:
+    if not aceite or not aceite.get("issues"):
+        return ""
+    from src.metrics.calculations import num
+    return (f"{aceite['issues']} US ({num(aceite['sp'])} SP) aguardam o aceite do PO e valem 0 SP até fecharem")
+
+
+def analise_critica(u, aceite: dict | None = None) -> dict[str, str]:
+    """Leitura crítica de cada gráfico do EVM (ata R2, ação C1.3), gerada dos números da sprint ``u``.
+
+    ``u`` é a linha do ``agile_evm`` da sprint de referência e ``aceite`` o resultado de
+    ``agile.sp_aguardando_aceite``. Devolve ``curvas``, ``indices`` e ``burndown``; chave ausente = sem
+    leitura possível (dado indisponível). Cada texto diz o que a curva indica e que decisão ela apoia.
+    """
+    from src.metrics.calculations import brl, num, pct
+    fila = _fila_aceite(aceite)
+    saida: dict[str, str] = {}
+
+    pv, ev, ac, bac = u.get("PV"), u.get("EV"), u.get("AC"), u.get("BAC")
+    if not any(pd.isna(x) for x in (pv, ev, bac)):
+        if pv > 0 and ev < pv:
+            t = (f"Leitura crítica: o entregue (EV, {brl(ev, 0)}) está {brl(pv - ev, 0)} abaixo do planejado "
+                 f"(PV, {brl(pv, 0)}): a release está atrasada em valor. Só conta US fechada depois do aceite do PO, "
+                 "então a distância mede aceite, não esforço")
+            t += f" — {fila}." if fila else "."
+            t += " Decisão que isso apoia: fechar o aceite das US já prontas antes de abrir novas, ou rever o escopo."
+        elif pv > 0:
+            t = (f"Leitura crítica: o entregue (EV, {brl(ev, 0)}) alcançou o planejado (PV, {brl(pv, 0)}): a release "
+                 "está no ritmo. Decisão que isso apoia: manter o escopo e o ritmo de aceite.")
+        else:
+            t = "Leitura crítica: ainda não há valor planejado (PV zero) para comparar."
+        if not pd.isna(ac) and ac > 0:
+            t += (f" O gasto (AC, {brl(ac, 0)}) está acima do entregue: o time custa mais do que a entrega aceita "
+                  "mostra." if ac > ev else f" O gasto (AC, {brl(ac, 0)}) está dentro do entregue.")
+        saida["curvas"] = t
+
+    spi, cpi = u.get("SPI"), u.get("CPI")
+    if not pd.isna(spi):
+        t = (f"Leitura crítica: SPI {num(spi, 2)} — " + ("no ritmo planejado (meta ≥ 0,95)." if spi >= 0.95 else
+             f"para cada R$ 1 planejado até aqui, R$ {num(spi, 2)} virou entrega aceita."))
+        if not pd.isna(cpi):
+            t += f" CPI {num(cpi, 2)}: " + ("o custo está acompanhando a entrega." if cpi >= 0.95 else
+                                           "gasta-se mais do que se entrega.")
+            t += " Com time estável o CPI anda junto do SPI (AC é o custo do time, sem horas)."
+        if spi < 0.95 and fila:
+            t += f" Parte do atraso é fila de aceite: {fila}."
+        saida["indices"] = t
+
+    prp, rpc, base = u.get("PRP"), u.get("RPC"), u.get("prp_linha_de_base")
+    if not pd.isna(prp):
+        falta = prp - (0 if pd.isna(rpc) else rpc)
+        t = f"Leitura crítica: faltam {num(falta)} de {num(prp)} SP de US para fechar a release"
+        if not pd.isna(base) and base > 0 and prp > base * 1.2:
+            t += (f"; o escopo cresceu de {num(base)} para {num(prp)} SP desde a linha de base, então parte do que "
+                  "falta é trabalho novo, não atraso")
+        t += "."
+        if prp == 0:
+            t = "Leitura crítica: nenhuma US (Feature) passou pelas sprints desta release; não há escopo funcional a medir."
+        saida["burndown"] = t
+    return saida

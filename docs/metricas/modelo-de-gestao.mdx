@@ -22,7 +22,7 @@ flowchart TB
   ONDAS --> EAP["EAP (PMBOK)<br/>pacotes de trabalho, regra dos 100%"]
   EAP --> ZH["Zenhub<br/>Épico → US / Task com story points"]
   ZH --> BASE["Linha de base da release<br/>PRP + calendário + BAC"]
-  BASE --> SPR["Sprint a sprint<br/>pontos Done · pontos adicionados · horas reais"]
+  BASE --> SPR["Sprint a sprint<br/>pontos Done · pontos adicionados · custo do time"]
   SPR --> IND["Velocity · Burndown · AgileEVM"]
   IND --> DEC["Riscos e Decisões"]
   DEC -->|"planejamento em ondas sucessivas"| ONDAS
@@ -45,9 +45,8 @@ flowchart TB
 | Calendário oficial | O do **Zenhub**: S1 24/08–06/09, S2 07/09–20/09, semanais a partir de 21/09 | É o único que fecha exatamente nas datas das releases (27/09, 25/10, 29/11). A planilha quinzenal anterior terminava a R1 em 04/10. |
 | Sprints por release (L) | R1 = 3 · R2 = 4 · R3 = 5 | Consequência do calendário. |
 | Critério de "feito" | Issue **fechada** | Para os story points serem contabilizados a issue só precisa estar fechada, em qualquer pipeline. Issue aberta (inclusive no Done) não conta. |
-| O que recebe story points | **US (Feature) e Task.** Bug entra como Task de correção. | Épicos e Initiatives agregam, e Sub-tasks decompõem. Estimar em mais de um nível conta o mesmo trabalho duas vezes. |
-| Custo | Horas reais × custo/hora de dev júnior | O custo/hora só converte horas em R$. CPI e SPI não dependem dele. |
-| Horas reais | Aba **Horas**, lançada por cada integrante na planning de segunda | Sem horas reais não existe AC. Não se preenche o passado por estimativa. |
+| O que recebe story points | **Só a US (Feature) aceita pelo PO.** Task, Sub-task e Bug não pontuam. | Feedback da R2 (ação C1.2): Velocity, SPI e CPI medem valor funcional aceito. O trabalho técnico e os defeitos são acompanhados pelas métricas de fluxo (Throughput, Lead Time, Cycle Time), sem alterar o EVM. Ver D4 em [Decisões](/docs/planejamento/decisoes). |
+| Custo | Custo do time: integrantes ativos na semana × custo de um integrante por semana + infraestrutura (aba Planejamento) | Como na literatura de EVM ágil (Sulaiman et al., 2006), ninguém aponta horas: o custo é o do time. |
 
 ## 3. O que cada informação representa
 
@@ -98,12 +97,27 @@ Sulaiman, Barton e Blackburn (2006), calculado por release:
 | BAC | custo planejado das semanas da release (aba Planejamento) | Orçamento da release. |
 | PV | PPC × BAC | Valor planejado até aqui. |
 | EV | APC × BAC | Valor agregado até aqui. |
-| AC | Σ horas reais × custo/hora (sem horas registradas: **indisponível**, junto com CPI, CV, ETC e EAC) | Custo real até aqui. |
+| AC | Σ custo do time nas sprints iniciadas (sem custo na aba Planejamento: **indisponível**, junto com CPI, CV, ETC e EAC) | Custo real até aqui. |
 | SPI | EV / PV = APC / PPC | Abaixo de 1 significa atraso. |
 | CPI | EV / AC | Abaixo de 1 significa gastar mais do que se entrega. |
 | SV, CV | EV − PV, EV − AC | Variâncias em valor. |
 | ETC, EAC | (BAC − EV) / CPI, AC + ETC | Projeção de custo final. |
 | RD | início + duração / SPI | Quando a release fecha, no ritmo atual. |
+
+### Métricas de fluxo (página Fluxo)
+
+Task, Sub-task, Bug e issue sem tipo não pontuam. Elas são acompanhadas em itens e dias, sem story
+points e sem alterar o EVM (Kanban; ata da R2, ação C1.4):
+
+| Métrica | Fórmula | Leitura |
+| --- | --- | --- |
+| Throughput | issues fechadas por semana (segunda a domingo, Brasília) | Ritmo de conclusão do trabalho técnico. |
+| Lead Time | fechamento − criação, em dias (mediana e percentil 85) | Quanto uma issue leva para ser entregue. |
+| Cycle Time | fechamento − entrada em *In Progress* | **Indisponível**: a coleta guarda só a última transferência de pipeline. |
+| Taxa de conclusão | fechadas ÷ ativas no período | Q-Rapids, *Development Task Completion*. |
+
+Para habilitar o Cycle Time é preciso coletar o histórico de transferências de pipeline
+(`Issue.timelineItems` da API do Zenhub), validando a query com `scripts/diagnostico_zenhub.py`.
 
 ### Riscos (aba Riscos)
 
@@ -134,7 +148,7 @@ quadro e congelar a linha de base da R2 na planning de 28/09.
 | Quando | O quê | Quem |
 | --- | --- | --- |
 | Planning de abertura da release | Garantir as issues da release no Zenhub (a linha de base congela sozinha) | Líderes da quinzena |
-| Toda segunda (planning) | Lançar as horas da semana na aba Horas | Cada integrante |
+| Toda segunda (planning) | Atualizar os integrantes ativos da semana na aba Planejamento | Líderes da quinzena |
 | Fim de cada sprint | Fechar as issues entregues (a coleta diária do workflow atualiza o painel) | Líderes da quinzena |
 | Toda retrospectiva | Revisar riscos e registrar decisões | Equipe |
 
@@ -151,3 +165,4 @@ quadro e congelar a linha de base da R2 na planning de 28/09.
 | --- | --- | --- | --- | --- |
 | 1.0 | 27/09/2026 | Modelo de gestão e dicionário de dados do DA-R1 | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
 | 1.1 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.2 | 06/11/2026 | Só US pontua; AC é o custo do time, sem horas; métricas de fluxo (DA-R3.02) | [@zzzBECK](https://github.com/zzzBECK) |  |

@@ -20,7 +20,7 @@ S2 = S1_FIM + timedelta(hours=1)
 S2_FIM = S2 + timedelta(days=7, hours=-1)
 
 
-def issue(iid, est, fechada=None, tipo="Task"):
+def issue(iid, est, fechada=None, tipo="Feature"):
     return {"issue_id": iid, "number": int(iid[1:]), "title": f"Story {iid}", "repository": "repo",
             "state": "CLOSED" if fechada else "OPEN", "closed_at": fechada.isoformat() if fechada else None,
             "estimate": est, "issue_type": tipo, "parent_id": None, "is_pull_request": False, "pipeline": None,

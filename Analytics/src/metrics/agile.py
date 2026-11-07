@@ -45,7 +45,7 @@ def _para_data(serie: pd.Series) -> pd.Series:
     return pd.to_datetime(serie, utc=True, errors="coerce")
 
 
-TIPOS_PONTUADOS = {"Feature", "Task", "Bug"}
+TIPOS_PONTUADOS = {"Feature"}   # só US (DA-R3.02); o valor efetivo vem de config.PARAMETROS
 
 
 def universo_issues(snap: dict | None, tipos_pontuados: set | None = None) -> tuple[pd.DataFrame, bool]:
@@ -97,7 +97,7 @@ def universo_issues(snap: dict | None, tipos_pontuados: set | None = None) -> tu
     df["pipeline"] = df["pipeline"].where(df["pipeline"].notna(),
                                           df["state"].map(lambda e: "Fechada" if e == "CLOSED" else "Sem pipeline"))
     df["pontos"] = pd.to_numeric(df["estimate"], errors="coerce")
-    # Mesma regra da velocity: pontua Feature/Task/Bug sem filhas pontuáveis (quem pontua são as filhas).
+    # Mesma regra da velocity: só pontua US (Feature) sem filhas pontuáveis (DA-R3.02).
     # ``sp`` é o que entra em qualquer soma de story points; ``pontos`` é só a estimativa cadastrada.
     tipos = tipos_pontuados or TIPOS_PONTUADOS
     tipo_de = dict(zip(df["issue_id"], df["issue_type"]))
@@ -147,6 +147,27 @@ def universo_issues(snap: dict | None, tipos_pontuados: set | None = None) -> tu
     df["sprint"] = df["issue_id"].map(sprint_de).fillna("Sem sprint")
     df["sprints"] = df["issue_id"].map(lambda i: passou.get(i) or ["Sem sprint"])
     return df.reset_index(drop=True), completo
+
+
+PIPELINE_ACEITE_PO = "Aguardando aprovação do PO (DoD)"
+
+
+def sp_aguardando_aceite(df: pd.DataFrame, release: str | None = None) -> dict:
+    """US (Feature) entregues pela equipe e ainda não aceitas pelo PO.
+
+    Velocity, SPI e CPI só contam US **fechadas** (critério de feito = issue fechada, depois do aceite do
+    PO). As que estão em "Aguardando aprovação do PO (DoD)" valem 0 SP até fecharem: esta função mostra o
+    tamanho dessa fila para o painel explicar por que a velocity é baixa. Não entra em nenhuma soma de SP.
+    """
+    vazio = {"sp": 0.0, "issues": 0, "sem_estimativa": 0, "itens": pd.DataFrame()}
+    if df is None or df.empty or "pontuavel" not in df:
+        return vazio
+    x = df[df["pontuavel"] & (df["state"] != "CLOSED") & (df["pipeline"] == PIPELINE_ACEITE_PO)]
+    if release is not None and "release" in x:
+        x = x[x["release"] == release]
+    cols = [c for c in ("number", "title", "repositorio", "pontos", "url", "release") if c in x]
+    return {"sp": float(x["pontos"].fillna(0).sum()), "issues": len(x), "sem_estimativa": int(x["pontos"].isna().sum()),
+            "itens": x[cols].sort_values("pontos", ascending=False)}
 
 
 def distribuicao(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
@@ -228,7 +249,8 @@ def alertas_de_dados(df: pd.DataFrame, tipos_pontuados: set) -> pd.DataFrame:
 
     * sem tipo, mas com filhas — se for épico, some da lista de épicos e as filhas
       ficam "Sem épico";
-    * sem tipo, com estimativa — os pontos não contam (só Feature, Task e Bug pontuam);
+    * sem tipo, com estimativa — os pontos não contam (só Feature pontua; Task e Bug vão para as métricas
+      de fluxo);
     * épico com estimativa — épico não pontua, a estimativa é ignorada;
     * US/Task com filhas pontuáveis e estimativa — quem pontua são as filhas;
     * pontuável sem estimativa — conta como 0 SP no planejado e no concluído.
@@ -256,7 +278,7 @@ def alertas_de_dados(df: pd.DataFrame, tipos_pontuados: set) -> pd.DataFrame:
         for pr in problemas:
             linhas.append({"numero": r.number, "titulo": r.title, "repositorio": r.repositorio,
                            "tipo": tipo or "Sem tipo", "problema": pr, "url": getattr(r, "url", None)})
-    return pd.DataFrame(linhas)
+    return pd.DataFrame(linhas, columns=["numero", "titulo", "repositorio", "tipo", "problema", "url"])
 
 
 def conciliacao_sp(df: pd.DataFrame, sprints: pd.DataFrame) -> dict:

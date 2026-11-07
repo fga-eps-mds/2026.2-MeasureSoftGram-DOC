@@ -24,7 +24,7 @@ def sprint(sid, ini, dias, ids, eventos, estado="CLOSED"):
 
 def issue(iid, est, fechada=None):
     return {"issue_id": iid, "state": "CLOSED" if fechada else "OPEN", "closed_at": fechada, "estimate": est,
-            "issue_type": "Task", "is_pull_request": False, "parent_id": None, "pipeline": None}
+            "issue_type": "Feature", "is_pull_request": False, "parent_id": None, "pipeline": None}
 
 
 def ev(iid, quando, est):
@@ -137,6 +137,36 @@ class AgileEvmTest(unittest.TestCase):
         self.assertTrue(math.isnan(d.iloc[0]["CPI"]))
         self.assertAlmostEqual(d.iloc[1]["SPI"], 0.75)                 # SPI = APC ÷ PPC, sem custo
         self.assertEqual(d.iloc[1]["RPC"], 15)                         # pontos continuam
+
+
+class AnaliseCriticaTest(unittest.TestCase):
+    """DA-R3.02 (ata R2, C1.3): cada gráfico do EVM traz uma leitura crítica gerada dos números."""
+
+    def u(self, **kw):
+        base = {"PV": 100000.0, "EV": 20000.0, "AC": 90000.0, "BAC": 300000.0, "SPI": 0.2, "CPI": 0.22,
+                "PRP": 100.0, "RPC": 20.0, "prp_linha_de_base": 60.0}
+        return pd.Series({**base, **kw})
+
+    def test_atraso_aponta_a_fila_de_aceite_do_po(self):
+        a = evm.analise_critica(self.u(), {"issues": 12, "sp": 83.0})
+        self.assertIn("atrasada em valor", a["curvas"])
+        self.assertIn("12 US (83 SP) aguardam o aceite do PO", a["curvas"])
+        self.assertIn("acima do entregue", a["curvas"])
+        self.assertIn("fila de aceite", a["indices"])
+        self.assertIn("cresceu de 60 para 100 SP", a["burndown"])
+
+    def test_no_ritmo_nao_inventa_atraso(self):
+        a = evm.analise_critica(self.u(EV=100000.0, AC=100000.0, SPI=1.0, CPI=1.0, prp_linha_de_base=100.0))
+        self.assertIn("no ritmo", a["curvas"])
+        self.assertNotIn("aceite", a["indices"])
+
+    def test_sem_custo_ou_sem_us_nao_ha_leitura_inventada(self):
+        a = evm.analise_critica(self.u(BAC=float("nan"), PV=float("nan"), EV=float("nan"), SPI=float("nan"),
+                                       CPI=float("nan")))
+        self.assertNotIn("curvas", a)
+        self.assertNotIn("indices", a)
+        sem_us = evm.analise_critica(self.u(PRP=0.0, RPC=0.0, prp_linha_de_base=0.0))
+        self.assertIn("nenhuma US", sem_us["burndown"])
 
 
 if __name__ == "__main__":

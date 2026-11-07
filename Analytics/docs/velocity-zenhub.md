@@ -46,7 +46,7 @@ validados com `graphql.validate` antes de escrever o código. As queries estão 
 | `Issue.estimate.value` | story points |
 | `Issue.state` (`OPEN`/`CLOSED`), `Issue.closedAt` | conclusão e data de conclusão |
 | `Issue.pipelineIssue(workspaceId).pipeline.name`, `.latestTransferTime` | pipeline atual da issue (situação no quadro; não define se está feita) |
-| `Issue.issueType` (união `GithubIssueType`/`ZenhubIssueType`, campo `name`) | só Feature, Task e Bug pontuam |
+| `Issue.issueType` (união `GithubIssueType`/`ZenhubIssueType`, campo `name`) | só Feature pontua |
 | `Issue.parentIssue.id`, `Issue.pullRequest` | não somar pai e filha; ignorar PR |
 | `Workspace.releases` → `Release.id`, `title`, `startOn`, `endOn`, `state`, `closedAt`, `issues` | release de cada sprint |
 
@@ -64,9 +64,10 @@ substituído por `coleta_velocity.py`) — **não é válido** no schema atual:
 
 ## Regras de cálculo
 
-**Issue pontuável.** US (`Feature`), `Task` e `Bug` sem filhas, conforme
-`config.PARAMETROS` (Analytics/config.py) (`niveis_pontuados`, decisão D2). PR, Épico e Sub-task
-não pontuam. Issue pontuável **sem estimativa** conta como issue, com **0 SP**,
+**Issue pontuável.** Só a US (`Feature`), conforme `config.PARAMETROS`
+(Analytics/config.py) (`niveis_pontuados`, decisão D4 de `docs/planejamento/decisoes.mdx`). Task,
+Sub-task, Bug, PR e Épico não pontuam: o trabalho técnico e os defeitos são acompanhados pelas
+métricas de fluxo (página Fluxo). Issue pontuável **sem estimativa** conta como issue, com **0 SP**,
 e é sinalizada na coluna de observações — o painel nunca estima por ela.
 
 **Planned SP.** Issues pontuáveis que estavam na sprint ao fim da **janela de

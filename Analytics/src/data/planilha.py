@@ -165,7 +165,7 @@ def converter(df: pd.DataFrame, numericas=(), datas=()) -> pd.DataFrame:
 
 # ───────────────────────── parâmetros do modelo de gestão ─────────────────────────
 
-TIPOS_PONTUADOS_PADRAO = {"Feature", "Task", "Bug"}
+TIPOS_PONTUADOS_PADRAO = {"Feature"}   # só US; espelha config.PARAMETROS["niveis_pontuados"]
 
 
 def carregar_parametros(pasta: Path | None = None) -> dict:

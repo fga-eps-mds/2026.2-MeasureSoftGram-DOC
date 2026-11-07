@@ -12,7 +12,7 @@ from src.metrics import agile  # noqa: E402
 from src.metrics.calculations import pct, status_indice, variacao  # noqa: E402
 
 
-def issue(iid, tipo="Task", estado="OPEN", pipeline="Sprint Backlog", est=None, pai=None, fechada=None, pr=False,
+def issue(iid, tipo="Feature", estado="OPEN", pipeline="Sprint Backlog", est=None, pai=None, fechada=None, pr=False,
           titulo=None):
     return {"issue_id": iid, "number": int(iid[1:]) if iid[1:].isdigit() else 0, "title": titulo or iid,
             "issue_type": tipo, "state": estado, "pipeline": pipeline, "estimate": est, "parent_id": pai,
@@ -153,16 +153,34 @@ class AlertasTest(unittest.TestCase):
 
 
 class PontuavelTest(unittest.TestCase):
-    def test_pai_com_filhas_nao_soma_junto(self):
+    def test_so_us_pontua_task_e_bug_nao(self):
+        """DA-R3.02: Velocity, SPI e CPI contam só a US (Feature); Task, Sub-task e Bug não somam SP."""
         snap = {"issues": {"E": issue("E", "Epic"),
                            "US": issue("US", "Feature", est=13, pai="E", estado="CLOSED", fechada="2026-09-27T10:00:00Z"),
-                           "T": issue("T", "Task", est=3, pai="US", estado="CLOSED", fechada="2026-09-27T10:00:00Z")},
+                           "T": issue("T", "Task", est=3, pai="US", estado="CLOSED", fechada="2026-09-27T10:00:00Z"),
+                           "B": issue("B", "Bug", est=5, pai="E", estado="CLOSED", fechada="2026-09-27T10:00:00Z")},
                 "sprints": [], "releases": []}
         df, _ = agile.universo_issues(snap)
         ep = agile.progresso_epicos(df).iloc[0]
-        self.assertEqual(ep["pontos_concluidos"], 3)          # só a Task; a US com filha não soma
-        a = agile.alertas_de_dados(df, {"Feature", "Task", "Bug"})
-        self.assertTrue(any("quem pontua são as filhas" in p for p in a["problema"]))
+        self.assertEqual(ep["pontos_concluidos"], 13)         # só a US; a Task filha e o Bug não somam
+        self.assertEqual(set(df[df["pontuavel"]]["issue_id"]), {"US"})
+        a = agile.alertas_de_dados(df, {"Feature"})
+        self.assertFalse(any("quem pontua são as filhas" in p for p in a["problema"]))
+        self.assertTrue(a[a["tipo"].isin(["Task", "Bug"])].empty)   # Task/Bug com estimativa não é alerta
+
+    def test_fila_de_aceite_do_po(self):
+        """US em 'Aguardando aprovação do PO (DoD)' valem 0 SP e aparecem só na fila de aceite."""
+        snap = {"issues": {"A": issue("A", "Feature", est=8, pipeline=agile.PIPELINE_ACEITE_PO),
+                           "B": issue("B", "Feature", est=5, pipeline=agile.PIPELINE_ACEITE_PO),
+                           "C": issue("C", "Feature", est=3, pipeline="Sprint Backlog"),
+                           "D": issue("D", "Task", est=2, pipeline=agile.PIPELINE_ACEITE_PO),
+                           "F": issue("F", "Feature", est=13, estado="CLOSED", fechada="2026-09-27T10:00:00Z",
+                                      pipeline=agile.PIPELINE_ACEITE_PO)},
+                "sprints": [], "releases": []}
+        df, _ = agile.universo_issues(snap)
+        fila = agile.sp_aguardando_aceite(df)
+        self.assertEqual((fila["issues"], fila["sp"]), (2, 13.0))     # A e B; Task e fechada ficam de fora
+        self.assertEqual(df[df["situacao"] == agile.CONCLUIDO]["sp"].sum(), 13.0)
 
 
 class ConciliacaoTest(unittest.TestCase):

@@ -22,7 +22,7 @@ def t(base, dias=0, horas=0):
     return (base + timedelta(days=dias, hours=horas)).isoformat()
 
 
-def issue(iid, est=None, tipo="Task", estado="OPEN", fechada=None, pipeline=None, movida=None, pai=None, pr=False):
+def issue(iid, est=None, tipo="Feature", estado="OPEN", fechada=None, pipeline=None, movida=None, pai=None, pr=False):
     return {"issue_id": iid, "number": 1, "title": iid, "repository": "r", "state": estado, "closed_at": fechada,
             "is_pull_request": pr, "estimate": est, "issue_type": tipo, "parent_id": pai,
             "pipeline": pipeline, "pipeline_moved_at": movida, "url": ""}
@@ -86,6 +86,20 @@ class PlanejadoTest(unittest.TestCase):
         r = linha(v.calculate_velocity(self.snap, agora=self.agora, linhas_de_base=linhas), "S1")
         self.assertEqual(r["planned_story_points"], 16)
         self.assertTrue(r["baseline_source"].startswith("linha de base congelada"))
+
+    def test_task_e_bug_nao_pontuam_e_linha_de_base_antiga_e_filtrada(self):
+        """DA-R3.02: Task e Bug não somam SP, nem quando já estavam na linha de base congelada de antes."""
+        self.issues["T"] = issue("T", 5, tipo="Task", estado="CLOSED", fechada=t(S1_INI, 2))
+        self.issues["G"] = issue("G", 2, tipo="Bug", estado="CLOSED", fechada=t(S1_INI, 2))
+        self.snap["sprints"][0]["issue_ids"] += ["T", "G"]
+        self.snap["sprints"][0]["scope_changes"] += [ev("T", "ISSUE_ADDED", t(S1_INI, horas=-2), 5),
+                                                     ev("G", "ISSUE_ADDED", t(S1_INI, horas=-2), 2)]
+        r = linha(v.calculate_velocity(self.snap, agora=self.agora), "S1")
+        self.assertEqual((r["planned_story_points"], r["completed_story_points"]), (16, 21))   # sem T e G
+        antiga = {"S1": {"issues": {"A": 5, "B": 8, "C": 3, "T": 5, "G": 2}, "regra": v.REGRA_LINHA_DE_BASE,
+                         "congelado_em": "2026-09-27"}}
+        r = linha(v.calculate_velocity(self.snap, agora=self.agora, linhas_de_base=antiga), "S1")
+        self.assertEqual(r["planned_story_points"], 16)      # a congelada tinha 23; T e G saem na leitura
 
     def test_coleta_incompleta_nao_congela(self):
         self.snap["sprints"][0]["falhas"] = ["scope"]
@@ -217,10 +231,12 @@ class ConcluidoTest(unittest.TestCase):
         issues = {"PR": issue("PR", 5, estado="CLOSED", fechada=t(S1_INI, 1), pr=True),
                   "EP": issue("EP", 8, tipo="Epic", estado="CLOSED", fechada=t(S1_INI, 1)),
                   "US": issue("US", 8, tipo="Feature", estado="CLOSED", fechada=t(S1_INI, 1)),
-                  "T1": issue("T1", 3, estado="CLOSED", fechada=t(S1_INI, 1), pai="US")}
+                  "T1": issue("T1", 3, tipo="Task", estado="CLOSED", fechada=t(S1_INI, 1), pai="US"),
+                  "B1": issue("B1", 5, tipo="Bug", estado="CLOSED", fechada=t(S1_INI, 1))}
         eventos = [ev(i, "ISSUE_ADDED", t(S1_INI, -1), issues[i]["estimate"]) for i in issues]
         r = linha(self.calc(issues, list(issues), eventos), "S1")
-        self.assertEqual((r["planned_story_points"], r["completed_story_points"]), (3, 3))
+        # DA-R3.02: só a US pontua; PR, Épico, Task filha e Bug ficam de fora (vão para as métricas de fluxo)
+        self.assertEqual((r["planned_story_points"], r["completed_story_points"]), (8, 8))
 
     def test_eventos_duplicados_nao_duplicam_pontos(self):
         issues = {"A": issue("A", 5, estado="CLOSED", fechada=t(S1_INI, 2))}

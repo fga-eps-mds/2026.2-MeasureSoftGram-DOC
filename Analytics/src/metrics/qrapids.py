@@ -40,11 +40,12 @@ NA_MEDIA = {CALCULADA}
 
 INDICADORES = {
     "product_quality": ("Product Quality (qualidade do produto)",
-                        "manutenibilidade, confiabilidade, segurança e adequação funcional do produto",
-                        ["code_quality", "software_stability", "software_security", "software_usage"]),
+                        "manutenibilidade, confiabilidade e adequação funcional do produto",
+                        ["code_quality", "software_stability", "software_usage"]),
+    # model-doc (abril/2019), seção 3: Code Quality entra também em Product Readiness
     "product_readiness": ("Product Readiness (prontidão do produto)",
                           "o produto está pronto para ser entregue?",
-                          ["product_stability", "known_remaining_defects", "activities_completion"]),
+                          ["code_quality", "product_stability", "known_remaining_defects", "activities_completion"]),
     "blocking": ("Blocking (bloqueios)", "condições que atrapalham o fluxo do projeto",
                  ["quality_issues_specification", "blocking_code", "testing_status"]),
     "process_performance": ("Process Performance (desempenho do processo)",
@@ -54,7 +55,6 @@ INDICADORES = {
 FATORES = {
     "code_quality": ("Code Quality (qualidade do código)", "Manutenibilidade", "produto"),
     "software_stability": ("Software Stability (estabilidade)", "Confiabilidade", "produto"),
-    "software_security": ("Software Security (segurança)", "Segurança", "produto"),   # extensão do time
     "software_usage": ("Software Usage (uso)", "Adequação funcional", "produto"),
     "product_stability": ("Product Stability (estabilidade do produto)", "Confiabilidade", "produto"),
     "known_remaining_defects": ("Known Remaining Defects (defeitos conhecidos)", "Confiabilidade", "processo"),
@@ -128,44 +128,14 @@ def notas_por_repo(ctx, f: dict, rec: dict) -> dict:
     c = comp[comp["repositorio"].isin(rec["repos"]) & (pd.to_datetime(comp["coleta"]) < fim)]
     if f.get("branch"):
         c = c[c["branch"] == f["branch"]]
-    # segurança: última avaliação do SonarCloud até o fim do período (pipeline ou API), por repositório
-    atual = rec.get("atual", pd.DataFrame())
-
-    def medida(repo, metrica):
-        if atual is None or atual.empty:
-            return None, None
-        m = atual[(atual["repositorio"] == repo) & (atual["metrica"] == metrica)]
-        if m.empty or pd.isna(m["valor"].iloc[0]):
-            return None, None
-        return float(m["valor"].iloc[0]), (m["coleta"].iloc[0] if "coleta" in m else None)
-
     saida = {}
     for repo, x in c.groupby("repositorio"):
         ult = x["coleta"].max()
         y = x[x["coleta"] == ult]
         arq = y["arquivo"].iloc[0] if "arquivo" in y else ""
         y = y[y["arquivo"] == arq] if "arquivo" in y else y
-        rating, quando = medida(repo, "security_rating")
-        vulns, _ = medida(repo, "vulnerabilities")
-        av = nq.com_seguranca(nq.avaliar(y, repo), rating, vulns, quando)
-        saida[repo] = {"avaliacao": av, "coleta": ult, "arquivo": arq}
+        saida[repo] = {"avaliacao": nq.avaliar(y, repo), "coleta": ult, "arquivo": arq}
     return saida
-
-
-def media_seguranca(notas: dict, campo: str = "total_seguranca") -> tuple[float | None, list[str], list[str]]:
-    """Média simples entre repositórios da nota com segurança (``total_seguranca``) ou da Segurança
-    (``seguranca``). Devolve (média, repositórios sem dado de segurança, repositórios vetados)."""
-    vals, sem, veto = [], [], []
-    for repo, n in notas.items():
-        a = n["avaliacao"]
-        v = a.get(campo) if campo != "seguranca" else a.get("seguranca", {}).get("valor")
-        if v is None:
-            sem.append(nq_nome(repo))
-        else:
-            vals.append(v)
-        if a.get("veto_seguranca"):
-            veto.append(nq_nome(repo))
-    return (sum(vals) / len(vals) if vals else None), sem, veto
 
 
 def serie_notebook(ctx, f: dict, rec: dict) -> pd.DataFrame:
@@ -269,6 +239,17 @@ def _issues(ctx, f: dict) -> pd.DataFrame:
     return z
 
 
+def runs_de_build(runs: pd.DataFrame) -> pd.DataFrame:
+    """Execuções que contam como build: só os workflows de ``config.QRAPIDS["workflows_build"]`` e só as
+    que terminaram em sucesso ou falha (cancelada e ignorada não dizem se o build está estável nem quanto
+    ele demora). Lista de workflows vazia = todos."""
+    if runs is None or runs.empty:
+        return runs if runs is not None else pd.DataFrame()
+    nomes = set(config.QRAPIDS.get("workflows_build") or [])
+    r = runs[runs["workflow"].isin(nomes)] if nomes else runs
+    return r[r["conclusao"].isin(["success", "failure"])]
+
+
 def calcular(ctx, f: dict, rec: dict) -> dict:
     """Todas as métricas do modelo completo no recorte dos filtros globais.
 
@@ -293,6 +274,7 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
             runs = runs[runs["repositorio"].map(nq_nome).isin(f["repos"])]
         runs = runs.assign(criado=_local(runs["criado_em"]))
         runs = runs[(runs["criado"] >= ini) & (runs["criado"] < fim_ex)]
+        runs = runs_de_build(runs)      # só o workflow de testes, concluído (D5)
     out: list[Resultado] = []
 
     def novo(fator, chave, nome, descricao, formula, dado_bruto, fonte):
@@ -309,43 +291,6 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
         _sonar_media(chave_nb, notas, novo("code_quality", chave, f"{nome} — {nome_nb}", desc,
                                            f"{formula} · {regra}", "medidas de cada arquivo (.json do pipeline)",
                                            "SonarCloud via metrics.yml"))
-
-    # ── Software Security (extensão do time): nota de segurança do SonarCloud ──
-    r = novo("software_security", "security_rating", "Security rating — nota de segurança do SonarCloud",
-             "nota de segurança de cada repositório (A a E) em 0 a 1",
-             "(5 − security_rating) ÷ 4 · A = 1 · B = 0,75 · C = 0,5 · D = 0,25 · E = 0; média dos repositórios",
-             "security_rating de cada repositório (última avaliação até o fim do período)",
-             "SonarCloud (pipeline ou API)")
-    linhas = [{"repositorio": nq_nome(repo), "valor": n["avaliacao"]["seguranca"]["valor"],
-               "nota": n["avaliacao"]["seguranca"]["letra"] or "—",
-               "vulnerabilidades": n["avaliacao"]["seguranca"]["vulnerabilidades"],
-               "coleta": n["avaliacao"]["seguranca"]["coleta"]} for repo, n in notas.items()]
-    if linhas:
-        d = pd.DataFrame(linhas)
-        r.por_repo = d
-        com = d[d["valor"].notna()]
-        if not com.empty:
-            r.valor, r.situacao = float(com["valor"].mean()), CALCULADA
-            r.bruto = f"média de {len(com)} repositórios · " + ", ".join(
-                f"{a}: {b}" for a, b in zip(com["repositorio"], com["nota"]) if b not in ("A", "—"))
-            sem = d[d["valor"].isna()]["repositorio"].tolist()
-            r.motivo = f"sem security_rating: {', '.join(sem)}" if sem else ""
-        else:
-            r.situacao, r.motivo = SEM_DADO, "nenhum repositório com security_rating até o fim do período"
-    else:
-        r.situacao, r.motivo = SEM_DADO, "nenhuma coleta do pipeline até o fim do período"
-    r = novo("software_security", "vulnerabilities", "Vulnerabilities — vulnerabilidades abertas",
-             "quantidade de vulnerabilidades abertas no SonarCloud", "Σ vulnerabilidades dos repositórios",
-             "vulnerabilidades de cada repositório", "SonarCloud (pipeline ou API)")
-    vs = {nq_nome(repo): n["avaliacao"]["seguranca"]["vulnerabilidades"] for repo, n in notas.items()
-          if n["avaliacao"]["seguranca"]["vulnerabilidades"] is not None}
-    if vs:
-        r.numerador = float(sum(vs.values()))
-        r.bruto = f"{int(r.numerador)} no total" + (" · " + ", ".join(f"{k}: {int(v)}" for k, v in vs.items() if v)
-                                                    if r.numerador else "")
-        r.situacao, r.motivo = INFORMATIVA, "contagem, não proporção: mostrada, fora da média (a nota acima já a reflete)"
-    else:
-        r.situacao, r.motivo = SEM_DADO, "vulnerabilidades não coletadas no período"
 
     # ── Software Stability: Bug density ──
     r = novo("software_stability", "bug_density", "Bug density — densidade de bugs",
@@ -383,9 +328,9 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
         r.situacao, r.motivo = SEM_DADO, ("nenhuma issue com prioridade no Zenhub: marcar prioridade (ou "
                                          "severidade) nas issues habilita esta métrica")
     r = novo("product_stability", "build_stability", "Build stability — builds com sucesso",
-             "densidade de execuções de CI com sucesso",
-             "execuções com sucesso ÷ execuções com sucesso ou falha, no período",
-             "resultado de cada execução de CI", "GitHub Actions")
+             "densidade de execuções do workflow de testes (test.yml) com sucesso",
+             "execuções de test.yml com sucesso ÷ execuções de test.yml com sucesso ou falha, no período",
+             "resultado de cada execução do workflow de testes", "GitHub Actions")
     if not runs.empty:
         c = runs[runs["conclusao"].isin(["success", "failure"])]
         r.itens = c[["repositorio", "workflow", "conclusao", "criado", "duracao_min", "url"]]
@@ -493,9 +438,9 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
 
     # ── Development Speed ──
     r = novo("development_speed", "build_performance", "Build performance — builds rápidos",
-             f"execuções de CI que não passaram de {L['build_rapido_min']} min",
-             f"execuções com duração ≤ {L['build_rapido_min']} min ÷ execuções no período",
-             "duração de cada execução de CI", "GitHub Actions")
+             f"execuções do workflow de testes que não passaram de {L['build_rapido_min']} min",
+             f"execuções de test.yml com duração ≤ {L['build_rapido_min']} min ÷ execuções de test.yml concluídas "
+             "no período", "duração de cada execução do workflow de testes", "GitHub Actions")
     if not runs.empty:
         d = runs.dropna(subset=["duracao_min"])
         r.itens = d[["repositorio", "workflow", "duracao_min", "criado", "url"]].sort_values("duracao_min",
@@ -668,8 +613,9 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
         r.bruto = f"{int(tot)} testes ÷ {len(fe)} issues" + (f" = {tot / len(fe):.1f}".replace(".", ",") if len(fe) else "")
         r.situacao, r.motivo = INFORMATIVA, "não é proporção de 0 a 1: mostrada, fora da média"
     r = novo("testing_performance", "ci_feedback_time", "CI feedback time — tempo de feedback da CI",
-             "tempo médio que a CI leva para responder", "Σ duração das execuções ÷ execuções no período",
-             "duração de cada execução de CI", "GitHub Actions")
+             "tempo médio que o workflow de testes leva para responder",
+             "Σ duração das execuções de test.yml ÷ execuções de test.yml concluídas no período",
+             "duração de cada execução do workflow de testes", "GitHub Actions")
     if not runs.empty and runs["duracao_min"].notna().any():
         d = runs["duracao_min"].dropna()
         r.numerador, r.denominador = float(d.sum()), len(d)
@@ -706,7 +652,8 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
 def tabela(resultados: list[Resultado]) -> pd.DataFrame:
     """Resultados em tabela (CSV e telas)."""
     return pd.DataFrame([{
-        "indicador": next((v[0] for v in INDICADORES.values() if r.fator in v[2]), ""),
+        # um fator pode alimentar mais de um indicador (Code Quality: Product Quality e Product Readiness)
+        "indicador": " · ".join(v[0] for v in INDICADORES.values() if r.fator in v[2]),
         "fator": FATORES[r.fator][0], "aspecto": FATORES[r.fator][1], "chave": r.chave, "metrica": r.nome,
         "descricao": r.descricao, "formula": r.formula, "dado_bruto": r.dado_bruto, "fonte": r.fonte,
         "situacao": ROTULO[r.situacao], "valor": r.valor, "bruto": r.bruto, "numerador": r.numerador,

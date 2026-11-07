@@ -65,6 +65,13 @@ def regra_horizontal(valor: float, texto: str, cor: str = theme.INK["muted"], tr
             .encode(y="y:Q", text="t:N", x=alt.value(0)))
 
 
+def regra_vertical(valor: float, texto: str, cor: str = theme.INK["muted"], tracejado=(6, 4)):
+    base = pd.DataFrame({"x": [valor], "t": [texto]})
+    return (alt.Chart(base).mark_rule(strokeDash=list(tracejado), color=cor, strokeWidth=1.5).encode(x="x:Q")
+            + alt.Chart(base).mark_text(align="left", dx=4, dy=-4, fontSize=11, color=cor, baseline="top")
+            .encode(x="x:Q", text="t:N", y=alt.value(0)))
+
+
 def marcos_release(inicio, fim):
     """Linhas verticais pontilhadas nas datas de entrega das releases que caem no período."""
     d = pd.DataFrame({"data": pd.to_datetime(list(config.RELEASES.values())), "release": list(config.RELEASES)})

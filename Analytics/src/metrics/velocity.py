@@ -6,9 +6,9 @@ nem com o Streamlit, por isso são testadas em ``tests/test_velocity.py``.
 Regras (documentadas também em ``docs/metricas/velocity-zenhub.mdx``)
 ----------------------------------------------------------------------
 
-**Issue pontuável.** Só US (``Feature``), ``Task`` e ``Bug`` sem filhas contam
-pontos (``config.PARAMETROS``, ``niveis_pontuados``); PR, Épico e
-Sub-task não. Issue pontuável sem estimativa conta como issue (planejada ou
+**Issue pontuável.** Só US (``Feature``) conta pontos (``config.PARAMETROS``,
+``niveis_pontuados``, DA-R3.02): Task, Bug, Sub-task, PR e Épico não, e vão para as métricas
+de fluxo. Issue pontuável sem estimativa conta como issue (planejada ou
 concluída) com **0 SP** e aparece na coluna "sem estimativa" — nunca recebe um
 valor estimado pelo painel.
 
@@ -62,7 +62,7 @@ STATUS_CANCELADA = "cancelada"
 
 @dataclass
 class Regras:
-    tipos_pontuados: set = field(default_factory=lambda: {"Feature", "Task", "Bug"})
+    tipos_pontuados: set = field(default_factory=lambda: {"Feature"})   # só US (DA-R3.02)
     janela_planning: timedelta = timedelta(hours=24)
     min_sprints_media: int = 2
     sprints_canceladas: set = field(default_factory=set)
@@ -343,7 +343,8 @@ def calculate_velocity(snapshot: dict, regras: Regras | None = None, agora: date
         if congelada and congelada.get("regra") != REGRA_LINHA_DE_BASE:
             congelada = None  # congelada com a regra antiga (sem as issues iniciais): recalcula
         if congelada:
-            planejadas = congelada.get("issues", {})
+            # congelada com as regras antigas (Tasks e Bugs): mantém a estimativa da época, só das pontuáveis hoje
+            planejadas = {k: v for k, v in congelada.get("issues", {}).items() if pontuavel(issues.get(k), regras, pais)}
             fonte_base = f"linha de base congelada em {congelada.get('congelado_em', '')[:10]}"
         else:
             base = linha_de_base(s, issues, regras)
