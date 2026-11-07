@@ -35,7 +35,7 @@ WORKSPACE_PADRAO = "6a8326e265e211000ef9379a"  # workspace MeasureSoftGram 2026.
 # Tamanhos de página iniciais, calculados para ficar abaixo de 200 pontos de
 # complexidade (ver src/zenhub/queries.py). O cliente reduz se precisar.
 PAGINA = {"sprints": 15, "issues": 8, "scope": 18, "releases": 20, "release_issues": 100,
-          "pipelines": 30, "pipeline_issues": 7}
+          "pipelines": 30, "pipeline_issues": 7, "timeline": 30}
 
 
 class ZenhubError(RuntimeError):
@@ -366,6 +366,12 @@ class ZenhubClient:
         data = self.executar(queries.ISSUE, {"issueId": issue_id, "workspaceId": self.workspace_id})
         no = data.get("node")
         return no if isinstance(no, dict) and no.get("id") else None
+
+    def get_issue_timeline(self, issue_id: str) -> list[dict]:
+        """Itens do histórico da issue (transferências de pipeline, sprint, estimativa...), do mais antigo."""
+        nos, _ = self.paginar(queries.ISSUE_TIMELINE, {"issueId": issue_id}, ["node", "timelineItems"],
+                              PAGINA["timeline"])
+        return nos
 
     def get_releases(self) -> list[dict]:
         nos, _ = self.paginar(queries.RELEASES, {"workspaceId": self.workspace_id},

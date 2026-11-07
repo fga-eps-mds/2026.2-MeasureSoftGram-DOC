@@ -113,11 +113,22 @@ points e sem alterar o EVM (Kanban; ata da R2, ação C1.4):
 | --- | --- | --- |
 | Throughput | issues fechadas por semana (segunda a domingo, Brasília) | Ritmo de conclusão do trabalho técnico. |
 | Lead Time | fechamento − criação, em dias (mediana e percentil 85) | Quanto uma issue leva para ser entregue. |
-| Cycle Time | fechamento − entrada em *In Progress* | **Indisponível**: a coleta guarda só a última transferência de pipeline. |
+| Cycle Time | fechamento − primeira entrada em *In Progress* (mediana e P85, em dias) | Quanto dura o trabalho depois de começar. Vem do histórico de transferências de pipeline do Zenhub. |
 | Taxa de conclusão | fechadas ÷ ativas no período | Q-Rapids, *Development Task Completion*. |
 
-Para habilitar o Cycle Time é preciso coletar o histórico de transferências de pipeline
-(`Issue.timelineItems` da API do Zenhub), validando a query com `scripts/diagnostico_zenhub.py`.
+**Cycle Time.** A coleta do Zenhub (`scripts/coleta_velocity.py`) grava no snapshot, em
+`transferencias_pipeline`, as transferências de pipeline de cada issue (`Issue.timelineItems`, eventos
+`issue.change_pipeline`). Issues já fechadas são reaproveitadas da coleta anterior. Regras:
+
+- o início é a **primeira** entrada em *In Progress* (retrabalho não reinicia a contagem);
+- só entram issues fechadas no período que passaram por *In Progress*;
+- card movido para *In Progress* menos de 5 minutos antes de fechar é movimentação de cadastro e fica de
+  fora (`config.FLUXO`);
+- a página mostra a **cobertura** (issues com Cycle Time ÷ fechadas) e lista as que ficaram de fora. Quando
+  o card é fechado direto do backlog, o Cycle Time descreve só parte do trabalho: mover o card ao começar
+  dá a medida completa;
+- sem `transferencias_pipeline` no snapshot (coleta antiga), o Cycle Time aparece como "coleta pendente",
+  nunca como valor aproximado.
 
 ### Riscos (aba Riscos)
 
@@ -165,4 +176,4 @@ quadro e congelar a linha de base da R2 na planning de 28/09.
 | --- | --- | --- | --- | --- |
 | 1.0 | 27/09/2026 | Modelo de gestão e dicionário de dados do DA-R1 | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
 | 1.1 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
-| 1.2 | 06/11/2026 | Só US pontua; AC é o custo do time, sem horas; métricas de fluxo (DA-R3.02) | [@zzzBECK](https://github.com/zzzBECK) |  |
+| 1.2 | 06/11/2026 | Só US pontua; AC é o custo do time, sem horas; métricas de fluxo, com Cycle Time pelo histórico de pipelines (DA-R3.02) | [@zzzBECK](https://github.com/zzzBECK) |  |

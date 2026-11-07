@@ -38,7 +38,8 @@ def executar(pasta: Path = coleta.PASTA, log=_log) -> Path:
     carregar_env(RAIZ / ".env")
     cliente = ZenhubClient.do_ambiente()
     agora = datetime.now(timezone.utc)
-    snapshot = coleta.coletar(cliente, agora, log=log)
+    anterior, _ = coleta.ultimo_snapshot(pasta)     # reaproveita o histórico de pipelines das issues já fechadas
+    snapshot = coleta.coletar(cliente, agora, log=log, anterior=anterior)
     destino = coleta.salvar_snapshot(snapshot, pasta)
     regras = Regras.dos_parametros(planilha.carregar_parametros())
     linhas, congeladas = congelar_linhas_de_base(snapshot, coleta.ler_linhas_de_base(pasta), agora, regras)

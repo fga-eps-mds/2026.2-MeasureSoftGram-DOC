@@ -203,5 +203,114 @@ class ColetaTest(unittest.TestCase):
         self.assertEqual(snap["releases"][0]["issue_ids"], ["i1"])
 
 
+def pagina_historico(nos, proxima=None):
+    conexao = {"nodes": nos, "pageInfo": {"hasNextPage": proxima is not None, "endCursor": proxima}}
+    return Resposta(200, {}, {"data": {"node": {"timelineItems": conexao}}})
+
+
+def evento(em, de, para, chave="issue.change_pipeline", ws="ws", id_=None):
+    return {"id": id_ or f"{em}-{para}", "key": chave, "createdAt": em,
+            "data": {"workspace": {"mongo_id": ws}, "from_pipeline": {"name": de}, "to_pipeline": {"name": para}}}
+
+
+class HistoricoDePipelinesTest(unittest.TestCase):
+    """Cycle Time: transferências de pipeline vindas de Issue.timelineItems."""
+
+    def test_pagina_o_historico_da_issue(self):
+        f = Falso(pagina_historico([evento("2026-10-01T10:00:00Z", "Sprint Backlog", "In Progress")], "c1"),
+                  pagina_historico([evento("2026-10-05T10:00:00Z", "In Progress", "Review/QA")]))
+        nos = cliente(f).get_issue_timeline("i1")
+        self.assertEqual(len(nos), 2)
+        self.assertEqual(f.chamadas[0][0]["variables"]["issueId"], "i1")
+        self.assertEqual(f.chamadas[1][0]["variables"]["after"], "c1")
+
+    def test_so_transferencia_do_workspace_atual(self):
+        from src.zenhub import normalizacao as norm
+        t = norm.transferencia(evento("2026-10-01T10:00:00Z", "Sprint Backlog", "In Progress"), "ws")
+        self.assertEqual(t, {"em": "2026-10-01T10:00:00Z", "de": "Sprint Backlog", "para": "In Progress"})
+        self.assertIsNone(norm.transferencia(evento("2026-10-01T10:00:00Z", "a", "b", chave="issue.set_estimate"), "ws"))
+        self.assertIsNone(norm.transferencia(evento("2026-10-01T10:00:00Z", "a", "b", ws="outro"), "ws"))
+
+    def _cliente(self, historicos, falhar=()):
+        outer = self
+
+        class C:
+            workspace_id = "ws"
+
+            def __init__(self):
+                self.buscadas = []
+
+            def get_issue_timeline(self, iid):
+                self.buscadas.append(iid)
+                if iid in falhar:
+                    raise zc.ZenhubUnavailableError("rede")
+                return historicos.get(iid, [])
+
+        outer.c = C()
+        return outer.c
+
+    @staticmethod
+    def _issue(iid, estado="CLOSED", fechada="2026-10-10T00:00:00Z", repo="2026.2-MeasureSoftGram-Front", pr=False):
+        return {"issue_id": iid, "number": 1, "state": estado, "closed_at": fechada, "repository": repo,
+                "is_pull_request": pr}
+
+    def test_reaproveita_issue_fechada_e_busca_aberta_ou_reaberta(self):
+        from src.zenhub import coleta
+        antiga = {"issues": {"f": self._issue("f"), "r": self._issue("r")},
+                  "transferencias_pipeline": {"f": [{"em": "2026-10-02T00:00:00Z", "de": "a", "para": "In Progress"}],
+                                              "r": []}}
+        atual = {"f": self._issue("f"),                                             # fechada igual: reaproveita
+                 "r": self._issue("r", fechada="2026-10-20T00:00:00Z"),              # fechada em outra data: busca
+                 "a": self._issue("a", estado="OPEN", fechada=None),                 # aberta: busca
+                 "pr": self._issue("pr", pr=True),                                   # PR: ignora
+                 "c": self._issue("c", repo="MeasureSoftGram-Core")}                 # fora do projeto: ignora
+        c = self._cliente({"a": [evento("2026-10-03T00:00:00Z", "Sprint Backlog", "In Progress")]})
+        avisos = []
+        saida = coleta.coletar_transferencias(c, atual, None, antiga, avisos, log=lambda *_: None)
+        self.assertEqual(sorted(c.buscadas), ["a", "r"])
+        self.assertEqual(saida["f"][0]["para"], "In Progress")
+        self.assertEqual(saida["a"], [{"em": "2026-10-03T00:00:00Z", "de": "Sprint Backlog", "para": "In Progress"}])
+        self.assertEqual(saida["r"], [])
+        self.assertNotIn("pr", saida)
+        self.assertNotIn("c", saida)
+        self.assertEqual(avisos, [])
+
+    def test_falha_numa_issue_vira_aviso_e_nao_derruba(self):
+        from src.zenhub import coleta
+        atual = {"a": self._issue("a"), "b": self._issue("b")}
+        c = self._cliente({"b": [evento("2026-10-03T00:00:00Z", "x", "In Progress")]}, falhar={"a"})
+        avisos = []
+        saida = coleta.coletar_transferencias(c, atual, None, None, avisos, log=lambda *_: None)
+        self.assertEqual(list(saida), ["b"])
+        self.assertEqual(len(avisos), 1)
+        self.assertIn("1 issue(s)", avisos[0])
+
+    def test_tudo_falhando_devolve_none_para_nao_parecer_que_ninguem_se_moveu(self):
+        from src.zenhub import coleta
+        atual = {"a": self._issue("a"), "b": self._issue("b")}
+        c = self._cliente({}, falhar={"a", "b"})
+        self.assertIsNone(coleta.coletar_transferencias(c, atual, None, None, [], log=lambda *_: None))
+
+    def test_cliente_sem_suporte_ao_historico(self):
+        from src.zenhub import coleta
+
+        class Antigo:
+            workspace_id = "ws"
+
+        self.assertIsNone(coleta.coletar_transferencias(Antigo(), {"a": self._issue("a")}, None, None, []))
+
+    def test_auth_error_sobe(self):
+        from src.zenhub import coleta
+
+        class C:
+            workspace_id = "ws"
+
+            def get_issue_timeline(self, iid):
+                raise zc.ZenhubAuthError("chave")
+
+        with self.assertRaises(zc.ZenhubAuthError):
+            coleta.coletar_transferencias(C(), {"a": self._issue("a")}, None, None, [], log=lambda *_: None)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -23,6 +23,7 @@ from src.zenhub.client import ZenhubAuthError, ZenhubClient, ZenhubError
 PASTA = Path(__file__).resolve().parents[2] / "data" / "zenhub" / "velocity"
 ARQ_LINHAS_DE_BASE = "linhas-de-base.json"
 MAX_ISSUES_AVULSAS = 400  # teto de consultas individuais por coleta
+MAX_HISTORICOS = 400      # teto de históricos de issue (transferências de pipeline) por coleta
 
 
 def _dt(texto: str | None) -> datetime | None:
@@ -31,7 +32,8 @@ def _dt(texto: str | None) -> datetime | None:
     return datetime.fromisoformat(texto.replace("Z", "+00:00"))
 
 
-def coletar(cliente: ZenhubClient, agora: datetime | None = None, log=print) -> dict:
+def coletar(cliente: ZenhubClient, agora: datetime | None = None, log=print, anterior: dict | None = None) -> dict:
+    """``anterior``: snapshot da coleta anterior, para não buscar de novo o histórico de issues já fechadas."""
     agora = agora or datetime.now(timezone.utc)
     avisos: list[str] = []
     if hasattr(cliente, "log"):
@@ -107,6 +109,7 @@ def coletar(cliente: ZenhubClient, agora: datetime | None = None, log=print) -> 
     log(f"{len(releases)} releases")
 
     backlog = coletar_backlog(cliente, avisos, log)
+    transferencias = coletar_transferencias(cliente, issues, backlog, anterior, avisos, log)
 
     return {
         "versao": 2,
@@ -118,6 +121,7 @@ def coletar(cliente: ZenhubClient, agora: datetime | None = None, log=print) -> 
         "issues": issues,
         "releases": releases,
         "backlog": backlog,
+        "transferencias_pipeline": transferencias,
         "avisos": avisos,
     }
 
@@ -157,6 +161,61 @@ def coletar_backlog(cliente: ZenhubClient, avisos: list[str], log=print) -> dict
     if falhas and len(falhas) == len(pipelines):
         return None
     return {"pipelines": pipelines, "issues": issues, "pipelines_com_falha": falhas}
+
+
+def coletar_transferencias(cliente: ZenhubClient, issues: dict, backlog: dict | None, anterior: dict | None,
+                           avisos: list[str], log=print) -> dict | None:
+    """Transferências de pipeline de cada issue (``issue_id`` → lista ordenada de ``{em, de, para}``).
+
+    Base do Cycle Time (entrada em In Progress → fechamento). Só issues dos repositórios do projeto e sem PR.
+    Issue que já estava FECHADA no snapshot anterior, com o mesmo ``closed_at``, reaproveita o histórico de lá:
+    ela não muda mais, e isso evita centenas de requisições a cada coleta. Falha numa issue vira aviso e não
+    derruba a coleta. Devolve None quando a coleta do histórico não foi possível (nenhuma issue conseguiu), para
+    o painel dizer "coleta pendente" em vez de tratar como "ninguém se moveu".
+    """
+    if not hasattr(cliente, "get_issue_timeline"):
+        return None
+    import config
+
+    universo = dict(issues)
+    for b in (backlog or {}).get("issues") or []:
+        universo.setdefault(b["issue_id"], b)
+    alvo = [i for i in universo.values() if not i.get("is_pull_request")
+            and str(i.get("repository") or "").startswith(config.PREFIXO_REPOS_PROJETO)]
+    antigas = (anterior or {}).get("transferencias_pipeline") or {}
+    estado_antigo = {**(anterior or {}).get("issues", {}),
+                     **{b["issue_id"]: b for b in ((anterior or {}).get("backlog") or {}).get("issues") or []}}
+    saida: dict[str, list[dict]] = {}
+    buscar = []
+    for i in alvo:
+        velho = estado_antigo.get(i["issue_id"]) or {}
+        if (i["issue_id"] in antigas and i.get("state") == "CLOSED" and velho.get("state") == "CLOSED"
+                and velho.get("closed_at") == i.get("closed_at")):
+            saida[i["issue_id"]] = antigas[i["issue_id"]]
+        else:
+            buscar.append(i)
+    if len(buscar) > MAX_HISTORICOS:
+        avisos.append(f"{len(buscar)} issues precisam do histórico de pipelines; buscadas as {MAX_HISTORICOS} primeiras.")
+        buscar = buscar[:MAX_HISTORICOS]
+    log(f"Histórico de pipelines: {len(saida)} reaproveitadas, {len(buscar)} a buscar")
+    falhas = []
+    for i in buscar:
+        try:
+            nos = cliente.get_issue_timeline(i["issue_id"])
+        except ZenhubAuthError:
+            raise
+        except ZenhubError as erro:
+            falhas.append(f"{i.get('repository')}#{i.get('number')} ({erro})")
+            continue
+        eventos = [t for t in (norm.transferencia(n, cliente.workspace_id) for n in nos) if t and t["em"]]
+        saida[i["issue_id"]] = sorted(eventos, key=lambda t: t["em"])
+    if falhas:
+        avisos.append(f"Histórico de pipelines não coletado para {len(falhas)} issue(s): " + "; ".join(falhas[:5])
+                      + ("..." if len(falhas) > 5 else "") + ".")
+        log(f"  {len(falhas)} issue(s) sem histórico")
+    if buscar and len(falhas) == len(buscar) and not saida:
+        return None
+    return saida
 
 
 def salvar_snapshot(snapshot: dict, pasta: Path = PASTA) -> Path:

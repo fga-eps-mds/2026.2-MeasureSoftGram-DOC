@@ -21,7 +21,7 @@ def issue(iid, tipo, criada, fechada=None, est=None, pai=None):
 
 
 class FluxoTest(unittest.TestCase):
-    def itens(self):
+    def itens(self, transferencias=None):
         snap = {"issues": {
             "T1": issue("T1", "Task", "2026-10-01T12:00:00Z", "2026-10-03T12:00:00Z", est=5),   # lead 2 d
             "T2": issue("T2", "Task", "2026-10-01T12:00:00Z", "2026-10-11T12:00:00Z"),          # lead 10 d
@@ -32,7 +32,22 @@ class FluxoTest(unittest.TestCase):
             "EP": issue("EP", "Epic", "2026-09-01T12:00:00Z")},
             "sprints": [], "releases": []}
         df, _ = agile.universo_issues(snap)
-        return fluxo.itens_de_fluxo(df)
+        return fluxo.itens_de_fluxo(df, transferencias=transferencias)
+
+    @staticmethod
+    def transferencias():
+        def t(em, para, de="Sprint Backlog"):
+            return {"em": em, "de": de, "para": para}
+        return {
+            "T1": [t("2026-09-30T10:00:00Z", "Sprint Backlog", "New Issues"), t("2026-10-02T12:00:00Z", "In Progress")],
+            # retrabalho: sai para Review/QA e volta; vale a PRIMEIRA entrada (10-05), não a última
+            "T2": [t("2026-10-05T12:00:00Z", "In Progress"), t("2026-10-07T12:00:00Z", "Review/QA", "In Progress"),
+                   t("2026-10-09T12:00:00Z", "In Progress", "Review/QA")],
+            # movida para In Progress 2 min antes de fechar: movimentação de cadastro
+            "B1": [t("2026-10-06T11:58:00Z", "In Progress")],
+            "S1": [t("2026-10-06T12:00:00Z", "In Progress")],     # aberta: fora
+            "N1": [],                                              # fechada direto do backlog
+        }
 
     def test_so_trabalho_tecnico_e_defeitos_sem_story_points(self):
         it = self.itens()
@@ -61,11 +76,49 @@ class FluxoTest(unittest.TestCase):
         self.assertEqual((taxa["fechadas"], taxa["ativas"]), (4, 5))
         self.assertAlmostEqual(taxa["taxa"], 0.8)
 
-    def test_cycle_time_nao_e_inventado(self):
-        ct = fluxo.cycle_time(self.itens())
+    def test_cycle_time_sem_historico_e_coleta_pendente(self):
+        """Snapshot antigo (sem transferencias_pipeline): nada de número aproximado."""
+        ct = fluxo.cycle_time(self.itens(), coletado=False)
         self.assertFalse(ct["disponivel"])
         self.assertIsNone(ct["mediana"])
-        self.assertIn("In Progress", ct["motivo"])
+        self.assertIn("coleta pendente", ct["motivo"])
+        self.assertIn("coleta_velocity", ct["necessario"])
+        self.assertTrue(self.itens()["inicio"].isna().all())
+
+    def test_cycle_time_primeira_entrada_cobertura_e_exclusoes(self):
+        it = self.itens(self.transferencias())
+        ini, fim = pd.Timestamp("2026-10-01"), pd.Timestamp("2026-10-31")
+        ct = fluxo.cycle_time(it, ini, fim, coletado=True)
+        self.assertTrue(ct["disponivel"])
+        self.assertEqual((ct["n"], ct["fechadas"]), (2, 4))              # T1 e T2 de T1, T2, B1, N1
+        self.assertAlmostEqual(ct["cobertura"], 0.5)
+        self.assertEqual((ct["sem_inicio"], ct["movidas_ao_fechar"]), (1, 1))   # N1 nunca entrou; B1 movida ao fechar
+        self.assertAlmostEqual(ct["mediana"], 3.5, places=2)             # T1 = 1 dia, T2 = 6 dias (primeira entrada)
+        self.assertAlmostEqual(ct["p85"], 1 + 5 * 0.85, places=2)
+        self.assertAlmostEqual(ct["espera_mediana"], 2.5, places=2)      # Lead 2 e 10 menos Cycle 1 e 6 = 1 e 4
+        self.assertEqual(set(ct["por_tipo"]["tipo"]), {"Task"})
+
+    def test_cycle_time_so_conta_fechadas_no_periodo(self):
+        it = self.itens(self.transferencias())
+        ct = fluxo.cycle_time(it, pd.Timestamp("2026-10-05"), pd.Timestamp("2026-10-31"), coletado=True)
+        self.assertEqual((ct["n"], ct["fechadas"]), (1, 3))              # T1 fechou antes do período
+        self.assertAlmostEqual(ct["mediana"], 6.0, places=2)
+        vazio = fluxo.cycle_time(it, pd.Timestamp("2026-12-01"), pd.Timestamp("2026-12-31"), coletado=True)
+        self.assertFalse(vazio["disponivel"])
+        self.assertIn("nenhuma issue fechada", vazio["motivo"])
+
+    def test_cycle_time_nenhuma_passou_por_in_progress(self):
+        it = self.itens({"T1": [], "T2": [], "B1": [], "N1": []})
+        ct = fluxo.cycle_time(it, pd.Timestamp("2026-10-01"), pd.Timestamp("2026-10-31"), coletado=True)
+        self.assertFalse(ct["disponivel"])
+        self.assertEqual((ct["n"], ct["cobertura"], ct["sem_inicio"]), (0, 0.0, 4))
+        self.assertIn("passou por In Progress", ct["motivo"])
+
+    def test_cycle_nao_afeta_lead_time_nem_throughput(self):
+        sem, com = self.itens(), self.itens(self.transferencias())
+        self.assertEqual(fluxo.lead_time(sem)["mediana"], fluxo.lead_time(com)["mediana"])
+        self.assertEqual(int(fluxo.throughput_semanal(sem)["itens"].sum()),
+                         int(fluxo.throughput_semanal(com)["itens"].sum()))
 
     def test_sem_tipo_lista_para_corrigir(self):
         snap = {"issues": {"N1": issue("N1", None, "2026-10-07T12:00:00Z", "2026-10-08T12:00:00Z", est=3),
@@ -83,12 +136,18 @@ class FluxoTest(unittest.TestCase):
     def test_analise_critica_gerada_dos_numeros(self):
         it = self.itens()
         ini, fim = pd.Timestamp("2026-10-01"), pd.Timestamp("2026-10-31")
+        ct = fluxo.cycle_time(self.itens(self.transferencias()), ini, fim, coletado=True)
         a = fluxo.analise_critica(fluxo.throughput_semanal(it), fluxo.lead_time(it), fluxo.taxa_conclusao(it, ini, fim),
-                                  abertas=1)
+                                  abertas=1, cycle=ct)
         self.assertIn("4 itens concluídos em 2 semanas", a["throughput"])
         self.assertIn("4 issues fecha em até 1,5 dias", a["lead_time"])
         self.assertIn("A cauda (P85) é muito maior", a["lead_time"])
         self.assertIn("4 de 5 issues ativas", a["taxa"])
+        self.assertIn("2 (50%) passaram por In Progress", a["cycle_time"])
+        self.assertIn("2,5 dias foram de espera", a["cycle_time"])
+        self.assertNotIn("Menos da metade", a["cycle_time"])           # 50% não é "menos da metade"
+        baixa = {**ct, "cobertura": 0.3, "n": 3}
+        self.assertIn("Menos da metade", fluxo.analise_critica(fluxo.throughput_semanal(it), fluxo.lead_time(it), {}, 0, baixa)["cycle_time"])
 
 
 if __name__ == "__main__":

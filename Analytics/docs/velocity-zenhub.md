@@ -49,6 +49,7 @@ validados com `graphql.validate` antes de escrever o código. As queries estão 
 | `Issue.issueType` (união `GithubIssueType`/`ZenhubIssueType`, campo `name`) | só Feature pontua |
 | `Issue.parentIssue.id`, `Issue.pullRequest` | não somar pai e filha; ignorar PR |
 | `Workspace.releases` → `Release.id`, `title`, `startOn`, `endOn`, `state`, `closedAt`, `issues` | release de cada sprint |
+| `Issue.timelineItems` → `key`, `createdAt`, `data` (`issue.change_pipeline`: `from_pipeline.name`, `to_pipeline.name`) | histórico de transferências de pipeline: base do Cycle Time (página Fluxo). Formato conferido contra a API real em 07/11/2026 |
 
 Limites da API que o cliente trata: paginação Relay (`first`/`after`, máximo 100),
 **complexidade máxima de 200 pontos por query** (o cliente usa páginas pequenas e

@@ -53,6 +53,15 @@ PARAMETROS = {
     "prazo_fechamento_dia_seguinte": "08:00",
 }
 
+# Métricas de fluxo (página Fluxo; DA-R3.02, ata R2 ação C1.4).
+FLUXO = {
+    # Cycle Time = fechamento − primeira entrada neste pipeline do Zenhub (histórico de transferências).
+    "pipeline_inicio": "In Progress",
+    # Card movido para o pipeline de início menos de N minutos antes de fechar é movimentação de cadastro, não
+    # trabalho: fica fora do Cycle Time (continua no Lead Time e no Throughput) e é contado na tela.
+    "cycle_minimo_min": 5,
+}
+
 # ───────────────────────── SonarCloud ─────────────────────────
 
 SONAR_URL = "https://sonarcloud.io"
