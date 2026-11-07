@@ -1,10 +1,29 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-06T23:12:13+00:00",
+ "coletado_em": "2026-11-07T11:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-AI",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 4,
+   "title": "fix(quality): saneamento de exclusões do server.py e reporte junit no SonarCloud",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-07T01:48:09Z",
+   "closed_at": "2026-11-07T09:05:44Z",
+   "updated_at": "2026-11-07T09:05:44Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "DiegoCarlito"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2946,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-AI/pull/4",
+   "author": "DiegoCarlito"
+  },
   {
    "number": 3,
    "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",

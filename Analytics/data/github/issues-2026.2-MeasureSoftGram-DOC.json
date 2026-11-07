@@ -1,10 +1,29 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-06T23:12:13+00:00",
+ "coletado_em": "2026-11-07T11:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 198,
+   "title": "feat(dashboard): [DA-R3.02] corrige Q-Rapids, EVM e CI apontados no feedback da R2",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-07T02:43:47Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T03:18:02Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 7519,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/198",
+   "author": "zzzBECK"
+  },
   {
    "number": 197,
    "title": "[MSG32] Revisão de pendencias do projeto",
@@ -71,7 +90,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:13:30Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T12:18:35Z",
+   "updated_at": "2026-11-07T01:59:38Z",
    "labels": [
     "task"
    ],
@@ -132,12 +151,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:11:39Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T00:11:42Z",
+   "updated_at": "2026-11-07T08:02:07Z",
    "labels": [
     "task"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "storch7"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1628,
@@ -151,12 +172,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:10:48Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T00:10:51Z",
+   "updated_at": "2026-11-07T08:01:31Z",
    "labels": [
     "task"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "storch7"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1953,
@@ -191,12 +214,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:09:25Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T00:35:22Z",
+   "updated_at": "2026-11-07T02:24:19Z",
    "labels": [
     "subtask"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "DiegoCarlito"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1316,
@@ -210,12 +235,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:09:01Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T00:35:00Z",
+   "updated_at": "2026-11-07T01:52:56Z",
    "labels": [
     "subtask"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "DiegoCarlito"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1138,
@@ -225,16 +252,18 @@
   {
    "number": 186,
    "title": "[QUAL.01.2] AI: Saneamento de exclusões (server.py) e reporte de testes (junit.xml)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-06T00:08:31Z",
-   "closed_at": null,
-   "updated_at": "2026-11-06T00:34:41Z",
+   "closed_at": "2026-11-07T09:05:45Z",
+   "updated_at": "2026-11-07T09:05:45Z",
    "labels": [
     "subtask"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "DiegoCarlito"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1376,
@@ -269,7 +298,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:07:34Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T00:07:37Z",
+   "updated_at": "2026-11-07T09:06:21Z",
    "labels": [
     "task"
    ],
@@ -288,12 +317,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:06:46Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T00:36:13Z",
+   "updated_at": "2026-11-07T08:01:07Z",
    "labels": [
     "epic"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "storch7"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1112,

@@ -1,11 +1,38 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-06T23:12:13+00:00",
+ "coletado_em": "2026-11-07T11:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-AI",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "1006318b98586a5a10896b57f65a511703ab345e",
+   "date": "2026-11-07T09:05:43Z",
+   "author": "DiegoCarlito",
+   "message": "fix(quality): saneamento de exclusões do server.py e reporte junit no SonarCloud (#4)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 3
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 3
+    }
+   ]
+  },
   {
    "sha": "231eeb58a97f96e930544885ae42ae0deb8bb83e",
    "date": "2026-10-15T21:35:10Z",
@@ -451,5 +478,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }

@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-06T23:12:13+00:00",
+ "coletado_em": "2026-11-07T11:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Core",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 26,
+   "title": "fix(coverage): ajusta relatórios e coleta de métricas do Core",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-07T06:00:25Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T06:01:56Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2485,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/26",
+   "author": "Marcosatc147"
+  },
   {
    "number": 25,
    "title": "feat(core): [US130] valida comparação experimental de complexidade por arquivo",

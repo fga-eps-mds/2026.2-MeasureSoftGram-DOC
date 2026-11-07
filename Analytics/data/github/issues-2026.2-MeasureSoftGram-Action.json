@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-06T23:12:13+00:00",
+ "coletado_em": "2026-11-07T11:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 22,
+   "title": "fix(action): ajusta cobertura, relatórios e confiabilidade",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-07T05:58:04Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T06:12:41Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2147,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/22",
+   "author": "Marcosatc147"
+  },
   {
    "number": 21,
    "title": "fix(index): marca com void a chamada de run() no fim do entrypoint",
