@@ -42,13 +42,24 @@ CACHE_PLANILHAS_S = 300  # a planilha publicada é relida a cada 5 minutos
 # Regras do time usadas no cálculo da velocity (antes em planilhas/parametros.csv).
 PARAMETROS = {
     # Critério de feito: a issue só precisa estar FECHADA (closedAt) — fixo no código, sem pipeline.
-    "niveis_pontuados": "Feature;Task;Bug",    # US (Feature), Task e Bug; US com Tasks filhas não pontua
+    # DA-R3.02 (ata R2, ação C1.2): Velocity, SPI e CPI contam só Story Points de US (Feature) aceitas pelo PO.
+    # Tasks, Sub-tasks e Bugs saem do cálculo e são acompanhados pelas métricas de fluxo (página Fluxo).
+    "niveis_pontuados": "Feature",
     "janela_planning_horas": "24",             # planejado = escopo da sprint ao fim do 1º dia (planning)
     "min_sprints_media_velocity": "2",         # velocity média só com pelo menos 2 sprints concluídas
     "sprints_canceladas": "",                  # ids de sprint separados por ";"
     # Prazo de fechamento: issue fechada até esta hora (Brasília) do dia seguinte ao último dia da
     # sprint ainda conta nela (e na release dela). Vazio = só até o fim da sprint no Zenhub.
     "prazo_fechamento_dia_seguinte": "08:00",
+}
+
+# Métricas de fluxo (página Fluxo; DA-R3.02, ata R2 ação C1.4).
+FLUXO = {
+    # Cycle Time = fechamento − primeira entrada neste pipeline do Zenhub (histórico de transferências).
+    "pipeline_inicio": "In Progress",
+    # Card movido para o pipeline de início menos de N minutos antes de fechar é movimentação de cadastro, não
+    # trabalho: fica fora do Cycle Time (continua no Lead Time e no Throughput) e é contado na tela.
+    "cycle_minimo_min": 5,
 }
 
 # ───────────────────────── SonarCloud ─────────────────────────
@@ -136,6 +147,13 @@ QRAPIDS = {
         "correcao_bug_dias": 7,             # bug corrigido rápido: até 7 dias
         "revisao_pr_horas": 48,             # PR revisado e fechado em até 48 h
     },
+    # Workflows que contam como "build" em Build stability, Build performance e CI feedback time (DA-R3.02,
+    # decisão D5 em docs/planejamento/decisoes.mdx). Só o workflow de testes (test.yml, que o time padronizou
+    # como "Rodar Testes"): deploy, coleta de dados, dependabot e publicação não dizem se o produto está estável,
+    # e o Deploy Prod cancelado após ~24 h distorcia o tempo médio. Os dados coletados não trazem o caminho do
+    # arquivo, então o filtro é pelo nome; os caminhos entram porque o GitHub usa o caminho como nome quando o
+    # arquivo do workflow falha ao carregar. Lista vazia = todos os workflows.
+    "workflows_build": ["Rodar Testes", "Testes", ".github/workflows/test.yml", ".github/workflows/tests.yml"],
     # pesos do notebook (pm = métrica, psc = fator, pc = aspecto)
     "pesos": {
         "complexidade": 0.33, "comentarios": 0.33, "duplicacao": 0.33,          # → Qualidade do código
@@ -143,17 +161,7 @@ QRAPIDS = {
         "qualidade_codigo": 1.0, "situacao_testes": 1.0,                          # psc1, psc2
         "manutenibilidade": 0.5, "confiabilidade": 0.5,                           # pc1, pc2 → nota total
     },
-    # Segurança: extensão do time (27/10/2026). O notebook só tem Manutenibilidade e Confiabilidade, então uma
-    # nota de segurança E no SonarCloud não mudava a nota. A nota oficial (do notebook) fica igual; ao lado dela
-    # o painel mostra a "nota com segurança", e uma nota de segurança ruim rebaixa o repositório (veto).
-    #   Segurança = (5 − security_rating) ÷ 4   →  A = 1 · B = 0,75 · C = 0,5 · D = 0,25 · E = 0
-    "seguranca": {
-        "pesos": {"manutenibilidade": 0.4, "confiabilidade": 0.4, "seguranca": 0.2},
-        "rating_veto": 4,   # security_rating ≥ 4 (D ou E) → repositório crítico, seja qual for a nota
-    },
     "justificativa": {
-        "seguranca_pesos": "a preencher pelo time",
-        "seguranca_veto": "a preencher pelo time",
         "complexidade_por_funcao": "a preencher pelo time",
         "comentarios_min": "a preencher pelo time",
         "duplicacao_max": "a preencher pelo time",

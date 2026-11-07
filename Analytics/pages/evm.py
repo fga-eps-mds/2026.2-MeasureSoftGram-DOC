@@ -27,6 +27,8 @@ from src.data import contexto
 from src.components import charts, filters, layout, rastreio
 from src.components.kpi import kpi
 from src.data import planilha
+from src.metrics import agile
+from src.metrics import evm as evm_calc
 from src.metrics import gestao_agil as ga
 from src.metrics import resumo
 from src.metrics import velocity as vel
@@ -161,6 +163,24 @@ def _kpis(u, d):
                   if not vazio(u["EAC"]) else "Indisponível: depende do CPI, que depende do custo real."))
 
 
+def _aceite(ctx, rel, u):
+    """Só US fechadas depois do aceite do PO pontuam: mostra a fila de aceite e a release sem US."""
+    fila = agile.sp_aguardando_aceite(ctx.zh_issues)
+    c = st.columns(3)
+    with c[0]:
+        kpi("SP aguardando aceite do PO", num(fila["sp"]) if fila["issues"] else "0", "ZENHUB",
+            status="warning" if fila["issues"] else "good",
+            nota=f"{fila['issues']} US em \"Aguardando aprovação do PO (DoD)\" · valem 0 SP até fecharem"
+                 + (f" · {fila['sem_estimativa']} sem estimativa" if fila["sem_estimativa"] else ""),
+            origem=[ZENHUB])
+    if vazio(u["PRP"]) or u["PRP"] == 0:
+        layout.alerta("warning", f"A {rel} não tem nenhuma US (Feature) no escopo: EVM, SPI e CPI só contam story "
+                                 "points de US aceitas pelo PO. Tasks, Sub-tasks e Bugs não entram; veja a página Fluxo.")
+    elif u["RPC"] == 0:
+        layout.alerta("neutral", f"Nenhuma US da {rel} foi fechada até a {u['sprint']}: SPI e CPI ficam zerados "
+                                 "até o aceite do PO. US fechada depois conta na sprint em que fechou, não na anterior.")
+
+
 def _menus(ctx):
     c = ctx.custo or {}
     layout.menus([(f"{v[0]} ({k})", v[1], v[2], v[3]) for k, v in LEGENDA.items()], [
@@ -178,7 +198,7 @@ def _menus(ctx):
          rastreio.codigo("src/metrics/velocity.py")),
     ], fontes=["ZENHUB", "PLANILHA", "CALCULADO"])
 
-def _graficos(rel, feitas, u):
+def _graficos(rel, feitas, u, analise):
     tem_bac, tem_ac = not vazio(u["BAC"]), not vazio(u["AC"])
     nomes = {"PV": "Planejado (PV)", "EV": "Entregue em valor (EV)", "AC": "Gasto (AC)"}
     if not tem_bac:
@@ -204,6 +224,7 @@ def _graficos(rel, feitas, u):
         nota = "Entregue abaixo do planejado = atraso. Gasto acima do entregue = custou mais do que entregou."
         if not tem_ac:
             nota += f" O gasto não aparece: {_motivo_ac(u)}."
+        nota += " " + analise.get("curvas", "")
         charts.mostrar(linhas + charts.regra_horizontal(u["BAC"], f"orçamento {brl(u['BAC'], 0)}", theme.INK["muted"]),
                        f"Planejado × entregue × gasto — {rel}", "R$ acumulado · uma marca por sprint iniciada",
                        nota=nota, altura=280)
@@ -226,7 +247,9 @@ def _graficos(rel, feitas, u):
                                   alt.Tooltip("valor:Q", title="Valor", format=".2f")]))
             charts.mostrar(g + charts.regra_horizontal(1.0, "1,0 = no plano"), "Índices de prazo e custo",
                            "acima de 1,0 = melhor que o plano", altura=220,
-                           nota=None if "Custo (CPI)" in dom else f"Custo não aparece: {_motivo_ac(u)}.")
+                           nota=" ".join(x for x in (None if "Custo (CPI)" in dom else
+                                                     f"Custo não aparece: {_motivo_ac(u)}.", analise.get("indices")) if x)
+                           or None)
     with d2:
         b = feitas.assign(restante=feitas["PRP"] - feitas["RPC"], ideal=feitas["PRP"] * (1 - feitas["PPC"]))
         nomes_b = {"restante": "Falta entregar", "ideal": "Deveria faltar", "PRP": "Escopo total (PRP)"}
@@ -244,7 +267,8 @@ def _graficos(rel, feitas, u):
                               alt.Tooltip("pontos:Q", title="SP", format=".0f")]))
         charts.mostrar(g, f"Burndown da release {rel}", "Story Points no fim de cada sprint", altura=240,
                        nota="Se o escopo total sobe, entrou trabalho novo na release e o que falta sobe junto, mesmo com "
-                            "o time entregando. Burndown dia a dia de cada sprint: página Gestão ágil.")
+                            "o time entregando. Burndown dia a dia de cada sprint: página Gestão ágil. "
+                            + analise.get("burndown", ""))
 
 
 def _rastreabilidade(ctx, rel, d, u):
@@ -397,8 +421,10 @@ def pagina():
         layout.alerta("warning", f"Nada foi estimado na planning da 1ª sprint da {rel}; todo o escopo "
                                  f"({num(u['PRP'])} SP) entrou depois.")
 
+    _aceite(ctx, rel, u)
+
     layout.secao("Análise", "Como prazo, custo e escopo evoluíram sprint a sprint?", ["CALCULADO"])
-    _graficos(rel, feitas, u)
+    _graficos(rel, feitas, u, evm_calc.analise_critica(u, agile.sp_aguardando_aceite(ctx.zh_issues)))
 
     if layout.detalhes("evm", "Mostrar stories, semanas e a tabela completa do EVM"):
         layout.secao("Dado bruto", "Quais stories e semanas formam o EVM?", ["ZENHUB", "PLANILHA"])

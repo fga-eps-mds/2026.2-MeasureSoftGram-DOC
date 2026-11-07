@@ -70,6 +70,20 @@ def scope_change(no: dict) -> dict:
     }
 
 
+def transferencia(no: dict, workspace_id: str | None = None) -> dict | None:
+    """Transferência de pipeline de um item do histórico, ou None para os outros tipos de evento.
+
+    ``workspace_id`` (mongo_id do workspace) descarta transferências de outros quadros, quando a issue está
+    em mais de um workspace.
+    """
+    if no.get("key") != "issue.change_pipeline":
+        return None
+    dado = no.get("data") or {}
+    if workspace_id and (dado.get("workspace") or {}).get("mongo_id") not in (None, workspace_id):
+        return None
+    return {"em": no.get("createdAt"), "de": _nome(dado.get("from_pipeline")), "para": _nome(dado.get("to_pipeline"))}
+
+
 def release(no: dict) -> dict:
     return {
         "release_id": no.get("id"),

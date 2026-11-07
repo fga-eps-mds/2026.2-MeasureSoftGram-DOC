@@ -220,6 +220,22 @@ query PipelineIssues($pipelineId: ID!, $workspaceId: ID!, $first: Int!, $after: 
 }
 """
 
+# Histórico de uma issue (Issue.timelineItems). Cada item tem `key` e `data` (JSON); as transferências de
+# pipeline são `issue.change_pipeline` com `data.from_pipeline.name` e `data.to_pipeline.name`. Formato conferido
+# em 07/11/2026 contra a API real (150 issues, no máximo 21 itens por issue). Complexidade: ~4 pontos por item.
+ISSUE_TIMELINE = """
+query IssueTimeline($issueId: ID!, $first: Int!, $after: String) {
+  node(id: $issueId) {
+    ... on Issue {
+      timelineItems(first: $first, after: $after) {
+        pageInfo { hasNextPage endCursor }
+        nodes { id key createdAt data }
+      }
+    }
+  }
+}
+"""
+
 TODAS = {
     "SPRINTS": SPRINTS,
     "SPRINT_ISSUES": SPRINT_ISSUES,
@@ -229,4 +245,5 @@ TODAS = {
     "RELEASE_ISSUES": RELEASE_ISSUES,
     "PIPELINES": PIPELINES,
     "PIPELINE_ISSUES": PIPELINE_ISSUES,
+    "ISSUE_TIMELINE": ISSUE_TIMELINE,
 }

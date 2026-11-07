@@ -68,9 +68,14 @@ class ModeloCompletoTest(unittest.TestCase):
                           issue(2, "Task", "2026-10-01T12:00:00Z", "2026-10-05T12:00:00Z"),
                           issue(3, "Task", "2026-08-01T12:00:00Z"),
                           issue(4, "Feature", "2026-10-02T12:00:00Z")])
-        runs = pd.DataFrame([{"repositorio": "2026.2-MeasureSoftGram-Core", "workflow": "CI", "conclusao": c,
+        # 3 execuções do workflow de testes + ruído que NÃO é build (D5): deploy cancelado após ~24 h,
+        # dependabot ignorado e coleta de dados com sucesso
+        testes = [("Rodar Testes", c, d) for c, d in (("success", 2.0), ("success", 15.0), ("failure", 3.0))]
+        ruido = [("Deploy Prod (self-hosted)", "cancelled", 1440.0), ("Dependabot Auto-merge", "skipped", 0.0),
+                 ("Coleta de dados do dashboard", "success", 1.4), ("Deploy to GitHub Pages", "failure", 0.5)]
+        runs = pd.DataFrame([{"repositorio": "2026.2-MeasureSoftGram-Core", "workflow": w, "conclusao": c,
                               "criado_em": pd.Timestamp("2026-10-10T12:00:00Z"), "duracao_min": d, "url": ""}
-                             for c, d in (("success", 2.0), ("success", 15.0), ("failure", 3.0))])
+                             for w, c, d in testes + ruido])
         return SimpleNamespace(sonar_componentes=pd.DataFrame(), sonar_api={}, zh_issues=z, zh_snap={},
                                gh_runs=runs, gh_issues_coleta=pd.DataFrame(), gh_commits=pd.DataFrame(),
                                hoje=pd.Timestamp("2026-10-20"), zh_iniciadas=pd.DataFrame(), zh_regras=None)
@@ -83,6 +88,8 @@ class ModeloCompletoTest(unittest.TestCase):
         self.assertAlmostEqual(m["bug_density"].valor, 2 / 3)                                 # 1 = melhor
         self.assertEqual((m["build_stability"].numerador, m["build_stability"].denominador), (2, 3))
         self.assertEqual(m["build_performance"].numerador, 2)                                  # 15 min > 10
+        self.assertEqual(m["build_performance"].denominador, 3)                                # só test.yml
+        self.assertAlmostEqual(m["ci_feedback_time"].numerador / m["ci_feedback_time"].denominador, 20 / 3)  # sem 1440
         self.assertEqual(m["old_issues"].numerador, 1)                                       # #3 é antiga
         self.assertAlmostEqual(m["old_issues"].valor, 2 / 3)
         self.assertEqual(m["feature_usage"].situacao, qrapids.SEM_FONTE)
@@ -98,6 +105,30 @@ class ModeloCompletoTest(unittest.TestCase):
                                                     "process_performance"})
         fatores = {fc for _, _, fs in qrapids.INDICADORES.values() for fc in fs}
         self.assertEqual(fatores, set(qrapids.FATORES))
+
+    def test_so_o_workflow_de_testes_conta_como_build(self):
+        """DA-R3.02/D5: deploy, coleta e dependabot não entram; cancelada e ignorada também não."""
+        runs = pd.DataFrame({"workflow": ["Rodar Testes", "Testes", ".github/workflows/test.yml", "Linter",
+                                          "Deploy Prod (self-hosted)", "Rodar Testes", "Rodar Testes"],
+                             "conclusao": ["success", "failure", "failure", "success", "success", "cancelled",
+                                           "skipped"]})
+        self.assertEqual(list(qrapids.runs_de_build(runs).index), [0, 1, 2])
+        self.assertTrue(qrapids.runs_de_build(pd.DataFrame()).empty)
+
+    def test_arvore_segue_o_model_doc_sem_seguranca(self):
+        """DA-R3.02: o model-doc (abril/2019) não tem fator nem métrica de segurança; Code Quality alimenta
+        Product Quality e Product Readiness."""
+        self.assertNotIn("software_security", qrapids.FATORES)
+        self.assertEqual(qrapids.INDICADORES["product_quality"][2], ["code_quality", "software_stability",
+                                                                    "software_usage"])
+        self.assertIn("code_quality", qrapids.INDICADORES["product_readiness"][2])
+        f = {"periodo": (pd.Timestamp("2026-09-29"), pd.Timestamp("2026-10-26")), "repos": [], "branch": None}
+        res = qrapids.calcular(self.ctx(), f, {"fim": pd.Timestamp("2026-10-26"), "repos": []})
+        chaves = {r.chave for r in res["metricas"]}
+        self.assertFalse({"security_rating", "vulnerabilities"} & chaves)
+        tab = qrapids.tabela(res["metricas"])
+        cq = tab[tab["fator"].str.startswith("Code Quality")]["indicador"].unique()
+        self.assertEqual(list(cq), ["Product Quality (qualidade do produto) · Product Readiness (prontidão do produto)"])
 
     def test_media_sem_os_zeros_por_falta_de_dado(self):
         def av(total, falta):

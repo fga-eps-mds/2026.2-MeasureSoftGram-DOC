@@ -20,7 +20,7 @@ CARTOES = [
     # sozinha não representa a qualidade e vira só reserva quando a nota não puder ser calculada.
     ("Entrega", "Taxa de conclusão das sprints", "ZENHUB"),
     ("Qualidade", ("Nota de qualidade Q-Rapids", "Cobertura"), "SONAR"),
-    ("Riscos", "Riscos elevados", "PLANILHA"), ("Integração contínua", "Sucesso da CI", "GITHUB"),
+    ("Riscos", "Riscos elevados", "PLANILHA"), ("Integração contínua", "Sucesso da CI (testes)", "GITHUB"),
 ]
 
 

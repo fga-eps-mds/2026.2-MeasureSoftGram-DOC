@@ -105,21 +105,7 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
             media, fora = qrapids.media_repos(notas, lambda a: a["total"])
             tot = {sn.nome_curto(r): n["avaliacao"]["total"] for r, n in notas.items()
                    if sn.nome_curto(r) not in fora}
-            media_seg, sem_seg, vetados = qrapids.media_seguranca(notas)
-            if tot and media_seg is not None:
-                # cartão da Visão Executiva: nota com segurança (extensão do time); a oficial vai na leitura
-                tseg = {sn.nome_curto(r): n["avaliacao"]["total_seguranca"] for r, n in notas.items()
-                        if n["avaliacao"]["total_seguranca"] is not None}
-                pior = min(tseg, key=tseg.get)
-                status = "critical" if vetados else ("good" if media_seg >= 0.7 else
-                                                     ("warning" if media_seg >= 0.5 else "critical"))
-                out.append(_item("Qualidade", "Nota de qualidade Q-Rapids com segurança (média)", num(media_seg, 2),
-                                 status,
-                                 (f"segurança D/E: {', '.join(vetados)} · " if vetados else "")
-                                 + f"oficial (notebook): {num(media, 2)} · pior: {pior} ({num(tseg[pior], 2)})"
-                                 + (f" · sem nota de segurança: {', '.join(sem_seg)}" if sem_seg else ""),
-                                 "Qualidade (Q-Rapids)", "SONAR"))
-            elif tot:
+            if tot:
                 pior = min(tot, key=tot.get)
                 out.append(_item("Qualidade", "Nota de qualidade Q-Rapids (média)", num(media, 2),
                                  "good" if media >= 0.7 else ("warning" if media >= 0.5 else "critical"),
@@ -128,6 +114,16 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
                                  "Qualidade (Q-Rapids)", "SONAR"))
     except Exception:  # noqa: BLE001 — a nota não derruba a visão executiva
         pass
+    # Segurança fica fora do Q-Rapids (o model-doc não a prevê): é o rating do SonarCloud, por repositório.
+    sec = atual[(atual["metrica"] == "security_rating") & atual["repositorio"].isin(repos)]
+    if not sec.empty:
+        ruins = sorted(sn.nome_curto(r) for r in sec.loc[sec["valor"] >= 4, "repositorio"])
+        pior_s = sec.loc[sec["valor"].idxmax()]
+        letra = {1: "A", 2: "B", 3: "C", 4: "D", 5: "E"}.get(int(round(float(pior_s["valor"]))), "—")
+        out.append(_item("Qualidade", "Segurança (pior repositório, Sonar)", letra,
+                         "critical" if ruins else ("good" if pior_s["valor"] <= 1 else "warning"),
+                         f"{sn.nome_curto(pior_s['repositorio'])} · rating de segurança do SonarCloud (A melhor, E pior)"
+                         + (f" · D/E: {', '.join(ruins)}" if ruins else ""), "Qualidade técnica", "SONAR"))
     if not ctx.sonar_erros.empty:
         sem = sorted({sn.nome_curto(r) for r in ctx.sonar_erros["repositorio"]}
                      - {sn.nome_curto(r) for r in atual["repositorio"]})
@@ -235,13 +231,15 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
     # ── Processo (GITHUB) ──
     runs = ctx.gh_runs
     if runs is not None and not runs.empty:
-        c = flt.por_periodo(runs[runs["conclusao"].isin(["success", "failure"])], "criado_em", filtros["periodo"])
+        from src.metrics import qrapids   # mesmo critério de build do Q-Rapids: só o workflow de testes (D5)
+        c = flt.por_periodo(qrapids.runs_de_build(runs), "criado_em", filtros["periodo"])
         if filtros["repos"]:
             c = c[c["repositorio"].map(sn.nome_curto).isin(filtros["repos"])]
         if not c.empty:
             t = (c["conclusao"] == "success").mean() * 100
-            out.append(_item("Processo", "Sucesso da CI", f"{num(t)}%", status_taxa(t, config.META_CI_SUCESSO, config.LIMITE_CI_CRITICO),
-                             f"{int((c['conclusao'] == 'failure').sum())} falhas em {len(c)} execuções · meta ≥ {num(config.META_CI_SUCESSO)}%",
+            out.append(_item("Processo", "Sucesso da CI (testes)", f"{num(t)}%", status_taxa(t, config.META_CI_SUCESSO, config.LIMITE_CI_CRITICO),
+                             f"{int((c['conclusao'] == 'failure').sum())} falhas em {len(c)} execuções do workflow de testes · "
+                             f"meta ≥ {num(config.META_CI_SUCESSO)}%",
                              "Integração contínua", "GITHUB"))
     df = pd.DataFrame(out)
     if not df.empty:  # None continua None (o pandas trocaria por NaN)

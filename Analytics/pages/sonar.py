@@ -100,6 +100,55 @@ def _resumo(atual, serie, repos, qg, rel):
                 if topo is not None else None)
 
 
+LETRA_SEG = {1: "A", 2: "B", 3: "C", 4: "D", 5: "E"}
+
+
+def _seguranca(atual, serie_ate, repos):
+    """Segurança do SonarCloud por repositório. Não entra na nota Q-Rapids (o model-doc não prevê segurança)."""
+    a = atual[atual["repositorio"].isin(repos)]
+    pivo = a.pivot_table(index="repositorio", columns="metrica", values="valor", aggfunc="last") if not a.empty         else pd.DataFrame()
+    if pivo.empty or not {"security_rating", "vulnerabilities"} & set(pivo.columns):
+        st.caption("Sem rating de segurança nem vulnerabilidades coletados. " + SEM_API[1] + ".")
+        return
+    rating = pivo.get("security_rating")
+    ruins = [] if rating is None else sorted(sn.nome_curto(r) for r in rating[rating >= 4].index)
+    k = st.columns(3)
+    with k[0]:
+        if rating is None or rating.dropna().empty:
+            kpi("Rating de segurança (pior repositório)", None, "SONAR", nota=SEM_API[0] + ".")
+        else:
+            pior = rating.idxmax()
+            kpi("Rating de segurança (pior repositório)", LETRA_SEG.get(int(round(rating.max())), "—"), "SONAR",
+                status="critical" if ruins else ("good" if rating.max() <= 1 else "warning"),
+                nota=f"{sn.nome_curto(pior)} · A = nenhuma vulnerabilidade, E = bloqueante"
+                     + (f" · D/E: {', '.join(ruins)}" if ruins else ""),
+                origem=[(sn.nome_curto(pior), rastreio.sonar(pior))])
+    with k[1]:
+        v = sn.atual_e_anterior(serie_ate, "vulnerabilities", repos)
+        if v["atual"] is None:
+            kpi("Vulnerabilidades abertas", None, "SONAR", nota=SEM_API[0] + ".")
+        else:
+            kpi("Vulnerabilidades abertas", sn.formatar("vulnerabilities", v["atual"]), "SONAR",
+                delta=variacao(v["atual"], v["anterior"], sn.METRICAS["vulnerabilities"][1], False),
+                nota=f"soma de {v['n_repos']} repositórios")
+    with k[2]:
+        h = pivo.get("security_hotspots")
+        if h is None or h.dropna().empty:
+            kpi("Security hotspots", None, "SONAR", nota=SEM_API[0] + ".")
+        else:
+            kpi("Security hotspots", sn.formatar("security_hotspots", float(h.sum())), "SONAR",
+                nota="a revisar, soma dos repositórios")
+    t = pd.DataFrame({"Repositório": [sn.nome_curto(r) for r in pivo.index]})
+    t["Rating de segurança"] = [LETRA_SEG.get(int(round(x)), "—") if pd.notna(x) else "—"
+                                for x in (pivo["security_rating"] if "security_rating" in pivo else [None] * len(pivo))]
+    for m, rot in (("vulnerabilities", "Vulnerabilidades"), ("security_hotspots", "Security hotspots")):
+        t[rot] = [sn.formatar(m, x) if pd.notna(x) else "—" for x in (pivo[m] if m in pivo else [None] * len(pivo))]
+    st.dataframe(t, use_container_width=True, hide_index=True)
+    st.caption("Segurança é uma métrica técnica complementar do SonarCloud, fora da nota Q-Rapids: o modelo "
+               "(model-doc, abril/2019) não tem fator de segurança. O rating depende da vulnerabilidade mais grave "
+               "aberta (A nenhuma, B menor, C maior, D crítica, E bloqueante).")
+
+
 def _placar(ctx, api, atual, qg, repos):
     a = atual[atual["repositorio"].isin(repos)]
     if a.empty:
@@ -183,6 +232,10 @@ def pagina():
     layout.secao("Resumo", "Como está a qualidade técnica agora, e mudou desde a última coleta?", ["SONAR"])
     rel = f["release_metas"]
     _resumo(atual, rec["serie_ate"], repos, qg, rel)
+
+    # ── segurança: métrica técnica complementar do Sonar, fora do modelo Q-Rapids ──
+    layout.secao("Segurança", "Há vulnerabilidades abertas, e qual repositório está pior?", ["SONAR"])
+    _seguranca(atual, rec["serie_ate"], repos)
 
     # ── dado bruto ──
     layout.secao("Dado bruto", "Qual é a situação de cada repositório?", ["SONAR"])

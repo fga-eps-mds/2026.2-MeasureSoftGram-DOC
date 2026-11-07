@@ -32,6 +32,8 @@ Cada decisão tem:
 | D1 | 3 | Gerencial | Calendário oficial de sprints: o do Zenhub | Vigente | Parcial: sprints criadas no Zenhub; planilha a conferir |
 | D2 | 3 | Gerencial | Critério de "feito" e níveis que recebem story points | Vigente | Meta não atingida na S4 (28%) |
 | D3 | 3 | Gerencial | Modelo de custo e registro de horas reais | Planejada | A medir |
+| D4 | 8 | Gerencial | Velocity, SPI e CPI só com story points de US aceitas pelo PO | Vigente | A medir na S9 |
+| D5 | 8 | Técnica | Build stability, Build performance e CI feedback time só com o workflow de testes | Provisória | Pendente de validação do time |
 
 :::caution[A preencher]
 D1 a D3 foram tomadas em 27/09/2026, na construção do DA-R1, e ainda não têm
@@ -92,6 +94,8 @@ segundo o Zenhub ([Sprint 4](/docs/sprints/sprint-4)). Achado novo: issues
 continuam listadas em várias sprints, o que infla o planejado. Ação sugerida:
 limpar as sprints antigas na planning.
 
+**Revisão (06/11).** Os níveis pontuados foram reduzidos a `Feature`: ver [D4](#d4-velocity-spi-e-cpi-só-com-us-aceitas-pelo-po).
+
 ## D3: Modelo de custo e horas reais
 
 **Contexto e dado.** O EVM precisa de orçamento (BAC) e custo real (AC). Não havia
@@ -110,9 +114,67 @@ CPI calculado no dashboard.
 **Resultado.** *A medir:* conferir quantos integrantes lançaram horas nas sprints
 4 a 7 (aba Horas) e se o CPI aparece no [Agile EVM](https://20262-measuresoftgram-doc.streamlit.app/agile-evm).
 
+## D4: Velocity, SPI e CPI só com US aceitas pelo PO
+
+**Contexto e dado.** No feedback da R2 (28/10, ação C1.2), o professor apontou que Velocity,
+SPI e CPI misturavam Tasks e Bugs com as histórias de usuário. Com a regra anterior (D2), a
+velocity somava 41 SP na S3 e 20 SP na S4 e na S6, e só 5 desses SP vinham de US. No snapshot do
+Zenhub de 05/11, só 2 das 21 US do projeto estavam fechadas (5 SP no semestre), e 12 US (83 SP)
+esperavam o aceite do PO em "Aguardando aprovação do PO (DoD)".
+
+**Decisão.** Só pontua a **US (`Feature`) fechada**, isto é, aceita pelo PO. Task, Sub-task, Bug,
+PR e Épico saem da Velocity, do EVM (PV, EV, AC, SPI, CPI) e do burndown, em todas as releases, com
+uma regra só. As linhas de base congeladas antes desta decisão são filtradas na leitura (a estimativa
+da época é mantida, só deixam de contar Tasks e Bugs). Trabalho técnico e defeitos passam a ser
+acompanhados por métricas de fluxo (Throughput, Lead Time, Cycle Time e taxa de conclusão), na
+página Fluxo do dashboard, sem story points e sem alterar o EVM. A fila de aceite do PO aparece à
+parte e nunca soma SP.
+
+**Consequência.** Velocity e SPI caem de forma esperada: a R1 não tem US tipada (EVM
+indisponível) e a R2 tem 5 SP entregues. A queda mede o gargalo de aceite, não esforço. Uma US
+fechada depois conta na sprint em que fechou, não na anterior.
+
+**Evidência.** `Analytics/config.py` (`niveis_pontuados`), `Analytics/src/metrics/velocity.py`,
+`agile.py` e `evm.py` (`analise_critica`), com testes em `Analytics/tests/`.
+
+**Critério de sucesso.** Teste cruzado fechando as 12 US em DoD até a S9, com SPI da R3 ≥ 0,95.
+
+**Resultado.** *A medir* na S9.
+
+## D5: Quais workflows contam como build
+
+**Contexto e dado.** O Q-Rapids define *Build stability* (builds com sucesso), *Build performance*
+(builds rápidos) e *CI feedback time* sobre "builds". O dashboard somava todas as execuções do
+GitHub Actions, inclusive deploy, coleta de dados, dependabot e publicação. Nas 2.252 execuções
+coletadas de 24/08 a 05/11: 'Dependabot Auto-merge' tem 265 execuções ignoradas, 'Deploy Prod
+(self-hosted)' tem 25 canceladas após cerca de 24 h, e 'Coleta de dados' e 'Deploy to GitHub Pages'
+rodam por agendamento ou a cada push na `main`. Nenhum deles diz se o produto está estável.
+
+**Decisão (provisória).** Só o workflow de testes (`test.yml`, chamado "Rodar Testes"; "Testes" e o
+caminho do arquivo entram porque o GitHub usa o caminho como nome quando o arquivo falha ao carregar).
+Só contam execuções concluídas com sucesso ou falha; cancelada e ignorada saem. A lista fica em
+`config.QRAPIDS["workflows_build"]` (lista vazia = todos os workflows). Os dados coletados não trazem o
+caminho do arquivo, então o filtro é pelo nome.
+
+| Medida (24/08 a 05/11) | Todas as execuções (regra antiga) | Só o workflow de testes |
+| --- | --- | --- |
+| Build stability | 83,8% (1.941 execuções) | 85,4% (644 execuções) |
+| CI feedback time (média) | 16,6 min | 3,1 min (mediana 2,0) |
+| Build performance (≤ 10 min) | 98,6% | 99,4% |
+
+**Pendência.** O card DA-R3.02 pede validar esta escolha com a equipe antes de considerá-la definitiva.
+O Plano de Qualidade (QUAL.02) deve decidir se o limiar de 10 minutos faz sentido: com ele, Build
+performance fica perto de 100% e quase não discrimina.
+
+**Evidência.** `Analytics/config.py` (`workflows_build`), `Analytics/src/metrics/qrapids.py`
+(`runs_de_build`), `Analytics/tests/test_qrapids.py`.
+
+**Resultado.** *A medir:* confirmar com a equipe e registrar o revisor.
+
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
 | 1.0 | 27/09/2026 | Formato e três primeiras decisões (rascunho) | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
 | 1.1 | 21/10/2026 | Resultados de D1 e D2, coluna de resultado no resumo | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.2 | 06/11/2026 | D4 (Velocity, SPI e CPI só com US aceitas pelo PO) e D5 (workflows de CI), DA-R3.02 | [@zzzBECK](https://github.com/zzzBECK) |  |
