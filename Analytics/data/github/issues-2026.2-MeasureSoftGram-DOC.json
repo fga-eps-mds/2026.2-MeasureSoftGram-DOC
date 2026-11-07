@@ -1,10 +1,511 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-07T17:11:55+00:00",
+ "coletado_em": "2026-11-07T23:12:15+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 225,
+   "title": "docs(eap): [TASK EAP.01] detalhamento da rastreabilidade da EAP para a Release 03",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-07T22:27:15Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T22:27:53Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2772,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/225",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 224,
+   "title": "[TASK EAP.01] Revisão da EAP para Release 03",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T22:18:37Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T22:22:49Z",
+   "labels": [
+    "docs",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4727,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/224",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 223,
+   "title": "[1.3] Ambientes de implantação e disponibilização das releases",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:45:59Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:45:59Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 758,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/223",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 222,
+   "title": "[1.2.3.3] Retrospectiva crítica do uso de IA",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:45:13Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:45:13Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 765,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/222",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 221,
+   "title": "[1.2.3.2] Quadro de conhecimento e pareamentos",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:45:03Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:45:03Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 729,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/221",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 220,
+   "title": "[1.2.3.1] Plano de comunicação e rodízio de lideranças",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:44:54Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:44:54Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 753,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/220",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 219,
+   "title": "[1.2.2.6] Manual de instalação do produto",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:44:29Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:44:29Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 675,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/219",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 218,
+   "title": "[1.2.2.4] Gerência de configuração consolidada",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:43:52Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:43:52Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 727,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/218",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 217,
+   "title": "[1.2.2.3] Fluxo de Trabalho",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:43:42Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:43:42Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 680,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/217",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 216,
+   "title": "[1.2.2.2] Documento de Arquitetura",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:43:34Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:43:34Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 694,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/216",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 215,
+   "title": "[1.2.2.1] Diagnóstico do ecossistema herdado",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:43:25Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:43:25Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 656,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/215",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 214,
+   "title": "[1.2.1.6] Relatório de Encerramento",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:42:58Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:42:58Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 715,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/214",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 213,
+   "title": "[1.2.1.5] Matriz de riscos",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:42:49Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:42:49Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 677,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/213",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 212,
+   "title": "[1.2.1.4] Análise planejado × realizado",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:42:40Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:42:40Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 716,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/212",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 211,
+   "title": "[1.2.1.3] Planilha de custos e EVM-Ágil",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:42:32Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:42:32Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 748,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/211",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 210,
+   "title": "[1.2.1.2] EAP",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:42:22Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:42:22Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 689,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/210",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 209,
+   "title": "[1.2.1.1] Registro do projeto e do parceiro",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:42:13Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:42:13Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 694,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/209",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 208,
+   "title": "[1.2.3] Documentos de equipe",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:41:41Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:41:41Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 669,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/208",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 207,
+   "title": "[1.2.2] Documentos técnicos",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:41:31Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:41:31Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 785,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/207",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 206,
+   "title": "[1.2.1] Documentos de gestão",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:41:21Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:41:21Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 735,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/206",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 205,
+   "title": "[1.2] Documentação do projeto",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:41:11Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:41:11Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 583,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/205",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 204,
+   "title": "[1.1.4] Identidade visual",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:40:48Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:40:48Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 615,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/204",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 203,
+   "title": "[1.1.3] Protótipos de alta fidelidade",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:40:39Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:40:39Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 661,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/203",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 202,
+   "title": "[1.1.2] Cronograma e planejamento de releases",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:40:16Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:40:16Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 637,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/202",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 201,
+   "title": "[1.1.1] Backlog do Produto",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:40:08Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:40:08Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 659,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/201",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 200,
+   "title": "[1.1] Visão do Produto (Lean Inception)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T21:39:15Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T21:39:15Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 677,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/200",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 199,
+   "title": "[TASK DA-R3.04] Documentação do Processo de Coleta das métricas",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-07T19:45:05Z",
+   "closed_at": null,
+   "updated_at": "2026-11-07T19:45:05Z",
+   "labels": [
+    "docs",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4549,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/199",
+   "author": "luciano-freitas-melo"
+  },
   {
    "number": 198,
    "title": "feat(dashboard): [DA-R3.02] corrige Q-Rapids, EVM e CI apontados no feedback da R2",
@@ -90,7 +591,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:13:30Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T12:04:25Z",
+   "updated_at": "2026-11-07T20:05:35Z",
    "labels": [
     "task"
    ],
@@ -100,18 +601,18 @@
    ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 1352,
+   "body_chars": 1895,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/194",
    "author": "luciano-freitas-melo"
   },
   {
    "number": 193,
    "title": "[DA-R3.02] Correções conceituais no Dashboard Analítico apontadas no feedback da R2",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-06T00:12:33Z",
-   "closed_at": null,
-   "updated_at": "2026-11-06T00:29:29Z",
+   "closed_at": "2026-11-07T19:14:25Z",
+   "updated_at": "2026-11-07T19:14:25Z",
    "labels": [
     "task"
    ],
@@ -128,11 +629,11 @@
   {
    "number": 192,
    "title": "[DA-R3.01] Vincular a coleta de métricas exclusivamente ao repositório do semestre (por PR)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-06T00:12:06Z",
-   "closed_at": null,
-   "updated_at": "2026-11-07T13:32:33Z",
+   "closed_at": "2026-11-07T20:03:27Z",
+   "updated_at": "2026-11-07T20:03:27Z",
    "labels": [
     "task"
    ],
@@ -153,17 +654,18 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:11:39Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T14:07:10Z",
+   "updated_at": "2026-11-07T22:29:36Z",
    "labels": [
     "task"
    ],
    "type": "Task",
    "assignees": [
+    "luciano-freitas-melo",
     "storch7"
    ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 1628,
+   "body_chars": 1696,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/191",
    "author": "luciano-freitas-melo"
   },
@@ -174,7 +676,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:10:48Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T13:55:41Z",
+   "updated_at": "2026-11-07T20:26:31Z",
    "labels": [
     "task"
    ],
@@ -296,11 +798,11 @@
   {
    "number": 184,
    "title": "[QUAL.01] Saneamento da coleta de dados nos repositórios",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-06T00:07:34Z",
-   "closed_at": null,
-   "updated_at": "2026-11-07T13:31:17Z",
+   "closed_at": "2026-11-07T19:14:37Z",
+   "updated_at": "2026-11-07T19:14:37Z",
    "labels": [
     "task"
    ],
@@ -797,11 +1299,11 @@
   {
    "number": 156,
    "title": "[TASK] Cadastrar o release.yml como Trusted Publisher no PyPI (msgram-core, msgram-parser, msgram)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-17T20:04:49Z",
-   "closed_at": null,
-   "updated_at": "2026-10-17T20:04:49Z",
+   "closed_at": "2026-11-07T22:40:31Z",
+   "updated_at": "2026-11-07T22:43:15Z",
    "labels": [
     "devops",
     "task",
@@ -810,10 +1312,12 @@
     "cli"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 2173,
+   "body_chars": 2333,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/156",
    "author": "bottinolucas"
   },
@@ -1410,11 +1914,11 @@
   {
    "number": 126,
    "title": "[US21.01] Como Helena, quero ver a estrutura das medidas e indicadores (Metamodelo)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:33Z",
-   "closed_at": null,
-   "updated_at": "2026-10-21T20:06:41Z",
+   "closed_at": "2026-11-07T19:14:18Z",
+   "updated_at": "2026-11-07T19:14:18Z",
    "labels": [
     "US"
    ],
@@ -2952,12 +3456,12 @@
   },
   {
    "number": 30,
-   "title": "MVP",
+   "title": "[1.4] MVP",
    "state": "open",
    "is_pull_request": false,
    "created_at": "2026-09-10T19:35:57Z",
    "closed_at": null,
-   "updated_at": "2026-09-10T19:35:57Z",
+   "updated_at": "2026-11-07T21:52:56Z",
    "labels": [],
    "type": null,
    "assignees": [],

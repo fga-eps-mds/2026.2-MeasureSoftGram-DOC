@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-07T17:11:55+00:00",
+ "coletado_em": "2026-11-07T23:12:15+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
@@ -661,11 +661,11 @@
   {
    "number": 48,
    "title": "[TASK] Investigar e corrigir o bug de regressão na paginação/importação de repositórios da organização",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-20T00:40:50Z",
-   "closed_at": null,
-   "updated_at": "2026-10-25T21:46:38Z",
+   "closed_at": "2026-11-07T19:14:41Z",
+   "updated_at": "2026-11-07T19:14:41Z",
    "labels": [],
    "type": "Task",
    "assignees": [
