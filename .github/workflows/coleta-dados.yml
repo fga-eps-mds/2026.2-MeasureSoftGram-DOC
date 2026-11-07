@@ -7,23 +7,27 @@ name: Coleta de dados do dashboard
 # O Streamlit Community Cloud republica o dashboard a cada commit na main.
 #
 # Quando roda:
-#   - a cada push na main (menos os commits de dados, para não entrar em laço);
-#   - 3 vezes por dia (08h, 14h e 20h em Brasília), mesmo sem commit;
-#   - na mão: Actions > Coleta de dados do dashboard > Run workflow.
+#   - 3 vezes por dia (08h, 14h e 20h em Brasília);
+#   - manual sob demanda: Actions > Coleta de dados do dashboard > Run workflow.
 #
-# Pré-requisitos (uma vez só):
-#   1. Settings > Secrets and variables > Actions > secret ZENHUB_API_KEY
-#      (SONAR_TOKEN é opcional: os projetos do SonarCloud são públicos).
-#   2. Settings > Actions > General > Workflow permissions > "Read and write permissions".
+# Regra do SonarCloud:
+#   - Só coleta do SonarCloud se houver novos PRs mergeados na branch develop (ou se 'forcar_coleta' for true).
+#   - Zenhub e GitHub rodam continuamente em cada ciclo para manter sprints e CI atualizados.
 
 on:
-  push:
-    branches: [main]
-    paths-ignore:
-      - "Analytics/data/**"        # commits só de dados (ex.: metrics.yml dos outros repositórios) não disparam
   schedule:
     - cron: "7 11,17,23 * * *"   # 08:07, 14:07 e 20:07 em Brasília (UTC-3)
   workflow_dispatch:
+    inputs:
+      forcar_coleta:
+        description: "Forçar coleta do SonarCloud mesmo sem novo PR na branch develop"
+        type: boolean
+        default: false
+      repositorios:
+        description: "Repositórios para coletar (deixe 'todos' ou informe separados por vírgula, ex: Service, Front)"
+        type: string
+        default: "todos"
+        required: false
 
 permissions:
   contents: write
@@ -46,9 +50,17 @@ jobs:
       - name: Instalar dependências
         run: pip install pandas requests
 
+      - name: Verificar novos PRs na develop
+        id: verificar
+        working-directory: Analytics
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/verificar_novos_prs.py --repos "${{ inputs.repositorios || 'todos' }}" ${{ (inputs.forcar_coleta == true) && '--force' || '' }}
+
       - name: Coletar do Zenhub
         id: zenhub
-        continue-on-error: true      # sem a chave ou com o Zenhub fora do ar, a coleta do Sonar segue
+        continue-on-error: true      # sem a chave ou com o Zenhub fora do ar, a coleta segue
         working-directory: Analytics
         env:
           ZENHUB_API_KEY: ${{ secrets.ZENHUB_API_KEY }}
@@ -61,12 +73,13 @@ jobs:
           python scripts/coleta_velocity.py
 
       - name: Coletar do SonarCloud
+        if: steps.verificar.outputs.houve_novo_pr == 'true' || inputs.forcar_coleta == true
         id: sonar
         continue-on-error: true
         working-directory: Analytics
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: python scripts/coleta_sonar.py
+        run: python scripts/coleta_sonar.py --repos "${{ steps.verificar.outputs.repos_alvo }}"
 
       - name: Coletar execuções do GitHub Actions
         id: github
@@ -74,7 +87,7 @@ jobs:
         working-directory: Analytics
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python scripts/coleta_github.py
+        run: python scripts/coleta_github.py --repos "${{ steps.verificar.outputs.repos_alvo }}"
 
       - name: Testes dos cálculos
         working-directory: Analytics
@@ -84,7 +97,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Analytics/data/zenhub Analytics/data/sonar $(ls -d Analytics/data/github 2>/dev/null)
+          git add Analytics/data/zenhub Analytics/data/sonar Analytics/data/.last_pr_state.json $(ls -d Analytics/data/github 2>/dev/null)
           if git diff --cached --quiet; then echo "Sem dados novos"; exit 0; fi
           git commit -m "chore(dados): coleta automática do Zenhub, SonarCloud e GitHub Actions"
           git pull --rebase origin main
@@ -94,6 +107,9 @@ jobs:
         if: always()
         run: |
           echo "### Coleta de dados" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Zenhub: ${{ steps.zenhub.outcome }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- SonarCloud: ${{ steps.sonar.outcome }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- GitHub Actions: ${{ steps.github.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Novos PRs na develop**: \`${{ steps.verificar.outputs.houve_novo_pr || 'não verificado' }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Repositórios avaliados**: \`${{ steps.verificar.outputs.repos_alvo || 'todos' }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Detalhes**: ${{ steps.verificar.outputs.resumo_prs || '-' }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Zenhub**: ${{ steps.zenhub.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **SonarCloud**: ${{ steps.sonar.outcome || 'pulado (sem PR novo)' }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **GitHub Actions**: ${{ steps.github.outcome }}" >> "$GITHUB_STEP_SUMMARY"

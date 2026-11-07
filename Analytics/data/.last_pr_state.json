@@ -1,0 +1,50 @@
+{
+  "2026.2-MeasureSoftGram-Action": {
+    "number": 18,
+    "last_merged_at": "2026-10-21T01:37:02Z",
+    "title": "feat(sonarqube): busca todas as páginas do component_tree (TASK21.03.03)",
+    "author": "LuizaMaluf"
+  },
+  "2026.2-MeasureSoftGram-AI": {
+    "number": 3,
+    "last_merged_at": "2026-10-15T21:35:11Z",
+    "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
+    "author": "luciano-freitas-melo"
+  },
+  "2026.2-MeasureSoftGram-CLI": {
+    "number": 19,
+    "last_merged_at": "2026-10-25T17:57:27Z",
+    "title": "fix(calculate): filtra medidas pela configuração do msgram.json em todos os formatos de saída",
+    "author": "DiegoCarlito"
+  },
+  "2026.2-MeasureSoftGram-Core": {
+    "number": 23,
+    "last_merged_at": "2026-10-22T15:37:07Z",
+    "title": "feat(transformations): função de correlação f_sigma e prepara 1.5.5rc4",
+    "author": "gusrberto"
+  },
+  "2026.2-MeasureSoftGram-Front": {
+    "number": 101,
+    "last_merged_at": "2026-11-05T21:24:17Z",
+    "title": "fix(dashboards): correções do PO na Distribuição Estatística (US21.03)",
+    "author": "LuizaMaluf"
+  },
+  "2026.2-MeasureSoftGram-Parser": {
+    "number": 16,
+    "last_merged_at": "2026-10-21T01:19:32Z",
+    "title": "ci(release): alinha as versões das actions do release.yml às do Core e da CLI",
+    "author": "bottinolucas"
+  },
+  "2026.2-MeasureSoftGram-Plugin": {
+    "number": 6,
+    "last_merged_at": "2026-11-05T22:55:03Z",
+    "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
+    "author": "luciano-freitas-melo"
+  },
+  "2026.2-MeasureSoftGram-Service": {
+    "number": 83,
+    "last_merged_at": "2026-11-05T20:53:04Z",
+    "title": "fix(releases): inclui desvio padrão e variância no resumo da distribuição (US21.03)",
+    "author": "LuizaMaluf"
+  }
+}
