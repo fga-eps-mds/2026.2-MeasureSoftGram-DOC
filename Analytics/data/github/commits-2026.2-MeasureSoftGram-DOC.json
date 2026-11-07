@@ -1,11 +1,602 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-07T11:11:58+00:00",
+ "coletado_em": "2026-11-07T13:40:11+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "branch": "(padrão)",
  "commits": [
+  {
+   "sha": "43c22d63fe25791a13a1a32539070c0ffc171ce4",
+   "date": "2026-11-07T13:27:16Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-CLI develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 134,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-07-2026-13-27-10.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-07-2026-13-27-10-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "776469dc9d0ca1c1d8deb4ca852b40a1a3bc919f",
+   "date": "2026-11-07T13:20:15Z",
+   "author": "MilenaFRocha",
+   "message": "Merge pull request #198 from fga-eps-mds/task/DA-R3.02-correcoes-conceituais-dashboard",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "Analytics/app.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/config.py",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 11
+    },
+    {
+     "filename": "Analytics/docs/velocity-zenhub.md",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/pages/evm.py",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/pages/fluxo.py",
+     "status": "added",
+     "additions": 214,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/pages/metodologia.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/pages/qualidade.py",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 61
+    },
+    {
+     "filename": "Analytics/pages/sonar.py",
+     "status": "modified",
+     "additions": 53,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/pages/visao_executiva.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/pages/zenhub.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/pages/zenhub_dados.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/scripts/coleta_velocity.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/src/components/charts.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/data/planilha.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/src/metrics/agile.py",
+     "status": "modified",
+     "additions": 26,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/src/metrics/evm.py",
+     "status": "modified",
+     "additions": 64,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/metrics/fluxo.py",
+     "status": "added",
+     "additions": 226,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/metrics/qrapids.py",
+     "status": "modified",
+     "additions": 28,
+     "deletions": 81
+    },
+    {
+     "filename": "Analytics/src/metrics/qualidade.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 40
+    },
+    {
+     "filename": "Analytics/src/metrics/resumo.py",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 18
+    },
+    {
+     "filename": "Analytics/src/metrics/velocity.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/src/zenhub/client.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/src/zenhub/coleta.py",
+     "status": "modified",
+     "additions": 60,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/src/zenhub/normalizacao.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/zenhub/queries.py",
+     "status": "modified",
+     "additions": 17,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_agile.py",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 6
+    },
+    {
+     "filename": "Analytics/tests/test_evm.py",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_fluxo.py",
+     "status": "added",
+     "additions": 154,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_gestao_agil.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_qrapids.py",
+     "status": "modified",
+     "additions": 33,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/tests/test_seguranca.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 43
+    },
+    {
+     "filename": "Analytics/tests/test_velocity.py",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 3
+    },
+    {
+     "filename": "Analytics/tests/test_zenhub_client.py",
+     "status": "modified",
+     "additions": 109,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/metricas/modelo-de-gestao.mdx",
+     "status": "modified",
+     "additions": 32,
+     "deletions": 6
+    },
+    {
+     "filename": "docs/planejamento/decisoes.mdx",
+     "status": "modified",
+     "additions": 62,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "2543ec6e70e207318a7473c060ed5b3a9b06b33e",
+   "date": "2026-11-07T13:19:32Z",
+   "author": "nateejpg",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Plugin develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Plugin-11-07-2026-13-19-28-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "56f6562c1e03ff7dc54c3f19e0a687fc90f615ed",
+   "date": "2026-11-07T13:17:33Z",
+   "author": "MilenaFRocha",
+   "message": "Merge pull request #196 from fga-eps-mds/feat/coleta-inteligente-develop",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/coleta-dados.yml",
+     "status": "modified",
+     "additions": 34,
+     "deletions": 18
+    },
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/.last_pr_state.json",
+     "status": "added",
+     "additions": 50,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/scripts/coleta_github.py",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 3
+    },
+    {
+     "filename": "Analytics/scripts/coleta_sonar.py",
+     "status": "modified",
+     "additions": 46,
+     "deletions": 14
+    },
+    {
+     "filename": "Analytics/scripts/verificar_novos_prs.py",
+     "status": "added",
+     "additions": 259,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_verificar_novos_prs.py",
+     "status": "added",
+     "additions": 127,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "4120d408adceefc82b898998fb393b0c6615bd0e",
+   "date": "2026-11-07T13:14:11Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Service develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 117,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Service-11-07-2026-13-14-01.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-11-07-2026-13-14-01-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "5143c262f6348ecd12661bd255150960a872cb3f",
+   "date": "2026-11-07T12:59:35Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Parser develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 92,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-07-2026-12-59-28.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-07-2026-12-59-28-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "4190932c32e88c8f0ef1b536916f664665cde63c",
+   "date": "2026-11-07T12:47:56Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Core develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-11-07-2026-12-47-51-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "498d6c697586d183cb778c3e8b9648bd37538a81",
+   "date": "2026-11-07T12:02:37Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Action develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 234,
+     "deletions": 8
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Action-11-07-2026-12-02-28.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Action-11-07-2026-12-02-28-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "02cb46d04faca360a1f65784932ec6100f56d9a3",
+   "date": "2026-11-07T11:13:35Z",
+   "author": "github-actions[bot]",
+   "message": "chore(dados): coleta automática do Zenhub, SonarCloud e GitHub Actions",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 29,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 211,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 48,
+     "deletions": 17
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 58,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 58,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 60,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 13
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-07T1111.json",
+     "status": "added",
+     "additions": 19662,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-07T1111.json",
+     "status": "added",
+     "additions": 9436,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "91c7b1ef92d5dab4fd472f5eb22b7b6f901d94cb",
    "date": "2026-11-07T09:06:00Z",
@@ -29,6 +620,270 @@
      "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-AI-11-07-2026-09-05-54-develop.json",
      "status": "added",
      "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "3f7531b214c530a64e72152aaf2abd1d1239faea",
+   "date": "2026-11-07T03:06:39Z",
+   "author": "zzzBECK",
+   "message": "feat(dashboard): [DA-R3.02] calcula Cycle Time pelo histórico de pipelines do Zenhub",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/config.py",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/docs/velocity-zenhub.md",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/pages/fluxo.py",
+     "status": "modified",
+     "additions": 65,
+     "deletions": 18
+    },
+    {
+     "filename": "Analytics/scripts/coleta_velocity.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/src/metrics/fluxo.py",
+     "status": "modified",
+     "additions": 86,
+     "deletions": 16
+    },
+    {
+     "filename": "Analytics/src/zenhub/client.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/src/zenhub/coleta.py",
+     "status": "modified",
+     "additions": 60,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/src/zenhub/normalizacao.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/zenhub/queries.py",
+     "status": "modified",
+     "additions": 17,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_fluxo.py",
+     "status": "modified",
+     "additions": 65,
+     "deletions": 6
+    },
+    {
+     "filename": "Analytics/tests/test_zenhub_client.py",
+     "status": "modified",
+     "additions": 109,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/metricas/modelo-de-gestao.mdx",
+     "status": "modified",
+     "additions": 15,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "6963100b6c0f21ed00d5d862a06d7768a88b687b",
+   "date": "2026-11-07T02:41:03Z",
+   "author": "zzzBECK",
+   "message": "feat(dashboard): [DA-R3.02] corrige Q-Rapids, EVM e CI apontados no feedback da R2",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/app.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/config.py",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 11
+    },
+    {
+     "filename": "Analytics/docs/velocity-zenhub.md",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/pages/evm.py",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/pages/fluxo.py",
+     "status": "added",
+     "additions": 167,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/pages/metodologia.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/pages/qualidade.py",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 61
+    },
+    {
+     "filename": "Analytics/pages/sonar.py",
+     "status": "modified",
+     "additions": 53,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/pages/visao_executiva.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/pages/zenhub.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/pages/zenhub_dados.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/src/components/charts.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/data/planilha.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/src/metrics/agile.py",
+     "status": "modified",
+     "additions": 26,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/src/metrics/evm.py",
+     "status": "modified",
+     "additions": 64,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/metrics/fluxo.py",
+     "status": "added",
+     "additions": 156,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/metrics/qrapids.py",
+     "status": "modified",
+     "additions": 28,
+     "deletions": 81
+    },
+    {
+     "filename": "Analytics/src/metrics/qualidade.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 40
+    },
+    {
+     "filename": "Analytics/src/metrics/resumo.py",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 18
+    },
+    {
+     "filename": "Analytics/src/metrics/velocity.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/tests/test_agile.py",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 6
+    },
+    {
+     "filename": "Analytics/tests/test_evm.py",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_fluxo.py",
+     "status": "added",
+     "additions": 95,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_gestao_agil.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_qrapids.py",
+     "status": "modified",
+     "additions": 33,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/tests/test_seguranca.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 43
+    },
+    {
+     "filename": "Analytics/tests/test_velocity.py",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 3
+    },
+    {
+     "filename": "docs/metricas/modelo-de-gestao.mdx",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 6
+    },
+    {
+     "filename": "docs/planejamento/decisoes.mdx",
+     "status": "modified",
+     "additions": 62,
      "deletions": 0
     }
    ]
@@ -239,6 +1094,93 @@
      "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-06-2026-22-45-45-develop.json",
      "status": "added",
      "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "1faf7ad9d7c85e29eeb2cc737d74bc85a0ecc753",
+   "date": "2026-11-06T19:59:12Z",
+   "author": "luciano-freitas-melo",
+   "message": "ci(workflows): condiciona coleta do SonarCloud a novos PRs e adiciona inputs manuais no workflow_dispatch",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/coleta-dados.yml",
+     "status": "modified",
+     "additions": 34,
+     "deletions": 18
+    }
+   ]
+  },
+  {
+   "sha": "6efbc2de87fd94c57765926b95d17d41c2b4137f",
+   "date": "2026-11-06T19:59:05Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(dados): inicializa cursor de estado de PRs da branch develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/.last_pr_state.json",
+     "status": "added",
+     "additions": 50,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "9e475802df9a38cf9ee9193536c606b4101f68da",
+   "date": "2026-11-06T19:58:58Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat(analytics): adiciona suporte ao filtro de repositórios na coleta de SonarCloud e GitHub",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/scripts/coleta_github.py",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 3
+    },
+    {
+     "filename": "Analytics/scripts/coleta_sonar.py",
+     "status": "modified",
+     "additions": 46,
+     "deletions": 14
+    }
+   ]
+  },
+  {
+   "sha": "63df7cfc161568c82fe36463ab275ef63396352c",
+   "date": "2026-11-06T19:58:51Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat(analytics): adiciona script e testes para verificar novos PRs na branch develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/scripts/verificar_novos_prs.py",
+     "status": "added",
+     "additions": 259,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_verificar_novos_prs.py",
+     "status": "added",
+     "additions": 127,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "701656814984f217505887d429fd1b6e109ac866",
+   "date": "2026-11-06T19:58:44Z",
+   "author": "luciano-freitas-melo",
+   "message": "chore(env): adiciona regras para uv, venv e caches de python no gitignore",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 9,
      "deletions": 0
     }
    ]
@@ -36316,5 +37258,5 @@
    ]
   }
  ],
- "detalhes_novos": 2
+ "detalhes_novos": 16
 }

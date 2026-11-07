@@ -1,50 +1,50 @@
 {
   "2026.2-MeasureSoftGram-Action": {
-    "number": 18,
-    "last_merged_at": "2026-10-21T01:37:02Z",
-    "title": "feat(sonarqube): busca todas as páginas do component_tree (TASK21.03.03)",
-    "author": "LuizaMaluf"
+    "number": 22,
+    "last_merged_at": "2026-11-07T12:02:09Z",
+    "title": "fix(action): ajusta cobertura, relatórios e confiabilidade",
+    "author": "Marcosatc147"
   },
   "2026.2-MeasureSoftGram-AI": {
-    "number": 3,
-    "last_merged_at": "2026-10-15T21:35:11Z",
-    "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
-    "author": "luciano-freitas-melo"
+    "number": 4,
+    "last_merged_at": "2026-11-07T09:05:44Z",
+    "title": "fix(quality): saneamento de exclusões do server.py e reporte junit no SonarCloud",
+    "author": "DiegoCarlito"
   },
   "2026.2-MeasureSoftGram-CLI": {
-    "number": 19,
-    "last_merged_at": "2026-10-25T17:57:27Z",
-    "title": "fix(calculate): filtra medidas pela configuração do msgram.json em todos os formatos de saída",
+    "number": 20,
+    "last_merged_at": "2026-11-07T13:27:01Z",
+    "title": "fix(quality): saneamento de exclusões do cli.py e parsers.py no SonarCloud",
     "author": "DiegoCarlito"
   },
   "2026.2-MeasureSoftGram-Core": {
-    "number": 23,
-    "last_merged_at": "2026-10-22T15:37:07Z",
-    "title": "feat(transformations): função de correlação f_sigma e prepara 1.5.5rc4",
-    "author": "gusrberto"
+    "number": 26,
+    "last_merged_at": "2026-11-07T12:47:28Z",
+    "title": "fix(coverage): ajusta relatórios e coleta de métricas do Core",
+    "author": "Marcosatc147"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 101,
-    "last_merged_at": "2026-11-05T21:24:17Z",
-    "title": "fix(dashboards): correções do PO na Distribuição Estatística (US21.03)",
-    "author": "LuizaMaluf"
-  },
-  "2026.2-MeasureSoftGram-Parser": {
-    "number": 16,
-    "last_merged_at": "2026-10-21T01:19:32Z",
-    "title": "ci(release): alinha as versões das actions do release.yml às do Core e da CLI",
-    "author": "bottinolucas"
-  },
-  "2026.2-MeasureSoftGram-Plugin": {
-    "number": 6,
-    "last_merged_at": "2026-11-05T22:55:03Z",
-    "title": "chore(ci): padronização do workflow test.yml e expurgo de workflows legados",
+    "number": 97,
+    "last_merged_at": "2026-11-06T22:45:30Z",
+    "title": "fix(quality): remove exclusoes indevidas do Sonar e padroniza rotas como re-exports",
     "author": "luciano-freitas-melo"
   },
+  "2026.2-MeasureSoftGram-Parser": {
+    "number": 17,
+    "last_merged_at": "2026-11-07T12:59:11Z",
+    "title": "fix(coverage): ajusta relatórios e coleta de métricas do Parser",
+    "author": "Marcosatc147"
+  },
+  "2026.2-MeasureSoftGram-Plugin": {
+    "number": 10,
+    "last_merged_at": "2026-11-07T13:19:16Z",
+    "title": "fix(ci): reativa metrics.yml, reporte de testes no SonarCloud e saneamento de segurança",
+    "author": "DiegoCarlito"
+  },
   "2026.2-MeasureSoftGram-Service": {
-    "number": 83,
-    "last_merged_at": "2026-11-05T20:53:04Z",
-    "title": "fix(releases): inclui desvio padrão e variância no resumo da distribuição (US21.03)",
-    "author": "LuizaMaluf"
+    "number": 84,
+    "last_merged_at": "2026-11-07T13:13:48Z",
+    "title": "fix(coverage): alinha escopo, relatórios e coleta do Service",
+    "author": "Marcosatc147"
   }
 }

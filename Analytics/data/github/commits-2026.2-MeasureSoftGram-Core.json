@@ -1,11 +1,50 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-07T11:11:58+00:00",
+ "coletado_em": "2026-11-07T13:40:11+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Core",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "e9ec68d6b842504cc51eb4e3f0e34bd16a710681",
+   "date": "2026-11-07T12:47:27Z",
+   "author": "Marcosatc147",
+   "message": "fix(coverage): ajusta relatórios de testes e coleta de métricas do Core (#26)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".coveragerc",
+     "status": "added",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 1
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 0
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 12
+    },
+    {
+     "filename": "tox.ini",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 6
+    }
+   ]
+  },
   {
    "sha": "2f56e779f01c486503ebd817c89ca0353a8ab3d5",
    "date": "2026-10-22T15:37:07Z",
@@ -2676,5 +2715,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }

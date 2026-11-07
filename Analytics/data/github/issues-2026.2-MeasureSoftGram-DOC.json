@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-07T11:11:58+00:00",
+ "coletado_em": "2026-11-07T13:40:11+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
@@ -8,11 +8,11 @@
   {
    "number": 198,
    "title": "feat(dashboard): [DA-R3.02] corrige Q-Rapids, EVM e CI apontados no feedback da R2",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-07T02:43:47Z",
-   "closed_at": null,
-   "updated_at": "2026-11-07T03:18:02Z",
+   "closed_at": "2026-11-07T13:20:16Z",
+   "updated_at": "2026-11-07T13:20:19Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -44,11 +44,11 @@
   {
    "number": 196,
    "title": "feat(analytics): [DOC#192] centraliza coleta no docs e condiciona SonarCloud a novos PRs na develop",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-06T21:48:33Z",
-   "closed_at": null,
-   "updated_at": "2026-11-06T21:49:15Z",
+   "closed_at": "2026-11-07T13:17:34Z",
+   "updated_at": "2026-11-07T13:17:36Z",
    "labels": [
     "analytics"
    ],
@@ -90,12 +90,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:13:30Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T01:59:38Z",
+   "updated_at": "2026-11-07T12:04:25Z",
    "labels": [
     "task"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "storch7"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1352,
@@ -130,7 +132,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:12:06Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T21:21:12Z",
+   "updated_at": "2026-11-07T13:32:33Z",
    "labels": [
     "task"
    ],
@@ -151,7 +153,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:11:39Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T08:02:07Z",
+   "updated_at": "2026-11-07T12:25:02Z",
    "labels": [
     "task"
    ],
@@ -172,7 +174,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:10:48Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T08:01:31Z",
+   "updated_at": "2026-11-07T12:02:00Z",
    "labels": [
     "task"
    ],
@@ -189,11 +191,11 @@
   {
    "number": 189,
    "title": "[QUAL.01.5] Demais repositórios: Ajustes de relatórios e cobertura (Service, Action, Core)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-06T00:10:22Z",
-   "closed_at": null,
-   "updated_at": "2026-11-06T16:17:18Z",
+   "closed_at": "2026-11-07T13:15:59Z",
+   "updated_at": "2026-11-07T13:15:59Z",
    "labels": [
     "subtask"
    ],
@@ -210,11 +212,11 @@
   {
    "number": 188,
    "title": "[QUAL.01.4] Plugin: Reativação de metrics.yml e reporte de testes",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-06T00:09:25Z",
-   "closed_at": null,
-   "updated_at": "2026-11-07T02:24:19Z",
+   "closed_at": "2026-11-07T13:19:18Z",
+   "updated_at": "2026-11-07T13:19:18Z",
    "labels": [
     "subtask"
    ],
@@ -231,11 +233,11 @@
   {
    "number": 187,
    "title": "[QUAL.01.3] CLI: Saneamento de exclusões (cli.py e parsers.py)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-06T00:09:01Z",
-   "closed_at": null,
-   "updated_at": "2026-11-07T01:52:56Z",
+   "closed_at": "2026-11-07T13:27:03Z",
+   "updated_at": "2026-11-07T13:27:03Z",
    "labels": [
     "subtask"
    ],
@@ -298,12 +300,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:07:34Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T09:06:21Z",
+   "updated_at": "2026-11-07T13:31:17Z",
    "labels": [
     "task"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1595,
@@ -317,7 +321,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:06:46Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T08:01:07Z",
+   "updated_at": "2026-11-07T13:31:38Z",
    "labels": [
     "epic"
    ],
@@ -355,7 +359,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:51:28Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T14:29:29Z",
+   "updated_at": "2026-11-07T13:30:51Z",
    "labels": [
     "US"
    ],
@@ -376,7 +380,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:51Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T14:29:09Z",
+   "updated_at": "2026-11-07T13:25:55Z",
    "labels": [
     "US"
    ],
@@ -397,7 +401,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:08Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T14:28:40Z",
+   "updated_at": "2026-11-07T13:05:44Z",
    "labels": [
     "US"
    ],
@@ -1259,7 +1263,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:31Z",
    "closed_at": null,
-   "updated_at": "2026-11-06T12:15:58Z",
+   "updated_at": "2026-11-07T12:58:24Z",
    "labels": [
     "US",
     "service",

@@ -1,11 +1,32 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-07T11:11:58+00:00",
+ "coletado_em": "2026-11-07T13:40:11+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-CLI",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "ad426a2b6ef66a286566c4b0c4585d231c37429d",
+   "date": "2026-11-07T13:27:01Z",
+   "author": "DiegoCarlito",
+   "message": "fix(quality): saneamento de exclusões do cli.py e parsers.py no SonarCloud (#20)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "tox.ini",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 2
+    }
+   ]
+  },
   {
    "sha": "1e81255e1f7cd919d3a6166c9f397ea8fbf136f8",
    "date": "2026-10-25T17:57:26Z",
@@ -1405,5 +1426,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }

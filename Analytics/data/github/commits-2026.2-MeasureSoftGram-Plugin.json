@@ -1,11 +1,68 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-07T11:11:58+00:00",
+ "coletado_em": "2026-11-07T13:40:11+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Plugin",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "a2d868cf550b49f68d9a7bc1b4094556ef254c30",
+   "date": "2026-11-07T13:19:16Z",
+   "author": "DiegoCarlito",
+   "message": "fix(ci): reativa metrics.yml, reporte de testes no SonarCloud e saneamento de segurança (#10)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/metrics.yml",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 0
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 2
+    },
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 0
+    },
+    {
+     "filename": "scripts/generate-sonar-report.mjs",
+     "status": "added",
+     "additions": 80,
+     "deletions": 0
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/utilities/utilities.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": "webview-ui/src/App.tsx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 0
+    },
+    {
+     "filename": "webview-ui/src/components/action/OutputView.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    }
+   ]
+  },
   {
    "sha": "95aedabca32b3393d90c354a23babd2a89e73e75",
    "date": "2026-11-05T22:55:03Z",
@@ -1126,5 +1183,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }
