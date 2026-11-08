@@ -1,10 +1,107 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-08T17:11:43+00:00",
+ "coletado_em": "2026-11-08T23:12:37+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 239,
+   "title": "[TASK15.01.05] Docs: Documentação técnica e guia de integração do GitLab CI/CD",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-08T20:21:47Z",
+   "closed_at": null,
+   "updated_at": "2026-11-08T20:22:28Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1242,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/239",
+   "author": "DiegoCarlito"
+  },
+  {
+   "number": 238,
+   "title": "[TASK15.01.04] Validação E2E: Executar pipeline piloto em projeto de teste no GitLab",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-08T20:20:22Z",
+   "closed_at": null,
+   "updated_at": "2026-11-08T20:20:56Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1524,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/238",
+   "author": "DiegoCarlito"
+  },
+  {
+   "number": 237,
+   "title": "[TASK15.01.03] Service: Suportar recepção e persistência de métricas de projetos GitLab",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-08T20:18:17Z",
+   "closed_at": null,
+   "updated_at": "2026-11-08T20:19:03Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1602,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/237",
+   "author": "DiegoCarlito"
+  },
+  {
+   "number": 236,
+   "title": "[TASK15.01.02] GitLab CI: Desenvolver componente do CI/CD Catalog e template de job",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-08T20:15:35Z",
+   "closed_at": null,
+   "updated_at": "2026-11-08T20:17:15Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1617,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/236",
+   "author": "DiegoCarlito"
+  },
+  {
+   "number": 235,
+   "title": "[TASK15.01.01] Coletor: Implementar extração de métricas e feedback para o GitLab",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-08T20:12:05Z",
+   "closed_at": null,
+   "updated_at": "2026-11-08T20:13:17Z",
+   "labels": [
+    "task",
+    "action"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1883,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/235",
+   "author": "DiegoCarlito"
+  },
   {
    "number": 234,
    "title": "[DA-R3.03.09] Otimização e deduplicação da coleta de métricas do dashboard (Cron e Hashing)",
@@ -764,14 +861,15 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:13:30Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T20:05:35Z",
+   "updated_at": "2026-11-08T20:07:10Z",
    "labels": [
     "task"
    ],
    "type": "Task",
    "assignees": [
     "luciano-freitas-melo",
-    "storch7"
+    "storch7",
+    "DiegoCarlito"
    ],
    "milestone": null,
    "milestone_due_on": null,
