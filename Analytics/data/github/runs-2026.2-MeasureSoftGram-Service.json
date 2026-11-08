@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-11-07T23:12:15+00:00",
+ "coletado_em": "2026-11-08T11:12:34+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
@@ -63,20 +63,6 @@
    "workflow_id": 339749512
   },
   {
-   "id": 42107502622,
-   "name": "Rodar Testes",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-11-05T20:53:08Z",
-   "run_started_at": "2026-11-05T20:53:08Z",
-   "updated_at": "2026-11-05T20:56:07Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/42107502622",
-   "run_number": 173,
-   "workflow_id": 339749512
-  },
-  {
    "id": 42107502520,
    "name": "Export de métricas",
    "status": "completed",
@@ -89,6 +75,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/42107502520",
    "run_number": 64,
    "workflow_id": 339749509
+  },
+  {
+   "id": 42107502622,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-11-05T20:53:08Z",
+   "run_started_at": "2026-11-05T20:53:08Z",
+   "updated_at": "2026-11-05T20:56:07Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/42107502622",
+   "run_number": 173,
+   "workflow_id": 339749512
   },
   {
    "id": 42106076381,

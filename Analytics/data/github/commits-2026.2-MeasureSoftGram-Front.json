@@ -1,11 +1,32 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-07T23:12:15+00:00",
+ "coletado_em": "2026-11-08T11:12:34+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "dfe68bf9dd8a41ec4a3df97fdf62a7c2fdd15ee7",
+   "date": "2026-11-07T23:31:15Z",
+   "author": "MilenaFRocha",
+   "message": "feat(equalizador): mostra a seta de vetor em cima das siglas Rp, Rd e Rc (#102)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/shared/components/PlannedVsAccomplishedEqualizer/PlannedVsAccomplishedEqualizer.tsx",
+     "status": "modified",
+     "additions": 55,
+     "deletions": 8
+    },
+    {
+     "filename": "src/shared/components/PlannedVsAccomplishedEqualizer/tests/PlannedVsAccomplishedEqualizer.spec.tsx",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "ec0857b57c1d533f55fc9423c52c48fee32c4d65",
    "date": "2026-11-06T22:45:29Z",
@@ -11191,5 +11212,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 1
 }

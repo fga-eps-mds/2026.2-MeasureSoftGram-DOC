@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-07T23:12:15+00:00",
+ "coletado_em": "2026-11-08T11:12:34+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
@@ -25,11 +25,11 @@
   {
    "number": 102,
    "title": "feat(equalizador): mostra a seta de vetor em cima das siglas Rp, Rd e Rc",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-07T15:23:56Z",
-   "closed_at": null,
-   "updated_at": "2026-11-07T15:26:42Z",
+   "closed_at": "2026-11-07T23:31:16Z",
+   "updated_at": "2026-11-07T23:31:18Z",
    "labels": [],
    "type": null,
    "assignees": [],

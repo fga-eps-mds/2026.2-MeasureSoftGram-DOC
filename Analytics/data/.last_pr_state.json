@@ -24,10 +24,10 @@
     "author": "Marcosatc147"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 97,
-    "last_merged_at": "2026-11-06T22:45:30Z",
-    "title": "fix(quality): remove exclusoes indevidas do Sonar e padroniza rotas como re-exports",
-    "author": "luciano-freitas-melo"
+    "number": 102,
+    "last_merged_at": "2026-11-07T23:31:16Z",
+    "title": "feat(equalizador): mostra a seta de vetor em cima das siglas Rp, Rd e Rc",
+    "author": "MilenaFRocha"
   },
   "2026.2-MeasureSoftGram-Parser": {
     "number": 17,
