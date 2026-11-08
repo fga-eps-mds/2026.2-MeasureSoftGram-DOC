@@ -7,7 +7,7 @@ name: Coleta de dados do dashboard
 # O Streamlit Community Cloud republica o dashboard a cada commit na main.
 #
 # Quando roda:
-#   - 3 vezes por dia (08h, 14h e 20h em Brasília);
+#   - 1 vez por dia (23:59 em Brasília);
 #   - manual sob demanda: Actions > Coleta de dados do dashboard > Run workflow.
 #
 # Regra do SonarCloud:
@@ -16,7 +16,7 @@ name: Coleta de dados do dashboard
 
 on:
   schedule:
-    - cron: "7 11,17,23 * * *"   # 08:07, 14:07 e 20:07 em Brasília (UTC-3)
+    - cron: "59 2 * * *"   # 23:59 em Brasília (UTC-3)
   workflow_dispatch:
     inputs:
       forcar_coleta:
@@ -89,6 +89,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python scripts/coleta_github.py --repos "${{ steps.verificar.outputs.repos_alvo }}"
 
+      - name: Saneamento de snapshots duplicados (hashing)
+        working-directory: Analytics
+        run: python scripts/saneamento_dados.py
+
       - name: Testes dos cálculos
         working-directory: Analytics
         run: python -m unittest discover -s tests
@@ -97,6 +101,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -u Analytics/data
           git add Analytics/data/zenhub Analytics/data/sonar Analytics/data/.last_pr_state.json $(ls -d Analytics/data/github 2>/dev/null)
           if git diff --cached --quiet; then echo "Sem dados novos"; exit 0; fi
           git commit -m "chore(dados): coleta automática do Zenhub, SonarCloud e GitHub Actions"
