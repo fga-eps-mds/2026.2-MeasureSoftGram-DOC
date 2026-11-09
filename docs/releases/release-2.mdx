@@ -9,7 +9,7 @@ description: Critérios da Release 2, situação de cada um e onde está a evid�
 
 | Data | Sprints | Peso | Status |
 | --- | --- | --- | --- |
-| 26/10/2026 | 4 a 7 (28/09–25/10) | 30% das releases | Em andamento |
+| 26/10/2026 | 4 a 7 (28/09–25/10) | 30% das releases | Entregue · aceite das histórias em andamento |
 
 ## Objetivo da release
 
@@ -22,14 +22,20 @@ de qualidade.
 ## Critérios da disciplina
 
 Legenda: ✅ atendido · 🟡 parcial · ❌ não atendido · ⏳ a verificar.
-Situação em 21/10/2026, a 5 dias da entrega.
+
+:::caution[Revisão pendente]
+As tabelas abaixo são da situação de 21/10/2026, a 5 dias da entrega, e só a linha
+do aceite das histórias foi revista depois da apresentação. Revisar as demais com
+os dados de fechamento da release — responsáveis: líderes da quinzena 5
+(Gabriel Moura, Gustavo Roberto Silva de Melo, Wallyson Souza).
+:::
 
 ### I. Projeto-Produto
 
 | Critério | Situação | Evidência | Observação |
 | --- | --- | --- | --- |
 | Incremento funcional implantado em homologação | ⏳ | — | Issue de homologação [DOC#71](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/71) aberta |
-| Histórias aceitas pelo cliente com testes de aceitação documentados | ❌ | [Sprint 7](/docs/sprints/sprint-7) | Nenhuma US da R2 fechada em 21/10. Critérios de aceitação validados na [reunião de 07/10](/docs/reunioes/reunioes-po/ata-po-07-10) |
+| Histórias aceitas pelo cliente com testes de aceitação documentados | 🟡 | [Homologação da US07.01](/docs/releases/homologacao-us07-01) | O aceite passou a ser coletado por formulário, critério a critério. A US07.01 foi aceita com ressalvas em 03/11, com o critério 4 rejeitado; as demais seguem em homologação assíncrona ([ata de 04/11](/docs/reunioes/reunioes-po/ata-po-04-11)) |
 | Backlog atualizado e repriorizado após a R1 | 🟡 | [Ata de 07/10](/docs/reunioes/reunioes-po/ata-po-07-10) | O plugin do VS Code saiu do escopo |
 | Protótipos evoluídos no Figma com validação do cliente | 🟡 | [Ata de 07/10](/docs/reunioes/reunioes-po/ata-po-07-10) | O PO aceitou a prévia das 6 histórias por Figma; incluir o link |
 | Testes de integração e cobertura ≥ 85% | 🟡 | [Qualidade técnica](https://20262-measuresoftgram-doc.streamlit.app/sonar) | Coleta de 21/10: AI 99,5 · CLI 92,2 · Parser 92,1 · Core 91,5 · Plugin 89,6 · Front 87,4 · Service 87,2 · **Action 83,3**. Testes de integração a verificar |
@@ -61,13 +67,55 @@ Situação em 21/10/2026, a 5 dias da entrega.
 
 ## O que aprendemos
 
-:::caution[A preencher após a apresentação de 26/10]
-Feedback do professor e do PO e o que muda na R3. Responsáveis: líderes da
-quinzena 5 (Gabriel Moura, Gustavo Roberto Silva de Melo, Wallyson Souza).
-:::
+O detalhamento do feedback e a distribuição das ações estão na
+[ata de feedback da entrega da R2 (28/10)](/docs/reunioes/feedback-release/ata-feedback-r2).
+Abaixo, o que a equipe tira disso como aprendizado e o que muda na R3.
+
+### 1. Entregar implantado mudou a conversa
+
+A R1 foi avaliada por demonstração; a R2, pelo produto rodando em homologação. Foi
+o ponto mais elogiado pelo PO, e é o que viabilizou os formulários de aceite
+critério a critério. **Na R3:** homologação deixa de ser a última etapa da release
+e passa a acompanhar cada história fechada.
+
+### 2. Critério de aceitação sem roteiro de teste vira ressalva
+
+A [US07.01](/docs/releases/homologacao-us07-01) foi aceita com ressalvas e teve um
+critério rejeitado, e nenhum dos achados era bug de lógica: eram estado vazio sem
+mensagem, `.csv` que o Excel em português abre numa coluna só e etiqueta sobreposta
+no gráfico. São coisas que a suíte de testes não vê e que ninguém da equipe tinha
+aberto no navegador antes de pedir o aceite. **Na R3:** testes de aceitação
+cruzados, com quem não implementou a feature percorrendo os critérios
+([ata de 04/11](/docs/reunioes/reunioes-po/ata-po-04-11)).
+
+### 3. O que parece dado errado costuma ser regra não documentada
+
+O PO leu o gráfico de métricas vazio como violação da lógica *bottom-up* do modelo.
+Era o filtro `qualifier: 'TRK'`, que exclui as métricas coletadas por arquivo — uma
+decisão deliberada e correta, mas que não estava escrita em lugar nenhum. A equipe
+gastou duas rodadas para reconstruir a explicação. **Na R3:** regra de negócio que
+muda o que o usuário vê é registrada junto com a história, não só no comentário do
+código. O caso está escrito em
+[Homologação da US07.01](/docs/releases/homologacao-us07-01#por-que-o-gráfico-de-métricas-fica-vazio).
+
+### 4. Qualidade medida só pelo SonarQube não sustentou a avaliação
+
+A cobertura unitária passou de 85% na maioria dos repositórios e ainda assim o
+professor apontou ausência de planejamento formal de qualidade e de testes
+funcionais. **Na R3:** plano de qualidade sobre ISO/IEC 25010 e Q-Rapids com
+baseline e metas, mais suíte *end-to-end* nos fluxos críticos (Ação B1), com corte
+dos épicos MSG23 e MSG24 para abrir espaço.
+
+### 5. Critério que a equipe não consegue testar chega como ressalva
+
+O critério 5 da US07.01 ("qualquer membro vê os dashboards") voltou com "não
+consigo testar esse cenário": só havia conta de administrador em homologação.
+**Na R3:** o ambiente de homologação precisa ter os perfis de usuário que os
+critérios exigem antes do envio do formulário.
 
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
 | 1.0 | 21/10/2026 | Criação: critérios da R2 com situação a 5 dias da entrega | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.1 | 09/11/2026 | "O que aprendemos" preenchido após a apresentação e o aceite da US07.01; linha do aceite das histórias revista | [@devwallyson](https://github.com/devwallyson) |  |

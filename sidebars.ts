@@ -13,7 +13,16 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Releases",
       collapsed: false,
-      items: ["releases/release-1", "releases/release-2", "releases/release-3"],
+      items: [
+        "releases/release-1",
+        "releases/release-2",
+        "releases/release-3",
+        {
+          type: "category",
+          label: "Homologações",
+          items: ["releases/homologacao-us07-01"],
+        },
+      ],
     },
     {
       type: "category",

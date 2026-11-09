@@ -1,0 +1,109 @@
+---
+id: homologacao-us07-01
+title: Homologação da US07.01 — Dashboards sem o Grafana
+sidebar_label: Homologação US07.01
+description: Resultado do formulário de aceite da US07.01, o que foi corrigido em cada ressalva e por que o gráfico de métricas fica vazio.
+---
+
+# Homologação da US07.01 — Dashboards sem o Grafana
+
+Registro do formulário de aceite da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131)
+respondido pelo PO em 03/11/2026, o que já foi corrigido em cada ressalva e o que
+ainda depende de terceiros. A página existe para que o reteste da US não recomece
+do zero e para que a justificativa técnica do gráfico de métricas não precise ser
+reconstruída na próxima homologação.
+
+| Avaliador | Papel | Data | Ambiente | Decisão final |
+| --- | --- | --- | --- | --- |
+| Hilmer Rodrigues Neri | Product Owner | 03/11/2026 | `develop` (homologação) | **Aceito com ressalvas** |
+
+## Resultado por critério
+
+| # | Critério | Decisão | Observação do PO |
+| --- | --- | --- | --- |
+| 1 | Visão Geral de Qualidade (totais, indicador, planejado × realizado, radar) | 🟡 Aceito com ressalvas | Nível das métricas não exibido; falta o símbolo de vetor em Rp, Rd, Rc e Rp − Rd; radar pequeno ao lado do equalizador; valores do `.csv` numa coluna só |
+| 2 | Evolução Temporal (4 gráficos e filtros em cascata) | 🟡 Aceito com ressalvas | A mensagem de aviso está errada e pouco clara: manda o usuário à Distribuição Estatística, que não exibe valores coletados. "Deveria ser um erro e não um aviso" |
+| 3 | Gráfico de pulso na tela do repositório | 🟡 Aceito com ressalvas | "Sombra" do nome da release, defeito já corrigido no pulso da visão geral |
+| 4 | Estados de carregamento, sem dados e erro em cada gráfico | ❌ **Rejeitado** | "Ao escolher um produto 'sem dados' não foi exibida nenhuma mensagem explicativa" |
+| 5 | Qualquer membro da organização vê os dashboards, não só o administrador | 🟡 Aceito com ressalvas | "Não consigo testar esse cenário" |
+| 6 | Nenhuma tela mostra painéis do Grafana | ✅ Aceito | — |
+| 7 | Cores dos gráficos seguem o guia de IDV | ✅ Aceito | — |
+
+## Situação das ressalvas
+
+| Ressalva | Critério | O que foi feito | Evidência | Situação |
+| --- | --- | --- | --- | --- |
+| Símbolo de vetor em Rp, Rd e Rc | 1 | Seta de vetor sobre as siglas do equalizador | [Front#102](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/102) | ✅ Mesclado |
+| Radar desproporcional ao equalizador | 1 | Altura do radar de 300px para 480px: o raio é 72% do menor lado, então num card largo o círculo ficava miúdo | [Front#103](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/103) | ✅ Mesclado |
+| "Sombra" do nome da release no pulso | 3 | O gráfico do repositório não passava `releaseStartLabels: false`: o início de uma release cai no fim da anterior e as duas etiquetas se sobrepunham | [Front#103](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/103) | ✅ Mesclado |
+| Mensagem errada no gráfico de métricas | 2 | Texto reescrito: deixou de citar a Distribuição Estatística e passou a explicar que o gráfico mostra só métricas do repositório inteiro | [Front#103](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/103) | ✅ Mesclado — ver [a justificativa abaixo](#por-que-o-gráfico-de-métricas-fica-vazio) |
+| Valores do `.csv` numa coluna só | 1 | Separador `;`, vírgula decimal e marca de ordem de bytes, que é como o Excel em português abre o arquivo em colunas | [Front#106](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/106) | ✅ Mesclado |
+| Produto "sem dados" sem mensagem explicativa | 4 | Card de Totais com os estados de carregamento e de ausência: sem modelo de qualidade os quatro totais mostram `—` em vez de `0`, com aviso explicando o motivo | [Front#107](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/107) | 🟡 Em revisão |
+| Nível das métricas não exibido | 1 | Comportamento esperado do filtro `TRK`, não defeito. O que falta é uma tela de métricas por arquivo — escopo novo | — | 🟡 Justificado, tela pendente |
+| Critério 5 não testável | 5 | Criar uma conta sem perfil de administrador no ambiente de homologação | — | ⏳ Pendente |
+
+:::caution[O que ainda depende do PO]
+Os critérios 3 e 4 citam "ver imagem" e as duas imagens não vieram no formulário.
+O defeito do critério 3 foi reproduzido e corrigido sem elas. O do critério 4
+tem uma causa provável identificada e corrigida (card de Totais), mas o fechamento
+depende de confirmar com o PO qual era a tela do print.
+:::
+
+## Por que o gráfico de métricas fica vazio
+
+O PO apontou, no critério 1 e de novo no critério 2, que o nível de métricas não
+exibe valores enquanto os níveis acima exibem — e que isso violaria a lógica
+*bottom-up* do modelo, já que não existe medida sem métrica. O mesmo ponto virou a
+[Ação A1 da ata de feedback da R2](/docs/reunioes/feedback-release/ata-feedback-r2),
+com a hipótese de "erro no mock de homologação ou bug de consulta".
+
+**Não é nenhum dos dois.** O Service guarda a coleta em dois níveis, distinguidos
+pelo campo `qualifier` de `CollectedMetric`:
+
+| `qualifier` | Granularidade | Origem típica | Exemplos |
+| --- | --- | --- | --- |
+| `TRK` | Um valor por análise, do repositório inteiro | API do GitHub | `sum_ci_feedback_times`, `total_builds` |
+| `FIL` | Um valor por arquivo analisado | SonarQube | `coverage`, `complexity`, `functions`, `comment_lines_density`, `duplicated_lines_density`, `sqale_debt_ratio` |
+
+A lista das seis métricas por arquivo está fixada em `src/utils/file_metrics.py`
+no Service, e é a partir delas que `src/math_model/services.py` calcula as
+**medidas**. Ou seja: a cadeia *bottom-up* está íntegra — as medidas exibidas nos
+gráficos de cima realmente vêm dessas métricas.
+
+O que acontece é que o **gráfico de métricas consulta só `qualifier: 'TRK'`**
+(`useTemporalEvolution.ts`), pela mesma regra já usada na Análise por Entidade
+(US21.02) e na Distribuição Estatística: uma série temporal ou um histograma
+precisam de um valor por análise, e uma métrica por arquivo tem centenas de
+valores na mesma análise, sem um número único que represente o repositório.
+
+Daí a conclusão que importa registrar:
+
+- **Métricas vazias com medidas preenchidas é o estado esperado** quando a medida
+  escolhida depende só de métricas do SonarQube. Não indica falta de coleta.
+- **Transformar essa condição em erro seria um falso positivo** — foi por isso que
+  a correção do critério 2 reescreveu o texto da mensagem em vez de trocar o
+  estado de aviso para erro, como o PO havia sugerido.
+- **A necessidade real por trás da ressalva é outra:** hoje nenhuma tela do produto
+  exibe métricas por arquivo. O serviço `getMetricsLatestValues` e o componente
+  `LatestValueTable` existem no Front, mas nenhuma página os consome. Mostrar
+  `coverage` por arquivo é uma história nova, não um ajuste de release *minor*.
+
+:::tip[Encaminhamento]
+Levar ao PO como proposta de história para a R3 ou para o backlog: "ver as métricas
+coletadas por arquivo de um repositório". Enquanto ela não existe, a mensagem do
+gráfico de métricas é o único lugar onde o usuário descobre essa distinção.
+:::
+
+## Evidências
+
+- [Issue da US07.01 (DOC#131)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131)
+- [Épico MSG07 — Descontinuação do Grafana (DOC#49)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/49)
+- [Front#102](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/102) · [Front#103](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/103) · [Front#106](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/106) · [Front#107](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/107)
+- [Ata de feedback da entrega da R2 (28/10)](/docs/reunioes/feedback-release/ata-feedback-r2) — Ação A1
+- [Ata da reunião com o PO (04/11)](/docs/reunioes/reunioes-po/ata-po-04-11) — estratégia de testes de aceitação cruzados
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 09/11/2026 | Criação: resultado do aceite, situação das ressalvas e justificativa do filtro `TRK` | [@devwallyson](https://github.com/devwallyson) |  |
