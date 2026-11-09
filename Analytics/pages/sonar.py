@@ -40,7 +40,7 @@ def _menus(f):
         ("Dívida técnica", "tempo estimado para corrigir os code smells", "`sqale_index` em minutos, mostrado em horas",
          []),
         ("Duplicação", "% de linhas duplicadas", "valor do SonarCloud por repositório", []),
-        ("Ratings (A a E)", "notas de confiabilidade, segurança e manutenibilidade", "A = melhor, E = pior; o painel "
+        ("Ratings (A a E)", "classificações de confiabilidade, segurança e manutenibilidade", "A = melhor, E = pior; o painel "
          "mostra o pior repositório (não existe média de letra)", []),
         ("Variação", "mudança desde a coleta anterior", "atual − anterior; em % é em pontos percentuais (p.p.)", []),
     ], [
@@ -104,7 +104,7 @@ LETRA_SEG = {1: "A", 2: "B", 3: "C", 4: "D", 5: "E"}
 
 
 def _seguranca(atual, serie_ate, repos):
-    """Segurança do SonarCloud por repositório. Não entra na nota Q-Rapids (o model-doc não prevê segurança)."""
+    """Segurança do SonarCloud por repositório. Não entra nos indicadores Q-Rapids (o model-doc não prevê segurança)."""
     a = atual[atual["repositorio"].isin(repos)]
     pivo = a.pivot_table(index="repositorio", columns="metrica", values="valor", aggfunc="last") if not a.empty         else pd.DataFrame()
     if pivo.empty or not {"security_rating", "vulnerabilities"} & set(pivo.columns):
@@ -144,7 +144,7 @@ def _seguranca(atual, serie_ate, repos):
     for m, rot in (("vulnerabilities", "Vulnerabilidades"), ("security_hotspots", "Security hotspots")):
         t[rot] = [sn.formatar(m, x) if pd.notna(x) else "—" for x in (pivo[m] if m in pivo else [None] * len(pivo))]
     st.dataframe(t, use_container_width=True, hide_index=True)
-    st.caption("Segurança é uma métrica técnica complementar do SonarCloud, fora da nota Q-Rapids: o modelo "
+    st.caption("Segurança é uma métrica técnica complementar do SonarCloud, fora dos indicadores Q-Rapids: o modelo "
                "(model-doc, abril/2019) não tem fator de segurança. O rating depende da vulnerabilidade mais grave "
                "aberta (A nenhuma, B menor, C maior, D crítica, E bloqueante).")
 
@@ -243,7 +243,7 @@ def pagina():
 
     layout.secao("Análise", "A qualidade está melhorando, e onde o teste rende mais?", ["SONAR"])
     _analise(ctx, f, rec, serie, repos, rel, metrica)
-    st.caption("A nota de qualidade (modelo Q-Rapids, do arquivo à nota) está na página **Qualidade (Q-Rapids)**.")
+    st.caption("Os indicadores de qualidade (plano Q-Rapids, do dado bruto ao indicador) estão na página **Qualidade (Q-Rapids)**.")
 
 
 def _analise(ctx, f, rec, serie, repos, rel, metrica):

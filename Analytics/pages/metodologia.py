@@ -52,7 +52,7 @@ em **Filtros desta página**, os filtros próprios da página aberta e o resumo 
 | Riscos | período padrão | identificados até o fim; revisões no período | não se aplica | — | status, nível, categoria, responsável |
 | Decisões | meta da release | tabela no período; meta acumulada até o fim | não se aplica | — | tipo, status, indicador |
 | Qualidade técnica | metas | situação no fim do período; evolução no período | repositórios | coletas do pipeline | Quality Gate, linguagem, métrica do gráfico |
-| Qualidade (Q-Rapids) | comparação entre releases | nota na última coleta até o fim do período; métricas de processo no período | repositórios avaliados | coletas do pipeline | repositório do detalhamento |
+| Qualidade (Q-Rapids) | não se aplica: compara sempre R1 × R2 × atual | Sonar na última coleta até o fim de cada janela; CI, issues e sprints dentro dela | repositórios avaliados | coletas do pipeline | — |
 | Integração contínua | período padrão | execuções criadas no período | repositórios | — | workflow, branch da execução |
 
 **Situação no fim do período**: com a R1 escolhida, a página mostra o valor de cada métrica na última coleta até

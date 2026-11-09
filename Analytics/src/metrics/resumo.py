@@ -97,22 +97,19 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
     else:
         out.append(_item("Qualidade", "Quality Gate, bugs e vulnerabilidades", None, "unavailable",
                          "não coletados: rodar scripts/coleta_sonar.py", "Qualidade técnica", "SONAR"))
-    try:   # nota de qualidade do notebook (Q-Rapids), média dos repositórios
+    try:   # indicadores estratégicos do plano de qualidade (Q-Rapids): valor de hoje contra piso e meta da R3
         from src.metrics import qrapids
-        rq = {**rec, "repos": [r for r in repos if r in config.QRAPIDS["linguagem"]]}
-        notas = qrapids.notas_por_repo(ctx, filtros, rq)
-        if notas:
-            media, fora = qrapids.media_repos(notas, lambda a: a["total"])
-            tot = {sn.nome_curto(r): n["avaliacao"]["total"] for r, n in notas.items()
-                   if sn.nome_curto(r) not in fora}
-            if tot:
-                pior = min(tot, key=tot.get)
-                out.append(_item("Qualidade", "Nota de qualidade Q-Rapids (média)", num(media, 2),
-                                 "good" if media >= 0.7 else ("warning" if media >= 0.5 else "critical"),
-                                 f"0 a 1 · {len(tot)} repositórios · pior: {pior} ({num(tot[pior], 2)})"
-                                 + (f" · sem dado no pipeline: {', '.join(fora)}" if fora else ""),
-                                 "Qualidade (Q-Rapids)", "SONAR"))
-    except Exception:  # noqa: BLE001 — a nota não derruba a visão executiva
+        av = qrapids.avaliar_releases(ctx, filtros)
+        ind = av["indicadores"]
+        com_valor = ind[ind["Atual"].notna()]
+        if not com_valor.empty:
+            na_meta = int((com_valor["situacao"] == qrapids.STATUS["verde"]).sum())
+            pior = max(com_valor["situacao"].map({qrapids.STATUS["vermelho"]: 2, qrapids.STATUS["amarelo"]: 1,
+                                                    qrapids.STATUS["verde"]: 0}))
+            partes = " · ".join(f"{r.nome} {num(r.Atual, 2)} (meta ≥ {num(r.meta, 2)})" for r in com_valor.itertuples())
+            out.append(_item("Qualidade", "Indicadores Q-Rapids na meta", f"{na_meta} de {len(ind)}",
+                             {0: "good", 1: "warning", 2: "critical"}[pior], partes, "Qualidade (Q-Rapids)", "SONAR"))
+    except Exception:  # noqa: BLE001 — os indicadores não derrubam a visão executiva
         pass
     # Segurança fica fora do Q-Rapids (o model-doc não a prevê): é o rating do SonarCloud, por repositório.
     sec = atual[(atual["metrica"] == "security_rating") & atual["repositorio"].isin(repos)]

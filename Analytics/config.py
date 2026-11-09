@@ -116,7 +116,7 @@ META_INDICE_EVM = 0.95   # SPI/CPI abaixo disso = atenção
 LIMITE_INDICE_CRITICO = 0.80   # SPI/CPI abaixo disso = crítico
 META_TAXA_CONCLUSAO = 80.0     # % de SP concluídos ÷ planejados nas sprints concluídas
 LIMITE_TAXA_CRITICO = 60.0     # abaixo disso = crítico
-META_CI_SUCESSO = 80.0   # % de execuções da CI com sucesso
+META_CI_SUCESSO = 95.0   # % de execuções da CI com sucesso (metas.mdx, M10: meta ≥ 0,95)
 LIMITE_CI_CRITICO = 60.0 # abaixo disso = crítico
 
 # ───────────────────────── modelo de qualidade Q-Rapids ─────────────────────────
@@ -160,6 +160,21 @@ QRAPIDS = {
         "testes_passando": 0.25, "testes_rapidos": 0.25, "cobertura": 0.5,       # → Situação dos testes
         "qualidade_codigo": 1.0, "situacao_testes": 1.0,                          # psc1, psc2
         "manutenibilidade": 0.5, "confiabilidade": 0.5,                           # pc1, pc2 → nota total
+    },
+    # Metas da R3 do plano de qualidade (docs/planejamento/metas.mdx). Só as métricas têm meta: a do fator é a
+    # média das metas das métricas e a do indicador é a fórmula aplicada às metas dos fatores, truncada em 2 casas.
+    "plano": {
+        "metas": {
+            "complexity": 0.88, "duplication": 0.99,                     # M1, M2
+            "test_success": 1.00, "test_coverage": 0.90,                 # M3, M5
+            "non_blocking_files": 1.00, "well_defined_issues": 0.95,     # M6, M7
+            "team_throughput": 0.60, "build_stability": 0.95,            # M9, M10
+            "development_task_completion": 0.80,                         # DT
+        },
+        "piso_por_repo": {"test_coverage": 0.80, "build_stability": 0.90},   # M5 e M10: piso por repositório
+        "portao_ci_mediana_min": 5.0,            # M8: mediana do test.yml por repositório (portão, fora da média)
+        "repos_com_relatorio_de_testes": 8,      # M3: todos os repositórios enviam o relatório de testes
+        "meta_throughput_por_sprint": True,      # M9: a meta vale para cada sprint
     },
     "justificativa": {
         "complexidade_por_funcao": "a preencher pelo time",
