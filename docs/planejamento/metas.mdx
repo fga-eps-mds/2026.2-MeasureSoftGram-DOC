@@ -1,0 +1,460 @@
+# Metas dos Indicadores Estratégicos
+
+> **Data:** 07/11/2026 · **Autor:** Guilherme
+>
+> Documento relacionado: [Seleção de Métricas Q-Rapids — MeasureSoftGram 2026.2](selecaometricas.mdx)
+
+## Sumário
+
+1. [Objetivo e escopo](#objetivo-e-escopo)
+2. [Regras de definição das metas](#regras-de-definição-das-metas)
+3. [Fórmula dos indicadores (decisão do time)](#fórmula-dos-indicadores-decisão-do-time)
+4. [Indicadores estratégicos e fatores](#indicadores-estratégicos-e-fatores)
+5. [Cálculo dos fatores](#cálculo-dos-fatores)
+6. [Cálculo dos indicadores](#cálculo-dos-indicadores)
+7. [Resumo das metas](#resumo-das-metas)
+8. [Product Quality — meta ≥ 0,93](#product-quality--meta--093)
+9. [Blocking — meta ≥ 0,96](#blocking--meta--096)
+10. [Process Performance — meta ≥ 0,60](#process-performance--meta--060)
+11. [Product Readiness — meta ≥ 0,89](#product-readiness--meta--089)
+12. [Portões obrigatórios](#portões-obrigatórios)
+13. [Limitações e pendências](#limitações-e-pendências)
+14. [Referências](#referências)
+
+---
+
+## Objetivo e escopo
+
+Este documento fixa as metas da **Release 3 (30/11/2026)** para os quatro indicadores estratégicos do plano de qualidade: **Product Quality**, **Blocking**, **Process Performance** e **Product Readiness**. Para cada valor, ele registra de onde o número vem e por que foi escolhido.
+
+O escopo são as 10 métricas incluídas no plano [Seleção de Métricas Q-Rapids — MeasureSoftGram 2026.2](selecaometricas.mdx): M1, M2, M3, M5, M6, M7, M8, M9, M10 e DT. As métricas monitoradas, habilitáveis e excluídas não recebem meta.
+
+**Fontes dos dados.** Os valores vêm dos arquivos de `Analytics/data` do repositório `2026.2-MeasureSoftGram-DOC` (commit `43c22d6`, coleta de 07/11/2026): SonarCloud (pipeline `metrics.yml` e snapshot da API), GitHub Actions e Zenhub. O cálculo usa o código de `src/metrics/qrapids.py`, restrito às 10 métricas incluídas, com a branch `develop`.
+
+**Janelas.** R1 = 24/08 a 28/09. R2 = 29/09 a 26/10. "Atual" = 27/10 a 07/11, ou seja, a R3 até a data da coleta. Métricas do SonarCloud usam o último snapshot de cada repositório dentro da janela.
+
+**Definições.** M9 e DT seguem a definição do plano, não a do dashboard. A implementação do dashboard será alinhada ao plano depois que o professor aprovar o documento.
+
+---
+
+## Regras de definição das metas
+
+As metas são fixadas só nas métricas. Fator e indicador recebem a meta por cálculo. Quatro regras sustentam todos os valores deste documento.
+
+1. **A meta nasce na métrica.** Cada métrica recebe uma meta para 30/11, absoluta ou relativa à linha de base, conforme a seção 5 do plano (viés de linguagem).
+   > *Justificativa:* a métrica é o único nível em que o time age diretamente (refatorar um arquivo, escrever um teste, fechar uma issue). Uma meta fixada no indicador não diz o que fazer.
+
+2. **Fator e indicador herdam a meta pela fórmula.** A meta do fator é a média das metas das suas métricas. A meta do indicador é a fórmula do indicador aplicada às metas dos fatores, truncada em duas casas decimais.
+   > *Justificativa:* assim a meta do indicador nunca contradiz as metas de baixo. Se o time bater todas as metas das métricas, o indicador bate a sua. O truncamento evita arredondar a meta para cima.
+
+3. **O piso é o valor da R2.** Abaixo do valor da R2 o indicador regrediu (🔴 vermelho). Entre a R2 e a meta, está em evolução (🟡 amarelo). Na meta ou acima, atingido (🟢 verde).
+   > *Justificativa:* a R2 é a última release fechada e o ponto de partida mais recente que o time conhece. A R1 tem a coleta do SonarCloud ainda sendo corrigida, por isso não serve de piso.
+
+4. **Portões ficam fora da nota.** Grandezas sem escala 0–1 (M8, em minutos) e as metas globais da disciplina (cobertura ≥ 90% e duplicação ≤ 3%) não entram na média. Elas são condições obrigatórias: o indicador só conta como atingido se a nota estiver na meta **e** todos os seus portões passarem.
+   > *Justificativa:* o plano exclui da média o que não está em 0–1 (seção 2, M8). As metas da disciplina são globais por repositório, enquanto M2 e M5 são por arquivo; misturar as duas escalas na média contaria o mesmo dado duas vezes.
+
+Os números-alvo das métricas seguem três critérios, na ordem:
+
+- **(a)** meta fixada pela disciplina ou pelo plano, quando existe;
+- **(b)** melhor valor já atingido pelo time no semestre, quando a métrica oscila;
+- **(c)** número de arquivos ou issues a corrigir que cabe nas 4 sprints restantes da R3 (S9 a S12).
+
+---
+
+## Fórmula dos indicadores (decisão do time)
+
+O indicador é a soma ponderada dos fatores avaliados, com pesos iguais. O fator é a média simples das suas métricas incluídas.
+
+$$
+\text{Fator}_f = \frac{1}{|M_f|} \sum_{m \in M_f} v_m
+\qquad
+\text{Indicador}_i = \sum_{f \in F_i} w_f \cdot \text{Fator}_f,\quad w_f = \frac{1}{|F_i|}
+$$
+
+Aqui $v_m$ é o valor avaliado da métrica (0 = pior, 1 = melhor), $M_f$ são as métricas incluídas no fator $f$ e $F_i$ são os fatores do indicador $i$ que têm ao menos uma métrica 0–1 calculada.
+
+**Justificativa.** Nenhuma das referências traz fórmula para o nível do indicador estratégico:
+
+| Fonte | O que traz | Fórmula do indicador |
+|---|---|---|
+| Q-Rapids Quality Model (abr/2019) | Os 4 indicadores e os fatores de cada um | Não |
+| Martínez-Fernández *et al.* (SEAA 2018) | Agregação por soma ponderada até aspectos de qualidade (Fig. 1: Maintainability = 0,41 · Code Quality + 0,59 · Blocking Code) | Não |
+| Notebook da disciplina (células 51 e 57) | Pesos fixos de fator para Manutenibilidade e Confiabilidade e para a nota total | Não |
+| López *et al.* (2021), QaSD | Forma quantitativa (fórmula sobre os fatores) ou qualitativa (rede bayesiana), sem fixar fórmula nem pesos | Deixa a cargo de quem usa o modelo |
+
+A fórmula adotada estende ao nível do indicador a regra do artigo de 2018, de que os níveis superiores se agregam da mesma forma (soma ponderada), que também é a regra que o notebook implementa para os aspectos. É a forma quantitativa do QaSD. A rede bayesiana (Manzano *et al.*, 2018) foi descartada porque exige série histórica, e o projeto tem só 3 releases.
+
+Os pesos iguais são um marcador provisório, coerente com a seção 4 do plano: enquanto o time não definir pesos, vale a média simples. Se os pesos mudarem, as metas dos indicadores se recalculam pela regra 2, e as metas das métricas continuam as mesmas.
+
+---
+
+## Indicadores estratégicos e fatores
+
+O modelo de 2019 liga 13 fatores aos 4 indicadores, com Code Quality presente em dois deles. No projeto, 9 desses vínculos têm métrica incluída. Oito entram na média, contando Code Quality nos dois indicadores. Testing Performance entra só como portão. Os 5 fatores sem dado ficam fora do denominador e nunca valem zero.
+
+![mapa-indicadores](@site/static/img/mapa-indicadores-fatores-qrapids.png)
+
+*Q-Rapids Quality Model (2019), seção 3 · 4 indicadores, 13 vínculos com fatores. Cada coluna é lida de cima para baixo: o indicador é a média dos fatores de borda cheia. A borda tracejada marca fator sem dado, e a borda laranja marca o portão.*
+
+### Mapa do modelo (seção 3 do Q-Rapids Quality Model)
+
+| Indicador | Definição no modelo | Fator | Tipo | O que o fator mede | Métricas incluídas | No cálculo |
+|---|---|---|---|---|---|---|
+| **Product Quality** | Manutenibilidade, confiabilidade e adequação funcional do produto | Code Quality | Produto | Impacto das mudanças na qualidade do código-fonte | M1, M2 | Sim |
+| Product Quality | | Software Stability | Produto | Problemas mais críticos em execução | — | Não: sem fonte (sem logs de produção; Bug density habilitável) |
+| Product Quality | | Software Usage | Produto | Padrão de uso das funcionalidades | — | Não: sem telemetria de uso |
+| **Blocking** | Condições que atrapalham o fluxo do projeto (parar a linha, adiar uma feature) | Quality Issues' Specification | Produto | Se a issue entra no backlog pronta para ser desenvolvida | M7 | Sim |
+| Blocking | | Testing Status | Produto | Qualidade e estabilidade dos testes executados | M3, M5 | Sim |
+| Blocking | | Blocking Code | Produto | Dívida técnica em violações de regras de qualidade | M6 | Sim |
+| **Process Performance** | Eficiência e qualidade do processo de desenvolvimento | Issues' Velocity | Processo | Capacidade de cumprir as issues planejadas na sprint | M9 | Sim |
+| Process Performance | | Testing Performance | Processo | Eficácia e eficiência das atividades de teste | M8 | Portão (M8 fora de 0–1) |
+| Process Performance | | Development Speed | Processo | Atividades de integração contínua | — | Não: métricas só monitoradas |
+| Process Performance | | External Quality | Processo | Qualidade do ponto de vista do cliente | — | Não: sem registro de feedback |
+| **Product Readiness** | Produto pronto para a próxima release: implementa o planejado e sem bloqueios | Activities Completion | Processo | Conclusão das tarefas planejadas para a release | DT | Sim |
+| Product Readiness | | Code Quality | Produto | Idem Product Quality (reuso) | M1, M2 | Sim |
+| Product Readiness | | Product Stability | Produto | Problemas mais críticos do produto | M10 | Sim |
+| Product Readiness | | Known Remaining Defects | Processo | Defeitos menores que podem ser adiados | — | Não: prioridade não é marcada nas issues (habilitável) |
+
+O tipo (fator de produto ou de processo) é o do modelo. Os fatores de processo não têm subcaracterística na ISO/IEC 25010, e o Q-Rapids os associa à Produtividade.
+
+---
+
+## Cálculo dos fatores
+
+Cada fator é a média simples das suas métricas incluídas, todas na escala 0–1.
+
+$$
+\begin{aligned}
+\text{CQ} &= (M1 + M2)/2 &\qquad \text{QIS} &= M7 &\qquad \text{TS} &= (M3 + M5)/2 \\
+\text{BC} &= M6 & \text{IV} &= M9 & \text{PS} &= M10 \\
+\text{AC} &= DT & & & &
+\end{aligned}
+$$
+
+| Fator | R1 | R2 | Atual | Meta R3 |
+|---|---|---|---|---|
+| Code Quality (CQ) | (0,807 + 0,980)/2 = 0,894 | (0,828 + 0,988)/2 = 0,908 | (0,835 + 0,997)/2 = 0,916 | (0,88 + 0,99)/2 = **0,935** |
+| Quality Issues' Specification (QIS) | 0,838 | 0,932 | 0,931 | **0,95** |
+| Testing Status (TS) | (1,00 + 0,807)/2 = 0,904 | (1,00 + 0,855)/2 = 0,927 | (1,00 + 0,862)/2 = 0,931 | (1,00 + 0,90)/2 = **0,95** |
+| Blocking Code (BC) | sem coleta | sem coleta | 0,938 | **1,00** |
+| Issues' Velocity (IV) | 27/69 = 0,391 | 62/155 = 0,400 | 6/27 = 0,222 (S8) | **0,60** |
+| Product Stability (PS) | 0,766 | 0,890 | 0,939 | **0,95** |
+| Activities Completion (AC) | 30/49 = 0,612 | 35/54 = 0,648 | 10/33 = 0,303 (parcial) | **0,80** |
+
+---
+
+## Cálculo dos indicadores
+
+Cada indicador é a soma dos fatores avaliados com peso $1/n$, sendo $n$ o número de fatores com valor no período. Um fator sem coleta sai do denominador. Ele não entra com zero, para que a falta de dado não pareça uma nota ruim.
+
+$$
+\begin{aligned}
+\text{PQ} &= \text{CQ} \\
+\text{Blocking} &= (\text{QIS} + \text{TS} + \text{BC})/3 \\
+\text{PP} &= \text{IV} \quad (\text{portão: } M8 \le 5\ \text{min}) \\
+\text{PR} &= (\text{PS} + \text{AC} + \text{CQ})/3
+\end{aligned}
+$$
+
+| Indicador | R1 | R2 (piso) | Atual (07/11) | Meta R3 |
+|---|---|---|---|---|
+| Product Quality | 0,894 | 0,908 | 0,916 | 0,935 → **0,93** |
+| Blocking | (0,838 + 0,904)/2 = 0,871¹ | (0,932 + 0,927)/2 = 0,929¹ | (0,931 + 0,931 + 0,938)/3 = 0,933 | (0,95 + 0,95 + 1,00)/3 = 0,967 → **0,96** |
+| Process Performance | 0,391 | 0,400 | 0,222 | **0,60** |
+| Product Readiness | (0,766 + 0,612 + 0,894)/3 = 0,757 | (0,890 + 0,648 + 0,908)/3 = 0,815 | (0,939 + 0,303 + 0,916)/3 = 0,719 | (0,95 + 0,80 + 0,935)/3 = 0,895 → **0,89** |
+
+¹ Na R1 e na R2, Blocking Code não tinha coleta por arquivo, então $n = 2$. A partir da R3, $n = 3$. Por isso o piso de Blocking (0,929) e o valor atual não têm exatamente a mesma base.
+
+Se o time definir pesos diferentes de $1/n$, basta trocar os pesos nesta tabela. Os valores dos fatores ficam iguais, e as metas dos indicadores se recalculam pela mesma conta.
+
+---
+
+## Resumo das metas
+
+Em 07/11, nenhum dos quatro indicadores está na meta. Product Quality e Blocking estão entre o piso e a meta. Process Performance está abaixo do piso. Product Readiness também está, mas só vale comparar quando a release fechar.
+
+| Indicador | Fatores avaliados | R1 | R2 (piso) | Atual (07/11) | Meta R3 | Situação | Portões |
+|---|---|---|---|---|---|---|---|
+| Product Quality | 1 de 3 | 0,89 | 0,91 | 0,92 | ≥ 0,93 | 🟡 Em evolução | Duplicação global ≤ 3% |
+| Blocking | 3 de 3 | 0,87 | 0,93 | 0,93 | ≥ 0,96 | 🟡 Em evolução | Cobertura global ≥ 90%; zero blocker/critical; relatório de testes em 8/8 |
+| Process Performance | 1 de 4 na média (+ M8 como portão) | 0,39 | 0,40 | 0,22 | ≥ 0,60 | 🔴 Abaixo do piso | Mediana do `test.yml` ≤ 5 min |
+| Product Readiness | 3 de 4 | 0,76 | 0,82 | 0,72 (parcial) | ≥ 0,89 | 🔴 Abaixo do piso (release em curso) | Duplicação global ≤ 3% (via Code Quality) |
+
+| Métrica | Fator · indicador | Tipo de meta | R2 | Atual | Meta R3 |
+|---|---|---|---|---|---|
+| M1 Complexity | Code Quality · PQ e PR | Relativa por repositório | 0,828 | 0,835 | ≥ 0,88 |
+| M2 Duplication | Code Quality · PQ e PR | Relativa (não regredir) | 0,988 | 0,997 | ≥ 0,99 |
+| M3 Test success | Testing Status · Blocking | Absoluta | 1,00 (6 repos) | 1,00 (6 repos) | 1,00 em 8/8 repos |
+| M5 Test coverage | Testing Status · Blocking | Absoluta + piso por repo | 0,855 | 0,862 | ≥ 0,90; ≥ 0,80 por repo |
+| M6 Non-blocking files | Blocking Code · Blocking | Absoluta (zero) | — | 0,938 | 1,00 |
+| M7 Well defined issues | Quality Issues' Specification · Blocking | Absoluta | 0,932 | 0,931 | ≥ 0,95 |
+| M8 CI feedback time | Testing Performance · PP | Portão, em minutos | 2,2 min | 3,0 min | Mediana ≤ 5 min por repo |
+| M9 Team throughput | Issues' Velocity · PP | Absoluta por sprint | 0,40 | 0,22 (S8) | ≥ 0,60 por sprint |
+| M10 Build stability | Product Stability · PR | Absoluta + piso por repo | 0,890 | 0,939 | ≥ 0,95; ≥ 0,90 por repo |
+| DT Development task completion | Activities Completion · PR | Absoluta (escopo da release) | 0,648 | 0,303 (parcial) | ≥ 0,80 |
+
+---
+
+## Product Quality — meta ≥ 0,93
+
+A meta de Product Quality é **0,93**, e o valor atual é 0,92. Só Code Quality tem métrica incluída: Software Stability e Software Usage não têm dado no projeto. Por isso PQ = Code Quality = (M1 + M2) ÷ 2.
+
+| Nível | Item | R1 | R2 | Atual | Meta R3 |
+|---|---|---|---|---|---|
+| Métrica | M1 Complexity | 0,807 | 0,828 | 0,835 | ≥ 0,88 |
+| Métrica | M2 Duplication | 0,980 | 0,988 | 0,997 | ≥ 0,99 |
+| Fator | Code Quality | 0,894 | 0,908 | 0,916 | ≥ 0,93 |
+| **Indicador** | **Product Quality** | **0,89** | **0,91** | **0,92** | **≥ 0,93** |
+
+### M1 Complexity — meta ≥ 0,88
+
+M1 = arquivos com complexidade ÷ funções < 10, divididos pelo total de arquivos. A média é calculada entre os 8 repositórios.
+
+| Repositório | Linguagem | R2 | Atual | Meta R3 | Ação |
+|---|---|---|---|---|---|
+| Core | Python | 0,50 | 7/14 = 0,50 | ≥ 9/14 = 0,64 | Refatorar 2 arquivos |
+| Parser | Python | 0,67 | 4/6 = 0,67 | ≥ 5/6 = 0,83 | Refatorar 1 arquivo |
+| Service | Python | 0,72 | 67/93 = 0,72 | ≥ 72/93 = 0,77 | Refatorar 5 arquivos |
+| CLI | Python | 0,89 | 17/19 = 0,89 | ≥ 0,89 | Manter |
+| AI | Python | 1,00 | 13/13 = 1,00 | 1,00 | Manter |
+| Front | TypeScript | 0,95 | 140/147 = 0,95 | ≥ 0,95 | Manter |
+| Plugin | TypeScript | 0,89 | 34/36 = 0,94 | ≥ 0,94 | Manter o ganho |
+| Action | TypeScript | 1,00 | 7/7 = 1,00 | 1,00 | Manter |
+
+**Justificativa.** O plano manda usar meta relativa à linha de base de cada repositório, porque em TypeScript cada callback conta como função e reduz a razão (viés médio). Por isso a meta não compara Python com TypeScript. A regra é: nenhum repositório abaixo do próprio valor, e os três abaixo de 0,80 sobem.
+
+Os incrementos foram dimensionados em arquivos, para caber em 4 sprints. Core e Parser são bibliotecas publicadas com poucos arquivos, então 1 a 2 arquivos refatorados já mudam bastante a razão. No Service, 5 dos 26 arquivos complexos (cerca de 20%) é o que cabe sem competir com as entregas funcionais da R3. A meta agregada (0,88) é a média dessas metas por repositório, e não um número escolhido à parte.
+
+### M2 Duplication — meta ≥ 0,99
+
+M2 = arquivos com densidade de duplicação < 5%, divididos pelo total de arquivos. Hoje 6 repositórios estão em 1,00, Front está em 0,986 e Service em 0,989.
+
+**Justificativa.** O plano manda usar meta relativa, porque código declarativo (JSX, tipos, serializers) repete estrutura. A métrica já está perto do teto, então pedir 1,00 em todos os repositórios não muda nenhuma decisão do time. A meta é não regredir em nenhum repositório, e 0,99 é o menor valor agregado compatível com isso. O risco real de duplicação está no portão global da disciplina (≤ 3%), que o Plugin reprova com 3,9%. Ver [Portões obrigatórios](#portões-obrigatórios).
+
+### Indicador — meta ≥ 0,93
+
+(0,880 + 0,990) ÷ 2 = 0,935, truncado para **0,93**. O piso é 0,91 (R2).
+
+---
+
+## Blocking — meta ≥ 0,96
+
+A meta de Blocking é **0,96**, e o valor atual é 0,93. Os três fatores são avaliados: Blocking = (Quality Issues' Specification + Blocking Code + Testing Status) ÷ 3. Na R1 e na R2 não havia coleta de violações por arquivo, e a média dessas releases usa só 2 fatores.
+
+| Nível | Item | R1 | R2 | Atual | Meta R3 |
+|---|---|---|---|---|---|
+| Métrica | M7 Well defined issues | 0,838 | 0,932 | 0,931 | ≥ 0,95 |
+| Fator | Quality Issues' Specification | 0,838 | 0,932 | 0,931 | ≥ 0,95 |
+| Métrica | M6 Non-blocking files | — | — | 0,938 | 1,00 |
+| Fator | Blocking Code | — | — | 0,938 | 1,00 |
+| Métrica | M3 Test success | 1,00¹ | 1,00¹ | 1,00¹ | 1,00 em 8/8 |
+| Métrica | M5 Test coverage | 0,807 | 0,855 | 0,862 | ≥ 0,90 |
+| Fator | Testing Status | 0,904 | 0,927 | 0,931 | ≥ 0,95 |
+| **Indicador** | **Blocking** | **0,87** | **0,93** | **0,93** | **≥ 0,96** |
+
+¹ Média de 6 repositórios. AI e Plugin não enviam o relatório de testes por pasta ao SonarCloud. Pela regra do notebook, que dá 0 ao repositório sem dado, M3 seria 6/8 = 0,75, Testing Status 0,81 e Blocking 0,89.
+
+### M7 Well defined issues — meta ≥ 0,95
+
+M7 = issues com descrição e prazo (sprint ou milestone) ÷ issues criadas no período.
+
+**Justificativa.** A métrica foi de 0,84 (R1) para 0,93 (R2) e se manteve na R3 (27 de 29). Ou seja, 0,93 já é o patamar do time, e a meta pede um passo além dele. O plano prevê que estimativa e responsável entrem na *Definition of Ready*, e é esse critério que fecha a diferença até 0,95. A margem de 1 issue mal definida a cada 20 cobre issues abertas durante a sprint, antes de entrarem no planejamento. Exigir 1,00 desestimularia registrar defeitos na hora em que aparecem.
+
+### M6 Non-blocking files — meta 1,00
+
+M6 = arquivos sem violação blocker nem critical ÷ arquivos de código. Hoje são 392 de 418, ou seja, 26 arquivos a corrigir.
+
+| Repositório | Atual | Arquivos a corrigir |
+|---|---|---:|
+| Service | 84/93 = 0,90 | 9 |
+| Plugin | 31/39 = 0,79 | 8 |
+| Core | 11/14 = 0,79 | 3 |
+| Front | 223/226 = 0,99 | 3 |
+| CLI | 17/19 = 0,89 | 2 |
+| Parser | 5/6 = 0,83 | 1 |
+| AI | 14/14 = 1,00 | 0 |
+| Action | 7/7 = 1,00 | 0 |
+
+**Justificativa.** O plano fixa meta absoluta (zero), porque as regras e severidades do SonarCloud mudam com a linguagem e uma meta relativa compararia escalas diferentes. Violações blocker e critical são, por definição do SonarCloud, as que devem ser corrigidas antes da entrega, e cada uma é uma correção pontual. 26 arquivos em 4 sprints dá menos de 7 por sprint para o time inteiro. Não há R1 nem R2 porque a coleta por arquivo só existe no snapshot de 07/11. Como a meta é absoluta, a falta de série não afeta o valor.
+
+### M3 Test success — meta 1,00 em 8 de 8 repositórios
+
+M3 = (testes − erros − falhas) ÷ testes.
+
+**Justificativa.** Nos 6 repositórios que reportam, M3 já é 1,00 desde a R1. Teste falhando na `develop` bloqueia o time inteiro, então não há valor aceitável abaixo de 1,00. A meta passa a cobrir os 8 repositórios porque o plano diz que M3 "obriga a fechar essa lacuna": AI e Plugin precisam enviar o relatório de testes ao SonarCloud. Sem isso, a métrica afirma 1,00 sobre repositórios que ela não enxerga.
+
+### M5 Test coverage (por arquivo) — meta ≥ 0,90 e ≥ 0,80 por repositório
+
+M5 = arquivos com cobertura > 60% ÷ arquivos (notebook, célula 44).
+
+| Repositório | Atual | Meta R3 | Ação |
+|---|---|---|---|
+| Core | 9/14 = 0,64 | ≥ 12/14 = 0,86 | Testar 3 arquivos |
+| Action | 5/7 = 0,71 | ≥ 6/7 = 0,86 | Testar 1 arquivo |
+| Parser | 5/6 = 0,83 | ≥ 0,83 | Manter |
+| Service | 0,90 | ≥ 0,90 | Manter |
+| Plugin | 0,92 | ≥ 0,92 | Manter |
+| Front | 0,94 | ≥ 0,94 | Manter |
+| CLI | 0,95 | ≥ 0,95 | Manter |
+| AI | 1,00 | 1,00 | Manter |
+
+**Justificativa.** 0,90 acompanha a meta de cobertura que a disciplina fixa para a R3 (≥ 90%) e mede a mesma intenção por arquivo: o plano inclui M5 justamente para mostrar arquivos pouco testados que a média global esconde. O piso de 0,80 por repositório impede que Front e Service, com muitos arquivos, compensem Core e Action. Com o piso, a média sobe para 0,907. A meta só fica firme depois de ligar `branch = True` em CLI, Core e Parser, que hoje medem só linhas (seção 5 do plano).
+
+### Indicador — meta ≥ 0,96
+
+QIS 0,95 + Blocking Code 1,00 + Testing Status (1,00 + 0,90) ÷ 2 = 0,95, divididos por 3, dá 0,967, truncado para **0,96**. O piso é 0,93 (R2).
+
+---
+
+## Process Performance — meta ≥ 0,60
+
+A meta de Process Performance é **0,60**, e o valor atual é 0,22. O indicador tem 2 fatores avaliados, mas só Issues' Velocity tem métrica 0–1. Testing Performance tem só M8, que é medido em minutos e que o plano deixa fora da média. Por isso PP = Issues' Velocity = M9, e M8 funciona como portão.
+
+| Nível | Item | R1 | R2 | Atual | Meta R3 |
+|---|---|---|---|---|---|
+| Métrica | M9 Team throughput | 0,39 | 0,40 | 0,22 (S8) | ≥ 0,60 por sprint |
+| Fator | Issues' Velocity | 0,39 | 0,40 | 0,22 | ≥ 0,60 |
+| Métrica | M8 CI feedback time (mediana) | 1,6 min | 2,2 min | 3,0 min | ≤ 5 min por repo (portão) |
+| Fator | Testing Performance | — | — | — | fora da média |
+| **Indicador** | **Process Performance** | **0,39** | **0,40** | **0,22** | **≥ 0,60** |
+
+### M9 Team throughput — meta ≥ 0,60 por sprint
+
+M9 = issues da sprint fechadas até o prazo de fechamento ÷ issues da sprint. A contagem exclui épicos, pacotes de trabalho e iniciativas, e o prazo de fechamento é 08:00 do dia seguinte ao fim da sprint. R1 e R2 são a razão agregada das sprints de cada release: R1 = 27/69 e R2 = 62/155.
+
+| Sprint | Release | Fechadas / planejadas | M9 |
+|---|---|---|---|
+| S9 (em andamento) | R3 | 6/42 | 0,14 (parcial) |
+| S8 | R3 | 6/27 | 0,22 |
+| S7 | R2 | 38/63 | 0,60 |
+| S6 | R2 | 12/30 | 0,40 |
+| S5 | R2 | 3/31 | 0,10 |
+| S4 | R2 | 9/31 | 0,29 |
+| S3 | R1 | 26/56 | 0,46 |
+
+**Justificativa.** 0,60 é o melhor valor que o time já atingiu (S7). Ou seja, é uma meta comprovadamente alcançável por este time, não um padrão externo. A meta pede que esse ritmo vire o padrão nas sprints S10 a S12. A métrica é por sprint porque o fator mede a capacidade de planejamento em cada ciclo (plano, seção 2): uma sprint boa no fim da release não compensa as anteriores. A diferença entre a R2 (0,40) e a meta é grande, e o caminho é planejar menos issues por sprint ou fechá-las dentro dela, não mudar a fórmula.
+
+### M8 CI feedback time — portão: mediana ≤ 5 min por repositório
+
+M8 = duração das execuções do workflow de testes (`test.yml`, decisão D5), em minutos.
+
+| Repositório | R1 | R2 | Atual | Execuções (atual) |
+|---|---:|---:|---:|---:|
+| Front | 1,9 | 7,0 | 7,2 | 13 |
+| Plugin | 2,8 | 2,6 | 3,2 | 4 |
+| Service | 1,8 | 2,2 | 2,6 | 6 |
+| CLI | 1,9 | 1,9 | 1,7 | 1 |
+| Parser | 1,3 | 1,4 | 1,6 | 2 |
+| Core | 1,6 | 1,8 | 1,5 | 1 |
+| Action | 1,0 | 1,1 | 1,4 | 4 |
+| AI | 0,4 | 1,0 | 1,1 | 2 |
+
+*Valores em minutos (mediana).*
+
+**Justificativa.** O limite de 5 minutos é o limiar de suíte rápida do próprio modelo Q-Rapids (*Fast tests*, 5 min por suíte, usado também no notebook). O plano registra que esse limiar é alto para testes unitários, e de fato 7 dos 8 repositórios ficam abaixo de 3,5 min. Mesmo assim, ele separa o único caso que atrasa o feedback: o Front, que passou de 1,9 para 7,2 min entre a R1 e a R3. Usamos a mediana, e não a média do modelo, porque a média da R2 (3,8 min) é puxada por execuções longas do Front. A troca de média por mediana está pendente no plano e precisa ser declarada. O limite de 10 min do `config.py` (`build_rapido_min`) fica como teto crítico.
+
+### Indicador — meta ≥ 0,60
+
+Com um único fator na média, a meta do indicador é a de M9. O piso é 0,40 (R2). O indicador só conta como atingido se o portão M8 também passar.
+
+---
+
+## Product Readiness — meta ≥ 0,89
+
+A meta de Product Readiness é **0,89**. O valor atual, 0,72, é parcial, porque a R3 está no começo. Três dos quatro fatores são avaliados: PR = (Product Stability + Activities Completion + Code Quality) ÷ 3. Code Quality é reaproveitado de Product Quality, com os mesmos valores e a mesma meta, porque o modelo de 2019 o coloca também neste indicador.
+
+| Nível | Item | R1 | R2 | Atual | Meta R3 |
+|---|---|---|---|---|---|
+| Métrica | M10 Build stability | 0,766 | 0,890 | 0,939 | ≥ 0,95 |
+| Fator | Product Stability | 0,766 | 0,890 | 0,939 | ≥ 0,95 |
+| Métrica | DT Development task completion | 0,612 | 0,648 | 0,303 (parcial) | ≥ 0,80 |
+| Fator | Activities Completion | 0,612 | 0,648 | 0,303 | ≥ 0,80 |
+| Fator | Code Quality (M1, M2) | 0,894 | 0,908 | 0,916 | ≥ 0,93 |
+| **Indicador** | **Product Readiness** | **0,76** | **0,82** | **0,72 (parcial)** | **≥ 0,89** |
+
+### M10 Build stability — meta ≥ 0,95 e ≥ 0,90 por repositório
+
+M10 = execuções do `test.yml` com sucesso ÷ execuções com sucesso ou falha.
+
+| Repositório | R1 | R2 | Atual |
+|---|---:|---:|---:|
+| Action | 0,65 | 0,45 | 3/4 = 0,75 |
+| Front | 0,69 | 0,86 | 12/13 = 0,92 |
+| AI | 0,56 | 0,64 | 2/2 = 1,00 |
+| Service | 0,69 | 0,93 | 6/6 = 1,00 |
+| Plugin | 1,00 | 0,91 | 4/4 = 1,00 |
+| CLI | 0,94 | 0,97 | 1/1 = 1,00 |
+| Core | 0,87 | 1,00 | 1/1 = 1,00 |
+| Parser | 0,92 | 1,00 | 2/2 = 1,00 |
+
+**Justificativa.** A métrica sobe a cada release (0,77, 0,89, 0,94), então 0,95 continua a tendência em vez de fixar um salto. O piso de 0,90 por repositório existe porque uma build quebrada bloqueia o merge do time inteiro naquele repositório, e a média global esconde isso: o Action está em 0,75 com a média em 0,94. A meta de 80% (`META_CI_SUCESSO`) hoje no `config.py` está abaixo do que o time já entrega e deve subir para 95% quando o dashboard for alinhado. A R3 tem só 33 execuções até agora: no Action, uma falha a mais derruba o repositório em 25 pontos.
+
+### DT Development task completion — meta ≥ 0,80
+
+DT = Tasks e Sub-tasks das sprints da release fechadas até a data da release ÷ Tasks e Sub-tasks das sprints da release. R1: 30 de 49. R2: 35 de 54. R3 até agora: 10 de 33.
+
+**Justificativa.** 0,80 é a meta de conclusão (`META_TAXA_CONCLUSAO = 80`) que o time já usa no painel de gestão ágil. Ela foi aplicada aqui ao escopo da release, para que DT e a gestão ágil cobrem o mesmo patamar. As duas releases anteriores fecharam com 0,61 e 0,65, então 0,80 pede uma melhoria real, sem exigir 100% de um escopo que muda durante a release. Para chegar a 0,80 em 30/11 faltam pelo menos 17 tarefas fechadas (27 de 33), mais as que entrarem no escopo. O valor atual é parcial por natureza: o indicador só deve ser comparado com o piso no fechamento da release.
+
+### Indicador — meta ≥ 0,89
+
+(0,95 + 0,80 + 0,935) ÷ 3 = 0,895, truncado para **0,89**. O piso é 0,82 (R2).
+
+---
+
+## Portões obrigatórios
+
+Em 07/11 os cinco portões estão reprovados. Eles não entram na nota, mas um indicador só conta como atingido se todos os seus portões passarem.
+
+| Portão | Indicador | Origem | Situação em 07/11 | Justificativa |
+|---|---|---|---|---|
+| Cobertura global ≥ 90% em cada repositório | Blocking | Disciplina, meta da R3 (`METAS.coverage`) | ❌ Reprova: Action 83,3%, Plugin 89,6%. Os outros 6 passam (AI 97,7; CLI 92,5; Parser 92,1; Core 91,9; Front 90,5; Service 90,3) | É a única meta de métrica fixada pela disciplina. Fica como portão porque M5 já mede cobertura por arquivo, e somar a versão global contaria o mesmo dado duas vezes |
+| Duplicação global ≤ 3% em cada repositório | Product Quality, Product Readiness | Disciplina, meta da R3 (`METAS.duplicated_lines_density`) | ❌ Reprova: Plugin 3,9%. Os outros ≤ 0,4% | Mesma lógica: M2 mede por arquivo com limiar de 5%, e a meta da disciplina é global e mais estrita |
+| Zero arquivo com violação blocker ou critical | Blocking | Plano, M6 (meta absoluta) | ❌ Reprova: 26 arquivos em 6 repositórios | M6 já entra na nota. O portão impede que um Testing Status alto compense violações graves pendentes |
+| Mediana do `test.yml` ≤ 5 min em cada repositório | Process Performance | Plano, M8 | ❌ Reprova: Front 7,2 min | M8 está fora da escala 0–1, e o plano o mantém fora da média com meta em minutos |
+| Relatório de testes em 8 de 8 repositórios | Blocking | Plano, M3 | ❌ Reprova: AI e Plugin sem relatório por pasta | Sem o relatório, M3 não enxerga esses repositórios, e a nota de Blocking fica superestimada |
+
+---
+
+## Limitações e pendências
+
+Antes da aprovação, o time precisa decidir quatro pontos. As outras duas pendências dependem só de coleta.
+
+### Decisões do time
+
+- **Process Performance com um fator.** Com M8 fora da média, PP passa a ser igual a M9. A alternativa é voltar com Build performance como versão 0–1 de M8, mas isso desfaz a exclusão por repetição que o plano fez. Este documento adota M8 como portão.
+- **Pesos dos indicadores.** Os pesos iguais são provisórios. Se mudarem, as metas dos indicadores são recalculadas pela regra 2.
+- **Mediana em M8.** O modelo usa a média. A troca pela mediana precisa ser declarada no plano.
+- **Alinhamento do dashboard.** O dashboard calcula M9 e DT por período (issues ativas no período) e o plano calcula por sprint e por escopo da release. Depois da aprovação, o `qrapids.py` será ajustado para a definição do plano, e `META_CI_SUCESSO` sobe de 80 para 95.
+
+### Pendências de coleta
+
+- **M5 com ramos.** Ligar `branch = True` em CLI, Core e Parser e recalcular a linha de base antes de fixar 0,90.
+- **M6 sem série.** Só existe o snapshot de 07/11. Como a meta é absoluta, o valor dela não muda, mas o piso de Blocking na R2 usa só 2 fatores.
+
+**Limitação geral.** A série tem 3 releases, e a R3 está parcial (27/10 a 07/11). Os valores "Atual" de M9, DT, M10 e M8 têm poucas observações e não devem ser lidos como tendência.
+
+---
+
+## Referências
+
+FGA-EPS-MDS. **2026.2-MeasureSoftGram-DOC**: Analytics. GitHub, 2026. Commit 43c22d6. Disponível em: [https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC). Acesso em: 7 nov. 2026.
+
+FGA-EPS-MDS. **Analytics**: internal_quality_analysis-sonarqube.ipynb. GitHub, 2024. Disponível em: [https://github.com/fga-eps-mds/Analytics](https://github.com/fga-eps-mds/Analytics). Acesso em: 7 nov. 2026.
+
+FGA-EPS-MDS. **Seleção de Métricas Q-Rapids — MeasureSoftGram 2026.2**. Brasília: UnB, 2026. Plano de qualidade do projeto.
+
+LÓPEZ, L. *et al*. QaSD: a quality-aware strategic dashboard for supporting decision makers in agile software development. **Science of Computer Programming**, v. 202, 2021.
+
+MANZANO, M. *et al*. Using Bayesian networks to estimate strategic indicators in the context of rapid software development. *In*: INTERNATIONAL CONFERENCE ON PREDICTIVE MODELS AND DATA ANALYTICS IN SOFTWARE ENGINEERING (PROMISE), 14., 2018, Oulu. **Proceedings** [...]. New York: ACM, 2018.
+
+MARTÍNEZ-FERNÁNDEZ, S. *et al*. A quality model for actionable analytics in rapid software development. *In*: EUROMICRO CONFERENCE ON SOFTWARE ENGINEERING AND ADVANCED APPLICATIONS, 44., 2018, Praga. **Proceedings** [...]. [*S. l.*]: IEEE, 2018.
+
+Q-RAPIDS CONSORTIUM. **Q-Rapids Quality Model (April 2019)**. [*S. l.*]: Q-Rapids, 2019. Disponível em: [https://figshare.com/s/217851eed7ec1da7ab86](https://figshare.com/s/217851eed7ec1da7ab86). Acesso em: 7 nov. 2026.
+
+---
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 08/11/2026 | Criacao do documento | [@storch7](https://github.com/storch7) |  |

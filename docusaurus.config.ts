@@ -1,6 +1,8 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 // Em Deploy Previews (Netlify), o site é servido na raiz do subdomínio ('/').
 // Na publicação oficial (GitHub Pages), é servido sob o subdiretório do repositório ('/2026.2-MeasureSoftGram-DOC/').
@@ -19,6 +21,12 @@ const config: Config = {
   // Fontes da IDV: Roboto (texto/títulos) + Quattrocento (wordmark do logo).
   stylesheets: [
     'https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&family=Roboto:wght@400;500;700&display=swap',
+    // Estilos do KaTeX para as fórmulas em LaTeX ($...$ e $$...$$).
+    {
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css',
+      type: 'text/css',
+      crossorigin: 'anonymous',
+    },
   ],
 
   future: {
@@ -66,6 +74,8 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          remarkPlugins: [remarkMath],
+          rehypePlugins: [rehypeKatex],
           editUrl:
             'https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/tree/main/',
         },

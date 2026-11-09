@@ -65,6 +65,8 @@ const sidebars: SidebarsConfig = {
         "planejamento/eap",
         "planejamento/roadmap",
         "planejamento/squads",
+        "planejamento/selecaometricas",
+        "planejamento/metas",
         "planejamento/riscos",
         "planejamento/custos",
         "planejamento/agile-evm",
