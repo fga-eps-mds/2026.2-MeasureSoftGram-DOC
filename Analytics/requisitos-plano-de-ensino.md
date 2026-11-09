@@ -71,7 +71,7 @@ Plano: *"Evolui DA-R1 e incorpora o Dashboard com as métricas de qualidade de p
 
 | Exigência | Gráfico / indicador | Fonte | Status |
 |---|---|---|---|
-| Métricas de qualidade **normalizadas, ponderadas e agregadas** | Árvore do modelo: medidas (0–1) → subcaracterísticas → Manutenibilidade e Confiabilidade → nota total (TSQMI), por repositório e ao longo do tempo | .json SonarCloud (`src/metrics/qualidade.py`) | ⚠️ existe prévia na aba Produto com pesos e limiares herdados de 2026.1 |
+| Métricas de qualidade **normalizadas, ponderadas e agregadas** | Plano Q-Rapids (`docs/planejamento/selecaometricas.mdx` e `metas.mdx`): métricas (0–1) → fatores → 4 indicadores estratégicos, com meta da R3, piso (R2) e portões, em R1, R2 e atual | .json SonarCloud, GitHub Actions e Zenhub (`src/metrics/qrapids.py`) | ✅ página Qualidade (Q-Rapids), conferida contra o `metas.mdx` em `tests/test_plano_qualidade.py` |
 | ... **interpretadas pelo time** | Texto de interpretação ao lado de cada gráfico + justificativa dos pesos e limiares | time | ❌ |
 | **Comparação R1 × R2** (velocidade, cobertura, defeitos) | Barras lado a lado R1 × R2: velocity média, cobertura por repositório, bugs abertos e fechados | Zenhub, SonarCloud, GitHub | ❌ |
 | **≥ 3 decisões gerenciais** com causa + evidência + ação | Cartões na aba Decisões | Riscos e Decisões → Decisões | ⚠️ 3 rascunhos (D1–D3): a equipe precisa validar e registrar o resultado |
@@ -88,11 +88,11 @@ Plano: *"Evolui DA-R2 e alcança sua forma final com o Canvas Analytics — uma 
 
 | Exigência | Gráfico / indicador | Fonte | Status |
 |---|---|---|---|
-| **Canvas Analytics** | Página-resumo com KPIs do semestre (SPI, CPI, velocity, cobertura, nota de qualidade, riscos materializados, decisões) e tendências | todas | ❌ |
+| **Canvas Analytics** | Página-resumo com KPIs do semestre (SPI, CPI, velocity, cobertura, indicadores de qualidade, riscos materializados, decisões) e tendências | todas | ❌ |
 | **Planejado × realizado: custo** | PV × EV × AC do semestre; BAC × EAC | AgileEVM | ⚠️ existe por release, falta a visão do semestre |
 | **Planejado × realizado: tempo** | Datas planejadas × término estimado (RD) por release | AgileEVM | ⚠️ |
 | **Planejado × realizado: escopo** | Histórias aceitas × planejadas; PRP da linha de base × PRP final | Zenhub | ❌ |
-| **Planejado × realizado: qualidade** | Meta × real de cobertura (85% → 90%) e nota de qualidade por release | SonarCloud | ⚠️ meta aparece no gráfico de cobertura |
+| **Planejado × realizado: qualidade** | Meta × real de cobertura (85% → 90%) e indicadores de qualidade por release | SonarCloud | ⚠️ meta aparece no gráfico de cobertura |
 | **≥ 5 decisões gerenciais** (causa, análise, decisão, resultado) | aba Decisões | planilha | ❌ (3 hoje) |
 | **Retrospectiva crítica sobre IA** (acertos, erros, onde o julgamento humano foi necessário) | seção de texto + evidências | `MD_Template.md` | ❌ |
 | **Prompts usados e outputs aceitos ou descartados** | tabela de evidências | `MD_Template.md` | ❌ |

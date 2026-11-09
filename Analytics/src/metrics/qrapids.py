@@ -1,30 +1,26 @@
-"""Modelo de qualidade Q-Rapids completo, com rastreabilidade de cada número.
+"""Plano de qualidade Q-Rapids: indicadores estratégicos → fatores → métricas → dado bruto.
 
-Duas camadas, as duas exibidas na página Qualidade (Q-Rapids):
+Segue ``docs/planejamento/selecaometricas.mdx`` (quais métricas entram) e ``docs/planejamento/metas.mdx``
+(como agregar, metas da R3, piso, situação e portões). O que o plano decide:
 
-1. **Nota do notebook** (``src/metrics/qualidade.py``): as 6 métricas do SonarCloud que o notebook da
-   disciplina calcula, com os mesmos pesos. É a nota oficial (Manutenibilidade, Confiabilidade, total).
-2. **Modelo completo** (este módulo): todas as métricas do *Q-Rapids Quality Model* (abril/2019,
-   ``q-rapids model-doc.pdf``) — indicadores estratégicos → fatores → métricas avaliadas → dado bruto.
-   Cada métrica é calculada com o dado que o projeto tem (SonarCloud, GitHub, Zenhub). A que não tem
-   fonte aparece com o motivo e fica fora da agregação: nunca vira zero.
+* **10 métricas incluídas** (M1, M2, M3, M5, M6, M7, M8, M9, M10 e DT) entram na agregação;
+* **8 monitoradas** aparecem com valor, mas não têm peso em nenhum fator;
+* **8 habilitáveis** e **18 excluídas** só aparecem no catálogo, com a justificativa do plano;
+* fator = média simples das suas métricas incluídas (escala 0–1, 1 = melhor);
+* indicador = soma dos fatores avaliados com peso 1/n; fator sem dado sai do denominador, nunca vale zero;
+* M8 (minutos) não está em 0–1: é **portão**, não entra na média;
+* a meta nasce na métrica; a do fator é a média das metas das métricas e a do indicador é a fórmula aplicada
+  às metas dos fatores, truncada em 2 casas; o piso é o valor da R2.
 
-Convenção: ``valor`` vai de 0 a 1 e **1 é sempre o melhor**. Métricas que o documento define "ao contrário"
-(densidade de bugs, issues antigas, commits sem issue) entram pelo complemento, e o valor bruto do documento
-fica em ``bruto``. Métricas sem escala 0–1 (tempo de feedback da CI, testes por produto, bug leakage) são
-mostradas, mas não entram na média.
-
-Agregação do modelo completo: o model-doc não fixa pesos, então fator = média simples das métricas
-calculadas e indicador = média simples dos fatores calculados. Os pesos do notebook valem só para a nota
-oficial.
-
-Referências: Martínez-Fernández et al., "A Quality Model for Actionable Analytics in Rapid Software
-Development", SEAA 2018 (Tabela I e Fig. 1) e Q-Rapids Quality Model (abril/2019).
+Os valores de M1, M2, M3 e M5 usam as funções do notebook da disciplina (``src/metrics/qualidade.py``).
 """
 
 from __future__ import annotations
 
+import math
+import re
 from dataclasses import dataclass, field
+from pathlib import Path
 
 import pandas as pd
 
@@ -32,42 +28,81 @@ import config
 from src.metrics import qualidade as nq
 
 L = config.QRAPIDS["limiares"]
-CALCULADA, SEM_DADO, PENDENTE, SEM_FONTE, DERIVADA, INFORMATIVA = (
-    "calculada", "sem dado no recorte", "coleta pendente", "sem fonte no projeto", "derivada", "informativa")
+PLANO = config.QRAPIDS["plano"]
+RAIZ_DOCS = Path(__file__).resolve().parents[3] / "docs" / "planejamento"
+
+CALCULADA, SEM_DADO, PENDENTE, INFORMATIVA = "calculada", "sem dado no recorte", "coleta pendente", "informativa"
 ROTULO = {CALCULADA: "Calculada", SEM_DADO: "Sem dado no recorte", PENDENTE: "Coleta pendente",
-          SEM_FONTE: "Sem fonte no projeto", DERIVADA: "Repete outra métrica", INFORMATIVA: "Só informativa"}
-NA_MEDIA = {CALCULADA}
+          INFORMATIVA: "Só informativa"}
+INCLUIDA, MONITORADA, HABILITAVEL, EXCLUIDA = "Incluída", "Monitorada", "Habilitável", "Excluída"
+
+# ───────────────────────── estrutura do modelo (mapa da seção "Indicadores estratégicos e fatores") ─────────────────────────
 
 INDICADORES = {
-    "product_quality": ("Product Quality (qualidade do produto)",
-                        "manutenibilidade, confiabilidade e adequação funcional do produto",
+    "product_quality": ("Product Quality", "manutenibilidade, confiabilidade e adequação funcional do produto",
                         ["code_quality", "software_stability", "software_usage"]),
-    # model-doc (abril/2019), seção 3: Code Quality entra também em Product Readiness
-    "product_readiness": ("Product Readiness (prontidão do produto)",
-                          "o produto está pronto para ser entregue?",
-                          ["code_quality", "product_stability", "known_remaining_defects", "activities_completion"]),
-    "blocking": ("Blocking (bloqueios)", "condições que atrapalham o fluxo do projeto",
-                 ["quality_issues_specification", "blocking_code", "testing_status"]),
-    "process_performance": ("Process Performance (desempenho do processo)",
-                            "eficiência e qualidade do processo de desenvolvimento",
-                            ["development_speed", "issues_velocity", "testing_performance", "external_quality"]),
+    "blocking": ("Blocking", "condições que atrapalham o fluxo do projeto (parar a linha, adiar uma feature)",
+                 ["quality_issues_specification", "testing_status", "blocking_code"]),
+    "process_performance": ("Process Performance", "eficiência e qualidade do processo de desenvolvimento",
+                            ["issues_velocity", "testing_performance", "development_speed", "external_quality"]),
+    "product_readiness": ("Product Readiness", "produto pronto para a próxima release: implementa o planejado e "
+                          "sem bloqueios",
+                          ["activities_completion", "code_quality", "product_stability", "known_remaining_defects"]),
 }
-FATORES = {
-    "code_quality": ("Code Quality (qualidade do código)", "Manutenibilidade", "produto"),
-    "software_stability": ("Software Stability (estabilidade)", "Confiabilidade", "produto"),
-    "software_usage": ("Software Usage (uso)", "Adequação funcional", "produto"),
-    "product_stability": ("Product Stability (estabilidade do produto)", "Confiabilidade", "produto"),
-    "known_remaining_defects": ("Known Remaining Defects (defeitos conhecidos)", "Confiabilidade", "processo"),
-    "activities_completion": ("Activities Completion (conclusão das atividades)", "Produtividade", "processo"),
-    "quality_issues_specification": ("Quality Issues' Specification (especificação das issues)",
-                                     "Manutenibilidade", "produto"),
-    "blocking_code": ("Blocking Code (código bloqueante)", "Manutenibilidade", "produto"),
-    "testing_status": ("Testing Status (situação dos testes)", "Confiabilidade", "produto"),
-    "development_speed": ("Development Speed (velocidade de desenvolvimento)", "Produtividade", "processo"),
-    "issues_velocity": ("Issues' Velocity (velocidade das issues)", "Produtividade", "processo"),
-    "testing_performance": ("Testing Performance (desempenho dos testes)", "Produtividade", "processo"),
-    "external_quality": ("External Quality (qualidade externa)", "Adequação funcional", "processo"),
+# fatores que entram na média de cada indicador (os demais não têm métrica incluída ou são só portão)
+AVALIADOS = {
+    "product_quality": ["code_quality"],
+    "blocking": ["quality_issues_specification", "testing_status", "blocking_code"],
+    "process_performance": ["issues_velocity"],
+    "product_readiness": ["activities_completion", "code_quality", "product_stability"],
 }
+FATORES = {   # nome, tipo, motivo de ficar fora da média (vazio = entra)
+    "code_quality": ("Code Quality", "produto", ""),
+    "software_stability": ("Software Stability", "produto", "sem fonte: não há logs de produção (Bug density é habilitável)"),
+    "software_usage": ("Software Usage", "produto", "sem fonte: o produto não tem telemetria de uso"),
+    "quality_issues_specification": ("Quality Issues' Specification", "produto", ""),
+    "testing_status": ("Testing Status", "produto", ""),
+    "blocking_code": ("Blocking Code", "produto", ""),
+    "issues_velocity": ("Issues' Velocity", "processo", ""),
+    "testing_performance": ("Testing Performance", "processo", "portão: M8 é medido em minutos, fora da escala 0–1"),
+    "development_speed": ("Development Speed", "processo", "as métricas do fator são só monitoradas"),
+    "external_quality": ("External Quality", "processo", "sem fonte: o feedback do cliente não é registrado"),
+    "activities_completion": ("Activities Completion", "processo", ""),
+    "product_stability": ("Product Stability", "produto", ""),
+    "known_remaining_defects": ("Known Remaining Defects", "processo",
+                                "prioridade não é marcada nas issues (Postponed issues ratio é habilitável)"),
+}
+
+# chave → (código, nome, fator, decisão). Só as incluídas e as monitoradas são calculadas.
+METRICAS = {
+    "complexity": ("M1", "Complexity", "code_quality", INCLUIDA),
+    "duplication": ("M2", "Duplication", "code_quality", INCLUIDA),
+    "well_defined_issues": ("M7", "Well defined issues", "quality_issues_specification", INCLUIDA),
+    "non_blocking_files": ("M6", "Non-blocking files", "blocking_code", INCLUIDA),
+    "test_success": ("M3", "Test success", "testing_status", INCLUIDA),
+    "test_coverage": ("M5", "Test coverage", "testing_status", INCLUIDA),
+    "ci_feedback_time": ("M8", "CI feedback time", "testing_performance", INCLUIDA),
+    "team_throughput": ("M9", "Team throughput", "issues_velocity", INCLUIDA),
+    "build_stability": ("M10", "Build stability", "product_stability", INCLUIDA),
+    "development_task_completion": ("DT", "Development task completion", "activities_completion", INCLUIDA),
+    "comments": ("Mc", "Comments", "code_quality", MONITORADA),
+    "fast_tests": ("M4", "Fast tests", "testing_performance", MONITORADA),
+    "resolved_issues_throughput": ("—", "Resolved issues' throughput", "issues_velocity", MONITORADA),
+    "old_issues": ("—", "Old issues", "issues_velocity", MONITORADA),
+    "build_performance": ("—", "Build performance", "development_speed", MONITORADA),
+    "commit_review_duration": ("—", "Commit review duration", "development_speed", MONITORADA),
+    "timely_feature_delivery": ("—", "Timely feature delivery", "development_speed", MONITORADA),
+    "non_issue_commits": ("—", "Non-issue component commit", "development_speed", MONITORADA),
+}
+TIPO_META = {   # como a meta é lida (metas.mdx, tabela "Resumo das metas")
+    "complexity": "Relativa por repositório", "duplication": "Relativa (não regredir)",
+    "test_success": "Absoluta (8 de 8 repositórios)", "test_coverage": "Absoluta + piso 0,80 por repositório",
+    "non_blocking_files": "Absoluta (zero)", "well_defined_issues": "Absoluta",
+    "ci_feedback_time": "Portão: mediana ≤ 5 min por repositório", "team_throughput": "Absoluta por sprint",
+    "build_stability": "Absoluta + piso 0,90 por repositório", "development_task_completion": "Absoluta (escopo da release)",
+}
+TIPOS_FORA_M9 = {"Epic", "Project (pacote trabalho)", "Initiative (entrega)"}
+STATUS = {"verde": "🟢 Atingido", "amarelo": "🟡 Em evolução", "vermelho": "🔴 Abaixo do piso", "sem": "—"}
 
 
 @dataclass
@@ -79,14 +114,23 @@ class Resultado:
     formula: str
     dado_bruto: str
     fonte: str
+    codigo: str = "—"
+    decisao: str = MONITORADA
     situacao: str = SEM_DADO
     valor: float | None = None          # 0 a 1, 1 = melhor
-    bruto: str = ""                     # o número como o documento define (ex.: "12% de bugs")
+    bruto: str = ""                     # o número como o plano define (ex.: "12 de 40 = 30,0%")
     numerador: float | None = None
     denominador: float | None = None
     motivo: str = ""                    # por que não foi calculada, ou observação
-    itens: pd.DataFrame = field(default_factory=pd.DataFrame)   # dado bruto para conferência
+    escala01: bool = True               # False: grandeza fora de 0–1 (M8), nunca entra na média
+    medida: float | None = None         # valor fora de 0–1 (ex.: minutos)
+    itens: pd.DataFrame = field(default_factory=pd.DataFrame)       # dado bruto para conferência
     por_repo: pd.DataFrame = field(default_factory=pd.DataFrame)
+
+    @property
+    def na_media(self) -> bool:
+        return (self.decisao == INCLUIDA and self.situacao == CALCULADA and self.escala01
+                and self.valor is not None and not pd.isna(self.valor))
 
 
 def _pct(x):
@@ -114,10 +158,21 @@ def _local(s):
         return s.dt.tz_convert(None) - pd.Timedelta(hours=3)
 
 
-# ───────────────────────── nota do notebook por repositório ─────────────────────────
+def nq_nome(repo: str) -> str:
+    from src.data.sonar import nome_curto
+    return nome_curto(repo)
 
-def notas_por_repo(ctx, f: dict, rec: dict) -> dict:
-    """Avaliação do notebook na última coleta do pipeline até o fim do período, por repositório.
+
+def truncar(x: float, casas: int = 2) -> float:
+    """Trunca (não arredonda) — a meta do indicador nunca pode subir por arredondamento (regra 2 do plano)."""
+    f = 10 ** casas
+    return math.floor(x * f + 1e-9) / f
+
+
+# ───────────────────────── dados do SonarCloud por repositório ─────────────────────────
+
+def avaliacoes_por_repo(ctx, f: dict, rec: dict) -> dict:
+    """Avaliação das métricas do notebook na última coleta do pipeline até o fim do período, por repositório.
 
     ``{repo: {"avaliacao": ..., "coleta": Timestamp, "arquivo": nome do .json}}``.
     """
@@ -137,45 +192,6 @@ def notas_por_repo(ctx, f: dict, rec: dict) -> dict:
         saida[repo] = {"avaliacao": nq.avaliar(y, repo), "coleta": ult, "arquivo": arq}
     return saida
 
-
-def serie_notebook(ctx, f: dict, rec: dict) -> pd.DataFrame:
-    """Nota do notebook em cada coleta do período (gráfico de evolução)."""
-    comp = ctx.sonar_componentes
-    if comp is None or comp.empty:
-        return pd.DataFrame()
-    ini = pd.Timestamp(f["periodo"][0])
-    fim = pd.Timestamp(rec["fim"]) + pd.Timedelta(days=1)
-    c = comp[comp["repositorio"].isin(rec["repos"]) & (pd.to_datetime(comp["coleta"]) >= ini)
-             & (pd.to_datetime(comp["coleta"]) < fim)]
-    if f.get("branch"):
-        c = c[c["branch"] == f["branch"]]
-    return nq.serie(c, ctx.sonar_pipeline)
-
-
-def sem_dado_algum(avaliacao: dict) -> bool:
-    """Todas as métricas do repositório são "0 por falta de dado" (ex.: AI sem cobertura nem testes no .json)."""
-    return all(r["zero_por_falta"] for r in avaliacao["metricas"].values())
-
-
-def media_repos(notas: dict, fn, metrica: str | None = None) -> tuple[float | None, list[str]]:
-    """Média simples entre repositórios, sem os valores que são só "0 por falta de dado".
-
-    O notebook não faz média entre repositórios (calcula um por um); a média é do painel. Ela deixa de
-    fora: para uma métrica, os repositórios em que ela é 0 por falta de dado; para fator, aspecto e nota
-    total, os repositórios sem nenhum dado. Devolve (média, repositórios deixados de fora).
-    """
-    vals, fora = [], []
-    for repo, n in notas.items():
-        a = n["avaliacao"]
-        vazio = a["metricas"][metrica]["zero_por_falta"] if metrica else sem_dado_algum(a)
-        if vazio:
-            fora.append(nq_nome(repo))
-        else:
-            vals.append(fn(a))
-    return (sum(vals) / len(vals) if vals else None), fora
-
-
-# ───────────────────────── modelo completo ─────────────────────────
 
 def _sonar_media(chave_nb: str, notas: dict, r: Resultado) -> Resultado:
     """Métrica do notebook como média simples dos repositórios (o detalhe por repositório vai junto)."""
@@ -199,14 +215,8 @@ def _sonar_media(chave_nb: str, notas: dict, r: Resultado) -> Resultado:
     r.bruto = f"média de {len(com)} repositórios"
     zeros = d[d["zero_por_falta"] != ""]
     if len(zeros):
-        r.motivo = (f"fora da média por não terem o dado (no notebook valeriam 0): "
-                    + ", ".join(zeros["repositorio"]))
+        r.motivo = ("sem o dado no .json do pipeline (fora da média): " + ", ".join(zeros["repositorio"]))
     return r
-
-
-def nq_nome(repo: str) -> str:
-    from src.data.sonar import nome_curto
-    return nome_curto(repo)
 
 
 def _arquivos_api(ctx, rec) -> pd.DataFrame:
@@ -224,6 +234,8 @@ def _arquivos_api(ctx, rec) -> pd.DataFrame:
     w = w[(w["linguagem"] == w["lingua_repo"]) | w["lingua_repo"].isna()]
     return w[w.get("ncloc", pd.Series(0, index=w.index)) > 0] if "ncloc" in w else w
 
+
+# ───────────────────────── dados do Zenhub e do GitHub ─────────────────────────
 
 def _issues(ctx, f: dict) -> pd.DataFrame:
     """Issues do Zenhub (sem PR) no recorte de repositórios, com datas locais."""
@@ -250,15 +262,51 @@ def runs_de_build(runs: pd.DataFrame) -> pd.DataFrame:
     return r[r["conclusao"].isin(["success", "failure"])]
 
 
-def calcular(ctx, f: dict, rec: dict) -> dict:
-    """Todas as métricas do modelo completo no recorte dos filtros globais.
+def _sprints(ctx) -> pd.DataFrame:
+    s = getattr(ctx, "zh_sprints", None)
+    if s is None or s.empty:
+        return pd.DataFrame()
+    s = s.copy()
+    s["inicio"], s["fim"], s["prazo"] = _local(s["start_date"]), _local(s["end_date"]), _local(s["count_until"])
+    return s
 
-    Devolve ``{"metricas": [Resultado], "fatores": DataFrame, "indicadores": DataFrame, "notas": {...}}``.
+
+def _agora(ctx) -> pd.Timestamp:
+    a = getattr(ctx, "agora_utc", None)
+    if a is not None:
+        return _local(pd.Series([pd.Timestamp(a)])).iloc[0]
+    return pd.Timestamp(ctx.hoje) + pd.Timedelta(days=1)
+
+
+def _na_sprint(lista, rotulo) -> bool:
+    return isinstance(lista, (list, tuple)) and rotulo in lista
+
+
+def _janela(rel: str) -> tuple[pd.Timestamp, pd.Timestamp]:
+    nomes = list(config.RELEASES)
+    fim = pd.Timestamp(config.RELEASES[rel])
+    i = nomes.index(rel)
+    ini = pd.Timestamp(config.RELEASES[nomes[i - 1]]) + pd.Timedelta(days=1) if i else pd.Timestamp(config.INICIO_SEMESTRE)
+    return ini, fim
+
+
+def _release_de(fim: pd.Timestamp) -> str:
+    return next((r for r, d in config.RELEASES.items() if pd.Timestamp(d) >= fim), list(config.RELEASES)[-1])
+
+
+# ───────────────────────── cálculo das métricas ─────────────────────────
+
+def calcular(ctx, f: dict, rec: dict, ultima_sprint: bool = False) -> dict:
+    """Métricas incluídas e monitoradas do plano no período ``f["periodo"]`` (Sonar: último snapshot até o fim).
+
+    ``ultima_sprint``: M9 usa só a última sprint concluída do período (como a coluna "Atual" do metas.mdx);
+    sem isso, M9 é a razão agregada das sprints concluídas no período (como R1 e R2).
+    Devolve ``{"metricas": [Resultado], "fatores": DataFrame, "indicadores": DataFrame, "avaliacoes": {...}}``.
     """
     ini = pd.Timestamp(f["periodo"][0])
     fim = pd.Timestamp(rec["fim"])
     fim_ex = fim + pd.Timedelta(days=1)
-    notas = notas_por_repo(ctx, f, rec)
+    avs = avaliacoes_por_repo(ctx, f, rec)
     z = _issues(ctx, f)
     zh_ok = not z.empty
     snap = ctx.zh_snap or {}
@@ -277,97 +325,24 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
         runs = runs_de_build(runs)      # só o workflow de testes, concluído (D5)
     out: list[Resultado] = []
 
-    def novo(fator, chave, nome, descricao, formula, dado_bruto, fonte):
-        r = Resultado(fator, chave, nome, descricao, formula, dado_bruto, fonte)
+    def novo(chave, descricao, formula, dado_bruto, fonte):
+        codigo, nome, fator, decisao = METRICAS[chave]
+        r = Resultado(fator, chave, f"{codigo} {nome}" if codigo != "—" else nome, descricao, formula, dado_bruto,
+                      fonte, codigo=codigo, decisao=decisao)
         out.append(r)
         return r
 
-    # ── Code Quality (notebook) ──
-    for chave_nb, chave, nome, desc in (
-            ("complexidade", "complexity", "Complexity", "arquivos abaixo do limiar de complexidade ciclomática"),
-            ("comentarios", "comments", "Comments", "arquivos com densidade de comentários dentro da faixa"),
-            ("duplicacao", "duplication", "Duplication", "arquivos abaixo do limiar de linhas duplicadas")):
-        nome_nb, _, _, regra, formula = nq.METRICAS[chave_nb]
-        _sonar_media(chave_nb, notas, novo("code_quality", chave, f"{nome} — {nome_nb}", desc,
-                                           f"{formula} · {regra}", "medidas de cada arquivo (.json do pipeline)",
-                                           "SonarCloud via metrics.yml"))
+    # ── Code Quality: M1, M2 (incluídas) e Mc (monitorada) ──
+    for chave_nb, chave, desc in (
+            ("complexidade", "complexity", "arquivos abaixo do limiar de complexidade ciclomática"),
+            ("duplicacao", "duplication", "arquivos abaixo do limiar de linhas duplicadas"),
+            ("comentarios", "comments", "arquivos com densidade de comentários dentro da faixa")):
+        _, _, _, regra, formula = nq.METRICAS[chave_nb]
+        _sonar_media(chave_nb, avs, novo(chave, desc, f"{formula} · {regra}", "medidas de cada arquivo (.json do pipeline)",
+                                         "SonarCloud via metrics.yml"))
 
-    # ── Software Stability: Bug density ──
-    r = novo("software_stability", "bug_density", "Bug density — densidade de bugs",
-             "proporção de issues abertas do tipo bug (valor = 1 − proporção)",
-             "issues abertas do tipo Bug ÷ issues abertas, no fim do período",
-             "tipo e status de cada issue", "Zenhub")
-    if zh_ok:
-        abertas = z[(z["criada"] < fim_ex) & (z["fechada"].isna() | (z["fechada"] >= fim_ex))]
-        bugs = abertas[abertas["tipo_issue"] == "Bug"]
-        r.itens = bugs[["repositorio", "number", "title", "criada"]]
-        _razao(r, len(bugs), len(abertas), complemento=True, rotulo_bruto="bugs entre as abertas")
-        r.motivo = aviso_zh
-
-    # ── Software Usage / External Quality: sem fonte ──
-    for fator, chave, nome, desc, dado in (
-            ("software_usage", "feature_usage", "Feature usage — uso das funcionalidades",
-             "adequação das funcionalidades ao uso real", "uso por funcionalidade (vezes, tempo)"),
-            ("external_quality", "end_user_feedback", "End user feedback — retorno do usuário",
-             "feedback do usuário final ligado a issues", "feedbacks recebidos no período")):
-        r = novo(fator, chave, nome, desc, "—", dado, "nenhuma")
-        r.situacao = SEM_FONTE
-        r.motivo = ("o produto não registra telemetria de uso" if chave == "feature_usage" else
-                    "não há canal de feedback do usuário final registrado (ex.: formulário ou label de issue)")
-
-    # ── Product Stability: Critical issues ratio + Build stability ──
-    r = novo("product_stability", "critical_issues_ratio", "Critical issues ratio — issues críticas resolvidas",
-             "proporção das issues de alta severidade que foram fechadas",
-             "issues de alta prioridade fechadas ÷ issues de alta prioridade", "severidade/prioridade de cada issue",
-             "Zenhub (prioridade)")
-    if zh_ok and (z["prioridade"].fillna("Sem prioridade") != "Sem prioridade").any():
-        alta = z[(z["prioridade"] != "Sem prioridade") & (z["criada"] < fim_ex)]
-        fechadas = alta[alta["fechada"].notna() & (alta["fechada"] < fim_ex)]
-        _razao(r, len(fechadas), len(alta))
-    else:
-        r.situacao, r.motivo = SEM_DADO, ("nenhuma issue com prioridade no Zenhub: marcar prioridade (ou "
-                                         "severidade) nas issues habilita esta métrica")
-    r = novo("product_stability", "build_stability", "Build stability — builds com sucesso",
-             "densidade de execuções do workflow de testes (test.yml) com sucesso",
-             "execuções de test.yml com sucesso ÷ execuções de test.yml com sucesso ou falha, no período",
-             "resultado de cada execução do workflow de testes", "GitHub Actions")
-    if not runs.empty:
-        c = runs[runs["conclusao"].isin(["success", "failure"])]
-        r.itens = c[["repositorio", "workflow", "conclusao", "criado", "duracao_min", "url"]]
-        r.por_repo = (c.groupby(c["repositorio"].map(nq_nome))["conclusao"].agg(
-            sucesso=lambda s: int((s == "success").sum()), total="size").reset_index()
-            .assign(valor=lambda d: d["sucesso"] / d["total"]))
-        _razao(r, int((c["conclusao"] == "success").sum()), len(c))
-
-    # ── Known Remaining Defects: Postponed issues ratio ──
-    r = novo("known_remaining_defects", "postponed_issues_ratio", "Postponed issues ratio — issues adiadas",
-             "proporção das issues de baixa severidade que não foram fechadas",
-             "issues de baixa prioridade fechadas ÷ issues de baixa prioridade", "severidade de cada issue",
-             "Zenhub (prioridade)")
-    r.situacao, r.motivo = SEM_DADO, "nenhuma issue com prioridade/severidade no Zenhub"
-
-    # ── Activities Completion ──
-    r = novo("activities_completion", "development_task_completion", "Development task completion — tarefas concluídas",
-             "densidade de tarefas de desenvolvimento concluídas",
-             "Tasks e Sub-tasks fechadas ÷ Tasks e Sub-tasks ativas no período",
-             "tipo e status de cada issue", "Zenhub")
-    if zh_ok:
-        t = z[z["tipo_issue"].isin(["Task", "Sub-task"]) & (z["criada"] < fim_ex)
-              & (z["fechada"].isna() | (z["fechada"] >= ini))]
-        feitas = t[t["fechada"].notna() & (t["fechada"] < fim_ex)]
-        r.itens = t[["repositorio", "number", "title", "tipo_issue", "criada", "fechada"]]
-        _razao(r, len(feitas), len(t))
-        r.motivo = aviso_zh
-    r = novo("activities_completion", "specification_task_completion",
-             "Specification task completion — tarefas de especificação concluídas",
-             "densidade de tarefas de especificação concluídas", "—", "tarefas marcadas como especificação",
-             "nenhuma")
-    r.situacao, r.motivo = SEM_FONTE, ("o time não separa tarefas de especificação (tipo ou label); criar um "
-                                      "tipo/label 'especificação' habilita esta métrica")
-
-    # ── Quality Issues' Specification: Well defined issues ──
-    r = novo("quality_issues_specification", "well_defined_issues", "Well defined issues — issues bem definidas",
-             "issues com descrição e prazo preenchidos",
+    # ── Quality Issues' Specification: M7 ──
+    r = novo("well_defined_issues", "issues com descrição e prazo preenchidos",
              "issues com descrição e prazo (sprint ou milestone) ÷ issues criadas no período",
              "descrição e prazo de cada issue", "GitHub (descrição, milestone) + Zenhub (sprint)")
     if gi is None or gi.empty:
@@ -394,15 +369,14 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
         r.itens = g[["repositorio", "number", "title", "com_descricao", "com_prazo", "bem_definida"]]
         _razao(r, int(g["bem_definida"].sum()), len(g))
 
-    # ── Blocking Code: Non-blocking files (+ highly changed files) ──
-    r = novo("blocking_code", "non_blocking_files", "Non-blocking files — arquivos sem violação crítica",
-             "arquivos sem violação bloqueante ou crítica",
-             "arquivos sem blocker_violations e critical_violations ÷ total de arquivos de código",
+    # ── Blocking Code: M6 ──
+    r = novo("non_blocking_files", "arquivos sem violação bloqueante ou crítica",
+             "arquivos com 0 blocker_violations e 0 critical_violations ÷ arquivos de código",
              "violações por arquivo e severidade", "API do SonarCloud (component_tree)")
     aa = _arquivos_api(ctx, rec)
     if aa.empty or not {"blocker_violations", "critical_violations"} <= set(aa.columns):
-        r.situacao, r.motivo = PENDENTE, ("violações por arquivo ainda não coletadas: rodar scripts/coleta_sonar.py "
-                                          "(versão nova) ou o workflow Coleta de dados do dashboard")
+        r.situacao, r.motivo = PENDENTE, ("sem coleta de violações por arquivo até o fim do período (a coleta por "
+                                          "arquivo só existe a partir de 07/11; rodar scripts/coleta_sonar.py)")
     else:
         aa = aa.dropna(subset=["blocker_violations", "critical_violations"])
         aa["passa"] = (aa["blocker_violations"] == 0) & (aa["critical_violations"] == 0)
@@ -410,35 +384,124 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
         r.por_repo = (aa.groupby(aa["repositorio"].map(nq_nome))["passa"].agg(numerador="sum", denominador="size")
                       .reset_index().assign(valor=lambda d: d["numerador"] / d["denominador"]))
         _razao(r, int(aa["passa"].sum()), len(aa))
-    r = novo("blocking_code", "highly_changed_files", "Highly changed files — arquivos estáveis",
-             "arquivos que não foram alterados muitas vezes no período (valor = 1 − proporção de muito alterados)",
-             "arquivos alterados em mais de 5 commits ÷ arquivos alterados no período",
-             "arquivos alterados em cada commit", "API do GitHub (commits)")
-    if cm is None or cm.empty:
-        r.situacao, r.motivo = PENDENTE, "commits ainda não coletados: rodar scripts/coleta_github.py (versão nova)"
-    else:
-        c = cm.copy()
-        if f.get("repos"):
-            c = c[c["repositorio"].map(nq_nome).isin(f["repos"])]
-        c["quando"] = _local(c["data"])
-        c = c[(c["quando"] >= ini) & (c["quando"] < fim_ex) & ~c["merge"]]
-        vezes = c.groupby(["repositorio", "arquivo"])["sha"].nunique().reset_index(name="commits")
-        vezes["muito_alterado"] = vezes["commits"] > 5
-        r.itens = vezes.sort_values("commits", ascending=False)
-        _razao(r, int(vezes["muito_alterado"].sum()), len(vezes), complemento=True,
-               rotulo_bruto="alterados em mais de 5 commits")
 
-    # ── Testing Status: Test success + coverage (Tabela I do artigo) ──
-    for chave_nb, chave, nome in (("testes_passando", "test_success", "Test success — testes que passam"),
-                                  ("cobertura", "test_coverage", "Test coverage — cobertura de testes")):
+    # ── Testing Status: M3, M5 ──
+    for chave_nb, chave in (("testes_passando", "test_success"), ("cobertura", "test_coverage")):
         _, _, _, regra, formula = nq.METRICAS[chave_nb]
-        _sonar_media(chave_nb, notas, novo("testing_status", chave, nome, regra, formula,
-                                           "testes, erros e falhas / cobertura de cada arquivo",
-                                           "SonarCloud via metrics.yml"))
+        _sonar_media(chave_nb, avs, novo(chave, regra, formula, "testes, erros e falhas / cobertura de cada arquivo",
+                                         "SonarCloud via metrics.yml"))
 
-    # ── Development Speed ──
-    r = novo("development_speed", "build_performance", "Build performance — builds rápidos",
-             f"execuções do workflow de testes que não passaram de {L['build_rapido_min']} min",
+    # ── Testing Performance: M8 (portão) e M4 (monitorada) ──
+    r = novo("ci_feedback_time", "tempo que o workflow de testes (test.yml) leva para responder",
+             "mediana da duração das execuções de test.yml concluídas no período, em minutos (por repositório)",
+             "duração de cada execução do workflow de testes", "GitHub Actions")
+    r.escala01 = False
+    if not runs.empty and runs["duracao_min"].notna().any():
+        d = runs.dropna(subset=["duracao_min"])
+        r.itens = d[["repositorio", "workflow", "duracao_min", "criado", "url"]].sort_values("duracao_min",
+                                                                                            ascending=False)
+        r.por_repo = (d.groupby(d["repositorio"].map(nq_nome))["duracao_min"]
+                      .agg(mediana="median", execucoes="size").reset_index())
+        r.medida = float(d["duracao_min"].median())
+        r.numerador, r.denominador = float(d["duracao_min"].sum()), len(d)
+        r.bruto = f"mediana {r.medida:.1f} min em {len(d)} execuções".replace(".", ",")
+        r.situacao = CALCULADA
+        r.motivo = f"portão: mediana ≤ {PLANO['portao_ci_mediana_min']:g} min em cada repositório; fora da média 0–1"
+    _, _, _, regra, formula = nq.METRICAS["testes_rapidos"]
+    _sonar_media("testes_rapidos", avs, novo("fast_tests", regra, formula, "duração de cada suíte de teste (UTS)",
+                                             "SonarCloud via metrics.yml"))
+
+    # ── Issues' Velocity: M9 ──
+    r = novo("team_throughput", "issues da sprint fechadas até o prazo de fechamento da sprint",
+             "issues da sprint fechadas até 08:00 do dia seguinte ao fim da sprint ÷ issues da sprint "
+             "(sem Epic, pacote de trabalho e Iniciativa)", "status e datas de cada issue da sprint", "Zenhub")
+    sp = _sprints(ctx)
+    if not zh_ok or sp.empty:
+        r.situacao, r.motivo = SEM_DADO, "sem snapshot do Zenhub com sprints"
+    else:
+        base = z[~z["tipo_issue"].isin(TIPOS_FORA_M9)]
+        limite = min(fim_ex, _agora(ctx))
+        linhas = []
+        for s in sp.itertuples():
+            conc = s.prazo <= limite
+            if (ini <= s.fim < fim_ex) or (ultima_sprint and not conc and s.inicio < fim_ex <= s.fim + pd.Timedelta(days=1)
+                                           and s.fim >= ini):
+                x = base[base["sprints"].map(lambda l, rot=s.sprint_label: _na_sprint(l, rot))]
+                fech = int((x["fechada"].notna() & (x["fechada"] <= s.prazo)).sum())
+                linhas.append({"sprint": s.sprint_label, "inicio": s.inicio, "fim": s.fim, "prazo": s.prazo,
+                               "fechadas": fech, "planejadas": len(x), "concluida": bool(conc),
+                               "valor": fech / len(x) if len(x) else None})
+        t = pd.DataFrame(linhas)
+        conc = t[t["concluida"] & (t["planejadas"] > 0)] if not t.empty else t
+        if conc.empty:
+            r.situacao, r.motivo = SEM_DADO, "nenhuma sprint concluída no período"
+            r.itens = t
+        else:
+            r.itens = t
+            if ultima_sprint:
+                u = conc.sort_values("fim").iloc[-1]
+                _razao(r, int(u["fechadas"]), int(u["planejadas"]), rotulo_bruto=f"sprint {u['sprint']}")
+            else:
+                _razao(r, int(conc["fechadas"].sum()), int(conc["planejadas"].sum()),
+                       rotulo_bruto=f"sprints {conc['sprint'].iloc[0]}–{conc['sprint'].iloc[-1]}")
+            r.motivo = aviso_zh
+
+    # ── Product Stability: M10 ──
+    r = novo("build_stability", "execuções do workflow de testes (test.yml) com sucesso",
+             "execuções de test.yml com sucesso ÷ execuções de test.yml com sucesso ou falha, no período",
+             "resultado de cada execução do workflow de testes", "GitHub Actions")
+    if not runs.empty:
+        c = runs[runs["conclusao"].isin(["success", "failure"])]
+        r.itens = c[["repositorio", "workflow", "conclusao", "criado", "duracao_min", "url"]]
+        r.por_repo = (c.groupby(c["repositorio"].map(nq_nome))["conclusao"].agg(
+            sucesso=lambda s: int((s == "success").sum()), total="size").reset_index()
+            .assign(valor=lambda d: d["sucesso"] / d["total"]))
+        _razao(r, int((c["conclusao"] == "success").sum()), len(c))
+
+    # ── Activities Completion: DT ──
+    r = novo("development_task_completion", "Tasks e Sub-tasks das sprints da release fechadas até a data da release",
+             "Tasks e Sub-tasks das sprints da release fechadas até a data da release (ou do fim do período, se "
+             "vier antes) ÷ Tasks e Sub-tasks das sprints da release", "tipo, status e sprint de cada issue", "Zenhub")
+    if not zh_ok or sp.empty:
+        r.situacao, r.motivo = SEM_DADO, "sem snapshot do Zenhub com sprints"
+    else:
+        rel = _release_de(fim)
+        rel_ini, rel_fim = _janela(rel)
+        rel_fim_ex = rel_fim + pd.Timedelta(days=1)
+        doss = sp[(sp["fim"] >= rel_ini) & (sp["fim"] < rel_fim_ex) & (sp["inicio"] < fim_ex)]
+        rotulos = set(doss["sprint_label"])
+        t = z[z["tipo_issue"].isin(["Task", "Sub-task"])
+              & z["sprints"].map(lambda l: any(_na_sprint(l, x) for x in rotulos))].copy()
+        corte = min(fim_ex, rel_fim_ex)
+        t["concluida"] = t["fechada"].notna() & (t["fechada"] < corte)
+        r.itens = t[["repositorio", "number", "title", "tipo_issue", "criada", "fechada", "concluida"]]
+        _razao(r, int(t["concluida"].sum()), len(t), rotulo_bruto=f"release {rel}, sprints "
+               + ", ".join(sorted(rotulos, key=lambda x: int(re.sub(r"\D", "", x) or 0))))
+        r.motivo = ("release em andamento: o valor só é comparável ao piso no fechamento" if fim < rel_fim else "")
+        r.motivo = "; ".join(x for x in (r.motivo, aviso_zh) if x)
+
+    # ── monitoradas de processo: sem peso em nenhum fator ──
+    r = novo("resolved_issues_throughput", f"issues resolvidas em até {L['resolucao_dias']} dias",
+             f"issues fechadas no período em até {L['resolucao_dias']} dias após criadas ÷ issues fechadas no período",
+             "criação e fechamento de cada issue", "Zenhub")
+    if zh_ok:
+        fe = z[(z["fechada"] >= ini) & (z["fechada"] < fim_ex)].copy()
+        fe["dias"] = (fe["fechada"] - fe["criada"]).dt.total_seconds() / 86400
+        r.itens = fe[["repositorio", "number", "title", "tipo_issue", "dias"]].sort_values("dias", ascending=False)
+        _razao(r, int((fe["dias"] <= L["resolucao_dias"]).sum()), len(fe))
+        r.motivo = aviso_zh
+    r = novo("old_issues", f"issues abertas há mais de {L['issue_antiga_dias']} dias (valor = 1 − proporção)",
+             f"issues abertas há mais de {L['issue_antiga_dias']} dias no fim do período ÷ issues abertas",
+             "criação e status de cada issue", "Zenhub")
+    if zh_ok:
+        abertas = z[(z["criada"] < fim_ex) & (z["fechada"].isna() | (z["fechada"] >= fim_ex))].copy()
+        abertas["idade_dias"] = (fim_ex - abertas["criada"]).dt.days
+        r.itens = abertas[["repositorio", "number", "title", "tipo_issue", "idade_dias"]].sort_values(
+            "idade_dias", ascending=False)
+        _razao(r, int((abertas["idade_dias"] > L["issue_antiga_dias"]).sum()), len(abertas), complemento=True,
+               rotulo_bruto="antigas")
+        r.motivo = aviso_zh
+    r = novo("build_performance", f"execuções do workflow de testes que não passaram de {L['build_rapido_min']} min",
              f"execuções de test.yml com duração ≤ {L['build_rapido_min']} min ÷ execuções de test.yml concluídas "
              "no período", "duração de cada execução do workflow de testes", "GitHub Actions")
     if not runs.empty:
@@ -446,16 +509,11 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
         r.itens = d[["repositorio", "workflow", "duracao_min", "criado", "url"]].sort_values("duracao_min",
                                                                                             ascending=False)
         _razao(r, int((d["duracao_min"] <= L["build_rapido_min"]).sum()), len(d))
-    r = novo("development_speed", "avg_automation_duration", "Avg. automation duration — testes automatizados rápidos",
-             "testes automatizados abaixo do limiar de duração", "igual a Testes rápidos (suítes UTS do SonarCloud)",
-             "duração de cada suíte de teste", "SonarCloud")
-    r.situacao, r.motivo = DERIVADA, "mesmo dado e mesma fórmula de Fast tests (Testing Performance): fica fora da média"
-    r = novo("development_speed", "commit_review_duration", "Commit review duration — PRs revisados no prazo",
-             f"pull requests fechados em até {L['revisao_pr_horas']} h",
+    r = novo("commit_review_duration", f"pull requests fechados em até {L['revisao_pr_horas']} h",
              f"PRs fechados em até {L['revisao_pr_horas']} h após abertos ÷ PRs fechados no período",
              "abertura e fechamento de cada PR", "API do GitHub (issues/PRs)")
     if gi is None or gi.empty:
-        r.situacao, r.motivo = PENDENTE, "PRs ainda não coletados: rodar scripts/coleta_github.py (versão nova)"
+        r.situacao, r.motivo = PENDENTE, "PRs ainda não coletados: rodar scripts/coleta_github.py"
     else:
         p = gi[gi["is_pull_request"].fillna(False).astype(bool)].copy()
         if f.get("repos"):
@@ -466,8 +524,7 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
         p["horas"] = (p["fechado"] - p["aberto"]).dt.total_seconds() / 3600
         r.itens = p[["repositorio", "number", "title", "horas"]].sort_values("horas", ascending=False)
         _razao(r, int((p["horas"] <= L["revisao_pr_horas"]).sum()), len(p))
-    r = novo("development_speed", "timely_feature_delivery", "Timely feature delivery — features entregues no prazo",
-             "histórias (Feature) concluídas na primeira sprint em que entraram",
+    r = novo("timely_feature_delivery", "histórias (Feature) concluídas na primeira sprint em que entraram",
              "Features concluídas sem serem levadas para outra sprint ÷ Features concluídas no período",
              "sprints de cada história e data de conclusão", "Zenhub")
     if zh_ok:
@@ -485,20 +542,11 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
             r.motivo = aviso_zh
         except Exception as erro:  # noqa: BLE001
             r.situacao, r.motivo = SEM_DADO, f"não foi possível montar as sprints das histórias ({erro})"
-    r = novo("development_speed", "timely_feature_specifications_delivery",
-             "Timely feature specifications delivery — especificações no prazo",
-             "especificações de features entregues no prazo", "—", "tarefas de especificação", "nenhuma")
-    r.situacao, r.motivo = SEM_FONTE, "não há tarefas de especificação separadas (tipo ou label)"
-    r = novo("development_speed", "core_component_commits", "Core component commits — commits no componente central",
-             "commits no componente central antes da release", "—", "commits por componente", "nenhuma")
-    r.situacao, r.motivo = SEM_FONTE, ("o documento define componente central por arquivos .bpmn (caso de uso da "
-                                      "Modelio): não se aplica ao MeasureSoftGram")
-    r = novo("development_speed", "non_issue_commits", "Non-issue component commit — commits ligados a issue",
-             "commits que citam uma issue (valor = 1 − proporção de commits sem issue)",
+    r = novo("non_issue_commits", "commits que citam uma issue (valor = 1 − proporção de commits sem issue)",
              "commits sem referência a issue (#número) na mensagem ÷ commits no período",
              "mensagem de cada commit", "API do GitHub (commits)")
     if cm is None or cm.empty:
-        r.situacao, r.motivo = PENDENTE, "commits ainda não coletados: rodar scripts/coleta_github.py (versão nova)"
+        r.situacao, r.motivo = PENDENTE, "commits ainda não coletados: rodar scripts/coleta_github.py"
     else:
         c = cm.copy()
         if f.get("repos"):
@@ -509,164 +557,218 @@ def calcular(ctx, f: dict, rec: dict) -> dict:
         r.itens = c[["repositorio", "sha", "mensagem"]].assign(sem_issue=sem)
         _razao(r, int(sem.sum()), len(c), complemento=True, rotulo_bruto="sem issue")
 
-    # ── Issues' Velocity ──
-    r = novo("issues_velocity", "resolved_issues_throughput", "Resolved issues' throughput — resolvidas no prazo",
-             f"issues resolvidas em até {L['resolucao_dias']} dias",
-             f"issues fechadas no período em até {L['resolucao_dias']} dias após criadas ÷ issues fechadas no período",
-             "criação e fechamento de cada issue", "Zenhub")
-    if zh_ok:
-        fe = z[(z["fechada"] >= ini) & (z["fechada"] < fim_ex)].copy()
-        fe["dias"] = (fe["fechada"] - fe["criada"]).dt.total_seconds() / 86400
-        r.itens = fe[["repositorio", "number", "title", "tipo_issue", "dias"]].sort_values("dias", ascending=False)
-        _razao(r, int((fe["dias"] <= L["resolucao_dias"]).sum()), len(fe))
-        r.motivo = aviso_zh
-    r = novo("issues_velocity", "issue_type_timeframe", "Issues-type in a timeframe — issues de um tipo",
-             "densidade de issues de um tipo (aqui: Bug) criadas no período",
-             "issues do tipo Bug criadas no período ÷ issues criadas no período", "tipo de cada issue", "Zenhub")
-    if zh_ok:
-        cr = z[(z["criada"] >= ini) & (z["criada"] < fim_ex)]
-        _razao(r, int((cr["tipo_issue"] == "Bug").sum()), len(cr), rotulo_bruto="bugs entre as criadas")
-        if r.situacao == CALCULADA:
-            r.situacao, r.valor = INFORMATIVA, None
-            r.motivo = "o documento deixa o tipo livre; com Bug repete Bug density, por isso fica fora da média"
-    r = novo("issues_velocity", "team_throughput", "Team throughput — vazão do time",
-             "densidade de issues resolvidas pelo time no período",
-             "issues fechadas no período ÷ issues ativas no período (abertas em algum momento dele)",
-             "status e datas de cada issue", "Zenhub")
-    if zh_ok:
-        ativas = z[(z["criada"] < fim_ex) & (z["fechada"].isna() | (z["fechada"] >= ini))]
-        fe = ativas[ativas["fechada"].notna() & (ativas["fechada"] < fim_ex)]
-        r.itens = ativas[["repositorio", "number", "title", "tipo_issue", "criada", "fechada"]]
-        _razao(r, len(fe), len(ativas))
-        r.motivo = aviso_zh
-    r = novo("issues_velocity", "bugs_ratio", "Bugs ratio — issues abertas que não são bug",
-             "densidade de issues abertas que não são bug", "issues abertas que não são Bug ÷ issues abertas",
-             "tipo e status de cada issue", "Zenhub")
-    if zh_ok:
-        abertas = z[(z["criada"] < fim_ex) & (z["fechada"].isna() | (z["fechada"] >= fim_ex))]
-        _razao(r, int((abertas["tipo_issue"] != "Bug").sum()), len(abertas))
-        if r.situacao == CALCULADA:
-            r.situacao = DERIVADA
-            r.motivo = "é o complemento de Bug density (Software Stability): fica fora da média para não contar duas vezes"
-    r = novo("issues_velocity", "old_issues", "Old issues — issues antigas",
-             f"issues abertas há mais de {L['issue_antiga_dias']} dias (valor = 1 − proporção)",
-             f"issues abertas há mais de {L['issue_antiga_dias']} dias no fim do período ÷ issues abertas",
-             "criação e status de cada issue", "Zenhub")
-    if zh_ok:
-        abertas = z[(z["criada"] < fim_ex) & (z["fechada"].isna() | (z["fechada"] >= fim_ex))].copy()
-        abertas["idade_dias"] = (fim_ex - abertas["criada"]).dt.days
-        r.itens = abertas[["repositorio", "number", "title", "tipo_issue", "idade_dias"]].sort_values(
-            "idade_dias", ascending=False)
-        _razao(r, int((abertas["idade_dias"] > L["issue_antiga_dias"]).sum()), len(abertas), complemento=True,
-               rotulo_bruto="antigas")
-        r.motivo = aviso_zh
+    fat, ind = agregar(out)
+    return {"metricas": out, "fatores": fat, "indicadores": ind, "avaliacoes": avs}
 
-    # ── Testing Performance ──
-    _, _, _, regra, formula = nq.METRICAS["testes_rapidos"]
-    _sonar_media("testes_rapidos", notas, novo("testing_performance", "fast_tests", "Fast tests — testes rápidos",
-                                               regra, formula, "duração de cada suíte de teste (UTS)",
-                                               "SonarCloud via metrics.yml"))
-    for chave, nome in (("long_tests", "Long tests — testes longos"),
-                        ("unit_test_duration", "Unit test duration — duração dos testes unitários")):
-        r = novo("testing_performance", chave, nome, "testes acima/abaixo do limiar de duração",
-                 "complemento ou repetição de Fast tests", "duração de cada suíte", "SonarCloud")
-        r.situacao, r.motivo = DERIVADA, "mesmo dado de Fast tests: fica fora da média para não contar duas vezes"
-    r = novo("testing_performance", "error_identification", "Error identification — bugs identificados no período",
-             "bugs identificados no período em relação a todos os identificados desde o início",
-             "bugs criados no período ÷ bugs criados desde o início do semestre", "tipo e criação de cada issue",
-             "Zenhub")
-    if zh_ok:
-        b = z[(z["tipo_issue"] == "Bug") & (z["criada"] < fim_ex)]
-        _razao(r, int((b["criada"] >= ini).sum()), len(b), rotulo_bruto="dos bugs do semestre")
-        if r.situacao == CALCULADA:
-            r.situacao, r.valor = INFORMATIVA, None
-            r.motivo = "não tem direção boa/ruim (mais bugs achados pode ser teste melhor): fica fora da média"
-    r = novo("testing_performance", "error_correction", "Error correction — bugs corrigidos no prazo",
-             f"bugs resolvidos em até {L['correcao_bug_dias']} dias",
-             f"bugs fechados no período em até {L['correcao_bug_dias']} dias ÷ bugs fechados no período",
-             "criação e fechamento de cada bug", "Zenhub")
-    if zh_ok:
-        b = z[(z["tipo_issue"] == "Bug") & (z["fechada"] >= ini) & (z["fechada"] < fim_ex)].copy()
-        b["dias"] = (b["fechada"] - b["criada"]).dt.total_seconds() / 86400
-        r.itens = b[["repositorio", "number", "title", "dias"]]
-        _razao(r, int((b["dias"] <= L["correcao_bug_dias"]).sum()), len(b))
-        if r.situacao != CALCULADA:
-            r.motivo = "nenhum bug fechado no período"
-    r = novo("testing_performance", "bug_leakage", "Bug leakage — bugs que escaparam da release",
-             "bugs identificados depois da release em relação aos de antes",
-             "bugs criados no período ÷ bugs criados antes do início do período", "tipo e criação de cada issue",
-             "Zenhub")
-    if zh_ok:
-        b = z[z["tipo_issue"] == "Bug"]
-        depois, antes = int(((b["criada"] >= ini) & (b["criada"] < fim_ex)).sum()), int((b["criada"] < ini).sum())
-        r.numerador, r.denominador = depois, antes
-        r.bruto = f"{depois} depois ÷ {antes} antes" + (f" = {depois / antes:.2f}".replace(".", ",") if antes else "")
-        r.situacao = INFORMATIVA
-        r.motivo = "razão sem teto (pode passar de 1): mostrada, fora da média"
-    r = novo("testing_performance", "tests_per_product", "Tests per product — testes por issue",
-             "número de testes em relação às issues do período", "testes (soma dos repositórios) ÷ issues fechadas no período",
-             "testes de cada repositório e issues fechadas", "SonarCloud + Zenhub")
-    tot = sum((n["avaliacao"]["metricas"]["testes_passando"]["denominador"] or 0) for n in notas.values())
-    if zh_ok and tot:
-        fe = z[(z["fechada"] >= ini) & (z["fechada"] < fim_ex)]
-        r.numerador, r.denominador = tot, len(fe)
-        r.bruto = f"{int(tot)} testes ÷ {len(fe)} issues" + (f" = {tot / len(fe):.1f}".replace(".", ",") if len(fe) else "")
-        r.situacao, r.motivo = INFORMATIVA, "não é proporção de 0 a 1: mostrada, fora da média"
-    r = novo("testing_performance", "ci_feedback_time", "CI feedback time — tempo de feedback da CI",
-             "tempo médio que o workflow de testes leva para responder",
-             "Σ duração das execuções de test.yml ÷ execuções de test.yml concluídas no período",
-             "duração de cada execução do workflow de testes", "GitHub Actions")
-    if not runs.empty and runs["duracao_min"].notna().any():
-        d = runs["duracao_min"].dropna()
-        r.numerador, r.denominador = float(d.sum()), len(d)
-        r.bruto = f"{d.mean():.1f} min em média ({len(d)} execuções; mediana {d.median():.1f} min)".replace(".", ",")
-        r.situacao, r.motivo = INFORMATIVA, "é um tempo, não proporção: a versão 0–1 é Build performance"
-    for chave, nome, motivo in (
-            ("developer_tester_communication", "Developer-tester communication — comunicação dev-teste",
-             "não há papel de testador separado nem registro de feedback de teste nas issues"),
-            ("commit_review_iterations", "Commit review iterations — iterações de revisão",
-             "rodadas de revisão de cada PR não são coletadas (exigiria a API de reviews do GitHub)"),
-            ("commit_response_time", "Commit response time — tempo de resposta da revisão",
-             "horário da primeira revisão de cada PR não é coletado (exigiria a API de reviews do GitHub)")):
-        r = novo("testing_performance", chave, nome, "—", "—", "—", "nenhuma")
-        r.situacao, r.motivo = SEM_FONTE, motivo
 
-    # ── agregação ──
-    m = pd.DataFrame([{"fator": x.fator, "chave": x.chave, "valor": x.valor, "situacao": x.situacao} for x in out])
+# ───────────────────────── agregação (metas.mdx: "Fórmula dos indicadores") ─────────────────────────
+
+def agregar(resultados: list[Resultado]) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Fator = média das métricas incluídas calculadas (0–1); indicador = soma dos fatores avaliados com peso 1/n.
+
+    Fator sem métrica calculada sai do denominador do indicador: a falta de dado não vira nota ruim.
+    """
     fatores = []
-    for fc, (nome, aspecto, tipo) in FATORES.items():
-        x = m[(m["fator"] == fc) & m["situacao"].isin(NA_MEDIA)]
-        fatores.append({"fator": fc, "nome": nome, "aspecto": aspecto, "tipo": tipo,
-                        "valor": float(x["valor"].mean()) if not x.empty else None,
-                        "metricas_na_media": len(x), "metricas": int((m["fator"] == fc).sum())})
+    for fc, (nome, tipo, motivo) in FATORES.items():
+        x = [r.valor for r in resultados if r.fator == fc and r.na_media]
+        fatores.append({"fator": fc, "nome": nome, "tipo": tipo,
+                        "valor": float(sum(x) / len(x)) if x else None, "metricas_na_media": len(x),
+                        "metricas": sum(1 for r in resultados if r.fator == fc and r.decisao == INCLUIDA),
+                        "fora_do_calculo": motivo})
     fat = pd.DataFrame(fatores)
     indicadores = []
     for ic, (nome, desc, fs) in INDICADORES.items():
-        x = fat[fat["fator"].isin(fs) & fat["valor"].notna()]
+        x = fat[fat["fator"].isin(AVALIADOS[ic]) & fat["valor"].notna()]
         indicadores.append({"indicador": ic, "nome": nome, "descricao": desc,
                             "valor": float(x["valor"].mean()) if not x.empty else None,
-                            "fatores_na_media": len(x), "fatores": len(fs)})
-    return {"metricas": out, "fatores": fat, "indicadores": pd.DataFrame(indicadores), "notas": notas}
+                            "fatores_na_media": len(x), "fatores_avaliados": len(AVALIADOS[ic]), "fatores": len(fs)})
+    return fat, pd.DataFrame(indicadores)
+
+
+def metas_agregadas() -> tuple[dict, dict]:
+    """Meta de cada fator (média das metas das métricas) e de cada indicador (fórmula sobre as metas, truncada)."""
+    metas = PLANO["metas"]
+    mf = {}
+    for fc in FATORES:
+        v = [metas[k] for k, (_, _, fator, dec) in METRICAS.items() if fator == fc and dec == INCLUIDA and k in metas]
+        if v:
+            mf[fc] = sum(v) / len(v)
+    mi = {}
+    for ic, fs in AVALIADOS.items():
+        v = [mf[fc] for fc in fs if fc in mf]
+        if v:
+            mi[ic] = truncar(sum(v) / len(v))
+    return mf, mi
+
+
+# ───────────────────────── portões (metas.mdx: "Portões obrigatórios") ─────────────────────────
+
+def portoes(res: dict, rec: dict) -> pd.DataFrame:
+    """Condições obrigatórias que ficam fora da nota: o indicador só conta como atingido se todas passarem."""
+    m = {r.chave: r for r in res["metricas"]}
+    linhas = []
+    atual = rec["atual"]
+
+    def por_repo(metrica, ok, meta, rotulo, indicador, unidade="%"):
+        d = atual[atual["metrica"] == metrica]
+        if d.empty:
+            linhas.append({"portao": rotulo, "indicador": indicador, "passa": None, "detalhe": "sem dado do SonarCloud"})
+            return
+        bons = {nq_nome(r): v for r, v in zip(d["repositorio"], d["valor"])}
+        ruins = {k: v for k, v in bons.items() if not ok(v)}
+        linhas.append({"portao": rotulo, "indicador": indicador, "passa": not ruins,
+                       "detalhe": ("todos passam" if not ruins else "reprovam: " + ", ".join(
+                           f"{k} {v:.1f}".replace(".", ",") + unidade for k, v in sorted(ruins.items())))})
+
+    cob = config.METAS["coverage"]["R3"]
+    dup = config.METAS["duplicated_lines_density"]["R3"]
+    por_repo("coverage", lambda v: v >= cob, cob, f"Cobertura global ≥ {cob:g}% em cada repositório", "Blocking")
+    por_repo("duplicated_lines_density", lambda v: v <= dup, dup,
+             f"Duplicação global ≤ {dup:g}% em cada repositório", "Product Quality · Product Readiness")
+    r6 = m["non_blocking_files"]
+    if r6.situacao == CALCULADA:
+        ruins = int(r6.denominador - r6.numerador)
+        linhas.append({"portao": "Zero arquivo com violação blocker ou critical", "indicador": "Blocking",
+                       "passa": ruins == 0, "detalhe": "nenhum arquivo" if ruins == 0 else f"{ruins} arquivos a corrigir"})
+    else:
+        linhas.append({"portao": "Zero arquivo com violação blocker ou critical", "indicador": "Blocking",
+                       "passa": None, "detalhe": "sem coleta de violações por arquivo"})
+    r8, lim = m["ci_feedback_time"], PLANO["portao_ci_mediana_min"]
+    if r8.situacao == CALCULADA and not r8.por_repo.empty:
+        ruins = r8.por_repo[r8.por_repo["mediana"] > lim]
+        linhas.append({"portao": f"Mediana do test.yml ≤ {lim:g} min em cada repositório", "indicador": "Process Performance",
+                       "passa": ruins.empty, "detalhe": "todos passam" if ruins.empty else "reprovam: " + ", ".join(
+                           f"{a} {b:.1f} min".replace(".", ",") for a, b in zip(ruins["repositorio"], ruins["mediana"]))})
+    else:
+        linhas.append({"portao": f"Mediana do test.yml ≤ {lim:g} min em cada repositório",
+                       "indicador": "Process Performance", "passa": None, "detalhe": "sem execuções no período"})
+    r3, alvo = m["test_success"], PLANO["repos_com_relatorio_de_testes"]
+    if not r3.por_repo.empty:
+        com = int((r3.por_repo["zero_por_falta"] == "").sum())
+        sem = list(r3.por_repo.loc[r3.por_repo["zero_por_falta"] != "", "repositorio"])
+        linhas.append({"portao": f"Relatório de testes em {alvo} de {alvo} repositórios", "indicador": "Blocking",
+                       "passa": com >= alvo, "detalhe": f"{com} de {alvo}" + (f"; sem relatório: {', '.join(sem)}" if sem else "")})
+    else:
+        linhas.append({"portao": f"Relatório de testes em {alvo} de {alvo} repositórios", "indicador": "Blocking",
+                       "passa": None, "detalhe": "sem coleta do pipeline"})
+    return pd.DataFrame(linhas)
+
+
+# ───────────────────────── R1 × R2 × Atual com meta, piso e situação ─────────────────────────
+
+def janelas(ctx, fim_atual=None) -> dict:
+    """Janelas de comparação: R1, R2 e "Atual" (do dia seguinte à entrega da R2 até hoje ou ``fim_atual``)."""
+    r2_fim = pd.Timestamp(config.RELEASES["R2"])
+    r3_fim = pd.Timestamp(config.RELEASES["R3"])
+    fim = pd.Timestamp(fim_atual) if fim_atual is not None else min(pd.Timestamp(ctx.hoje), r3_fim)
+    return {"R1": _janela("R1"), "R2": _janela("R2"), "Atual": (r2_fim + pd.Timedelta(days=1), fim)}
+
+
+def _situacao(valor, piso, meta, portoes_ok) -> str:
+    if valor is None or pd.isna(valor):
+        return STATUS["sem"]
+    if piso is not None and not pd.isna(piso) and valor < piso:
+        return STATUS["vermelho"]
+    if valor >= meta and portoes_ok is not False:
+        return STATUS["verde"]
+    return STATUS["amarelo"]
+
+
+def avaliar_releases(ctx, f: dict, fim_atual=None) -> dict:
+    """Todas as métricas, fatores e indicadores em R1, R2 e Atual, com meta da R3, piso (R2) e situação."""
+    from src.components import filters   # import tardio: filters usa streamlit
+    jan = janelas(ctx, fim_atual)
+    branch = f.get("branch") or config.SONAR_BRANCH
+    res, recs = {}, {}
+    for nome, (ini, fim) in jan.items():
+        f2 = {**f, "periodo": (ini, fim), "branch": branch}
+        rec = filters.sonar(ctx, f2)
+        rec = {**rec, "repos": [r for r in rec["repos"] if r in config.QRAPIDS["linguagem"]]}
+        rec["atual"] = rec["atual"][rec["atual"]["repositorio"].isin(rec["repos"])]
+        res[nome], recs[nome] = calcular(ctx, f2, rec, ultima_sprint=(nome == "Atual")), rec
+    mf, mi = metas_agregadas()
+    metas = PLANO["metas"]
+
+    linhas = []
+    for k, (codigo, nome, fator, dec) in METRICAS.items():
+        linha = {"chave": k, "codigo": codigo, "nome": nome, "fator": fator, "decisao": dec,
+                 "tipo_meta": TIPO_META.get(k, "Monitorada: sem meta"), "meta": metas.get(k)}
+        for rel in jan:
+            r = next(x for x in res[rel]["metricas"] if x.chave == k)
+            linha[rel] = r.medida if not r.escala01 else r.valor
+            linha[f"{rel}_bruto"] = r.bruto
+        linhas.append(linha)
+    met = pd.DataFrame(linhas)
+
+    fat = []
+    for fc, (nome, tipo, motivo) in FATORES.items():
+        linha = {"fator": fc, "nome": nome, "tipo": tipo, "meta": mf.get(fc), "fora_do_calculo": motivo}
+        for rel in jan:
+            linha[rel] = res[rel]["fatores"].set_index("fator").loc[fc, "valor"]
+        fat.append(linha)
+    fatores = pd.DataFrame(fat)
+
+    port = portoes(res["Atual"], recs["Atual"])
+    ind = []
+    for ic, (nome, desc, fs) in INDICADORES.items():
+        linha = {"indicador": ic, "nome": nome, "descricao": desc, "meta": mi.get(ic),
+                 "avaliados": f"{len(AVALIADOS[ic])} de {len(fs)}"}
+        for rel in jan:
+            linha[rel] = res[rel]["indicadores"].set_index("indicador").loc[ic, "valor"]
+        ok = _portoes_do(ic, port)
+        linha["portoes_ok"] = ok
+        linha["piso"] = linha["R2"]
+        linha["situacao"] = _situacao(linha["Atual"], linha["piso"], linha["meta"], ok)
+        ind.append(linha)
+    return {"janelas": jan, "res": res, "recs": recs, "metricas": met, "fatores": fatores,
+            "indicadores": pd.DataFrame(ind), "portoes": port}
+
+
+def _portoes_do(indicador: str, port: pd.DataFrame) -> bool | None:
+    """True se todos os portões do indicador passam; False se algum reprova; None se algum não tem dado."""
+    nome = INDICADORES[indicador][0]
+    x = port[port["indicador"].str.contains(nome, regex=False)]
+    if x.empty:
+        return True
+    if (x["passa"] == False).any():   # noqa: E712 — coluna pode ter None
+        return False
+    return None if x["passa"].isna().any() else True
+
+
+# ───────────────────────── catálogo das 44 métricas (lido do selecaometricas.mdx) ─────────────────────────
+
+def catalogo() -> pd.DataFrame:
+    """Decisão do plano sobre as métricas monitoradas, habilitáveis e excluídas, com a justificativa.
+
+    Lê as tabelas 3.1, 3.2 e 3.3 de ``docs/planejamento/selecaometricas.mdx``, para a tela nunca divergir do plano.
+    Sem o arquivo (deploy sem a pasta docs/), devolve tabela vazia.
+    """
+    arq = RAIZ_DOCS / "selecaometricas.mdx"
+    if not arq.exists():
+        return pd.DataFrame(columns=["decisao", "indicador_fator", "metrica", "motivo", "justificativa", "condicao"])
+    texto = arq.read_text(encoding="utf-8")
+    secoes = {"### 3.1": MONITORADA, "### 3.2": HABILITAVEL, "### 3.3": EXCLUIDA}
+    linhas, atual = [], None
+    for ln in texto.splitlines():
+        if ln.startswith("#"):
+            atual = next((v for k, v in secoes.items() if ln.startswith(k)), None)
+            continue
+        if atual and ln.startswith("|") and not ln.startswith("|---") and not ln.startswith("| Indicador"):
+            c = [x.strip().replace("**", "") for x in ln.strip().strip("|").split("|")]
+            if atual == MONITORADA:
+                linhas.append((atual, c[0], c[1], "", c[3], ""))
+            elif atual == HABILITAVEL:
+                linhas.append((atual, c[0], c[1], "", c[3], c[4]))
+            else:
+                linhas.append((atual, c[0], c[1], c[2], c[3], ""))
+    return pd.DataFrame(linhas, columns=["decisao", "indicador_fator", "metrica", "motivo", "justificativa", "condicao"])
 
 
 def tabela(resultados: list[Resultado]) -> pd.DataFrame:
     """Resultados em tabela (CSV e telas)."""
     return pd.DataFrame([{
-        # um fator pode alimentar mais de um indicador (Code Quality: Product Quality e Product Readiness)
-        "indicador": " · ".join(v[0] for v in INDICADORES.values() if r.fator in v[2]),
-        "fator": FATORES[r.fator][0], "aspecto": FATORES[r.fator][1], "chave": r.chave, "metrica": r.nome,
+        "indicador": " · ".join(v[0] for k, v in INDICADORES.items() if r.fator in v[2]),
+        "fator": FATORES[r.fator][0], "codigo": r.codigo, "metrica": r.nome, "decisao": r.decisao,
         "descricao": r.descricao, "formula": r.formula, "dado_bruto": r.dado_bruto, "fonte": r.fonte,
-        "situacao": ROTULO[r.situacao], "valor": r.valor, "bruto": r.bruto, "numerador": r.numerador,
-        "denominador": r.denominador, "observacao": r.motivo} for r in resultados])
-
-
-def resumo_situacao(resultados: list[Resultado]) -> dict:
-    s = pd.Series([r.situacao for r in resultados]).value_counts()
-    return {ROTULO[k]: int(s.get(k, 0)) for k in ROTULO}
-
-
-# Compatibilidade: a conferência simples de dados (usada antes na página Qualidade técnica).
-def disponibilidade(ctx, f: dict, rec: dict) -> pd.DataFrame:
-    t = tabela(calcular(ctx, f, rec)["metricas"])
-    return t.rename(columns={"observacao": "detalhe"})
-
+        "situacao": ROTULO[r.situacao], "valor": r.medida if not r.escala01 else r.valor, "bruto": r.bruto,
+        "numerador": r.numerador, "denominador": r.denominador, "observacao": r.motivo} for r in resultados])
