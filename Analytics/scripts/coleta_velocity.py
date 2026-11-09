@@ -38,13 +38,16 @@ def executar(pasta: Path = coleta.PASTA, log=_log) -> Path:
     carregar_env(RAIZ / ".env")
     cliente = ZenhubClient.do_ambiente()
     agora = datetime.now(timezone.utc)
-    anterior, _ = coleta.ultimo_snapshot(pasta)     # reaproveita o histórico de pipelines das issues já fechadas
+    anterior, nome_anterior = coleta.ultimo_snapshot(pasta)     # reaproveita o histórico de pipelines das issues já fechadas
     snapshot = coleta.coletar(cliente, agora, log=log, anterior=anterior)
     destino = coleta.salvar_snapshot(snapshot, pasta)
     regras = Regras.dos_parametros(planilha.carregar_parametros())
     linhas, congeladas = congelar_linhas_de_base(snapshot, coleta.ler_linhas_de_base(pasta), agora, regras)
     coleta.gravar_linhas_de_base(linhas, pasta)
-    log(f"Gravado {destino.name} ({cliente.requisicoes} requisições)")
+    if nome_anterior and destino.name == nome_anterior:
+        log(f"Snapshot Zenhub idêntico ao anterior ({destino.name}); gravação ignorada ({cliente.requisicoes} requisições)")
+    else:
+        log(f"Gravado {destino.name} ({cliente.requisicoes} requisições)")
     if congeladas:
         log("Linha de base congelada agora: " + ", ".join(congeladas))
     for aviso in snapshot["avisos"]:

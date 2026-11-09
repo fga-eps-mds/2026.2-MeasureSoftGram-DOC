@@ -25,6 +25,7 @@ RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ))
 
 import config  # noqa: E402
+from scripts.saneamento_dados import mesmo_payload  # noqa: E402
 from scripts.verificar_novos_prs import normalizar_repositorios  # noqa: E402
 from src.data import sonar_api  # noqa: E402
 from src.data.sonar import PASTA_API, ultimo_snapshot  # noqa: E402
@@ -54,15 +55,21 @@ def executar(pasta: Path = PASTA_API, repos: list[str] | str | None = None, log=
 
     snap = sonar_api.coletar(cliente, projetos_alvo, config.SONAR_BRANCH, config.SONAR_BUSCA, log=log)
 
+    snap_antigo, nome_antigo = ultimo_snapshot(pasta)
+
     # Se coletamos um subconjunto, mesclamos com o último snapshot para manter os demais projetos
     todos_projetos = set(config.SONAR_PROJETOS)
     if set(projetos_alvo) < todos_projetos:
-        snap_antigo, nome_antigo = ultimo_snapshot(pasta)
         if snap_antigo and "projetos" in snap_antigo:
             keys_novas = {p["key"] for p in snap["projetos"]}
             projetos_preservados = [p for p in snap_antigo["projetos"] if p.get("key") not in keys_novas]
             snap["projetos"].extend(projetos_preservados)
+            snap["projetos"].sort(key=lambda p: p.get("key", ""))
             log(f"Mesclados {len(projetos_preservados)} projetos do snapshot anterior ({nome_antigo})")
+
+    if snap_antigo and nome_antigo and mesmo_payload(snap, snap_antigo):
+        log(f"Snapshot SonarCloud idêntico ao anterior ({nome_antigo}); gravação ignorada ({cliente.requisicoes} requisições)")
+        return pasta / nome_antigo
 
     pasta.mkdir(parents=True, exist_ok=True)
     quando = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M")
