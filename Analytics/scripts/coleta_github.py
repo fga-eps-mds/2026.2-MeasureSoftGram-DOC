@@ -135,11 +135,22 @@ def coletar_commits(sessao, repo: str, desde: str, anteriores: dict | None = Non
     return {"branch": branch or "(padrão)", "commits": commits, "detalhes_novos": novos}
 
 
-def _gravar(destino: Path, cabecalho: dict, dados: dict) -> None:
-    destino.write_text(json.dumps({**cabecalho, **dados}, ensure_ascii=False, indent=1), encoding="utf-8")
-
-
+from scripts.saneamento_dados import mesmo_payload  # noqa: E402
 from scripts.verificar_novos_prs import normalizar_repositorios  # noqa: E402
+
+
+def _gravar(destino: Path, cabecalho: dict, dados: dict) -> bool:
+    novo = {**cabecalho, **dados}
+    if destino.exists():
+        try:
+            antigo = json.loads(destino.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            antigo = None
+        if mesmo_payload(novo, antigo):
+            return False
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    destino.write_text(json.dumps(novo, ensure_ascii=False, indent=1), encoding="utf-8")
+    return True
 
 
 def executar(pasta: Path = PASTA_COLETA, repos: list[str] | str | None = None, log=print) -> list[Path]:

@@ -219,7 +219,13 @@ def coletar_transferencias(cliente: ZenhubClient, issues: dict, backlog: dict | 
 
 
 def salvar_snapshot(snapshot: dict, pasta: Path = PASTA) -> Path:
+    from scripts.saneamento_dados import mesmo_payload
+
+    pasta = Path(pasta)
     pasta.mkdir(parents=True, exist_ok=True)
+    anterior, nome_antigo = ultimo_snapshot(pasta)
+    if anterior and nome_antigo and mesmo_payload(snapshot, anterior):
+        return pasta / nome_antigo
     quando = _dt(snapshot["coletado_em"]).strftime("%Y-%m-%dT%H%M")
     destino = pasta / f"zenhub-velocity-{quando}.json"
     destino.write_text(json.dumps(snapshot, ensure_ascii=False, indent=1), encoding="utf-8")
