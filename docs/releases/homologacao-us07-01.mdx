@@ -1,0 +1,257 @@
+---
+id: homologacao-us07-01
+title: Homologação da US07.01 — Dashboards sem o Grafana
+sidebar_label: Homologação US07.01
+description: Resultado do formulário de aceite da US07.01, o que foi corrigido em cada ressalva e por que o gráfico de métricas fica vazio.
+---
+
+# Homologação da US07.01 — Dashboards sem o Grafana
+
+Registro do formulário de aceite da [US07.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131)
+respondido pelo PO em 03/11/2026, o que já foi corrigido em cada ressalva e o que
+ainda depende de terceiros. A página existe para que o reteste da US não recomece
+do zero e para que a justificativa técnica do gráfico de métricas não precise ser
+reconstruída na próxima homologação.
+
+| Avaliador | Papel | Data | Ambiente | Decisão final |
+| --- | --- | --- | --- | --- |
+| Hilmer Rodrigues Neri | Product Owner | 03/11/2026 | `develop` (homologação) | **Aceito com ressalvas** |
+
+## Resultado por critério
+
+| # | Critério | Decisão | Observação do PO |
+| --- | --- | --- | --- |
+| 1 | Visão Geral de Qualidade (totais, indicador, planejado × realizado, radar) | 🟡 Aceito com ressalvas | Nível das métricas não exibido; falta o símbolo de vetor em Rp, Rd, Rc e Rp − Rd; radar pequeno ao lado do equalizador; valores do `.csv` numa coluna só |
+| 2 | Evolução Temporal (4 gráficos e filtros em cascata) | 🟡 Aceito com ressalvas | A mensagem de aviso está errada e pouco clara: manda o usuário à Distribuição Estatística, que não exibe valores coletados. "Deveria ser um erro e não um aviso" |
+| 3 | Gráfico de pulso na tela do repositório | 🟡 Aceito com ressalvas | "Sombra" do nome da release, defeito já corrigido no pulso da visão geral |
+| 4 | Estados de carregamento, sem dados e erro em cada gráfico | ❌ **Rejeitado** | "Ao escolher um produto 'sem dados' não foi exibida nenhuma mensagem explicativa" |
+| 5 | Qualquer membro da organização vê os dashboards, não só o administrador | 🟡 Aceito com ressalvas | "Não consigo testar esse cenário" |
+| 6 | Nenhuma tela mostra painéis do Grafana | ✅ Aceito | — |
+| 7 | Cores dos gráficos seguem o guia de IDV | ✅ Aceito | — |
+
+## Situação das ressalvas
+
+| Ressalva | Critério | O que foi feito | Evidência | Situação |
+| --- | --- | --- | --- | --- |
+| Símbolo de vetor em Rp, Rd e Rc | 1 | Seta de vetor sobre as siglas do equalizador | [Front#102](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/102) | ✅ Mesclado |
+| Radar desproporcional ao equalizador | 1 | Altura do radar de 300px para 480px: o raio é 72% do menor lado, então num card largo o círculo ficava miúdo | [Front#103](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/103) | ✅ Mesclado |
+| "Sombra" do nome da release no pulso | 3 | O gráfico do repositório não passava `releaseStartLabels: false`: o início de uma release cai no fim da anterior e as duas etiquetas se sobrepunham | [Front#103](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/103) | ✅ Mesclado |
+| Mensagem errada no gráfico de métricas | 2 | Texto reescrito: deixou de citar a Distribuição Estatística e passou a explicar que o gráfico mostra só métricas do repositório inteiro | [Front#103](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/103) | ✅ Mesclado — ver [a justificativa abaixo](#por-que-o-gráfico-de-métricas-fica-vazio) |
+| Valores do `.csv` numa coluna só | 1 | Separador `;`, vírgula decimal e marca de ordem de bytes, que é como o Excel em português abre o arquivo em colunas | [Front#106](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/106) | ✅ Mesclado |
+| Produto "sem dados" sem mensagem explicativa, na Visão Geral | 4 | Card de Totais com os estados de carregamento e de ausência: sem modelo de qualidade os quatro totais mostram `—` em vez de `0`, com aviso explicando o motivo | [Front#107](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/107) | ✅ Mesclado |
+| Produto "sem dados" sem mensagem explicativa, na tela do produto | 4 | Estado vazio no gráfico de pulso quando o produto nunca teve medição, separado do caso em que só o filtro de período não encontra nada — ver [abaixo](#a-tela-do-produto-era-a-outra-metade-do-critério-4) | [Front#111](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/111) | ✅ Mesclado |
+| Total de métricas zerado na Visão Geral | 1 | `load_initial_data` deixava a relação `SupportedMeasure.metrics` vazia — ver [abaixo](#o-total-de-métricas-da-visão-geral-é-outro-problema) | [Service#86](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86) | ✅ Mesclado — falta o seed rodar em homologação |
+| Gráfico de métricas vazio na Evolução Temporal | 2 | Comportamento esperado do filtro `TRK`, não defeito. O que falta é uma tela de métricas por arquivo — escopo novo | — | 🟡 Justificado, tela pendente |
+| Critério 5 não testável | 5 | Teste local com uma conta membro sem perfil de administrador (`membro-teste-local`): vê a organização, o produto e a Visão Geral completa. Em homologação ainda falta uma conta assim | — | ✅ Verificado localmente; falta em homologação |
+
+:::note[Decisão do time sobre o que o PO não pôde confirmar]
+Os critérios 3 e 4 citam "ver imagem" e as duas imagens não vieram no formulário.
+O defeito do critério 3 foi reproduzido e corrigido sem elas. No critério 4, a
+ausência da imagem custou uma rodada: a primeira correção tratou o card de Totais
+da Visão Geral, e só depois se percebeu que "escolher um produto sem dados"
+descreve melhor a tela do produto, corrigida em seguida. As duas telas plausíveis
+estão corrigidas e o reteste em [10/11](#reteste-em-10112026) as cobriu.
+
+O print não será reaberto porque, na
+[reunião com o PO de 04/11](/docs/reunioes/reunioes-po/ata-po-04-11), o próprio PO
+definiu que os testes sistemáticos passariam a ser cruzados dentro da equipe, com
+ele fazendo uso exploratório e intervindo só diante de algo grave fora dos
+requisitos. A decisão foi tomada para a Release 3; aqui ela é aplicada ao reteste
+de uma ressalva da Release 2, o que é uma extensão do combinado e não o combinado
+em si.
+:::
+
+## Por que o gráfico de métricas fica vazio
+
+O PO apontou, no critério 1 e de novo no critério 2, que o nível de métricas não
+exibe valores enquanto os níveis acima exibem — e que isso violaria a lógica
+*bottom-up* do modelo, já que não existe medida sem métrica. O mesmo ponto virou a
+[Ação A1 da ata de feedback da R2](/docs/reunioes/feedback-release/ata-feedback-r2),
+com a hipótese de "erro no mock de homologação ou bug de consulta".
+
+:::warning[São duas telas e duas causas diferentes]
+A mesma frase do PO descreve dois sintomas que não têm a mesma origem, e tratá-los
+como um só foi o que fez a equipe gastar duas rodadas na explicação:
+
+- o **gráfico** de métricas da Evolução Temporal (critério 2) fica vazio por uma
+  regra deliberada, explicada nesta seção;
+- o **total** de métricas do card de Totais da Visão Geral (critério 1) vem zerado
+  por um defeito, descrito em
+  [a seção seguinte](#o-total-de-métricas-da-visão-geral-é-outro-problema).
+:::
+
+Para o gráfico da Evolução Temporal, **não é nenhuma das duas hipóteses da Ação
+A1.** O Service guarda a coleta em dois níveis, distinguidos pelo campo
+`qualifier` de `CollectedMetric`:
+
+| `qualifier` | Granularidade | Origem típica | Exemplos |
+| --- | --- | --- | --- |
+| `TRK` | Um valor por análise, do repositório inteiro | API do GitHub | `sum_ci_feedback_times`, `total_builds` |
+| `FIL` | Um valor por arquivo analisado | SonarQube | `coverage`, `complexity`, `functions`, `comment_lines_density`, `duplicated_lines_density`, `sqale_debt_ratio` |
+
+A lista das seis métricas por arquivo está fixada em `src/utils/file_metrics.py`
+no Service, e é a partir delas que `src/math_model/services.py` calcula as
+**medidas**. Ou seja: a cadeia *bottom-up* está íntegra — as medidas exibidas nos
+gráficos de cima realmente vêm dessas métricas.
+
+O que acontece é que o **gráfico de métricas consulta só `qualifier: 'TRK'`**
+(`useTemporalEvolution.ts`), pela mesma regra já usada na Análise por Entidade
+(US21.02) e na Distribuição Estatística: uma série temporal ou um histograma
+precisam de um valor por análise, e uma métrica por arquivo tem centenas de
+valores na mesma análise, sem um número único que represente o repositório.
+
+Daí a conclusão que importa registrar:
+
+- **Métricas vazias com medidas preenchidas é o estado esperado** quando a medida
+  escolhida depende só de métricas do SonarQube. Não indica falta de coleta.
+- **Transformar essa condição em erro seria um falso positivo** — foi por isso que
+  a correção do critério 2 reescreveu o texto da mensagem em vez de trocar o
+  estado de aviso para erro, como o PO havia sugerido.
+- **A necessidade real por trás da ressalva é outra:** hoje nenhuma tela do produto
+  exibe métricas por arquivo. O serviço `getMetricsLatestValues` e o componente
+  `LatestValueTable` existem no Front, mas nenhuma página os consome. Mostrar
+  `coverage` por arquivo é uma história nova, não um ajuste de release *minor*.
+
+:::tip[Encaminhamento]
+Levar ao PO como proposta de história para a R3 ou para o backlog: "ver as métricas
+coletadas por arquivo de um repositório". Enquanto ela não existe, a mensagem do
+gráfico de métricas é o único lugar onde o usuário descobre essa distinção.
+:::
+
+## O total de métricas da Visão Geral é outro problema
+
+Levantado por [@bottinolucas](https://github.com/bottinolucas) em 09/11/2026, depois
+da primeira versão desta página, que atribuía os dois sintomas ao filtro `TRK`.
+**Aqui o filtro não explica nada: é defeito.**
+
+O total de métricas do card de Totais não vem da configuração da release. A
+configuração desce só até o nível medida — quem monta o nível métrica é
+`get_configured_entities` (`src/releases/entity_analysis.py`), a partir da relação
+`SupportedMeasure.metrics` no banco:
+
+```python
+measures = SupportedMeasure.objects.filter(key__in=[m["key"] for m in entities[MEASURE]]).prefetch_related("metrics")
+metrics_by_measure = {measure.key: [metric.key for metric in measure.metrics.all()] for measure in measures}
+```
+
+Com a relação vazia, `metrics_by_measure` fica vazio e o total sai 0, mesmo com a
+configuração da release correta e a coleta em dia. E quem preenche essa relação é o
+`load_initial_data`, onde estava a causa
+(`src/organizations/management/commands/load_initial_data.py`):
+
+```python
+with contextlib.suppress(IntegrityError):
+    measure, _ = SupportedMeasure.objects.get_or_create(key=measure_key, name=measure_name)
+    ...
+    measure.metrics.set(metrics)
+```
+
+O `get_or_create` usa `key` **e** `name` como filtro de busca. Em
+`SupportedMeasure`, `key` é `unique=True` e `name` não é. Então, se a medida já
+existe no banco com um `name` diferente — o que acontece quando o banco é populado
+à mão —, a busca não encontra, o `create` tenta inserir outra linha com o mesmo
+`key`, o banco recusa com `IntegrityError` e o `contextlib.suppress` engole o erro
+em silêncio. O `metrics.set(metrics)` nunca roda, e a medida fica sem métrica
+associada para sempre. Isso confirma a suspeita do PO de que o banco de
+homologação havia sido populado manualmente.
+
+A correção está em [Service#86](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86),
+já mesclada: a busca passa a ser só pelo `key`, e o `name` vai para `defaults`, que
+o Django usa apenas na criação.
+
+```python
+measure, _ = SupportedMeasure.objects.get_or_create(key=measure_key, defaults={"name": measure_name})
+```
+
+O mesmo PR extraiu `_create_measures_with_metrics`, porque o defeito estava
+duplicado em `create_suported_measures` e `create_github_suported_measures`, e
+acrescentou um teste que popula a medida com outro `name`, limpa as métricas e
+exige a associação depois do seed.
+
+:::caution[Mesclar não basta: o seed precisa rodar no ambiente]
+O `defaults` só vale na criação, então a correção age quando o `load_initial_data`
+roda de novo — é ele que executa o `metrics.set` nas medidas que já estão no banco.
+O `src/start_service.sh` chama o comando a cada deploy, mas sob
+`${RUN_LOAD_INITIAL_DATA:-true}`: se o ambiente de homologação tiver essa variável
+como `false`, o comando não roda e o total continua zerado, com ou sem a correção.
+O comentário na linha 32 do script sugere exatamente esse hábito — ligar no primeiro
+deploy e desligar depois.
+
+Depois do deploy, confirmar com
+`SupportedMeasure.objects.filter(metrics__isnull=True).count()`, que precisa dar 0.
+Até essa verificação, o critério 1 não deve ser dado por fechado.
+:::
+
+Fica um ponto para depois: o `contextlib.suppress(IntegrityError)` continua
+envolvendo todo o corpo do laço, inclusive o `metrics.set`. O gatilho conhecido foi
+removido, mas o padrão que manteve esse defeito invisível segue de pé — qualquer
+outro `IntegrityError` ali ainda falha em silêncio.
+
+## A tela do produto era a outra metade do critério 4
+
+Também levantado por [@bottinolucas](https://github.com/bottinolucas). A primeira
+correção do critério 4 ([Front#107](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/107))
+tratou o card de Totais do dashboard de Visão Geral. Mas a frase do PO fala em
+"escolher um produto", e a tela do produto tinha o mesmo problema, por outro
+caminho.
+
+O `ProductContent.tsx` só mostra estado vazio quando o produto não tem nenhuma
+release (`hasNoReleases`). Fora disso, entrega o gráfico de pulso, e aí havia dois
+casos sem explicação:
+
+| Situação | O que o usuário via |
+| --- | --- |
+| Produto com release, mas sem nenhuma medição | Faixas de pulso vazias, sem mensagem nenhuma |
+| Produto sem repositório | "Nenhuma medição no período selecionado. Ajuste as datas De/Até.", que manda mexer num filtro que não é a causa |
+
+O `PulseChart` decidia o estado vazio só por `filteredRepositories.length === 0`,
+que é o resultado **depois** do filtro de período, e por isso dava sempre a mesma
+mensagem. O `usePulseChartData` já calculava `totalMeasurements`, o total antes do
+filtro, mas nenhum componente consumia esse valor. A correção usa justamente ele
+para separar as duas causas: sem nenhuma medição no produto, a mensagem manda rodar
+a coleta; com medições fora do período, a mensagem continua mandando ajustar as
+datas.
+
+O mesmo PR acrescenta o **"Tentar novamente"** ao alerta de erro do gráfico, que o
+critério 4 exige e que não existia — a única saída era recarregar a página. Ele
+refaz as duas requisições que o pulso combina, porque refazer só uma deixaria
+metade do gráfico desatualizada.
+
+## Reteste em 10/11/2026
+
+Feito pelo time, com o Front da `develop` (com o Front#111) e o Service com o
+Service#86, em `localhost`, contra o banco semeado. Para o critério 4 foram criados
+dois produtos locais: um sem repositório e um com repositório sem nenhuma medição.
+
+Para o critério 1, o defeito foi **reproduzido antes de ser testado**: um banco
+recém-semeado nunca apresenta o sintoma, porque o `get_or_create` antigo só falhava
+quando a medida já existia com outro `name`. O teste renomeou uma medida à mão,
+limpou suas métricas, conferiu o total em 0 e só então rodou o seed corrigido,
+chegando a 14. É o mesmo cenário coberto pelo teste automatizado do
+[Service#86](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86).
+
+| # | Resultado | O que foi visto |
+| --- | --- | --- |
+| 1 | ✅ | Total de métricas em 14; seta de vetor em Rp, Rd, Rc e Rp − Rd; radar proporcional ao equalizador |
+| 2 | ✅ | 4 gráficos, filtros em cascata com o de métrica, e Dias/Meses; a mensagem do gráfico de métricas segue como aviso, pela justificativa do filtro `TRK` |
+| 3 | ✅ com ressalva | Nome da release uma vez por faixa. Nos dados de demonstração, duas releases coladas fazem a etiqueta de uma cobrir o início da outra |
+| 4 | ✅ | Sem repositório: "Este produto ainda não tem repositórios". Sem medição: "Ainda não há medições neste produto". Visão Geral e Evolução Temporal com aviso e selo "Sem dados" |
+| 5 | ✅ local | Conta membro sem administração vê a Visão Geral completa. Falta repetir em homologação |
+
+## Evidências
+
+- [Issue da US07.01 (DOC#131)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131)
+- [Épico MSG07 — Descontinuação do Grafana (DOC#49)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/49)
+- [Front#102](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/102) · [Front#103](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/103) · [Front#106](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/106) · [Front#107](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/107)
+- [Ata de feedback da entrega da R2 (28/10)](/docs/reunioes/feedback-release/ata-feedback-r2) — Ação A1
+- [Ata da reunião com o PO (04/11)](/docs/reunioes/reunioes-po/ata-po-04-11) — estratégia de testes de aceitação cruzados
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 09/11/2026 | Criação: resultado do aceite, situação das ressalvas e justificativa do filtro `TRK` | [@devwallyson](https://github.com/devwallyson) |  |
+| 1.1 | 09/11/2026 | Separa as duas causas do nível de métricas, que a 1.0 atribuía só ao `TRK`, e registra a tela do produto como a outra metade do critério 4 — análise de [@bottinolucas](https://github.com/bottinolucas) | [@devwallyson](https://github.com/devwallyson) |  |
+| 1.2 | 10/11/2026 | Registra o merge das correções da tela do produto ([Front#111](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/111)) e do seed das métricas ([Service#86](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86)), e troca a hipótese do critério 1 pela correção aplicada | [@devwallyson](https://github.com/devwallyson) |  |
+| 1.3 | 10/11/2026 | Registra o reteste do time (critérios 1 a 5), a verificação local do critério 5 e a decisão sobre o print do PO | [@henriquecq](https://github.com/henriquecq) |  |
+| 1.4 | 10/11/2026 | Cita a ata de 04/11 como origem da decisão sobre o print, delimitando que ela foi tomada para a R3, e detalha como o defeito do critério 1 foi reproduzido antes do reteste | [@devwallyson](https://github.com/devwallyson) |  |
