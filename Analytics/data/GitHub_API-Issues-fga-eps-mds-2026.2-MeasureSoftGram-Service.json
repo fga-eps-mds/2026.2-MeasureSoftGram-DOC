@@ -83,7 +83,7 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-11-10T03:12:10Z",
-        "updated_at": "2026-11-10T12:06:43Z",
+        "updated_at": "2026-11-10T12:07:11Z",
         "closed_at": "2026-11-10T12:06:43Z",
         "assignee": {
             "login": "gusrberto",
@@ -607,14 +607,14 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [],
         "milestone": null,
         "comments": 2,
         "created_at": "2026-11-10T00:47:57Z",
-        "updated_at": "2026-11-10T03:11:26Z",
-        "closed_at": null,
+        "updated_at": "2026-11-10T18:38:51Z",
+        "closed_at": "2026-11-10T18:38:51Z",
         "assignee": null,
         "author_association": "COLLABORATOR",
         "issue_field_values": [],
@@ -626,10 +626,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/85",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/85.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/85.patch",
-            "merged_at": null
+            "merged_at": "2026-11-10T18:38:51Z"
         },
         "body": "## Motiva\u00e7\u00e3o\n\nParte [Service] da US30.01 (fga-eps-mds/2026.2-MeasureSoftGram-DOC#178). Hoje as faixas de qualidade est\u00e3o fixas no Front (`QUALITY_BANDS`, cortes em 0,20, 0,40, 0,60 e 0,80), e o `Product` s\u00f3 tem os campos legados do veloc\u00edmetro (`gaugeRedLimit`/`gaugeYellowLimit`). Este PR cria o lugar \u00fanico onde a r\u00e9gua do produto \u00e9 guardada e o endpoint que a tela de configura\u00e7\u00f5es (Front#92) usa.\n\nCloses #79\n\n## Mudan\u00e7as\n\n- **Modelo:** `Product.quality_band_limits` (JSON, migra\u00e7\u00e3o `0017`) guarda os 4 cortes entre as faixas E a A. `null` quer dizer que o produto nunca alterou a r\u00e9gua e segue os padr\u00f5es, definidos s\u00f3 em `organizations/quality_bands.py`.\n- **`GET quality-bands/`** em `organizations/<org>/products/<product>/`: as 5 faixas de E a A (`key`, `min`, `max`), `is_default` e `can_edit` (se o usu\u00e1rio \u00e9 o admin da organiza\u00e7\u00e3o, para o modo somente leitura do Front).\n- **`PUT quality-bands/`:** recebe as faixas no mesmo formato do `GET` e s\u00f3 grava uma r\u00e9gua cont\u00ednua, crescente, de 0 a 1 e com at\u00e9 duas casas. Inv\u00e1lida, devolve `400` com um item por faixa e campo (`band`, `field`, `detail`), inclusive para erros de formato, que o DRF devolveria indexados por posi\u00e7\u00e3o. Enviar exatamente os padr\u00f5es volta o produto a `is_default: true`.\n- **`DELETE quality-bands/`:** volta aos padr\u00f5es (CA4).\n- **Permiss\u00f5es (CA5):** membros leem; s\u00f3 o `admin` da organiza\u00e7\u00e3o altera ou restaura (`403` para os outros membros, `404` para quem n\u00e3o \u00e9 membro).\n- Documenta\u00e7\u00e3o em `src/endpoints.md`, com a tabela de mensagens de valida\u00e7\u00e3o, e requisi\u00e7\u00f5es no Postman (Products \u203a A\u00e7\u00f5es \u203a Faixas de qualidade).\n\n### Mensagens de valida\u00e7\u00e3o (resposta \u00e0 pergunta do PO sobre o CA3)\n\n| Caso | Mensagem |\n|---|---|\n| Limite menor ou igual ao da faixa anterior | O limite precisa ser maior que 0,40. |\n| Fim da faixa B igual a 1 (a faixa A fica vazia) | O limite precisa ser menor que 1,00. |\n| Fora de 0 a 1 | Use um valor entre 0 e 1. |\n| N\u00e3o \u00e9 n\u00famero | Use um n\u00famero entre 0 e 1. |\n| Mais de duas casas | Use no m\u00e1ximo duas casas decimais. |\n\nO Front mostra as mesmas mensagens no campo, antes de enviar.\n\n### Fora deste PR\n\nOs gr\u00e1ficos e o badge continuam com as faixas fixas: usar a r\u00e9gua do produto \u00e9 escopo da US30.02 e da US30.03. A remo\u00e7\u00e3o de `gaugeRedLimit`/`gaugeYellowLimit` \u00e9 a Service#81.\n\n## Status Checklist\n\n- [x] Test: 28 testes novos em `organizations/tests/test_quality_bands.py`; su\u00edte completa com 466 testes passando\n- [x] Lint: `flake8 src/` limpo\n- [x] `makemigrations --check`: nenhuma migra\u00e7\u00e3o faltando\n\n## Execu\u00e7\u00e3o\n\n```bash\nmake migrate\n# como admin da organiza\u00e7\u00e3o\ncurl -H \"Authorization: Token <token>\" localhost:8080/api/v1/organizations/1/products/1/quality-bands/\ncurl -X PUT -H \"Authorization: Token <token>\" -H \"Content-Type: application/json\" \\\n  -d '{\"bands\":[{\"key\":\"E\",\"min\":0,\"max\":0.2},{\"key\":\"D\",\"min\":0.2,\"max\":0.4},{\"key\":\"C\",\"min\":0.4,\"max\":0.7},{\"key\":\"B\",\"min\":0.7,\"max\":0.8},{\"key\":\"A\",\"min\":0.8,\"max\":1}]}' \\\n  localhost:8080/api/v1/organizations/1/products/1/quality-bands/\n```\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "bottinolucas",
+            "id": 101297130,
+            "node_id": "U_kgDOBgmr6g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bottinolucas",
+            "html_url": "https://github.com/bottinolucas",
+            "followers_url": "https://api.github.com/users/bottinolucas/followers",
+            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+            "repos_url": "https://api.github.com/users/bottinolucas/repos",
+            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/85/reactions",
             "total_count": 0,
@@ -1527,7 +1547,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -1660,8 +1680,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-11-04T14:50:41Z",
-        "updated_at": "2026-11-10T02:15:25Z",
-        "closed_at": null,
+        "updated_at": "2026-11-10T18:38:53Z",
+        "closed_at": "2026-11-10T18:38:53Z",
         "assignee": {
             "login": "gusrberto",
             "id": 79723182,
@@ -1700,7 +1720,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nCriar a persist\u00eancia e o endpoint das faixas de qualidade do produto. \u00c9 a parte [Service] da US30.01 (fga-eps-mds/2026.2-MeasureSoftGram-DOC#178).\n\nHoje n\u00e3o existe faixa configur\u00e1vel: o Front usa a constante `QUALITY_BANDS` (cortes em 0,20, 0,40, 0,60 e 0,80) e o `Product` s\u00f3 tem os campos legados `gaugeRedLimit`/`gaugeYellowLimit` (0,33 e 0,66), usados pelo veloc\u00edmetro antigo.\n\n## Lista de afazeres\n1. [ ] Guardar no `Product` os 4 cortes entre as 5 faixas (E, D, C, B, A), com os valores padr\u00e3o 0,20, 0,40, 0,60 e 0,80 definidos em um s\u00f3 lugar (ex.: constante em `organizations`), com migra\u00e7\u00e3o. Produto sem configura\u00e7\u00e3o devolve os padr\u00f5es.\n2. [ ] Criar `GET` e `PUT` em `organizations/<org>/products/<product>/quality-bands/`, devolvendo as 5 faixas na ordem, cada uma com `key`, `min` e `max` (a primeira come\u00e7a em 0 e a \u00faltima termina em 1).\n3. [ ] Validar no `PUT`: cortes estritamente crescentes, dentro de 0 a 1, sem sobreposi\u00e7\u00e3o nem buraco. Inv\u00e1lido devolve 400 com a faixa e o motivo (CA3).\n4. [ ] Permiss\u00e3o: leitura para membros da organiza\u00e7\u00e3o; escrita s\u00f3 para o `admin` da organiza\u00e7\u00e3o (CA5).\n5. [ ] Permitir voltar aos padr\u00f5es (ex.: `PUT` com os valores padr\u00e3o ou `DELETE` que limpa a configura\u00e7\u00e3o) (CA4).\n6. [ ] Criar testes: produto sem configura\u00e7\u00e3o, `PUT` v\u00e1lido, cada caso inv\u00e1lido, membro sem permiss\u00e3o de escrita.\n7. [ ] Documentar em `src/endpoints.md` e no Postman.\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "bottinolucas",
+            "id": 101297130,
+            "node_id": "U_kgDOBgmr6g",
+            "avatar_url": "https://avatars.githubusercontent.com/u/101297130?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bottinolucas",
+            "html_url": "https://github.com/bottinolucas",
+            "followers_url": "https://api.github.com/users/bottinolucas/followers",
+            "following_url": "https://api.github.com/users/bottinolucas/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bottinolucas/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bottinolucas/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bottinolucas/subscriptions",
+            "organizations_url": "https://api.github.com/users/bottinolucas/orgs",
+            "repos_url": "https://api.github.com/users/bottinolucas/repos",
+            "events_url": "https://api.github.com/users/bottinolucas/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bottinolucas/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/79/reactions",
             "total_count": 0,
@@ -1715,7 +1755,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/79/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
