@@ -118,7 +118,10 @@ const sidebars: SidebarsConfig = {
           type: "category",
           label: "Reuniões do Time",
           collapsed: false,
-          items: ["reunioes/reunioes-time/ata-planning-sprint-8"],
+          items: [
+            "reunioes/reunioes-time/ata-planning-sprint-8",
+            "reunioes/reunioes-time/ata-reuniao-time-09-11",
+          ],
         },
       ],
     },
