@@ -1,0 +1,198 @@
+---
+id: ata-reuniao-time-09-11
+title: Ata – Reunião do Time (09/11/2026)
+sidebar_position: 2
+sidebar_label: Reunião do Time (09/11)
+description: Status da release minor, plano de qualidade, bug de cálculo no banco, entrega contínua, escopo da R3 e fluxo de validação e2e.
+---
+
+# Ata – Reunião do Time (09/11/2026)
+
+**Data:** 09/11/2026 · 20h23 às ~22h40
+**Participantes:** Alexandre Beck, Daniel Ferreira, Diogo Rodrigues, Gabriel Moura, Guilherme Storch, Lucas Bottino, Luciano Freitas, Luiza Maluf, Marcos Alt
+
+A gravação ficou dividida em duas partes porque a conexão da Luiza caiu: a primeira parte vai das 20h23 às 21h42 e a segunda das 21h55 às 22h40. O Diogo saiu por volta das 21h35.
+
+**Tipo:** status da release minor, plano de qualidade, problemas do banco, entrega contínua, escopo da R3 e fluxo de teste e2e
+
+:::tip[Resultado]
+A release minor vai ser entregue **gerando as releases nos forks hoje, sem deploy em produção**. O deploy fica para depois da validação com o PO na quarta (11/11). O time aprovou a proposta de execução do plano de qualidade, que vira **um épico executado sem validação do PO**. O bug de cálculo no banco (nota de característica vinda de outro repositório) será **corrigido agora**. Os problemas estruturais do banco vão para a documentação do próximo semestre. A entrega contínua foi dividida em dois problemas, com um recorte para a R3. A partir de agora, toda US é validada por **teste e2e com relatório anexado na issue**, e não mais por formulário.
+:::
+
+---
+
+## 1. Release minor
+
+### Status
+
+- **US 12:** o Moura está finalizando e gerando as evidências. O PO viu um erro no CA5 que parece vir da importação de repositórios. O Moura vai verificar no ambiente se o problema foi a permissão da conta ou a falta de um grupo do GitLab com as permissões necessárias.
+- **US 11 (login, Daniel):**
+  - Um dos critérios que o PO não conseguiu testar exige clicar em *cancelar*. O PO clicou em *autorizar* e, para testar de novo, precisa revogar o acesso. Isso vai ser explicado a ele.
+  - O outro critério estava com o redirecionamento errado. O PR com a correção está aberto e o Diogo vai revisar.
+  - A **11.3** depende dessa correção do Daniel para ser testada.
+- **US 07.01:** o código está todo na develop. O que falta para fechar está fora do código: o reteste do CA4 pelo PO, uma conta não-admin na homologação para o CA5 e a revisão do PR #244 (DOC).
+
+### Decisão sobre a entrega
+
+- Hoje é gerada a **release nos forks**, com o código empacotado e fixo. Foi assim que as outras equipes entregaram as releases intermediárias.
+- **Não haverá deploy em produção hoje.** Na quarta, o time demonstra ao PO os critérios passando. Se aparecer problema, a correção e o deploy acontecem na quinta.
+- A release intermediária serve para mostrar a evolução desde o retorno da R2: o que foi corrigido, o que não foi e o que já está no repositório.
+- Quem terminar sobe o que tiver hoje.
+
+### Validação
+
+- Cada critério de aceitação vira um cenário de teste. O PR roda o teste, gera um relatório, o relatório é anexado na US e a US é fechada.
+- As partes do front que ainda não têm teste são validadas manualmente, com print como evidência.
+- **Quem desenvolveu não testa.** É preciso registrar nos cards quem valida cada item.
+
+---
+
+## 2. Plano de qualidade
+
+### Proposta apresentada pela Luiza
+
+- A proposta transforma as metas do plano aprovado (Seleção de Métricas Q-Rapids e Metas dos Indicadores) em tasks com escopo, arquivos-alvo e critério de aceite, organizadas em blocos de A a F.
+- O Plugin continua no escopo. A refatoração dele já está na develop, e a versão nova se conecta ao repositório aberto no editor.
+- O time considerou que a proposta faz sentido. O Guilherme sugeriu incluir o risco de as métricas piorarem durante as correções, e esse risco já está na proposta.
+
+### Pontos levantados
+
+- **Dashboard:** hoje atualiza uma vez por dia (antes eram três). Ele é a referência para acompanhar as métricas durante as correções.
+- **Portões (Luciano):** um portão fica vermelho até a meta ser atingida, sem meio-termo. Algumas medidas ainda não são coletadas, como as suítes de teste do Plugin e do AI.
+- **Complexidade (Luciano):** não basta quebrar um bloco grande em funções menores só para sumir o alerta do Sonar. A refatoração precisa resolver o problema de verdade.
+- **Alcance do plano (Guilherme):** o plano segue o modelo Q-Rapids, que define como cada métrica é calculada. A ISO 25010 não define o cálculo, por isso o plano não cobre todas as características da norma. Das 44 métricas, o time filtrou as que fazem sentido no projeto e têm fórmula de cálculo. A mudança na coleta pode alterar os valores de referência das metas.
+- **Recorte:** o plano avalia um recorte do produto, não o produto inteiro. A Luiza vai escrever um **documento de evolução do plano** para o próximo semestre, com os indicadores que ficaram de fora e os dados que precisam ser gerados para eles.
+- **Pós-morte:** o time vai criar uma pasta na doc do semestre para registrar o que não será feito, como funcionalidades planejadas e não executadas, LGPD e os problemas do banco (seção 3). A pasta será alimentada desde já.
+- O Guilherme sugeriu levar duas versões ao PO, uma aplicada ao que foi desenvolvido e outra completa, para ele decidir.
+
+### Decisão
+
+- O plano vira **um épico, sem critérios de aceitação**, porque o PO não vai validar: o time só executa. As tasks usam critérios técnicos.
+- **Squad 3** (Lucas, Henrique, Moura e Wallyson): começa hoje pelo que é pequeno e independente (QA-01, QA-02, QA-03 e QA-05).
+- **Squad 1:** fica com os outros 3 blocos e com a MSG-30.
+- **Luiza:** faz os testes e2e de todas as US desenvolvidas e de outras do repositório.
+- Duração prevista: 2 sprints.
+
+---
+
+## 3. Problemas do banco (Marcos)
+
+### O que foi encontrado
+
+- A função do service que busca os últimos valores calculados de característica (arquivo de jobs, linhas 74 a 85) **não filtra por repositório**.
+- Exemplo: o usuário analisa o repositório A, depois analisa o B e, por fim, volta ao A para fechar a release. Nesse momento, a função pega a nota mais recente de **qualquer** repositório, não a do A.
+- O Marcos demonstrou isso com uma consulta direta no banco: a nota usada só sai certa quando o último repositório analisado é o próprio.
+- A tabela de análise tem uma chave opcional solta, o que abre espaço para esse tipo de erro.
+- Esse bug afeta o objetivo central do produto, que é calcular a nota do repositório.
+
+### Outros problemas estruturais
+
+- O modelo do banco não atende ao que o produto precisa. Os jobs gravam dados de forma atípica.
+- As métricas de todos os arquivos são salvas a cada PR, sem limite. Em produção, isso não escala.
+- Os valores calculados podem divergir entre o CLI, que roda local e é a fonte da verdade, e o Service, que usa o banco.
+
+### Decisão
+
+- **Corrigir agora o cálculo errado.** Uma dupla resolve em uma semana; o Marcos confirmou o prazo, mas a solução ainda precisa ser aprovada.
+- A correção deve ficar contida no service, mantendo o mesmo contrato da função ou do endpoint, para não causar regressão no front nem nos plugins.
+- Verificar se o mesmo problema acontece nos outros níveis (subcaracterística e métrica).
+- Os problemas estruturais do banco e dos jobs **não serão resolvidos neste semestre**. Eles vão para a documentação do pós-morte, com um caminho sugerido.
+- Na quarta, o time avisa o PO com o impacto no produto e no que já foi desenvolvido.
+
+---
+
+## 4. Entrega contínua entre repositórios (Luciano)
+
+### Diagnóstico
+
+- O projeto tem vários repositórios que dependem uns dos outros. O Core é usado pelo Service e pelo CLI, junto com o Parser. Action, Front e AI chamam a API do Service.
+- A versão do Core é fixada manualmente em cada repositório que depende dele, e as versões release candidate não são puxadas automaticamente. No início do semestre havia três versões do Core rodando ao mesmo tempo.
+- Isso gera três problemas:
+  - **Quebra de confiabilidade:** o CLI e o Service chegam a resultados diferentes.
+  - **Custo operacional:** cada atualização exige PRs manuais em cada repositório.
+  - **Atraso de feedback:** uma mudança no Core só mostra impacto no CLI ou no Service bem depois.
+- O Dependabot já está atualizando seis repositórios.
+- A ideia inicial é usar *repository dispatch*. A dúvida é que isso gera novas versões de pacote mesmo sem mudança no código.
+
+### Discussão
+
+- O Luciano defende que isso é mais crítico do que adicionar a característica de segurança, porque o cálculo já ficou errado entre semestres e há usuários usando o produto.
+- O Lucas propôs usar o repositório Platform para centralizar o dispatch e o deploy.
+- A Luiza pediu para delimitar exatamente o que o PO considera crítico. Sem essa delimitação, o escopo não para de crescer e o time não tem argumento para priorizar nem para retirar outra coisa do escopo.
+- O Alexandre alertou que mudar o fluxo de deploy com apenas uma release restante é arriscado, porque não sobra tempo para corrigir se der errado.
+
+### Recorte acordado
+
+| Problema | Solução proposta | Prazo estimado |
+| --- | --- | --- |
+| Versões desatualizadas entre repositórios | Documentar e validar os passos manuais e, se possível, empacotar como uma skill para agente de IA executar | 1 sprint |
+| Regressão entre repositórios | Smoke tests no repositório Platform, integrados ao CI, só para Core, Parser e CLI. Deixar estruturado para os próximos semestres | cerca de 2 semanas |
+
+- O Luciano monta o **plano de execução** com base nesse recorte e envia no grupo antes da quarta. O time decide se ele entra no escopo da R3.
+
+---
+
+## 5. Escopo e capacidade da R3
+
+- São 3 sprints até a R3, com 4 times entre duplas e trios.
+- Ocupação prevista:
+  - Correção do banco: 1 sprint
+  - Plano de qualidade: 2 sprints
+  - Testes e2e
+  - US em desenvolvimento: MSG-15 e MSG-30
+- Ainda soltas no backlog: **#135 [US13.02] AHP pela CLI** e **#132 [US14.01] Segurança**.
+  - O Luciano acha que fazer as duas é puxado, porque estavam estimadas em 3 sprints cada e o escopo não está claro (por exemplo, qual ferramenta usar para segurança). Ele sugere puxar só uma e negociar com o PO.
+  - A Luiza defende escrever as US e os critérios esta semana para o PO validar. Se o time não fizer as duas, a justificativa precisa mostrar que o escopo está cheio até a última sprint. Simplesmente não estruturar as US não serve como justificativa.
+  - Para a AHP, a sugestão é gerar o protótipo com IA e levar ao PO.
+- **Os líderes da semana** escrevem as duas US e os critérios até quarta.
+- A Luiza vai levantar a carga de cada squad a partir desta ata para ver se é preciso remanejar algo.
+
+---
+
+## 6. Fluxo de validação e2e (vale a partir de agora)
+
+- O PO não vai mais usar formulário de aceitação. A validação passa a ser feita por **teste e2e a partir do front**.
+- **Escopo inicial:** cobrir, critério por critério, as 10 US que já têm código no front. O esforço estimado é de 7 a 9 dias de uma pessoa. A Luiza entrega até sexta (13/11).
+- **Como funciona:**
+  - O teste abre o front de verdade, com uma sessão simulada, num ambiente isolado. Ele não depende da VM.
+  - Cada critério de aceitação vira um cenário com passo a passo.
+  - Os testes rodam em todo PR.
+  - O relatório fica disponível por 30 dias no Actions. Uma automação anexa o resultado na issue da US de origem.
+  - Antes de abrir o PR, o teste deve rodar 3 vezes localmente para detectar instabilidade.
+- A US 21.3 já está no repositório como exemplo.
+- A Luiza vai subir um template com passo a passo e uma skill que gera os cenários a partir dos critérios de aceitação.
+- **A definir pelo time, na doc:** se o teste e2e entra no mesmo PR da US ou num PR separado.
+- A US 14 ainda não tem critério de aceitação, por isso não tem teste.
+
+---
+
+## 7. Encaminhamentos
+
+| Ação | Responsável | Prazo |
+| --- | --- | --- |
+| Finalizar a US 12 e verificar o erro do CA5 (permissão ou grupo do GitLab) | Moura | Hoje |
+| Revisar o PR de correção do login (US 11) | Diogo | Hoje |
+| Explicar ao PO como testar o critério de cancelamento do login (revogar o acesso antes) | Daniel | Quarta (11/11) |
+| Gerar as releases nos forks com o que estiver pronto | Equipe | Hoje |
+| Registrar nos cards quem valida cada item (quem desenvolveu não testa) | Equipe | Hoje |
+| Demonstrar ao PO os critérios passando; deploy depois da validação | Equipe | 11/11 (correções em 12/11) |
+| Criar o épico do plano de qualidade com as tasks | Luiza | A definir |
+| Executar QA-01, QA-02, QA-03 e QA-05 | Squad 3 | Hoje e amanhã |
+| Executar os outros 3 blocos e a MSG-30 | Squad 1 | 2 sprints |
+| Documento de evolução do plano de qualidade | Luiza | Próxima semana |
+| Criar a pasta de pós-morte na doc e alimentar ao longo do semestre | Equipe | Contínuo |
+| Enviar o plano de correção do banco (4 partes) e verificar os outros níveis | Marcos | Antes de 11/11 |
+| Corrigir o cálculo da característica sem alterar o contrato | Dupla a definir (com Marcos) | 1 semana |
+| Plano de execução da entrega contínua (versões e smoke tests) | Luciano | 10/11, de manhã |
+| Escrever as US #132 e #135 com critérios de aceitação | Líderes da semana | 11/11 |
+| Levantar a carga de cada squad | Luiza | A definir |
+| Testes e2e das 10 US com código no front, template e skill | Luiza | 13/11 |
+| Decidir se o teste e2e vai no mesmo PR da US ou em PR separado | Equipe | A definir |
+
+---
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 09/11/2026 | Registro da reunião | [@LuizaMaluf](https://github.com/LuizaMaluf) | |
