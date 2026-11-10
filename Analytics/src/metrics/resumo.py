@@ -101,14 +101,14 @@ def indicadores(ctx, filtros) -> pd.DataFrame:
         from src.metrics import qrapids
         av = qrapids.avaliar_releases(ctx, filtros)
         ind = av["indicadores"]
-        com_valor = ind[ind["Atual"].notna()]
-        if not com_valor.empty:
-            na_meta = int((com_valor["situacao"] == qrapids.STATUS["verde"]).sum())
-            pior = max(com_valor["situacao"].map({qrapids.STATUS["vermelho"]: 2, qrapids.STATUS["amarelo"]: 1,
-                                                    qrapids.STATUS["verde"]: 0}))
-            partes = " · ".join(f"{r.nome} {num(r.Atual, 2)} (meta ≥ {num(r.meta, 2)})" for r in com_valor.itertuples())
-            out.append(_item("Qualidade", "Indicadores Q-Rapids na meta", f"{na_meta} de {len(ind)}",
-                             {0: "good", 1: "warning", 2: "critical"}[pior], partes, "Qualidade (Q-Rapids)", "SONAR"))
+        estados = {qrapids.STATUS["verde"]: "good", qrapids.STATUS["amarelo"]: "warning",
+                   qrapids.STATUS["vermelho"]: "critical", "Parcial": "neutral"}
+        for r in ind.itertuples():
+            out.append(_item("Qualidade", f"Q-Rapids · {r.nome}", num(r.Atual, 2) if pd.notna(r.Atual) else None,
+                             estados.get(r.situacao, "unavailable"),
+                             f"{r.situacao} · meta ≥ {num(r.meta, 2)} · piso R2 {num(r.piso, 2)} · "
+                             f"portões: {r.portoes_ok} · pisos por repo: {r.restricoes_ok}",
+                             "Qualidade (Q-Rapids)", "CALCULADO"))
     except Exception:  # noqa: BLE001 — os indicadores não derrubam a visão executiva
         pass
     # Segurança fica fora do Q-Rapids (o model-doc não a prevê): é o rating do SonarCloud, por repositório.

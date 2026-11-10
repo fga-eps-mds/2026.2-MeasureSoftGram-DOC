@@ -20,7 +20,6 @@ from __future__ import annotations
 import math
 import re
 from dataclasses import dataclass, field
-from pathlib import Path
 
 import pandas as pd
 
@@ -29,7 +28,6 @@ from src.metrics import qualidade as nq
 
 L = config.QRAPIDS["limiares"]
 PLANO = config.QRAPIDS["plano"]
-RAIZ_DOCS = Path(__file__).resolve().parents[3] / "docs" / "planejamento"
 
 CALCULADA, SEM_DADO, PENDENTE, INFORMATIVA = "calculada", "sem dado no recorte", "coleta pendente", "informativa"
 ROTULO = {CALCULADA: "Calculada", SEM_DADO: "Sem dado no recorte", PENDENTE: "Coleta pendente",
@@ -38,69 +36,14 @@ INCLUIDA, MONITORADA, HABILITAVEL, EXCLUIDA = "Incluída", "Monitorada", "Habili
 
 # ───────────────────────── estrutura do modelo (mapa da seção "Indicadores estratégicos e fatores") ─────────────────────────
 
-INDICADORES = {
-    "product_quality": ("Product Quality", "manutenibilidade, confiabilidade e adequação funcional do produto",
-                        ["code_quality", "software_stability", "software_usage"]),
-    "blocking": ("Blocking", "condições que atrapalham o fluxo do projeto (parar a linha, adiar uma feature)",
-                 ["quality_issues_specification", "testing_status", "blocking_code"]),
-    "process_performance": ("Process Performance", "eficiência e qualidade do processo de desenvolvimento",
-                            ["issues_velocity", "testing_performance", "development_speed", "external_quality"]),
-    "product_readiness": ("Product Readiness", "produto pronto para a próxima release: implementa o planejado e "
-                          "sem bloqueios",
-                          ["activities_completion", "code_quality", "product_stability", "known_remaining_defects"]),
-}
+INDICADORES = config.QRAPIDS_INDICADORES
 # fatores que entram na média de cada indicador (os demais não têm métrica incluída ou são só portão)
-AVALIADOS = {
-    "product_quality": ["code_quality"],
-    "blocking": ["quality_issues_specification", "testing_status", "blocking_code"],
-    "process_performance": ["issues_velocity"],
-    "product_readiness": ["activities_completion", "code_quality", "product_stability"],
-}
-FATORES = {   # nome, tipo, motivo de ficar fora da média (vazio = entra)
-    "code_quality": ("Code Quality", "produto", ""),
-    "software_stability": ("Software Stability", "produto", "sem fonte: não há logs de produção (Bug density é habilitável)"),
-    "software_usage": ("Software Usage", "produto", "sem fonte: o produto não tem telemetria de uso"),
-    "quality_issues_specification": ("Quality Issues' Specification", "produto", ""),
-    "testing_status": ("Testing Status", "produto", ""),
-    "blocking_code": ("Blocking Code", "produto", ""),
-    "issues_velocity": ("Issues' Velocity", "processo", ""),
-    "testing_performance": ("Testing Performance", "processo", "portão: M8 é medido em minutos, fora da escala 0–1"),
-    "development_speed": ("Development Speed", "processo", "as métricas do fator são só monitoradas"),
-    "external_quality": ("External Quality", "processo", "sem fonte: o feedback do cliente não é registrado"),
-    "activities_completion": ("Activities Completion", "processo", ""),
-    "product_stability": ("Product Stability", "produto", ""),
-    "known_remaining_defects": ("Known Remaining Defects", "processo",
-                                "prioridade não é marcada nas issues (Postponed issues ratio é habilitável)"),
-}
+AVALIADOS = config.QRAPIDS_AVALIADOS
+FATORES = config.QRAPIDS_FATORES
 
 # chave → (código, nome, fator, decisão). Só as incluídas e as monitoradas são calculadas.
-METRICAS = {
-    "complexity": ("M1", "Complexity", "code_quality", INCLUIDA),
-    "duplication": ("M2", "Duplication", "code_quality", INCLUIDA),
-    "well_defined_issues": ("M7", "Well defined issues", "quality_issues_specification", INCLUIDA),
-    "non_blocking_files": ("M6", "Non-blocking files", "blocking_code", INCLUIDA),
-    "test_success": ("M3", "Test success", "testing_status", INCLUIDA),
-    "test_coverage": ("M5", "Test coverage", "testing_status", INCLUIDA),
-    "ci_feedback_time": ("M8", "CI feedback time", "testing_performance", INCLUIDA),
-    "team_throughput": ("M9", "Team throughput", "issues_velocity", INCLUIDA),
-    "build_stability": ("M10", "Build stability", "product_stability", INCLUIDA),
-    "development_task_completion": ("DT", "Development task completion", "activities_completion", INCLUIDA),
-    "comments": ("Mc", "Comments", "code_quality", MONITORADA),
-    "fast_tests": ("M4", "Fast tests", "testing_performance", MONITORADA),
-    "resolved_issues_throughput": ("—", "Resolved issues' throughput", "issues_velocity", MONITORADA),
-    "old_issues": ("—", "Old issues", "issues_velocity", MONITORADA),
-    "build_performance": ("—", "Build performance", "development_speed", MONITORADA),
-    "commit_review_duration": ("—", "Commit review duration", "development_speed", MONITORADA),
-    "timely_feature_delivery": ("—", "Timely feature delivery", "development_speed", MONITORADA),
-    "non_issue_commits": ("—", "Non-issue component commit", "development_speed", MONITORADA),
-}
-TIPO_META = {   # como a meta é lida (metas.mdx, tabela "Resumo das metas")
-    "complexity": "Relativa por repositório", "duplication": "Relativa (não regredir)",
-    "test_success": "Absoluta (8 de 8 repositórios)", "test_coverage": "Absoluta + piso 0,80 por repositório",
-    "non_blocking_files": "Absoluta (zero)", "well_defined_issues": "Absoluta",
-    "ci_feedback_time": "Portão: mediana ≤ 5 min por repositório", "team_throughput": "Absoluta por sprint",
-    "build_stability": "Absoluta + piso 0,90 por repositório", "development_task_completion": "Absoluta (escopo da release)",
-}
+METRICAS = config.QRAPIDS_METRICAS
+TIPO_META = config.QRAPIDS_TIPO_META
 TIPOS_FORA_M9 = {"Epic", "Project (pacote trabalho)", "Initiative (entrega)"}
 STATUS = {"verde": "🟢 Atingido", "amarelo": "🟡 Em evolução", "vermelho": "🔴 Abaixo do piso", "sem": "—"}
 
@@ -169,10 +112,48 @@ def truncar(x: float, casas: int = 2) -> float:
     return math.floor(x * f + 1e-9) / f
 
 
+def repos_esperados(f: dict) -> list[str]:
+    """O escopo vem da configuração/seleção, nunca da disponibilidade da coleta."""
+    return [r for r in config.QRAPIDS["linguagem"] if not f.get("repos")
+            or nq_nome(r) in f["repos"] or r in f["repos"]]
+
+
+def media_fatores(indicador: str, valores: dict) -> float | None:
+    pesos = PLANO["pesos_fatores"].get(indicador)
+    if pesos is None:
+        return sum(valores.values()) / len(valores) if valores else None
+    fatores = AVALIADOS[indicador]
+    if (set(pesos) != set(fatores) or any(not math.isfinite(v) or v < 0 for v in pesos.values())
+            or sum(pesos.values()) <= 0):
+        raise ValueError(f"Pesos inválidos para {indicador}: informar todos os fatores com pesos não negativos")
+    total = sum(pesos[f] for f in valores)
+    return sum(v * pesos[f] for f, v in valores.items()) / total if total else None
+
+
+def restricoes_por_repo(res: dict, rec: dict) -> pd.DataFrame:
+    """Pisos de M5/M10 independentes da média; ausência de dado impede comprovar o piso."""
+    resultados = {r.chave: r for r in res["metricas"]}
+    linhas = []
+    for chave, piso in PLANO["piso_por_repo"].items():
+        r = resultados[chave]
+        valores = dict(zip(r.por_repo["repositorio"], r.por_repo["valor"])) if not r.por_repo.empty else {}
+        ausentes = set(r.por_repo.loc[r.por_repo.get("zero_por_falta", pd.Series("", index=r.por_repo.index)) != "",
+                                        "repositorio"]) if not r.por_repo.empty else set()
+        indicador = "blocking" if chave == "test_coverage" else "product_readiness"
+        for repo in rec["repos"]:
+            nome = nq_nome(repo)
+            valor = valores.get(nome) if nome not in ausentes else None
+            linhas.append({"indicador": indicador, "metrica": r.codigo, "repositorio": nome, "valor": valor,
+                           "piso": piso, "passa": valor is not None and pd.notna(valor) and valor >= piso,
+                           "situacao": "Sem dado" if valor is None or pd.isna(valor) else
+                                       ("Passa" if valor >= piso else "Abaixo do piso")})
+    return pd.DataFrame(linhas, columns=["indicador", "metrica", "repositorio", "valor", "piso", "passa", "situacao"])
+
+
 # ───────────────────────── dados do SonarCloud por repositório ─────────────────────────
 
 def avaliacoes_por_repo(ctx, f: dict, rec: dict) -> dict:
-    """Avaliação das métricas do notebook na última coleta do pipeline até o fim do período, por repositório.
+    """Avaliação das métricas do notebook na última coleta do pipeline dentro do período, por repositório.
 
     ``{repo: {"avaliacao": ..., "coleta": Timestamp, "arquivo": nome do .json}}``.
     """
@@ -180,7 +161,9 @@ def avaliacoes_por_repo(ctx, f: dict, rec: dict) -> dict:
     if comp is None or comp.empty:
         return {}
     fim = pd.Timestamp(rec["fim"]) + pd.Timedelta(days=1)
-    c = comp[comp["repositorio"].isin(rec["repos"]) & (pd.to_datetime(comp["coleta"]) < fim)]
+    inicio = pd.Timestamp(f["periodo"][0])
+    coletas = pd.to_datetime(comp["coleta"])
+    c = comp[comp["repositorio"].isin(rec["repos"]) & (coletas >= inicio) & (coletas < fim)]
     if f.get("branch"):
         c = c[c["branch"] == f["branch"]]
     saida = {}
@@ -195,10 +178,13 @@ def avaliacoes_por_repo(ctx, f: dict, rec: dict) -> dict:
 
 def _sonar_media(chave_nb: str, notas: dict, r: Resultado) -> Resultado:
     """Métrica do notebook como média simples dos repositórios (o detalhe por repositório vai junto)."""
-    linhas = []
+    linhas, itens = [], []
     for repo, n in notas.items():
         m = n["avaliacao"]["metricas"][chave_nb]
-        linhas.append({"repositorio": nq_nome(repo), "valor": m["valor"], "numerador": m["numerador"],
+        if not m["itens"].empty:
+            itens.append(m["itens"].assign(repositorio=nq_nome(repo), linguagem=n["avaliacao"]["linguagem"],
+                                         coleta=n["coleta"], arquivo_coleta=n["arquivo"]))
+        linhas.append({"repositorio": nq_nome(repo), "linguagem": n["avaliacao"]["linguagem"], "valor": m["valor"], "numerador": m["numerador"],
                        "denominador": m["denominador"], "zero_por_falta": m["zero_por_falta"] or "",
                        "coleta": n["coleta"], "arquivo": n["arquivo"]})
     if not linhas:
@@ -206,6 +192,7 @@ def _sonar_media(chave_nb: str, notas: dict, r: Resultado) -> Resultado:
         return r
     d = pd.DataFrame(linhas)
     r.por_repo = d
+    r.itens = pd.concat(itens, ignore_index=True) if itens else pd.DataFrame()
     com = d[d["zero_por_falta"] == ""]
     if com.empty:
         r.situacao, r.motivo = SEM_DADO, "nenhum repositório com esse dado no .json do pipeline"
@@ -225,7 +212,11 @@ def _arquivos_api(ctx, rec) -> pd.DataFrame:
     if a is None or a.empty:
         return pd.DataFrame()
     fim = pd.Timestamp(rec["fim"]) + pd.Timedelta(days=1)
-    a = a[a["repositorio"].isin(rec["repos"]) & (pd.to_datetime(a["coleta"]) < fim) & (a["tipo"] == "FIL")]
+    inicio = pd.Timestamp(rec.get("inicio", config.INICIO_SEMESTRE))
+    a = a[a["repositorio"].isin(rec["repos"]) & (pd.to_datetime(a["coleta"]) >= inicio)
+          & (pd.to_datetime(a["coleta"]) < fim) & (a["tipo"] == "FIL")]
+    if not a.empty:
+        a = a[a["coleta"] == a.groupby("repositorio")["coleta"].transform("max")]
     if a.empty:
         return a
     w = a.pivot_table(index=["repositorio", "componente", "linguagem"], columns="metrica", values="valor",
@@ -379,9 +370,10 @@ def calcular(ctx, f: dict, rec: dict, ultima_sprint: bool = False) -> dict:
                                           "arquivo só existe a partir de 07/11; rodar scripts/coleta_sonar.py)")
     else:
         aa = aa.dropna(subset=["blocker_violations", "critical_violations"])
+        aa = aa.copy()
         aa["passa"] = (aa["blocker_violations"] == 0) & (aa["critical_violations"] == 0)
-        r.itens = aa[["repositorio", "componente", "blocker_violations", "critical_violations", "passa"]]
-        r.por_repo = (aa.groupby(aa["repositorio"].map(nq_nome))["passa"].agg(numerador="sum", denominador="size")
+        r.itens = aa[["repositorio", "linguagem", "componente", "blocker_violations", "critical_violations", "passa"]]
+        r.por_repo = (aa.assign(repositorio=aa["repositorio"].map(nq_nome)).groupby(["repositorio", "linguagem"])["passa"].agg(numerador="sum", denominador="size")
                       .reset_index().assign(valor=lambda d: d["numerador"] / d["denominador"]))
         _razao(r, int(aa["passa"].sum()), len(aa))
 
@@ -580,7 +572,7 @@ def agregar(resultados: list[Resultado]) -> tuple[pd.DataFrame, pd.DataFrame]:
     for ic, (nome, desc, fs) in INDICADORES.items():
         x = fat[fat["fator"].isin(AVALIADOS[ic]) & fat["valor"].notna()]
         indicadores.append({"indicador": ic, "nome": nome, "descricao": desc,
-                            "valor": float(x["valor"].mean()) if not x.empty else None,
+                            "valor": media_fatores(ic, dict(zip(x["fator"], x["valor"]))),
                             "fatores_na_media": len(x), "fatores_avaliados": len(AVALIADOS[ic]), "fatores": len(fs)})
     return fat, pd.DataFrame(indicadores)
 
@@ -597,7 +589,7 @@ def metas_agregadas() -> tuple[dict, dict]:
     for ic, fs in AVALIADOS.items():
         v = [mf[fc] for fc in fs if fc in mf]
         if v:
-            mi[ic] = truncar(sum(v) / len(v))
+            mi[ic] = truncar(media_fatores(ic, {fc: mf[fc] for fc in fs if fc in mf}))
     return mf, mi
 
 
@@ -608,50 +600,66 @@ def portoes(res: dict, rec: dict) -> pd.DataFrame:
     m = {r.chave: r for r in res["metricas"]}
     linhas = []
     atual = rec["atual"]
+    esperados = {nq_nome(r) for r in rec.get("repos", repos_esperados({}))}
+    regras = PLANO["portoes"]
 
-    def por_repo(metrica, ok, meta, rotulo, indicador, unidade="%"):
+    def por_repo(metrica, ok, rotulo, indicador, unidade="%"):
         d = atual[atual["metrica"] == metrica]
         if d.empty:
-            linhas.append({"portao": rotulo, "indicador": indicador, "passa": None, "detalhe": "sem dado do SonarCloud"})
+            linhas.append({"portao": rotulo, "indicador": indicador, "passa": None,
+                           "detalhe": "sem dado do SonarCloud: " + ", ".join(sorted(esperados))})
             return
         bons = {nq_nome(r): v for r, v in zip(d["repositorio"], d["valor"])}
         ruins = {k: v for k, v in bons.items() if not ok(v)}
-        linhas.append({"portao": rotulo, "indicador": indicador, "passa": not ruins,
-                       "detalhe": ("todos passam" if not ruins else "reprovam: " + ", ".join(
-                           f"{k} {v:.1f}".replace(".", ",") + unidade for k, v in sorted(ruins.items())))})
+        faltam = esperados - bons.keys()
+        linhas.append({"portao": rotulo, "indicador": indicador, "passa": False if ruins else (None if faltam else True),
+                       "detalhe": ("todos os disponíveis passam" if not ruins else "reprovam: " + ", ".join(
+                           f"{k} {v:.1f}".replace(".", ",") + unidade for k, v in sorted(ruins.items())))
+                                  + ("; sem dado: " + ", ".join(sorted(faltam)) if faltam else "")})
 
-    cob = config.METAS["coverage"]["R3"]
-    dup = config.METAS["duplicated_lines_density"]["R3"]
-    por_repo("coverage", lambda v: v >= cob, cob, f"Cobertura global ≥ {cob:g}% em cada repositório", "Blocking")
-    por_repo("duplicated_lines_density", lambda v: v <= dup, dup,
+    cob = regras["coverage"]["limiar"]
+    dup = regras["duplicated_lines_density"]["limiar"]
+    por_repo("coverage", lambda v: v >= cob, f"Cobertura global ≥ {cob:g}% em cada repositório", "Blocking")
+    por_repo("duplicated_lines_density", lambda v: v <= dup,
              f"Duplicação global ≤ {dup:g}% em cada repositório", "Product Quality · Product Readiness")
     r6 = m["non_blocking_files"]
     if r6.situacao == CALCULADA:
         ruins = int(r6.denominador - r6.numerador)
+        repos_ruins = r6.por_repo.loc[r6.por_repo["valor"] < 1, "repositorio"]
         linhas.append({"portao": "Zero arquivo com violação blocker ou critical", "indicador": "Blocking",
-                       "passa": ruins == 0, "detalhe": "nenhum arquivo" if ruins == 0 else f"{ruins} arquivos a corrigir"})
+                       "passa": False if ruins else (True if esperados <= set(r6.por_repo["repositorio"]) else None),
+                       "detalhe": ("nenhum arquivo" if ruins == 0 else f"{ruins} arquivos a corrigir")
+                                  + ("; repositórios: " + ", ".join(sorted(repos_ruins)) if len(repos_ruins) else "")
+                                  + ("; sem dado: " + ", ".join(sorted(esperados - set(r6.por_repo["repositorio"])))
+                                     if esperados - set(r6.por_repo["repositorio"]) else "")})
     else:
         linhas.append({"portao": "Zero arquivo com violação blocker ou critical", "indicador": "Blocking",
                        "passa": None, "detalhe": "sem coleta de violações por arquivo"})
-    r8, lim = m["ci_feedback_time"], PLANO["portao_ci_mediana_min"]
+    r8, lim = m["ci_feedback_time"], regras["ci_feedback_time"]["limiar"]
     if r8.situacao == CALCULADA and not r8.por_repo.empty:
         ruins = r8.por_repo[r8.por_repo["mediana"] > lim]
+        faltam = esperados - set(r8.por_repo["repositorio"])
         linhas.append({"portao": f"Mediana do test.yml ≤ {lim:g} min em cada repositório", "indicador": "Process Performance",
-                       "passa": ruins.empty, "detalhe": "todos passam" if ruins.empty else "reprovam: " + ", ".join(
-                           f"{a} {b:.1f} min".replace(".", ",") for a, b in zip(ruins["repositorio"], ruins["mediana"]))})
+                       "passa": False if not ruins.empty else (None if faltam else True), "detalhe": ("todos os disponíveis passam" if ruins.empty else "reprovam: " + ", ".join(
+                           f"{a} {b:.1f} min".replace(".", ",") for a, b in zip(ruins["repositorio"], ruins["mediana"])))
+                       + ("; sem execuções: " + ", ".join(sorted(faltam)) if faltam else "")})
     else:
         linhas.append({"portao": f"Mediana do test.yml ≤ {lim:g} min em cada repositório",
                        "indicador": "Process Performance", "passa": None, "detalhe": "sem execuções no período"})
-    r3, alvo = m["test_success"], PLANO["repos_com_relatorio_de_testes"]
+    r3, alvo = m["test_success"], len(esperados)
     if not r3.por_repo.empty:
-        com = int((r3.por_repo["zero_por_falta"] == "").sum())
-        sem = list(r3.por_repo.loc[r3.por_repo["zero_por_falta"] != "", "repositorio"])
+        presentes = set(r3.por_repo.loc[r3.por_repo["zero_por_falta"] == "", "repositorio"]) & esperados
+        com = len(presentes)
+        sem = sorted(esperados - presentes)
         linhas.append({"portao": f"Relatório de testes em {alvo} de {alvo} repositórios", "indicador": "Blocking",
-                       "passa": com >= alvo, "detalhe": f"{com} de {alvo}" + (f"; sem relatório: {', '.join(sem)}" if sem else "")})
+                       "passa": bool(alvo and com >= alvo), "detalhe": f"{com} de {alvo}" + (f"; sem relatório: {', '.join(sem)}" if sem else "")})
     else:
         linhas.append({"portao": f"Relatório de testes em {alvo} de {alvo} repositórios", "indicador": "Blocking",
                        "passa": None, "detalhe": "sem coleta do pipeline"})
-    return pd.DataFrame(linhas)
+    tabela_portoes = pd.DataFrame(linhas)
+    for i, chave in enumerate(("coverage", "duplicated_lines_density", "non_blocking_files", "ci_feedback_time", "test_success")):
+        tabela_portoes.loc[i, "indicador"] = " · ".join(INDICADORES[k][0] for k in regras[chave]["indicadores"])
+    return tabela_portoes
 
 
 # ───────────────────────── R1 × R2 × Atual com meta, piso e situação ─────────────────────────
@@ -669,7 +677,7 @@ def _situacao(valor, piso, meta, portoes_ok) -> str:
         return STATUS["sem"]
     if piso is not None and not pd.isna(piso) and valor < piso:
         return STATUS["vermelho"]
-    if valor >= meta and portoes_ok is not False:
+    if valor >= meta and portoes_ok is True:
         return STATUS["verde"]
     return STATUS["amarelo"]
 
@@ -683,7 +691,8 @@ def avaliar_releases(ctx, f: dict, fim_atual=None) -> dict:
     for nome, (ini, fim) in jan.items():
         f2 = {**f, "periodo": (ini, fim), "branch": branch}
         rec = filters.sonar(ctx, f2)
-        rec = {**rec, "repos": [r for r in rec["repos"] if r in config.QRAPIDS["linguagem"]]}
+        rec = {**rec, "inicio": ini, "repos": repos_esperados(f)}
+        rec["atual"] = rec["atual"][pd.to_datetime(rec["atual"]["coleta"]) >= ini]
         rec["atual"] = rec["atual"][rec["atual"]["repositorio"].isin(rec["repos"])]
         res[nome], recs[nome] = calcular(ctx, f2, rec, ultima_sprint=(nome == "Atual")), rec
     mf, mi = metas_agregadas()
@@ -709,19 +718,28 @@ def avaliar_releases(ctx, f: dict, fim_atual=None) -> dict:
     fatores = pd.DataFrame(fat)
 
     port = portoes(res["Atual"], recs["Atual"])
+    restricoes = restricoes_por_repo(res["Atual"], recs["Atual"])
     ind = []
     for ic, (nome, desc, fs) in INDICADORES.items():
         linha = {"indicador": ic, "nome": nome, "descricao": desc, "meta": mi.get(ic),
                  "avaliados": f"{len(AVALIADOS[ic])} de {len(fs)}"}
         for rel in jan:
-            linha[rel] = res[rel]["indicadores"].set_index("indicador").loc[ic, "valor"]
+            agregado = res[rel]["indicadores"].set_index("indicador").loc[ic]
+            linha[rel] = agregado["valor"]
+            linha[f"n_{rel}"] = int(agregado["fatores_na_media"])
         ok = _portoes_do(ic, port)
+        restricoes_i = restricoes[restricoes["indicador"] == ic]
+        linha["restricoes_ok"] = bool(restricoes_i["passa"].all()) if not restricoes_i.empty else True
+        linha["parcial"] = ic == "product_readiness" and jan["Atual"][1] < pd.Timestamp(config.RELEASES["R3"])
+        linha["fatores_na_media"] = res["Atual"]["indicadores"].set_index("indicador").loc[ic, "fatores_na_media"]
         linha["portoes_ok"] = ok
         linha["piso"] = linha["R2"]
-        linha["situacao"] = _situacao(linha["Atual"], linha["piso"], linha["meta"], ok)
+        linha["situacao"] = ("Parcial" if linha["parcial"] else
+                             _situacao(linha["Atual"], linha["piso"], linha["meta"],
+                                       ok if linha["restricoes_ok"] else False))
         ind.append(linha)
     return {"janelas": jan, "res": res, "recs": recs, "metricas": met, "fatores": fatores,
-            "indicadores": pd.DataFrame(ind), "portoes": port}
+            "indicadores": pd.DataFrame(ind), "portoes": port, "restricoes": restricoes}
 
 
 def _portoes_do(indicador: str, port: pd.DataFrame) -> bool | None:
@@ -738,30 +756,8 @@ def _portoes_do(indicador: str, port: pd.DataFrame) -> bool | None:
 # ───────────────────────── catálogo das 44 métricas (lido do selecaometricas.mdx) ─────────────────────────
 
 def catalogo() -> pd.DataFrame:
-    """Decisão do plano sobre as métricas monitoradas, habilitáveis e excluídas, com a justificativa.
-
-    Lê as tabelas 3.1, 3.2 e 3.3 de ``docs/planejamento/selecaometricas.mdx``, para a tela nunca divergir do plano.
-    Sem o arquivo (deploy sem a pasta docs/), devolve tabela vazia.
-    """
-    arq = RAIZ_DOCS / "selecaometricas.mdx"
-    if not arq.exists():
-        return pd.DataFrame(columns=["decisao", "indicador_fator", "metrica", "motivo", "justificativa", "condicao"])
-    texto = arq.read_text(encoding="utf-8")
-    secoes = {"### 3.1": MONITORADA, "### 3.2": HABILITAVEL, "### 3.3": EXCLUIDA}
-    linhas, atual = [], None
-    for ln in texto.splitlines():
-        if ln.startswith("#"):
-            atual = next((v for k, v in secoes.items() if ln.startswith(k)), None)
-            continue
-        if atual and ln.startswith("|") and not ln.startswith("|---") and not ln.startswith("| Indicador"):
-            c = [x.strip().replace("**", "") for x in ln.strip().strip("|").split("|")]
-            if atual == MONITORADA:
-                linhas.append((atual, c[0], c[1], "", c[3], ""))
-            elif atual == HABILITAVEL:
-                linhas.append((atual, c[0], c[1], "", c[3], c[4]))
-            else:
-                linhas.append((atual, c[0], c[1], c[2], c[3], ""))
-    return pd.DataFrame(linhas, columns=["decisao", "indicador_fator", "metrica", "motivo", "justificativa", "condicao"])
+    """Catálogo completo, versionado em config.py com as justificativas do plano."""
+    return pd.DataFrame(config.QRAPIDS_CATALOGO).copy()
 
 
 def tabela(resultados: list[Resultado]) -> pd.DataFrame:

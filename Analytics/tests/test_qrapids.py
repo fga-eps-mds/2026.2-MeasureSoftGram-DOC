@@ -118,7 +118,7 @@ class ModeloCompletoTest(unittest.TestCase):
                          {"M1", "M2", "M3", "M5", "M6", "M7", "M8", "M9", "M10", "DT"})
         cat = qrapids.catalogo()
         self.assertEqual(cat["decisao"].value_counts().to_dict(),
-                         {qrapids.MONITORADA: 8, qrapids.HABILITAVEL: 8, qrapids.EXCLUIDA: 18})
+                         {qrapids.INCLUIDA: 10, qrapids.MONITORADA: 8, qrapids.HABILITAVEL: 8, qrapids.EXCLUIDA: 18})
         monitoradas = {v[0] + " " + v[1] if v[0] != "—" else v[1] for v in qrapids.METRICAS.values()
                        if v[3] == qrapids.MONITORADA}
         self.assertEqual(monitoradas, set(cat.loc[cat["decisao"] == qrapids.MONITORADA, "metrica"]))

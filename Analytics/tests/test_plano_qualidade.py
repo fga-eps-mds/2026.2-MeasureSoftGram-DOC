@@ -44,7 +44,7 @@ INDICADORES = {"product_quality": (.894, .908, .916), "blocking": (.871, .929, .
 METAS_FATOR = {"code_quality": .935, "quality_issues_specification": .95, "testing_status": .95,
                "blocking_code": 1.0, "issues_velocity": .60, "product_stability": .95, "activities_completion": .80}
 METAS_INDICADOR = {"product_quality": .93, "blocking": .96, "process_performance": .60, "product_readiness": .89}
-SITUACAO = {"product_quality": "🟡", "blocking": "🟡", "process_performance": "🔴", "product_readiness": "🔴"}
+SITUACAO = {"product_quality": "🟡", "blocking": "🟡", "process_performance": "🔴", "product_readiness": "Parcial"}
 
 
 def _carregar(dados: Path | None):
@@ -133,6 +133,15 @@ class PlanoNosDadosDe0711Test(unittest.TestCase):
             _confere(self, i.loc[ic, "meta"], METAS_INDICADOR[ic], f"meta {ic}", tol=1e-9)
             self.assertTrue(i.loc[ic, "situacao"].startswith(SITUACAO[ic]), f"{ic}: {i.loc[ic, 'situacao']}")
             self.assertFalse(bool(i.loc[ic, "portoes_ok"]), f"{ic}: os cinco portões reprovam em 07/11")
+
+    def test_pisos_parcial_e_fatores_disponiveis(self):
+        indicadores = self.av["indicadores"].set_index("indicador")
+        self.assertEqual(indicadores.loc["blocking", "n_R1"], 2)
+        self.assertEqual(indicadores.loc["blocking", "n_R2"], 2)
+        self.assertEqual(indicadores.loc["blocking", "n_Atual"], 3)
+        self.assertFalse(indicadores.loc["blocking", "restricoes_ok"])
+        self.assertEqual(indicadores.loc["product_readiness", "situacao"], "Parcial")
+        self.assertTrue(indicadores.loc["product_readiness", "parcial"])
 
     def test_portoes_reprovados_como_no_documento(self):
         p = self.av["portoes"]

@@ -44,6 +44,8 @@ METRICAS = {
     "sqale_index": ("Dívida técnica", "min", False),
     "sqale_debt_ratio": ("Razão de dívida técnica", "%", False),
     "coverage": ("Cobertura de testes", "%", True),
+    "line_coverage": ("Cobertura de linhas", "%", True),
+    "branch_coverage": ("Cobertura de ramos", "%", True),
     "duplicated_lines": ("Linhas duplicadas", "", False),
     "duplicated_lines_density": ("Densidade de duplicação", "%", False),
     "ncloc": ("Linhas de código", "", None),

@@ -31,7 +31,7 @@ ESCOPO = {
 PLANO = config.QRAPIDS["plano"]
 LIM = config.QRAPIDS["limiares"]
 JANELAS = ("R1", "R2", "Atual")
-STATUS_KPI = {"🟢 Atingido": "good", "🟡 Em evolução": "warning", "🔴 Abaixo do piso": "critical"}
+STATUS_KPI = {"Parcial": "neutral","🟢 Atingido": "good", "🟡 Em evolução": "warning", "🔴 Abaixo do piso": "critical"}
 CORES = [theme.SEQUENCIAL[6], theme.IDV["secundaria"], theme.NEUTRO, theme.SEQUENCIAL[3]]
 
 
@@ -42,7 +42,7 @@ def _n(v, casas=2) -> str:
 def _menus():
     layout.menus([
         ("Indicador estratégico", "Product Quality, Blocking, Process Performance ou Product Readiness",
-         "soma dos fatores avaliados com peso 1/n; fator sem dado sai do denominador (nunca vale zero)",
+         "soma ponderada dos fatores; padrão 1/n configurável; fator sem dado sai do denominador",
          [("metas.mdx", "https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/planejamento/metas/")]),
         ("Fator", "agrupa métricas de um mesmo assunto (ex.: Code Quality = M1 e M2)",
          "média simples das métricas incluídas, todas em 0–1 (1 = melhor)", []),
@@ -82,7 +82,7 @@ def _indicadores(av: dict):
         with col:
             ok = {True: "portões ok", False: "portão reprovado", None: "portão sem dado"}[r.portoes_ok]
             kpi(r.nome, _n(r.Atual) if pd.notna(r.Atual) else None, "CALCULADO", status=STATUS_KPI.get(r.situacao),
-                nota=f"{r.situacao} · meta ≥ {_n(r.meta)} · piso {_n(r.piso)} (R2) · {ok}")
+                nota=f"{r.situacao} · meta ≥ {_n(r.meta)} · piso {_n(r.piso)} (R2) · {ok} · pisos por repo: {'ok' if r.restricoes_ok else 'não comprovados'}")
     ate = av["janelas"]["Atual"][1]
     st.caption(f"Escala de 0 a 1 (1 = melhor). Atual = 27/10 a {ate:%d/%m/%Y}. Situação: 🔴 abaixo do piso (valor da R2) · "
                "🟡 entre o piso e a meta · 🟢 na meta, com todos os portões passando.")
@@ -90,7 +90,7 @@ def _indicadores(av: dict):
     layout.secao("Resumo das metas", "Quanto cada indicador valia na R1 e na R2 e quanto falta para a meta?", ["CALCULADO"])
     gates = {r.nome: _gates(av["portoes"], r.nome) for r in ind.itertuples()}
     t = pd.DataFrame([{"Indicador": r.nome, "Fatores avaliados": r.avaliados, "R1": r.R1, "R2 (piso)": r.R2,
-                       "Atual": r.Atual, "Meta R3": r.meta, "Situação": r.situacao, "Portões": gates[r.nome]}
+                       "Atual": r.Atual, "n R1": r.n_R1, "n R2": r.n_R2, "n Atual": r.n_Atual, "Meta R3": r.meta, "Situação": r.situacao, "Portões": gates[r.nome]}
                       for r in ind.itertuples()])
     st.dataframe(t, use_container_width=True, hide_index=True, column_config={
         **{c: st.column_config.NumberColumn(c, format="%.2f") for c in ("R1", "R2 (piso)", "Atual")},
@@ -106,6 +106,9 @@ def _indicadores(av: dict):
     layout.secao("Portões obrigatórios", "Quais condições ficam fora da média e precisam passar?",
                  ["SONAR", "GITHUB", "CALCULADO"])
     _portoes(av["portoes"])
+    layout.secao("Pisos por repositório", "A média esconde algum repositório abaixo do piso obrigatório?", ["CALCULADO"])
+    st.dataframe(av["restricoes"], use_container_width=True, hide_index=True)
+    st.caption("M5 ≥ 0,80 e M10 ≥ 0,90 em cada repositório. Sem dados ou abaixo do piso, o indicador não é atingido.")
 
 
 def _gates(port: pd.DataFrame, indicador: str) -> str:
@@ -138,7 +141,9 @@ def _fatores_e_metricas(av: dict):
         avaliados = qrapids.AVALIADOS[ic]
         formula = " + ".join(qrapids.FATORES[fc][0] for fc in avaliados)
         layout.secao(f"{nome_i} = {_n(ind.loc[ic, 'Atual'])}",
-                     f"{desc}. Fórmula: ({formula}) ÷ {len(avaliados)} · meta ≥ {_n(ind.loc[ic, 'meta'])}")
+                     f"{desc}. Fatores: {formula} · n disponível = {int(ind.loc[ic, 'fatores_na_media'])} · "
+                     f"meta ≥ {_n(ind.loc[ic, 'meta'])}")
+        st.markdown(f"[Fórmula e justificativa do indicador]({config.METAS_QUALIDADE_URL}#indicador-{ic})")
         for fc in fatores:
             nome_f, tipo, motivo = qrapids.FATORES[fc]
             mets = por_fator.get(fc, [])
@@ -155,6 +160,7 @@ def _fatores_e_metricas(av: dict):
                 if not mets:
                     st.caption("Nenhuma métrica incluída nem monitorada neste fator: " + motivo + ".")
                     continue
+                st.markdown(f"[Fórmula e justificativa no plano]({config.METAS_QUALIDADE_URL}#fator-{fc})")
                 _tabela_metricas(mets, met)
                 com_dado = [r for r in mets if (r.itens is not None and not r.itens.empty)
                             or (r.por_repo is not None and not r.por_repo.empty)]
@@ -165,14 +171,36 @@ def _fatores_e_metricas(av: dict):
                             st.caption(f"{r.descricao} · {r.formula}")
                             if r.por_repo is not None and not r.por_repo.empty:
                                 st.markdown("**Por repositório**")
-                                st.dataframe(r.por_repo, use_container_width=True, hide_index=True)
+                                detalhe = r.por_repo.copy()
+                                detalhe["meta_r3"] = detalhe["repositorio"].map(config.METAS_QRAPIDS["por_repo"].get(r.chave, {}))
+                                if r.chave in PLANO["piso_por_repo"]:
+                                    detalhe["piso"] = PLANO["piso_por_repo"][r.chave]
+                                    detalhe["situacao_piso"] = detalhe["valor"].map(
+                                        lambda v: "Sem dado" if pd.isna(v) else
+                                        ("Passa" if v >= PLANO["piso_por_repo"][r.chave] else "Abaixo do piso"))
+                                    if "zero_por_falta" in detalhe:
+                                        detalhe.loc[detalhe["zero_por_falta"] != "", "situacao_piso"] = "Sem dado"
+                                if r.chave == "ci_feedback_time":
+                                    limite = PLANO["portoes"]["ci_feedback_time"]
+                                    detalhe["Situação"] = detalhe["mediana"].map(
+                                        lambda v: "Crítico" if v > limite["critico"] else
+                                        ("Acima da meta" if v > limite["limiar"] else "Passa"))
+                                _por_linguagem(detalhe, r.chave)
                             if r.itens is not None and not r.itens.empty:
                                 st.markdown(f"**Dado bruto** ({len(r.itens)} itens)")
-                                st.dataframe(r.itens, use_container_width=True, hide_index=True,
-                                             height=min(380, 38 + 35 * len(r.itens)))
+                                _por_linguagem(r.itens, r.chave)
     tab = qrapids.tabela(res["metricas"])
     st.download_button("Baixar CSV (métricas)", tab.to_csv(index=False).encode("utf-8-sig"),
                        file_name="qrapids_metricas.csv", mime="text/csv", key="csv_q_metricas")
+
+
+def _por_linguagem(dados: pd.DataFrame, chave: str):
+    if chave in {"complexity", "duplication", "non_blocking_files"} and "linguagem" in dados:
+        for linguagem, grupo in dados.groupby("linguagem", dropna=False):
+            st.markdown("**" + {"py": "Python", "ts": "TypeScript"}.get(linguagem, str(linguagem)) + "**")
+            st.dataframe(grupo, use_container_width=True, hide_index=True)
+    else:
+        st.dataframe(dados, use_container_width=True, hide_index=True)
 
 
 def _tabela_metricas(mets: list, met: pd.DataFrame):
@@ -180,17 +208,21 @@ def _tabela_metricas(mets: list, met: pd.DataFrame):
     linhas = []
     for r in mets:
         x = m.loc[r.chave]
+        definicao = config.QRAPIDS_DEFINICOES.get(r.chave, {})
         linhas.append({"Métrica": r.nome, "Decisão do plano": ("Incluída: entra no fator" if r.decisao == qrapids.INCLUIDA
                                                                else "Monitorada: sem peso"),
                        "R1": x["R1"], "R2": x["R2"], "Atual": x["Atual"], "Meta R3": x["meta"],
                        "Tipo de meta": x["tipo_meta"], "Situação": qrapids.ROTULO[r.situacao],
                        "Conta atual": r.bruto, "Fórmula": r.formula, "Dado bruto": r.dado_bruto, "Fonte": r.fonte,
-                       "Observação": r.motivo})
+                       "Observação": r.motivo, "Justificativa": definicao.get("justificativa", "Acompanhamento sem peso"),
+                       "Plano": config.PLANO_QUALIDADE_URL + "#" + r.codigo.lower() if r.codigo != "—" else
+                                config.PLANO_QUALIDADE_URL + "#3-métricas-excluídas"})
     st.dataframe(pd.DataFrame(linhas), use_container_width=True, hide_index=True, column_config={
         **{c: st.column_config.NumberColumn(c, format="%.2f") for c in ("R1", "R2", "Atual")},
         "Meta R3": st.column_config.NumberColumn("Meta R3", format="≥ %.2f"),
         "Fórmula": st.column_config.TextColumn(width="medium"),
-        "Observação": st.column_config.TextColumn(width="large")})
+        "Observação": st.column_config.TextColumn(width="large"),
+        "Plano": st.column_config.LinkColumn("Justificativa no plano", display_text="Abrir plano")})
     if any(r.chave == "ci_feedback_time" for r in mets):
         st.caption("M8 está em minutos (mediana do test.yml): é portão e fica fora da média do fator.")
 
@@ -278,8 +310,7 @@ def _m9_por_sprint(av: dict):
 def _catalogo():
     layout.secao("Catálogo das 44 métricas do Q-Rapids", "O que o plano decidiu sobre cada métrica?", ["CALCULADO"])
     cat = qrapids.catalogo()
-    incl = [(v[0], v[1]) for v in qrapids.METRICAS.values() if v[3] == qrapids.INCLUIDA]
-    cont = {qrapids.INCLUIDA: len(incl), **cat["decisao"].value_counts().to_dict()}
+    cont = cat["decisao"].value_counts().to_dict()
     k = st.columns(4)
     for col, dec, txt in zip(k, (qrapids.INCLUIDA, qrapids.MONITORADA, qrapids.HABILITAVEL, qrapids.EXCLUIDA),
                              ("entram na agregação e têm meta para a R3", "aparecem no painel, sem peso",
@@ -290,8 +321,8 @@ def _catalogo():
         layout.indisponivel("Catálogo indisponível", "docs/planejamento/selecaometricas.mdx não foi encontrado neste "
                             "deploy.", "publicar a pasta docs/ junto com o painel")
         return
-    st.caption("Texto lido de docs/planejamento/selecaometricas.mdx, para a tela nunca divergir do plano.")
-    for dec in (qrapids.MONITORADA, qrapids.HABILITAVEL, qrapids.EXCLUIDA):
+    st.caption("Catálogo versionado em config.py com as decisões e justificativas do plano publicado.")
+    for dec in (qrapids.INCLUIDA, qrapids.MONITORADA, qrapids.HABILITAVEL, qrapids.EXCLUIDA):
         x = cat[cat["decisao"] == dec]
         with st.expander(f"{dec}s ({len(x)})" if dec != qrapids.HABILITAVEL else f"Habilitáveis ({len(x)})",
                          expanded=False):
@@ -337,6 +368,9 @@ def pagina():
         _seguro("Indicadores estratégicos", _indicadores, av)
     with t2:
         _seguro("Fatores e métricas", _fatores_e_metricas, av)
+        layout.secao("Monitoradas: sem peso nos indicadores", "Alertas de acompanhamento; não compõem a nota.")
+        monitoradas = [r for r in av["res"]["Atual"]["metricas"] if r.decisao == qrapids.MONITORADA]
+        _tabela_metricas(monitoradas, av["metricas"])
     with t3:
         _seguro("Evolução dos indicadores", _evolucao, av)
     with t4:
