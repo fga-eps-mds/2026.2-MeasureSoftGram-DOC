@@ -40,7 +40,7 @@ reconstruída na próxima homologação.
 | Valores do `.csv` numa coluna só | 1 | Separador `;`, vírgula decimal e marca de ordem de bytes, que é como o Excel em português abre o arquivo em colunas | [Front#106](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/106) | ✅ Mesclado |
 | Produto "sem dados" sem mensagem explicativa, na Visão Geral | 4 | Card de Totais com os estados de carregamento e de ausência: sem modelo de qualidade os quatro totais mostram `—` em vez de `0`, com aviso explicando o motivo | [Front#107](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/107) | ✅ Mesclado |
 | Produto "sem dados" sem mensagem explicativa, na tela do produto | 4 | Estado vazio no gráfico de pulso quando o produto nunca teve medição, separado do caso em que só o filtro de período não encontra nada — ver [abaixo](#a-tela-do-produto-era-a-outra-metade-do-critério-4) | [Front#111](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/111) | ✅ Mesclado |
-| Total de métricas zerado na Visão Geral | 1 | Causa provável no `load_initial_data`, que deixa a relação `SupportedMeasure.metrics` vazia — ver [abaixo](#o-total-de-métricas-da-visão-geral-é-outro-problema) | — | 🔴 Defeito em aberto, a confirmar em homologação |
+| Total de métricas zerado na Visão Geral | 1 | `load_initial_data` deixava a relação `SupportedMeasure.metrics` vazia — ver [abaixo](#o-total-de-métricas-da-visão-geral-é-outro-problema) | [Service#86](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86) | ✅ Mesclado — falta o seed rodar em homologação |
 | Gráfico de métricas vazio na Evolução Temporal | 2 | Comportamento esperado do filtro `TRK`, não defeito. O que falta é uma tela de métricas por arquivo — escopo novo | — | 🟡 Justificado, tela pendente |
 | Critério 5 não testável | 5 | Criar uma conta sem perfil de administrador no ambiente de homologação | — | ⏳ Pendente |
 
@@ -128,7 +128,7 @@ metrics_by_measure = {measure.key: [metric.key for metric in measure.metrics.all
 
 Com a relação vazia, `metrics_by_measure` fica vazio e o total sai 0, mesmo com a
 configuração da release correta e a coleta em dia. E quem preenche essa relação é o
-`load_initial_data`, onde está a causa provável
+`load_initial_data`, onde estava a causa
 (`src/organizations/management/commands/load_initial_data.py`):
 
 ```python
@@ -147,22 +147,37 @@ em silêncio. O `metrics.set(metrics)` nunca roda, e a medida fica sem métrica
 associada para sempre. Isso confirma a suspeita do PO de que o banco de
 homologação havia sido populado manualmente.
 
-| Como confirmar em homologação | Correção |
-| --- | --- |
-| `SupportedMeasure.objects.filter(metrics__isnull=True).count()` — maior que zero confirma o diagnóstico | `get_or_create(key=measure_key, defaults={"name": measure_name})` e rodar o `load_initial_data` de novo |
+A correção está em [Service#86](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86),
+já mesclada: a busca passa a ser só pelo `key`, e o `name` vai para `defaults`, que
+o Django usa apenas na criação.
 
-:::caution[Ainda não confirmado no ambiente]
-A query acima não foi executada em homologação, então a causa raiz é uma hipótese
-bem fundamentada no código, e não um fato verificado. O defeito segue **em aberto**
-até alguém com acesso ao ambiente rodá-la. Enquanto isso, o critério 1 não deve ser
-dado por fechado.
+```python
+measure, _ = SupportedMeasure.objects.get_or_create(key=measure_key, defaults={"name": measure_name})
+```
+
+O mesmo PR extraiu `_create_measures_with_metrics`, porque o defeito estava
+duplicado em `create_suported_measures` e `create_github_suported_measures`, e
+acrescentou um teste que popula a medida com outro `name`, limpa as métricas e
+exige a associação depois do seed.
+
+:::caution[Mesclar não basta: o seed precisa rodar no ambiente]
+O `defaults` só vale na criação, então a correção age quando o `load_initial_data`
+roda de novo — é ele que executa o `metrics.set` nas medidas que já estão no banco.
+O `src/start_service.sh` chama o comando a cada deploy, mas sob
+`${RUN_LOAD_INITIAL_DATA:-true}`: se o ambiente de homologação tiver essa variável
+como `false`, o comando não roda e o total continua zerado, com ou sem a correção.
+O comentário na linha 32 do script sugere exatamente esse hábito — ligar no primeiro
+deploy e desligar depois.
+
+Depois do deploy, confirmar com
+`SupportedMeasure.objects.filter(metrics__isnull=True).count()`, que precisa dar 0.
+Até essa verificação, o critério 1 não deve ser dado por fechado.
 :::
 
-Vale notar um segundo caminho para o mesmo sintoma: o `load_initial_data` só roda
-quando `RUN_LOAD_INITIAL_DATA` não é `false` (`src/start_service.sh` usa
-`${RUN_LOAD_INITIAL_DATA:-true}`, ou seja, o padrão é rodar). Se o ambiente tiver a
-variável desligada, a relação nunca é preenchida, com ou sem o `get_or_create`
-corrigido.
+Fica um ponto para depois: o `contextlib.suppress(IntegrityError)` continua
+envolvendo todo o corpo do laço, inclusive o `metrics.set`. O gatilho conhecido foi
+removido, mas o padrão que manteve esse defeito invisível segue de pé — qualquer
+outro `IntegrityError` ali ainda falha em silêncio.
 
 ## A tela do produto era a outra metade do critério 4
 
@@ -208,3 +223,4 @@ metade do gráfico desatualizada.
 | --- | --- | --- | --- | --- |
 | 1.0 | 09/11/2026 | Criação: resultado do aceite, situação das ressalvas e justificativa do filtro `TRK` | [@devwallyson](https://github.com/devwallyson) |  |
 | 1.1 | 09/11/2026 | Separa as duas causas do nível de métricas, que a 1.0 atribuía só ao `TRK`, e registra a tela do produto como a outra metade do critério 4 — análise de [@bottinolucas](https://github.com/bottinolucas) | [@devwallyson](https://github.com/devwallyson) |  |
+| 1.2 | 10/11/2026 | Registra o merge das correções da tela do produto ([Front#111](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/111)) e do seed das métricas ([Service#86](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86)), e troca a hipótese do critério 1 pela correção aplicada | [@devwallyson](https://github.com/devwallyson) |  |
