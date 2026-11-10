@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-10T03:12:06+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-CLI",
  "desde": "2026-08-24",
- "total_count": 152,
+ "total_count": 154,
  "workflow_runs": [
+  {
+   "id": 42741599722,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "v5.1.0",
+   "event": "push",
+   "created_at": "2026-11-10T02:16:22Z",
+   "run_started_at": "2026-11-10T02:16:22Z",
+   "updated_at": "2026-11-10T02:16:42Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/42741599722",
+   "run_number": 24,
+   "workflow_id": 346797056
+  },
+  {
+   "id": 42741599627,
+   "name": "Publicar pacote",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "v5.1.0",
+   "event": "push",
+   "created_at": "2026-11-10T02:16:22Z",
+   "run_started_at": "2026-11-10T02:16:22Z",
+   "updated_at": "2026-11-10T02:16:33Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/42741599627",
+   "run_number": 3,
+   "workflow_id": 346797057
+  },
   {
    "id": 42378836728,
    "name": "Export de métricas",

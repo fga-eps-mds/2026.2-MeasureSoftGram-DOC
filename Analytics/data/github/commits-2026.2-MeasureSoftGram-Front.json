@@ -1,11 +1,491 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-10T03:12:06+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "8900b6a1cb5f472362048bd093dac6ccd314a77f",
+   "date": "2026-11-10T02:15:51Z",
+   "author": "thegm445",
+   "message": "fix(products): importa grupo GitLab antes de usar a org (US12.01, #124) (#113)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/pages/products/Products.tsx",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 35
+    },
+    {
+     "filename": "src/pages/products/test/Products.spec.tsx",
+     "status": "modified",
+     "additions": 64,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "6d876d4c135e1940685b16e94694523fcb106137",
+   "date": "2026-11-10T00:43:02Z",
+   "author": "devwallyson",
+   "message": "fix(pulso): explica a ausência de medição na tela do produto (CA4) (#111)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/shared/components/PulseChart/PulseChart.tsx",
+     "status": "modified",
+     "additions": 54,
+     "deletions": 5
+    },
+    {
+     "filename": "src/shared/components/PulseChart/tests/PulseChart.spec.tsx",
+     "status": "modified",
+     "additions": 59,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/PulseChart/tests/usePulseChartData.spec.tsx",
+     "status": "modified",
+     "additions": 26,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/components/PulseChart/usePulseChartData.ts",
+     "status": "modified",
+     "additions": 15,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "9a90c9433000fc2d6c0ff586e0afedb3e517c7c7",
+   "date": "2026-11-10T00:08:37Z",
+   "author": "DanielFsR",
+   "message": "fix(auth): adiciona loading no callback oauth e trata fallback do usu… (#110)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/pages/landing/Landing.tsx",
+     "status": "modified",
+     "additions": 40,
+     "deletions": 13
+    },
+    {
+     "filename": "src/pages/landing/test/landing.spec.tsx",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/Layout/Layout.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/components/Layout/SideMenu/UserMenu/UserMenu.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/components/Layout/tests/__snapshots__/getLayout.spec.tsx.snap",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/contexts/Auth/Auth.context.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "33428a3762ed3ec410342093f0090a439f03cc8a",
+   "date": "2026-11-09T23:38:18Z",
+   "author": "devwallyson",
+   "message": "fix(overview): estados de carregamento e de ausencia no card de Totais (#107)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/pages/products/[product]/dashboards/overview/OverviewDashboard.tsx",
+     "status": "modified",
+     "additions": 44,
+     "deletions": 13
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/overview/tests/OverviewDashboard.spec.tsx",
+     "status": "modified",
+     "additions": 32,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/components/DashboardCard/DashboardCard.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/utils/formatOverviewCharts.ts",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 6
+    },
+    {
+     "filename": "src/shared/utils/formatOverviewCsv.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/utils/tests/formatOverviewCsv.spec.ts",
+     "status": "modified",
+     "additions": 22,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "5a0c1687571c29b54d84c8f5cd16e9c87cdae164",
+   "date": "2026-11-09T22:07:49Z",
+   "author": "devwallyson",
+   "message": "fix(csv): abre os CSVs exportados em colunas no Excel em português (#106)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us21-03-distribuicao.e2e.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 5
+    },
+    {
+     "filename": "src/shared/utils/exportCsv.ts",
+     "status": "modified",
+     "additions": 17,
+     "deletions": 7
+    },
+    {
+     "filename": "src/shared/utils/tests/entityMatrix.spec.ts",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 5
+    },
+    {
+     "filename": "src/shared/utils/tests/exportCsv.spec.ts",
+     "status": "modified",
+     "additions": 25,
+     "deletions": 12
+    },
+    {
+     "filename": "src/shared/utils/tests/formatCorrelationCharts.spec.ts",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 5
+    },
+    {
+     "filename": "src/shared/utils/tests/formatDistributionCsv.spec.ts",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 10
+    },
+    {
+     "filename": "src/shared/utils/tests/formatMetamodelCsv.spec.ts",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 9
+    },
+    {
+     "filename": "src/shared/utils/tests/formatOverviewCsv.spec.ts",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 21
+    },
+    {
+     "filename": "src/shared/utils/tests/formatPulseCsv.spec.ts",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 8
+    },
+    {
+     "filename": "src/shared/utils/tests/formatTemporalCsv.spec.ts",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 9
+    }
+   ]
+  },
+  {
+   "sha": "b826044f1085f3cd2633e2736994a4f45b76282d",
+   "date": "2026-11-09T21:56:55Z",
+   "author": "devwallyson",
+   "message": "fix(dashboards): ressalvas do PO na homologação da US07.01 (#103)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/pages/products/[product]/dashboards/overview/OverviewDashboard.tsx",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 5
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/temporal/TemporalDashboard.tsx",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 3
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/temporal/tests/TemporalDashboard.spec.tsx",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 2
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/[repository]/components/RepositoryPulseChart/RepositoryPulseChart.tsx",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 2
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/[repository]/components/RepositoryPulseChart/tests/RepositoryPulseChart.spec.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "7eaa510afcdedc7150fa6b9f4e6ab6a39656afb7",
+   "date": "2026-11-09T17:29:03Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): cenários de aceitação da Distribuição Estatística por critério (US21.03) (#105)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/e2e.yml",
+     "status": "modified",
+     "additions": 15,
+     "deletions": 1
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/common.ts",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 2
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/analysis-distribution-characteristic-reliability.json",
+     "status": "added",
+     "additions": 153,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/analysis-distribution-measure-passed_tests.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 69
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/analysis-distribution-metric-sum_ci_feedback_times.json",
+     "status": "added",
+     "additions": 86,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/analysis-distribution-metric-total_builds.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/analysis-distribution-poucas-analises.json",
+     "status": "added",
+     "additions": 56,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/analysis-distribution-tsqmi.json",
+     "status": "modified",
+     "additions": 17,
+     "deletions": 17
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/entity-analysis-entities.json",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 7
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/index.ts",
+     "status": "modified",
+     "additions": 62,
+     "deletions": 7
+    },
+    {
+     "filename": "e2e/us21-03-distribuicao.e2e.ts",
+     "status": "modified",
+     "additions": 369,
+     "deletions": 27
+    },
+    {
+     "filename": "e2e/us21-03-distribuicao.e2e.ts-snapshots/histograma-metrica-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us21-03-distribuicao.e2e.ts-snapshots/histograma-tsqmi-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "be369921bc408550b10c7a15eb153015bf5a2c28",
+   "date": "2026-11-09T15:40:31Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): Playwright e testes de aceitação da Distribuição Estatística (US21.03) (#104)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/e2e.yml",
+     "status": "added",
+     "additions": 51,
+     "deletions": 0
+    },
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 0
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 38,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/common.ts",
+     "status": "added",
+     "additions": 26,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/analysis-distribution-measure-passed_tests.json",
+     "status": "added",
+     "additions": 153,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/analysis-distribution-metric-total_builds.json",
+     "status": "added",
+     "additions": 86,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/analysis-distribution-sem-analise.json",
+     "status": "added",
+     "additions": 45,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/analysis-distribution-tsqmi.json",
+     "status": "added",
+     "additions": 219,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/entity-analysis-entities.json",
+     "status": "added",
+     "additions": 46,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/index.ts",
+     "status": "added",
+     "additions": 62,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/quality-model-tree.json",
+     "status": "added",
+     "additions": 124,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/release-repositories.json",
+     "status": "added",
+     "additions": 34,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/releases.json",
+     "status": "added",
+     "additions": 22,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/smoke.e2e.ts",
+     "status": "added",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/support/api.ts",
+     "status": "added",
+     "additions": 65,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/support/fixtures.ts",
+     "status": "added",
+     "additions": 23,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/support/session.ts",
+     "status": "added",
+     "additions": 21,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us21-03-distribuicao.e2e.ts",
+     "status": "added",
+     "additions": 58,
+     "deletions": 0
+    },
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 2
+    },
+    {
+     "filename": "playwright.config.ts",
+     "status": "added",
+     "additions": 33,
+     "deletions": 0
+    },
+    {
+     "filename": "pnpm-lock.yaml",
+     "status": "modified",
+     "additions": 28,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "dfe68bf9dd8a41ec4a3df97fdf62a7c2fdd15ee7",
    "date": "2026-11-07T23:31:15Z",
@@ -8092,6 +8572,27 @@
    ]
   },
   {
+   "sha": "2c170516adf611fd06c3b8cc16bb0c4e589a6660",
+   "date": "2026-09-28T18:28:51Z",
+   "author": "zzzBECK",
+   "message": "chore(deps): remove material-ui, react-router-dom e next-auth sem uso",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 3
+    },
+    {
+     "filename": "pnpm-lock.yaml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 393
+    }
+   ]
+  },
+  {
    "sha": "ad9b8b5d044dbda2fccd9b3ec3760feed805cfbc",
    "date": "2026-09-28T01:55:22Z",
    "author": "bottinolucas",
@@ -11212,5 +11713,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 8
 }

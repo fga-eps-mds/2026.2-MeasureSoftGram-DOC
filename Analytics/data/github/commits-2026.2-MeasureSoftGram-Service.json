@@ -1,11 +1,68 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-10T03:12:06+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "4d5f3b1f769c8620f250892f3df98122909d89bd",
+   "date": "2026-11-10T02:08:02Z",
+   "author": "thegm445",
+   "message": "fix(organizations): expõe gitlab_group_id da organização (BUG12.01, DOC#245) (#88)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/organizations/serializers.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/organizations/tests/test_provider_visibility.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "a2a8d30981ed922ff0e13f1d32aae7a1bfb9b261",
+   "date": "2026-11-10T01:59:16Z",
+   "author": "thegm445",
+   "message": "test(organizations): regressão do 404 ao importar projeto GitLab (US12.01, #124) (#87)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/organizations/tests/test_provider_visibility.py",
+     "status": "modified",
+     "additions": 41,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "105e2f8d3bc645adabe8c13b14c5c5a8c5b900d3",
+   "date": "2026-11-10T01:05:13Z",
+   "author": "henriquecq",
+   "message": "fix(seed): associa as métricas a medidas já cadastradas com outro nome (#86)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/organizations/management/commands/load_initial_data.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 25
+    },
+    {
+     "filename": "src/organizations/tests/test_load_initial_data.py",
+     "status": "modified",
+     "additions": 29,
+     "deletions": 1
+    }
+   ]
+  },
   {
    "sha": "ccd794f796a03219067022c4bbadcadf95177acf",
    "date": "2026-11-07T13:13:47Z",
@@ -3351,5 +3408,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 3
 }

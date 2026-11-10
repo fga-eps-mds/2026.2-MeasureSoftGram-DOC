@@ -1,10 +1,122 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-10T03:12:06+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 90,
+   "title": "fix(releases): releases da análise e normalidade das entidades na correlação (US21.04)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-10T03:12:10Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T03:12:10Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2339,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/90",
+   "author": "gusrberto"
+  },
+  {
+   "number": 89,
+   "title": "[TASK12.02.02] Namespace pessoal do GitLab: organização própria sem colisão de nome (Service)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:54:25Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:54:25Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 926,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/89",
+   "author": "thegm445"
+  },
+  {
+   "number": 88,
+   "title": "fix(organizations): expõe gitlab_group_id da organização (BUG12.01)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-10T01:55:13Z",
+   "closed_at": "2026-11-10T02:08:03Z",
+   "updated_at": "2026-11-10T02:08:11Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 905,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/88",
+   "author": "thegm445"
+  },
+  {
+   "number": 87,
+   "title": "test(organizations): regressão do 404 ao importar projeto GitLab (US12.01, #124)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-10T01:09:22Z",
+   "closed_at": "2026-11-10T01:59:17Z",
+   "updated_at": "2026-11-10T01:59:17Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1135,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/87",
+   "author": "thegm445"
+  },
+  {
+   "number": 86,
+   "title": "fix(seed): associa as métricas a medidas já cadastradas com outro nome",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-10T00:50:15Z",
+   "closed_at": "2026-11-10T01:05:14Z",
+   "updated_at": "2026-11-10T01:18:01Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1386,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86",
+   "author": "henriquecq"
+  },
+  {
+   "number": 85,
+   "title": "feat(produtos): faixas de qualidade configuráveis por produto (US30.01)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-10T00:47:57Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T03:11:26Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3011,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/85",
+   "author": "bottinolucas"
+  },
   {
    "number": 84,
    "title": "fix(coverage): alinha escopo, relatórios e coleta do Service",
@@ -65,13 +177,20 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T14:52:46Z",
    "closed_at": null,
-   "updated_at": "2026-11-04T14:52:46Z",
+   "updated_at": "2026-11-10T02:16:09Z",
    "labels": [
     "task",
     "service"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "gusrberto",
+    "bottinolucas",
+    "thegm445",
+    "henriquecq",
+    "LuizaMaluf",
+    "devwallyson"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 584,
@@ -85,13 +204,20 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T14:52:38Z",
    "closed_at": null,
-   "updated_at": "2026-11-04T14:52:38Z",
+   "updated_at": "2026-11-10T02:16:07Z",
    "labels": [
     "task",
     "service"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "gusrberto",
+    "bottinolucas",
+    "thegm445",
+    "henriquecq",
+    "LuizaMaluf",
+    "devwallyson"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 833,
@@ -105,13 +231,20 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T14:50:41Z",
    "closed_at": null,
-   "updated_at": "2026-11-04T14:50:41Z",
+   "updated_at": "2026-11-10T02:15:25Z",
    "labels": [
     "task",
     "service"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "gusrberto",
+    "bottinolucas",
+    "thegm445",
+    "henriquecq",
+    "LuizaMaluf",
+    "devwallyson"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1414,

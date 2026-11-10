@@ -24,10 +24,10 @@
     "author": "Marcosatc147"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 102,
-    "last_merged_at": "2026-11-07T23:31:16Z",
-    "title": "feat(equalizador): mostra a seta de vetor em cima das siglas Rp, Rd e Rc",
-    "author": "MilenaFRocha"
+    "number": 113,
+    "last_merged_at": "2026-11-10T02:15:52Z",
+    "title": "fix(products): importa grupo GitLab antes de usar a org (US12.01, #124)",
+    "author": "thegm445"
   },
   "2026.2-MeasureSoftGram-Parser": {
     "number": 17,
@@ -42,9 +42,9 @@
     "author": "DiegoCarlito"
   },
   "2026.2-MeasureSoftGram-Service": {
-    "number": 84,
-    "last_merged_at": "2026-11-07T13:13:48Z",
-    "title": "fix(coverage): alinha escopo, relatórios e coleta do Service",
-    "author": "Marcosatc147"
+    "number": 88,
+    "last_merged_at": "2026-11-10T02:08:02Z",
+    "title": "fix(organizations): expõe gitlab_group_id da organização (BUG12.01)",
+    "author": "thegm445"
   }
 }

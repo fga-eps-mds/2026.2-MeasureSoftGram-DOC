@@ -1,18 +1,701 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-10T03:12:06+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
   {
-   "number": 241,
-   "title": "feat(analytics): [DA-R3.03.09] otimização e deduplicação da coleta de métricas",
+   "number": 274,
+   "title": "[TASK11.03.01] Testes E2E por critério de aceitação da US11.03 (termos do provedor)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T03:00:29Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T03:00:31Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3142,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/274",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 273,
+   "title": "[TASK33.04.05] QA-17 · Action: estabilidade de build de 0,75 para ≥ 0,90",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:35:57Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:35:58Z",
+   "labels": [
+    "task",
+    "action"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 550,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/273",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 272,
+   "title": "[TASK33.04.04] QA-16b · Front: reduzir a mediana do test.yml para ≤ 5 min",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:35:49Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:35:51Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 529,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/272",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 271,
+   "title": "[TASK33.04.03] QA-16a · Front: investigar a mediana do test.yml (7,2 min)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:35:42Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:35:43Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 780,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/271",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 270,
+   "title": "[TASK33.04.02] QA-15 · Front e Service: arquivos com duplicação ≥ 5% (opcional)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:35:34Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:35:35Z",
+   "labels": [
+    "task",
+    "frontend",
+    "service"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 539,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/270",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 269,
+   "title": "[TASK33.04.01] QA-14 · Plugin: duplicação de 3,9% para ≤ 3%",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:35:26Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:35:28Z",
+   "labels": [
+    "task",
+    "plugin"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 632,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/269",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 268,
+   "title": "[TASK33.03.06] QA-13 · Front: 3 arquivos (3 critical)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:35:19Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:35:20Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 604,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/268",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 267,
+   "title": "[TASK33.03.05] QA-12 · Core, CLI e Parser: 7 arquivos (12 critical)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:35:11Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:35:12Z",
+   "labels": [
+    "task",
+    "core",
+    "parser",
+    "cli"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 915,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/267",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 266,
+   "title": "[TASK33.03.04] QA-11b · Plugin: complexidade cognitiva (6 funções)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:35:02Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:35:03Z",
+   "labels": [
+    "task",
+    "plugin"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1604,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/266",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 265,
+   "title": "[TASK33.03.03] QA-11a · Plugin: blocker em teste e dispose() vazio",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:34:51Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:34:52Z",
+   "labels": [
+    "task",
+    "plugin"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1027,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/265",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 264,
+   "title": "[TASK33.03.02] QA-10b · Service: demais arquivos (8 arquivos, 8 critical)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:34:42Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:34:44Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 678,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/264",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 263,
+   "title": "[TASK33.03.01] QA-10a · Service: management commands (2 arquivos, 5 critical)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:34:35Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:34:36Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 570,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/263",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 262,
+   "title": "[TASK33.02.05] QA-09 · M5 por arquivo: arquivos com cobertura ≤ 60%",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:34:13Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:34:27Z",
+   "labels": [
+    "task",
+    "frontend",
+    "service",
+    "cli",
+    "plugin"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1051,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/262",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 261,
+   "title": "[TASK33.02.04] QA-08 · Plugin: cobertura de 89,5% para ≥ 90%",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:34:11Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:34:12Z",
+   "labels": [
+    "task",
+    "plugin"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 675,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/261",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 260,
+   "title": "[TASK33.02.03] QA-07 · Parser: cobertura de 89,1% para ≥ 90%",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:34:08Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:34:27Z",
+   "labels": [
+    "task",
+    "parser"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 291,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/260",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 259,
+   "title": "[TASK33.02.02] QA-06 · Core: cobertura de 89,8% para ≥ 90%",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:34:06Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:34:07Z",
+   "labels": [
+    "task",
+    "core"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 322,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/259",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 258,
+   "title": "[TASK33.02.01] QA-05 · Ativar branch = True no CLI",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:34:03Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:34:04Z",
+   "labels": [
+    "task",
+    "cli"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 558,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/258",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 257,
+   "title": "[TASK33.01.05] QA-19 · M9 e DT: vazão por sprint ≥ 0,60 e conclusão de tarefas ≥ 0,80",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:33:26Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:33:28Z",
+   "labels": [
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 575,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/257",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 256,
+   "title": "[TASK33.01.04] QA-18 · M7: issues bem definidas ≥ 0,95",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:33:24Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:33:39Z",
+   "labels": [
+    "docs",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 444,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/256",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 255,
+   "title": "[TASK33.01.03] QA-04 · Conferir o cálculo da M1 (Complexity)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:33:21Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:33:22Z",
+   "labels": [
+    "analytics",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 793,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/255",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 254,
+   "title": "[TASK33.01.02] QA-03 · Corrigir a coleta de issues do Sonar",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:33:17Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:33:20Z",
+   "labels": [
+    "analytics",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 723,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/254",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 253,
+   "title": "[TASK33.01.01] QA-02 · Coletar line_coverage e branch_coverage",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:33:14Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:33:16Z",
+   "labels": [
+    "analytics",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 633,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/253",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 252,
+   "title": "[US33.04] Duplicação e CI",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:32:46Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:42:56Z",
+   "labels": [
+    "US",
+    "all repos"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "bottinolucas",
+    "thegm445",
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1356,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/252",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 251,
+   "title": "[US33.03] Zero violações blocker/critical",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:32:41Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:42:55Z",
+   "labels": [
+    "US",
+    "all repos"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "bottinolucas",
+    "thegm445",
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1446,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/251",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 250,
+   "title": "[US33.02] Cobertura de testes",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:32:35Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:42:53Z",
+   "labels": [
+    "US",
+    "all repos"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "bottinolucas",
+    "thegm445",
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1170,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/250",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 249,
+   "title": "[US33.01] Medição e processo",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:32:29Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:42:52Z",
+   "labels": [
+    "US",
+    "analytics"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "bottinolucas",
+    "thegm445",
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1400,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/249",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 248,
+   "title": "[MSG33] Execução do Plano de Qualidade (R3)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T02:32:00Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:32:00Z",
+   "labels": [
+    "epic",
+    "all repos"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas",
+    "thegm445",
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2049,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/248",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 247,
+   "title": "docs: adiciona ata da reunião do time de 09/11",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-10T01:54:56Z",
+   "closed_at": "2026-11-10T01:56:52Z",
+   "updated_at": "2026-11-10T01:56:55Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2318,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/247",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 246,
+   "title": "[BUG12.02] Namespace pessoal do GitLab é ligado à organização errada (ou falha) quando o nome já existe",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T01:44:28Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T02:09:30Z",
+   "labels": [
+    "bug",
+    "frontend",
+    "service"
+   ],
+   "type": "Bug",
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3828,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/246",
+   "author": "thegm445"
+  },
+  {
+   "number": 245,
+   "title": "[BUG12.01] Seletor de grupos do GitLab volta para o namespace pessoal quando usuário e grupo têm o mesmo nome",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-10T01:44:07Z",
+   "closed_at": null,
+   "updated_at": "2026-11-10T01:44:08Z",
+   "labels": [
+    "bug",
+    "frontend",
+    "service"
+   ],
+   "type": "Bug",
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3709,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/245",
+   "author": "thegm445"
+  },
+  {
+   "number": 244,
+   "title": "docs(releases): registra a homologacao da US07.01 e o que aprendemos na R2",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-09T22:35:42Z",
+   "closed_at": "2026-11-10T02:05:38Z",
+   "updated_at": "2026-11-10T02:05:41Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2889,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/244",
+   "author": "devwallyson"
+  },
+  {
+   "number": 243,
+   "title": "feat(analytics): [DA-R3.03] alinha a aba Qualidade ao plano de qualidade",
    "state": "open",
    "is_pull_request": true,
-   "created_at": "2026-11-09T00:20:28Z",
+   "created_at": "2026-11-09T20:13:13Z",
    "closed_at": null,
-   "updated_at": "2026-11-09T00:21:13Z",
+   "updated_at": "2026-11-09T20:14:24Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3716,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/243",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 242,
+   "title": "feat(analytics): alinha a aba Qualidade ao plano Q-Rapids",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-09T20:06:43Z",
+   "closed_at": "2026-11-09T20:13:21Z",
+   "updated_at": "2026-11-09T20:13:21Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2379,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/242",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 241,
+   "title": "feat(analytics): [DA-R3.03.09] otimização e deduplicação da coleta de métricas",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-09T00:20:28Z",
+   "closed_at": "2026-11-09T13:21:32Z",
+   "updated_at": "2026-11-09T13:21:34Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -27,11 +710,11 @@
   {
    "number": 240,
    "title": "Doc/226 plano de qualidade",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-09T00:16:53Z",
-   "closed_at": null,
-   "updated_at": "2026-11-09T00:17:41Z",
+   "closed_at": "2026-11-09T13:19:45Z",
+   "updated_at": "2026-11-09T13:19:48Z",
    "labels": [],
    "type": null,
    "assignees": [],
@@ -141,11 +824,11 @@
   {
    "number": 234,
    "title": "[DA-R3.03.09] Otimização e deduplicação da coleta de métricas do dashboard (Cron e Hashing)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-08T00:05:15Z",
-   "closed_at": null,
-   "updated_at": "2026-11-08T23:14:09Z",
+   "closed_at": "2026-11-09T13:21:33Z",
+   "updated_at": "2026-11-09T13:24:32Z",
    "labels": [
     "subtask"
    ],
@@ -280,7 +963,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-08T00:04:05Z",
    "closed_at": null,
-   "updated_at": "2026-11-09T01:51:28Z",
+   "updated_at": "2026-11-09T13:00:49Z",
    "labels": [
     "subtask"
    ],
@@ -297,11 +980,11 @@
   {
    "number": 226,
    "title": "[DA-R3.03.01] Publicar o plano de qualidade e as metas na documentação",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-08T00:03:54Z",
-   "closed_at": null,
-   "updated_at": "2026-11-08T00:12:53Z",
+   "closed_at": "2026-11-09T13:19:46Z",
+   "updated_at": "2026-11-09T13:19:46Z",
    "labels": [
     "subtask"
    ],
@@ -322,7 +1005,7 @@
    "is_pull_request": true,
    "created_at": "2026-11-07T22:27:15Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T22:27:53Z",
+   "updated_at": "2026-11-09T13:20:12Z",
    "labels": [],
    "type": null,
    "assignees": [],
@@ -1179,6 +1862,11 @@
    ],
    "type": "Feature",
    "assignees": [
+    "gusrberto",
+    "bottinolucas",
+    "thegm445",
+    "henriquecq",
+    "LuizaMaluf",
     "devwallyson"
    ],
    "milestone": null,
@@ -1200,6 +1888,11 @@
    ],
    "type": "Feature",
    "assignees": [
+    "gusrberto",
+    "bottinolucas",
+    "thegm445",
+    "henriquecq",
+    "LuizaMaluf",
     "devwallyson"
    ],
    "milestone": null,
@@ -1215,12 +1908,17 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:08Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T13:05:44Z",
+   "updated_at": "2026-11-10T02:12:26Z",
    "labels": [
     "US"
    ],
    "type": "Feature",
    "assignees": [
+    "gusrberto",
+    "bottinolucas",
+    "thegm445",
+    "henriquecq",
+    "LuizaMaluf",
     "devwallyson"
    ],
    "milestone": null,
@@ -2087,6 +2785,7 @@
    ],
    "type": "Feature",
    "assignees": [
+    "storch7",
     "MilenaFRocha",
     "DiegoCarlito"
    ],
@@ -2141,9 +2840,11 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:01Z",
    "closed_at": null,
-   "updated_at": "2026-10-21T20:06:39Z",
+   "updated_at": "2026-11-10T01:24:08Z",
    "labels": [
-    "US"
+    "US",
+    "frontend",
+    "service"
    ],
    "type": "Feature",
    "assignees": [
@@ -2184,11 +2885,11 @@
   {
    "number": 128,
    "title": "[US21.03] Como Helena, quero ver a distribuição estatística dos valores do modelo",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:46Z",
-   "closed_at": null,
-   "updated_at": "2026-10-22T02:05:53Z",
+   "closed_at": "2026-11-10T02:33:45Z",
+   "updated_at": "2026-11-10T02:33:45Z",
    "labels": [
     "US"
    ],
@@ -2638,26 +3339,6 @@
    "body_chars": 1477,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/101",
    "author": "Diogo-Barboza"
-  },
-  {
-   "number": 95,
-   "title": "[MSG24] Emitir alerta sobre o decaimento da qualidade antes do merge",
-   "state": "open",
-   "is_pull_request": false,
-   "created_at": "2026-09-27T16:21:51Z",
-   "closed_at": null,
-   "updated_at": "2026-10-07T20:38:48Z",
-   "labels": [
-    "epic",
-    "service"
-   ],
-   "type": null,
-   "assignees": [],
-   "milestone": null,
-   "milestone_due_on": null,
-   "body_chars": 1017,
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/95",
-   "author": "MilenaFRocha"
   },
   {
    "number": 93,

@@ -1,11 +1,3347 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-10T03:12:06+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "branch": "(padrão)",
  "commits": [
+  {
+   "sha": "9f1d5bb647350bc5e2fec2894ff3cf40f2d8a136",
+   "date": "2026-11-10T03:13:12Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 310,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-10-2026-03-12-59.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-10-2026-03-12-59-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "0a7d6b6ef25f49f57ca91ffeb11becedb209832d",
+   "date": "2026-11-10T02:35:33Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Action v2.1.0",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 124,
+     "deletions": 9
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Action-11-10-2026-02-35-22.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Action-11-10-2026-02-35-22-v2.1.0.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "50b34e27d55324e581838494c7394f3caa0bbe1e",
+   "date": "2026-11-10T02:20:29Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Plugin v5.1.0",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Plugin-11-10-2026-02-20-23-v5.1.0.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "156da1ebe1309aaf5c6c310b526cf9325962e665",
+   "date": "2026-11-10T02:17:45Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Core v3.1.0",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-11-10-2026-02-17-40-v3.1.0.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "e92cdd77797e1e85c05774458912f74cbdeaafa2",
+   "date": "2026-11-10T02:17:15Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Parser v2.1.0",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-10-2026-02-17-05.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-10-2026-02-17-05-v2.1.0.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "c8a3b8b95e5f3096c1c30f3c10e22def83bfc5a4",
+   "date": "2026-11-10T02:16:39Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-CLI v5.1.0",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 25,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-10-2026-02-16-29.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-10-2026-02-16-29-v5.1.0.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "5a32ac68dc61346ff38db357d7d75e644f11a6e7",
+   "date": "2026-11-10T02:16:21Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 872,
+     "deletions": 117
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-10-2026-02-16-07.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-10-2026-02-16-07-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "c4d6c07eb1237eb7f5e7fc320fa229e188179f91",
+   "date": "2026-11-10T02:14:46Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-AI v2.1.0",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-AI-11-10-2026-02-14-38.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-AI-11-10-2026-02-14-38-v2.1.0.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "08d0b0a337536ad9cfb1de4f766c24e4f9e91d7c",
+   "date": "2026-11-10T02:13:54Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Service v2.1.0",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Service-11-10-2026-02-13-44.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-11-10-2026-02-13-44-v2.1.0.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "cc5621018c8e5c0170fdf771cf42723ea822fed8",
+   "date": "2026-11-10T02:11:28Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front v2.1.0",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 259,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-10-2026-02-11-10.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-10-2026-02-11-10-v2.1.0.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "ab7478c27cbe06ef6bfdd2282990afc2aaa909a5",
+   "date": "2026-11-10T02:08:28Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Service develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 25,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Service-11-10-2026-02-08-16.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-11-10-2026-02-08-16-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "aef9a2f76ca3bb0a3d6b1c5c19db698c46ca2c31",
+   "date": "2026-11-10T02:05:37Z",
+   "author": "devwallyson",
+   "message": "Merge pull request #244 from fga-eps-mds/docs/registro-homologacao-us07-01",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "docs/releases/homologacao-us07-01.mdx",
+     "status": "added",
+     "additions": 257,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/releases/release-2.mdx",
+     "status": "modified",
+     "additions": 55,
+     "deletions": 7
+    },
+    {
+     "filename": "sidebars.ts",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "1dc59fdd5480a56401d4386609fc04a6ec26a06d",
+   "date": "2026-11-10T02:00:28Z",
+   "author": "devwallyson",
+   "message": "docs(homologacao): ancora na ata a decisão sobre o print e detalha o reteste do critério 1",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/releases/homologacao-us07-01.mdx",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "887cd1aabddb782cffb62a9360ee83c7897f6fa2",
+   "date": "2026-11-10T01:59:44Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Service develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 166,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Service-11-10-2026-01-59-34.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-11-10-2026-01-59-34-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "2487b655e88f843d39f78ea072fe1c20462bd10b",
+   "date": "2026-11-10T01:56:52Z",
+   "author": "LuizaMaluf",
+   "message": "Merge pull request #247 from fga-eps-mds/docs/ata-reuniao-time-09-11",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/reunioes/reunioes-time/ata-reuniao-time-09-11.mdx",
+     "status": "added",
+     "additions": 198,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/reunioes/reunioes.mdx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "sidebars.ts",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "847b96dde1d6dd0331770bea746d09f664a09214",
+   "date": "2026-11-10T01:20:49Z",
+   "author": "henriquecq",
+   "message": "docs(homologacao): registra o reteste do time e o aceite da US07.01",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/releases/homologacao-us07-01.mdx",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 4
+    },
+    {
+     "filename": "docs/releases/release-2.mdx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "9e199a5e07344f3ff05622a20f9c22c8b0357bae",
+   "date": "2026-11-10T01:07:45Z",
+   "author": "devwallyson",
+   "message": "docs(homologacao): registra as correções mescladas do critério 1 e do critério 4",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/releases/homologacao-us07-01.mdx",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 15
+    }
+   ]
+  },
+  {
+   "sha": "4c61bac0cd45667bd55c7289493e2c0644db1943",
+   "date": "2026-11-10T01:05:39Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Service develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 231,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Service-11-10-2026-01-05-29.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-11-10-2026-01-05-29-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "f11456bbb124c4d3d992f58722388a94ef4dacf1",
+   "date": "2026-11-10T00:44:00Z",
+   "author": "henriquecq",
+   "message": "docs(homologacao): marca o Front#111 como mesclado",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/releases/homologacao-us07-01.mdx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "36bc53e61ec175fa0184877b202dfdf2453e5fe8",
+   "date": "2026-11-10T00:43:32Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 93,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-10-2026-00-43-17.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-10-2026-00-43-17-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "d9760f6924e4c8fd686c7a5c95048982181075e0",
+   "date": "2026-11-10T00:17:33Z",
+   "author": "devwallyson",
+   "message": "docs(homologacao): referencia o PR da correção da tela do produto",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/releases/homologacao-us07-01.mdx",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "809fa5d7e9a1f351c616f456becfbc542ae39acc",
+   "date": "2026-11-10T00:09:05Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 7
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-10-2026-00-08-51.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-10-2026-00-08-51-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "3312fea8f65e6358cf6d857e1987815c609d5278",
+   "date": "2026-11-10T00:06:16Z",
+   "author": "devwallyson",
+   "message": "docs(homologacao): separa as duas causas do nível de métricas vazio",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/releases/homologacao-us07-01.mdx",
+     "status": "modified",
+     "additions": 103,
+     "deletions": 7
+    }
+   ]
+  },
+  {
+   "sha": "4d7a95da3568246dc26ec988272a5d0c1b628967",
+   "date": "2026-11-09T23:38:56Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 308,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-09-2026-23-38-37.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-09-2026-23-38-37-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "b1354eb3f6b8dbd002ffaea1075bb1dc23917f86",
+   "date": "2026-11-09T22:34:53Z",
+   "author": "devwallyson",
+   "message": "docs(releases): registra a homologação da US07.01 e o que aprendemos na R2",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/releases/homologacao-us07-01.mdx",
+     "status": "added",
+     "additions": 109,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/releases/release-2.mdx",
+     "status": "modified",
+     "additions": 55,
+     "deletions": 7
+    },
+    {
+     "filename": "sidebars.ts",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "27058c3c909f4ef2af8bd202a8e255c40a0a0c97",
+   "date": "2026-11-09T22:08:23Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 25,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-09-2026-22-08-06.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-09-2026-22-08-06-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "dd8d62e421dfb8c40be65f2ed4177720bd438968",
+   "date": "2026-11-09T21:57:32Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 97,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-09-2026-21-57-15.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-09-2026-21-57-15-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "0e7e630bfdb20175bcee093725c1bcc41d51d207",
+   "date": "2026-11-09T17:29:37Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 96,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-09-2026-17-29-22.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-09-2026-17-29-22-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "d5d7a5b12045ebec9ebc1f1fc0e3d746ffc72f18",
+   "date": "2026-11-09T15:41:03Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 94,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-09-2026-15-40-46.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-09-2026-15-40-46-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "cb3e115e85805457b5e1d756dd03528c559ce613",
+   "date": "2026-11-09T13:21:31Z",
+   "author": "MilenaFRocha",
+   "message": "Merge pull request #241 from fga-eps-mds/task/234-otimizacao-deduplicacao-coleta",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/coleta-dados.yml",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-AI-09-24-2026-02-33-39-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-AI-09-24-2026-03-01-26-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-AI-09-27-2026-08-08-10-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-AI-09-28-2026-23-09-58-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Action-09-28-2026-00-56-37-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Action-10-19-2026-21-50-23-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-CLI-09-27-2026-16-37-58-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-26-2026-18-35-16-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-26-2026-20-06-55-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-26-2026-22-52-23-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-01-05-32-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-01-08-56-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-04-35-14-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-04-40-18-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-04-43-18-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-04-48-51-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-10-01-2026-00-54-25-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-10-20-2026-15-29-51-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Parser-10-07-2026-22-08-27-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Parser-10-15-2026-21-14-17-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Plugin-09-27-2026-19-01-21-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Plugin-09-27-2026-19-55-17-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Plugin-09-28-2026-00-51-17-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Plugin-09-28-2026-23-37-05-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-09-26-2026-01-05-03-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-09-26-2026-12-25-30-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-10-07-2026-17-38-06-v1.0.0.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0332.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2783
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0353.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2783
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0408.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2783
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0452.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0502.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0515.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0539.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1102.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1122.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1603.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1734.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1842.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1956.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T2018.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T2300.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T0045.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T0124.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T0141.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T0208.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T1122.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T1720.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T2320.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-30T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-30T1722.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-30T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-01T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-01T2319.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-02T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-02T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-02T2319.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-03T1200.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-03T1817.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-04T1302.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-04T1810.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-04T2320.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-05T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-05T2320.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-06T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-06T1720.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-06T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-08T1122.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-08T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-08T2214.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-08T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-09T0042.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-09T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-09T1720.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-09T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-10T1119.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-10T1718.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-10T2320.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-11T1119.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-11T1719.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-11T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-12T1124.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-12T1722.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-12T2322.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-13T2317.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3429
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-14T1718.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3477
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-15T1119.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3429
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-15T1718.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3429
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-16T1718.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2981
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-17T1117.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3084
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-17T1716.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3084
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-18T1117.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3228
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-18T1716.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3228
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-18T2317.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3228
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-21T1817.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3992
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-21T2318.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3992
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-22T1120.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4040
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-22T1734.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3656
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-23T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3848
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-24T2316.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4136
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-25T1117.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4136
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-25T1357.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4136
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T0210.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 21083
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T1423.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 21201
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T1443.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 21201
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 21201
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T2318.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 21201
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-27T1221.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20500
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-27T1647.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20500
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-27T1716.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20500
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-27T1724.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20500
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-27T2314.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20500
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-28T1715.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-28T2315.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-29T1115.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-29T1716.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-29T2315.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-30T1114.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-30T1713.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-30T2312.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-31T1112.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-31T1711.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-31T2312.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-01T1112.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-01T1711.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-01T2312.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-02T1114.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-02T1713.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-02T2313.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-03T0158.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-03T1113.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-03T1652.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-03T1714.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-03T2313.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-04T1713.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-04T2313.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-05T0125.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-05T1113.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-05T1714.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-06T1113.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 18980
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-06T1713.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 18980
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T0332.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4181
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T0501.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4185
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T0538.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4185
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T1603.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4294
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4294
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T1733.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4294
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T1955.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4294
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-29T0141.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5182
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-29T0208.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5182
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-29T1720.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5134
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-01T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-01T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-01T2318.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-02T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-02T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-02T2318.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-03T1200.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-04T1302.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5432
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-04T1810.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5432
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-04T2319.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5432
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-05T2320.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5498
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-06T1719.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5587
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-06T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5587
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-27T1715.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8458
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-27T1723.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8458
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-28T1714.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8466
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-28T2314.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8466
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-29T1715.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-29T2314.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-30T1113.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-30T1712.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-30T2312.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-31T1111.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-31T1711.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-31T2311.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-01T1111.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-01T1711.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-01T2311.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-02T1712.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8558
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-03T1713.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8166
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-03T2312.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8166
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-05T0124.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8420
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-08T1710.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 12386
+    },
+    {
+     "filename": "Analytics/scripts/coleta_github.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 3
+    },
+    {
+     "filename": "Analytics/scripts/coleta_sonar.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/scripts/coleta_velocity.py",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/scripts/saneamento_dados.py",
+     "status": "added",
+     "additions": 150,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/zenhub/coleta.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_deduplicacao_coleta.py",
+     "status": "added",
+     "additions": 206,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "ee1a71191aba3e6df854fdce7e912c5f618ce939",
+   "date": "2026-11-09T13:19:44Z",
+   "author": "MilenaFRocha",
+   "message": "Merge pull request #240 from fga-eps-mds/doc/226-plano-de-qualidade",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "docs/planejamento/metas.mdx",
+     "status": "added",
+     "additions": 460,
+     "deletions": 0
+    },
+    {
+     "filename": "docs/planejamento/selecaometricas.mdx",
+     "status": "added",
+     "additions": 203,
+     "deletions": 0
+    },
+    {
+     "filename": "docusaurus.config.ts",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 0
+    },
+    {
+     "filename": "package-lock.json",
+     "status": "modified",
+     "additions": 238,
+     "deletions": 1
+    },
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": "sidebars.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "static/img/mapa-indicadores-fatores-qrapids.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "93387aa7d817e19b39374b54b8608ef0368285f1",
+   "date": "2026-11-09T11:16:15Z",
+   "author": "github-actions[bot]",
+   "message": "chore(dados): coleta automática do Zenhub, SonarCloud e GitHub Actions",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 178,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 45,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 74,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-09T1113.json",
+     "status": "added",
+     "additions": 12679,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "51b0867a42cde06bf2016f582eafe5ff2fa5a006",
+   "date": "2026-11-09T00:13:51Z",
+   "author": "storch7",
+   "message": "adicionando o plano de metas",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/planejamento/metas.mdx",
+     "status": "added",
+     "additions": 460,
+     "deletions": 0
+    },
+    {
+     "filename": "docusaurus.config.ts",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 0
+    },
+    {
+     "filename": "package-lock.json",
+     "status": "modified",
+     "additions": 238,
+     "deletions": 1
+    },
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": "sidebars.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "static/img/mapa-indicadores-fatores-qrapids.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "12fe99241aa063f1eb2ea1df5140816d50c6df58",
+   "date": "2026-11-09T00:05:27Z",
+   "author": "storch7",
+   "message": "adicionando o documento a sidebar",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/planejamento/selecaometricas.mdx",
+     "status": "renamed",
+     "additions": 4,
+     "deletions": 6
+    },
+    {
+     "filename": "sidebars.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "5fdfcc79d5cf164b729b85ff3c526606fd5d9010",
+   "date": "2026-11-09T00:04:56Z",
+   "author": "DiegoCarlito",
+   "message": "chore(dados): [DA-R3.03.09] expurga 186 snapshots JSON duplicados em Analytics/data",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-AI-09-24-2026-02-33-39-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-AI-09-24-2026-03-01-26-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-AI-09-27-2026-08-08-10-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-AI-09-28-2026-23-09-58-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Action-09-28-2026-00-56-37-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Action-10-19-2026-21-50-23-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-CLI-09-27-2026-16-37-58-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-26-2026-18-35-16-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-26-2026-20-06-55-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-26-2026-22-52-23-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-01-05-32-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-01-08-56-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-04-35-14-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-04-40-18-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-04-43-18-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-09-27-2026-04-48-51-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-10-01-2026-00-54-25-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-10-20-2026-15-29-51-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Parser-10-07-2026-22-08-27-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Parser-10-15-2026-21-14-17-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Plugin-09-27-2026-19-01-21-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Plugin-09-27-2026-19-55-17-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Plugin-09-28-2026-00-51-17-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Plugin-09-28-2026-23-37-05-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-09-26-2026-01-05-03-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-09-26-2026-12-25-30-develop.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-10-07-2026-17-38-06-v1.0.0.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0332.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2783
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0353.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2783
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0408.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2783
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0452.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0502.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0515.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T0539.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1102.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1122.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1603.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1734.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1842.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T1956.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T2018.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T2300.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-28T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2831
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T0045.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T0124.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T0141.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T0208.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T1122.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T1720.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-29T2320.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-30T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-30T1722.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-09-30T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2993
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-01T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-01T2319.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-02T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-02T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-02T2319.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-03T1200.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-03T1817.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2945
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-04T1302.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-04T1810.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-04T2320.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-05T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-05T2320.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-06T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-06T1720.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-06T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2893
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-08T1122.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-08T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-08T2214.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-08T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-09T0042.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-09T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-09T1720.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-09T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-10T1119.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-10T1718.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-10T2320.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-11T1119.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-11T1719.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-11T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-12T1124.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-12T1722.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-12T2322.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3525
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-13T2317.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3429
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-14T1718.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3477
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-15T1119.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3429
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-15T1718.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3429
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-16T1718.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2981
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-17T1117.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3084
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-17T1716.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3084
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-18T1117.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3228
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-18T1716.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3228
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-18T2317.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3228
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-21T1817.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3992
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-21T2318.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3992
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-22T1120.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4040
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-22T1734.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3656
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-23T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3848
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-24T2316.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4136
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-25T1117.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4136
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-25T1357.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4136
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T0210.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 21083
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T1423.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 21201
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T1443.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 21201
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 21201
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-26T2318.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 21201
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-27T1221.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20500
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-27T1647.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20500
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-27T1716.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20500
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-27T1724.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20500
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-27T2314.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20500
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-28T1715.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-28T2315.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-29T1115.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-29T1716.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-29T2315.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-30T1114.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-30T1713.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-30T2312.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-31T1112.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-31T1711.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-10-31T2312.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-01T1112.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-01T1711.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-01T2312.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-02T1114.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-02T1713.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-02T2313.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-03T0158.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-03T1113.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-03T1652.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-03T1714.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-03T2313.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-04T1713.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-04T2313.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-05T0125.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-05T1113.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-05T1714.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20260
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-06T1113.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 18980
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-06T1713.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 18980
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T0332.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4181
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T0501.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4185
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T0538.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4185
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T1603.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4294
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4294
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T1733.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4294
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-28T1955.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 4294
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-29T0141.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5182
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-29T0208.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5182
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-09-29T1720.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5134
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-01T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-01T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-01T2318.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-02T1121.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-02T1721.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-02T2318.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-03T1200.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5532
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-04T1302.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5432
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-04T1810.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5432
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-04T2319.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5432
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-05T2320.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5498
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-06T1719.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5587
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-06T2321.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5587
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-27T1715.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8458
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-27T1723.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8458
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-28T1714.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8466
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-28T2314.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8466
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-29T1715.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-29T2314.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-30T1113.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-30T1712.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-30T2312.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-31T1111.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-31T1711.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-10-31T2311.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-01T1111.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-01T1711.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-01T2311.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8510
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-02T1712.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8558
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-03T1713.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8166
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-03T2312.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8166
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-05T0124.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 8420
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-08T1710.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 12386
+    }
+   ]
+  },
+  {
+   "sha": "049ccb80f8524f71e0b4ba938fda00c0732ef5f7",
+   "date": "2026-11-09T00:04:55Z",
+   "author": "DiegoCarlito",
+   "message": "feat(analytics): [DA-R3.03.09] implementa deduplicação por hashing SHA-256 nos snapshots",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/scripts/coleta_github.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 3
+    },
+    {
+     "filename": "Analytics/scripts/coleta_sonar.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/scripts/coleta_velocity.py",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/scripts/saneamento_dados.py",
+     "status": "added",
+     "additions": 150,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/zenhub/coleta.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_deduplicacao_coleta.py",
+     "status": "added",
+     "additions": 206,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "7108f4e243583521bb015261ce85cfbb3151ac40",
+   "date": "2026-11-08T23:59:59Z",
+   "author": "storch7",
+   "message": "selecao de metricas",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/planejamento/plano-qualidade.md",
+     "status": "added",
+     "additions": 205,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "6572c6963b1b2d4b1c1c41b7c9d5c244e72adb50",
+   "date": "2026-11-08T23:42:18Z",
+   "author": "DiegoCarlito",
+   "message": "ci(workflows): [DA-R3.03.09] agenda coleta diária para 23:59 BRT e inclui passo de saneamento",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/coleta-dados.yml",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 2
+    }
+   ]
+  },
   {
    "sha": "8712ce29e29e9f4eabaa301866206d6418436b31",
    "date": "2026-11-08T23:14:12Z",
@@ -38626,5 +41962,5 @@
    ]
   }
  ],
- "detalhes_novos": 1
+ "detalhes_novos": 38
 }
