@@ -1886,7 +1886,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -1912,10 +1912,10 @@
             }
         ],
         "milestone": null,
-        "comments": 2,
+        "comments": 3,
         "created_at": "2026-09-27T04:59:54Z",
-        "updated_at": "2026-10-17T20:06:34Z",
-        "closed_at": null,
+        "updated_at": "2026-11-07T23:39:42Z",
+        "closed_at": "2026-11-07T23:39:42Z",
         "assignee": {
             "login": "luciano-freitas-melo",
             "id": 88516249,
@@ -1950,7 +1950,27 @@
             "merged_at": null
         },
         "body": "# Esteira de Release Automatizada com Google Release Please e Gate PyPI\n\n## Descri\u00e7\u00e3o\nEste Pull Request implementa a esteira can\u00f4nica de automa\u00e7\u00e3o de releases para a CLI (`msgram`) utilizando o **Google Release Please** (`googleapis/release-please-action@v4`) combinada \u00e0 publica\u00e7\u00e3o at\u00f4mica no PyPI via Trusted Publishing (OIDC) e ao **Gate de Seguran\u00e7a PyPI**.\n\n### Principais Mudan\u00e7as:\n- **Google Release Please (`release-type: python`)**: Gerencia automaticamente o bump sem\u00e2ntico de vers\u00e3o no `pyproject.toml`, a gera\u00e7\u00e3o do `CHANGELOG.md`, a cria\u00e7\u00e3o da tag Git e da GitHub Release oficial na branch `main`.\n- **Gate de Seguran\u00e7a PyPI (Regras 1 e 2)**:\n  1. Valida que a vers\u00e3o alvo a ser publicada \u00e9 estritamente superior \u00e0 \u00faltima vers\u00e3o est\u00e1vel dispon\u00edvel no PyPI (`msgram`).\n  2. Valida que j\u00e1 existe ao menos uma release candidate homologada (`rc`) da mesma vers\u00e3o base no PyPI antes de autorizar a publica\u00e7\u00e3o da vers\u00e3o final.\n- **Publica\u00e7\u00e3o At\u00f4mica P\u00f3s-Release**: Compila\u00e7\u00e3o (`sdist` + `wheel`), valida\u00e7\u00e3o (`twine check`), anexo de artefatos \u00e0 GitHub Release e publica\u00e7\u00e3o no PyPI via OIDC executados sob `if: ${{ steps.release.outputs.release_created }}`.\n- **Seguran\u00e7a (Supply Chain)**: Todas as actions do workflow est\u00e3o fixadas por full commit SHA hash.\n- **Conting\u00eancia Preservada**: O workflow `.github/workflows/python-publish.yml` permanece intacto para publica\u00e7\u00e3o de pr\u00e9-releases (`rc`) e conting\u00eancia manual.\n\n## Porque este Pull Request \u00e9 necess\u00e1rio?\nPara eliminar a depend\u00eancia de cria\u00e7\u00e3o manual de tags Git e contornar a regra de anti-recurs\u00e3o do GitHub Actions (que impedia o disparo autom\u00e1tico do `python-publish.yml` por tags criadas via `GITHUB_TOKEN`), garantindo conformidade com as regras de prote\u00e7\u00e3o de branch, gera\u00e7\u00e3o audit\u00e1vel de changelog e travas de seguran\u00e7a antes da publica\u00e7\u00e3o de vers\u00f5es finais no PyPI.\n\n## Crit\u00e9rios de aceita\u00e7\u00e3o\n1. [x] O workflow `.github/workflows/release.yml` utiliza o Google Release Please com actions pinadas por SHA?\n2. [x] O Gate de Seguran\u00e7a PyPI valida vers\u00e3o estritamente superior e exist\u00eancia pr\u00e9via de release candidate (`rc`)?\n3. [x] O workflow `.github/workflows/python-publish.yml` foi mantido intacto?\n4. [x] O escopo do PR restringe-se exclusivamente \u00e0 esteira de release (`release.yml`)?",
-        "closed_by": null,
+        "closed_by": {
+            "login": "luciano-freitas-melo",
+            "id": 88516249,
+            "node_id": "MDQ6VXNlcjg4NTE2MjQ5",
+            "avatar_url": "https://avatars.githubusercontent.com/u/88516249?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/luciano-freitas-melo",
+            "html_url": "https://github.com/luciano-freitas-melo",
+            "followers_url": "https://api.github.com/users/luciano-freitas-melo/followers",
+            "following_url": "https://api.github.com/users/luciano-freitas-melo/following{/other_user}",
+            "gists_url": "https://api.github.com/users/luciano-freitas-melo/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/luciano-freitas-melo/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/luciano-freitas-melo/subscriptions",
+            "organizations_url": "https://api.github.com/users/luciano-freitas-melo/orgs",
+            "repos_url": "https://api.github.com/users/luciano-freitas-melo/repos",
+            "events_url": "https://api.github.com/users/luciano-freitas-melo/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/luciano-freitas-melo/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-CLI/issues/5/reactions",
             "total_count": 0,
