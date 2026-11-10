@@ -42,6 +42,8 @@ reconstruída na próxima homologação.
 | Produto "sem dados" sem mensagem explicativa, na tela do produto | 4 | Estado vazio no gráfico de pulso quando o produto nunca teve medição, separado do caso em que só o filtro de período não encontra nada — ver [abaixo](#a-tela-do-produto-era-a-outra-metade-do-critério-4) | [Front#111](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/111) | ✅ Mesclado |
 | Total de métricas zerado na Visão Geral | 1 | `load_initial_data` deixava a relação `SupportedMeasure.metrics` vazia — ver [abaixo](#o-total-de-métricas-da-visão-geral-é-outro-problema) | [Service#86](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86) | ✅ Mesclado — falta o seed rodar em homologação |
 | Gráfico de métricas vazio na Evolução Temporal | 2 | Comportamento esperado do filtro `TRK`, não defeito. O que falta é uma tela de métricas por arquivo — escopo novo | — | 🟡 Justificado, tela pendente |
+| Erro da lista de repositórios escondido atrás do estado vazio, na Evolução Temporal | 4 | A tela não lia o `error` da lista: a busca falhava, a lista chegava vazia e aparecia "Este produto ainda não tem repositórios", sem o "Tentar novamente" — ver [abaixo](#o-que-o-reteste-manual-não-pegou-os-e2e-por-critério) | [Front#129](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/129) | 🟡 Em revisão |
+| Pulso vazio e "Application error" com uma única troca de faixa | 3 | `visualMap` sem parada de gradiente quando a característica troca de faixa uma vez só; vale também para o pulso do produto (US06.01) | [Front#130](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/130) | 🟡 Em revisão |
 | Critério 5 não testável | 5 | Teste local com uma conta membro sem perfil de administrador (`membro-teste-local`): vê a organização, o produto e a Visão Geral completa. Em homologação ainda falta uma conta assim | — | ✅ Verificado localmente; falta em homologação |
 
 :::note[Decisão do time sobre o que o PO não pôde confirmar]
@@ -238,11 +240,51 @@ chegando a 14. É o mesmo cenário coberto pelo teste automatizado do
 | 4 | ✅ | Sem repositório: "Este produto ainda não tem repositórios". Sem medição: "Ainda não há medições neste produto". Visão Geral e Evolução Temporal com aviso e selo "Sem dados" |
 | 5 | ✅ local | Conta membro sem administração vê a Visão Geral completa. Falta repetir em homologação |
 
+## O que o reteste manual não pegou: os E2E por critério
+
+Ainda em 10/11, depois do reteste acima, a [@LuizaMaluf](https://github.com/LuizaMaluf)
+rodou os testes E2E escritos critério a critério
+([Front#128](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/128),
+com `--repeat-each=3`: 99 passaram e 18 foram pulados) e achou dois defeitos de
+código em critérios que o reteste manual tinha dado como aceitos.
+
+Vale registrar que isso é o teste cruzado combinado na
+[reunião com o PO de 04/11](/docs/reunioes/reunioes-po/ata-po-04-11): quem testou
+não implementou a tela, e o roteiro foi critério a critério.
+
+| Critério | Defeito | Por que o reteste manual não viu | Correção |
+| --- | --- | --- | --- |
+| 4 | Com o GET de repositórios falhando, a Evolução Temporal dizia "Este produto ainda não tem repositórios" em vez de mostrar o erro com "Tentar novamente" | O reteste cobriu o produto **sem** repositório, não o produto cuja **busca falha**. A lista chega vazia nos dois casos, e a tela tratava os dois como o primeiro | [Front#129](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/129) |
+| 3 | Característica que troca de faixa **uma única vez**: o pulso fica sem linha ao carregar, e a tela vira "Application error" ao trocar o período | Os dados de demonstração têm características que trocam de faixa duas ou mais vezes, e com duas trocas ou mais o defeito não aparece | [Front#130](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/130) |
+
+O segundo está no `formatPulseChart.ts`, da US06.01 (Squad 2), e também quebrava o
+pulso do produto: o mesmo defeito está como `test.fixme` no
+[Front#125](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/125),
+no critério 1 da US06.01. A correção é uma só e atende as duas telas.
+
+Os dois cenários foram conferidos no navegador com as correções aplicadas,
+trocando o `test.fixme` por `test`: o arquivo da US07.01 passou a 35 testes
+(eram 33, com 2 pulados) e o da US06.01 fechou o seu cenário de troca de faixa.
+
+:::caution[O critério 4 não fecha com o reteste de 10/11]
+O critério 4 é o que o PO reprovou, e um dos defeitos achados pelos E2E é dele: a
+tela escondia uma falha de rede atrás de um estado vazio, que é o tipo de problema
+que esse critério existe para evitar. Ele só deve ser dado por fechado depois que o
+[Front#129](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/129)
+estiver mesclado e o `test.fixme` do cenário virar `test` no
+[Front#128](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/128).
+:::
+
+Sem critério associado, os E2E também mostraram que o `.csv` do Planejado ×
+Realizado exporta número sem arredondar (`-0,040000000000000036`). Nenhum critério
+da US22.01 pede arredondamento, então isso ficou fora das ressalvas desta US.
+
 ## Evidências
 
 - [Issue da US07.01 (DOC#131)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/131)
 - [Épico MSG07 — Descontinuação do Grafana (DOC#49)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/49)
 - [Front#102](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/102) · [Front#103](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/103) · [Front#106](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/106) · [Front#107](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/107)
+- [Front#128](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/128) — E2E por critério da US07.01 · [Front#129](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/129) · [Front#130](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/130)
 - [Ata de feedback da entrega da R2 (28/10)](/docs/reunioes/feedback-release/ata-feedback-r2) — Ação A1
 - [Ata da reunião com o PO (04/11)](/docs/reunioes/reunioes-po/ata-po-04-11) — estratégia de testes de aceitação cruzados
 
@@ -255,3 +297,4 @@ chegando a 14. É o mesmo cenário coberto pelo teste automatizado do
 | 1.2 | 10/11/2026 | Registra o merge das correções da tela do produto ([Front#111](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/111)) e do seed das métricas ([Service#86](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86)), e troca a hipótese do critério 1 pela correção aplicada | [@devwallyson](https://github.com/devwallyson) |  |
 | 1.3 | 10/11/2026 | Registra o reteste do time (critérios 1 a 5), a verificação local do critério 5 e a decisão sobre o print do PO | [@henriquecq](https://github.com/henriquecq) |  |
 | 1.4 | 10/11/2026 | Cita a ata de 04/11 como origem da decisão sobre o print, delimitando que ela foi tomada para a R3, e detalha como o defeito do critério 1 foi reproduzido antes do reteste | [@devwallyson](https://github.com/devwallyson) |  |
+| 1.5 | 10/11/2026 | Registra os dois defeitos que os E2E por critério da [@LuizaMaluf](https://github.com/LuizaMaluf) acharam nos critérios 3 e 4 depois do reteste manual, com a causa de cada um, e retira o critério 4 da situação de fechado | [@devwallyson](https://github.com/devwallyson) |  |
