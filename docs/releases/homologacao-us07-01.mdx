@@ -39,7 +39,7 @@ reconstruída na próxima homologação.
 | Mensagem errada no gráfico de métricas | 2 | Texto reescrito: deixou de citar a Distribuição Estatística e passou a explicar que o gráfico mostra só métricas do repositório inteiro | [Front#103](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/103) | ✅ Mesclado — ver [a justificativa abaixo](#por-que-o-gráfico-de-métricas-fica-vazio) |
 | Valores do `.csv` numa coluna só | 1 | Separador `;`, vírgula decimal e marca de ordem de bytes, que é como o Excel em português abre o arquivo em colunas | [Front#106](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/106) | ✅ Mesclado |
 | Produto "sem dados" sem mensagem explicativa, na Visão Geral | 4 | Card de Totais com os estados de carregamento e de ausência: sem modelo de qualidade os quatro totais mostram `—` em vez de `0`, com aviso explicando o motivo | [Front#107](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/107) | ✅ Mesclado |
-| Produto "sem dados" sem mensagem explicativa, na tela do produto | 4 | Estado vazio no gráfico de pulso quando o produto nunca teve medição, separado do caso em que só o filtro de período não encontra nada — ver [abaixo](#a-tela-do-produto-era-a-outra-metade-do-critério-4) | — | 🟡 Em correção |
+| Produto "sem dados" sem mensagem explicativa, na tela do produto | 4 | Estado vazio no gráfico de pulso quando o produto nunca teve medição, separado do caso em que só o filtro de período não encontra nada — ver [abaixo](#a-tela-do-produto-era-a-outra-metade-do-critério-4) | [Front#111](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/111) | 🟡 Em revisão |
 | Total de métricas zerado na Visão Geral | 1 | Causa provável no `load_initial_data`, que deixa a relação `SupportedMeasure.metrics` vazia — ver [abaixo](#o-total-de-métricas-da-visão-geral-é-outro-problema) | — | 🔴 Defeito em aberto, a confirmar em homologação |
 | Gráfico de métricas vazio na Evolução Temporal | 2 | Comportamento esperado do filtro `TRK`, não defeito. O que falta é uma tela de métricas por arquivo — escopo novo | — | 🟡 Justificado, tela pendente |
 | Critério 5 não testável | 5 | Criar uma conta sem perfil de administrador no ambiente de homologação | — | ⏳ Pendente |
@@ -188,6 +188,11 @@ filtro, mas nenhum componente consumia esse valor. A correção usa justamente e
 para separar as duas causas: sem nenhuma medição no produto, a mensagem manda rodar
 a coleta; com medições fora do período, a mensagem continua mandando ajustar as
 datas.
+
+O mesmo PR acrescenta o **"Tentar novamente"** ao alerta de erro do gráfico, que o
+critério 4 exige e que não existia — a única saída era recarregar a página. Ele
+refaz as duas requisições que o pulso combina, porque refazer só uma deixaria
+metade do gráfico desatualizada.
 
 ## Evidências
 
