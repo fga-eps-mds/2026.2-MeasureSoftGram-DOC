@@ -50,8 +50,15 @@ O defeito do critério 3 foi reproduzido e corrigido sem elas. No critério 4, a
 ausência da imagem custou uma rodada: a primeira correção tratou o card de Totais
 da Visão Geral, e só depois se percebeu que "escolher um produto sem dados"
 descreve melhor a tela do produto, corrigida em seguida. As duas telas plausíveis
-estão corrigidas e o reteste em [10/11](#reteste-em-10112026) as cobriu; como o PO
-delegou a aceitação ao time, o print não será reaberto.
+estão corrigidas e o reteste em [10/11](#reteste-em-10112026) as cobriu.
+
+O print não será reaberto porque, na
+[reunião com o PO de 04/11](/docs/reunioes/reunioes-po/ata-po-04-11), o próprio PO
+definiu que os testes sistemáticos passariam a ser cruzados dentro da equipe, com
+ele fazendo uso exploratório e intervindo só diante de algo grave fora dos
+requisitos. A decisão foi tomada para a Release 3; aqui ela é aplicada ao reteste
+de uma ressalva da Release 2, o que é uma extensão do combinado e não o combinado
+em si.
 :::
 
 ## Por que o gráfico de métricas fica vazio
@@ -216,9 +223,16 @@ Feito pelo time, com o Front da `develop` (com o Front#111) e o Service com o
 Service#86, em `localhost`, contra o banco semeado. Para o critério 4 foram criados
 dois produtos locais: um sem repositório e um com repositório sem nenhuma medição.
 
+Para o critério 1, o defeito foi **reproduzido antes de ser testado**: um banco
+recém-semeado nunca apresenta o sintoma, porque o `get_or_create` antigo só falhava
+quando a medida já existia com outro `name`. O teste renomeou uma medida à mão,
+limpou suas métricas, conferiu o total em 0 e só então rodou o seed corrigido,
+chegando a 14. É o mesmo cenário coberto pelo teste automatizado do
+[Service#86](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86).
+
 | # | Resultado | O que foi visto |
 | --- | --- | --- |
-| 1 | ✅ | Total de métricas em 14 (antes 0); seta de vetor em Rp, Rd, Rc e Rp − Rd; radar proporcional ao equalizador |
+| 1 | ✅ | Total de métricas em 14; seta de vetor em Rp, Rd, Rc e Rp − Rd; radar proporcional ao equalizador |
 | 2 | ✅ | 4 gráficos, filtros em cascata com o de métrica, e Dias/Meses; a mensagem do gráfico de métricas segue como aviso, pela justificativa do filtro `TRK` |
 | 3 | ✅ com ressalva | Nome da release uma vez por faixa. Nos dados de demonstração, duas releases coladas fazem a etiqueta de uma cobrir o início da outra |
 | 4 | ✅ | Sem repositório: "Este produto ainda não tem repositórios". Sem medição: "Ainda não há medições neste produto". Visão Geral e Evolução Temporal com aviso e selo "Sem dados" |
@@ -240,3 +254,4 @@ dois produtos locais: um sem repositório e um com repositório sem nenhuma medi
 | 1.1 | 09/11/2026 | Separa as duas causas do nível de métricas, que a 1.0 atribuía só ao `TRK`, e registra a tela do produto como a outra metade do critério 4 — análise de [@bottinolucas](https://github.com/bottinolucas) | [@devwallyson](https://github.com/devwallyson) |  |
 | 1.2 | 10/11/2026 | Registra o merge das correções da tela do produto ([Front#111](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/111)) e do seed das métricas ([Service#86](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/86)), e troca a hipótese do critério 1 pela correção aplicada | [@devwallyson](https://github.com/devwallyson) |  |
 | 1.3 | 10/11/2026 | Registra o reteste do time (critérios 1 a 5), a verificação local do critério 5 e a decisão sobre o print do PO | [@henriquecq](https://github.com/henriquecq) |  |
+| 1.4 | 10/11/2026 | Cita a ata de 04/11 como origem da decisão sobre o print, delimitando que ela foi tomada para a R3, e detalha como o defeito do critério 1 foi reproduzido antes do reteste | [@devwallyson](https://github.com/devwallyson) |  |
