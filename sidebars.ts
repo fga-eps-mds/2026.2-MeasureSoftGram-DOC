@@ -57,6 +57,7 @@ const sidebars: SidebarsConfig = {
         "processo/templates",
         "processo/fluxo-de-trabalho",
         "processo/historia-de-usuario",
+        "processo/testes-e2e",
         "processo/pauta-reuniao-diaria",
       ],
     },
