@@ -104,7 +104,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -130,10 +130,10 @@
             }
         ],
         "milestone": null,
-        "comments": 1,
+        "comments": 3,
         "created_at": "2026-11-10T20:28:44Z",
-        "updated_at": "2026-11-10T23:23:31Z",
-        "closed_at": null,
+        "updated_at": "2026-11-11T00:15:29Z",
+        "closed_at": "2026-11-11T00:15:27Z",
         "assignee": {
             "login": "LuizaMaluf",
             "id": 117913962,
@@ -165,10 +165,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/134",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/134.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/134.patch",
-            "merged_at": null
+            "merged_at": "2026-11-11T00:15:27Z"
         },
         "body": "> Mexe no `formatPulseChart.ts`, que \u00e9 da **US06.01 (Squad 2)**, e vale para as duas telas do pulso. A branch j\u00e1 tem a `develop` com o #133 e o #130; o diff fica s\u00f3 com esta corre\u00e7\u00e3o.\n\n## O que estava errado\n\nA s\u00e9rie `line` do pulso tem `clip: false` para o pico do batimento poder passar da faixa. No ECharts 5.6, a anima\u00e7\u00e3o de entrada ignora isso:\n\n- `createLineClipPath` (`chart/line/LineView.js`) pede o recorte ao `createGridClipPath` e, **depois**, alarga o ret\u00e2ngulo quando `clip` \u00e9 `false`;\n- com anima\u00e7\u00e3o, o `createGridClipPath` (`chart/helper/createClipPathFromCoordSys.js`) j\u00e1 disparou o `initProps` com destino na borda da grade;\n- a anima\u00e7\u00e3o termina nesse destino, e a expans\u00e3o se perde.\n\nOs picos que passam de 1,0 ou de 0,0 sa\u00edam **cortados no primeiro desenho**. S\u00f3 um segundo `setOption` (o caminho de atualiza\u00e7\u00e3o) alargava o recorte. O resultado dependia de a p\u00e1gina redesenhar ou n\u00e3o logo depois de abrir.\n\nO #130 mexeu no mesmo arquivo, mas no `visualMap` das faixas, n\u00e3o no recorte: com o c\u00f3digo da `develop` (j\u00e1 com o #130), o corte continua. Ver \"Como foi verificado\".\n\n## O que mudou\n\n- `formatPulseChartOptions` passa a devolver `animation: false`, como o `formatOverviewCharts`, o `formatTimeEvolutionChart` e os gr\u00e1ficos da Distribui\u00e7\u00e3o e das Correla\u00e7\u00f5es. Sem anima\u00e7\u00e3o, o `initProps` aplica o destino na hora e a expans\u00e3o do `clip: false` vale j\u00e1 no primeiro desenho. Serve para o `PulseChart` (produto) e o `RepositoryPulseChart` (reposit\u00f3rio), que usam a mesma fun\u00e7\u00e3o.\n- Teste unit\u00e1rio: o pulso sai sem anima\u00e7\u00e3o.\n- E2E: sai o `redrawChart` que o #133 p\u00f4s em `e2e/support/helpers.ts`, com as chamadas dele nos snapshots do pulso (US06.01 e US07.01) e as men\u00e7\u00f5es na skill `msg-e2e-por-criterio`. Com o pulso desenhando certo da primeira vez, o redesenho antes do snapshot n\u00e3o \u00e9 mais necess\u00e1rio. Os snapshots continuam sem `maxDiffPixels`, e as baselines da `develop` n\u00e3o mudaram.\n\n**Para a equipe:** o pulso perde a anima\u00e7\u00e3o de entrada (a linha que se desenhava da esquerda para a direita). Nenhum commit pediu essa anima\u00e7\u00e3o: era o padr\u00e3o do ECharts. Se o Squad 2 quiser mant\u00ea-la, o caminho \u00e9 outro (recorte desligado de vez ou um redesenho no fim da anima\u00e7\u00e3o), e d\u00e1 para trocar aqui.\n\n## Como foi verificado\n\n- **O corte ainda acontecia depois do #130.** Teste descart\u00e1vel, fora do PR: abre o pulso, captura o canvas, redesenha (estreita a janela e volta) e compara as duas capturas com o comparador do Playwright. O Google Fonts fica bloqueado, para a fonte n\u00e3o entrar na conta. Build da branch sem a `animation: false`: as 10 aberturas (5 de cada pulso) diferem, e os pixels diferentes ficam logo acima do 1,0 e abaixo do 0,0, onde est\u00e3o os picos. Com a corre\u00e7\u00e3o: as 10 saem iguais.\n- `jest` do `formatPulseChart` e do `toPulseSeries`: 47 testes passam.\n- E2E local (`pnpm build` + `next start`) da US06.01 e da US07.01 com `--repeat-each=3`: 141 passam; os 27 pulados s\u00e3o os snapshots, que s\u00f3 rodam no CI, e os manuais.\n- CI: o E2E do PR e mais dois `workflow_dispatch` na branch ([PR](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/42922378958), [1](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/42922420842), [2](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/42922425812)). Nos tr\u00eas, 167 testes passam, nenhum inst\u00e1vel. Os tr\u00eas snapshots do pulso passam na primeira tentativa contra as baselines da `develop`, sem `maxDiffPixels`.\n\n## Ponto de aten\u00e7\u00e3o: fonte do canvas\n\nSem bloquear o Google Fonts, num teste local, em 5 de 10 aberturas o **texto** do canvas (eixos e etiquetas R1/R2) saiu na fonte reserva no primeiro desenho. O pulso fixa `fontFamily: 'Roboto'`, a Roboto vem do Google Fonts com `display=swap`, e o ECharts n\u00e3o redesenha quando a fonte chega. O `redrawChart` escondia isso tamb\u00e9m. No CI n\u00e3o h\u00e1 sinal do problema: nenhum run marcou o pulso como inst\u00e1vel, nem antes nem depois deste PR. Se o snapshot do pulso oscilar no CI, a causa prov\u00e1vel \u00e9 essa, n\u00e3o o recorte.\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "LuizaMaluf",
+            "id": 117913962,
+            "node_id": "U_kgDOBwc5ag",
+            "avatar_url": "https://avatars.githubusercontent.com/u/117913962?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/LuizaMaluf",
+            "html_url": "https://github.com/LuizaMaluf",
+            "followers_url": "https://api.github.com/users/LuizaMaluf/followers",
+            "following_url": "https://api.github.com/users/LuizaMaluf/following{/other_user}",
+            "gists_url": "https://api.github.com/users/LuizaMaluf/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/LuizaMaluf/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/LuizaMaluf/subscriptions",
+            "organizations_url": "https://api.github.com/users/LuizaMaluf/orgs",
+            "repos_url": "https://api.github.com/users/LuizaMaluf/repos",
+            "events_url": "https://api.github.com/users/LuizaMaluf/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/LuizaMaluf/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/134/reactions",
             "total_count": 0,
