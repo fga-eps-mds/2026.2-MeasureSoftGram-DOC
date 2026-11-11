@@ -264,5 +264,35 @@
   "planned_unestimated_issues": 2,
   "regra": 2,
   "sprint_name": "Sprint: Nov 2 - Nov 8, 2026"
+ },
+ "Z2lkOi8vcmFwdG9yL1NwcmludC81MzA5OTI3": {
+  "congelado_em": "2026-11-11T03:10:58+00:00",
+  "corte": "2026-11-10T03:59:00+00:00",
+  "fonte": "histórico do Zenhub (scopeChange) + 16 issue(s) que já estavam na sprint no início (estimativa atual)",
+  "issues": {
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMDczNjEyNQ": 8.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMDczNjM0OA": 5.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMDkxMDQzOA": 10.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMTk1ODAyNw": 5.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMTk1ODgwOA": 5.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMjEzMjM5NQ": 8.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMjEzMjM5Ng": 8.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMjEzMjQwMg": 13.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMjEzMjQwNg": 8.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMjEzMjQxMA": 8.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMjEzMjQxOQ": 8.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMzg1OTEzMA": 8.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMzg1OTEzNA": 8.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMzg1OTEzOQ": 5.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzNDQ5MjY1Mw": null,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzNDQ5MjY1NA": null,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzNDQ5MjY1Nw": null,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzNDQ5MjY2NA": null
+  },
+  "planned_issues": 18,
+  "planned_story_points": 107.0,
+  "planned_unestimated_issues": 4,
+  "regra": 2,
+  "sprint_name": "Sprint: Nov 9 - Nov 15, 2026"
  }
 }

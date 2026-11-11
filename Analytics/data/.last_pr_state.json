@@ -24,10 +24,10 @@
     "author": "Marcosatc147"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 113,
-    "last_merged_at": "2026-11-10T02:15:52Z",
-    "title": "fix(products): importa grupo GitLab antes de usar a org (US12.01, #124)",
-    "author": "thegm445"
+    "number": 135,
+    "last_merged_at": "2026-11-11T00:51:54Z",
+    "title": "fix(pulso): a Visão Geral confere o histórico por release a cada visita (US06.01)",
+    "author": "LuizaMaluf"
   },
   "2026.2-MeasureSoftGram-Parser": {
     "number": 17,
@@ -42,9 +42,9 @@
     "author": "DiegoCarlito"
   },
   "2026.2-MeasureSoftGram-Service": {
-    "number": 88,
-    "last_merged_at": "2026-11-10T02:08:02Z",
-    "title": "fix(organizations): expõe gitlab_group_id da organização (BUG12.01)",
-    "author": "thegm445"
+    "number": 85,
+    "last_merged_at": "2026-11-10T18:38:51Z",
+    "title": "feat(produtos): faixas de qualidade configuráveis por produto (US30.01)",
+    "author": "bottinolucas"
   }
 }

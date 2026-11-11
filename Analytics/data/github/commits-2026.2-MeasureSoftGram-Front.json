@@ -1,11 +1,1160 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-10T03:12:06+00:00",
+ "coletado_em": "2026-11-11T03:12:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "5e9e0e1542a6c9ee0a111fbc326bd9a4e528c478",
+   "date": "2026-11-11T00:51:53Z",
+   "author": "LuizaMaluf",
+   "message": "fix(pulso): a Visão Geral confere o histórico por release a cada visita (US06.01) (#135)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us06-01-pulso-produto.e2e.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 4
+    },
+    {
+     "filename": "src/pages/products/[product]/components/ProductContent/ProductContent.tsx",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/components/ProductContent/tests/ProductContent.spec.tsx",
+     "status": "modified",
+     "additions": 42,
+     "deletions": 11
+    },
+    {
+     "filename": "src/pages/products/[product]/tests/Product.spec.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "0b496324f58ba881650048a2438ea28fac0549e4",
+   "date": "2026-11-11T00:40:54Z",
+   "author": "LuizaMaluf",
+   "message": "fix(pulso): texto do canvas na Roboto já no primeiro desenho (US06.01, US07.01) (#136)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/pages/products/[product]/repositories/[repository]/components/RepositoryPulseChart/RepositoryPulseChart.tsx",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 2
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/[repository]/components/RepositoryPulseChart/tests/RepositoryPulseChart.spec.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/PulseChart/PulseChart.tsx",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/components/PulseChart/tests/PulseChart.spec.tsx",
+     "status": "modified",
+     "additions": 28,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/hooks/tests/useFontLoaded.spec.tsx",
+     "status": "added",
+     "additions": 84,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/hooks/useFontLoaded.ts",
+     "status": "added",
+     "additions": 40,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/formatPulseChart.ts",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 5
+    }
+   ]
+  },
+  {
+   "sha": "8d30a2869d687750dd14cce523132c273809f626",
+   "date": "2026-11-11T00:15:26Z",
+   "author": "LuizaMaluf",
+   "message": "fix(pulso): picos inteiros já no primeiro desenho (US06.01, US07.01) (#134)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".claude/skills/msg-e2e-por-criterio/SKILL.md",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "e2e/support/helpers.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 22
+    },
+    {
+     "filename": "e2e/us06-01-pulso-produto.e2e.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 6
+    },
+    {
+     "filename": "e2e/us07-01-dashboards.e2e.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/utils/formatPulseChart.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/tests/formatPulseChart.spec.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "35ea845b3340951fb241f91a1fe1b964c720462d",
+   "date": "2026-11-10T23:53:32Z",
+   "author": "LuizaMaluf",
+   "message": "ci(e2e): separa bug conhecido (test.fixme) de item manual no comentário das issues (#132)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "scripts/e2e-acceptance-comment.mjs",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 5
+    }
+   ]
+  },
+  {
+   "sha": "d9b2b955d504c4469befdc0e32b596dd441b2f90",
+   "date": "2026-11-10T23:15:12Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): ajustes da revisão dos cenários por critério de aceitação (#133)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".claude/skills/msg-e2e-por-criterio/SKILL.md",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 15
+    },
+    {
+     "filename": "e2e/fixtures/common.ts",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/index.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 6
+    },
+    {
+     "filename": "e2e/fixtures/entidade/index.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 6
+    },
+    {
+     "filename": "e2e/fixtures/overview/index.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 13
+    },
+    {
+     "filename": "e2e/fixtures/relacoes/index.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 6
+    },
+    {
+     "filename": "e2e/fixtures/repositorio/index.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 6
+    },
+    {
+     "filename": "e2e/fixtures/temporal/index.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 7
+    },
+    {
+     "filename": "e2e/support/api.ts",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 5
+    },
+    {
+     "filename": "e2e/support/fixtures.ts",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 5
+    },
+    {
+     "filename": "e2e/support/helpers.ts",
+     "status": "added",
+     "additions": 83,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us01-02-divida-tecnica.e2e.ts",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 32
+    },
+    {
+     "filename": "e2e/us06-01-pulso-produto.e2e.ts",
+     "status": "modified",
+     "additions": 45,
+     "deletions": 28
+    },
+    {
+     "filename": "e2e/us06-01-pulso-produto.e2e.ts-snapshots/pulso-produto-chromium-linux.png",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us06-01-pulso-produto.e2e.ts-snapshots/pulso-um-repositorio-chromium-linux.png",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us07-01-dashboards.e2e.ts",
+     "status": "modified",
+     "additions": 46,
+     "deletions": 83
+    },
+    {
+     "filename": "e2e/us07-01-dashboards.e2e.ts-snapshots/repositorio-pulso-chromium-linux.png",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us11-01-login-gitlab.e2e.ts",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 23
+    },
+    {
+     "filename": "e2e/us12-01-importacao-gitlab.e2e.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 7
+    },
+    {
+     "filename": "e2e/us21-01-metamodelo.e2e.ts",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 28
+    },
+    {
+     "filename": "e2e/us21-02-entidade.e2e.ts",
+     "status": "modified",
+     "additions": 22,
+     "deletions": 32
+    },
+    {
+     "filename": "e2e/us21-03-distribuicao.e2e.ts",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 46
+    },
+    {
+     "filename": "e2e/us21-04-relacoes.e2e.ts",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 46
+    },
+    {
+     "filename": "e2e/us22-01-equalizador.e2e.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 5
+    }
+   ]
+  },
+  {
+   "sha": "3e9357d3b4d0adcf68112ddf207e5fedfe700ad4",
+   "date": "2026-11-10T20:36:06Z",
+   "author": "thegm445",
+   "message": "fix(products): casa grupo do GitLab pelo id ao sincronizar a organização (BUG12.01) (#114)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/pages/products/Products.tsx",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 21
+    },
+    {
+     "filename": "src/pages/products/test/Products.spec.tsx",
+     "status": "modified",
+     "additions": 202,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/customTypes/organization.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/services/organization.ts",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/services/tests/organization.spec.ts",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "752919b96c994f73248dc6bbc2e8eb1aa1c00ec4",
+   "date": "2026-11-10T20:22:16Z",
+   "author": "devwallyson",
+   "message": "fix(temporal): erro da lista de repositórios em vez do estado vazio (US07.01) (#129)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us07-01-dashboards.e2e.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 10
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/temporal/TemporalDashboard.tsx",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/temporal/tests/TemporalDashboard.spec.tsx",
+     "status": "modified",
+     "additions": 38,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/temporal/useTemporalEvolution.ts",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "d0e1ca2f1878f28e79ce99d98b5a575759332038",
+   "date": "2026-11-10T20:13:49Z",
+   "author": "devwallyson",
+   "message": "fix(pulso): desenha o pulso com uma única troca de faixa (US06.01, US07.01) (#130)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us06-01-pulso-produto.e2e.ts",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 9
+    },
+    {
+     "filename": "e2e/us07-01-dashboards.e2e.ts",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 12
+    },
+    {
+     "filename": "src/shared/utils/formatPulseChart.ts",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/utils/tests/formatPulseChart.spec.ts",
+     "status": "modified",
+     "additions": 28,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/utils/toPulseSeries.ts",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "9a27082a274596d6df3b6e890ec4045e2cb6b5e9",
+   "date": "2026-11-10T19:30:20Z",
+   "author": "bottinolucas",
+   "message": "feat(produto): configurações do produto com a aba Faixas de qualidade (US30.01) (#112)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "public/locales/en/breadcrumb.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "public/locales/pt/breadcrumb.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "src/mocks/handlers.ts",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/settings/ProductSettings.tsx",
+     "status": "added",
+     "additions": 70,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/settings/components/QualityBandsRuler.tsx",
+     "status": "added",
+     "additions": 92,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/settings/components/QualityBandsTab.tsx",
+     "status": "added",
+     "additions": 214,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/settings/components/RestoreDefaultsDialog.tsx",
+     "status": "added",
+     "additions": 43,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/settings/hooks/useQualityBands.ts",
+     "status": "added",
+     "additions": 49,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/settings/index.page.ts",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/settings/tests/ProductSettings.spec.tsx",
+     "status": "added",
+     "additions": 31,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/settings/tests/QualityBandsRuler.spec.tsx",
+     "status": "added",
+     "additions": 27,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/settings/tests/QualityBandsTab.spec.tsx",
+     "status": "added",
+     "additions": 259,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/settings/tests/useQualityBands.spec.tsx",
+     "status": "added",
+     "additions": 116,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/Layout/SideMenu/SideMenu.tsx",
+     "status": "modified",
+     "additions": 23,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/components/Layout/SideMenu/tests/SideMenuDashboards.spec.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/Layout/tests/__snapshots__/Layout.spec.tsx.snap",
+     "status": "modified",
+     "additions": 80,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/customTypes/qualityBands.ts",
+     "status": "added",
+     "additions": 17,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/services/product.ts",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/services/tests/product.spec.ts",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/qualityBandsForm.ts",
+     "status": "added",
+     "additions": 106,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/tests/qualityBandsForm.spec.ts",
+     "status": "added",
+     "additions": 111,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "303b1a0d690ea7ba58c9bb998c95aa05036293a8",
+   "date": "2026-11-10T19:19:47Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): cenários de aceitação dos dashboards sem o Grafana por critério (US07.01) (#128)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/overview/analysis-data.json",
+     "status": "added",
+     "additions": 40,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/overview/index.ts",
+     "status": "added",
+     "additions": 113,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/overview/summary.json",
+     "status": "added",
+     "additions": 16,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/repositorio/index.ts",
+     "status": "added",
+     "additions": 65,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/temporal/historical-characteristics.json",
+     "status": "added",
+     "additions": 60,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/temporal/historical-measures.json",
+     "status": "added",
+     "additions": 49,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/temporal/historical-metrics.json",
+     "status": "added",
+     "additions": 46,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/temporal/historical-subcharacteristics.json",
+     "status": "added",
+     "additions": 34,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/temporal/index.ts",
+     "status": "added",
+     "additions": 87,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/temporal/repositories.json",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us07-01-dashboards.e2e.ts",
+     "status": "added",
+     "additions": 801,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us07-01-dashboards.e2e.ts-snapshots/overview-indicador-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us07-01-dashboards.e2e.ts-snapshots/repositorio-pulso-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us07-01-dashboards.e2e.ts-snapshots/temporal-caracteristica-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "5050c40c78e7444b8de94106634648fe2d76a5b6",
+   "date": "2026-11-10T19:11:32Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): cenários de aceitação do pulso do TSQMI por release por critério (US06.01) (#125)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/produto/historical-values.json",
+     "status": "added",
+     "additions": 77,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/produto/index.ts",
+     "status": "added",
+     "additions": 48,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/produto/release-history.json",
+     "status": "added",
+     "additions": 48,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us06-01-pulso-produto.e2e.ts",
+     "status": "added",
+     "additions": 250,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us06-01-pulso-produto.e2e.ts-snapshots/pulso-produto-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us06-01-pulso-produto.e2e.ts-snapshots/pulso-um-repositorio-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "8a10ccae17a1ab72c9bcebd04270416a903d0df6",
+   "date": "2026-11-10T18:54:33Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): cenários de aceitação da dívida técnica por critério (US01.02) (#123)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/divida-tecnica/entity-analysis-modifiability.json",
+     "status": "added",
+     "additions": 82,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/entity-matrix-measure.json",
+     "status": "added",
+     "additions": 197,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/entity-matrix-subcharacteristic.json",
+     "status": "added",
+     "additions": 111,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/historical-values-characteristics.json",
+     "status": "added",
+     "additions": 38,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/historical-values-measures.json",
+     "status": "added",
+     "additions": 68,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/historical-values-subcharacteristics.json",
+     "status": "added",
+     "additions": 38,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/index.ts",
+     "status": "added",
+     "additions": 61,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/quality-model-tree.json",
+     "status": "added",
+     "additions": 145,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/repositories.json",
+     "status": "added",
+     "additions": 16,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us01-02-divida-tecnica.e2e.ts",
+     "status": "added",
+     "additions": 192,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "b732aed80784e576be3eb3b9a819799cb662028f",
+   "date": "2026-11-10T18:46:10Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): cenários de aceitação da Análise por Entidade por critério (US21.02) (#122)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/entidade/entity-analysis-reliability.json",
+     "status": "added",
+     "additions": 82,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/entidade/index.ts",
+     "status": "added",
+     "additions": 81,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/entidade/matrix-characteristic-r2.json",
+     "status": "added",
+     "additions": 97,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/entidade/matrix-measure-r1.json",
+     "status": "added",
+     "additions": 192,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/entidade/matrix-measure-r2.json",
+     "status": "added",
+     "additions": 197,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/entidade/matrix-subcharacteristic-r2.json",
+     "status": "added",
+     "additions": 142,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us21-02-entidade.e2e.ts",
+     "status": "added",
+     "additions": 406,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "ca4427f91bdf87cc40b30bbaf8c1d5ac7105e1fa",
+   "date": "2026-11-10T18:37:57Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): cenários de aceitação do Metamodelo por critério (US21.01) (#120)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/common.ts",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/index.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 3
+    },
+    {
+     "filename": "e2e/fixtures/metamodelo/arvore-r1.json",
+     "status": "added",
+     "additions": 53,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/metamodelo/arvore-r2.json",
+     "status": "added",
+     "additions": 145,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/metamodelo/index.ts",
+     "status": "added",
+     "additions": 37,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/relacoes/correlation-characteristic.json",
+     "status": "added",
+     "additions": 484,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/relacoes/correlation-subcharacteristic.json",
+     "status": "added",
+     "additions": 484,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/relacoes/index.ts",
+     "status": "added",
+     "additions": 85,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/relacoes/repositories.json",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/releases.json",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us21-01-metamodelo.e2e.ts",
+     "status": "added",
+     "additions": 243,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us21-01-metamodelo.e2e.ts-snapshots/arvore-r2-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us21-01-metamodelo.e2e.ts-snapshots/arvore-r2-expandida-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us21-04-relacoes.e2e.ts",
+     "status": "added",
+     "additions": 412,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us21-04-relacoes.e2e.ts-snapshots/matriz-bolhas-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us21-04-relacoes.e2e.ts-snapshots/matriz-correlacao-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "6e7c4d8cc19ad16c1cde092101da691884567fa3",
+   "date": "2026-11-10T18:21:18Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): cenários de aceitação do equalizador Planejado × Realizado por critério (US22.01) (#121)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/release/analysis-data.json",
+     "status": "added",
+     "additions": 40,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/release/index.ts",
+     "status": "added",
+     "additions": 35,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us22-01-equalizador.e2e.ts",
+     "status": "added",
+     "additions": 235,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us22-01-equalizador.e2e.ts-snapshots/equalizador-duas-caracteristicas-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us22-01-equalizador.e2e.ts-snapshots/equalizador-r2-chromium-linux.png",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "dc6ce842e1c6af714aa6588f0960891c20207a67",
+   "date": "2026-11-10T18:12:15Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): cenários de aceitação do login com GitLab por critério (US11.01) (#124)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/login-gitlab/index.ts",
+     "status": "added",
+     "additions": 33,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us11-01-login-gitlab.e2e.ts",
+     "status": "added",
+     "additions": 229,
+     "deletions": 0
+    },
+    {
+     "filename": "playwright.config.ts",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "7a66c08911d7d92015609b94707a6ee9c63d34dc",
+   "date": "2026-11-10T18:04:48Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): cenários de aceitação da importação do GitLab por critério (US12.01) (#127)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/importacao-gitlab/gitlab-namespaces.json",
+     "status": "added",
+     "additions": 26,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/importacao-gitlab/gitlab-projects-squad-01.json",
+     "status": "added",
+     "additions": 16,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/importacao-gitlab/gitlab-projects.json",
+     "status": "added",
+     "additions": 86,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/importacao-gitlab/index.ts",
+     "status": "added",
+     "additions": 140,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/support/api.ts",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 3
+    },
+    {
+     "filename": "e2e/support/fixtures.ts",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 4
+    },
+    {
+     "filename": "e2e/support/session.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 5
+    },
+    {
+     "filename": "e2e/us12-01-importacao-gitlab.e2e.ts",
+     "status": "added",
+     "additions": 400,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "a0221be51abac90e3fe9794446c8f5d57e4b1fdf",
+   "date": "2026-11-10T12:07:59Z",
+   "author": "gusrberto",
+   "message": "fix(relacoes): releases da análise e exportação da matriz RD (US21.04) (#118)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/pages/products/[product]/dashboards/relacoes/CorrelationDashboard.tsx",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 7
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/relacoes/CorrelationReleasesDialog.tsx",
+     "status": "added",
+     "additions": 91,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/relacoes/tests/CorrelationDashboard.spec.tsx",
+     "status": "modified",
+     "additions": 40,
+     "deletions": 3
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/relacoes/tests/fixtures.ts",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/customTypes/product.ts",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/utils/formatCorrelationCharts.ts",
+     "status": "modified",
+     "additions": 54,
+     "deletions": 5
+    },
+    {
+     "filename": "src/shared/utils/tests/formatCorrelationCharts.spec.ts",
+     "status": "modified",
+     "additions": 49,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "1fe128d0bba87c866c05ae3d81ff423425208881",
+   "date": "2026-11-10T03:57:01Z",
+   "author": "LuizaMaluf",
+   "message": "ci(e2e): publica o resultado por critério na issue de cada US no DOC (#109)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/e2e.yml",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 0
+    },
+    {
+     "filename": ".gitignore",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/acceptance-issues.json",
+     "status": "added",
+     "additions": 22,
+     "deletions": 0
+    },
+    {
+     "filename": "playwright.config.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "scripts/e2e-acceptance-comment.mjs",
+     "status": "added",
+     "additions": 195,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "c2818c7f9149f083e0b232c6d04fb5912f395dd4",
+   "date": "2026-11-10T03:50:16Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): espera o nível marcar antes de seguir na Distribuição (US21.03) (#108)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us21-03-distribuicao.e2e.ts",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 7
+    }
+   ]
+  },
+  {
+   "sha": "3f309ff3cdf9bed3448838d4019fa0216428bb34",
+   "date": "2026-11-10T03:12:46Z",
+   "author": "LuizaMaluf",
+   "message": "docs(e2e): skill para escrever o E2E de uma US por critério de aceitação (#115)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".claude/skills/msg-e2e-por-criterio/SKILL.md",
+     "status": "added",
+     "additions": 154,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "8900b6a1cb5f472362048bd093dac6ccd314a77f",
    "date": "2026-11-10T02:15:51Z",
@@ -8572,27 +9721,6 @@
    ]
   },
   {
-   "sha": "2c170516adf611fd06c3b8cc16bb0c4e589a6660",
-   "date": "2026-09-28T18:28:51Z",
-   "author": "zzzBECK",
-   "message": "chore(deps): remove material-ui, react-router-dom e next-auth sem uso",
-   "parents": 1,
-   "files": [
-    {
-     "filename": "package.json",
-     "status": "modified",
-     "additions": 0,
-     "deletions": 3
-    },
-    {
-     "filename": "pnpm-lock.yaml",
-     "status": "modified",
-     "additions": 1,
-     "deletions": 393
-    }
-   ]
-  },
-  {
    "sha": "ad9b8b5d044dbda2fccd9b3ec3760feed805cfbc",
    "date": "2026-09-28T01:55:22Z",
    "author": "bottinolucas",
@@ -11713,5 +12841,5 @@
    ]
   }
  ],
- "detalhes_novos": 8
+ "detalhes_novos": 21
 }

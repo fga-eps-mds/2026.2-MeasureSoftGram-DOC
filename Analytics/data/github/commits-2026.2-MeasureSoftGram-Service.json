@@ -1,11 +1,101 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-10T03:12:06+00:00",
+ "coletado_em": "2026-11-11T03:12:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "952cf06e33392ffba4eb747b9e0b6507f283630b",
+   "date": "2026-11-10T18:38:50Z",
+   "author": "bottinolucas",
+   "message": "feat(produtos): faixas de qualidade configuráveis por produto (US30.01) (#85)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "MSG.postman_collection.json",
+     "status": "modified",
+     "additions": 86,
+     "deletions": 0
+    },
+    {
+     "filename": "src/config/urls.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 4
+    },
+    {
+     "filename": "src/endpoints.md",
+     "status": "modified",
+     "additions": 70,
+     "deletions": 0
+    },
+    {
+     "filename": "src/organizations/migrations/0017_product_quality_band_limits.py",
+     "status": "added",
+     "additions": 18,
+     "deletions": 0
+    },
+    {
+     "filename": "src/organizations/models.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/organizations/quality_bands.py",
+     "status": "added",
+     "additions": 136,
+     "deletions": 0
+    },
+    {
+     "filename": "src/organizations/serializers.py",
+     "status": "modified",
+     "additions": 22,
+     "deletions": 0
+    },
+    {
+     "filename": "src/organizations/tests/test_quality_bands.py",
+     "status": "added",
+     "additions": 260,
+     "deletions": 0
+    },
+    {
+     "filename": "src/organizations/views.py",
+     "status": "modified",
+     "additions": 49,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "d34916b55901d491a41b277feab9c9eb7a7f68b4",
+   "date": "2026-11-10T12:06:42Z",
+   "author": "gusrberto",
+   "message": "fix(releases): releases da análise e normalidade das entidades na correlação (US21.04) (#90)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/endpoints.md",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 5
+    },
+    {
+     "filename": "src/releases/correlation.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 3
+    },
+    {
+     "filename": "src/releases/tests/test_correlation.py",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "4d5f3b1f769c8620f250892f3df98122909d89bd",
    "date": "2026-11-10T02:08:02Z",
@@ -3408,5 +3498,5 @@
    ]
   }
  ],
- "detalhes_novos": 3
+ "detalhes_novos": 2
 }
