@@ -116,6 +116,7 @@ const sidebars: SidebarsConfig = {
             "reunioes/reunioes-po/ata-po-14-10",
             "reunioes/reunioes-po/ata-po-21-10",
             "reunioes/reunioes-po/ata-po-04-11",
+            "reunioes/reunioes-po/ata-po-11-11",
           ],
         },
         {
