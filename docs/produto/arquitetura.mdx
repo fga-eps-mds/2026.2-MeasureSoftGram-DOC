@@ -698,8 +698,7 @@ erDiagram
         bigint id PK
         string name
         string key
-        decimal gaugeRedLimit
-        decimal gaugeYellowLimit
+        json quality_band_limits
         bigint organization_id FK
     }
     REPOSITORY {
