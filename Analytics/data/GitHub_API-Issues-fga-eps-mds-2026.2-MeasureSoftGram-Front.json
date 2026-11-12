@@ -38,7 +38,7 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-11-12T02:31:35Z",
-        "updated_at": "2026-11-12T02:34:45Z",
+        "updated_at": "2026-11-12T02:41:47Z",
         "closed_at": null,
         "assignee": null,
         "author_association": "NONE",
@@ -3105,7 +3105,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -3131,10 +3131,10 @@
             }
         ],
         "milestone": null,
-        "comments": 1,
+        "comments": 2,
         "created_at": "2026-11-10T03:01:13Z",
-        "updated_at": "2026-11-12T02:30:31Z",
-        "closed_at": null,
+        "updated_at": "2026-11-12T02:59:00Z",
+        "closed_at": "2026-11-12T02:58:57Z",
         "assignee": {
             "login": "zzzBECK",
             "id": 82113486,
@@ -3166,10 +3166,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/117",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/117.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/117.patch",
-            "merged_at": null
+            "merged_at": "2026-11-12T02:58:57Z"
         },
         "body": "## O que muda\n\nE2E por crit\u00e9rio de aceita\u00e7\u00e3o da [US11.03](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/114) (termos do provedor), tarefa [TASK11.03.01](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/274). Faz parte da fase 2 do plano de E2E por crit\u00e9rio (planning de 09/11). Um `test.describe` por CA, com t\u00edtulo `@US11.03-CAn <resumo do crit\u00e9rio>`, em `e2e/us11-03-termos-provedor.e2e.ts`.\n\nO PO n\u00e3o conseguiu homologar a US porque o fluxo real do GitLab depende da US11.01 e da US12.01. Aqui a evid\u00eancia vem do CI: a sess\u00e3o fake troca o provedor (`credentials`, `github`, `gitlab`) e o idioma (pt, en), sem OAuth.\n\n### Infra do E2E\n- `seedSession(page, provider)` e a op\u00e7\u00e3o `provider` no teste base (padr\u00e3o `credentials`). A US21.03 continua igual.\n- `e2e/support/terms.ts`: `seedLanguage` e `expectOnlyTermsOf`. Juntam o texto da tela, o t\u00edtulo da aba e os atributos `placeholder`, `aria-label`, `title` e `alt`, e falham listando cada linha com termo do outro provedor (Reposit\u00f3rio/Organiza\u00e7\u00e3o/Pull Request/PR \u00d7 Projeto/Grupo/Merge Request/MR, em pt e en).\n- `e2e/fixtures/termos/`: handlers das 17 telas autenticadas. Os dashboards de dados respondem 500, porque \u00e9 na mensagem de erro que aparecem os termos. Tamb\u00e9m h\u00e1 os cen\u00e1rios sem reposit\u00f3rios e de erro na importa\u00e7\u00e3o.\n\n### Falhas reais que o teste achou, corrigidas aqui\n- **P\u00e1gina Sobre**: com login pelo GitLab, mostrava Organiza\u00e7\u00f5es e Reposit\u00f3rios. Agora usa `useProviderTranslation` e tem as chaves `_gitlab` em pt e en.\n- **Bot\u00e3o de adicionar reposit\u00f3rio**: o `aria-label=\"add repository\"` estava fixo em ingl\u00eas. Agora vem da chave `add`, com variante `_gitlab`.\n- **CSVs dos dashboards**: a coluna `Reposit\u00f3rio` era fixa. Os bot\u00f5es de exporta\u00e7\u00e3o (CSV e .zip) passam a usar o termo do provedor (`withRepositoryTerm`), e a coluna vira `Projeto` no GitLab.\n\nNenhuma tela mostra \"Pull Request\"/\"PR\" hoje. O CA3 garante que esses termos n\u00e3o aparecem na sess\u00e3o GitLab.\n\n## CA \u00d7 teste\n\n| CA | Teste (tag) | Automatizado |\n|---|---|---|\n| CA1 | `@US11.03-CA1`: menu lateral e importa\u00e7\u00e3o com Projetos/Grupos no GitLab e Reposit\u00f3rios/Organiza\u00e7\u00f5es no GitHub | Sim |\n| CA2 | `@US11.03-CA2`: filtro (seletor \"Projeto\"), tooltip (\"Projetos do Produto\"), mensagem de estado vazio, toast de erro, texto do Gr\u00e1fico MSG e cabe\u00e7alho do CSV | Sim |\n| CA3 | `@US11.03-CA3`: 17 telas \u00d7 GitLab/GitHub \u00d7 pt/en sem termos do outro provedor | Sim |\n| CA4 | `@US11.03-CA4`: o login \u00e9 atrelado ao provedor (decis\u00e3o do PO em 14/10), ent\u00e3o trocar de provedor \u00e9 sair e entrar pelo OAuth (US11.01). A troca sem recarregar tem teste unit\u00e1rio em `useProviderTerms.spec.tsx` | **Manual** (`test.skip`) |\n| CA5 | `@US11.03-CA5`: sess\u00e3o sem provedor (`credentials`) com o vocabul\u00e1rio padr\u00e3o, sem termos do GitLab, nas 17 telas e nos dois idiomas | Parcial: quais s\u00e3o os termos neutros ainda \u00e9 pergunta em aberto do PO na issue (`test.skip`) |\n\n## Depend\u00eancias\n\n- O coment\u00e1rio autom\u00e1tico com o resultado por CA na issue da US depende do #109 (`e2e/acceptance-issues.json`, que j\u00e1 tem a US11.03 \u2192 DOC#114).\n\n## Verifica\u00e7\u00e3o\n\n- `pnpm e2e --grep @US11.03 --repeat-each=3`: 330 passaram e 6 pulados (o CA4 e o CA5 manuais, 3 vezes), sem falha intermitente.\n- `pnpm e2e` completo: 133 passaram e 4 pulados.\n- Jest dos arquivos alterados (`exportCsv`, `ExportCsvButton`, `Repositories`, p\u00e1gina Sobre): ok. O snapshot do `Repositories.spec` mudou s\u00f3 no `aria-label`.\n- `eslint` e `prettier` nos arquivos novos do E2E: ok.\n\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#114\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#274\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "LuizaMaluf",
+            "id": 117913962,
+            "node_id": "U_kgDOBwc5ag",
+            "avatar_url": "https://avatars.githubusercontent.com/u/117913962?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/LuizaMaluf",
+            "html_url": "https://github.com/LuizaMaluf",
+            "followers_url": "https://api.github.com/users/LuizaMaluf/followers",
+            "following_url": "https://api.github.com/users/LuizaMaluf/following{/other_user}",
+            "gists_url": "https://api.github.com/users/LuizaMaluf/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/LuizaMaluf/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/LuizaMaluf/subscriptions",
+            "organizations_url": "https://api.github.com/users/LuizaMaluf/orgs",
+            "repos_url": "https://api.github.com/users/LuizaMaluf/repos",
+            "events_url": "https://api.github.com/users/LuizaMaluf/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/LuizaMaluf/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/117/reactions",
             "total_count": 0,
