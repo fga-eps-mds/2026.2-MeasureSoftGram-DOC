@@ -1,11 +1,128 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-11T03:12:13+00:00",
+ "coletado_em": "2026-11-12T03:12:46+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "50284ebc049feb188c9c37bbba9c547c1b3e3928",
+   "date": "2026-11-12T02:59:37Z",
+   "author": "bottinolucas",
+   "message": "fix: resolve as violações critical do SonarCloud no Service (QA-10b, DOC#264) (#94)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/goals/models.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 3
+    },
+    {
+     "filename": "src/math_model/serializer.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/math_model/services.py",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 33
+    },
+    {
+     "filename": "src/organizations/utils.py",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 4
+    },
+    {
+     "filename": "src/release_configuration/models.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 3
+    },
+    {
+     "filename": "src/releases/analysis_distribution.py",
+     "status": "modified",
+     "additions": 37,
+     "deletions": 31
+    },
+    {
+     "filename": "src/releases/service.py",
+     "status": "modified",
+     "additions": 35,
+     "deletions": 27
+    }
+   ]
+  },
+  {
+   "sha": "6258ed269fff04ebcc30d612ecdc4ee8064847c1",
+   "date": "2026-11-12T02:55:54Z",
+   "author": "bottinolucas",
+   "message": "fix(seed): resolve as violações critical dos management commands (QA-10a, DOC#263) (#93)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/organizations/management/commands/seed_demo_data.py",
+     "status": "modified",
+     "additions": 26,
+     "deletions": 24
+    },
+    {
+     "filename": "src/organizations/management/commands/utils.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "b263b4436285f16b7e2c8a35e8fb202ca8d38836",
+   "date": "2026-11-12T02:03:22Z",
+   "author": "thegm445",
+   "message": "feat(badge): badge do repositório com as faixas do produto (US30.03) (#80) (#92)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/characteristics/tests.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 5
+    },
+    {
+     "filename": "src/characteristics/views.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "src/organizations/quality_bands.py",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 1
+    },
+    {
+     "filename": "src/tsqmi/tests.py",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 5
+    },
+    {
+     "filename": "src/tsqmi/views.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "src/utils/badge.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 14
+    }
+   ]
+  },
   {
    "sha": "952cf06e33392ffba4eb747b9e0b6507f283630b",
    "date": "2026-11-10T18:38:50Z",
@@ -3498,5 +3615,5 @@
    ]
   }
  ],
- "detalhes_novos": 2
+ "detalhes_novos": 3
 }

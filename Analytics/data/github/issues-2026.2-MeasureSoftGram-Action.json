@@ -1,10 +1,29 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-11T03:12:13+00:00",
+ "coletado_em": "2026-11-12T03:12:46+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 24,
+   "title": "Feat/235 extracao gitlab",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-11T19:50:28Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T20:45:33Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "DanielFsR"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4219,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/24",
+   "author": "storch7"
+  },
   {
    "number": 23,
    "title": "build(deps): bump follow-redirects from 1.16.0 to 1.16.2",

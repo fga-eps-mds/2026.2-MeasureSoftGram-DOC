@@ -1,10 +1,619 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-11T03:12:13+00:00",
+ "coletado_em": "2026-11-12T03:12:46+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 306,
+   "title": "[BUG] interpretation_function do Core não lança InvalidGainInterpretationValue para ganho inválido",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-12T02:56:12Z",
+   "closed_at": null,
+   "updated_at": "2026-11-12T02:56:12Z",
+   "labels": [
+    "bug",
+    "core"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3255,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/306",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 305,
+   "title": "docs(reunioes): adiciona ata da reuniao com o PO de 11/11",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-12T01:52:10Z",
+   "closed_at": "2026-11-12T01:53:41Z",
+   "updated_at": "2026-11-12T01:53:44Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 506,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/305",
+   "author": "DanielFsR"
+  },
+  {
+   "number": 304,
+   "title": "docs(reunioes): adiciona ata da reuniao com o PO de 11/11",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-12T01:48:16Z",
+   "closed_at": "2026-11-12T01:51:34Z",
+   "updated_at": "2026-11-12T01:53:44Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 506,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/304",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 303,
+   "title": "[BUG01.02] Core trata lista de métricas com um único arquivo como número e recusa a medida",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T23:00:54Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T23:00:54Z",
+   "labels": [
+    "bug",
+    "core"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2647,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/303",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 302,
+   "title": "[BUG00.02] CLI aceita sem aviso pesos que não somam 100 no msgram.json",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T22:49:26Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T22:49:27Z",
+   "labels": [
+    "bug",
+    "cli"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2363,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/302",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 301,
+   "title": "[BUG00.01] CLI omite sem aviso as medidas sem dados da fonte e anuncia sucesso mesmo com avisos",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T22:49:23Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T22:49:24Z",
+   "labels": [
+    "bug",
+    "cli"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2984,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/301",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 300,
+   "title": "[BUG01.01] CLI calcula as medidas por arquivo com componentes TRK e UTS e diverge do Service",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T22:49:20Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T22:49:21Z",
+   "labels": [
+    "bug",
+    "cli"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4020,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/300",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 299,
+   "title": "[MSG35] Adequação de Qualidade do Produto e Aprovação dos Portões Q-Rapids (R3)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T22:24:06Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T22:24:09Z",
+   "labels": [
+    "epic",
+    "all repos"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5402,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/299",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 298,
+   "title": "[MSG34] Smoke Tests de Contratos Multi-Repo no Platform (Core, Service e CLI)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T22:20:41Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T22:36:20Z",
+   "labels": [
+    "epic",
+    "platform",
+    "all repos"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4718,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/298",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 297,
+   "title": "[web] [TASK14.01.06] Exibir a característica de segurança no planejamento de release, tela do repositório e dashboards no Front",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T20:47:05Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T20:47:22Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1793,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/297",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 296,
+   "title": "[cli] [TASK14.01.05] Exibir e calcular a característica de segurança e suas medidas na CLI",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T20:46:37Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T20:46:48Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1122,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/296",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 295,
+   "title": "[service] [TASK14.01.04] Integrar, calcular, persistir e expor a característica de segurança e suas medidas no Service",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T20:46:05Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T20:46:21Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1563,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/295",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 294,
+   "title": "[parser] [TASK14.01.03] Processar e validar a extração das métricas de segurança no Parser",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T20:45:35Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T20:45:49Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 666,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/294",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 293,
+   "title": "[action] [TASK14.01.02] Coletar métricas de segurança (SAST do SonarQube e SCM do repositório) na Action",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T20:45:06Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T20:45:23Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 911,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/293",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 292,
+   "title": "[core] [TASK14.01.01] Subcaracterísticas, medidas e esquemas de segurança no modelo matemático",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T20:44:15Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T20:44:40Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1968,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/292",
+   "author": "Diogo-Barboza"
+  },
+  {
+   "number": 291,
+   "title": "docs(processo): validação por testes E2E",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-11T19:37:02Z",
+   "closed_at": "2026-11-11T19:46:45Z",
+   "updated_at": "2026-11-11T19:46:47Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1352,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/291",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 290,
+   "title": "[TASK13.03.02] Front: exibir a justificativa dos pesos",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:35:39Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:35:41Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 414,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/290",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 289,
+   "title": "[TASK13.03.01] Service: expor as comparações e o CR da release",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:35:28Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:35:29Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 396,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/289",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 288,
+   "title": "[TASK13.01.05] Testes por cenário da US13.01",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:35:20Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:35:22Z",
+   "labels": [
+    "task",
+    "frontend",
+    "service"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 351,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/288",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 287,
+   "title": "[TASK13.01.04] Front: tela de comparações no planejamento da release",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:35:11Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:35:13Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 404,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/287",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 286,
+   "title": "[TASK13.01.03] Service: comparações da release e endpoint de cálculo",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:35:04Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:35:06Z",
+   "labels": [
+    "task",
+    "service"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 585,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/286",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 285,
+   "title": "[TASK13.01.02] Protótipo no Figma das comparações de pesos",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:34:55Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:34:58Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 630,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/285",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 284,
+   "title": "[TASK13.01.01] Explorar o fluxo atual de planejamento de release",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:34:45Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:34:47Z",
+   "labels": [
+    "task",
+    "frontend",
+    "service"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 466,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/284",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 283,
+   "title": "[TASK13.02.05] CLI: testes por cenário e README",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:34:38Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:34:39Z",
+   "labels": [
+    "task",
+    "cli"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 342,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/283",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 282,
+   "title": "[TASK13.02.04] CLI: fluxo interativo de pesos por comparação",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:34:31Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:34:32Z",
+   "labels": [
+    "task",
+    "cli"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 658,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/282",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 281,
+   "title": "[TASK13.02.03] Core: cálculo AHP, consistência e arredondamento",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:34:23Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:34:25Z",
+   "labels": [
+    "task",
+    "core"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 877,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/281",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 280,
+   "title": "[TASK13.02.02] Spike: reproduzir os pesos de referência (oráculo de teste)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:34:15Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:34:16Z",
+   "labels": [
+    "task",
+    "core"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 721,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/280",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 279,
+   "title": "[TASK13.02.01] Explorar CLI e Core e montar o protótipo de interação",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:34:06Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T19:45:00Z",
+   "labels": [
+    "task",
+    "cli"
+   ],
+   "type": "Task",
+   "assignees": [
+    "MilenaFRocha",
+    "DanielFsR"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1927,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/279",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 278,
+   "title": "[US13.04] Informar o grau de certeza nas comparações (AHP fuzzy)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:33:52Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:33:54Z",
+   "labels": [
+    "US",
+    "frontend",
+    "core",
+    "cli"
+   ],
+   "type": "Feature",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1188,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/278",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 277,
+   "title": "[US13.03] Ver a justificativa dos pesos de uma release",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:33:41Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:33:44Z",
+   "labels": [
+    "US",
+    "frontend",
+    "service"
+   ],
+   "type": "Feature",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3494,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/277",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 276,
+   "title": "[US13.01] Definir pesos por comparação (AHP) no planejamento da release",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-11T12:33:26Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T12:33:28Z",
+   "labels": [
+    "US",
+    "frontend",
+    "service"
+   ],
+   "type": "Feature",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4782,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/276",
+   "author": "MilenaFRocha"
+  },
   {
    "number": 275,
    "title": "docs(homologacao): defeitos achados pelos E2E por critério na US07.01",
@@ -91,7 +700,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:42Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:35:43Z",
+   "updated_at": "2026-11-12T02:27:35Z",
    "labels": [
     "task",
     "frontend"
@@ -250,11 +859,11 @@
   {
    "number": 263,
    "title": "[TASK33.03.01] QA-10a · Service: management commands (2 arquivos, 5 critical)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:35Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:34:36Z",
+   "closed_at": "2026-11-12T02:55:56Z",
+   "updated_at": "2026-11-12T02:55:56Z",
    "labels": [
     "task",
     "service"
@@ -676,7 +1285,7 @@
    "is_pull_request": true,
    "created_at": "2026-11-09T20:13:13Z",
    "closed_at": null,
-   "updated_at": "2026-11-09T20:14:24Z",
+   "updated_at": "2026-11-11T03:24:33Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -786,13 +1395,15 @@
    "is_pull_request": false,
    "created_at": "2026-11-08T20:18:17Z",
    "closed_at": null,
-   "updated_at": "2026-11-08T20:19:03Z",
+   "updated_at": "2026-11-11T22:20:37Z",
    "labels": [
     "task",
     "service"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "DiegoCarlito"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1602,
@@ -2818,20 +3429,25 @@
   },
   {
    "number": 135,
-   "title": "[US13.02] Como Miguel, quero definir os pesos por AHP pela CLI",
+   "title": "[US13.02] Definir pesos por comparação (AHP) no terminal",
    "state": "open",
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:23Z",
    "closed_at": null,
-   "updated_at": "2026-10-07T20:40:26Z",
+   "updated_at": "2026-11-12T01:33:45Z",
    "labels": [
-    "US"
+    "US",
+    "core",
+    "cli"
    ],
    "type": "Feature",
-   "assignees": [],
+   "assignees": [
+    "MilenaFRocha",
+    "DanielFsR"
+   ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 265,
+   "body_chars": 17952,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/135",
    "author": "MilenaFRocha"
   },
@@ -2842,7 +3458,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:06Z",
    "closed_at": null,
-   "updated_at": "2026-10-07T20:40:08Z",
+   "updated_at": "2026-11-11T21:44:08Z",
    "labels": [
     "US"
    ],
@@ -2850,18 +3466,18 @@
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 304,
+   "body_chars": 7284,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/132",
    "author": "MilenaFRocha"
   },
   {
    "number": 131,
    "title": "[US07.01] Como Miguel, quero ver os dashboards sem usar o Grafana",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:01Z",
-   "closed_at": null,
-   "updated_at": "2026-11-11T00:55:21Z",
+   "closed_at": "2026-11-11T22:21:31Z",
+   "updated_at": "2026-11-12T03:12:56Z",
    "labels": [
     "US",
     "frontend",
@@ -2889,7 +3505,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:50Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T00:55:28Z",
+   "updated_at": "2026-11-12T03:13:03Z",
    "labels": [
     "US"
    ],
@@ -2910,7 +3526,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:46Z",
    "closed_at": "2026-11-10T02:33:45Z",
-   "updated_at": "2026-11-11T00:55:27Z",
+   "updated_at": "2026-11-12T03:13:02Z",
    "labels": [
     "US"
    ],
@@ -2927,11 +3543,11 @@
   {
    "number": 127,
    "title": "[US21.02] Como Helena, quero analisar a qualidade por entidade",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:38Z",
-   "closed_at": null,
-   "updated_at": "2026-11-11T00:55:26Z",
+   "closed_at": "2026-11-11T22:21:36Z",
+   "updated_at": "2026-11-12T03:13:01Z",
    "labels": [
     "US"
    ],
@@ -2952,7 +3568,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:33Z",
    "closed_at": "2026-11-07T19:14:18Z",
-   "updated_at": "2026-11-11T00:55:25Z",
+   "updated_at": "2026-11-12T03:13:00Z",
    "labels": [
     "US"
    ],
@@ -2969,11 +3585,11 @@
   {
    "number": 125,
    "title": "[US22.01] Como Valéria, quero comparar o planejado e o realizado da release sobre o equalizador, para decidir a liberação",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:28Z",
-   "closed_at": null,
-   "updated_at": "2026-11-11T00:55:29Z",
+   "closed_at": "2026-11-12T03:11:01Z",
+   "updated_at": "2026-11-12T03:13:04Z",
    "labels": [
     "US"
    ],
@@ -2991,11 +3607,11 @@
   {
    "number": 124,
    "title": "[US12.01] Como Valéria, quero listar e importar os repositórios da minha conta ou organização no GitLab",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:22Z",
-   "closed_at": null,
-   "updated_at": "2026-11-11T00:55:23Z",
+   "closed_at": "2026-11-11T22:21:33Z",
+   "updated_at": "2026-11-12T03:12:59Z",
    "labels": [
     "US"
    ],
@@ -3068,7 +3684,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:48:20Z",
    "closed_at": null,
-   "updated_at": "2026-10-15T04:40:38Z",
+   "updated_at": "2026-11-12T03:12:58Z",
    "labels": [
     "US",
     "frontend"
@@ -3116,7 +3732,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:06:06Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T00:55:22Z",
+   "updated_at": "2026-11-12T03:12:57Z",
    "labels": [
     "US"
    ],
@@ -3364,11 +3980,11 @@
   {
    "number": 93,
    "title": "[MSG22] Visualizar o gráfico Planejado x Realizado sobre o equalizador da qualidade",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-27T16:21:41Z",
-   "closed_at": null,
-   "updated_at": "2026-10-12T23:18:24Z",
+   "closed_at": "2026-11-12T03:11:44Z",
+   "updated_at": "2026-11-12T03:11:44Z",
    "labels": [
     "epic",
     "frontend"
@@ -3411,12 +4027,12 @@
   },
   {
    "number": 90,
-   "title": "[MSG19] Testes E2E do Produto",
+   "title": "[MSG19] Testes E2E do Produto e Adequação Funcional",
    "state": "open",
    "is_pull_request": false,
    "created_at": "2026-09-27T16:09:43Z",
    "closed_at": null,
-   "updated_at": "2026-10-07T20:38:38Z",
+   "updated_at": "2026-11-11T22:19:03Z",
    "labels": [
     "epic",
     "all repos"
@@ -3425,7 +4041,7 @@
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 987,
+   "body_chars": 5671,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/90",
    "author": "MilenaFRocha"
   },
@@ -3477,7 +4093,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-27T16:08:53Z",
    "closed_at": null,
-   "updated_at": "2026-10-07T20:38:31Z",
+   "updated_at": "2026-11-11T16:55:55Z",
    "labels": [
     "epic",
     "frontend",
@@ -3485,10 +4101,12 @@
     "cli"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "MilenaFRocha"
+   ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 1404,
+   "body_chars": 5301,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/84",
    "author": "MilenaFRocha"
   },
@@ -3536,12 +4154,12 @@
   },
   {
    "number": 81,
-   "title": "[MSG10] Entrega Contínua (CD) e Encadeamento entre Repositórios",
+   "title": "[MSG10] Sincronização Automática de Versões entre Repositórios via Dispatch nos PRs",
    "state": "open",
    "is_pull_request": false,
    "created_at": "2026-09-27T16:08:18Z",
    "closed_at": null,
-   "updated_at": "2026-10-07T20:38:26Z",
+   "updated_at": "2026-11-11T22:20:31Z",
    "labels": [
     "epic",
     "platform",
@@ -3551,7 +4169,7 @@
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 1423,
+   "body_chars": 3775,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/81",
    "author": "MilenaFRocha"
   },
@@ -3780,11 +4398,11 @@
   {
    "number": 67,
    "title": "[US06.01] Visualizar histórico de TSQMI dos repositórios por Release",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-25T20:16:41Z",
-   "closed_at": null,
-   "updated_at": "2026-11-11T00:55:19Z",
+   "closed_at": "2026-11-12T02:16:25Z",
+   "updated_at": "2026-11-12T03:12:55Z",
    "labels": [
     "US",
     "frontend",
@@ -3996,11 +4614,11 @@
   {
    "number": 76,
    "title": "[US01.01] Operacionalizar a medição de Dívida Técnica - CLI",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-24T00:57:37Z",
-   "closed_at": null,
-   "updated_at": "2026-10-17T19:03:52Z",
+   "closed_at": "2026-11-11T22:28:23Z",
+   "updated_at": "2026-11-11T22:28:23Z",
    "labels": [
     "US",
     "service",
@@ -4024,11 +4642,11 @@
   {
    "number": 77,
    "title": "[US01.02] Operacionalizar a medição de Dívida Técnica - Front",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-24T00:34:13Z",
-   "closed_at": null,
-   "updated_at": "2026-11-11T00:55:18Z",
+   "closed_at": "2026-11-11T22:35:14Z",
+   "updated_at": "2026-11-12T03:12:53Z",
    "labels": [
     "US",
     "frontend",
@@ -4176,11 +4794,11 @@
   {
    "number": 49,
    "title": "[MSG07] Descontinuação do Grafana: Gráficos Restantes, Plugin e Remoção de Infraestrutura",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-23T05:04:26Z",
-   "closed_at": null,
-   "updated_at": "2026-10-07T20:38:19Z",
+   "closed_at": "2026-11-11T23:12:02Z",
+   "updated_at": "2026-11-11T23:12:02Z",
    "labels": [
     "epic"
    ],
@@ -4195,11 +4813,11 @@
   {
    "number": 48,
    "title": "[MSG06] Gráfico de pulso: evolução do TSQMI por release",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-23T04:59:02Z",
-   "closed_at": null,
-   "updated_at": "2026-10-07T20:38:06Z",
+   "closed_at": "2026-11-12T03:11:25Z",
+   "updated_at": "2026-11-12T03:11:25Z",
    "labels": [
     "epic",
     "frontend"
@@ -4240,11 +4858,11 @@
   {
    "number": 42,
    "title": "[MSG02] Revisar o fluxo de carregamento (frontend)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-23T01:03:35Z",
-   "closed_at": null,
-   "updated_at": "2026-10-22T14:30:44Z",
+   "closed_at": "2026-11-11T23:11:26Z",
+   "updated_at": "2026-11-11T23:11:26Z",
    "labels": [
     "epic"
    ],
@@ -4264,11 +4882,11 @@
   {
    "number": 41,
    "title": "[MSG01] Operacionalizar a medição de Dívida Técnica",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-23T00:55:05Z",
-   "closed_at": null,
-   "updated_at": "2026-09-28T01:20:23Z",
+   "closed_at": "2026-11-11T23:11:17Z",
+   "updated_at": "2026-11-11T23:11:17Z",
    "labels": [
     "epic"
    ],

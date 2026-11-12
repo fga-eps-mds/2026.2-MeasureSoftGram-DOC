@@ -24,9 +24,9 @@
     "author": "Marcosatc147"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 135,
-    "last_merged_at": "2026-11-11T00:51:54Z",
-    "title": "fix(pulso): a Visão Geral confere o histórico por release a cada visita (US06.01)",
+    "number": 151,
+    "last_merged_at": "2026-11-12T03:09:56Z",
+    "title": "fix(release): chama o realizado de \"Realizado\" no tooltip do equalizador, como na legenda (US22.01)",
     "author": "LuizaMaluf"
   },
   "2026.2-MeasureSoftGram-Parser": {
@@ -42,9 +42,9 @@
     "author": "DiegoCarlito"
   },
   "2026.2-MeasureSoftGram-Service": {
-    "number": 85,
-    "last_merged_at": "2026-11-10T18:38:51Z",
-    "title": "feat(produtos): faixas de qualidade configuráveis por produto (US30.01)",
+    "number": 94,
+    "last_merged_at": "2026-11-12T02:59:38Z",
+    "title": "fix: violações critical do SonarCloud no Service (QA-10b)",
     "author": "bottinolucas"
   }
 }

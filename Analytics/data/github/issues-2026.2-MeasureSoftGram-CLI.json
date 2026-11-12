@@ -1,10 +1,46 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-12T03:12:46+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-CLI",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 22,
+   "title": "ci(coverage): cobertura de branches e violação do parsers.py no CLI (QA-05, QA-12)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-12T02:10:19Z",
+   "closed_at": null,
+   "updated_at": "2026-11-12T02:11:53Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1811,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/22",
+   "author": "bottinolucas"
+  },
+  {
+   "number": 21,
+   "title": "fix(calculate): valores por arquivo como o Service, avisos de medidas não calculadas e de pesos",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-11T23:00:32Z",
+   "closed_at": null,
+   "updated_at": "2026-11-11T23:02:56Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4640,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/21",
+   "author": "bottinolucas"
+  },
   {
    "number": 20,
    "title": "fix(quality): saneamento de exclusões do cli.py e parsers.py no SonarCloud",

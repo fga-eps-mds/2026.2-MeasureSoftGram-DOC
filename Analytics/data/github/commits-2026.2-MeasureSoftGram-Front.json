@@ -1,11 +1,614 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-11T03:12:13+00:00",
+ "coletado_em": "2026-11-12T03:12:46+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "25cdb1a1940c537d4c1d9cdf89ca2dbe73ca8f99",
+   "date": "2026-11-12T03:09:55Z",
+   "author": "LuizaMaluf",
+   "message": "fix(release): chama o realizado de \"Realizado\" no tooltip do equalizador, como na legenda (US22.01) (#151)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us22-01-equalizador.e2e.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "public/locales/en/release.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "public/locales/pt/release.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "ef4a066d36f8d22a3439f9edd0ee4c89217ee022",
+   "date": "2026-11-12T02:58:56Z",
+   "author": "zzzBECK",
+   "message": "test(e2e): [TASK11.03.01] cenários de aceitação dos termos do provedor por critério (US11.03) (#117)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/termos/index.ts",
+     "status": "added",
+     "additions": 66,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/support/terms.ts",
+     "status": "added",
+     "additions": 54,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us11-03-termos-provedor.e2e.ts",
+     "status": "added",
+     "additions": 240,
+     "deletions": 0
+    },
+    {
+     "filename": "public/locales/en/about.json",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 3
+    },
+    {
+     "filename": "public/locales/en/breadcrumb.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "public/locales/en/repositories.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "public/locales/pt/about.json",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 3
+    },
+    {
+     "filename": "public/locales/pt/breadcrumb.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "public/locales/pt/repositories.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/about/About.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/about/components/CardInfo/CardInfo.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/components/RepositoriesList/RepositoriesList.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/Repositories.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/manage-repository/RepositoryForm.tsx",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/tests/Repositories.spec.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/tests/__snapshots__/Repositories.spec.tsx.snap",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/components/ExportCsvButton/ExportCsvButton.tsx",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/utils/csvRepositoryTerm.ts",
+     "status": "added",
+     "additions": 17,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/tests/csvRepositoryTerm.spec.ts",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "a32c7531d509af85b8c0728c8afd20d2b23a1ee2",
+   "date": "2026-11-12T02:41:31Z",
+   "author": "thegm445",
+   "message": "feat(repositorio): velocímetro com as faixas do produto e sem o modal antigo (US30.03) (#96) (#143)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "public/locales/en/header.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 13
+    },
+    {
+     "filename": "public/locales/pt/header.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 13
+    },
+    {
+     "filename": "src/mocks/fixtures/products.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 3
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/[repository]/components/GaugeSlider/GaugeSlider.tsx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 114
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/[repository]/components/GaugeSlider/index.ts",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/[repository]/components/GaugeSlider/tests/GaugeSlider.spec.tsx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 122
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/[repository]/components/GaugeSlider/tests/__snapshots__/GaugeSlider.spec.tsx.snap",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 308
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/[repository]/components/Header/Header.tsx",
+     "status": "modified",
+     "additions": 80,
+     "deletions": 201
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/[repository]/components/Header/tests/Header.spec.tsx",
+     "status": "modified",
+     "additions": 124,
+     "deletions": 68
+    },
+    {
+     "filename": "src/pages/products/[product]/repositories/[repository]/components/Header/tests/__snapshots__/Header.spec.tsx.snap",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 75
+    },
+    {
+     "filename": "src/shared/customTypes/product.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/services/product.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "c197a224212973312b1f122d12ca75a133ab9d4e",
+   "date": "2026-11-12T02:14:40Z",
+   "author": "thegm445",
+   "message": "feat(faixas): hook das faixas do produto e pulso e Visão Geral com a régua do produto (US30.02) (#93) (#94) (#137)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/common.ts",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/overview/OverviewDashboard.tsx",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 6
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/overview/tests/OverviewDashboard.spec.tsx",
+     "status": "modified",
+     "additions": 28,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/PulseChart/PulseChart.tsx",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/components/PulseChart/PulseChartRepoSidebar.tsx",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/components/PulseChart/QualityLegend.tsx",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/components/PulseChart/tests/PulseChart.spec.tsx",
+     "status": "modified",
+     "additions": 44,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/PulseChart/tests/QualityLegend.spec.tsx",
+     "status": "added",
+     "additions": 13,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/QualityBandsUnavailableAlert/QualityBandsUnavailableAlert.tsx",
+     "status": "added",
+     "additions": 20,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/QualityBandsUnavailableAlert/index.ts",
+     "status": "added",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/QualityBandsUnavailableAlert/tests/QualityBandsUnavailableAlert.spec.tsx",
+     "status": "added",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/hooks/tests/useProductQualityBands.spec.tsx",
+     "status": "added",
+     "additions": 167,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/hooks/useProductQualityBands.ts",
+     "status": "added",
+     "additions": 59,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/formatOverviewCharts.ts",
+     "status": "modified",
+     "additions": 23,
+     "deletions": 9
+    },
+    {
+     "filename": "src/shared/utils/formatOverviewCsv.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/utils/formatPulseChart.ts",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 11
+    },
+    {
+     "filename": "src/shared/utils/formatPulseCsv.ts",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 7
+    },
+    {
+     "filename": "src/shared/utils/formatPulseReleaseTooltip.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/utils/qualityBands.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 7
+    },
+    {
+     "filename": "src/shared/utils/tests/formatOverviewCharts.spec.ts",
+     "status": "modified",
+     "additions": 17,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/tests/formatOverviewCsv.spec.ts",
+     "status": "modified",
+     "additions": 17,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/tests/formatPulseChart.spec.ts",
+     "status": "modified",
+     "additions": 45,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/utils/tests/formatPulseCsv.spec.ts",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/tests/qualityBands.spec.ts",
+     "status": "modified",
+     "additions": 36,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "eb40c63a5a9904053078a0e54ba67fa560b1e17d",
+   "date": "2026-11-11T21:15:30Z",
+   "author": "LuizaMaluf",
+   "message": "fix(auth): parágrafo da tela de erro do login acompanha o título do CA5 (US11.01) (#145)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us11-01-login-gitlab.e2e.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/auth/AuthError.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/auth/test/AuthError.spec.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "2e4b769c42f014409c1eeacd0c95ebaea41a6c4f",
+   "date": "2026-11-11T20:40:24Z",
+   "author": "LuizaMaluf",
+   "message": "fix(release): curvas do equalizador acompanham os trilhos quando a tradução chega depois (US22.01) (#144)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us22-01-equalizador.e2e.ts",
+     "status": "modified",
+     "additions": 62,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/PlannedVsAccomplishedEqualizer/PlannedVsAccomplishedEqualizer.tsx",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/PlannedVsAccomplishedEqualizer/tests/PlannedVsAccomplishedEqualizer.spec.tsx",
+     "status": "modified",
+     "additions": 29,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "eb8463784f8dcfd37eaffe0d4e6c308c65236f2c",
+   "date": "2026-11-11T20:05:42Z",
+   "author": "LuizaMaluf",
+   "message": "fix(products): manda o id do projeto do GitLab na importação e espera as organizações antes de escolher o grupo (US12.01) (#142)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us12-01-importacao-gitlab.e2e.ts",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 12
+    },
+    {
+     "filename": "src/pages/products/Products.tsx",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 4
+    },
+    {
+     "filename": "src/pages/products/test/Products.spec.tsx",
+     "status": "modified",
+     "additions": 48,
+     "deletions": 12
+    },
+    {
+     "filename": "src/shared/services/repository.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "cf34a28054a57bde8a272eec121f06dd70c17c03",
+   "date": "2026-11-11T19:56:27Z",
+   "author": "LuizaMaluf",
+   "message": "fix(temporal): avisa quais medidas escolhidas não têm valores no repositório (US01.02) (#140)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/divida-tecnica/index.ts",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us01-02-divida-tecnica.e2e.ts",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/temporal/TemporalDashboard.tsx",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/temporal/tests/TemporalDashboard.spec.tsx",
+     "status": "modified",
+     "additions": 15,
+     "deletions": 0
+    },
+    {
+     "filename": "src/pages/products/[product]/dashboards/temporal/useTemporalEvolution.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "b33a0219e3cd005142269bb9a111c21bf21257e8",
+   "date": "2026-11-11T19:45:33Z",
+   "author": "LuizaMaluf",
+   "message": "fix(repositórios): o lápis e a lixeira da lista não levam mais à tela do projeto (US12.01) (#138)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us12-01-importacao-gitlab.e2e.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 18
+    },
+    {
+     "filename": "src/pages/products/[product]/components/RepositoriesList/RepositoriesTable/RepositoriesTable.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/products/[product]/components/RepositoriesList/RepositoriesTable/tests/Repositoriestable.spec.tsx",
+     "status": "modified",
+     "additions": 22,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "4d08cc2ffd8143273e3523c10c31ffcdf8883cec",
+   "date": "2026-11-11T19:36:36Z",
+   "author": "LuizaMaluf",
+   "message": "fix(auth): mensagem de sessão expirada e volta ao login nas falhas do login OAuth (US11.01) (#141)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us11-01-login-gitlab.e2e.ts",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 41
+    },
+    {
+     "filename": "src/pages/auth/AuthError.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/pages/auth/test/AuthError.spec.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/contexts/Auth/Auth.context.tsx",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/contexts/Auth/tests/Auth.context.spec.tsx",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "827f7ae957b6467994ea397c9dbc16b85f983bcb",
+   "date": "2026-11-11T19:27:27Z",
+   "author": "LuizaMaluf",
+   "message": "fix(pulso): filtro de período abaixo do gráfico na Visão Geral do produto (US06.01) (#139)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/us06-01-pulso-produto.e2e.ts",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 11
+    },
+    {
+     "filename": "src/shared/components/PulseChart/PulseChart.tsx",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 12
+    },
+    {
+     "filename": "src/shared/components/PulseChart/tests/PulseChart.spec.tsx",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "5e9e0e1542a6c9ee0a111fbc326bd9a4e528c478",
    "date": "2026-11-11T00:51:53Z",
@@ -12841,5 +13444,5 @@
    ]
   }
  ],
- "detalhes_novos": 21
+ "detalhes_novos": 11
 }

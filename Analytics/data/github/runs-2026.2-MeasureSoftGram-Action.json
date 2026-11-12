@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-11-11T03:12:13+00:00",
+ "coletado_em": "2026-11-12T03:12:46+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
- "total_count": 184,
+ "total_count": 186,
  "workflow_runs": [
+  {
+   "id": 43090930141,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "feat/235-extracao-gitlab",
+   "event": "pull_request",
+   "created_at": "2026-11-11T19:50:33Z",
+   "run_started_at": "2026-11-11T19:50:33Z",
+   "updated_at": "2026-11-11T19:50:34Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/43090930141",
+   "run_number": 27,
+   "workflow_id": 368691716
+  },
+  {
+   "id": 43090929979,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "feat/235-extracao-gitlab",
+   "event": "pull_request",
+   "created_at": "2026-11-11T19:50:33Z",
+   "run_started_at": "2026-11-11T19:50:33Z",
+   "updated_at": "2026-11-11T19:51:42Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/actions/runs/43090929979",
+   "run_number": 46,
+   "workflow_id": 348865699
+  },
   {
    "id": 42813294484,
    "name": "Dependabot Auto-merge",
