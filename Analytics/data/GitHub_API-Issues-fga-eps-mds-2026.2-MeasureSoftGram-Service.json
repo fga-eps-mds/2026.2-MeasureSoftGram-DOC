@@ -38,7 +38,7 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-11-12T02:47:14Z",
-        "updated_at": "2026-11-12T02:50:09Z",
+        "updated_at": "2026-11-12T03:08:41Z",
         "closed_at": null,
         "assignee": null,
         "author_association": "NONE",
@@ -380,7 +380,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -408,8 +408,8 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-11-10T18:39:19Z",
-        "updated_at": "2026-11-10T21:21:59Z",
-        "closed_at": null,
+        "updated_at": "2026-11-12T03:58:50Z",
+        "closed_at": "2026-11-12T03:58:49Z",
         "assignee": {
             "login": "thegm445",
             "id": 110239666,
@@ -441,10 +441,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/91",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/91.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/91.patch",
-            "merged_at": null
+            "merged_at": "2026-11-12T03:58:49Z"
         },
         "body": "## Contexto\n\nCorrige o [BUG12.02] fga-eps-mds/2026.2-MeasureSoftGram-DOC#246. Parte [Service] do Front#114, que chama este endpoint (`importGitlabPersonal`) e casa o espa\u00e7o pessoal pelo `gitlab_user_id`.\n\nHoje o espa\u00e7o pessoal do GitLab \u00e9 achado pelo nome. Como o nome da organiza\u00e7\u00e3o s\u00f3 \u00e9 \u00fanico na valida\u00e7\u00e3o do `POST /organizations/`, uma pessoa cujo usu\u00e1rio tem o mesmo nome de um grupo cai na organiza\u00e7\u00e3o do grupo (e o contr\u00e1rio). A organiza\u00e7\u00e3o pessoal passa a ser identificada por um id pr\u00f3prio, como j\u00e1 \u00e9 feito com o grupo (`gitlab_group_id`, #88).\n\n## Ordem de merge\n\nO #85 j\u00e1 entrou na `develop`. Este PR vem agora, e depois o Front#114. A migra\u00e7\u00e3o `0018` daqui depende da `0017_product_quality_band_limits` do #85.\n\n## O que muda\n\n- `Organization.gitlab_user_id` (`BigIntegerField`, \u00fanico, nulo), com a migra\u00e7\u00e3o `0018`.\n- `POST organizations/import-gitlab-user/` (`ImportGitLabPersonalViewSet`): l\u00ea o usu\u00e1rio em `GET /user` do GitLab com o token da pessoa e faz `get_or_create` por `gitlab_user_id`. Atualiza nome e avatar se a org j\u00e1 existe, adiciona a pessoa aos membros e a deixa como admin se a org n\u00e3o tem admin.\n- Erros: sem GitLab vinculado `400`; token recusado (401/403) `409 gitlab_token_invalid`; GitLab fora do ar `502 gitlab_unavailable`.\n- `gitlab_user_id` aparece no `OrganizationSerializer`, somente leitura (n\u00e3o d\u00e1 para gravar pelo `POST`/`PUT` da organiza\u00e7\u00e3o).\n\n## Limita\u00e7\u00f5es\n\n- Organiza\u00e7\u00f5es pessoais criadas antes deste PR n\u00e3o t\u00eam `gitlab_user_id`; o Front continua casando essas pelo nome at\u00e9 a pessoa importar o espa\u00e7o de novo.\n\n## Testes\n\n- Testes novos em `src/organizations/tests/test_provider_visibility.py`: cria\u00e7\u00e3o por `gitlab_user_id`, reaproveitamento sem duplicar, espa\u00e7o pessoal separado da org de um grupo de mesmo nome, erros (400, 409 e 502) e `gitlab_user_id` somente leitura.\n- Su\u00edte completa depois do merge da `develop` (com a `0017` do #85 e a `0018` daqui): `480 passed` (`make test`).\n- N\u00e3o rodei `flake8` localmente; fica para o CI.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "LuizaMaluf",
+            "id": 117913962,
+            "node_id": "U_kgDOBwc5ag",
+            "avatar_url": "https://avatars.githubusercontent.com/u/117913962?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/LuizaMaluf",
+            "html_url": "https://github.com/LuizaMaluf",
+            "followers_url": "https://api.github.com/users/LuizaMaluf/followers",
+            "following_url": "https://api.github.com/users/LuizaMaluf/following{/other_user}",
+            "gists_url": "https://api.github.com/users/LuizaMaluf/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/LuizaMaluf/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/LuizaMaluf/subscriptions",
+            "organizations_url": "https://api.github.com/users/LuizaMaluf/orgs",
+            "repos_url": "https://api.github.com/users/LuizaMaluf/repos",
+            "events_url": "https://api.github.com/users/LuizaMaluf/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/LuizaMaluf/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/91/reactions",
             "total_count": 0,
