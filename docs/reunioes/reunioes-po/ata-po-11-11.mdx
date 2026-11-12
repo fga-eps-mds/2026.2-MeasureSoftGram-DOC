@@ -1,0 +1,55 @@
+---
+title: Ata – Reunião com o PO (11/11/2026)
+sidebar_label: Ata PO 11/11
+description: Decisões e encaminhamentos da reunião com o PO de 11/11/2026.
+---
+
+# Ata – Reunião com o PO (11/11/2026)
+
+| Data e horário     | Duração | Canal | Condutor                | Relator                       |
+| ------------------ | ------- | ----- | ----------------------- | ----------------------------- |
+| 11/11/2026 · 19:35 | 1h45min | Teams | Diogo Rodrigues Barboza | Daniel Ferreira Santos Rabelo |
+
+**Participantes:** Hilmer Rodrigues Neri (PO), Daniel Ferreira Santos Rabelo, Diogo Rodrigues Barboza, Gabriel Moura, Henrique Camelo Quenino, Luciano De Freitas Melo, Luiza Maluf Amorim, Marcos Antonio Teles De Castilhos, Milena Fernandes Rocha, Wallyson Souza.
+
+:::tip[Resultado]
+Aprovada a substituição dos formulários manuais de aceitação por testes ponta a ponta automatizados via Playwright no GitHub Actions, com evidências comentadas diretamente nas issues. No banco de dados, decidiu-se eliminar o cron job de cálculo, criar associação direta entre release e análise (`analysis_id`), manter o histórico de métricas brutas e tratar releases vazias com mensagens instrutivas. Na US13.02 (AHP no terminal), o PO vetou a aplicação de raiz quadrada ($\sqrt{p}$) na gravação dos pesos, determinando o registro do peso linear normal calculado pelo AHP. Validado o protótipo da tarja de aviso de ambiente acadêmico na Landing Page e no Login. Por fim, no escopo da Release 3, cortou-se oficialmente a Característica de Segurança (MSG14), alocando duas sprints para a reestruturação e estabilização do banco de dados.
+:::
+
+## Pauta
+
+1. Alinhamento sobre a Release Minor 2.
+2. Fluxo de Testes E2E por critério de aceitação (Playwright e automação no GitHub Actions).
+3. Banco de Dados e o Impacto no Cálculo (associação release-análise, concorrência e integridade).
+4. Validação da US13.02: Definir Pesos por Comparação (AHP) no Terminal.
+5. Validação do protótipo do aviso de ambiente acadêmico.
+6. Replanejamento de Escopo e Tempo da Release 3.
+
+## Discussão e decisões
+
+| Tema | Decisão | Quem decidiu |
+| --- | --- | --- |
+| **Release Minor 2** | A equipe alinhou a publicação e validação dos hotfixes pendentes da Release Minor 2 (resoluções no fluxo de login e correções pontuais de coleta), garantindo a estabilidade do ambiente para continuidade dos testes. | PO / Equipe |
+| **Fluxo de Testes E2E (Playwright)** | Luiza apresentou a suíte de testes E2E com Playwright rodando via GitHub Actions no repositório de frontend. Foi aprovada a substituição dos formulários manuais do Google Forms por relatórios automáticos em Markdown comentados diretamente nas issues e pull requests, contendo evidências visuais (snapshots) e status por critério de aceitação. A equipe continuará usando validação cruzada para critérios de difícil automação, mas o Playwright passa a ser a base padrão de homologação. | PO / Equipe |
+| **Banco de Dados: Associação Release e Análise** | Marcos expôs o modelo do banco e as falhas decorrentes da vinculação puramente temporal (`created_at`). Decidiu-se criar uma associação explícita (`analysis_id` / tabela associativa) ligando cada análise à respectiva release planejada, impedindo a sobreposição e interferência de métricas entre repositórios distintos. | PO / Equipe |
+| **Banco de Dados: Fim do Cron Job e Persistência Bruta** | Decidiu-se desativar o cron job concorrente de cálculo periódico, tornando o cálculo acionado por eventos/demanda. Confirmou-se a manutenção da persistência das métricas brutas (*raw metrics*) para auditoria, histórico e rastreabilidade dos cálculos no Core. | PO / Equipe |
+| **Tratamento de Releases sem Dados** | Para releases cadastradas que não possuam execuções de análise associadas, a interface web não deverá quebrar e sim exibir um alerta instrutivo ao usuário, orientando-o a disparar uma análise para a release ou excluí-la caso não venha a ser utilizada. | PO / Equipe |
+| **AHP no Terminal (US13.02) e Gravação de Pesos** | Apresentada a especificação do comando interativo `msgram weights` utilizando a escala de Saaty (1, 3, 5, 7, 9) e limiar de consistência CR ≤ 0,10. A equipe questionou se deveria gravar $\sqrt{p}$ para compensar a fórmula de norma ponderada do Core; **o PO determinou que NÃO se deve aplicar raiz quadrada**. O peso linear calculado pelo AHP (normalizado somando 100) deve ser gravado diretamente no JSON de configuração, preservando a coerência conceitual do modelo sem alterar a agregação do Core. | PO / Equipe |
+| **Aviso de Projeto Acadêmico** | Diogo apresentou o protótipo com a tarja de aviso amarela em destaque na Landing Page e na tela de login. O PO aprovou o design e o texto que adverte tratar-se de projeto experimental universitário, sem garantias de persistência de dados e recomendando a não utilização de credenciais sensíveis ou dados reais. | PO / Equipe |
+| **Corte de Escopo da Release 3 (Segurança)** | Diante do alto impacto técnico da reestruturação do banco de dados (estimada em duas sprints de trabalho: Sprints 9 e 10), o épico de Característica de Segurança (MSG14) foi formalmente removido do escopo da Release 3. O gerenciamento completo de Releases (CRUD via web) também foi postergado para turmas futuras. A R3 focará em: Estabilização do Banco, AHP na CLI, GitLab CI/CD e Qualidade/E2E. | PO / Equipe |
+
+## Ações
+
+| Ação | Responsável | Prazo |
+| --- | --- | --- |
+| Implementar os fluxos de testes E2E no Playwright para as USs da Release 3 e integrar os relatórios nas issues via GitHub Actions | Luiza Maluf | 18/11 |
+| Iniciar a modelagem e migração do banco de dados (tabela associativa `analysis_id`, desativação do cron job e proteção contra concorrência) | Marcos Castilhos | 23/11 |
+| Desenvolver a US13.02 (`msgram weights`) gravando os pesos lineares AHP diretos (sem raiz quadrada), com escala de Saaty e tolerância de CR 0,10 | Equipe | 18/11 |
+| Implementar e publicar a tarja de aviso de projeto acadêmico na Landing Page e no Login | Guilherme Storch | 16/11 |
+| Atualizar o Backlog, Roadmap e Planejamento de Escopo-Tempo no Docusaurus com a retirada de Segurança (MSG14) e foco no banco | Daniel Rabelo e Diogo Barboza | 16/11 |
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 11/11/2026 | Registro da reunião com o PO | [@Daniel-Rabelo](https://github.com/Daniel-Rabelo) | Equipe MeasureSoftGram |
