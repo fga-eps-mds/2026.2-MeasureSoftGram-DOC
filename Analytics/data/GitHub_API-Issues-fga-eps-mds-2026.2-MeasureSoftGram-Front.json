@@ -568,10 +568,10 @@
         "locked": false,
         "assignees": [],
         "milestone": null,
-        "comments": 2,
+        "comments": 1,
         "created_at": "2026-11-11T21:52:44Z",
-        "updated_at": "2026-11-11T21:57:08Z",
-        "closed_at": "2026-11-11T21:57:08Z",
+        "updated_at": "2026-11-12T04:35:20Z",
+        "closed_at": "2026-11-12T04:35:19Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -583,7 +583,7 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/148",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/148.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/148.patch",
-            "merged_at": null
+            "merged_at": "2026-11-12T04:35:19Z"
         },
         "body": "Completa os E2E da US11.01 (login com GitLab) nos dois crit\u00e9rios que a confer\u00eancia achou sem asser\u00e7\u00e3o. S\u00f3 os describes do CA3 e do CA6 mudaram (o do `/auth/error` ficou como estava).\n\n## O que mudou\n\n| CA | Crit\u00e9rio | Como foi testado |\n| --- | --- | --- |\n| CA1 | Bot\u00e3o \"Login com GitLab\" | E2E (sem mudan\u00e7a) |\n| CA2 | Autorizar entra logado | E2E (sem mudan\u00e7a) |\n| **CA3** | Entrar pelo GitLab abre a conta existente, sem perfil duplicado | **E2E da parte do Front + fora do Front.** Entra pelo GitLab, sai por \"Finalizar Sess\u00e3o\" e entra de novo com o mesmo usu\u00e1rio. Confere que o `/v1/accounts/` vai com o mesmo `Token`, que a sess\u00e3o guarda o mesmo `id` e o mesmo `username` e que o menu lateral mostra a conta. **Quem garante que n\u00e3o se cria um perfil duplicado \u00e9 o Service.** O Front s\u00f3 mostra a conta que o Service devolve. |\n| CA4 | Cancelar volta com \"Login cancelado\" | E2E (sem mudan\u00e7a) |\n| CA5 | Falha sem detalhe t\u00e9cnico | E2E (sem mudan\u00e7a) |\n| **CA6** | Depois de \"Finalizar Sess\u00e3o\", as telas autenticadas deixam de ser acess\u00edveis | **E2E.** Uma lista `PROTECTED_ROUTES` com as 19 telas autenticadas de `src/pages/`: home, sobre, configura\u00e7\u00f5es, organiza\u00e7\u00f5es, produtos, produto, ajustes, releases (lista, detalhe e cadastro), reposit\u00f3rios (lista, detalhe e cadastro) e os 6 dashboards. Depois do logout, cada tela abre numa aba nova da mesma sess\u00e3o (`Promise.all`, sem `await` em la\u00e7o). O teste confere que cada aba sai para `/` ou `/auth` e que o menu lateral n\u00e3o aparece. O clique no usu\u00e1rio agora fica restrito ao menu lateral (`getByTestId('side-menu')`). |\n\n### Como cada tela \u00e9 barrada\n\n- **Telas com `useRequireAuth`:** voltam a `/` com o toast \"Usu\u00e1rio(a) n\u00e3o autenticado(a)\".\n- **Organiza\u00e7\u00f5es, releases e reposit\u00f3rios:** n\u00e3o chamam o hook, e o `Layout` tamb\u00e9m n\u00e3o protege nada. Essas telas s\u00f3 saem porque pedem a API, e o 401 do Service (`services/api.ts`) manda para `/auth`. As abas novas respondem 401 a todo `/api/v1`, como o Service faria sem token. Por isso o teste aceita `/` ou `/auth`.\n\n## Para o PO\n\n- **Bug encontrado (`test.fixme`):** `/products/create/` continua aberta depois do logout. A tela n\u00e3o chama `useRequireAuth` e n\u00e3o pede a API ao abrir. O teste fica como `fixme` at\u00e9 a corre\u00e7\u00e3o.\n- **Prote\u00e7\u00e3o indireta:** as telas de organiza\u00e7\u00f5es, releases e reposit\u00f3rios s\u00f3 s\u00e3o barradas porque o Service responde 401. Se ele responder 403 ou cair, elas abrem sem sess\u00e3o.\n\n## Como foi verificado\n\nNode 20, `next start` local na porta 3205 com o build conferido (`buildId` igual ao de `.next/BUILD_ID`):\n\n- `e2e/us11-01-login-gitlab.e2e.ts --repeat-each=3`: **36 passaram, 3 pulados** (o `fixme`), sem flaky.\n- Su\u00edte inteira, uma vez: **166 passaram, 21 pulados**.\n- O `fixme` rodado como `test` falha em `/products/create/` (a URL continua a mesma), o que confirma o bug.\n- `eslint` e `prettier` no arquivo.\n\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#112\n",
         "closed_by": {
