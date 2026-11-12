@@ -32,14 +32,14 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [],
         "milestone": null,
         "comments": 1,
         "created_at": "2026-11-12T02:47:14Z",
-        "updated_at": "2026-11-12T03:08:41Z",
-        "closed_at": null,
+        "updated_at": "2026-11-12T13:17:48Z",
+        "closed_at": "2026-11-12T13:17:44Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -51,10 +51,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/95",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/95.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/95.patch",
-            "merged_at": null
+            "merged_at": "2026-11-12T13:17:44Z"
         },
-        "body": "## Descri\u00e7\u00e3o\n\nRemove os campos `gaugeRedLimit` e `gaugeYellowLimit` do produto, herdados do veloc\u00edmetro de 2024.1. Desde o Front#143, o veloc\u00edmetro da tela do reposit\u00f3rio usa as faixas de qualidade do produto (US30.01), e mais nada l\u00ea ou grava esses limites.\n\n[[TASK30.03.03] Remover os campos legados gaugeRedLimit e gaugeYellowLimit (Service)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/81), parte da [US30.03](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/180).\n\n- `organizations/models.py`: tira os dois `DecimalField` do `Product` (e o import de `Decimal`, que ficou sem uso).\n- `organizations/serializers.py`: tira os dois campos e os nomes deles do `fields` do `ProductSerializer`.\n- `organizations/migrations/0018_remove_product_gaugeredlimit_and_more.py`: migra\u00e7\u00e3o com os dois `RemoveField`, gerada pelo `makemigrations`.\n- `organizations/tests/test_products_endpoints.py`: teste novo de que o detalhe do produto n\u00e3o devolve mais os campos; os 3 payloads que ainda mandavam os campos ficaram sem eles.\n\nConferido: `src/endpoints.md` e `MSG.postman_collection.json` n\u00e3o citam os campos, ent\u00e3o n\u00e3o h\u00e1 o que atualizar. As migra\u00e7\u00f5es antigas (0005 e as que dependem dela) ficam como est\u00e3o.\n\n## Porque este Pull Request \u00e9 necess\u00e1rio?\n\nFecha a US30.03: o produto passa a ter uma r\u00e9gua s\u00f3 (as faixas de qualidade) em vez de dois limites soltos que ningu\u00e9m mais usa. S\u00f3 pode entrar depois do Front#143 (veloc\u00edmetro com as faixas do produto), que **j\u00e1 est\u00e1 na `develop`**. Antes dele, o veloc\u00edmetro antigo lia esses campos.\n\n## Crit\u00e9rios de aceita\u00e7\u00e3o\n\n1. [x] O endpoint de produto n\u00e3o devolve mais `gaugeRedLimit` nem `gaugeYellowLimit` (teste novo: `test_product_does_not_expose_the_legacy_gauge_limits`, em RED antes da remo\u00e7\u00e3o).\n2. [x] Migra\u00e7\u00e3o aplica e reverte sem erro (Postgres 18 limpo: `migrate` at\u00e9 a 0017, aplica a 0018, reverte para a 0017 e aplica tudo de novo; `manage.py check` sem problemas).\n3. [x] Nenhum uso dos campos fora das migra\u00e7\u00f5es (`grep` em `src/`, no Postman e no `endpoints.md`).\n4. [x] Gates do CI rodados localmente: `flake8==7.1.1 src/` sem erros; `pytest`: 475 passaram; `makemigrations --check --dry-run`: \"No changes detected\".\n\n## Como testar\n\n1. `make env && make check`.\n2. `GET /api/v1/organizations/<org>/products/<produto>/`: a resposta n\u00e3o tem mais `gaugeRedLimit` nem `gaugeYellowLimit`.\n3. No Front da `develop`, a tela do reposit\u00f3rio continua mostrando o veloc\u00edmetro com as faixas do produto.\n\nCloses #81\n",
-        "closed_by": null,
+        "body": "## Descri\u00e7\u00e3o\n\nRemove os campos `gaugeRedLimit` e `gaugeYellowLimit` do produto, herdados do veloc\u00edmetro de 2024.1. Desde o Front#143, o veloc\u00edmetro da tela do reposit\u00f3rio usa as faixas de qualidade do produto (US30.01), e mais nada l\u00ea ou grava esses limites.\n\n[[TASK30.03.03] Remover os campos legados gaugeRedLimit e gaugeYellowLimit (Service)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/81), parte da [US30.03](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/180).\n\n- `organizations/models.py`: tira os dois `DecimalField` do `Product` (e o import de `Decimal`, que ficou sem uso).\n- `organizations/serializers.py`: tira os dois campos e os nomes deles do `fields` do `ProductSerializer`.\n- `organizations/migrations/0019_remove_product_gaugeredlimit_and_more.py`: migra\u00e7\u00e3o com os dois `RemoveField`, gerada pelo `makemigrations`, depois da `0018_organization_gitlab_user_id` que entrou na `develop` com o BUG12.02.\n- `organizations/tests/test_products_endpoints.py`: teste novo de que o detalhe do produto responde 200, com o produto, e n\u00e3o devolve mais os campos; os 3 payloads que ainda mandavam os campos ficaram sem eles.\n\nConferido: `src/endpoints.md` e `MSG.postman_collection.json` n\u00e3o citam os campos, ent\u00e3o n\u00e3o h\u00e1 o que atualizar. As migra\u00e7\u00f5es antigas (0005 e as que dependem dela) ficam como est\u00e3o.\n\n## Porque este Pull Request \u00e9 necess\u00e1rio?\n\nFecha a US30.03: o produto passa a ter uma r\u00e9gua s\u00f3 (as faixas de qualidade) em vez de dois limites soltos que ningu\u00e9m mais usa. S\u00f3 pode entrar depois do Front#143 (veloc\u00edmetro com as faixas do produto), que **j\u00e1 est\u00e1 na `develop`**. Antes dele, o veloc\u00edmetro antigo lia esses campos.\n\n## Crit\u00e9rios de aceita\u00e7\u00e3o\n\n1. [x] O endpoint de produto n\u00e3o devolve mais `gaugeRedLimit` nem `gaugeYellowLimit` (teste novo: `test_product_does_not_expose_the_legacy_gauge_limits`, em RED antes da remo\u00e7\u00e3o).\n2. [x] Migra\u00e7\u00e3o aplica e reverte sem erro (Postgres 18 limpo: aplica a 0019, reverte para a 0018 e reaplica; `manage.py check` sem problemas). **A volta tem perda de dado:** ela recria as colunas com os padr\u00f5es 0,33 e 0,66, ent\u00e3o um produto que tinha limites pr\u00f3prios no modal antigo n\u00e3o recupera os valores. \u00c9 intencional: os dois limites do veloc\u00edmetro antigo n\u00e3o t\u00eam equivalente nos quatro cortes da r\u00e9gua nova.\n3. [x] Nenhum uso dos campos fora das migra\u00e7\u00f5es (`grep` em `src/`, no Postman e no `endpoints.md`).\n4. [x] Gates do CI rodados localmente, com a branch j\u00e1 atualizada com a `develop`: `flake8==7.1.1 src/` sem erros; `pytest`: 481 passaram; `makemigrations --check --dry-run`: \"No changes detected\".\n\n## Como testar\n\n1. `make env && make check`.\n2. `GET /api/v1/organizations/<org>/products/<produto>/`: a resposta n\u00e3o tem mais `gaugeRedLimit` nem `gaugeYellowLimit`.\n3. No Front da `develop`, a tela do reposit\u00f3rio continua mostrando o veloc\u00edmetro com as faixas do produto.\n\nCloses #81\n",
+        "closed_by": {
+            "login": "henriquecq",
+            "id": 110349110,
+            "node_id": "U_kgDOBpPLNg",
+            "avatar_url": "https://avatars.githubusercontent.com/u/110349110?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/henriquecq",
+            "html_url": "https://github.com/henriquecq",
+            "followers_url": "https://api.github.com/users/henriquecq/followers",
+            "following_url": "https://api.github.com/users/henriquecq/following{/other_user}",
+            "gists_url": "https://api.github.com/users/henriquecq/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/henriquecq/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/henriquecq/subscriptions",
+            "organizations_url": "https://api.github.com/users/henriquecq/orgs",
+            "repos_url": "https://api.github.com/users/henriquecq/repos",
+            "events_url": "https://api.github.com/users/henriquecq/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/henriquecq/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/95/reactions",
             "total_count": 0,
@@ -408,7 +428,7 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-11-10T18:39:19Z",
-        "updated_at": "2026-11-12T03:58:50Z",
+        "updated_at": "2026-11-12T04:23:09Z",
         "closed_at": "2026-11-12T03:58:49Z",
         "assignee": {
             "login": "thegm445",
@@ -443,7 +463,7 @@
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/91.patch",
             "merged_at": "2026-11-12T03:58:49Z"
         },
-        "body": "## Contexto\n\nCorrige o [BUG12.02] fga-eps-mds/2026.2-MeasureSoftGram-DOC#246. Parte [Service] do Front#114, que chama este endpoint (`importGitlabPersonal`) e casa o espa\u00e7o pessoal pelo `gitlab_user_id`.\n\nHoje o espa\u00e7o pessoal do GitLab \u00e9 achado pelo nome. Como o nome da organiza\u00e7\u00e3o s\u00f3 \u00e9 \u00fanico na valida\u00e7\u00e3o do `POST /organizations/`, uma pessoa cujo usu\u00e1rio tem o mesmo nome de um grupo cai na organiza\u00e7\u00e3o do grupo (e o contr\u00e1rio). A organiza\u00e7\u00e3o pessoal passa a ser identificada por um id pr\u00f3prio, como j\u00e1 \u00e9 feito com o grupo (`gitlab_group_id`, #88).\n\n## Ordem de merge\n\nO #85 j\u00e1 entrou na `develop`. Este PR vem agora, e depois o Front#114. A migra\u00e7\u00e3o `0018` daqui depende da `0017_product_quality_band_limits` do #85.\n\n## O que muda\n\n- `Organization.gitlab_user_id` (`BigIntegerField`, \u00fanico, nulo), com a migra\u00e7\u00e3o `0018`.\n- `POST organizations/import-gitlab-user/` (`ImportGitLabPersonalViewSet`): l\u00ea o usu\u00e1rio em `GET /user` do GitLab com o token da pessoa e faz `get_or_create` por `gitlab_user_id`. Atualiza nome e avatar se a org j\u00e1 existe, adiciona a pessoa aos membros e a deixa como admin se a org n\u00e3o tem admin.\n- Erros: sem GitLab vinculado `400`; token recusado (401/403) `409 gitlab_token_invalid`; GitLab fora do ar `502 gitlab_unavailable`.\n- `gitlab_user_id` aparece no `OrganizationSerializer`, somente leitura (n\u00e3o d\u00e1 para gravar pelo `POST`/`PUT` da organiza\u00e7\u00e3o).\n\n## Limita\u00e7\u00f5es\n\n- Organiza\u00e7\u00f5es pessoais criadas antes deste PR n\u00e3o t\u00eam `gitlab_user_id`; o Front continua casando essas pelo nome at\u00e9 a pessoa importar o espa\u00e7o de novo.\n\n## Testes\n\n- Testes novos em `src/organizations/tests/test_provider_visibility.py`: cria\u00e7\u00e3o por `gitlab_user_id`, reaproveitamento sem duplicar, espa\u00e7o pessoal separado da org de um grupo de mesmo nome, erros (400, 409 e 502) e `gitlab_user_id` somente leitura.\n- Su\u00edte completa depois do merge da `develop` (com a `0017` do #85 e a `0018` daqui): `480 passed` (`make test`).\n- N\u00e3o rodei `flake8` localmente; fica para o CI.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n",
+        "body": "## Contexto\n\nCorrige o [BUG12.02] fga-eps-mds/2026.2-MeasureSoftGram-DOC#246. Parte [Service] do Front#114, que chama este endpoint (`importGitlabPersonal`) e casa o espa\u00e7o pessoal pelo `gitlab_user_id`.\n\nHoje o espa\u00e7o pessoal do GitLab \u00e9 achado pelo nome. Como o nome da organiza\u00e7\u00e3o s\u00f3 \u00e9 \u00fanico na valida\u00e7\u00e3o do `POST /organizations/`, uma pessoa cujo usu\u00e1rio tem o mesmo nome de um grupo cai na organiza\u00e7\u00e3o do grupo (e o contr\u00e1rio). A organiza\u00e7\u00e3o pessoal passa a ser identificada por um id pr\u00f3prio, como j\u00e1 \u00e9 feito com o grupo (`gitlab_group_id`, #88).\n\n## Ordem de merge\n\nO #85 j\u00e1 entrou na `develop`. Este PR vem agora, e depois o Front#114. A migra\u00e7\u00e3o `0018` daqui depende da `0017_product_quality_band_limits` do #85.\n\n## O que muda\n\n- `Organization.gitlab_user_id` (`BigIntegerField`, \u00fanico, nulo), com a migra\u00e7\u00e3o `0018`.\n- `POST organizations/import-gitlab-user/` (`ImportGitLabPersonalViewSet`): l\u00ea o usu\u00e1rio em `GET /user` do GitLab com o token da pessoa e faz `get_or_create` por `gitlab_user_id`. Atualiza nome e avatar se a org j\u00e1 existe, adiciona a pessoa aos membros e a deixa como admin se a org n\u00e3o tem admin.\n- Erros: sem GitLab vinculado `400`; token recusado (401/403) `409 gitlab_token_invalid`; GitLab fora do ar `502 gitlab_unavailable`.\n- `gitlab_user_id` aparece no `OrganizationSerializer`, somente leitura (n\u00e3o d\u00e1 para gravar pelo `POST`/`PUT` da organiza\u00e7\u00e3o).\n\n## Limita\u00e7\u00f5es\n\n- Organiza\u00e7\u00f5es pessoais criadas antes deste PR n\u00e3o t\u00eam `gitlab_user_id`; o Front continua casando essas pelo nome at\u00e9 a pessoa importar o espa\u00e7o de novo.\n\n## Testes\n\n- Testes novos em `src/organizations/tests/test_provider_visibility.py`: cria\u00e7\u00e3o por `gitlab_user_id`, reaproveitamento sem duplicar, espa\u00e7o pessoal separado da org de um grupo de mesmo nome, erros (400, 409 e 502) e `gitlab_user_id` somente leitura.\n- Su\u00edte completa depois do merge da `develop` (com a `0017` do #85 e a `0018` daqui): `480 passed` (`make test`).\n- N\u00e3o rodei `flake8` localmente; fica para o CI.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n\n\n\nCloses #89\n",
         "closed_by": {
             "login": "LuizaMaluf",
             "id": 117913962,
@@ -694,14 +714,14 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [],
         "milestone": null,
-        "comments": 0,
+        "comments": 1,
         "created_at": "2026-11-10T02:54:25Z",
-        "updated_at": "2026-11-10T02:54:25Z",
-        "closed_at": null,
+        "updated_at": "2026-11-12T04:23:38Z",
+        "closed_at": "2026-11-12T04:23:38Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -720,7 +740,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nGarantir, no Service, que a cria\u00e7\u00e3o da organiza\u00e7\u00e3o do namespace pessoal do GitLab n\u00e3o falha nem liga o usu\u00e1rio \u00e0 organiza\u00e7\u00e3o de outra pessoa quando o nome j\u00e1 existe. \u00c9 a parte [Service] do BUG12.02 (fga-eps-mds/2026.2-MeasureSoftGram-DOC#246).\n\nHoje `OrganizationSerializer.name` usa `UniqueValidator(queryset=Organization.objects.all())`. Quando o nome do usu\u00e1rio j\u00e1 est\u00e1 em uso, `POST /organizations/` responde 400 \"Organization with this name already exists.\".\n\n## Lista de afazeres\n1. [ ] Definir como o namespace pessoal obt\u00e9m uma organiza\u00e7\u00e3o pr\u00f3pria quando o nome j\u00e1 existe, sem se confundir com a de um grupo nem com a de outra pessoa (Cen\u00e1rios 1 e 2).\n2. [ ] Implementar a regra escolhida no endpoint de cria\u00e7\u00e3o de organiza\u00e7\u00e3o, sem quebrar a unicidade de nome nos demais casos.\n3. [ ] Testes: nome j\u00e1 usado por organiza\u00e7\u00e3o de grupo, nome j\u00e1 usado por organiza\u00e7\u00e3o de outra pessoa, nome livre.\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "LuizaMaluf",
+            "id": 117913962,
+            "node_id": "U_kgDOBwc5ag",
+            "avatar_url": "https://avatars.githubusercontent.com/u/117913962?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/LuizaMaluf",
+            "html_url": "https://github.com/LuizaMaluf",
+            "followers_url": "https://api.github.com/users/LuizaMaluf/followers",
+            "following_url": "https://api.github.com/users/LuizaMaluf/following{/other_user}",
+            "gists_url": "https://api.github.com/users/LuizaMaluf/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/LuizaMaluf/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/LuizaMaluf/subscriptions",
+            "organizations_url": "https://api.github.com/users/LuizaMaluf/orgs",
+            "repos_url": "https://api.github.com/users/LuizaMaluf/repos",
+            "events_url": "https://api.github.com/users/LuizaMaluf/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/LuizaMaluf/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/89/reactions",
             "total_count": 0,
@@ -735,7 +775,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/89/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -1535,7 +1575,7 @@
                 "archived_by": null
             }
         ],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -1668,8 +1708,8 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-11-04T14:52:46Z",
-        "updated_at": "2026-11-10T02:16:09Z",
-        "closed_at": null,
+        "updated_at": "2026-11-12T13:17:46Z",
+        "closed_at": "2026-11-12T13:17:45Z",
         "assignee": {
             "login": "gusrberto",
             "id": 79723182,
@@ -1708,7 +1748,27 @@
             "total_blocking": 0
         },
         "body": "## Descri\u00e7\u00e3o da atividade\n\nRemover os campos do veloc\u00edmetro antigo de 2024.1, que deixam de ser usados com as faixas do produto. \u00c9 parte [Service] da US30.03 (fga-eps-mds/2026.2-MeasureSoftGram-DOC#180). Fazer s\u00f3 depois da TASK30.03.02 estar na `develop` do Front, para o Front n\u00e3o quebrar.\n\n## Lista de afazeres\n1. [ ] Remover `gaugeRedLimit` e `gaugeYellowLimit` de `organizations/models.py`, com migra\u00e7\u00e3o.\n2. [ ] Remover os campos de `organizations/serializers.py`.\n3. [ ] Atualizar `organizations/tests/test_products_endpoints.py`.\n4. [ ] Atualizar `src/endpoints.md` e o Postman.\n",
-        "closed_by": null,
+        "closed_by": {
+            "login": "henriquecq",
+            "id": 110349110,
+            "node_id": "U_kgDOBpPLNg",
+            "avatar_url": "https://avatars.githubusercontent.com/u/110349110?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/henriquecq",
+            "html_url": "https://github.com/henriquecq",
+            "followers_url": "https://api.github.com/users/henriquecq/followers",
+            "following_url": "https://api.github.com/users/henriquecq/following{/other_user}",
+            "gists_url": "https://api.github.com/users/henriquecq/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/henriquecq/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/henriquecq/subscriptions",
+            "organizations_url": "https://api.github.com/users/henriquecq/orgs",
+            "repos_url": "https://api.github.com/users/henriquecq/repos",
+            "events_url": "https://api.github.com/users/henriquecq/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/henriquecq/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/81/reactions",
             "total_count": 0,
@@ -1723,7 +1783,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/81/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
