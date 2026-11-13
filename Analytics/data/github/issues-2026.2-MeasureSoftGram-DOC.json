@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-12T03:12:46+00:00",
+ "coletado_em": "2026-11-13T03:12:19+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 307,
+   "title": "docs(arquitetura): [US30.03] faixas de qualidade no lugar dos limites do velocímetro antigo no modelo de dados",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-12T14:07:16Z",
+   "closed_at": "2026-11-12T14:26:22Z",
+   "updated_at": "2026-11-12T14:26:25Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2383,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/307",
+   "author": "henriquecq"
+  },
   {
    "number": 306,
    "title": "[BUG] interpretation_function do Core não lança InvalidGainInterpretationValue para ganho inválido",
@@ -634,11 +651,11 @@
   {
    "number": 274,
    "title": "[TASK11.03.01] Testes E2E por critério de aceitação da US11.03 (termos do provedor)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T03:00:29Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T03:00:31Z",
+   "closed_at": "2026-11-12T04:58:56Z",
+   "updated_at": "2026-11-12T04:58:56Z",
    "labels": [
     "task",
     "frontend"
@@ -716,18 +733,20 @@
   {
    "number": 270,
    "title": "[TASK33.04.02] QA-15 · Front e Service: arquivos com duplicação ≥ 5% (opcional)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:34Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:35:35Z",
+   "closed_at": "2026-11-12T21:53:29Z",
+   "updated_at": "2026-11-12T21:53:29Z",
    "labels": [
     "task",
     "frontend",
     "service"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "henriquecq"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 539,
@@ -737,17 +756,19 @@
   {
    "number": 269,
    "title": "[TASK33.04.01] QA-14 · Plugin: duplicação de 3,9% para ≤ 3%",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:26Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:35:28Z",
+   "closed_at": "2026-11-12T22:04:27Z",
+   "updated_at": "2026-11-12T22:04:27Z",
    "labels": [
     "task",
     "plugin"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "henriquecq"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 632,
@@ -757,17 +778,19 @@
   {
    "number": 268,
    "title": "[TASK33.03.06] QA-13 · Front: 3 arquivos (3 critical)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:19Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:35:20Z",
+   "closed_at": "2026-11-12T13:06:57Z",
+   "updated_at": "2026-11-12T13:06:57Z",
    "labels": [
     "task",
     "frontend"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "henriquecq"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 604,
@@ -799,17 +822,19 @@
   {
    "number": 266,
    "title": "[TASK33.03.04] QA-11b · Plugin: complexidade cognitiva (6 funções)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:02Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:35:03Z",
+   "closed_at": "2026-11-12T13:06:27Z",
+   "updated_at": "2026-11-12T13:06:27Z",
    "labels": [
     "task",
     "plugin"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "henriquecq"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1604,
@@ -819,17 +844,19 @@
   {
    "number": 265,
    "title": "[TASK33.03.03] QA-11a · Plugin: blocker em teste e dispose() vazio",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:51Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:34:52Z",
+   "closed_at": "2026-11-12T13:03:02Z",
+   "updated_at": "2026-11-12T13:03:02Z",
    "labels": [
     "task",
     "plugin"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "henriquecq"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1027,
@@ -902,17 +929,19 @@
   {
    "number": 261,
    "title": "[TASK33.02.04] QA-08 · Plugin: cobertura de 89,5% para ≥ 90%",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:11Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:34:12Z",
+   "closed_at": "2026-11-12T13:41:33Z",
+   "updated_at": "2026-11-12T13:43:37Z",
    "labels": [
     "task",
     "plugin"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "henriquecq"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 675,
@@ -1092,6 +1121,7 @@
    ],
    "type": "Feature",
    "assignees": [
+    "gusrberto",
     "bottinolucas",
     "thegm445",
     "henriquecq"
@@ -1164,6 +1194,7 @@
    ],
    "type": "Feature",
    "assignees": [
+    "gusrberto",
     "bottinolucas",
     "thegm445",
     "henriquecq"
@@ -1218,11 +1249,11 @@
   {
    "number": 246,
    "title": "[BUG12.02] Namespace pessoal do GitLab é ligado à organização errada (ou falha) quando o nome já existe",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:28Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:09:30Z",
+   "closed_at": "2026-11-12T04:20:39Z",
+   "updated_at": "2026-11-12T22:11:55Z",
    "labels": [
     "bug",
     "frontend",
@@ -1241,11 +1272,11 @@
   {
    "number": 245,
    "title": "[BUG12.01] Seletor de grupos do GitLab volta para o namespace pessoal quando usuário e grupo têm o mesmo nome",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:07Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T01:44:08Z",
+   "closed_at": "2026-11-12T03:51:27Z",
+   "updated_at": "2026-11-12T22:11:54Z",
    "labels": [
     "bug",
     "frontend",
@@ -1357,12 +1388,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-08T20:21:47Z",
    "closed_at": null,
-   "updated_at": "2026-11-08T20:22:28Z",
+   "updated_at": "2026-11-13T03:02:13Z",
    "labels": [
     "task"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "DiegoCarlito"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1242,
@@ -1376,12 +1409,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-08T20:20:22Z",
    "closed_at": null,
-   "updated_at": "2026-11-08T20:20:56Z",
+   "updated_at": "2026-11-13T03:01:53Z",
    "labels": [
     "task"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "DiegoCarlito"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1524,
@@ -2488,7 +2523,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:51:28Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T13:30:51Z",
+   "updated_at": "2026-11-12T22:12:11Z",
    "labels": [
     "US"
    ],
@@ -2514,7 +2549,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:51Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T13:25:55Z",
+   "updated_at": "2026-11-12T22:12:10Z",
    "labels": [
     "US"
    ],
@@ -2540,7 +2575,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:08Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:12:26Z",
+   "updated_at": "2026-11-12T22:12:09Z",
    "labels": [
     "US"
    ],
@@ -2611,6 +2646,8 @@
    "type": null,
    "assignees": [
     "bottinolucas",
+    "thegm445",
+    "henriquecq",
     "LuizaMaluf",
     "devwallyson"
    ],
@@ -3477,7 +3514,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:01Z",
    "closed_at": "2026-11-11T22:21:31Z",
-   "updated_at": "2026-11-12T03:12:56Z",
+   "updated_at": "2026-11-12T22:11:58Z",
    "labels": [
     "US",
     "frontend",
@@ -3501,11 +3538,11 @@
   {
    "number": 129,
    "title": "[US21.04] Como Helena, quero ver relações e correlações entre as características",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:50Z",
-   "closed_at": null,
-   "updated_at": "2026-11-12T03:13:03Z",
+   "closed_at": "2026-11-12T03:15:43Z",
+   "updated_at": "2026-11-12T22:12:06Z",
    "labels": [
     "US"
    ],
@@ -3526,7 +3563,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:46Z",
    "closed_at": "2026-11-10T02:33:45Z",
-   "updated_at": "2026-11-12T03:13:02Z",
+   "updated_at": "2026-11-12T22:12:05Z",
    "labels": [
     "US"
    ],
@@ -3547,7 +3584,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:38Z",
    "closed_at": "2026-11-11T22:21:36Z",
-   "updated_at": "2026-11-12T03:13:01Z",
+   "updated_at": "2026-11-12T22:12:04Z",
    "labels": [
     "US"
    ],
@@ -3568,7 +3605,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:33Z",
    "closed_at": "2026-11-07T19:14:18Z",
-   "updated_at": "2026-11-12T03:13:00Z",
+   "updated_at": "2026-11-12T22:12:03Z",
    "labels": [
     "US"
    ],
@@ -3589,7 +3626,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:28Z",
    "closed_at": "2026-11-12T03:11:01Z",
-   "updated_at": "2026-11-12T03:13:04Z",
+   "updated_at": "2026-11-12T22:12:07Z",
    "labels": [
     "US"
    ],
@@ -3611,7 +3648,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:22Z",
    "closed_at": "2026-11-11T22:21:33Z",
-   "updated_at": "2026-11-12T03:12:59Z",
+   "updated_at": "2026-11-12T22:12:02Z",
    "labels": [
     "US"
    ],
@@ -3680,11 +3717,11 @@
   {
    "number": 114,
    "title": "[US11.03] Como usuário do GitLab, quero ver os termos do GitLab (merge request), para não me confundir",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-06T00:48:20Z",
-   "closed_at": null,
-   "updated_at": "2026-11-12T03:12:58Z",
+   "closed_at": "2026-11-12T05:12:26Z",
+   "updated_at": "2026-11-12T22:12:01Z",
    "labels": [
     "US",
     "frontend"
@@ -3728,11 +3765,11 @@
   {
    "number": 112,
    "title": "[US11.01] Como usuário, quero entrar no MeasureSoftGram com minha conta do GitLab",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-06T00:06:06Z",
-   "closed_at": null,
-   "updated_at": "2026-11-12T03:12:57Z",
+   "closed_at": "2026-11-12T04:56:19Z",
+   "updated_at": "2026-11-12T22:11:59Z",
    "labels": [
     "US"
    ],
@@ -4002,11 +4039,11 @@
   {
    "number": 92,
    "title": "[MSG21] Criação de novos gráficos no dashboard",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-27T16:21:35Z",
-   "closed_at": null,
-   "updated_at": "2026-10-26T23:47:07Z",
+   "closed_at": "2026-11-12T03:16:11Z",
+   "updated_at": "2026-11-12T03:16:11Z",
    "labels": [
     "epic",
     "frontend",
@@ -4113,11 +4150,11 @@
   {
    "number": 83,
    "title": "[MSG12] Importar repositórios hospedados no GitLab",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-27T16:08:40Z",
-   "closed_at": null,
-   "updated_at": "2026-11-06T22:28:15Z",
+   "closed_at": "2026-11-12T04:24:18Z",
+   "updated_at": "2026-11-12T04:24:18Z",
    "labels": [
     "epic",
     "frontend",
@@ -4134,11 +4171,11 @@
   {
    "number": 82,
    "title": "[MSG11] Autenticar usuários pelo GitLab",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-27T16:08:35Z",
-   "closed_at": null,
-   "updated_at": "2026-10-15T22:28:26Z",
+   "closed_at": "2026-11-12T05:12:28Z",
+   "updated_at": "2026-11-12T05:12:28Z",
    "labels": [
     "epic",
     "frontend",
@@ -4402,7 +4439,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-25T20:16:41Z",
    "closed_at": "2026-11-12T02:16:25Z",
-   "updated_at": "2026-11-12T03:12:55Z",
+   "updated_at": "2026-11-12T22:11:57Z",
    "labels": [
     "US",
     "frontend",
@@ -4646,7 +4683,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-24T00:34:13Z",
    "closed_at": "2026-11-11T22:35:14Z",
-   "updated_at": "2026-11-12T03:12:53Z",
+   "updated_at": "2026-11-12T22:11:56Z",
    "labels": [
     "US",
     "frontend",

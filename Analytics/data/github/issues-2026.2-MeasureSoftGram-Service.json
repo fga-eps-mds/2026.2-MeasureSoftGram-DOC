@@ -1,24 +1,41 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-12T03:12:46+00:00",
+ "coletado_em": "2026-11-13T03:12:19+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "issues": [
   {
-   "number": 95,
-   "title": "refactor(produtos): remove gaugeRedLimit e gaugeYellowLimit do produto (US30.03) (#81)",
-   "state": "open",
+   "number": 96,
+   "title": "feat(e2e): URLs dos provedores configuráveis e seed fixo para o E2E de sistema",
+   "state": "closed",
    "is_pull_request": true,
-   "created_at": "2026-11-12T02:47:14Z",
-   "closed_at": null,
-   "updated_at": "2026-11-12T03:08:41Z",
+   "created_at": "2026-11-13T02:21:34Z",
+   "closed_at": "2026-11-13T02:41:36Z",
+   "updated_at": "2026-11-13T02:41:36Z",
    "labels": [],
    "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 2492,
+   "body_chars": 3624,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/96",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 95,
+   "title": "refactor(produtos): remove gaugeRedLimit e gaugeYellowLimit do produto (US30.03) (#81)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-12T02:47:14Z",
+   "closed_at": "2026-11-12T13:17:44Z",
+   "updated_at": "2026-11-12T13:17:48Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2891,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/95",
    "author": "henriquecq"
   },
@@ -76,11 +93,11 @@
   {
    "number": 91,
    "title": "fix(organizations): importa o namespace pessoal do GitLab como organização própria (BUG12.02)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-10T18:39:19Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T21:21:59Z",
+   "closed_at": "2026-11-12T03:58:49Z",
+   "updated_at": "2026-11-12T04:23:09Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -88,7 +105,7 @@
    ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 2045,
+   "body_chars": 2059,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/91",
    "author": "thegm445"
   },
@@ -117,11 +134,11 @@
   {
    "number": 89,
    "title": "[TASK12.02.02] Namespace pessoal do GitLab: organização própria sem colisão de nome (Service)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:54:25Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:54:25Z",
+   "closed_at": "2026-11-12T04:23:38Z",
+   "updated_at": "2026-11-12T04:23:38Z",
    "labels": [
     "task",
     "service"
@@ -260,11 +277,11 @@
   {
    "number": 81,
    "title": "[TASK30.03.03] Remover os campos legados gaugeRedLimit e gaugeYellowLimit (Service)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-04T14:52:46Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:16:09Z",
+   "closed_at": "2026-11-12T13:17:45Z",
+   "updated_at": "2026-11-12T13:17:46Z",
    "labels": [
     "task",
     "service"

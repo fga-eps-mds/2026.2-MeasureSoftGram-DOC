@@ -1,11 +1,110 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-13T03:12:19+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Plugin",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "bb553c44e6316f01dfc4efe8b8763f34b86d8974",
+   "date": "2026-11-12T22:04:25Z",
+   "author": "henriquecq",
+   "message": "refactor(webview): reusa o contrato de mensagens da extensão em vez de copiá-lo (QA-14) (#13)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/panels/messages.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "webview-ui/src/types/index.ts",
+     "status": "modified",
+     "additions": 23,
+     "deletions": 125
+    }
+   ]
+  },
+  {
+   "sha": "1f7eb24efd8e690840cb1499c2744c9ef270e9a4",
+   "date": "2026-11-12T13:06:25Z",
+   "author": "henriquecq",
+   "message": "fix(quality): complexidade cognitiva das 6 funções do Plugin (QA-11b) (#12)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/panels/measureSoftGramBase.ts",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 14
+    },
+    {
+     "filename": "src/services/msgramApi.ts",
+     "status": "modified",
+     "additions": 15,
+     "deletions": 14
+    },
+    {
+     "filename": "src/services/repoResolver.ts",
+     "status": "modified",
+     "additions": 85,
+     "deletions": 53
+    },
+    {
+     "filename": "src/tests/panels/measureSoftGramBase.test.ts",
+     "status": "modified",
+     "additions": 46,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/services/msgramApi.contract.test.ts",
+     "status": "modified",
+     "additions": 43,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tests/views/qualityTree.test.ts",
+     "status": "modified",
+     "additions": 101,
+     "deletions": 0
+    },
+    {
+     "filename": "src/views/qualityTree.ts",
+     "status": "modified",
+     "additions": 129,
+     "deletions": 88
+    },
+    {
+     "filename": "webview-ui/src/components/DashboardView.tsx",
+     "status": "modified",
+     "additions": 60,
+     "deletions": 40
+    }
+   ]
+  },
+  {
+   "sha": "768f9d9af751e0397abf0f61c9a721cd56fe86e9",
+   "date": "2026-11-12T13:03:00Z",
+   "author": "henriquecq",
+   "message": "fix(quality): blocker em teste e dispose() vazio no Plugin (QA-11a) (#11)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/tests/vscode.mock.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": "webview-ui/src/tests/components/action/CopyButton.test.tsx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    }
+   ]
+  },
   {
    "sha": "a2d868cf550b49f68d9a7bc1b4094556ef254c30",
    "date": "2026-11-07T13:19:16Z",
@@ -1183,5 +1282,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 3
 }

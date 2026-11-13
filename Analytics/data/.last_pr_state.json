@@ -24,10 +24,10 @@
     "author": "Marcosatc147"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 151,
-    "last_merged_at": "2026-11-12T03:09:56Z",
-    "title": "fix(release): chama o realizado de \"Realizado\" no tooltip do equalizador, como na legenda (US22.01)",
-    "author": "LuizaMaluf"
+    "number": 159,
+    "last_merged_at": "2026-11-12T22:08:09Z",
+    "title": "test(e2e): cenários de aceitação das faixas de qualidade por critério (US30.01, US30.02, US30.03)",
+    "author": "henriquecq"
   },
   "2026.2-MeasureSoftGram-Parser": {
     "number": 17,
@@ -36,15 +36,15 @@
     "author": "Marcosatc147"
   },
   "2026.2-MeasureSoftGram-Plugin": {
-    "number": 10,
-    "last_merged_at": "2026-11-07T13:19:16Z",
-    "title": "fix(ci): reativa metrics.yml, reporte de testes no SonarCloud e saneamento de segurança",
-    "author": "DiegoCarlito"
+    "number": 13,
+    "last_merged_at": "2026-11-12T22:04:25Z",
+    "title": "fix(quality): duplicação do Plugin abaixo de 3% (QA-14)",
+    "author": "henriquecq"
   },
   "2026.2-MeasureSoftGram-Service": {
-    "number": 94,
-    "last_merged_at": "2026-11-12T02:59:38Z",
-    "title": "fix: violações critical do SonarCloud no Service (QA-10b)",
-    "author": "bottinolucas"
+    "number": 96,
+    "last_merged_at": "2026-11-13T02:41:36Z",
+    "title": "feat(e2e): URLs dos provedores configuráveis e seed fixo para o E2E de sistema",
+    "author": "LuizaMaluf"
   }
 }

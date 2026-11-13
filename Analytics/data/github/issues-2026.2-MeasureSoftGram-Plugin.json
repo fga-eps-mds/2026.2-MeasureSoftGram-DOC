@@ -1,10 +1,67 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-13T03:12:19+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Plugin",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 13,
+   "title": "fix(quality): duplicação do Plugin abaixo de 3% (QA-14)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-12T13:26:42Z",
+   "closed_at": "2026-11-12T22:04:25Z",
+   "updated_at": "2026-11-12T22:04:26Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1833,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/13",
+   "author": "henriquecq"
+  },
+  {
+   "number": 12,
+   "title": "fix(quality): complexidade cognitiva das 6 funções do Plugin (QA-11b)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-12T11:57:22Z",
+   "closed_at": "2026-11-12T13:06:26Z",
+   "updated_at": "2026-11-12T13:06:38Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2782,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/12",
+   "author": "henriquecq"
+  },
+  {
+   "number": 11,
+   "title": "fix(quality): blocker em teste e dispose() vazio no Plugin (QA-11a)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-12T11:14:08Z",
+   "closed_at": "2026-11-12T13:03:01Z",
+   "updated_at": "2026-11-12T13:03:15Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1278,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/11",
+   "author": "henriquecq"
+  },
   {
    "number": 10,
    "title": "fix(ci): reativa metrics.yml, reporte de testes no SonarCloud e saneamento de segurança",
