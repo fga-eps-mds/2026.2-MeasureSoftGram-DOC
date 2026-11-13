@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-13T03:12:19+00:00",
+ "coletado_em": "2026-11-13T03:55:27+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Plugin",
  "desde": "2026-08-24",
@@ -12,7 +12,7 @@
    "is_pull_request": true,
    "created_at": "2026-11-12T13:26:42Z",
    "closed_at": "2026-11-12T22:04:25Z",
-   "updated_at": "2026-11-12T22:04:26Z",
+   "updated_at": "2026-11-13T03:13:39Z",
    "labels": [],
    "type": null,
    "assignees": [
