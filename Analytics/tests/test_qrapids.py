@@ -84,27 +84,86 @@ class ModeloCompletoTest(unittest.TestCase):
         f = {"periodo": (pd.Timestamp("2026-09-29"), pd.Timestamp("2026-10-26")), "repos": [], "branch": None}
         res = qrapids.calcular(self.ctx(), f, {"fim": pd.Timestamp("2026-10-26"), "repos": []})
         m = {r.chave: r for r in res["metricas"]}
-        self.assertEqual((m["bug_density"].numerador, m["bug_density"].denominador), (1, 3))   # 1 bug em 3 abertas
-        self.assertAlmostEqual(m["bug_density"].valor, 2 / 3)                                 # 1 = melhor
-        self.assertEqual((m["build_stability"].numerador, m["build_stability"].denominador), (2, 3))
-        self.assertEqual(m["build_performance"].numerador, 2)                                  # 15 min > 10
-        self.assertEqual(m["build_performance"].denominador, 3)                                # só test.yml
-        self.assertAlmostEqual(m["ci_feedback_time"].numerador / m["ci_feedback_time"].denominador, 20 / 3)  # sem 1440
-        self.assertEqual(m["old_issues"].numerador, 1)                                       # #3 é antiga
-        self.assertAlmostEqual(m["old_issues"].valor, 2 / 3)
-        self.assertEqual(m["feature_usage"].situacao, qrapids.SEM_FONTE)
+        self.assertEqual((m["build_stability"].numerador, m["build_stability"].denominador), (2, 3))   # M10, só test.yml
+        self.assertEqual(m["build_performance"].numerador, 2)                                  # 15 min > 10 (monitorada)
+        self.assertEqual(m["build_performance"].denominador, 3)
+        self.assertAlmostEqual(m["ci_feedback_time"].medida, 3.0)                              # M8: mediana, sem os 1440 min
+        self.assertFalse(m["ci_feedback_time"].escala01)                                       # minutos: portão, não média
+        self.assertEqual(m["old_issues"].numerador, 1)                                         # #3 é antiga (monitorada)
         self.assertEqual(m["non_blocking_files"].situacao, qrapids.PENDENTE)
-        self.assertIsNone(m["feature_usage"].valor)                                            # nunca vira zero
-        # agregação: só métricas calculadas entram; fator sem nenhuma fica sem valor
+        self.assertEqual(m["team_throughput"].situacao, qrapids.SEM_DADO)                      # sem sprints no snapshot
+        self.assertIsNone(m["non_blocking_files"].valor)                                       # nunca vira zero
         fat = res["fatores"].set_index("fator")
-        self.assertTrue(pd.isna(fat.loc["software_usage", "valor"]))
-        self.assertAlmostEqual(fat.loc["software_stability", "valor"], 2 / 3)
+        self.assertAlmostEqual(fat.loc["product_stability", "valor"], 2 / 3)
+        self.assertTrue(pd.isna(fat.loc["testing_performance", "valor"]))                      # M8 é portão
+        self.assertTrue(pd.isna(fat.loc["development_speed", "valor"]))                        # só monitoradas
+        self.assertTrue(pd.isna(fat.loc["issues_velocity", "valor"]))
 
-    def test_catalogo_cobre_os_indicadores_do_model_doc(self):
+    def test_monitoradas_nao_entram_na_media(self):
+        """Monitorada tem valor mas nenhum peso: Old issues e Build performance não mexem em fator algum."""
+        f = {"periodo": (pd.Timestamp("2026-09-29"), pd.Timestamp("2026-10-26")), "repos": [], "branch": None}
+        res = qrapids.calcular(self.ctx(), f, {"fim": pd.Timestamp("2026-10-26"), "repos": []})
+        m = {r.chave: r for r in res["metricas"]}
+        for chave in ("old_issues", "build_performance"):
+            self.assertEqual(m[chave].decisao, qrapids.MONITORADA)
+            self.assertIsNotNone(m[chave].valor)
+            self.assertFalse(m[chave].na_media)
+        self.assertTrue(m["build_stability"].na_media)
+
+    def test_so_o_plano_e_calculado(self):
+        """10 métricas incluídas e 8 monitoradas; as outras 26 só existem no catálogo do plano."""
+        decisoes = [v[3] for v in qrapids.METRICAS.values()]
+        self.assertEqual((decisoes.count(qrapids.INCLUIDA), decisoes.count(qrapids.MONITORADA)), (10, 8))
+        self.assertEqual({v[0] for v in qrapids.METRICAS.values() if v[3] == qrapids.INCLUIDA},
+                         {"M1", "M2", "M3", "M5", "M6", "M7", "M8", "M9", "M10", "DT"})
+        cat = qrapids.catalogo()
+        self.assertEqual(cat["decisao"].value_counts().to_dict(),
+                         {qrapids.INCLUIDA: 10, qrapids.MONITORADA: 8, qrapids.HABILITAVEL: 8, qrapids.EXCLUIDA: 18})
+        monitoradas = {v[0] + " " + v[1] if v[0] != "—" else v[1] for v in qrapids.METRICAS.values()
+                       if v[3] == qrapids.MONITORADA}
+        self.assertEqual(monitoradas, set(cat.loc[cat["decisao"] == qrapids.MONITORADA, "metrica"]))
+
+    def test_arvore_segue_o_mapa_do_plano_sem_iso(self):
+        """metas.mdx, "Indicadores estratégicos e fatores": 13 fatores, 14 vínculos (Code Quality em dois indicadores)."""
         self.assertEqual(set(qrapids.INDICADORES), {"product_quality", "product_readiness", "blocking",
                                                     "process_performance"})
-        fatores = {fc for _, _, fs in qrapids.INDICADORES.values() for fc in fs}
-        self.assertEqual(fatores, set(qrapids.FATORES))
+        vinculos = [fc for _, _, fs in qrapids.INDICADORES.values() for fc in fs]
+        self.assertEqual((len(set(vinculos)), len(vinculos)), (13, 14))
+        self.assertEqual(set(vinculos), set(qrapids.FATORES))
+        self.assertEqual(qrapids.AVALIADOS["product_quality"], ["code_quality"])
+        self.assertEqual(qrapids.AVALIADOS["process_performance"], ["issues_velocity"])     # M8 é só portão
+        self.assertIn("code_quality", qrapids.AVALIADOS["product_readiness"])
+        self.assertNotIn("software_security", qrapids.FATORES)
+        res = qrapids.calcular(self.ctx(), {"periodo": (pd.Timestamp("2026-09-29"), pd.Timestamp("2026-10-26")),
+                                            "repos": [], "branch": None},
+                               {"fim": pd.Timestamp("2026-10-26"), "repos": []})
+        tab = qrapids.tabela(res["metricas"])
+        cq = tab[tab["fator"] == "Code Quality"]["indicador"].unique()
+        self.assertEqual(list(cq), ["Product Quality · Product Readiness"])
+        self.assertFalse(any("nota" in c.lower() for c in tab.columns))
+
+    def test_agregacao_tira_fator_sem_dado_do_denominador(self):
+        def r(fator, chave, valor, dec=qrapids.INCLUIDA, **kw):
+            x = qrapids.Resultado(fator, chave, chave, "", "", "", "", decisao=dec, **kw)
+            x.valor, x.situacao = valor, (qrapids.CALCULADA if valor is not None else qrapids.SEM_DADO)
+            return x
+        fat, ind = qrapids.agregar([r("quality_issues_specification", "a", 0.8), r("testing_status", "b", 0.9),
+                                    r("testing_status", "c", 0.7), r("blocking_code", "d", None),
+                                    r("code_quality", "e", 0.6, dec=qrapids.MONITORADA)])
+        fat, ind = fat.set_index("fator"), ind.set_index("indicador")
+        self.assertAlmostEqual(fat.loc["testing_status", "valor"], 0.8)
+        self.assertTrue(pd.isna(fat.loc["code_quality", "valor"]))                  # monitorada não pesa
+        self.assertAlmostEqual(ind.loc["blocking", "valor"], (0.8 + 0.8) / 2)       # Blocking Code sem dado: n = 2
+        self.assertTrue(pd.isna(ind.loc["product_quality", "valor"]))
+
+    def test_metas_seguem_a_regra_do_metas_mdx(self):
+        mf, mi = qrapids.metas_agregadas()
+        self.assertAlmostEqual(mf["code_quality"], 0.935)
+        self.assertAlmostEqual(mf["testing_status"], 0.95)
+        self.assertEqual(mi, {"product_quality": 0.93, "blocking": 0.96, "process_performance": 0.60,
+                              "product_readiness": 0.89})                           # truncadas, não arredondadas
+        self.assertEqual(qrapids.truncar(0.9667), 0.96)
+        self.assertEqual(qrapids.truncar(0.895), 0.89)
 
     def test_so_o_workflow_de_testes_conta_como_build(self):
         """DA-R3.02/D5: deploy, coleta e dependabot não entram; cancelada e ignorada também não."""
@@ -114,29 +173,6 @@ class ModeloCompletoTest(unittest.TestCase):
                                            "skipped"]})
         self.assertEqual(list(qrapids.runs_de_build(runs).index), [0, 1, 2])
         self.assertTrue(qrapids.runs_de_build(pd.DataFrame()).empty)
-
-    def test_arvore_segue_o_model_doc_sem_seguranca(self):
-        """DA-R3.02: o model-doc (abril/2019) não tem fator nem métrica de segurança; Code Quality alimenta
-        Product Quality e Product Readiness."""
-        self.assertNotIn("software_security", qrapids.FATORES)
-        self.assertEqual(qrapids.INDICADORES["product_quality"][2], ["code_quality", "software_stability",
-                                                                    "software_usage"])
-        self.assertIn("code_quality", qrapids.INDICADORES["product_readiness"][2])
-        f = {"periodo": (pd.Timestamp("2026-09-29"), pd.Timestamp("2026-10-26")), "repos": [], "branch": None}
-        res = qrapids.calcular(self.ctx(), f, {"fim": pd.Timestamp("2026-10-26"), "repos": []})
-        chaves = {r.chave for r in res["metricas"]}
-        self.assertFalse({"security_rating", "vulnerabilities"} & chaves)
-        tab = qrapids.tabela(res["metricas"])
-        cq = tab[tab["fator"].str.startswith("Code Quality")]["indicador"].unique()
-        self.assertEqual(list(cq), ["Product Quality (qualidade do produto) · Product Readiness (prontidão do produto)"])
-
-    def test_media_sem_os_zeros_por_falta_de_dado(self):
-        def av(total, falta):
-            return {"avaliacao": {"total": total, "metricas": {"a": {"zero_por_falta": falta},
-                                                              "b": {"zero_por_falta": falta}}}}
-        notas = {"2026.2-MeasureSoftGram-AI": av(0.0, "sem dado"), "2026.2-MeasureSoftGram-Core": av(0.8, None)}
-        media, fora = qrapids.media_repos(notas, lambda a: a["total"])
-        self.assertEqual((media, fora), (0.8, ["AI"]))
 
 
 if __name__ == "__main__":

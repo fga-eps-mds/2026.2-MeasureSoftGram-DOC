@@ -32,8 +32,8 @@ da fonte (`SONAR`, `ZENHUB`, `PLANILHA`, `GITHUB`, `CALCULADO`).
 | Informação | Fonte | Como chega |
 | --- | --- | --- |
 | Cobertura, duplicação, LOC, testes, ratings | SonarCloud | `metrics.yml` de cada repositório → `data/*.json` |
-| Bugs, vulnerabilidades, code smells, hotspots, dívida técnica, Quality Gate, severidade, histórico | SonarCloud | `scripts/coleta_sonar.py` → `data/sonar/` (workflow `coleta-dados.yml`: a cada push na main e 3×/dia) |
-| Sprints, story points, velocity, backlog, pipelines, épicos, releases | Zenhub | `scripts/coleta_velocity.py` → `data/zenhub/velocity/` (workflow `coleta-dados.yml`: a cada push na main e 3×/dia) |
+| Bugs, vulnerabilidades, code smells, hotspots, dívida técnica, Quality Gate, severidade, histórico | SonarCloud | `scripts/coleta_sonar.py` → `data/sonar/` (workflow `coleta-dados.yml`: diário e sob demanda) |
+| Sprints, story points, velocity, backlog, pipelines, épicos, releases | Zenhub | `scripts/coleta_velocity.py` → `data/zenhub/velocity/` (workflow `coleta-dados.yml`: diário e sob demanda) |
 | Custos, time por semana, horas, riscos, monitoramento, decisões | Planilha | abas publicadas no Google em CSV (`config.PLANILHAS`), sem cópia local |
 | Execuções da CI | GitHub | `metrics.yml` → `GitHub_API-Runs-*.json` |
 
@@ -49,6 +49,7 @@ falta para calculá-la (ex.: *CPI indisponível: Actual Cost não foi fornecido*
 | --- | --- |
 | **Visão Executiva** | Como está o projeto? Status geral, KPIs, situação por dimensão, planejado × realizado, pontos de atenção |
 | **Agile EVM** | Estamos no prazo e no custo? PV, EV, AC, BAC, SV, CV, SPI, CPI, EAC, ETC, burndown |
+| **Qualidade (Q-Rapids)** | Quatro indicadores do plano, metas, pisos, portões e detalhe por arquivo/sprint |
 | **Qualidade técnica (Sonar)** | A qualidade do código está evoluindo? Atual → anterior → variação, evolução, severidade, Quality Gate |
 | **Gestão ágil (ZenHub)** | Como estão backlog, velocity, throughput, épicos e releases? |
 | **Custos e riscos (Planilha)** | Custos (orçamento, planejado, realizado, por categoria e recurso), matriz de riscos P × I, decisões |
@@ -124,3 +125,62 @@ de `Analytics/data/` e das abas publicadas da planilha, lidas ao vivo.
   falharem, a coleta segue e a página avisa que só as issues das sprints foram lidas.
 - Sem horas registradas na aba Horas, o custo real (AC) e tudo que depende dele (CPI,
   CV, ETC, EAC) ficam indisponíveis — o custo planejado não substitui o real.
+
+## Plano de qualidade da R3
+
+A página **Qualidade (Q-Rapids)** compara R1, R2 e R3 até a data atual. Release e período
+selecionados na barra lateral não alteram essa comparação fixa; repositórios e branch do Sonar são respeitados.
+As janelas são 24/08–28/09, 29/09–26/10 e 27/10–30/11/2026. O Sonar usa o último snapshot **dentro**
+da janela; sem coleta na janela, não reutiliza silenciosamente um dado de outra release.
+
+A configuração fica em `config.py`: catálogo das 44 métricas, fontes, fórmulas, justificativas,
+mapa indicador/fatores, metas agregadas e por repositório e os cinco portões. As 10 incluídas
+são M1, M2, M3, M5, M6, M7, M8, M9, M10 e DT; há 8 monitoradas, 8 habilitáveis e 18 excluídas.
+Monitoradas aparecem com valor e sem peso; habilitáveis mostram a condição necessária para entrar.
+O catálogo completo e os cinco critérios de seleção também aparecem em **Metodologia e Fontes**.
+
+- Fator: média das métricas incluídas calculáveis na escala 0–1.
+- Indicador: média dos fatores disponíveis; falta de dado nunca recebe zero.
+- Pesos: `QRAPIDS["plano"]["pesos_fatores"]`, por indicador. `None` usa `1/n`; um dicionário
+  informa um peso não negativo para cada fator. Os pesos são normalizados entre os fatores disponíveis,
+  e as metas dos indicadores usam a mesma fórmula, com truncamento em duas casas.
+- M8: mediana de `test.yml`, fora da média; até 5 minutos por repositório e teto crítico de 10 minutos.
+- M9: conclusão por sprint; DT: Tasks/Sub-tasks concluídas no escopo da release. DT/Readiness em curso é parcial.
+- Pisos: M5 ≥ 0,80 e M10 ≥ 0,90 por repositório. São restrições das métricas, sem criar um sexto portão.
+- Atingido: exige meta atingida, portões comprovados e pisos atendidos. Dados ausentes impedem a comprovação;
+  o painel identifica os repositórios ausentes. Ao selecionar repositórios, os portões usam esse escopo
+  (por exemplo, relatório 1/1 no Core); sem seleção, são os oito repositórios do produto.
+
+M1, M2 e M6 têm detalhe separado por Python/TypeScript. As tabelas mostram repositório, linguagem,
+arquivo/sprint, fórmula, fonte e links estáveis para o plano. Os pesos do notebook são mantidos somente
+para compatibilidade da implementação por arquivo e dos testes de referência; não agregam os indicadores.
+
+As metas por repositório registram os números publicados no plano de 07/11, base `43c22d6`; não são
+recalibradas automaticamente quando chegam coletas novas. Mudanças de pesos ou metas requerem atualizar
+o plano e suas evidências. A implementação não equivale ao aceite do professor nem ao registro de D6–D9.
+
+### Ambiente e verificação
+
+```bash
+# Na raiz do repositório; Node >= 20 e Python >= 3.11
+python3 -m venv .venv
+.venv/bin/python -m pip install -r Analytics/requirements.txt
+npm ci
+.venv/bin/python -m unittest discover -s Analytics/tests -v
+npm run typecheck
+npm run build
+.venv/bin/python -m streamlit run Analytics/app.py
+```
+
+Os testes históricos precisam do commit `43c22d6` no histórico Git (clones rasos pulam essa verificação).
+Dois testes do cliente Zenhub abrem um servidor HTTP em localhost: um sandbox que proíbe sockets
+precisa liberar a execução local desses testes. Nenhum token é necessário para os testes nem para consultar
+os snapshots versionados; atualizar Zenhub/Sonar/GitHub depende das credenciais de coleta correspondentes.
+
+Os arquivos de `data/` são gerados pelos coletores e não devem ser corrigidos manualmente. Na base histórica de 07/11 faltavam
+relatórios em AI/Plugin. Em 10/11, os pipelines públicos da `develop` desses dois repositórios já
+geram e declaram os relatórios de testes; confirmar sua importação depende de nova análise e coleta
+do Sonar. Não foram necessárias alterações adicionais nesses dois repositórios. A habilitação de cobertura de ramos muda a base de comparação: depois dela, coletar
+novamente antes de interpretar a evolução de M5. O coletor da API passa a pedir `line_coverage` e
+`branch_coverage` separadamente, sem preencher dados ausentes nem reescrever snapshots antigos. O Dev Container instala as dependências de
+`Analytics/requirements.txt` e do lockfile npm e abre o Streamlit com as proteções padrão.

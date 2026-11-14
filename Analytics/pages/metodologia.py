@@ -8,6 +8,7 @@ import streamlit as st
 import config
 from src.components import filters, layout
 from src.metrics.calculations import data_br
+from src.metrics import qrapids
 
 STATUS_COLETA = {"ok": "Coletado", "parcial": "Parcial", "sem dados": "Sem dados", "erro": "Erro na leitura"}
 
@@ -52,13 +53,30 @@ em **Filtros desta página**, os filtros próprios da página aberta e o resumo 
 | Riscos | período padrão | identificados até o fim; revisões no período | não se aplica | — | status, nível, categoria, responsável |
 | Decisões | meta da release | tabela no período; meta acumulada até o fim | não se aplica | — | tipo, status, indicador |
 | Qualidade técnica | metas | situação no fim do período; evolução no período | repositórios | coletas do pipeline | Quality Gate, linguagem, métrica do gráfico |
-| Qualidade (Q-Rapids) | comparação entre releases | nota na última coleta até o fim do período; métricas de processo no período | repositórios avaliados | coletas do pipeline | repositório do detalhamento |
+| Qualidade (Q-Rapids) | não se aplica: compara sempre R1 × R2 × atual | Sonar na última coleta até o fim de cada janela; CI, issues e sprints dentro dela | repositórios avaliados | coletas do pipeline | — |
 | Integração contínua | período padrão | execuções criadas no período | repositórios | — | workflow, branch da execução |
 
 **Situação no fim do período**: com a R1 escolhida, a página mostra o valor de cada métrica na última coleta até
 28/09 — é assim que dá para comparar R1 × R2 sem misturar coletas. O Quality Gate e os problemas por severidade só
 existem no snapshot mais recente da API (sem histórico): num período que termina antes dele, ficam de fora.
 """)
+
+    layout.secao("Plano de qualidade: seleção e limitações", "Como as 44 métricas foram selecionadas?")
+    st.markdown("""
+1. Responde a um objetivo de qualidade da R3.
+2. Tem fonte coletável no fluxo atual do projeto.
+3. Permite uma ação concreta da equipe no semestre.
+4. Não repete outra métrica na composição do indicador.
+5. Tem fórmula no modelo Q-Rapids ou no notebook de referência (critério eliminatório).
+
+A série tem apenas três releases; a R3 permanece parcial até 30/11. M1, M2 e M6 têm viés de linguagem:
+Python e TypeScript são apresentados separadamente. CLI, Core e Parser precisam de cobertura de ramos
+padronizada e nova coleta antes de comparar a linha de base de M5. M6 não tem série histórica na R1/R2.
+Ausência de dados não vale zero e não comprova portões nem pisos. Pesos iguais são o padrão configurável;
+a implementação não registra aprovação das decisões D6 a D9 pela equipe.
+""")
+    st.markdown(f"[Plano e critérios]({config.PLANO_QUALIDADE_URL}) · [Metas e limitações]({config.METAS_QUALIDADE_URL})")
+    st.dataframe(qrapids.catalogo(), use_container_width=True, hide_index=True)
 
     layout.secao("Fontes e responsabilidades", "Por que cada informação vem de onde vem?")
     st.markdown(f"""
@@ -67,7 +85,7 @@ existem no snapshot mais recente da API (sem histórico): num período que termi
 | **SonarCloud** | {layout.etiqueta('SONAR')} | qualidade técnica: cobertura, duplicação, bugs, vulnerabilidades, code smells, hotspots, dívida técnica, ratings, Quality Gate, testes; medidas por arquivo (complexidade, comentários, duplicação, cobertura, violações bloqueantes/críticas) para o modelo Q-Rapids | `metrics.yml` de cada repositório → `data/*.json`; API do SonarCloud → `scripts/coleta_sonar.py` → `data/sonar/` | a cada execução do pipeline; API diária (workflow `coleta-dados.yml`) |
 | **Zenhub** | {layout.etiqueta('ZENHUB')} | gestão ágil: sprints, story points, velocity, backlog, pipelines, épicos, releases, throughput | API GraphQL → `scripts/coleta_velocity.py` → `data/zenhub/velocity/` | diária (workflow `coleta-dados.yml`) ou botão na página do Zenhub |
 | **Planilha** | {layout.etiqueta('PLANILHA')} | só o que não existe nas outras: custos, time por semana, riscos, monitoramento, decisões | abas publicadas no Google em CSV (`config.PLANILHAS`); sem cópia local | a cada {config.CACHE_PLANILHAS_S // 60} min (local) ou a cada deploy (GitHub Pages) |
-| **GitHub** | {layout.etiqueta('GITHUB')} | processo: execuções e resultado da CI; issues (labels, descrição, milestone) e commits com arquivos alterados para o modelo Q-Rapids | API do GitHub → `scripts/coleta_github.py` → `data/github/` (`runs-`, `issues-`, `commits-`); `metrics.yml` → `GitHub_API-Runs-*.json` | 3 vezes por dia (workflow `coleta-dados.yml`) e a cada execução do pipeline |
+| **GitHub** | {layout.etiqueta('GITHUB')} | processo: execuções e resultado da CI; issues (labels, descrição, milestone) e commits com arquivos alterados para o modelo Q-Rapids | API do GitHub → `scripts/coleta_github.py` → `data/github/` (`runs-`, `issues-`, `commits-`); `metrics.yml` → `GitHub_API-Runs-*.json` | diária (workflow `coleta-dados.yml`) e a cada execução do pipeline |
 | **Calculado** | {layout.etiqueta('CALCULADO')} | indicadores derivados (EVM, variações, status) | `src/metrics/` — funções puras, com testes em `tests/` | a cada abertura do painel |
 """, unsafe_allow_html=True)
     st.markdown("A planilha **não repete** nenhum dado do Sonar ou do Zenhub: nenhum ponto, sprint ou métrica de "

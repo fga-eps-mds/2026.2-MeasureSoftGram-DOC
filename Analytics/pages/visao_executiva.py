@@ -16,10 +16,10 @@ from src.metrics.calculations import data_br, release_atual
 # (tema, prefixo do indicador em resumo.indicadores, fonte)
 CARTOES = [
     ("Prazo", "SPI da", "CALCULADO"), ("Custo", "CPI (custo)", "CALCULADO"),
-    # Qualidade: nota agregada do Q-Rapids (normalizada, ponderada e agregada, como a R2 pede); a cobertura
-    # sozinha não representa a qualidade e vira só reserva quando a nota não puder ser calculada.
+    # Qualidade: indicadores estratégicos do plano Q-Rapids (valor contra piso e meta da R3); a cobertura
+    # sozinha não representa a qualidade e vira só reserva quando os indicadores não puderem ser calculados.
     ("Entrega", "Taxa de conclusão das sprints", "ZENHUB"),
-    ("Qualidade", ("Nota de qualidade Q-Rapids", "Cobertura"), "SONAR"),
+    ("Qualidade", ("Indicadores Q-Rapids na meta", "Cobertura"), "SONAR"),
     ("Riscos", "Riscos elevados", "PLANILHA"), ("Integração contínua", "Sucesso da CI (testes)", "GITHUB"),
 ]
 

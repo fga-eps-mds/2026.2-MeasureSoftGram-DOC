@@ -204,7 +204,7 @@ def analise_critica(u, aceite: dict | None = None) -> dict[str, str]:
     ``agile.sp_aguardando_aceite``. Devolve ``curvas``, ``indices`` e ``burndown``; chave ausente = sem
     leitura possível (dado indisponível). Cada texto diz o que a curva indica e que decisão ela apoia.
     """
-    from src.metrics.calculations import brl, num, pct
+    from src.metrics.calculations import brl, num
     fila = _fila_aceite(aceite)
     saida: dict[str, str] = {}
 

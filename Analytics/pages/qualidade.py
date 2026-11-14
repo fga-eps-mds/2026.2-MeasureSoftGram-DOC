@@ -1,12 +1,13 @@
-"""Qualidade (Q-Rapids) — nota de qualidade do produto e modelo completo, do dado bruto à nota.
+"""Qualidade (Q-Rapids) — os quatro indicadores estratégicos do plano de qualidade, do dado bruto ao indicador.
 
-Duas visões, cada número com fórmula, peso, limiar e de onde veio:
+Segue ``docs/planejamento/selecaometricas.mdx`` (quais métricas entram) e ``docs/planejamento/metas.mdx``
+(fórmula, metas da R3, piso e portões). O cálculo está em ``src/metrics/qrapids.py``; esta página só mostra:
 
-1. **Nota do notebook (oficial)** — o mesmo cálculo do notebook da disciplina
-   (``src/metrics/qualidade.py``; o teste ``tests/test_qualidade_notebook.py`` garante que o número é
-   igual ao do notebook em todas as coletas). Árvore: nota total → aspecto → fator → métrica → arquivos.
-2. **Modelo Q-Rapids completo** — todas as métricas do *Q-Rapids Quality Model* (``src/metrics/qrapids.py``):
-   indicadores estratégicos → fatores → métricas → dado bruto, com o que não tem fonte explicado.
+1. **Indicadores estratégicos** — Product Quality, Blocking, Process Performance e Product Readiness em
+   R1, R2 e hoje, com meta da R3, piso (valor da R2), situação e portões;
+2. **Fatores e métricas** — a conta de cada fator e cada métrica com fórmula, dado bruto e fonte;
+3. **Evolução dos indicadores** — R1 → R2 → hoje contra a meta, e a série de M9 por sprint;
+4. **Portões e catálogo** — as condições obrigatórias e as 44 métricas do Q-Rapids com a decisão do plano.
 """
 
 from __future__ import annotations
@@ -16,345 +17,324 @@ import pandas as pd
 import streamlit as st
 
 import config
+from src import theme
 from src.components import charts, filters, layout, rastreio
 from src.components.kpi import kpi
-from src.data.sonar import nome_curto
 from src.metrics import qrapids
-from src.metrics import qualidade as nq
-from src.metrics.calculations import data_br
 
 ESCOPO = {
-    "release": "define o período padrão e a comparação R1 × R2",
-    "periodo": "nota na última coleta até o fim do período; evolução e métricas de processo dentro do período",
+    "release": None,
+    "periodo": None,
     "repos": "repositórios avaliados (métricas do Sonar, CI e issues)",
     "branch": "coletas do pipeline desta branch",
 }
-TODOS = "Todos (média dos repositórios)"
-PESOS, LIM = config.QRAPIDS["pesos"], config.QRAPIDS["limiares"]
-JSON_BASE = "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/Analytics/data/"
+PLANO = config.QRAPIDS["plano"]
+LIM = config.QRAPIDS["limiares"]
+JANELAS = ("R1", "R2", "Atual")
+STATUS_KPI = {"Parcial": "neutral","🟢 Atingido": "good", "🟡 Em evolução": "warning", "🔴 Abaixo do piso": "critical"}
+CORES = [theme.SEQUENCIAL[6], theme.IDV["secundaria"], theme.NEUTRO, theme.SEQUENCIAL[3]]
 
 
 def _n(v, casas=2) -> str:
     return "—" if v is None or (isinstance(v, float) and pd.isna(v)) else f"{v:.{casas}f}".replace(".", ",")
 
 
-def _status(v) -> str | None:
-    if v is None or pd.isna(v):
-        return None
-    return "good" if v >= 0.7 else ("warning" if v >= 0.5 else "critical")
-
-
 def _menus():
     layout.menus([
-        ("Métrica avaliada", "proporção de 0 a 1 (1 = melhor) calculada a partir do dado bruto",
-         "ex.: arquivos não complexos ÷ total de arquivos", [("q-rapids model-doc.pdf",
-                                                            "https://github.com/fga-eps-mds/Analytics")]),
-        ("Fator", "agrupa métricas de um mesmo assunto (qualidade do código, situação dos testes...)",
-         "Σ peso × métrica", []),
-        ("Aspecto / indicador", "característica de qualidade (ISO 25010) ou indicador estratégico do Q-Rapids",
-         "nota oficial: fator × peso do aspecto; modelo completo: média dos fatores calculados", []),
-        ("0 por falta de dado", "regra do notebook: métrica que não pode ser calculada vale 0",
-         "marcada na tela para não ser confundida com 0 medido", []),
-        ("Situação da métrica (modelo completo)", "Calculada, Sem dado no recorte, Coleta pendente, Sem fonte no "
-         "projeto, Repete outra métrica, Só informativa", "só as Calculadas entram na média", []),
+        ("Indicador estratégico", "Product Quality, Blocking, Process Performance ou Product Readiness",
+         "soma ponderada dos fatores; padrão 1/n configurável; fator sem dado sai do denominador",
+         [("metas.mdx", "https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/planejamento/metas/")]),
+        ("Fator", "agrupa métricas de um mesmo assunto (ex.: Code Quality = M1 e M2)",
+         "média simples das métricas incluídas, todas em 0–1 (1 = melhor)", []),
+        ("Métrica incluída", "uma das 10 métricas que entram na agregação (M1, M2, M3, M5, M6, M7, M8, M9, M10, DT)",
+         "dado bruto → limiar ou função de utilidade → valor de 0 a 1",
+         [("selecaometricas.mdx",
+           "https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/planejamento/selecaometricas/")]),
+        ("Métrica monitorada", "aparece no painel e pode gerar alerta, mas não tem peso em nenhum fator",
+         "valor calculado, fora de qualquer média", []),
+        ("Meta da R3", "meta de 30/11 definida na métrica; a do fator é a média das metas das métricas e a do "
+         "indicador é a fórmula aplicada às metas dos fatores, truncada em 2 casas", "ver metas.mdx", []),
+        ("Piso", "valor do indicador na R2: abaixo dele o indicador regrediu", "🔴 abaixo do piso · 🟡 entre o piso "
+         "e a meta · 🟢 na meta ou acima, com todos os portões passando", []),
+        ("Portão", "condição obrigatória fora da média (M8 em minutos, metas globais da disciplina)",
+         "o indicador só conta como atingido se a meta e todos os seus portões passarem", []),
+        ("Atual", "do dia seguinte à entrega da R2 até hoje; no Sonar, a última coleta até lá",
+         "M9 usa a última sprint concluída; DT usa a release em andamento (parcial)", []),
     ], [
+        *[(f"Meta · {qrapids.METRICAS[k][0]} {qrapids.METRICAS[k][1]}", f"≥ {_n(v)}", "config.py · QRAPIDS['plano']",
+           rastreio.codigo()) for k, v in PLANO["metas"].items()],
+        ("Portão M8", f"mediana ≤ {PLANO['portao_ci_mediana_min']:g} min", "config.py · QRAPIDS['plano']", rastreio.codigo()),
+        ("Meta de cobertura global (R3)", f"≥ {config.METAS['coverage']['R3']:g}%", "config.py · METAS", rastreio.codigo()),
+        ("Meta de duplicação global (R3)", f"≤ {config.METAS['duplicated_lines_density']['R3']:g}%",
+         "config.py · METAS", rastreio.codigo()),
         *[(f"Limiar · {k}", str(v), "config.py · QRAPIDS['limiares']", rastreio.codigo()) for k, v in LIM.items()],
-        *[(f"Peso · {k}", str(v), "config.py · QRAPIDS['pesos']", rastreio.codigo()) for k, v in PESOS.items()],
     ], fontes=["SONAR", "GITHUB", "ZENHUB", "CALCULADO"])
 
 
-# ───────────────────────── nota do notebook ─────────────────────────
+# ───────────────────────── indicadores estratégicos ─────────────────────────
 
-def _media(notas: dict, caminho, metrica: str | None = None) -> float | None:
-    return qrapids.media_repos(notas, caminho, metrica)[0]
-
-
-def _tabela_repos(notas: dict) -> pd.DataFrame:
-    linhas = []
-    for repo, n in sorted(notas.items()):
-        a = n["avaliacao"]
-        linhas.append({"Repositório": nome_curto(repo), "Nota total": a["total"],
-                       "Manutenibilidade": a["aspectos"]["manutenibilidade"]["valor"],
-                       "Confiabilidade": a["aspectos"]["confiabilidade"]["valor"],
-                       **{nq.METRICAS[m][0].split(" (")[0]: r["valor"] for m, r in a["metricas"].items()},
-                       "Arquivos na base": a["arquivos_base"], "Linguagem": a["linguagem"],
-                       "Zeros por falta de dado": ", ".join(nq.METRICAS[m][0].split(" (")[0]
-                                                            for m, r in a["metricas"].items() if r["zero_por_falta"]),
-                       "Coleta": n["coleta"], "Arquivo .json": layout.link_celula(JSON_BASE + n["arquivo"],
-                                                                                  n["arquivo"])})
-    return pd.DataFrame(linhas)
-
-
-def _notebook(notas: dict, sel: str | None):
-    a_sel = notas[sel]["avaliacao"] if sel else None
-
-    def val(fn, metrica=None):
-        return fn(a_sel) if a_sel else _media(notas, fn, metrica)
-
-    fora = qrapids.media_repos(notas, lambda a: a["total"])[1]
-
-    total = val(lambda a: a["total"])
-    man = val(lambda a: a["aspectos"]["manutenibilidade"]["valor"])
-    con = val(lambda a: a["aspectos"]["confiabilidade"]["valor"])
-    alvo = nome_curto(sel) if sel else f"média de {len(notas) - len(fora)} repositórios"
-    layout.secao("Nota de qualidade", f"Qual é a qualidade do produto ({alvo}) e de onde vem a nota?",
-                 ["SONAR", "CALCULADO"])
-    k = st.columns(3)
-    with k[0]:
-        kpi("Nota total", _n(total), "CALCULADO", status=_status(total),
-            nota=f"{PESOS['manutenibilidade']:g} × Manutenibilidade + {PESOS['confiabilidade']:g} × Confiabilidade"
-                 f" = {PESOS['manutenibilidade']:g} × {_n(man)} + {PESOS['confiabilidade']:g} × {_n(con)}")
-    with k[1]:
-        kpi("Manutenibilidade", _n(man), "CALCULADO", status=_status(man), nota="= Qualidade do código")
-    with k[2]:
-        kpi("Confiabilidade", _n(con), "CALCULADO", status=_status(con), nota="= Situação dos testes")
-    if fora and not sel:
-        layout.alerta("warning", f"Fora da média por não terem nenhum dado no .json do pipeline: {', '.join(fora)}. "
-                                 "No notebook a nota deles seria 0 (regra: métrica sem dado vale 0). Ver o motivo na "
-                                 "tabela por repositório.")
-    st.caption("Escala de 0 a 1 (1 = melhor). Status: ≥ 0,7 conforme · 0,5 a 0,7 atenção · < 0,5 crítico "
-               "(faixas de leitura do painel, não do notebook). No notebook, Manutenibilidade e Confiabilidade já "
-               "saem multiplicadas por 0,5; aqui elas aparecem de 0 a 1 e o 0,5 entra na nota total — o total é o "
-               "mesmo. **Nota total** = a do notebook (oficial da disciplina). Segurança não faz parte do modelo "
-               "Q-Rapids: a nota de segurança do SonarCloud está na página Qualidade técnica.")
-
-    layout.secao("Por repositório", "Como cada repositório se sai e de qual coleta veio o número?", ["SONAR"])
-    t = _tabela_repos(notas)
-    num = {c: st.column_config.ProgressColumn(c, min_value=0, max_value=1, format="%.2f")
-           for c in ("Nota total", "Manutenibilidade", "Confiabilidade")}
-    num.update({nq.METRICAS[m][0].split(" (")[0]: st.column_config.NumberColumn(format="%.2f") for m in nq.METRICAS})
-    st.dataframe(t, use_container_width=True, hide_index=True, column_config={
-        **num, "Coleta": st.column_config.DatetimeColumn("Coleta", format="DD/MM/YYYY HH:mm"),
-        "Arquivo .json": layout.coluna_link("Arquivo .json", help="abre o .json do pipeline no GitHub")})
-    csv = t.assign(**{"Arquivo .json": t["Arquivo .json"].map(layout.texto_de_link)})
-    st.download_button("Baixar CSV (nota por repositório)", csv.to_csv(index=False).encode("utf-8-sig"),
-                       file_name="qualidade_notebook_por_repositorio.csv", mime="text/csv", key="csv_q_repos")
-
-    layout.secao("Como a nota foi calculada", "Do aspecto até o arquivo: qual número entra em qual conta?",
-                 ["SONAR", "CALCULADO"])
-    st.caption(f"Detalhando: **{alvo}**. Escolha um repositório em *Repositório do detalhamento*, na barra lateral, "
-               "para ver os arquivos de cada métrica.")
-    for asp, (nome_asp, fator) in nq.ASPECTOS.items():
-        nome_f, _, metricas = nq.FATORES[fator]
-        vf = val(lambda a, fator=fator: a["fatores"][fator]["valor"])
-        partes = [(m, val(lambda a, m=m: a["metricas"][m]["valor"], m)) for m in metricas]
-        conta = " + ".join(f"{PESOS[m]:g} × {_n(v)}" for m, v in partes)
-        with st.expander(f"{nome_asp} = {_n(vf)}  ·  {nome_f} = {conta} (× {PESOS[fator]:g})", expanded=True):
-            linhas = []
-            for m, v in partes:
-                nome, _, _, regra, formula = nq.METRICAS[m]
-                if a_sel:
-                    r = a_sel["metricas"][m]
-                    calc = (f"{int(r['numerador']) if r['numerador'] is not None else '—'} ÷ "
-                            f"{int(r['denominador']) if r['denominador'] is not None else '—'}")
-                    obs = r["zero_por_falta"] or r.get("observacao", "")
-                else:
-                    calc = "média dos repositórios com o dado"
-                    obs = ", ".join(nome_curto(rp) for rp, n in notas.items()
-                                    if n["avaliacao"]["metricas"][m]["zero_por_falta"])
-                    obs = f"fora da média (sem o dado; no notebook valeria 0): {obs}" if obs else ""
-                linhas.append({"Métrica": nome, "Regra (limiar)": regra, "Fórmula": formula, "Conta": calc,
-                               "Valor": v, "Peso": PESOS[m], "Contribuição": (v or 0) * PESOS[m] * PESOS[fator],
-                               "Observação": obs})
-            st.dataframe(pd.DataFrame(linhas), use_container_width=True, hide_index=True, column_config={
-                "Valor": st.column_config.ProgressColumn("Valor", min_value=0, max_value=1, format="%.2f"),
-                "Contribuição": st.column_config.NumberColumn(format="%.3f"),
-                "Fórmula": st.column_config.TextColumn(width="medium"),
-                "Observação": st.column_config.TextColumn(width="large")})
-            abas = st.tabs([nq.METRICAS[m][0].split(" (")[0] for m in metricas])
-            for aba, m in zip(abas, metricas):
-                with aba:
-                    _dado_bruto(notas, sel, m)
-
-
-def _dado_bruto(notas, sel, m):
-    nome, _, _, regra, _ = nq.METRICAS[m]
-    if not sel:
-        d = pd.DataFrame([{"Repositório": nome_curto(rp), "Numerador": n["avaliacao"]["metricas"][m]["numerador"],
-                           "Denominador": n["avaliacao"]["metricas"][m]["denominador"],
-                           "Valor": n["avaliacao"]["metricas"][m]["valor"],
-                           "0 por falta de dado": n["avaliacao"]["metricas"][m]["zero_por_falta"] or ""}
-                          for rp, n in sorted(notas.items())])
-        st.dataframe(d, use_container_width=True, hide_index=True, column_config={
-            "Valor": st.column_config.NumberColumn(format="%.2f")})
-        return
-    r = notas[sel]["avaliacao"]["metricas"][m]
-    st.caption(f"Regra: **{regra}** · {nome_curto(sel)}, coleta {data_br(notas[sel]['coleta'], True)} "
-               f"(`{notas[sel]['arquivo']}`)" + (f" · {r['observacao']}" if r.get("observacao") else ""))
-    if r["zero_por_falta"]:
-        layout.indisponivel(f"{nome}: 0 por falta de dado", r["zero_por_falta"])
-        return
-    itens = r["itens"]
-    if itens is None or itens.empty:
-        st.caption("Sem itens.")
-        return
-    t = itens.rename(columns={"componente": "Arquivo / pasta / suíte", "valor": "Valor medido",
-                              "passa": "Passa no limiar", "sem_tempo": "Sem tempo (conta 0 ms)",
-                              "testes": "Testes", "erros": "Erros", "falhas": "Falhas"})
-    if "Passa no limiar" in t:
-        n_nao = int((~t["Passa no limiar"]).sum())
-        st.caption(f"{len(t)} itens · {n_nao} não passam — são eles que puxam a métrica para baixo.")
-    st.dataframe(t, use_container_width=True, hide_index=True, height=min(420, 38 + 35 * len(t)),
-                 column_config={"Valor medido": st.column_config.NumberColumn(format="%.2f")})
-    st.download_button("Baixar CSV", t.to_csv(index=False).encode("utf-8-sig"),
-                       file_name=f"qualidade_{m}_{nome_curto(sel)}.csv", mime="text/csv", key=f"csv_q_{m}")
-
-
-# ───────────────────────── modelo completo ─────────────────────────
-
-def _completo(res: dict):
-    layout.secao("Indicadores estratégicos do Q-Rapids", "Como está o produto e o processo em cada indicador?",
+def _indicadores(av: dict):
+    ind = av["indicadores"]
+    layout.secao("Indicadores estratégicos", "Onde está cada indicador em relação ao piso (R2) e à meta da R3?",
                  ["SONAR", "GITHUB", "ZENHUB", "CALCULADO"])
-    ind = res["indicadores"]
-    k = st.columns(len(ind))
-    for col, r in zip(k, ind.itertuples()):
+    cols = st.columns(len(ind))
+    for col, r in zip(cols, ind.itertuples()):
         with col:
-            kpi(r.nome.split(" (")[0], _n(r.valor) if r.valor is not None and not pd.isna(r.valor) else None,
-                "CALCULADO", status=_status(r.valor),
-                nota=f"média de {r.fatores_na_media} de {r.fatores} fatores" if r.fatores_na_media else
-                "nenhum fator com métrica calculada")
-    cont = qrapids.resumo_situacao(res["metricas"])
-    st.caption(f"{len(res['metricas'])} métricas do model-doc · " + " · ".join(f"{k}: {v}" for k, v in cont.items() if v)
-               + ". O model-doc não fixa pesos: fator = média das métricas calculadas; indicador = média dos fatores.")
+            ok = {True: "portões ok", False: "portão reprovado", None: "portão sem dado"}[r.portoes_ok]
+            kpi(r.nome, _n(r.Atual) if pd.notna(r.Atual) else None, "CALCULADO", status=STATUS_KPI.get(r.situacao),
+                nota=f"{r.situacao} · meta ≥ {_n(r.meta)} · piso {_n(r.piso)} (R2) · {ok} · pisos por repo: {'ok' if r.restricoes_ok else 'não comprovados'}")
+    ate = av["janelas"]["Atual"][1]
+    st.caption(f"Escala de 0 a 1 (1 = melhor). Atual = 27/10 a {ate:%d/%m/%Y}. Situação: 🔴 abaixo do piso (valor da R2) · "
+               "🟡 entre o piso e a meta · 🟢 na meta, com todos os portões passando.")
 
+    layout.secao("Resumo das metas", "Quanto cada indicador valia na R1 e na R2 e quanto falta para a meta?", ["CALCULADO"])
+    gates = {r.nome: _gates(av["portoes"], r.nome) for r in ind.itertuples()}
+    t = pd.DataFrame([{"Indicador": r.nome, "Fatores avaliados": r.avaliados, "R1": r.R1, "R2 (piso)": r.R2,
+                       "Atual": r.Atual, "n R1": r.n_R1, "n R2": r.n_R2, "n Atual": r.n_Atual, "Meta R3": r.meta, "Situação": r.situacao, "Portões": gates[r.nome]}
+                      for r in ind.itertuples()])
+    st.dataframe(t, use_container_width=True, hide_index=True, column_config={
+        **{c: st.column_config.NumberColumn(c, format="%.2f") for c in ("R1", "R2 (piso)", "Atual")},
+        "Meta R3": st.column_config.NumberColumn("Meta R3", format="≥ %.2f"),
+        "Portões": st.column_config.TextColumn(width="large")})
+    st.caption("Blocking na R1 e na R2 usa 2 fatores: a coleta de violações por arquivo (Blocking Code) só existe a "
+               "partir de 07/11. Product Readiness em andamento é parcial e só deve ser comparado ao piso no "
+               "fechamento da release.")
+    csv = t.to_csv(index=False).encode("utf-8-sig")
+    st.download_button("Baixar CSV (indicadores)", csv, file_name="qrapids_indicadores.csv", mime="text/csv",
+                       key="csv_q_ind")
+
+    layout.secao("Portões obrigatórios", "Quais condições ficam fora da média e precisam passar?",
+                 ["SONAR", "GITHUB", "CALCULADO"])
+    _portoes(av["portoes"])
+    layout.secao("Pisos por repositório", "A média esconde algum repositório abaixo do piso obrigatório?", ["CALCULADO"])
+    st.dataframe(av["restricoes"], use_container_width=True, hide_index=True)
+    st.caption("M5 ≥ 0,80 e M10 ≥ 0,90 em cada repositório. Sem dados ou abaixo do piso, o indicador não é atingido.")
+
+
+def _gates(port: pd.DataFrame, indicador: str) -> str:
+    x = port[port["indicador"].str.contains(indicador, regex=False)]
+    if x.empty:
+        return "—"
+    return " · ".join(("✅ " if p is True else "❌ " if p is False else "⚪ ") + g.split(" em cada")[0].split(" em ")[0]
+                      for g, p in zip(x["portao"], x["passa"]))
+
+
+def _portoes(port: pd.DataFrame):
+    t = port.assign(Situação=port["passa"].map({True: "✅ Passa", False: "❌ Reprova"}).fillna("⚪ Sem dado"))
+    st.dataframe(t.rename(columns={"portao": "Portão", "indicador": "Indicador", "detalhe": "Detalhe"})[
+        ["Portão", "Indicador", "Situação", "Detalhe"]], use_container_width=True, hide_index=True,
+        column_config={"Detalhe": st.column_config.TextColumn(width="large")})
+    st.caption("Os portões não entram na média: são metas globais da disciplina (cobertura, duplicação) ou grandezas "
+               "fora de 0–1 (M8). Cobertura e duplicação usam o último valor global de cada repositório no SonarCloud.")
+
+
+# ───────────────────────── fatores e métricas ─────────────────────────
+
+def _fatores_e_metricas(av: dict):
+    res = av["res"]["Atual"]
+    met, fat = av["metricas"], av["fatores"].set_index("fator")
+    ind = av["indicadores"].set_index("indicador")
     por_fator = {}
     for r in res["metricas"]:
         por_fator.setdefault(r.fator, []).append(r)
-    fat = res["fatores"].set_index("fator")
     for ic, (nome_i, desc, fatores) in qrapids.INDICADORES.items():
-        vi = ind.set_index("indicador").loc[ic, "valor"]
-        layout.secao(f"{nome_i} = {_n(vi)}", desc)
+        avaliados = qrapids.AVALIADOS[ic]
+        formula = " + ".join(qrapids.FATORES[fc][0] for fc in avaliados)
+        layout.secao(f"{nome_i} = {_n(ind.loc[ic, 'Atual'])}",
+                     f"{desc}. Fatores: {formula} · n disponível = {int(ind.loc[ic, 'fatores_na_media'])} · "
+                     f"meta ≥ {_n(ind.loc[ic, 'meta'])}")
+        st.markdown(f"[Fórmula e justificativa do indicador]({config.METAS_QUALIDADE_URL}#indicador-{ic})")
         for fc in fatores:
-            nome_f, aspecto, tipo = qrapids.FATORES[fc]
-            vf = fat.loc[fc, "valor"]
+            nome_f, tipo, motivo = qrapids.FATORES[fc]
             mets = por_fator.get(fc, [])
-            calc = [r for r in mets if r.situacao == qrapids.CALCULADA]
+            incl = [r for r in mets if r.decisao == qrapids.INCLUIDA]
+            calc = [r for r in incl if r.na_media]
             conta = " + ".join(_n(r.valor) for r in calc)
-            titulo = (f"{nome_f} = {_n(vf)}" + (f"  ·  ({conta}) ÷ {len(calc)}" if len(calc) > 1 else "")
-                      + f"  ·  aspecto {aspecto}, fator de {tipo}")
+            vf = fat.loc[fc, "Atual"]
+            if fc in avaliados:
+                titulo = (f"{nome_f} = {_n(vf)}" + (f"  ·  ({conta}) ÷ {len(calc)}" if len(calc) > 1 else "")
+                          + f"  ·  meta ≥ {_n(fat.loc[fc, 'meta'])}  ·  fator de {tipo}")
+            else:
+                titulo = f"{nome_f}  ·  fora do cálculo: {motivo}  ·  fator de {tipo}"
             with st.expander(titulo, expanded=False):
-                t = pd.DataFrame([{"Métrica": r.nome, "Situação": qrapids.ROTULO[r.situacao], "Valor (0–1)": r.valor,
-                                   "Número bruto": r.bruto, "Fórmula": r.formula, "Dado bruto": r.dado_bruto,
-                                   "Fonte": r.fonte, "Observação": r.motivo} for r in mets])
-                st.dataframe(t, use_container_width=True, hide_index=True, column_config={
-                    "Valor (0–1)": st.column_config.ProgressColumn("Valor (0–1)", min_value=0, max_value=1,
-                                                                  format="%.2f"),
-                    "Fórmula": st.column_config.TextColumn(width="medium"),
-                    "Observação": st.column_config.TextColumn(width="large")})
+                if not mets:
+                    st.caption("Nenhuma métrica incluída nem monitorada neste fator: " + motivo + ".")
+                    continue
+                st.markdown(f"[Fórmula e justificativa no plano]({config.METAS_QUALIDADE_URL}#fator-{fc})")
+                _tabela_metricas(mets, met)
                 com_dado = [r for r in mets if (r.itens is not None and not r.itens.empty)
                             or (r.por_repo is not None and not r.por_repo.empty)]
                 if com_dado:
-                    abas = st.tabs([r.nome.split(" — ")[0] for r in com_dado])
+                    abas = st.tabs([r.nome for r in com_dado])
                     for aba, r in zip(abas, com_dado):
                         with aba:
                             st.caption(f"{r.descricao} · {r.formula}")
                             if r.por_repo is not None and not r.por_repo.empty:
                                 st.markdown("**Por repositório**")
-                                st.dataframe(r.por_repo, use_container_width=True, hide_index=True)
+                                detalhe = r.por_repo.copy()
+                                detalhe["meta_r3"] = detalhe["repositorio"].map(config.METAS_QRAPIDS["por_repo"].get(r.chave, {}))
+                                if r.chave in PLANO["piso_por_repo"]:
+                                    detalhe["piso"] = PLANO["piso_por_repo"][r.chave]
+                                    detalhe["situacao_piso"] = detalhe["valor"].map(
+                                        lambda v: "Sem dado" if pd.isna(v) else
+                                        ("Passa" if v >= PLANO["piso_por_repo"][r.chave] else "Abaixo do piso"))
+                                    if "zero_por_falta" in detalhe:
+                                        detalhe.loc[detalhe["zero_por_falta"] != "", "situacao_piso"] = "Sem dado"
+                                if r.chave == "ci_feedback_time":
+                                    limite = PLANO["portoes"]["ci_feedback_time"]
+                                    detalhe["Situação"] = detalhe["mediana"].map(
+                                        lambda v: "Crítico" if v > limite["critico"] else
+                                        ("Acima da meta" if v > limite["limiar"] else "Passa"))
+                                _por_linguagem(detalhe, r.chave)
                             if r.itens is not None and not r.itens.empty:
                                 st.markdown(f"**Dado bruto** ({len(r.itens)} itens)")
-                                st.dataframe(r.itens, use_container_width=True, hide_index=True,
-                                             height=min(380, 38 + 35 * len(r.itens)))
-
+                                _por_linguagem(r.itens, r.chave)
     tab = qrapids.tabela(res["metricas"])
-    st.download_button("Baixar CSV (modelo completo)", tab.to_csv(index=False).encode("utf-8-sig"),
-                       file_name="qrapids_modelo_completo.csv", mime="text/csv", key="csv_q_completo")
+    st.download_button("Baixar CSV (métricas)", tab.to_csv(index=False).encode("utf-8-sig"),
+                       file_name="qrapids_metricas.csv", mime="text/csv", key="csv_q_metricas")
 
 
-# ───────────────────────── evolução e R1 × R2 ─────────────────────────
-
-def _evolucao(ctx, f, rec):
-    layout.secao("Evolução da nota", "A qualidade está melhorando ao longo das coletas?", ["SONAR", "CALCULADO"])
-    s = qrapids.serie_notebook(ctx, f, rec)
-    if s.empty:
-        layout.indisponivel("Sem coletas no período", "nenhum .json do pipeline no período escolhido.")
+def _por_linguagem(dados: pd.DataFrame, chave: str):
+    if chave in {"complexity", "duplication", "non_blocking_files"} and "linguagem" in dados:
+        for linguagem, grupo in dados.groupby("linguagem", dropna=False):
+            st.markdown("**" + {"py": "Python", "ts": "TypeScript"}.get(linguagem, str(linguagem)) + "**")
+            st.dataframe(grupo, use_container_width=True, hide_index=True)
     else:
-        s = s.assign(repo=s["repositorio"].map(nome_curto), dia=pd.to_datetime(s["coleta"]).dt.normalize())
-        d = s.sort_values("coleta").drop_duplicates(["repo", "dia"], keep="last")
-        linha = (alt.Chart(d).mark_line(point=True, strokeWidth=2)
-                 .encode(x=alt.X("dia:T", title="Data da coleta", axis=alt.Axis(format="%d/%m")),
-                         y=alt.Y("total:Q", title="Nota total (0 a 1)", scale=alt.Scale(domain=[0, 1])),
-                         color=alt.Color("repo:N", title="Repositório"),
-                         tooltip=[alt.Tooltip("repo:N", title="Repositório"),
-                                  alt.Tooltip("dia:T", title="Data", format="%d/%m/%Y"),
-                                  alt.Tooltip("total:Q", title="Nota", format=".2f"),
-                                  alt.Tooltip("manutenibilidade:Q", format=".2f"),
-                                  alt.Tooltip("confiabilidade:Q", format=".2f")]))
-        charts.mostrar(linha + charts.marcos_release(d["dia"].min(), d["dia"].max()),
-                       "Nota total por repositório", "última coleta de cada dia · pontilhado: entregas das releases",
-                       d[["repo", "dia", "total", "manutenibilidade", "confiabilidade", *nq.METRICAS, "arquivo"]],
-                       altura=300)
+        st.dataframe(dados, use_container_width=True, hide_index=True)
 
-    layout.secao("Comparação entre releases", "A nota melhorou da R1 para a R2?", ["SONAR", "CALCULADO"])
+
+def _tabela_metricas(mets: list, met: pd.DataFrame):
+    m = met.set_index("chave")
     linhas = []
-    for rel in config.RELEASES:
-        ini, fim = filters.janela_release(rel)
-        if ini > ctx.hoje:
-            continue
-        f2 = {**f, "periodo": (ini, fim)}
-        notas = qrapids.notas_por_repo(ctx, f2, filters.sonar(ctx, f2))
-        for repo, n in notas.items():
-            a = n["avaliacao"]
-            linhas.append({"release": rel, "repositorio": nome_curto(repo), "total": a["total"],
-                           "manutenibilidade": a["aspectos"]["manutenibilidade"]["valor"],
-                           "confiabilidade": a["aspectos"]["confiabilidade"]["valor"],
-                           "coleta": n["coleta"]})
-    if not linhas:
-        layout.indisponivel("Sem releases com coleta", "nenhuma release com .json do pipeline até a entrega.")
+    for r in mets:
+        x = m.loc[r.chave]
+        definicao = config.QRAPIDS_DEFINICOES.get(r.chave, {})
+        linhas.append({"Métrica": r.nome, "Decisão do plano": ("Incluída: entra no fator" if r.decisao == qrapids.INCLUIDA
+                                                               else "Monitorada: sem peso"),
+                       "R1": x["R1"], "R2": x["R2"], "Atual": x["Atual"], "Meta R3": x["meta"],
+                       "Tipo de meta": x["tipo_meta"], "Situação": qrapids.ROTULO[r.situacao],
+                       "Conta atual": r.bruto, "Fórmula": r.formula, "Dado bruto": r.dado_bruto, "Fonte": r.fonte,
+                       "Observação": r.motivo, "Justificativa": definicao.get("justificativa", "Acompanhamento sem peso"),
+                       "Plano": config.PLANO_QUALIDADE_URL + "#" + r.codigo.lower() if r.codigo != "—" else
+                                config.PLANO_QUALIDADE_URL + "#3-métricas-excluídas"})
+    st.dataframe(pd.DataFrame(linhas), use_container_width=True, hide_index=True, column_config={
+        **{c: st.column_config.NumberColumn(c, format="%.2f") for c in ("R1", "R2", "Atual")},
+        "Meta R3": st.column_config.NumberColumn("Meta R3", format="≥ %.2f"),
+        "Fórmula": st.column_config.TextColumn(width="medium"),
+        "Observação": st.column_config.TextColumn(width="large"),
+        "Plano": st.column_config.LinkColumn("Justificativa no plano", display_text="Abrir plano")})
+    if any(r.chave == "ci_feedback_time" for r in mets):
+        st.caption("M8 está em minutos (mediana do test.yml): é portão e fica fora da média do fator.")
+
+
+# ───────────────────────── evolução dos indicadores ─────────────────────────
+
+def _evolucao(av: dict):
+    layout.secao("Evolução dos indicadores", "Os indicadores estão melhorando da R1 para hoje e chegam à meta da R3?",
+                 ["SONAR", "GITHUB", "ZENHUB", "CALCULADO"])
+    ind = av["indicadores"]
+    ate = av["janelas"]["Atual"][1]
+    ordem = ["R1", "R2", f"Atual ({ate:%d/%m})", "Meta R3"]
+    linhas = []
+    for r in ind.itertuples():
+        for rel, v in (("R1", r.R1), ("R2", r.R2), (ordem[2], r.Atual)):
+            linhas.append({"Indicador": r.nome, "Ponto": rel, "Valor": v, "Tipo": "Valor"})
+        linhas.append({"Indicador": r.nome, "Ponto": "Meta R3", "Valor": r.meta, "Tipo": "Meta"})
+    d = pd.DataFrame(linhas).dropna(subset=["Valor"])
+    nomes = list(ind["nome"])
+    cor = alt.Color("Indicador:N", scale=alt.Scale(domain=nomes, range=CORES[:len(nomes)]), title="Indicador")
+    x = alt.X("Ponto:N", sort=ordem, title=None, axis=alt.Axis(labelAngle=0))
+    y = alt.Y("Valor:Q", scale=alt.Scale(domain=[0, 1]), title="Valor do indicador (0 a 1)")
+    tip = [alt.Tooltip("Indicador:N"), alt.Tooltip("Ponto:N"), alt.Tooltip("Valor:Q", format=".2f")]
+    linha = alt.Chart(d[d["Tipo"] == "Valor"]).mark_line(point=True, strokeWidth=2).encode(x=x, y=y, color=cor, tooltip=tip)
+    meta = alt.Chart(d[d["Tipo"] == "Meta"]).mark_point(shape="diamond", size=140, filled=True, opacity=.9).encode(
+        x=x, y=y, color=cor, tooltip=tip)
+    charts.mostrar(linha + meta, "Indicadores estratégicos: R1, R2, atual e meta da R3",
+                   "losango = meta da R3 · a R2 é o piso de cada indicador",
+                   d.drop(columns="Tipo"), altura=320)
+
+    layout.secao("Fatores por release", "Qual fator puxa cada indicador?", ["CALCULADO"])
+    f = av["fatores"]
+    f = f[f["R1"].notna() | f["R2"].notna() | f["Atual"].notna()]
+    st.dataframe(f.rename(columns={"nome": "Fator", "tipo": "Tipo", "meta": "Meta R3", "Atual": "Atual"})[
+        ["Fator", "Tipo", "R1", "R2", "Atual", "Meta R3"]], use_container_width=True, hide_index=True,
+        column_config={**{c: st.column_config.NumberColumn(c, format="%.2f") for c in ("R1", "R2", "Atual")},
+                       "Meta R3": st.column_config.NumberColumn("Meta R3", format="≥ %.2f")})
+
+    layout.secao("Métricas por release", "Quais métricas subiram ou caíram desde a R1?", ["CALCULADO"])
+    m = av["metricas"]
+    m = m[m["R1"].notna() | m["R2"].notna() | m["Atual"].notna()]
+    st.dataframe(m.rename(columns={"codigo": "Código", "nome": "Métrica", "decisao": "Decisão", "meta": "Meta R3",
+                                   "tipo_meta": "Tipo de meta"})[
+        ["Código", "Métrica", "Decisão", "R1", "R2", "Atual", "Meta R3", "Tipo de meta"]],
+        use_container_width=True, hide_index=True,
+        column_config={**{c: st.column_config.NumberColumn(c, format="%.2f") for c in ("R1", "R2", "Atual")},
+                       "Meta R3": st.column_config.NumberColumn("Meta R3", format="≥ %.2f")})
+    st.caption("M8 está em minutos (mediana do test.yml); as demais, de 0 a 1.")
+
+    _m9_por_sprint(av)
+
+
+def _m9_por_sprint(av: dict):
+    layout.secao("M9 Team throughput por sprint", "Cada sprint fecha o que planejou? A meta vale para cada sprint.",
+                 ["ZENHUB", "CALCULADO"])
+    partes = []
+    for rel in JANELAS:
+        r = next(x for x in av["res"][rel]["metricas"] if x.chave == "team_throughput")
+        if r.itens is not None and not r.itens.empty:
+            partes.append(r.itens.assign(release=rel))
+    if not partes:
+        layout.indisponivel("Sem sprints", "nenhuma sprint com issues no Zenhub nos períodos.")
         return
-    d = pd.DataFrame(linhas)
-    piv = d.pivot_table(index="repositorio", columns="release", values="total").reset_index()
-    rels = [r for r in config.RELEASES if r in piv]
-    if len(rels) >= 2:
-        piv[f"Variação {rels[-2]}→{rels[-1]}"] = piv[rels[-1]] - piv[rels[-2]]
-    st.dataframe(piv.rename(columns={"repositorio": "Repositório"}), use_container_width=True, hide_index=True,
-                 column_config={c: st.column_config.NumberColumn(format="%.2f") for c in piv.columns
-                                if c != "repositorio"})
-    st.caption("Nota total na última coleta até a entrega de cada release (a R2 em andamento usa a coleta mais "
-               "recente). Detalhe com coletas usadas:")
-    layout.tabela(d.assign(coleta=d["coleta"].map(lambda x: data_br(x, True))), "Ver as coletas de cada release")
+    d = pd.concat(partes).drop_duplicates("sprint", keep="last").sort_values("fim")
+    d["Situação"] = d.apply(lambda x: "parcial" if not x["concluida"] else (
+        "na meta" if x["valor"] is not None and x["valor"] >= PLANO["metas"]["team_throughput"] else "abaixo da meta"),
+        axis=1)
+    meta = PLANO["metas"]["team_throughput"]
+    barras = alt.Chart(d.dropna(subset=["valor"])).mark_bar().encode(
+        x=alt.X("sprint:N", sort=list(d["sprint"]), title="Sprint"), y=alt.Y("valor:Q", scale=alt.Scale(domain=[0, 1]),
+                                                                              title="Fechadas ÷ planejadas"),
+        color=alt.Color("Situação:N", scale=alt.Scale(domain=["na meta", "abaixo da meta", "parcial"],
+                                                      range=[theme.cor_status("good"), theme.cor_status("critical"),
+                                                             theme.NEUTRO_CLARO]), title=None),
+        tooltip=[alt.Tooltip("sprint:N", title="Sprint"), alt.Tooltip("fechadas:Q", title="Fechadas"),
+                 alt.Tooltip("planejadas:Q", title="Planejadas"), alt.Tooltip("valor:Q", title="M9", format=".2f")])
+    charts.mostrar(barras + charts.regra_horizontal(meta, f"meta ≥ {_n(meta)}"), "M9 por sprint",
+                   "issues da sprint (sem Epic, pacote de trabalho e Iniciativa) fechadas até 08:00 do dia seguinte ao "
+                   "fim da sprint",
+                   d[["sprint", "release", "fechadas", "planejadas", "valor", "Situação"]], altura=240)
 
 
-# ───────────────────────── parâmetros e dados ─────────────────────────
+# ───────────────────────── catálogo das 44 métricas ─────────────────────────
 
-def _parametros(ctx, f, rec, res):
-    layout.secao("Parâmetros e justificativas", "Por que esses limiares e pesos?", ["CALCULADO"])
-    j = config.QRAPIDS["justificativa"]
-    linhas = [{"Parâmetro": k, "Valor": v, "Origem": "notebook da disciplina / model-doc" if k in (
-        "complexidade_por_funcao", "comentarios_min", "comentarios_max", "duplicacao_max", "cobertura_min",
-        "teste_rapido_ms") else "definido pelo time (model-doc: 'user defined')",
-               "Justificativa do time": j.get(k, "a preencher pelo time")} for k, v in LIM.items()]
-    linhas += [{"Parâmetro": f"peso · {k}", "Valor": v, "Origem": "notebook da disciplina",
-                "Justificativa do time": j.get("pesos", "a preencher pelo time")} for k, v in PESOS.items()]
-    t = pd.DataFrame(linhas)
-    st.dataframe(t, use_container_width=True, hide_index=True,
-                 column_config={"Justificativa do time": st.column_config.TextColumn(width="large")})
-    faltam = int((t["Justificativa do time"] == "a preencher pelo time").sum())
-    if faltam:
-        layout.alerta("warning", f"{faltam} parâmetro(s) sem justificativa do time: a R2 pede métricas "
-                                 "interpretadas pelo time. Preencher em config.py · QRAPIDS['justificativa'].",
-                      link=("config.py", rastreio.codigo()))
-
-    layout.secao("Fidelidade ao notebook", "O número do painel é o mesmo do notebook?", ["CALCULADO"])
-    st.markdown(f"""
-- O cálculo está em [`src/metrics/qualidade.py`]({rastreio.codigo('src/metrics/qualidade.py')}) e segue as funções do
-  notebook `internal_quality_analysis-sonarqube.ipynb` (fga-eps-mds/Analytics).
-- O teste [`tests/test_qualidade_notebook.py`]({rastreio.codigo('tests/test_qualidade_notebook.py')}) roda as funções
-  **copiadas do notebook** (`tests/referencia_notebook.py`) e o painel nos mesmos `.json` de `Analytics/data/` e
-  exige o mesmo resultado em todas as coletas. O teste roda no workflow de coleta a cada atualização dos dados.
-- Regras do notebook mantidas: só arquivos da linguagem do repositório com linhas de código; o mesmo conjunto de
-  arquivos para complexidade, comentários, duplicação e cobertura; testes que passam pela pasta com mais testes;
-  suíte sem tempo conta como rápida; métrica sem dado vale 0 (aqui marcada).
-""")
-
-    layout.secao("Os dados existem?", "Cada métrica do modelo completo tem dado coletado?", ["SONAR", "GITHUB", "ZENHUB"])
-    t = qrapids.tabela(res["metricas"])
-    sit = t.groupby("situacao").size().reset_index(name="métricas")
-    st.dataframe(sit.rename(columns={"situacao": "Situação"}), hide_index=True)
-    pend = t[t["situacao"].isin([qrapids.ROTULO[qrapids.PENDENTE], qrapids.ROTULO[qrapids.SEM_DADO],
-                                 qrapids.ROTULO[qrapids.SEM_FONTE]])]
-    layout.tabela_html(pend, {"fator": "Fator", "metrica": "Métrica", "situacao": "Situação",
-                              "observacao": "O que falta"}, altura=None)
+def _catalogo():
+    layout.secao("Catálogo das 44 métricas do Q-Rapids", "O que o plano decidiu sobre cada métrica?", ["CALCULADO"])
+    cat = qrapids.catalogo()
+    cont = cat["decisao"].value_counts().to_dict()
+    k = st.columns(4)
+    for col, dec, txt in zip(k, (qrapids.INCLUIDA, qrapids.MONITORADA, qrapids.HABILITAVEL, qrapids.EXCLUIDA),
+                             ("entram na agregação e têm meta para a R3", "aparecem no painel, sem peso",
+                              "entram quando o time adotar a prática ou a coleta", "sem fonte, sem fórmula ou repetidas")):
+        with col:
+            kpi(dec + "s" if not dec.endswith("l") else dec[:-1] + "eis", str(cont.get(dec, 0)), "CALCULADO", nota=txt)
+    if cat.empty:
+        layout.indisponivel("Catálogo indisponível", "docs/planejamento/selecaometricas.mdx não foi encontrado neste "
+                            "deploy.", "publicar a pasta docs/ junto com o painel")
+        return
+    st.caption("Catálogo versionado em config.py com as decisões e justificativas do plano publicado.")
+    for dec in (qrapids.INCLUIDA, qrapids.MONITORADA, qrapids.HABILITAVEL, qrapids.EXCLUIDA):
+        x = cat[cat["decisao"] == dec]
+        with st.expander(f"{dec}s ({len(x)})" if dec != qrapids.HABILITAVEL else f"Habilitáveis ({len(x)})",
+                         expanded=False):
+            cols = {"indicador_fator": "Indicador › Fator", "metrica": "Métrica", "justificativa": "Justificativa"}
+            if dec == qrapids.EXCLUIDA:
+                cols = {**cols, "motivo": "Motivo"}
+            if dec == qrapids.HABILITAVEL:
+                cols = {**cols, "condicao": "Condição para incluir"}
+            st.dataframe(x[list(cols)].rename(columns=cols), use_container_width=True, hide_index=True, column_config={
+                "Justificativa": st.column_config.TextColumn(width="large")})
+    st.download_button("Baixar CSV (catálogo)", cat.to_csv(index=False).encode("utf-8-sig"),
+                       file_name="qrapids_catalogo.csv", mime="text/csv", key="csv_q_catalogo")
 
 
 def _seguro(bloco: str, fn, *args):
@@ -372,34 +352,26 @@ def _seguro(bloco: str, fn, *args):
 
 def pagina():
     ctx, f = layout.estado()
-    layout.titulo_pagina("Qualidade (Q-Rapids)", "Nota de qualidade do produto pelo modelo Q-Rapids: do arquivo "
-                         "à nota, com a fórmula de cada passo.", ["SONAR", "GITHUB", "ZENHUB"])
+    layout.titulo_pagina("Qualidade (Q-Rapids)", "Indicadores estratégicos do plano de qualidade: do dado bruto ao "
+                         "indicador, com a fórmula, a meta da R3 e o piso de cada passo.", ["SONAR", "GITHUB", "ZENHUB"])
     _menus()
-    rec = filters.sonar(ctx, f)
-    rec = {**rec, "repos": [r for r in rec["repos"] if r in config.QRAPIDS["linguagem"]]}
-    caixa = filters.da_pagina(f, ESCOPO)
-    notas = qrapids.notas_por_repo(ctx, f, rec)
-    opcoes = [TODOS] + sorted(notas, key=nome_curto)
-    sel = caixa.selectbox("Repositório do detalhamento", opcoes, format_func=lambda r: r if r == TODOS
-                          else nome_curto(r), key="q_repo",
-                          help="a árvore da nota oficial mostra os arquivos deste repositório")
-    sel = None if sel == TODOS else sel
-    st.caption(f"Situação no fim do período ({data_br(rec['fim'])}) · {filters.resumo_ativos(f, ESCOPO)}")
+    filters.da_pagina(f, ESCOPO)
+    av = _seguro("Indicadores Q-Rapids", qrapids.avaliar_releases, ctx, f)
+    if av is None:
+        return
+    st.caption("Comparação fixa R1 × R2 × atual (o período e a release da barra lateral não mudam esta página) · "
+               + (filters.resumo_ativos(f, ESCOPO) or "todos os repositórios"))
 
-    t1, t2, t3, t4 = st.tabs(["Nota do notebook (oficial)", "Modelo Q-Rapids completo", "Evolução e releases",
-                              "Parâmetros e dados"])
+    t1, t2, t3, t4 = st.tabs(["Indicadores estratégicos", "Fatores e métricas", "Evolução dos indicadores",
+                              "Catálogo das métricas"])
     with t1:
-        if not notas:
-            layout.indisponivel("Sem nota de qualidade", "nenhuma coleta do pipeline até o fim do período para os "
-                                "repositórios escolhidos.", "rodar o metrics.yml nos repositórios.")
-        else:
-            _seguro("Nota do notebook", _notebook, notas, sel)
-    res = _seguro("Modelo Q-Rapids completo", qrapids.calcular, ctx, f, rec)
+        _seguro("Indicadores estratégicos", _indicadores, av)
     with t2:
-        if res is not None:
-            _seguro("Modelo Q-Rapids completo", _completo, res)
+        _seguro("Fatores e métricas", _fatores_e_metricas, av)
+        layout.secao("Monitoradas: sem peso nos indicadores", "Alertas de acompanhamento; não compõem a nota.")
+        monitoradas = [r for r in av["res"]["Atual"]["metricas"] if r.decisao == qrapids.MONITORADA]
+        _tabela_metricas(monitoradas, av["metricas"])
     with t3:
-        _seguro("Evolução e releases", _evolucao, ctx, f, rec)
+        _seguro("Evolução dos indicadores", _evolucao, av)
     with t4:
-        if res is not None:
-            _seguro("Parâmetros e dados", _parametros, ctx, f, rec, res)
+        _seguro("Catálogo", _catalogo)
