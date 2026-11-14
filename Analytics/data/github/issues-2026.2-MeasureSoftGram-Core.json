@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-12T03:12:46+00:00",
+ "coletado_em": "2026-11-14T03:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Core",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 28,
+   "title": "feat(security): subcaracteristicas, medidas e esquemas de seguranca no modelo matematico",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-13T22:58:54Z",
+   "closed_at": null,
+   "updated_at": "2026-11-13T23:00:49Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3596,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/28",
+   "author": "devwallyson"
+  },
   {
    "number": 27,
    "title": "fix(quality): violações critical e cobertura ≥ 90% no Core (QA-06, QA-12)",

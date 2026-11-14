@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-13T03:55:27+00:00",
+ "coletado_em": "2026-11-14T03:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 160,
+   "title": "perf(ci): separa o empacotamento do test.yml num job paralelo (QA-16b)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-13T17:14:56Z",
+   "closed_at": "2026-11-13T19:09:09Z",
+   "updated_at": "2026-11-13T19:09:12Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2510,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/160",
+   "author": "devwallyson"
+  },
   {
    "number": 159,
    "title": "test(e2e): cenários de aceitação das faixas de qualidade por critério (US30.01, US30.02, US30.03)",
@@ -1021,11 +1038,11 @@
   {
    "number": 100,
    "title": "chore(front): [TASK08.01] migra para Next 16 com App Router e autenticação no servidor",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-05T17:19:30Z",
-   "closed_at": null,
-   "updated_at": "2026-11-13T03:45:56Z",
+   "closed_at": "2026-11-13T20:25:25Z",
+   "updated_at": "2026-11-13T20:25:28Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -1041,11 +1058,11 @@
   {
    "number": 99,
    "title": "[TASK08.01] Atualizar o Front para Next 16 com App Router e autenticação no servidor",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-05T17:05:03Z",
-   "closed_at": null,
-   "updated_at": "2026-11-13T03:44:03Z",
+   "closed_at": "2026-11-13T20:26:27Z",
+   "updated_at": "2026-11-13T20:26:27Z",
    "labels": [
     "task",
     "frontend"
@@ -1489,11 +1506,11 @@
   {
    "number": 78,
    "title": "build(deps): bump next from 12.2.2 to 15.5.28",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-10-23T19:08:34Z",
-   "closed_at": null,
-   "updated_at": "2026-11-09T15:43:09Z",
+   "closed_at": "2026-11-13T20:27:44Z",
+   "updated_at": "2026-11-13T20:27:48Z",
    "labels": [
     "dependencies",
     "javascript"

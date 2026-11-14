@@ -1,10 +1,29 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-13T03:12:19+00:00",
+ "coletado_em": "2026-11-14T03:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 97,
+   "title": "feat(math_model): suporta recepção e persistência de métricas de projetos GitLab (TASK15.01.03)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-14T00:27:40Z",
+   "closed_at": null,
+   "updated_at": "2026-11-14T00:30:19Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "DiegoCarlito"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2820,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/97",
+   "author": "DiegoCarlito"
+  },
   {
    "number": 96,
    "title": "feat(e2e): URLs dos provedores configuráveis e seed fixo para o E2E de sistema",

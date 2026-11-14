@@ -24,10 +24,10 @@
     "author": "Marcosatc147"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 159,
-    "last_merged_at": "2026-11-12T22:08:09Z",
-    "title": "test(e2e): cenários de aceitação das faixas de qualidade por critério (US30.01, US30.02, US30.03)",
-    "author": "henriquecq"
+    "number": 100,
+    "last_merged_at": "2026-11-13T20:25:25Z",
+    "title": "chore(front): [TASK08.01] migra para Next 16 com App Router e autenticação no servidor",
+    "author": "zzzBECK"
   },
   "2026.2-MeasureSoftGram-Parser": {
     "number": 17,

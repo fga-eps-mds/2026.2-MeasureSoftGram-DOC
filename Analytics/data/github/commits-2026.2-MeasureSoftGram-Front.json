@@ -1,11 +1,1835 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-13T03:12:19+00:00",
+ "coletado_em": "2026-11-14T03:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "230952d0abce2cefdc5bb1130e0327356b714739",
+   "date": "2026-11-13T20:25:24Z",
+   "author": "zzzBECK",
+   "message": "chore(front): [TASK08.01] migra para Next 16 com App Router e autenticação no servidor (#100)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".env.example",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 7
+    },
+    {
+     "filename": ".eslintrc.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 65
+    },
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 5
+    },
+    {
+     "filename": "Dockerfile",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 8
+    },
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "__mocks__/next/ImageMock.js",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "docker-compose-dev.yml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "docker-compose.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/bug12-01-grupo-mesmo-nome.e2e.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/bug12-02-namespace-pessoal.e2e.ts",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 5
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/index.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/fixtures/login-servidor/index.ts",
+     "status": "added",
+     "additions": 37,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/support/api.ts",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 4
+    },
+    {
+     "filename": "e2e/support/fixtures.ts",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 3
+    },
+    {
+     "filename": "e2e/support/mock-service.mjs",
+     "status": "added",
+     "additions": 97,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/support/oauth.ts",
+     "status": "added",
+     "additions": 22,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/support/service.ts",
+     "status": "added",
+     "additions": 69,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/support/session.ts",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 14
+    },
+    {
+     "filename": "e2e/task08-01-login-servidor.e2e.ts",
+     "status": "added",
+     "additions": 332,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/us11-01-login-gitlab.e2e.ts",
+     "status": "modified",
+     "additions": 48,
+     "deletions": 43
+    },
+    {
+     "filename": "e2e/us12-01-importacao-gitlab.e2e.ts",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 6
+    },
+    {
+     "filename": "e2e/us22-01-equalizador.e2e.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/us30-03-velocimetro.e2e.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": "eslint.config.mjs",
+     "status": "added",
+     "additions": 85,
+     "deletions": 0
+    },
+    {
+     "filename": "jest.config.js",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 8
+    },
+    {
+     "filename": "next.config.js",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 23
+    },
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 37,
+     "deletions": 36
+    },
+    {
+     "filename": "playwright.config.ts",
+     "status": "modified",
+     "additions": 32,
+     "deletions": 14
+    },
+    {
+     "filename": "pnpm-lock.yaml",
+     "status": "modified",
+     "additions": 1732,
+     "deletions": 2082
+    },
+    {
+     "filename": "scripts/e2e-acceptance-comment.mjs",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "settings/alias.js",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 6
+    },
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/DashboardProviders.tsx",
+     "status": "added",
+     "additions": 33,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/about/About.tsx",
+     "status": "renamed",
+     "additions": 4,
+     "deletions": 12
+    },
+    {
+     "filename": "src/app/(dashboard)/about/components/CardInfo/CardInfo.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/about/components/CardInfo/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/about/components/CardInfo/tests/CardInfo.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/about/components/ListNavCard/ListNavCard.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/about/components/ListNavCard/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/about/components/ListNavCard/tests/ListNavCard.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/about/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/about/tests/__snapshots__/about.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/about/tests/about.spec.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 3
+    },
+    {
+     "filename": "src/app/(dashboard)/config/ProfileConfig.tsx",
+     "status": "renamed",
+     "additions": 4,
+     "deletions": 11
+    },
+    {
+     "filename": "src/app/(dashboard)/config/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/config/tests/ProfileConfig.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/config/tests/__snapshots__/ProfileConfig.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "src/app/(dashboard)/home/Home.tsx",
+     "status": "renamed",
+     "additions": 6,
+     "deletions": 13
+    },
+    {
+     "filename": "src/app/(dashboard)/home/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/home/test/__snapshots__/home.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 4,
+     "deletions": 4
+    },
+    {
+     "filename": "src/app/(dashboard)/home/test/home.spec.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 4
+    },
+    {
+     "filename": "src/app/(dashboard)/layout.tsx",
+     "status": "added",
+     "additions": 16,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/loading.tsx",
+     "status": "added",
+     "additions": 10,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/organizations/Organizations.tsx",
+     "status": "renamed",
+     "additions": 5,
+     "deletions": 10
+    },
+    {
+     "filename": "src/app/(dashboard)/organizations/hooks/tests/useOrganizationQuery.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/organizations/hooks/useOrganizationQuery.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/organizations/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/organizations/styles.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/organizations/tests/Organizations.spec.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/Products.tsx",
+     "status": "renamed",
+     "additions": 15,
+     "deletions": 32
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/Product.tsx",
+     "status": "renamed",
+     "additions": 5,
+     "deletions": 11
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ProductContent/NoReleasesState/NoReleasesState.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ProductContent/NoReleasesState/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ProductContent/NoReleasesState/tests/NoReleasesState.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ProductContent/ProductContent.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ProductContent/Skeleton/Skeleton.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ProductContent/Skeleton/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ProductContent/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ProductContent/tests/ProductContent.spec.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/ReleasesList.tsx",
+     "status": "renamed",
+     "additions": 4,
+     "deletions": 4
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/ReleasesTable/ReleasesTable.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/ReleasesTable/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/ReleasesTable/tests/ReleasesTable.spec.tsx",
+     "status": "renamed",
+     "additions": 7,
+     "deletions": 6
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/Skeleton/Skeleton.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/Skeleton/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/styles.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/tests/ReleasList.spec.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/tests/__snapshots__/ReleasList.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/RepositoriesList/RepositoriesList.tsx",
+     "status": "renamed",
+     "additions": 4,
+     "deletions": 23
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/RepositoriesList/RepositoriesTable/RepositoriesTable.tsx",
+     "status": "renamed",
+     "additions": 9,
+     "deletions": 8
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/RepositoriesList/RepositoriesTable/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/RepositoriesList/RepositoriesTable/tests/Repositoriestable.spec.tsx",
+     "status": "renamed",
+     "additions": 16,
+     "deletions": 16
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/RepositoriesList/Skeleton/Skeleton.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/RepositoriesList/Skeleton/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/RepositoriesList/Skeleton/tests/Skeleton.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/RepositoriesList/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/RepositoriesList/styles.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/RepositoriesList/tests/RepositoriesList.spec.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/DistributionBoxplot.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/DistributionChart.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/DistributionDashboard.tsx",
+     "status": "renamed",
+     "additions": 5,
+     "deletions": 11
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/DistributionDensity.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/DistributionFilters.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/DistributionHistogram.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/DistributionScatter.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/DistributionStates.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/DistributionSummary.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/tests/DistributionBoxplot.spec.tsx",
+     "status": "renamed",
+     "additions": 3,
+     "deletions": 5
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/tests/DistributionChart.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/tests/DistributionDashboard.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/tests/DistributionDensity.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/tests/DistributionHistogram.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/tests/DistributionScatter.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/tests/DistributionSummary.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/tests/fixtures.ts",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 3
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/tests/useDistributionDashboard.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/useDistributionDashboard.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/entidade/ContributionChart.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/entidade/EntityAnalysisDashboard.tsx",
+     "status": "renamed",
+     "additions": 5,
+     "deletions": 11
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/entidade/EntityHeatmap.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/entidade/RepositoryDetailDialog.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/entidade/WorstPairsRanking.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/entidade/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/entidade/tests/EntityAnalysisDashboard.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/entidade/tests/fixtures.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/entidade/tests/useEntityAnalysis.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/entidade/useEntityAnalysis.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/metamodelo/MetamodeloDashboard.tsx",
+     "status": "renamed",
+     "additions": 5,
+     "deletions": 11
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/metamodelo/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/metamodelo/tests/MetamodeloDashboard.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 3
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/metamodelo/tests/useMetamodelo.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/metamodelo/useMetamodelo.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/overview/OverviewDashboard.tsx",
+     "status": "renamed",
+     "additions": 6,
+     "deletions": 12
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/overview/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/overview/tests/OverviewDashboard.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/overview/tests/fixtures.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/overview/tests/useOverviewDashboard.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/overview/useOverviewDashboard.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/CorrelationBubbles.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/CorrelationChart.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/CorrelationDashboard.tsx",
+     "status": "renamed",
+     "additions": 5,
+     "deletions": 11
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/CorrelationFilters.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/CorrelationMatrix.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/CorrelationReleasesDialog.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/tests/CorrelationDashboard.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/tests/fixtures.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/tests/useCorrelationDashboard.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/useCorrelationDashboard.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/temporal/TemporalDashboard.tsx",
+     "status": "renamed",
+     "additions": 6,
+     "deletions": 12
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/temporal/TemporalFilters.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/temporal/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/temporal/tests/TemporalDashboard.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/temporal/useTemporalEvolution.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/hooks/useQuery.ts",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 6
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/Releases.tsx",
+     "status": "renamed",
+     "additions": 7,
+     "deletions": 13
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/[release]/Release.tsx",
+     "status": "renamed",
+     "additions": 4,
+     "deletions": 8
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/[release]/page.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/[release]/tests/release.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/ReleaseCreation.tsx",
+     "status": "renamed",
+     "additions": 9,
+     "deletions": 19
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/BasicInfoForm/BasicInfoForm.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/BasicInfoForm/tests/BasicInfoForm.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/CharacteristicsBalanceForm/CharacteristicsBalanceForm.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/CharacteristicsBalanceForm/tests/CharacteristicsBalanceForm.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/CheckboxSliderInput/CheckboxSliderInput.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/MinMaxInput/MinMaxInput.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/ModelConfigForm/ModelConfigForm.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 6
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/ModelConfigForm/tests/ModelConfigForm.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/ReferenceValuesForm/ReferenceValuesForm.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/ReferenceValuesForm/tests/ReferenceValuesForm.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/RepositorySelectionForm/RepositorySelectionForm.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/RepositorySelectionForm/tests/RepositorySelectionForm.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/SectionTooltip/SectionTooltip.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/styles.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/tests/ReleaseCreation.spec.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 6
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/tests/Releases.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/tests/__snapshots__/Releases.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 3
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/util/filterReleaseList.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/util/tests/filterReleaseList.spec.ts",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/Repositories.tsx",
+     "status": "renamed",
+     "additions": 5,
+     "deletions": 9
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/Repository.tsx",
+     "status": "renamed",
+     "additions": 6,
+     "deletions": 21
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/CharacteristicsBadges/CharacteristicsBadges.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/CharacteristicsBadges/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/CharacteristicsBadges/tests/CharacteristicsBadges.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/CopyBadgeModal/CopyBadgeModal.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/CopyBadgeModal/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/CopyBadgeModal/tests/CopyBadgeModal.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/CustomTabs/CustomTabs.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/CustomTabs/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/GithubRepositoriesModal/GithubRepositoriesModal.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 5
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/GithubRepositoriesModal/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/GithubRepositoriesModal/tests/GithubRepositoriesModal.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/Header/Header.tsx",
+     "status": "renamed",
+     "additions": 6,
+     "deletions": 6
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/Header/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/Header/tests/Header.spec.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/OptionsHeader/OptionsHeader.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/OptionsHeader/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/OptionsHeader/tests/OptionsHeader.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/OptionsHeader/tests/__snapshots__/OptionsHeader.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/RepositoryPulseChart/RepositoryPulseChart.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/RepositoryPulseChart/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/RepositoryPulseChart/tests/RepositoryPulseChart.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/TreeViewFilter/TreeViewFilter.tsx",
+     "status": "renamed",
+     "additions": 8,
+     "deletions": 11
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/TreeViewFilter/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/TreeViewFilter/styles.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/TreeViewFilter/tests/TreeViewFilter.spec.tsx",
+     "status": "renamed",
+     "additions": 7,
+     "deletions": 7
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/TreeViewFilter/tests/__snapshots__/TreeViewFilter.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 9,
+     "deletions": 9
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/TsqmiBadge/TsqmiBadge.tsx",
+     "status": "renamed",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/TsqmiBadge/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/TsqmiBadge/tests/TsqmiBadge.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/hooks/tests/useQuery.spec.tsx",
+     "status": "renamed",
+     "additions": 4,
+     "deletions": 3
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/hooks/useQuery.ts",
+     "status": "renamed",
+     "additions": 4,
+     "deletions": 7
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/hooks/useRepositoryPulse.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/layout.tsx",
+     "status": "added",
+     "additions": 6,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/styles.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/tests/Repository.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/manage-repository/RepositoryForm.tsx",
+     "status": "renamed",
+     "additions": 25,
+     "deletions": 25
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/manage-repository/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/manage-repository/tests/RepositoryForm.spec.tsx",
+     "status": "added",
+     "additions": 163,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/tests/Repositories.spec.tsx",
+     "status": "renamed",
+     "additions": 5,
+     "deletions": 3
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/tests/__snapshots__/Repositories.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/settings/ProductSettings.tsx",
+     "status": "renamed",
+     "additions": 7,
+     "deletions": 12
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/settings/components/QualityBandsRuler.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/settings/components/QualityBandsTab.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/settings/components/RestoreDefaultsDialog.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/settings/hooks/useQualityBands.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/settings/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/settings/tests/ProductSettings.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/settings/tests/QualityBandsRuler.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/settings/tests/QualityBandsTab.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/settings/tests/useQualityBands.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/tests/Product.spec.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/tests/__snapshots__/Product.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/components/ImportRepoList.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/components/ReauthorizePanel.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/components/ScrollableList/ScrollableList.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/components/ScrollableList/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/components/ScrollableList/test/ScrollableList.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/components/ScrollableList/test/__snapshots__/ScrollableList.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/components/Skeleton/Skeleton.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/components/Skeleton/index.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/components/Skeleton/test/Skeleton.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/components/Skeleton/test/__snapshots__/Skeleton.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/create/ProductsCreation.tsx",
+     "status": "renamed",
+     "additions": 177,
+     "deletions": 184
+    },
+    {
+     "filename": "src/app/(dashboard)/products/create/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/create/test/ProductsCreation.spec.tsx",
+     "status": "renamed",
+     "additions": 6,
+     "deletions": 6
+    },
+    {
+     "filename": "src/app/(dashboard)/products/create/test/__snapshots__/ProductsCreation.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 40,
+     "deletions": 44
+    },
+    {
+     "filename": "src/app/(dashboard)/products/hooks/useImportRepos.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/hooks/useProductQuery.ts",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/page.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/test/Products.spec.tsx",
+     "status": "renamed",
+     "additions": 26,
+     "deletions": 101
+    },
+    {
+     "filename": "src/app/(public)/auth/Auth.tsx",
+     "status": "renamed",
+     "additions": 20,
+     "deletions": 52
+    },
+    {
+     "filename": "src/app/(public)/auth/AuthError.tsx",
+     "status": "renamed",
+     "additions": 6,
+     "deletions": 9
+    },
+    {
+     "filename": "src/app/(public)/auth/callback/AuthCallback.tsx",
+     "status": "added",
+     "additions": 94,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/callback/page.tsx",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/components/AuthFooter.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(public)/auth/components/AuthHeader.tsx",
+     "status": "renamed",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(public)/auth/components/test/AuthFooter.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/error/page.tsx",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/oauth/[provider]/route.ts",
+     "status": "added",
+     "additions": 64,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/page.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/test/AuthCallback.spec.tsx",
+     "status": "added",
+     "additions": 116,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/test/AuthError.spec.tsx",
+     "status": "renamed",
+     "additions": 7,
+     "deletions": 14
+    },
+    {
+     "filename": "src/app/(public)/auth/test/__snapshots__/auth.spec.tsx.snap",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/test/auth.spec.tsx",
+     "status": "added",
+     "additions": 114,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/test/oauthRoute.spec.ts",
+     "status": "added",
+     "additions": 123,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/Landing.tsx",
+     "status": "added",
+     "additions": 29,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/components/CommunitySection.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(public)/landing/components/FeatureCard.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/components/HeroSection.tsx",
+     "status": "renamed",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "src/app/(public)/landing/components/HowItWorksSection.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/components/IntegrationsSection.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/components/LandingFooter.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(public)/landing/components/LandingHeader.tsx",
+     "status": "renamed",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "src/app/(public)/landing/components/LandingSection.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/components/PublicationsSection.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/components/ValuePropsSection.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/components/brandIcons.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/constants.ts",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/metadata.ts",
+     "status": "added",
+     "additions": 50,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/page.ts",
+     "status": "added",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/test/CommunitySection.spec.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(public)/landing/test/FeatureCard.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/test/IntegrationsSection.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/test/LandingFooter.spec.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(public)/landing/test/LandingHeader.spec.tsx",
+     "status": "renamed",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(public)/landing/test/LandingSection.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/test/PublicationsSection.spec.tsx",
+     "status": "renamed",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/test/landing.spec.tsx",
+     "status": "added",
+     "additions": 102,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/page.ts",
+     "status": "added",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/bff/[...path]/route.ts",
+     "status": "added",
+     "additions": 98,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/bff/session/route.ts",
+     "status": "added",
+     "additions": 109,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/bff/tests/path.spec.ts",
+     "status": "added",
+     "additions": 212,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/bff/tests/session.spec.ts",
+     "status": "added",
+     "additions": 300,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/layout.tsx",
+     "status": "added",
+     "additions": 29,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/not-found.tsx",
+     "status": "added",
+     "additions": 37,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/providers.tsx",
+     "status": "added",
+     "additions": 48,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/tests/not-found.spec.tsx",
+     "status": "added",
+     "additions": 12,
+     "deletions": 0
+    },
+    {
+     "filename": "src/components/idv/buttons/MSGButton.tsx",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/mocks/handlers.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/mocks/initMocks.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 25
+    },
+    {
+     "filename": "src/pages/_app.next.tsx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 274
+    }
+   ]
+  },
+  {
+   "sha": "68c425a686606764f1d4bdc4b12e9f094550fd40",
+   "date": "2026-11-13T19:09:08Z",
+   "author": "devwallyson",
+   "message": "perf(ci): separa o empacotamento do test.yml num job paralelo (QA-16b) (#160)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "499b841632e2f99639ea0a787e64dbf3bcdc5249",
    "date": "2026-11-12T22:08:08Z",
@@ -13783,5 +15607,5 @@
    ]
   }
  ],
- "detalhes_novos": 9
+ "detalhes_novos": 2
 }

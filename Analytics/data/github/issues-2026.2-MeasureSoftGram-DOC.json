@@ -1,10 +1,29 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-13T03:55:27+00:00",
+ "coletado_em": "2026-11-14T03:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 308,
+   "title": "docs(produto): [TASK15.01.05] atualiza arquitetura e repositórios para GitLab CI/CD (#239)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-14T01:42:57Z",
+   "closed_at": null,
+   "updated_at": "2026-11-14T01:43:39Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "DiegoCarlito"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2610,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/308",
+   "author": "DiegoCarlito"
+  },
   {
    "number": 307,
    "title": "docs(arquitetura): [US30.03] faixas de qualidade no lugar dos limites do velocímetro antigo no modelo de dados",
@@ -261,10 +280,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T20:45:35Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T20:45:49Z",
+   "updated_at": "2026-11-13T22:33:56Z",
    "labels": [],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "devwallyson"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 666,
@@ -278,10 +299,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T20:45:06Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T20:45:23Z",
+   "updated_at": "2026-11-13T22:33:37Z",
    "labels": [],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "devwallyson"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 911,
@@ -295,10 +318,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T20:44:15Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T20:44:40Z",
+   "updated_at": "2026-11-13T22:33:12Z",
    "labels": [],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "devwallyson"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 1968,
@@ -693,11 +718,11 @@
   {
    "number": 272,
    "title": "[TASK33.04.04] QA-16b · Front: reduzir a mediana do test.yml para ≤ 5 min",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:49Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:35:51Z",
+   "closed_at": "2026-11-13T19:09:11Z",
+   "updated_at": "2026-11-13T19:09:11Z",
    "labels": [
     "task",
     "frontend"
@@ -717,13 +742,15 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:42Z",
    "closed_at": null,
-   "updated_at": "2026-11-12T02:27:35Z",
+   "updated_at": "2026-11-13T17:07:40Z",
    "labels": [
     "task",
     "frontend"
    ],
    "type": "Task",
-   "assignees": [],
+   "assignees": [
+    "devwallyson"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 780,
@@ -1253,7 +1280,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:28Z",
    "closed_at": "2026-11-12T04:20:39Z",
-   "updated_at": "2026-11-12T22:11:55Z",
+   "updated_at": "2026-11-13T20:28:40Z",
    "labels": [
     "bug",
     "frontend",
@@ -1276,7 +1303,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:07Z",
    "closed_at": "2026-11-12T03:51:27Z",
-   "updated_at": "2026-11-12T22:11:54Z",
+   "updated_at": "2026-11-13T20:28:39Z",
    "labels": [
     "bug",
     "frontend",
@@ -1316,7 +1343,7 @@
    "is_pull_request": true,
    "created_at": "2026-11-09T20:13:13Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T03:24:33Z",
+   "updated_at": "2026-11-14T01:37:11Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -1388,7 +1415,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-08T20:21:47Z",
    "closed_at": null,
-   "updated_at": "2026-11-13T03:02:13Z",
+   "updated_at": "2026-11-14T01:49:03Z",
    "labels": [
     "task"
    ],
@@ -1398,7 +1425,7 @@
    ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 1242,
+   "body_chars": 1827,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/239",
    "author": "DiegoCarlito"
   },
@@ -1473,7 +1500,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-08T20:12:05Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T01:06:04Z",
+   "updated_at": "2026-11-14T01:54:23Z",
    "labels": [
     "task",
     "action"
@@ -1484,7 +1511,7 @@
    ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 1883,
+   "body_chars": 1945,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/235",
    "author": "DiegoCarlito"
   },
@@ -1672,7 +1699,7 @@
    "is_pull_request": true,
    "created_at": "2026-11-07T22:27:15Z",
    "closed_at": null,
-   "updated_at": "2026-11-09T13:20:12Z",
+   "updated_at": "2026-11-14T01:37:11Z",
    "labels": [],
    "type": null,
    "assignees": [],
@@ -2523,7 +2550,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:51:28Z",
    "closed_at": "2026-11-13T03:47:32Z",
-   "updated_at": "2026-11-13T03:47:32Z",
+   "updated_at": "2026-11-13T20:28:55Z",
    "labels": [
     "US"
    ],
@@ -2549,7 +2576,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:51Z",
    "closed_at": "2026-11-13T03:32:17Z",
-   "updated_at": "2026-11-13T03:32:17Z",
+   "updated_at": "2026-11-13T20:28:54Z",
    "labels": [
     "US"
    ],
@@ -2575,7 +2602,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:08Z",
    "closed_at": "2026-11-13T03:32:14Z",
-   "updated_at": "2026-11-13T03:32:14Z",
+   "updated_at": "2026-11-13T20:28:53Z",
    "labels": [
     "US"
    ],
@@ -3495,12 +3522,15 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:06Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T21:44:08Z",
+   "updated_at": "2026-11-13T22:15:45Z",
    "labels": [
     "US"
    ],
    "type": "Feature",
-   "assignees": [],
+   "assignees": [
+    "gusrberto",
+    "devwallyson"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 7284,
@@ -3514,7 +3544,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:01Z",
    "closed_at": "2026-11-11T22:21:31Z",
-   "updated_at": "2026-11-12T22:11:58Z",
+   "updated_at": "2026-11-13T20:28:44Z",
    "labels": [
     "US",
     "frontend",
@@ -3542,7 +3572,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:50Z",
    "closed_at": "2026-11-12T03:15:43Z",
-   "updated_at": "2026-11-12T22:12:06Z",
+   "updated_at": "2026-11-13T20:28:51Z",
    "labels": [
     "US"
    ],
@@ -3563,7 +3593,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:46Z",
    "closed_at": "2026-11-10T02:33:45Z",
-   "updated_at": "2026-11-12T22:12:05Z",
+   "updated_at": "2026-11-13T20:28:50Z",
    "labels": [
     "US"
    ],
@@ -3584,7 +3614,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:38Z",
    "closed_at": "2026-11-11T22:21:36Z",
-   "updated_at": "2026-11-12T22:12:04Z",
+   "updated_at": "2026-11-13T20:28:49Z",
    "labels": [
     "US"
    ],
@@ -3605,7 +3635,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:33Z",
    "closed_at": "2026-11-07T19:14:18Z",
-   "updated_at": "2026-11-12T22:12:03Z",
+   "updated_at": "2026-11-13T20:28:48Z",
    "labels": [
     "US"
    ],
@@ -3626,7 +3656,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:28Z",
    "closed_at": "2026-11-12T03:11:01Z",
-   "updated_at": "2026-11-12T22:12:07Z",
+   "updated_at": "2026-11-13T20:28:52Z",
    "labels": [
     "US"
    ],
@@ -3648,7 +3678,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:22Z",
    "closed_at": "2026-11-11T22:21:33Z",
-   "updated_at": "2026-11-12T22:12:02Z",
+   "updated_at": "2026-11-13T20:28:47Z",
    "labels": [
     "US"
    ],
@@ -3721,7 +3751,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:48:20Z",
    "closed_at": "2026-11-12T05:12:26Z",
-   "updated_at": "2026-11-12T22:12:01Z",
+   "updated_at": "2026-11-13T20:28:46Z",
    "labels": [
     "US",
     "frontend"
@@ -3769,7 +3799,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:06:06Z",
    "closed_at": "2026-11-12T04:56:19Z",
-   "updated_at": "2026-11-12T22:11:59Z",
+   "updated_at": "2026-11-13T20:28:45Z",
    "labels": [
     "US"
    ],
@@ -4095,7 +4125,8 @@
    ],
    "type": null,
    "assignees": [
-    "storch7"
+    "storch7",
+    "DiegoCarlito"
    ],
    "milestone": null,
    "milestone_due_on": null,
@@ -4439,7 +4470,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-25T20:16:41Z",
    "closed_at": "2026-11-12T02:16:25Z",
-   "updated_at": "2026-11-12T22:11:57Z",
+   "updated_at": "2026-11-13T20:28:43Z",
    "labels": [
     "US",
     "frontend",
@@ -4683,7 +4714,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-24T00:34:13Z",
    "closed_at": "2026-11-11T22:35:14Z",
-   "updated_at": "2026-11-12T22:11:56Z",
+   "updated_at": "2026-11-13T20:28:41Z",
    "labels": [
     "US",
     "frontend",

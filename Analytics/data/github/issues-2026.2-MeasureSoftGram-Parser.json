@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-12T03:12:46+00:00",
+ "coletado_em": "2026-11-14T03:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Parser",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 19,
+   "title": "feat(security): processa e tipa as metricas de seguranca do SonarQube e do SCM",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-13T23:17:56Z",
+   "closed_at": null,
+   "updated_at": "2026-11-13T23:19:28Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3153,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Parser/pull/19",
+   "author": "devwallyson"
+  },
   {
    "number": 18,
    "title": "fix(quality): violações critical e cobertura ≥ 90% no Parser (QA-07, QA-12)",

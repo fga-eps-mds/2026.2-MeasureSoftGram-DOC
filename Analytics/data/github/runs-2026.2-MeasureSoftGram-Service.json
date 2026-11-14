@@ -1,11 +1,25 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-11-13T03:12:19+00:00",
+ "coletado_em": "2026-11-14T03:11:58+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
- "total_count": 331,
+ "total_count": 332,
  "workflow_runs": [
+  {
+   "id": 43534343268,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "feat/237-gitlab-metrics-ingestion",
+   "event": "pull_request",
+   "created_at": "2026-11-14T00:27:47Z",
+   "run_started_at": "2026-11-14T00:27:47Z",
+   "updated_at": "2026-11-14T00:30:26Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/43534343268",
+   "run_number": 212,
+   "workflow_id": 339749512
+  },
   {
    "id": 43353930968,
    "name": "Rodar Testes",
