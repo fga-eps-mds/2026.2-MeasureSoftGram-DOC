@@ -202,6 +202,7 @@ flowchart TB
     CLI --> SQ
     CLI --> GH
     SVC -->|"OAuth e disparo de workflow"| GH
+    SVC -->|OAuth| GL
 ```
 
 Pontos centrais da visão lógica:
@@ -254,24 +255,24 @@ Existem dois mecanismos, ambos internos ao processo Django:
 ```mermaid
 sequenceDiagram
     participant CI as Build de CI do usuário
-    participant Act as Action
+    participant Act as Action / GitLab CI
     participant SQ as SonarQube
-    participant GH as API do GitHub
+    participant API as API do GitHub / GitLab
     participant Svc as Service
     participant Core as Core (in-process)
     participant DB as PostgreSQL
-    participant PR as Pull request
+    participant PR as Pull / Merge Request
 
-    CI->>Act: evento workflow_run (build concluído)
+    CI->>Act: evento workflow_run / pipeline
     Act->>Svc: consulta organização, produto, repositório e release vigente
     Act->>SQ: busca medidas do projeto
-    Act->>GH: busca métricas do repositório e do workflow
+    Act->>API: busca métricas do repositório e do CI
     Act->>Svc: POST .../repositories/id/calculate/math-model/
     Svc->>Core: calculate_measures, subcharacteristics, characteristics, tsqmi
     Core-->>Svc: valores calculados
     Svc->>DB: grava métricas coletadas e valores calculados
     Svc-->>Act: resultado
-    Act->>PR: cria ou atualiza comentário com o resultado
+    Act->>PR: cria ou atualiza comentário com o resultado (em PR/MR)
 ```
 
 ### Job diário de releases
@@ -543,7 +544,7 @@ flowchart TB
         BR["Navegador"]
         VS["VS Code + Plugin"]
         AIC["Claude Desktop / Code"]
-        RUNNER["Runner de CI<br/>(GitHub ou local)"]
+        RUNNER["Runner de CI<br/>(GitHub, GitLab ou local)"]
     end
 
     subgraph VM["Nó de produção (VM)"]
