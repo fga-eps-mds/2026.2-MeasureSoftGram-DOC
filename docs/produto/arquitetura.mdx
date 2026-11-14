@@ -46,8 +46,9 @@ arquiteturais, o impacto do MVP de 2026.2, as metas e restrições e as decisõe
   para calcular.
 - **O Service é o ponto de acesso aos dados.** Front, Plugin, Action e MCP falam com o
   Service por HTTP.
-- **A coleta acontece fora do Service.** As métricas são extraídas no CI do usuário (Action)
-  ou na máquina do usuário (CLI), a partir do SonarQube e do GitHub.
+- **A coleta acontece fora do Service.** As métricas são extraídas no CI do usuário (Action
+  no GitHub Actions ou componente no GitLab CI/CD) ou na máquina do usuário (CLI), a partir
+  do SonarQube, do GitHub e do GitLab.
 - **O ambiente de desenvolvimento é um só.** O Platform reúne os repositórios como submódulos
   e sobe a stack a partir do código deles, com hot reload. Ele não faz parte do deploy de
   produção.
@@ -61,7 +62,7 @@ arquiteturais, o impacto do MVP de 2026.2, as metas e restrições e as decisõe
 | Service | API REST, autenticação, persistência, cálculo via Core, job diário de releases e dados dos dashboards por release | Django 5.2, DRF 3.18, django-allauth, APScheduler, gunicorn, Python 3.12, uv | Imagem Docker própria (DockerHub) |
 | Front | Interface web: organizações, produtos, repositórios, releases e dashboards nativos (ECharts) | Next.js 12.2, React 18, MUI 5, ECharts, TypeScript, pnpm | Imagem Docker própria (DockerHub) |
 | CLI | Extração e cálculo local, sem acesso ao Service | Python 3.9+ | PyPI `msgram` (3.3.1rc2) |
-| Action | Coleta métricas no CI do usuário, envia ao Service e comenta o resultado no PR | TypeScript, `@actions/*`, octokit, axios, runtime node20 | GitHub Action |
+| Action | Coleta métricas no CI do usuário (GitHub Actions e GitLab CI/CD), envia ao Service e comenta o resultado no PR/MR | TypeScript, `@actions/*`, octokit, axios, runtime node20 | GitHub Action e componente/imagem GitLab CI/CD |
 | Plugin | Painel de qualidade, dashboards e execução local da Action dentro do VS Code | TypeScript (extension host) + React e Vite (webview) | Extensão VS Code (1.0.2) |
 | AI (MCP) | Expõe os dados do Service a clientes de IA pelo protocolo MCP | Python 3.11+, SDK `mcp` (FastMCP), httpx | Imagem Docker `measuresoftgram/ai` |
 | PostgreSQL | Persistência do Service | PostgreSQL 18 (`postgres:18-alpine`) | Container |
@@ -178,7 +179,7 @@ flowchart TB
     end
 
     subgraph CI["CI do usuário"]
-        ACT["Action"]
+        ACT["Action / GitLab CI"]
     end
 
     subgraph Local["Máquina do usuário"]
@@ -188,6 +189,7 @@ flowchart TB
     MCP["Servidor MCP (AI)"]
     SQ[("SonarQube / SonarCloud")]
     GH[("API do GitHub")]
+    GL[("API do GitLab")]
 
     FE <-->|HTTPS| RP
     VSC <-->|"HTTPS (token)"| RP
@@ -196,6 +198,7 @@ flowchart TB
     ACT -->|"HTTPS (token)"| RP
     ACT --> SQ
     ACT --> GH
+    ACT --> GL
     CLI --> SQ
     CLI --> GH
     SVC -->|"OAuth e disparo de workflow"| GH
@@ -208,11 +211,11 @@ Pontos centrais da visão lógica:
   `calculate_tsqmi`, além de `diff` e `norm_diff` para comparar planejado e realizado.
 - **Parser** é consumido apenas pela CLI. O Service não depende dele.
 - **CLI** não se comunica com o Service: extrai, calcula e grava o resultado localmente.
-- **Action** coleta métricas do SonarQube e do GitHub e envia ao Service, que calcula e
-  persiste.
-- **Autenticação:** usuários entram via OAuth do GitHub (django-allauth). A API REST usa
-  `TokenAuthentication` do DRF, que também é o mecanismo usado pela Action, pelo Plugin e pelo
-  MCP.
+- **Action** coleta métricas do SonarQube e do GitHub (ou do GitLab, via componente
+  GitLab CI/CD) e envia ao Service, que calcula e persiste.
+- **Autenticação:** usuários entram via OAuth do GitHub ou do GitLab (django-allauth). A API
+  REST usa `TokenAuthentication` do DRF, que também é o mecanismo usado pela Action/GitLab CI,
+  pelo Plugin e pelo MCP.
 - **Platform** não aparece no diagrama porque não participa da execução: só reúne e sobe os
   componentes acima no ambiente de desenvolvimento.
 
@@ -288,8 +291,9 @@ sequenceDiagram
 
 ### Processos efêmeros
 
-- **Action:** cada execução é um runner novo (hospedado no GitHub, ou local via Docker quando
-  disparada pelo Plugin), que termina ao fim da análise.
+- **Action:** cada execução é um runner novo (hospedado no GitHub, em GitLab Runners via
+  container Docker, ou local via Docker quando disparada pelo Plugin), que termina ao fim da
+  análise.
 - **CLI:** cada comando roda até concluir e encerra.
 
 ## Visão de desenvolvimento
@@ -384,11 +388,14 @@ e US21.02.
 
 ```
 src/
-├── index.ts               # orquestra o fluxo
+├── index.ts               # entrypoint da GitHub Action
+├── gitlab.ts              # entrypoint e cliente API v4 do GitLab CI/CD
 ├── sonarqube.ts           # coleta no SonarQube
 ├── github.ts              # coleta na API do GitHub e comentário no PR
 ├── service/               # cliente HTTP do Service
 └── utils.ts
+templates/
+└── measure.yml            # componente reutilizável para GitLab CI/CD
 ```
 
 ### Plugin VS Code
@@ -808,7 +815,7 @@ arquitetura nestes pontos:
 
 | Frente do MVP | Componentes afetados | Mudança esperada |
 | --- | --- | --- |
-| GitLab como alternativa ao GitHub | Service, Front, Plugin, Action | Autenticação via GitLab (OAuth2/OIDC), importação de repositórios pela API do GitLab, pipeline de CI análoga à Action e nomenclatura adaptada (merge request em vez de pull request). O campo `platform` de `Repository` já aceita `gitlab`. |
+| GitLab como alternativa ao GitHub | Service, Front, Plugin, Action | Autenticação via GitLab (OAuth2/OIDC), importação de repositórios pela API do GitLab, componente de CI/CD análogo à Action, recepção da chave `gitlab` no Service e nomenclatura adaptada (merge request em vez de pull request). |
 | Retirada do Grafana | Service, Front, infraestrutura | Concluída na US07.01: gráficos nativos no Front e remoção do container, do `grafana_proxy` e do acesso direto ao banco. O Plugin saiu do semestre e ainda referencia o Grafana. |
 | Rastreabilidade da degradação e alerta antes do merge | Action, Service, Front | Uso de `path` das métricas coletadas para ligar indicadores a arquivos; alerta no PR quando a qualidade cair. |
 | Característica de segurança e medida de Dívida Técnica | Core, Parser, Action, Service | Novas métricas (SAST, DAST, SCM e chaves de dívida técnica do SonarQube) e novas medidas no modelo. |
@@ -929,3 +936,4 @@ decisão da equipe**.
 | 1.3 | 20/10/2026 | docs(arquitetura): remove o Grafana da arquitetura | [@henriquecq](https://github.com/henriquecq) |  |
 | 1.4 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
 | 1.5 | 25/10/2026 | docs(arquitetura): inclui o repositório Platform (ambiente integrado de desenvolvimento e ADR 004) | [@storch7](https://github.com/storch7) |  |
+| 1.6 | 13/11/2026 | docs(arquitetura): atualiza referências de coleta e suporte ao GitLab CI/CD | [@DiegoCarlito](https://github.com/DiegoCarlito) |  |
