@@ -100,20 +100,20 @@ O modelo de 2019 liga 13 fatores aos 4 indicadores, com Code Quality presente em
 
 | Indicador | Definição no modelo | Fator | Tipo | O que o fator mede | Métricas incluídas | No cálculo |
 |---|---|---|---|---|---|---|
-| **Product Quality** | Manutenibilidade, confiabilidade e adequação funcional do produto | Code Quality | Produto | Impacto das mudanças na qualidade do código-fonte | M1, M2 | Sim |
-| Product Quality | | Software Stability | Produto | Problemas mais críticos em execução | — | Não: sem fonte (sem logs de produção; Bug density habilitável) |
-| Product Quality | | Software Usage | Produto | Padrão de uso das funcionalidades | — | Não: sem telemetria de uso |
-| **Blocking** | Condições que atrapalham o fluxo do projeto (parar a linha, adiar uma feature) | Quality Issues' Specification | Produto | Se a issue entra no backlog pronta para ser desenvolvida | M7 | Sim |
-| Blocking | | Testing Status | Produto | Qualidade e estabilidade dos testes executados | M3, M5 | Sim |
-| Blocking | | Blocking Code | Produto | Dívida técnica em violações de regras de qualidade | M6 | Sim |
-| **Process Performance** | Eficiência e qualidade do processo de desenvolvimento | Issues' Velocity | Processo | Capacidade de cumprir as issues planejadas na sprint | M9 | Sim |
-| Process Performance | | Testing Performance | Processo | Eficácia e eficiência das atividades de teste | M8 | Portão (M8 fora de 0–1) |
-| Process Performance | | Development Speed | Processo | Atividades de integração contínua | — | Não: métricas só monitoradas |
-| Process Performance | | External Quality | Processo | Qualidade do ponto de vista do cliente | — | Não: sem registro de feedback |
-| **Product Readiness** | Produto pronto para a próxima release: implementa o planejado e sem bloqueios | Activities Completion | Processo | Conclusão das tarefas planejadas para a release | DT | Sim |
+| **Product Quality** | Manutenibilidade, confiabilidade e adequação funcional do produto | <span id="fator-code_quality">Code Quality</span> | Produto | Impacto das mudanças na qualidade do código-fonte | M1, M2 | Sim |
+| Product Quality | | <span id="fator-software_stability">Software Stability</span> | Produto | Problemas mais críticos em execução | — | Não: sem fonte (sem logs de produção; Bug density habilitável) |
+| Product Quality | | <span id="fator-software_usage">Software Usage</span> | Produto | Padrão de uso das funcionalidades | — | Não: sem telemetria de uso |
+| **Blocking** | Condições que atrapalham o fluxo do projeto (parar a linha, adiar uma feature) | <span id="fator-quality_issues_specification">Quality Issues' Specification</span> | Produto | Se a issue entra no backlog pronta para ser desenvolvida | M7 | Sim |
+| Blocking | | <span id="fator-testing_status">Testing Status</span> | Produto | Qualidade e estabilidade dos testes executados | M3, M5 | Sim |
+| Blocking | | <span id="fator-blocking_code">Blocking Code</span> | Produto | Dívida técnica em violações de regras de qualidade | M6 | Sim |
+| **Process Performance** | Eficiência e qualidade do processo de desenvolvimento | <span id="fator-issues_velocity">Issues' Velocity</span> | Processo | Capacidade de cumprir as issues planejadas na sprint | M9 | Sim |
+| Process Performance | | <span id="fator-testing_performance">Testing Performance</span> | Processo | Eficácia e eficiência das atividades de teste | M8 | Portão (M8 fora de 0–1) |
+| Process Performance | | <span id="fator-development_speed">Development Speed</span> | Processo | Atividades de integração contínua | — | Não: métricas só monitoradas |
+| Process Performance | | <span id="fator-external_quality">External Quality</span> | Processo | Qualidade do ponto de vista do cliente | — | Não: sem registro de feedback |
+| **Product Readiness** | Produto pronto para a próxima release: implementa o planejado e sem bloqueios | <span id="fator-activities_completion">Activities Completion</span> | Processo | Conclusão das tarefas planejadas para a release | DT | Sim |
 | Product Readiness | | Code Quality | Produto | Idem Product Quality (reuso) | M1, M2 | Sim |
-| Product Readiness | | Product Stability | Produto | Problemas mais críticos do produto | M10 | Sim |
-| Product Readiness | | Known Remaining Defects | Processo | Defeitos menores que podem ser adiados | — | Não: prioridade não é marcada nas issues (habilitável) |
+| Product Readiness | | <span id="fator-product_stability">Product Stability</span> | Produto | Problemas mais críticos do produto | M10 | Sim |
+| Product Readiness | | <span id="fator-known_remaining_defects">Known Remaining Defects</span> | Processo | Defeitos menores que podem ser adiados | — | Não: prioridade não é marcada nas issues (habilitável) |
 
 O tipo (fator de produto ou de processo) é o do modelo. Os fatores de processo não têm subcaracterística na ISO/IEC 25010, e o Q-Rapids os associa à Produtividade.
 
@@ -195,6 +195,8 @@ Em 07/11, nenhum dos quatro indicadores está na meta. Product Quality e Blockin
 
 ---
 
+<span id="indicador-product_quality"></span>
+
 ## Product Quality — meta ≥ 0,93
 
 A meta de Product Quality é **0,93**, e o valor atual é 0,92. Só Code Quality tem métrica incluída: Software Stability e Software Usage não têm dado no projeto. Por isso PQ = Code Quality = (M1 + M2) ÷ 2.
@@ -236,6 +238,8 @@ M2 = arquivos com densidade de duplicação < 5%, divididos pelo total de arquiv
 (0,880 + 0,990) ÷ 2 = 0,935, truncado para **0,93**. O piso é 0,91 (R2).
 
 ---
+
+<span id="indicador-blocking"></span>
 
 ## Blocking — meta ≥ 0,96
 
@@ -306,6 +310,8 @@ QIS 0,95 + Blocking Code 1,00 + Testing Status (1,00 + 0,90) ÷ 2 = 0,95, dividi
 
 ---
 
+<span id="indicador-process_performance"></span>
+
 ## Process Performance — meta ≥ 0,60
 
 A meta de Process Performance é **0,60**, e o valor atual é 0,22. O indicador tem 2 fatores avaliados, mas só Issues' Velocity tem métrica 0–1. Testing Performance tem só M8, que é medido em minutos e que o plano deixa fora da média. Por isso PP = Issues' Velocity = M9, e M8 funciona como portão.
@@ -358,6 +364,8 @@ M8 = duração das execuções do workflow de testes (`test.yml`, decisão D5), 
 Com um único fator na média, a meta do indicador é a de M9. O piso é 0,40 (R2). O indicador só conta como atingido se o portão M8 também passar.
 
 ---
+
+<span id="indicador-product_readiness"></span>
 
 ## Product Readiness — meta ≥ 0,89
 

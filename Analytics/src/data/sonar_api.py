@@ -26,7 +26,7 @@ from typing import Callable
 
 METRICAS_ATUAIS = [
     "bugs", "vulnerabilities", "code_smells", "security_hotspots", "sqale_index", "sqale_debt_ratio",
-    "coverage", "duplicated_lines", "duplicated_lines_density", "ncloc", "reliability_rating",
+    "coverage", "line_coverage", "branch_coverage", "duplicated_lines", "duplicated_lines_density", "ncloc", "reliability_rating",
     "security_rating", "sqale_rating", "tests", "test_errors", "test_failures", "test_success_density",
     "alert_status", "ncloc_language_distribution",
     # modelo de qualidade (Q-Rapids): insumos que o metrics.yml às vezes não traz
@@ -37,13 +37,14 @@ METRICAS_HISTORICO = [
     "bugs", "vulnerabilities", "code_smells", "security_hotspots", "sqale_index", "coverage",
     "duplicated_lines_density", "ncloc", "reliability_rating", "security_rating", "sqale_rating", "tests",
     "test_errors", "test_failures", "test_execution_time", "complexity", "functions", "comment_lines_density",
-    "blocker_violations", "critical_violations",
+    "blocker_violations", "critical_violations", "line_coverage", "branch_coverage",
 ]
 # Medidas por arquivo (api/measures/component_tree). FIL = código; UTS = arquivo de teste.
 # São os dados brutos do modelo Q-Rapids: arquivos não complexos, comentados, sem duplicação, com
 # cobertura e sem violação bloqueante/crítica; testes que passam e testes rápidos.
 METRICAS_ARQUIVO = [
     "ncloc", "complexity", "functions", "comment_lines_density", "duplicated_lines_density", "coverage",
+    "line_coverage", "branch_coverage",
     "violations", "blocker_violations", "critical_violations",
     "tests", "test_errors", "test_failures", "skipped_tests", "test_execution_time",
 ]

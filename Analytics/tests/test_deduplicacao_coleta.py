@@ -14,7 +14,6 @@ RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ))
 
 from scripts import coleta_github, coleta_sonar, saneamento_dados  # noqa: E402
-from src.data import sonar_api as api  # noqa: E402
 from src.zenhub import coleta as zh_coleta  # noqa: E402
 
 
