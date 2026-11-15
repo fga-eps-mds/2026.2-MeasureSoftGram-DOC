@@ -24,10 +24,10 @@
     "author": "Marcosatc147"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 100,
-    "last_merged_at": "2026-11-13T20:25:25Z",
-    "title": "chore(front): [TASK08.01] migra para Next 16 com App Router e autenticação no servidor",
-    "author": "zzzBECK"
+    "number": 162,
+    "last_merged_at": "2026-11-14T20:54:04Z",
+    "title": "ci(e2e): E2E de sistema do Platform a cada merge na develop",
+    "author": "LuizaMaluf"
   },
   "2026.2-MeasureSoftGram-Parser": {
     "number": 17,
@@ -42,9 +42,9 @@
     "author": "henriquecq"
   },
   "2026.2-MeasureSoftGram-Service": {
-    "number": 96,
-    "last_merged_at": "2026-11-13T02:41:36Z",
-    "title": "feat(e2e): URLs dos provedores configuráveis e seed fixo para o E2E de sistema",
+    "number": 99,
+    "last_merged_at": "2026-11-14T20:50:54Z",
+    "title": "ci(e2e): roda o E2E de sistema do Platform a cada merge na develop",
     "author": "LuizaMaluf"
   }
 }

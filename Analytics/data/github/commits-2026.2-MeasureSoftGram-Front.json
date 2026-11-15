@@ -1,11 +1,275 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-14T03:11:58+00:00",
+ "coletado_em": "2026-11-15T03:12:19+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "b7da6a9abaa332a921ee9aa2f1c3739371aa9b15",
+   "date": "2026-11-14T20:54:03Z",
+   "author": "LuizaMaluf",
+   "message": "ci(e2e): E2E de sistema do Platform a cada merge na develop (#162)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/e2e-system.yml",
+     "status": "added",
+     "additions": 15,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "de9acee5e5462bc428eba8e8405985221b8324cd",
+   "date": "2026-11-14T19:59:47Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): respostas simuladas conferidas contra o schema OpenAPI do Service (#161)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/e2e.yml",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/bug12-02-namespace-pessoal.e2e.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/contract.e2e.ts",
+     "status": "added",
+     "additions": 28,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/contract/openapi.json",
+     "status": "added",
+     "additions": 7050,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/common.ts",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/distribuicao/index.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/historical-values-characteristics.json",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/historical-values-measures.json",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/historical-values-subcharacteristics.json",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/index.ts",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 6
+    },
+    {
+     "filename": "e2e/fixtures/divida-tecnica/repositories.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/fixtures/entidade/index.ts",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    },
+    {
+     "filename": "e2e/fixtures/importacao-gitlab/index.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 6
+    },
+    {
+     "filename": "e2e/fixtures/metamodelo/index.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "e2e/fixtures/overview/analysis-data.json",
+     "status": "modified",
+     "additions": 25,
+     "deletions": 13
+    },
+    {
+     "filename": "e2e/fixtures/overview/index.ts",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 7
+    },
+    {
+     "filename": "e2e/fixtures/relacoes/repositories.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "e2e/fixtures/release/analysis-data.json",
+     "status": "modified",
+     "additions": 51,
+     "deletions": 11
+    },
+    {
+     "filename": "e2e/fixtures/releases.json",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 4
+    },
+    {
+     "filename": "e2e/fixtures/repositorio/index.ts",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 8
+    },
+    {
+     "filename": "e2e/fixtures/temporal/historical-characteristics.json",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/temporal/historical-measures.json",
+     "status": "modified",
+     "additions": 15,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/temporal/historical-metrics.json",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/temporal/historical-subcharacteristics.json",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/temporal/index.ts",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 9
+    },
+    {
+     "filename": "e2e/fixtures/temporal/repositories.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "e2e/support/api.ts",
+     "status": "modified",
+     "additions": 23,
+     "deletions": 6
+    },
+    {
+     "filename": "e2e/support/contract.ts",
+     "status": "added",
+     "additions": 93,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/support/fixtures.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/us06-01-pulso-produto.e2e.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "e2e/us07-01-dashboards.e2e.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "package.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "pnpm-lock.yaml",
+     "status": "modified",
+     "additions": 29,
+     "deletions": 0
+    },
+    {
+     "filename": "scripts/e2e-contract-report.mjs",
+     "status": "added",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/overview/OverviewDashboard.tsx",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 2
+    },
+    {
+     "filename": "src/mocks/fixtures/organizations.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/mocks/fixtures/products.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/mocks/fixtures/repositories.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/utils/formatOverviewCharts.ts",
+     "status": "modified",
+     "additions": 15,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/utils/tests/formatOverviewCharts.spec.ts",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "230952d0abce2cefdc5bb1130e0327356b714739",
    "date": "2026-11-13T20:25:24Z",

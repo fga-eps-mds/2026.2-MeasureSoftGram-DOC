@@ -1,10 +1,32 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-14T03:11:58+00:00",
+ "coletado_em": "2026-11-15T03:12:19+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 309,
+   "title": "[MSG36] Eliminar Cron Job de Releases e associar Análises de Qualidade (AQ) diretamente via Action",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-14T23:50:48Z",
+   "closed_at": null,
+   "updated_at": "2026-11-14T23:59:03Z",
+   "labels": [
+    "epic"
+   ],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo",
+    "Marcosatc147"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1864,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/309",
+   "author": "luciano-freitas-melo"
+  },
   {
    "number": 308,
    "title": "docs(produto): [TASK15.01.05] atualiza arquitetura e repositórios para GitLab CI/CD (#239)",
@@ -122,7 +144,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T22:49:26Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T22:49:27Z",
+   "updated_at": "2026-11-14T11:41:48Z",
    "labels": [
     "bug",
     "cli"
@@ -180,26 +202,6 @@
    "body_chars": 4020,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/300",
    "author": "bottinolucas"
-  },
-  {
-   "number": 299,
-   "title": "[MSG35] Adequação de Qualidade do Produto e Aprovação dos Portões Q-Rapids (R3)",
-   "state": "open",
-   "is_pull_request": false,
-   "created_at": "2026-11-11T22:24:06Z",
-   "closed_at": null,
-   "updated_at": "2026-11-11T22:24:09Z",
-   "labels": [
-    "epic",
-    "all repos"
-   ],
-   "type": "Task",
-   "assignees": [],
-   "milestone": null,
-   "milestone_due_on": null,
-   "body_chars": 5402,
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/299",
-   "author": "luciano-freitas-melo"
   },
   {
    "number": 298,
@@ -354,12 +356,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:35:39Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T12:35:41Z",
+   "updated_at": "2026-11-15T00:05:33Z",
    "labels": [
     "task",
     "frontend"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -374,12 +376,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:35:28Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T12:35:29Z",
+   "updated_at": "2026-11-15T00:05:36Z",
    "labels": [
     "task",
     "service"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -394,13 +396,13 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:35:20Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T12:35:22Z",
+   "updated_at": "2026-11-15T00:05:36Z",
    "labels": [
     "task",
     "frontend",
     "service"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -415,12 +417,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:35:11Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T12:35:13Z",
+   "updated_at": "2026-11-15T00:05:36Z",
    "labels": [
     "task",
     "frontend"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -435,12 +437,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:35:04Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T12:35:06Z",
+   "updated_at": "2026-11-15T00:05:35Z",
    "labels": [
     "task",
     "service"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -455,12 +457,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:34:55Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T12:34:58Z",
+   "updated_at": "2026-11-15T00:05:35Z",
    "labels": [
     "task",
     "frontend"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -475,13 +477,13 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:34:45Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T12:34:47Z",
+   "updated_at": "2026-11-15T00:05:34Z",
    "labels": [
     "task",
     "frontend",
     "service"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -496,12 +498,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:34:38Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T12:34:39Z",
+   "updated_at": "2026-11-15T00:05:34Z",
    "labels": [
     "task",
     "cli"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -516,12 +518,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:34:31Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T12:34:32Z",
+   "updated_at": "2026-11-15T00:05:34Z",
    "labels": [
     "task",
     "cli"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -536,12 +538,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:34:23Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T12:34:25Z",
+   "updated_at": "2026-11-15T00:05:33Z",
    "labels": [
     "task",
     "core"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -556,12 +558,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:34:15Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T12:34:16Z",
+   "updated_at": "2026-11-15T00:05:33Z",
    "labels": [
     "task",
     "core"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -702,12 +704,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:57Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:35:58Z",
+   "updated_at": "2026-11-15T00:03:06Z",
    "labels": [
     "task",
     "action"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -742,12 +744,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:42Z",
    "closed_at": null,
-   "updated_at": "2026-11-13T17:07:40Z",
+   "updated_at": "2026-11-15T00:03:07Z",
    "labels": [
     "task",
     "frontend"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [
     "devwallyson"
    ],
@@ -831,14 +833,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:11Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:35:12Z",
+   "updated_at": "2026-11-15T00:03:07Z",
    "labels": [
     "task",
     "core",
     "parser",
     "cli"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -897,12 +899,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:42Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:34:44Z",
+   "updated_at": "2026-11-15T00:03:08Z",
    "labels": [
     "task",
     "service"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -937,7 +939,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:13Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:34:27Z",
+   "updated_at": "2026-11-15T00:03:08Z",
    "labels": [
     "task",
     "frontend",
@@ -945,7 +947,7 @@
     "cli",
     "plugin"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -982,12 +984,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:08Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:34:27Z",
+   "updated_at": "2026-11-15T00:03:08Z",
    "labels": [
     "task",
     "parser"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -1002,12 +1004,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:06Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:34:07Z",
+   "updated_at": "2026-11-15T00:03:09Z",
    "labels": [
     "task",
     "core"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -1022,12 +1024,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:03Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:34:04Z",
+   "updated_at": "2026-11-15T00:03:09Z",
    "labels": [
     "task",
     "cli"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -1042,11 +1044,11 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:33:26Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:33:28Z",
+   "updated_at": "2026-11-15T00:03:09Z",
    "labels": [
     "task"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -1061,12 +1063,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:33:24Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:33:39Z",
+   "updated_at": "2026-11-15T00:03:10Z",
    "labels": [
     "docs",
     "task"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -1081,12 +1083,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:33:21Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:33:22Z",
+   "updated_at": "2026-11-15T00:03:07Z",
    "labels": [
     "analytics",
     "task"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -1101,12 +1103,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:33:17Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:33:20Z",
+   "updated_at": "2026-11-15T00:03:07Z",
    "labels": [
     "analytics",
     "task"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -1121,12 +1123,12 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:33:14Z",
    "closed_at": null,
-   "updated_at": "2026-11-10T02:33:16Z",
+   "updated_at": "2026-11-15T00:03:07Z",
    "labels": [
     "analytics",
     "task"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
@@ -1280,7 +1282,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:28Z",
    "closed_at": "2026-11-12T04:20:39Z",
-   "updated_at": "2026-11-13T20:28:40Z",
+   "updated_at": "2026-11-14T20:57:56Z",
    "labels": [
     "bug",
     "frontend",
@@ -1303,7 +1305,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:07Z",
    "closed_at": "2026-11-12T03:51:27Z",
-   "updated_at": "2026-11-13T20:28:39Z",
+   "updated_at": "2026-11-14T20:57:55Z",
    "labels": [
     "bug",
     "frontend",
@@ -1436,11 +1438,11 @@
    "is_pull_request": false,
    "created_at": "2026-11-08T20:20:22Z",
    "closed_at": null,
-   "updated_at": "2026-11-13T03:01:53Z",
+   "updated_at": "2026-11-15T00:04:05Z",
    "labels": [
     "task"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [
     "DiegoCarlito"
    ],
@@ -1479,11 +1481,11 @@
    "is_pull_request": false,
    "created_at": "2026-11-08T20:15:35Z",
    "closed_at": null,
-   "updated_at": "2026-11-11T01:06:12Z",
+   "updated_at": "2026-11-15T00:22:10Z",
    "labels": [
     "task"
    ],
-   "type": "Task",
+   "type": null,
    "assignees": [
     "storch7"
    ],
@@ -2343,7 +2345,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T00:11:39Z",
    "closed_at": null,
-   "updated_at": "2026-11-07T22:29:36Z",
+   "updated_at": "2026-11-14T23:46:06Z",
    "labels": [
     "task"
    ],
@@ -2361,11 +2363,11 @@
   {
    "number": 190,
    "title": "[QUAL.02] Elaboração do Plano de Qualidade do Projeto (Release 3)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-06T00:10:48Z",
-   "closed_at": null,
-   "updated_at": "2026-11-07T20:26:31Z",
+   "closed_at": "2026-11-14T23:45:25Z",
+   "updated_at": "2026-11-14T23:45:25Z",
    "labels": [
     "task"
    ],
@@ -2550,7 +2552,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:51:28Z",
    "closed_at": "2026-11-13T03:47:32Z",
-   "updated_at": "2026-11-13T20:28:55Z",
+   "updated_at": "2026-11-14T20:58:11Z",
    "labels": [
     "US"
    ],
@@ -2576,7 +2578,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:51Z",
    "closed_at": "2026-11-13T03:32:17Z",
-   "updated_at": "2026-11-13T20:28:54Z",
+   "updated_at": "2026-11-14T20:58:10Z",
    "labels": [
     "US"
    ],
@@ -2602,7 +2604,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:08Z",
    "closed_at": "2026-11-13T03:32:14Z",
-   "updated_at": "2026-11-13T20:28:53Z",
+   "updated_at": "2026-11-14T20:58:09Z",
    "labels": [
     "US"
    ],
@@ -3498,7 +3500,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:23Z",
    "closed_at": null,
-   "updated_at": "2026-11-12T01:33:45Z",
+   "updated_at": "2026-11-14T11:28:54Z",
    "labels": [
     "US",
     "core",
@@ -3544,7 +3546,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:01Z",
    "closed_at": "2026-11-11T22:21:31Z",
-   "updated_at": "2026-11-13T20:28:44Z",
+   "updated_at": "2026-11-14T20:57:59Z",
    "labels": [
     "US",
     "frontend",
@@ -3572,7 +3574,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:50Z",
    "closed_at": "2026-11-12T03:15:43Z",
-   "updated_at": "2026-11-13T20:28:51Z",
+   "updated_at": "2026-11-14T20:58:07Z",
    "labels": [
     "US"
    ],
@@ -3593,7 +3595,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:46Z",
    "closed_at": "2026-11-10T02:33:45Z",
-   "updated_at": "2026-11-13T20:28:50Z",
+   "updated_at": "2026-11-14T20:58:05Z",
    "labels": [
     "US"
    ],
@@ -3614,7 +3616,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:38Z",
    "closed_at": "2026-11-11T22:21:36Z",
-   "updated_at": "2026-11-13T20:28:49Z",
+   "updated_at": "2026-11-14T20:58:04Z",
    "labels": [
     "US"
    ],
@@ -3635,7 +3637,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:33Z",
    "closed_at": "2026-11-07T19:14:18Z",
-   "updated_at": "2026-11-13T20:28:48Z",
+   "updated_at": "2026-11-14T20:58:03Z",
    "labels": [
     "US"
    ],
@@ -3656,7 +3658,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:28Z",
    "closed_at": "2026-11-12T03:11:01Z",
-   "updated_at": "2026-11-13T20:28:52Z",
+   "updated_at": "2026-11-14T20:58:08Z",
    "labels": [
     "US"
    ],
@@ -3678,7 +3680,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:22Z",
    "closed_at": "2026-11-11T22:21:33Z",
-   "updated_at": "2026-11-13T20:28:47Z",
+   "updated_at": "2026-11-14T20:58:02Z",
    "labels": [
     "US"
    ],
@@ -3751,7 +3753,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:48:20Z",
    "closed_at": "2026-11-12T05:12:26Z",
-   "updated_at": "2026-11-13T20:28:46Z",
+   "updated_at": "2026-11-14T20:58:01Z",
    "labels": [
     "US",
     "frontend"
@@ -3799,7 +3801,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:06:06Z",
    "closed_at": "2026-11-12T04:56:19Z",
-   "updated_at": "2026-11-13T20:28:45Z",
+   "updated_at": "2026-11-14T20:58:00Z",
    "labels": [
     "US"
    ],
@@ -4470,7 +4472,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-25T20:16:41Z",
    "closed_at": "2026-11-12T02:16:25Z",
-   "updated_at": "2026-11-13T20:28:43Z",
+   "updated_at": "2026-11-14T20:57:58Z",
    "labels": [
     "US",
     "frontend",
@@ -4714,7 +4716,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-24T00:34:13Z",
    "closed_at": "2026-11-11T22:35:14Z",
-   "updated_at": "2026-11-13T20:28:41Z",
+   "updated_at": "2026-11-14T20:57:57Z",
    "labels": [
     "US",
     "frontend",
