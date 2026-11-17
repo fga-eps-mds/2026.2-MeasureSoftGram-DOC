@@ -66,6 +66,7 @@ Como saberemos que este épico funcionou? (ex: métricas de tempo de resposta, e
 
 - [ ] Épico cadastrado no ZenHub (Convert to Epic / Create Epic)
 - [ ] Integrantes do Squad atribuídos aos **Assignees**
+- [ ] Milestone da release-alvo configurada no GitHub
 - [ ] Validação prévia com o PO realizada (se for Épico de Funcionalidade)
 - [ ] Decomposição preliminar em itens filhos vinculados (US, Tasks ou Bugs)
 

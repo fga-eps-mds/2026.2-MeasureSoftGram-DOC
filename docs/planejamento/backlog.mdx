@@ -97,6 +97,8 @@ Para eliminar a confusão entre obrigações de negócio e tarefas de engenharia
 
 A **Definição de Preparado** atua como uma porta de qualidade de entrada (*quality gate*), garantindo que um item só ingresse no desenvolvimento quando estiver maduro, claro e compreendido.
 
+Toda issue, de qualquer tipo, precisa de descrição e prazo: sprint no ZenHub ou, para itens que não entram em sprint (épicos e pacotes da EAP), milestone da release no GitHub. É o que mede a métrica [M7 Well defined issues](/docs/planejamento/selecaometricas#m7).
+
 ### 4.1 DoR de Épico
 
 #### Épico de Funcionalidade (Feature)
@@ -106,6 +108,7 @@ A **Definição de Preparado** atua como uma porta de qualidade de entrada (*qua
 - [ ] **Sessão de alinhamento com o PO realizada para sanar dúvidas e validar o entendimento do escopo.**
 - [ ] Decomposição preliminar em Histórias de Usuário (US) estruturada.
 - [ ] Dependências arquiteturais e de serviços mapeadas.
+- [ ] Responsáveis atribuídos e milestone da release-alvo configurada no GitHub.
 
 #### Épico de Correção / Dívida Técnica
 - [ ] Diagnóstico técnico do problema ou gargalo arquitetural registrado.
@@ -114,6 +117,7 @@ A **Definição de Preparado** atua como uma porta de qualidade de entrada (*qua
 - [ ] Fronteiras de Não-Escopo definidas: Está documentado de forma explícita o que NÃO será feito neste épico (refatorações paralelas, módulos próximos ou bugs menores que serão ignorados)
 - [ ] Decomposição preliminar em Tasks Técnicas e/ou Bugs estruturada.
 - [ ] Impactos funcionais verificados (se houver alteração de comportamento para o usuário, validado previamente com o PO).
+- [ ] Responsáveis atribuídos e milestone da release-alvo configurada no GitHub.
 
 ### 4.2 DoR de História de Usuário (US)
 - [ ] Descrição completa no formato padrão (`Como... Quero... Para...`).
@@ -139,6 +143,9 @@ A **Definição de Preparado** atua como uma porta de qualidade de entrada (*qua
 - [ ] Evidências anexadas (prints, gravações de tela, logs de terminal/console ou respostas de API).
 - [ ] Ambiente, navegador ou versão em que o defeito se manifesta.
 - [ ] Severidade e prioridade de resolução definidas.
+- [ ] Estimativa de esforço pontuada pela equipe de desenvolvimento.
+- [ ] Desenvolvedores responsáveis designados.
+- [ ] Issue cadastrada no ZenHub com Labels, Épico e Sprint configurados.
 
 ---
 
@@ -186,3 +193,4 @@ Diferente dos itens de trabalho da Sprint, um Épico não recebe commits ou Pull
 | --- | --- | --- | --- | --- |
 | 1.0 | 24/09/2026 | Criação da governança do backlog, taxonomia de itens, validação com PO, DoR e DoD modularizados | [@luciano-freitas-melo](https://github.com/luciano-freitas-melo) |  |
 | 1.1 | 21/10/2026 | Padronização: título, caixas de aviso e histórico; correções de consistência | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
+| 1.2 | 17/11/2026 | DoR: descrição e prazo em toda issue (M7); milestone nos épicos; estimativa, responsáveis e sprint nos bugs | [@gusrberto](https://github.com/gusrberto) |  |
