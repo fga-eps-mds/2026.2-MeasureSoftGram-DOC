@@ -48,7 +48,7 @@ jobs:
           python-version: "3.12"
 
       - name: Instalar dependências
-        run: pip install pandas requests
+        run: pip install -r Analytics/requirements.txt
 
       - name: Verificar novos PRs na develop
         id: verificar
