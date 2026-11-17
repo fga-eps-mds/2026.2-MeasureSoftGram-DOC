@@ -101,6 +101,20 @@ class ClienteTest(unittest.TestCase):
                          ["valor"].iloc[0], 1.0)
         self.assertTrue((arq["tipo"] == "FIL").all())
 
+    def test_medidas_por_arquivo_em_lotes_dentro_do_limite_da_api(self):
+        def arvore(p):
+            chaves = p["metricKeys"].split(",")
+            if len(chaves) > api.MAX_METRICAS_POR_CHAMADA:
+                return api.Resposta(400, {"errors": [{"msg": "'metricKeys' can contains only 15 values"}]})
+            return api.Resposta(200, {"paging": {"total": 1}, "components": [
+                {"key": "org_Core:src/a.py", "path": "src/a.py", "qualifier": "FIL",
+                 "measures": [{"metric": m, "value": "1"} for m in chaves]}]})
+        t = Transporte({"api/measures/component_tree": arvore})
+        arq = api.SonarClient(transporte=t, dormir=lambda s: None).arquivos("org_Core", None)
+        self.assertEqual(len(t.chamadas), 2)
+        self.assertEqual(len(arq["linhas"]), 1)
+        self.assertEqual(arq["linhas"][0][3:], [1.0] * len(api.METRICAS_ARQUIVO))
+
     def test_erro_de_um_projeto_nao_derruba_os_outros(self):
         r = respostas_ok()
         r["api/measures/component"] = lambda p: api.Resposta(404, {"errors": [{"msg": "Component key not found"}]}) \
