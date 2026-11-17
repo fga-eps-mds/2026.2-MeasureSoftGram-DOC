@@ -348,7 +348,7 @@ def calcular(ctx, f: dict, rec: dict, ultima_sprint: bool = False) -> dict:
         em_sprint = set()
         if zh_ok:
             em_sprint = {(nq_nome(a), int(b)) for a, b, s in zip(z["repositorio"], z["number"], z["sprints"])
-                         if isinstance(s, list) and s}
+                         if isinstance(s, list) and s and s != ["Sem sprint"]}
         g["com_descricao"] = g["body_chars"].fillna(0) > 0
         no_sprint = pd.Series([(nq_nome(a), int(b)) in em_sprint for a, b in zip(g["repositorio"], g["number"])],
                               index=g.index, dtype=bool)

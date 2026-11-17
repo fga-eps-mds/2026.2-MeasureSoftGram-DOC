@@ -48,6 +48,7 @@ METRICAS_ARQUIVO = [
     "violations", "blocker_violations", "critical_violations",
     "tests", "test_errors", "test_failures", "skipped_tests", "test_execution_time",
 ]
+MAX_METRICAS_POR_CHAMADA = 15   # limite de metricKeys do api/measures/component_tree
 
 
 class SonarError(RuntimeError):
@@ -166,22 +167,27 @@ class SonarClient:
     def arquivos(self, projeto: str, branch: str | None, max_paginas: int = 20) -> dict:
         """Medidas de cada arquivo (código e teste), compactas: ``{"metricas": [...], "linhas": [[path,
         qualifier, language, v1, v2, ...]]}``. Valor ausente = None (o Sonar não mede aquilo naquele arquivo)."""
-        linhas, pagina = [], 1
-        while pagina <= max_paginas:
-            p = {"component": projeto, "qualifiers": "FIL,UTS", "metricKeys": ",".join(METRICAS_ARQUIVO),
-                 "ps": 500, "p": pagina, "strategy": "leaves"}
-            if branch:
-                p["branch"] = branch
-            d = self.get("api/measures/component_tree", p)
-            comps = d.get("components") or []
-            for c in comps:
-                med = {m.get("metric"): _float(m.get("value")) for m in c.get("measures", []) if "metric" in m}
-                linhas.append([c.get("path") or c.get("name"), c.get("qualifier"), c.get("language"),
-                               *[med.get(m) for m in METRICAS_ARQUIVO]])
-            total = (d.get("paging") or {}).get("total", 0)
-            if pagina * 500 >= total or not comps:
-                break
-            pagina += 1
+        componentes, medidas = {}, {}
+        for i in range(0, len(METRICAS_ARQUIVO), MAX_METRICAS_POR_CHAMADA):
+            lote, pagina = METRICAS_ARQUIVO[i:i + MAX_METRICAS_POR_CHAMADA], 1
+            while pagina <= max_paginas:
+                p = {"component": projeto, "qualifiers": "FIL,UTS", "metricKeys": ",".join(lote),
+                     "ps": 500, "p": pagina, "strategy": "leaves"}
+                if branch:
+                    p["branch"] = branch
+                d = self.get("api/measures/component_tree", p)
+                comps = d.get("components") or []
+                for c in comps:
+                    chave = c.get("key") or c.get("path") or c.get("name")
+                    componentes.setdefault(chave, c)
+                    medidas.setdefault(chave, {}).update(
+                        {m.get("metric"): _float(m.get("value")) for m in c.get("measures", []) if "metric" in m})
+                total = (d.get("paging") or {}).get("total", 0)
+                if pagina * 500 >= total or not comps:
+                    break
+                pagina += 1
+        linhas = [[c.get("path") or c.get("name"), c.get("qualifier"), c.get("language"),
+                   *[medidas[k].get(m) for m in METRICAS_ARQUIVO]] for k, c in componentes.items()]
         return {"colunas": ["path", "qualifier", "language"], "metricas": list(METRICAS_ARQUIVO), "linhas": linhas}
 
 

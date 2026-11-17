@@ -94,8 +94,26 @@ jobs:
         run: python scripts/saneamento_dados.py
 
       - name: Testes dos cálculos
+        id: testes
         working-directory: Analytics
         run: python -m unittest discover -s tests
+
+      # Com teste falhando os dados não são commitados; o artefato guarda só o que esta coleta mudou.
+      - name: Separar os dados desta coleta
+        if: failure() && steps.testes.outcome == 'failure'
+        run: |
+          mkdir -p "$RUNNER_TEMP/dados"
+          { git diff -z --name-only --diff-filter=AM -- Analytics/data; git ls-files -z -o --exclude-standard Analytics/data; } \
+            | xargs -0 -r cp --parents -t "$RUNNER_TEMP/dados"
+          git diff --name-only --diff-filter=D -- Analytics/data > "$RUNNER_TEMP/dados/removidos.txt"
+
+      - name: Publicar os dados desta coleta
+        if: failure() && steps.testes.outcome == 'failure'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: dados-coleta-${{ github.run_id }}
+          path: ${{ runner.temp }}/dados
+          retention-days: 7
 
       - name: Commitar os dados
         run: |
