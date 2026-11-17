@@ -1,11 +1,137 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-17T22:07:23+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Parser",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "0741f5a235d40cb801723cfb925caafb67ca9f7c",
+   "date": "2026-11-16T18:00:47Z",
+   "author": "LuizaMaluf",
+   "message": "chore: bump 1.2.4rc3 (#21)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "5671c1d5f7cb4ea61deb9b5456370bcafded3e6c",
+   "date": "2026-11-16T17:27:58Z",
+   "author": "gusrberto",
+   "message": "revert(security): remove a extração das métricas de segurança (#22)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "genericparser/plugins/dinamic/github.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 46
+    },
+    {
+     "filename": "genericparser/plugins/statics/sonarqube.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 19
+    },
+    {
+     "filename": "tests/unit_tests/test_extract_metric_sonarqbe.py",
+     "status": "modified",
+     "additions": 33,
+     "deletions": 172
+    },
+    {
+     "filename": "tests/unit_tests/test_genericparser_main_file.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 74
+    },
+    {
+     "filename": "tests/unit_tests/test_github_parser_metrics.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 93
+    }
+   ]
+  },
+  {
+   "sha": "ca5fb7e026b1c67c4fd6914d26d108778523db05",
+   "date": "2026-11-16T14:11:55Z",
+   "author": "LuizaMaluf",
+   "message": "fix(github): falha de rede vira GithubConnectionError em vez de métricas zeradas (#20)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "genericparser/__init__.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "genericparser/plugins/dinamic/github.py",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 2
+    },
+    {
+     "filename": "tests/unit_tests/test_github_parser_metrics.py",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "a162a2ac4a730f0292e9b508b25ab307ea4fc976",
+   "date": "2026-11-16T00:20:02Z",
+   "author": "devwallyson",
+   "message": "feat(security): processa e tipa as metricas de seguranca do SonarQube e do SCM (#19)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "genericparser/plugins/dinamic/github.py",
+     "status": "modified",
+     "additions": 46,
+     "deletions": 0
+    },
+    {
+     "filename": "genericparser/plugins/statics/sonarqube.py",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 1
+    },
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit_tests/test_extract_metric_sonarqbe.py",
+     "status": "modified",
+     "additions": 172,
+     "deletions": 33
+    },
+    {
+     "filename": "tests/unit_tests/test_genericparser_main_file.py",
+     "status": "modified",
+     "additions": 74,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit_tests/test_github_parser_metrics.py",
+     "status": "modified",
+     "additions": 93,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "e6fb28640b91f12436eb00e2abfe0d5fee1487ae",
    "date": "2026-11-07T12:59:11Z",
@@ -1909,5 +2035,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 4
 }

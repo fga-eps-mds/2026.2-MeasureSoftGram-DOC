@@ -1,11 +1,215 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-15T03:12:19+00:00",
+ "coletado_em": "2026-11-17T22:07:23+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "16c847ab71521adaba372e2d08638c9f0ebeace4",
+   "date": "2026-11-16T13:59:28Z",
+   "author": "storch7",
+   "message": "Task 98/tarja ambiente academico (#157)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "public/locales/en/translation.json",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 1
+    },
+    {
+     "filename": "public/locales/pt/translation.json",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(public)/auth/Auth.tsx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/test/__snapshots__/auth.spec.tsx.snap",
+     "status": "modified",
+     "additions": 86,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/test/auth.spec.tsx",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/Landing.tsx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/landing/test/landing.spec.tsx",
+     "status": "modified",
+     "additions": 23,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/components/AcademicNotice/AcademicNotice.tsx",
+     "status": "added",
+     "additions": 178,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/AcademicNotice/AcademicNoticeFloating.tsx",
+     "status": "added",
+     "additions": 69,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/AcademicNotice/index.ts",
+     "status": "added",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/AcademicNotice/tests/AcademicNotice.spec.tsx",
+     "status": "added",
+     "additions": 66,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/AcademicNotice/tests/AcademicNoticeFloating.spec.tsx",
+     "status": "added",
+     "additions": 54,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "fdc1e7cb27c2f95250a1c455f1bd027290198793",
+   "date": "2026-11-15T23:05:55Z",
+   "author": "LuizaMaluf",
+   "message": "fix(types): created_by da release é o id do usuário (number) (#165)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/tests/fixtures.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/overview/tests/fixtures.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/components/CompareGoalsChart/tests/CompareGoals.spec.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/components/ReleaseSelect/tests/ReleaseSelect.spec.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/customTypes/product.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/utils/tests/releaseSelection.spec.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "1a2a0948149ab3d0538d10de4baba08bc054ad4a",
+   "date": "2026-11-15T22:09:10Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): remove o DOCUMENTED_AS com o schema novo do Service (#164)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/contract.e2e.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 3
+    },
+    {
+     "filename": "e2e/contract/openapi.json",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 7
+    },
+    {
+     "filename": "e2e/support/contract.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 11
+    }
+   ]
+  },
+  {
+   "sha": "e65a911660f5f5931c6b2a1816c4cf93681bba33",
+   "date": "2026-11-15T18:30:20Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): respostas do Service fake no contrato e schema da develop do Service na CI (#163)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/e2e.yml",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/login-gitlab/index.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/fixtures/login-servidor/index.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/support/contract.ts",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/support/fixtures.ts",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 3
+    },
+    {
+     "filename": "e2e/support/mock-service.mjs",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 2
+    },
+    {
+     "filename": "e2e/support/service.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "b7da6a9abaa332a921ee9aa2f1c3739371aa9b15",
    "date": "2026-11-14T20:54:03Z",
@@ -15871,5 +16075,5 @@
    ]
   }
  ],
- "detalhes_novos": 2
+ "detalhes_novos": 4
 }

@@ -294,5 +294,19 @@
   "planned_unestimated_issues": 4,
   "regra": 2,
   "sprint_name": "Sprint: Nov 9 - Nov 15, 2026"
+ },
+ "Z2lkOi8vcmFwdG9yL1NwcmludC81MzIxMjI5": {
+  "congelado_em": "2026-11-17T22:06:06+00:00",
+  "corte": "2026-11-17T03:59:00+00:00",
+  "fonte": "histórico do Zenhub (scopeChange) + 2 issue(s) que já estavam na sprint no início (estimativa atual)",
+  "issues": {
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMjEzMjQxOA": 8.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMjEzMjQxOQ": 8.0
+  },
+  "planned_issues": 2,
+  "planned_story_points": 16.0,
+  "planned_unestimated_issues": 0,
+  "regra": 2,
+  "sprint_name": "Sprint: Nov 16 - Nov 22, 2026"
  }
 }

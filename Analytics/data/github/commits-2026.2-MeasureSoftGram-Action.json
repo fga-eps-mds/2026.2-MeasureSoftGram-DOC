@@ -1,11 +1,113 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-17T22:07:23+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "1467022d411d23f669c8c40542a58f0987ad154b",
+   "date": "2026-11-16T17:27:53Z",
+   "author": "gusrberto",
+   "message": "revert(security): remove a coleta das métricas de segurança (#26)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 8
+    },
+    {
+     "filename": "__tests__/github.test.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 85
+    },
+    {
+     "filename": "__tests__/sonarqube.test.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 60
+    },
+    {
+     "filename": "dist/index.js",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 48
+    },
+    {
+     "filename": "dist/index.js.map",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/github.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 67
+    },
+    {
+     "filename": "src/sonarqube.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 3
+    }
+   ]
+  },
+  {
+   "sha": "afccb13e01782261a3510686042c9be1ddb82425",
+   "date": "2026-11-16T00:19:35Z",
+   "author": "devwallyson",
+   "message": "feat(security): coleta metricas de seguranca do SonarQube e do repositorio (#25)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "README.md",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 0
+    },
+    {
+     "filename": "__tests__/github.test.ts",
+     "status": "modified",
+     "additions": 85,
+     "deletions": 0
+    },
+    {
+     "filename": "__tests__/sonarqube.test.ts",
+     "status": "modified",
+     "additions": 60,
+     "deletions": 2
+    },
+    {
+     "filename": "dist/index.js",
+     "status": "modified",
+     "additions": 48,
+     "deletions": 0
+    },
+    {
+     "filename": "dist/index.js.map",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/github.ts",
+     "status": "modified",
+     "additions": 67,
+     "deletions": 0
+    },
+    {
+     "filename": "src/sonarqube.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "f1813eba78763f72508f6a414f629859dbca63a6",
    "date": "2026-11-07T12:02:09Z",
@@ -1009,5 +1111,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 2
 }

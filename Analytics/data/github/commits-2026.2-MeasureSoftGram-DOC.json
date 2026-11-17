@@ -1,11 +1,998 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-15T03:12:19+00:00",
+ "coletado_em": "2026-11-17T22:07:23+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "branch": "(padrão)",
  "commits": [
+  {
+   "sha": "040e69d52f27135fae460d9812cd5ff98d81ee21",
+   "date": "2026-11-17T22:02:47Z",
+   "author": "gusrberto",
+   "message": "Merge pull request #325 from fga-eps-mds/fix/coleta-sonar-arquivos",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/coleta-dados.yml",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/data/sonar_api.py",
+     "status": "modified",
+     "additions": 22,
+     "deletions": 16
+    },
+    {
+     "filename": "Analytics/src/metrics/qrapids.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_plano_qualidade.py",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/tests/test_sonar.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "f736e86d2551ce77586f546fee133a6ea0bfa4c9",
+   "date": "2026-11-17T22:00:01Z",
+   "author": "gusrberto",
+   "message": "ci(coleta): publica os dados coletados quando os testes falham",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/coleta-dados.yml",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "e724577c671c20507fe0137b2c8643a6f5e11342",
+   "date": "2026-11-17T21:59:45Z",
+   "author": "gusrberto",
+   "message": "fix(analytics): M7 não conta issue sem sprint como issue com prazo",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/src/metrics/qrapids.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_plano_qualidade.py",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 5
+    }
+   ]
+  },
+  {
+   "sha": "98303d2da88d8aa3e9f7c9c68c2a152f9e6f46fd",
+   "date": "2026-11-17T21:59:20Z",
+   "author": "gusrberto",
+   "message": "fix(analytics): coleta as medidas por arquivo do Sonar em lotes de 15",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/src/data/sonar_api.py",
+     "status": "modified",
+     "additions": 22,
+     "deletions": 16
+    },
+    {
+     "filename": "Analytics/tests/test_sonar.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "730260a591486782039e7c15601a23d0f140bc52",
+   "date": "2026-11-17T20:29:25Z",
+   "author": "gusrberto",
+   "message": "Merge pull request #324 from fga-eps-mds/fix/coleta-dados-dependencias",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".github/workflows/coleta-dados.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "94535b55fad15abf08814200cc3788c168ea50b3",
+   "date": "2026-11-17T20:26:20Z",
+   "author": "gusrberto",
+   "message": "fix(ci): instala as dependências do Analytics na coleta de dados",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/coleta-dados.yml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "ae44d6a01372825d9bb505f01731a1c5f78db715",
+   "date": "2026-11-16T18:16:36Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório MeasureSoftGram-Core v1.5.5rc6",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-11-16-2026-18-16-25-v1.5.5rc6.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "128714d0ba2cc767928be3df74d977c0375536c7",
+   "date": "2026-11-16T18:15:47Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório MeasureSoftGram-Core develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-11-16-2026-18-15-36-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "5a1093d6bfb1e66467b65c961bf244ff370b9fb4",
+   "date": "2026-11-16T18:01:30Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Core develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-11-16-2026-18-01-22-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "97ca7b7f1ef96aaa51f2a1be1768b1be44b3c5c0",
+   "date": "2026-11-16T18:01:18Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Parser develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 26,
+     "deletions": 6
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-16-2026-18-01-05.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-16-2026-18-01-05-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "ff79a239695188188654ec7e6d282b28147ca4ac",
+   "date": "2026-11-16T17:29:20Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Service develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 159,
+     "deletions": 5
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Service-11-16-2026-17-29-01.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-11-16-2026-17-29-01-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "794d8f7ab66592425489fcf5800dd1717872d79f",
+   "date": "2026-11-16T17:28:29Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Parser develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 206,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-16-2026-17-28-15.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-16-2026-17-28-15-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "8d679cb6e138d3971bd6b7b7a6e8fd0a4760972d",
+   "date": "2026-11-16T17:27:45Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Core develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-11-16-2026-17-27-34-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "dcc04b5b80a9bd8f839206411f3babb36f52a80f",
+   "date": "2026-11-16T14:56:00Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Core develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-11-16-2026-14-55-52-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "3c01f9fd5c193692042a0fe4ead1cba291ce7baf",
+   "date": "2026-11-16T14:12:28Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Parser develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 92,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-16-2026-14-12-15.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-16-2026-14-12-15-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "3c246c92ed28ec58fc3da4879112c2db3d67cf90",
+   "date": "2026-11-16T14:00:12Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 51,
+     "deletions": 11
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-16-2026-13-59-44.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-16-2026-13-59-44-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "51aae9150c1f83c1d2a6feec0223c11fb8505260",
+   "date": "2026-11-16T12:56:52Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-CLI develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 7
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-12-56-38.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-12-56-38-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "34386c1cd580220236f85eaf6c462101f7d754d6",
+   "date": "2026-11-16T12:47:41Z",
+   "author": "MilenaFRocha",
+   "message": "Merge pull request #308 from fga-eps-mds/docs/239-gitlab-ci-cd",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "docs/produto/arquitetura.mdx",
+     "status": "modified",
+     "additions": 29,
+     "deletions": 20
+    },
+    {
+     "filename": "docs/produto/repositorios.mdx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "705b4f335b7975f9da1735c03a78fe9de01840a6",
+   "date": "2026-11-16T02:41:17Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-CLI develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 206,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-02-41-04.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-02-41-04-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "33cf76e9f1591565fd54bee061d80acf2b09f21a",
+   "date": "2026-11-16T01:50:44Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-CLI develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 92,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-01-50-33.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-01-50-33-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "e015c845e50359593c72aa20ae2a4fd0cf9bda6d",
+   "date": "2026-11-16T01:34:02Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-CLI develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 50,
+     "deletions": 10
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-01-33-52.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-01-33-52-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "6dbd75ed9e328a95261179a1eb4ab9e9df2cfe31",
+   "date": "2026-11-16T01:26:57Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-CLI develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 236,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-01-26-43.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-01-26-43-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "e0426783cf59e29f636feb2e31233311e27f0a3f",
+   "date": "2026-11-16T01:07:38Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-CLI develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 278,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-01-07-28.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-CLI-11-16-2026-01-07-28-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "f13d40fa75aa46d4658e0d4b4a9e34ba08760875",
+   "date": "2026-11-16T01:05:24Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Service develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 134,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Service-11-16-2026-01-05-11.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-11-16-2026-01-05-11-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "6b11eab9eafea1fa4814f1d19b8cc3b1e3322a10",
+   "date": "2026-11-16T00:20:27Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Parser develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 164,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-16-2026-00-20-16.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Parser-11-16-2026-00-20-16-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "7e0e8a12d6feaa8492e05a793c73df5c3c55345e",
+   "date": "2026-11-16T00:20:04Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Action develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 208,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Action-11-16-2026-00-19-53.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Action-11-16-2026-00-19-53-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "d17233e2cb0f28be2112d344128e7d0a1b821aaa",
+   "date": "2026-11-16T00:02:20Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório MeasureSoftGram-Core v1.5.5rc5",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-11-16-2026-00-02-14-v1.5.5rc5.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "3eebf096921872220165b98f2eee22fe53c49879",
+   "date": "2026-11-16T00:01:07Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório MeasureSoftGram-Core develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-MeasureSoftGram-Core-11-16-2026-00-01-01-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "8b2b0290b5fb83c27882fd07c072acbbb936ff1e",
+   "date": "2026-11-15T23:17:50Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Core develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Core-11-15-2026-23-17-44-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "13c39546490f2d262124b2f8e6836fccf9d27b8c",
+   "date": "2026-11-15T23:06:31Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 92,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-15-2026-23-06-10.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-15-2026-23-06-10-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "2c34aa85e12531e87773a4e64089c1b6acaba524",
+   "date": "2026-11-15T22:09:43Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 92,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-15-2026-22-09-21.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-15-2026-22-09-21-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "3511e9bf5909ba96a94451b8abccf0214e7a3b3a",
+   "date": "2026-11-15T20:21:27Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Service develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 846,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Service-11-15-2026-20-21-15.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Service-11-15-2026-20-21-15-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "d6a0ac184c77adf82e4eef2194bc371709265137",
+   "date": "2026-11-15T18:30:52Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Front develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 92,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Front-11-15-2026-18-30-33.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Front-11-15-2026-18-30-33-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "81448d49297eacf2e30bfdbe78a7ede00611643e",
+   "date": "2026-11-15T05:18:24Z",
+   "author": "zzzBECK",
+   "message": "Merge pull request #243 from fga-eps-mds/task/DA-R3.03-dashboard-plano-qualidade",
+   "parents": 2,
+   "files": [
+    {
+     "filename": ".devcontainer/devcontainer.json",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 3
+    },
+    {
+     "filename": "Analytics/README.md",
+     "status": "modified",
+     "additions": 62,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/REVISAO-PR-243.md",
+     "status": "added",
+     "additions": 68,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/config.py",
+     "status": "modified",
+     "additions": 476,
+     "deletions": 12
+    },
+    {
+     "filename": "Analytics/pages/metodologia.py",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/pages/qualidade.py",
+     "status": "modified",
+     "additions": 296,
+     "deletions": 324
+    },
+    {
+     "filename": "Analytics/pages/sonar.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/pages/visao_executiva.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "Analytics/requisitos-plano-de-ensino.md",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "Analytics/src/data/sonar.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/data/sonar_api.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/src/metrics/evm.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/src/metrics/qrapids.py",
+     "status": "modified",
+     "additions": 502,
+     "deletions": 404
+    },
+    {
+     "filename": "Analytics/src/metrics/resumo.py",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 15
+    },
+    {
+     "filename": "Analytics/tests/test_deduplicacao_coleta.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_gestao_agil.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_plano_qualidade.py",
+     "status": "added",
+     "additions": 183,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_portoes_regressao.py",
+     "status": "added",
+     "additions": 119,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_qrapids.py",
+     "status": "modified",
+     "additions": 75,
+     "deletions": 39
+    },
+    {
+     "filename": "Analytics/tests/test_verificar_novos_prs.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 2
+    },
+    {
+     "filename": "docs/planejamento/metas.mdx",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 13
+    },
+    {
+     "filename": "docs/planejamento/selecaometricas.mdx",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 10
+    },
+    {
+     "filename": "tsconfig.json",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 6
+    }
+   ]
+  },
+  {
+   "sha": "d20d52615b22b01872b676d028c0da38564bbd7b",
+   "date": "2026-11-15T03:14:30Z",
+   "author": "github-actions[bot]",
+   "message": "chore(dados): coleta automática do Zenhub, SonarCloud e GitHub Actions",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/.last_pr_state.json",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 7
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 221,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 265,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 212,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 97,
+     "deletions": 95
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 35,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 120,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 74,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 295,
+     "deletions": 295
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 15,
+     "deletions": 15
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 114,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/sonar/sonar-2026-11-15T0312.json",
+     "status": "added",
+     "additions": 21930,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-15T0311.json",
+     "status": "added",
+     "additions": 16531,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "77ab8a6e615eab0001728efe08c383f8e9f2e394",
    "date": "2026-11-14T20:54:35Z",
@@ -222,6 +1209,51 @@
      "status": "added",
      "additions": 16297,
      "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "95057620417727b0a5c916d5bcb6ee5ee6f1b6a8",
+   "date": "2026-11-14T01:21:45Z",
+   "author": "DiegoCarlito",
+   "message": "docs(arquitetura): atualiza diagramas de fluxo e visão física para GitLab CI/CD (#239)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/produto/arquitetura.mdx",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 7
+    }
+   ]
+  },
+  {
+   "sha": "89dafbfae0a602f092b1f91c98eb54d65eb874e3",
+   "date": "2026-11-14T01:09:24Z",
+   "author": "DiegoCarlito",
+   "message": "docs(repositorios): inclui componente GitLab CI/CD no papel do módulo Action (#239)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/produto/repositorios.mdx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "e11cdaf825dcd2aebec9d1ce57fc2a763c92e7fd",
+   "date": "2026-11-14T01:09:22Z",
+   "author": "DiegoCarlito",
+   "message": "docs(arquitetura): atualiza referências de coleta e suporte ao GitLab CI/CD (#239)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "docs/produto/arquitetura.mdx",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 13
     }
    ]
   },
@@ -2083,6 +3115,153 @@
    ]
   },
   {
+   "sha": "35b0272782ea40e25515f1f520619624a961ae62",
+   "date": "2026-11-10T04:41:09Z",
+   "author": "Marcosatc147",
+   "message": "fix(analytics): valida portões e pisos do plano de qualidade",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/README.md",
+     "status": "modified",
+     "additions": 62,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/REVISAO-PR-243.md",
+     "status": "added",
+     "additions": 68,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/config.py",
+     "status": "modified",
+     "additions": 460,
+     "deletions": 11
+    },
+    {
+     "filename": "Analytics/pages/metodologia.py",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/pages/qualidade.py",
+     "status": "modified",
+     "additions": 48,
+     "deletions": 14
+    },
+    {
+     "filename": "Analytics/src/data/sonar.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/data/sonar_api.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/src/metrics/qrapids.py",
+     "status": "modified",
+     "additions": 115,
+     "deletions": 119
+    },
+    {
+     "filename": "Analytics/src/metrics/resumo.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 8
+    },
+    {
+     "filename": "Analytics/tests/test_plano_qualidade.py",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_portoes_regressao.py",
+     "status": "added",
+     "additions": 119,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_qrapids.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "docs/planejamento/metas.mdx",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 13
+    },
+    {
+     "filename": "docs/planejamento/selecaometricas.mdx",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 10
+    }
+   ]
+  },
+  {
+   "sha": "f77890e3fda23c1d4b1d15102c33b8eb84b57318",
+   "date": "2026-11-10T04:40:56Z",
+   "author": "Marcosatc147",
+   "message": "chore(analytics): remove imports sem uso apontados pelo lint",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/src/metrics/evm.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_deduplicacao_coleta.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_gestao_agil.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/tests/test_verificar_novos_prs.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "8316074882b7cb087287d66543bebc34451db11a",
+   "date": "2026-11-10T04:40:56Z",
+   "author": "Marcosatc147",
+   "message": "chore(ambiente): corrige configuração do TypeScript e do devcontainer",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".devcontainer/devcontainer.json",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 3
+    },
+    {
+     "filename": "tsconfig.json",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 6
+    }
+   ]
+  },
+  {
    "sha": "6e63e6694872b3c92d21029e2b98b9732868196d",
    "date": "2026-11-10T03:57:33Z",
    "author": "github-actions[bot]",
@@ -2871,6 +4050,75 @@
      "status": "added",
      "additions": 1,
      "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "8e37235a17943f77b95ef1f513a0ab1216a71a34",
+   "date": "2026-11-09T20:12:52Z",
+   "author": "zzzBECK",
+   "message": "feat(analytics): [DA-R3.03] alinha a aba Qualidade ao plano de qualidade",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/config.py",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/pages/metodologia.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/pages/qualidade.py",
+     "status": "modified",
+     "additions": 262,
+     "deletions": 324
+    },
+    {
+     "filename": "Analytics/pages/sonar.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/pages/visao_executiva.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "Analytics/requisitos-plano-de-ensino.md",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "Analytics/src/metrics/qrapids.py",
+     "status": "modified",
+     "additions": 494,
+     "deletions": 392
+    },
+    {
+     "filename": "Analytics/src/metrics/resumo.py",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 15
+    },
+    {
+     "filename": "Analytics/tests/test_plano_qualidade.py",
+     "status": "added",
+     "additions": 174,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_qrapids.py",
+     "status": "modified",
+     "additions": 75,
+     "deletions": 39
     }
    ]
   },
@@ -44209,5 +45457,5 @@
    ]
   }
  ],
- "detalhes_novos": 5
+ "detalhes_novos": 42
 }

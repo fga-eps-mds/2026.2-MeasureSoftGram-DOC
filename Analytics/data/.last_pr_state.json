@@ -1,9 +1,9 @@
 {
   "2026.2-MeasureSoftGram-Action": {
-    "number": 22,
-    "last_merged_at": "2026-11-07T12:02:09Z",
-    "title": "fix(action): ajusta cobertura, relatórios e confiabilidade",
-    "author": "Marcosatc147"
+    "number": 26,
+    "last_merged_at": "2026-11-16T17:27:54Z",
+    "title": "revert(security): remove a coleta das métricas de segurança",
+    "author": "gusrberto"
   },
   "2026.2-MeasureSoftGram-AI": {
     "number": 4,
@@ -12,28 +12,28 @@
     "author": "DiegoCarlito"
   },
   "2026.2-MeasureSoftGram-CLI": {
-    "number": 20,
-    "last_merged_at": "2026-11-07T13:27:01Z",
-    "title": "fix(quality): saneamento de exclusões do cli.py e parsers.py no SonarCloud",
-    "author": "DiegoCarlito"
+    "number": 31,
+    "last_merged_at": "2026-11-16T17:28:59Z",
+    "title": "revert(security): remove a característica Segurança da CLI",
+    "author": "gusrberto"
   },
   "2026.2-MeasureSoftGram-Core": {
-    "number": 26,
-    "last_merged_at": "2026-11-07T12:47:28Z",
-    "title": "fix(coverage): ajusta relatórios e coleta de métricas do Core",
-    "author": "Marcosatc147"
+    "number": 32,
+    "last_merged_at": "2026-11-16T18:00:53Z",
+    "title": "chore(release): bump version to 1.5.5rc6",
+    "author": "gusrberto"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 162,
-    "last_merged_at": "2026-11-14T20:54:04Z",
-    "title": "ci(e2e): E2E de sistema do Platform a cada merge na develop",
-    "author": "LuizaMaluf"
+    "number": 157,
+    "last_merged_at": "2026-11-16T13:59:29Z",
+    "title": "Task 98/tarja ambiente academico",
+    "author": "storch7"
   },
   "2026.2-MeasureSoftGram-Parser": {
-    "number": 17,
-    "last_merged_at": "2026-11-07T12:59:11Z",
-    "title": "fix(coverage): ajusta relatórios e coleta de métricas do Parser",
-    "author": "Marcosatc147"
+    "number": 21,
+    "last_merged_at": "2026-11-16T18:00:48Z",
+    "title": "chore: bump 1.2.4rc3",
+    "author": "LuizaMaluf"
   },
   "2026.2-MeasureSoftGram-Plugin": {
     "number": 13,
@@ -42,9 +42,9 @@
     "author": "henriquecq"
   },
   "2026.2-MeasureSoftGram-Service": {
-    "number": 99,
-    "last_merged_at": "2026-11-14T20:50:54Z",
-    "title": "ci(e2e): roda o E2E de sistema do Platform a cada merge na develop",
-    "author": "LuizaMaluf"
+    "number": 108,
+    "last_merged_at": "2026-11-16T17:28:46Z",
+    "title": "revert(security): remove a característica Segurança do Service",
+    "author": "gusrberto"
   }
 }

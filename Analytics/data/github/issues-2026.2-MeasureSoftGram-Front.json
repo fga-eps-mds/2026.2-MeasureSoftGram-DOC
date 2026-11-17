@@ -1,10 +1,99 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-15T03:12:19+00:00",
+ "coletado_em": "2026-11-17T22:07:23+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 167,
+   "title": "test(e2e): cenários de aceitação das US de 2026.1 por critério (TASK19.07)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-17T15:01:50Z",
+   "closed_at": null,
+   "updated_at": "2026-11-17T15:04:32Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2201,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/167",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 166,
+   "title": "test: tira os arquivos do Front da faixa de cobertura ≤ 60% (QA-09)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-17T00:27:54Z",
+   "closed_at": null,
+   "updated_at": "2026-11-17T00:32:53Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 754,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/166",
+   "author": "thegm445"
+  },
+  {
+   "number": 165,
+   "title": "fix(types): created_by da release é o id do usuário (number)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-15T22:52:20Z",
+   "closed_at": "2026-11-15T23:05:56Z",
+   "updated_at": "2026-11-15T23:05:58Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1175,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/165",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 164,
+   "title": "test(e2e): remove o DOCUMENTED_AS com o schema novo do Service",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-15T20:39:37Z",
+   "closed_at": "2026-11-15T22:09:10Z",
+   "updated_at": "2026-11-15T22:09:13Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1223,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/164",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 163,
+   "title": "test(e2e): respostas do Service fake no contrato e schema da develop do Service na CI",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-15T18:14:03Z",
+   "closed_at": "2026-11-15T18:30:21Z",
+   "updated_at": "2026-11-15T18:30:23Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2264,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/163",
+   "author": "LuizaMaluf"
+  },
   {
    "number": 162,
    "title": "ci(e2e): E2E de sistema do Platform a cada merge na develop",
@@ -95,11 +184,11 @@
   {
    "number": 157,
    "title": "Task 98/tarja ambiente academico",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-12T13:12:12Z",
-   "closed_at": null,
-   "updated_at": "2026-11-12T13:12:40Z",
+   "closed_at": "2026-11-16T13:59:29Z",
+   "updated_at": "2026-11-16T13:59:32Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -1114,11 +1203,11 @@
   {
    "number": 98,
    "title": "[TASK] Adicionar tarja de aviso de ambiente acadêmico na Landing Page",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-05T01:36:33Z",
-   "closed_at": null,
-   "updated_at": "2026-11-05T01:36:33Z",
+   "closed_at": "2026-11-16T13:59:31Z",
+   "updated_at": "2026-11-17T20:15:51Z",
    "labels": [
     "task"
    ],
@@ -1126,8 +1215,8 @@
    "assignees": [
     "storch7"
    ],
-   "milestone": null,
-   "milestone_due_on": null,
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 1891,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/98",
    "author": "Diogo-Barboza"

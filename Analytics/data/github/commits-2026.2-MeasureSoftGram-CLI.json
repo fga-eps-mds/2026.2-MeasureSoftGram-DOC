@@ -1,11 +1,425 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-17T22:07:23+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-CLI",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "db35acb412f83460de960a21a9ae0f7328be41ab",
+   "date": "2026-11-16T17:28:59Z",
+   "author": "gusrberto",
+   "message": "revert(security): remove a característica Segurança da CLI (#31)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/cli/aggregate_metrics.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 14
+    },
+    {
+     "filename": "src/cli/commands/cmd_list.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 7
+    },
+    {
+     "filename": "src/cli/resources/measure.py",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 10
+    },
+    {
+     "filename": "src/cli/resources/metrics.py",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 24
+    },
+    {
+     "filename": "src/config/settings.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 30
+    },
+    {
+     "filename": "tests/e2e/data/github_api/dependabot_alerts.json",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 5
+    },
+    {
+     "filename": "tests/e2e/test_extract_github.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 6
+    },
+    {
+     "filename": "tests/unit/test_calculate.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 31
+    },
+    {
+     "filename": "tests/unit/test_list.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 19
+    },
+    {
+     "filename": "tests/unit/test_measures.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 77
+    }
+   ]
+  },
+  {
+   "sha": "99e72a9e3ebb85ceead93b2283e65f6e3bfb5930",
+   "date": "2026-11-16T12:56:28Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): rastreabilidade por critério de aceitação da US01.01 (#28)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 0
+    },
+    {
+     "filename": "pytest.ini",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 0
+    },
+    {
+     "filename": "scripts/acceptance_comment.py",
+     "status": "added",
+     "additions": 193,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/acceptance-issues.json",
+     "status": "added",
+     "additions": 6,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/conftest.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/test_us01_01_divida_tecnica.py",
+     "status": "added",
+     "additions": 166,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_acceptance_comment.py",
+     "status": "added",
+     "additions": 59,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "41b167257ff6c67ced4d593b2f875f4d6997b30d",
+   "date": "2026-11-16T02:40:48Z",
+   "author": "gusrberto",
+   "message": "feat(security): calcula e exibe a característica Segurança na CLI (#29)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/cli/aggregate_metrics.py",
+     "status": "modified",
+     "additions": 14,
+     "deletions": 1
+    },
+    {
+     "filename": "src/cli/commands/cmd_list.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/resources/measure.py",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 5
+    },
+    {
+     "filename": "src/cli/resources/metrics.py",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 12
+    },
+    {
+     "filename": "src/config/settings.py",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/data/github_api/dependabot_alerts.json",
+     "status": "added",
+     "additions": 5,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/test_extract_github.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 2
+    },
+    {
+     "filename": "tests/unit/test_calculate.py",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_list.py",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_measures.py",
+     "status": "modified",
+     "additions": 77,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "a4f529bcd2943c6b7c9d0adf5f9e399352f66fd0",
+   "date": "2026-11-16T01:50:22Z",
+   "author": "LuizaMaluf",
+   "message": "fix(cli): calculate termina com código 1 quando nada é calculado (#27)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/commands/cmd_calculate.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 2
+    },
+    {
+     "filename": "tests/e2e/test_errors.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit/test_calculate.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "74b9c94cf00129af0245bd1792cc4941dd52ae81",
+   "date": "2026-11-16T01:33:37Z",
+   "author": "LuizaMaluf",
+   "message": "fix(cli): init sem terminal mantém o msgram.json existente em vez de dar EOFError (#26)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/utils.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/test_errors.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit/test_cli_theme.py",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "42f65112b9fdca370e356ac16640a6c1e5731f5d",
+   "date": "2026-11-16T01:30:09Z",
+   "author": "LuizaMaluf",
+   "message": "fix(cli): -rp e -rd obrigatórios em diff e norm_diff (#25)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/parsers.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/test_errors.py",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "95ccbae2c8ab5ca6227c0bf687ef9eb1895f7227",
+   "date": "2026-11-16T01:26:32Z",
+   "author": "LuizaMaluf",
+   "message": "fix(cli): list sem config e extract com pe_ incompleto terminam com código 1 (#24)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/commands/cmd_extract.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/cli/commands/cmd_list.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/e2e/test_errors.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "ab0a2ec6a448f03834d89ec426306f85170c88fc",
+   "date": "2026-11-16T01:07:18Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): pipeline da CLI de ponta a ponta com golden e casos de erro (#23)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "tests/e2e/__init__.py",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/__snapshots__/test_pipeline.ambr",
+     "status": "added",
+     "additions": 237,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/__snapshots__/test_pipeline/test_github_metrics_calculate.json",
+     "status": "added",
+     "additions": 52,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/__snapshots__/test_pipeline/test_performance_efficiency_extract_and_calculate.json",
+     "status": "added",
+     "additions": 46,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/__snapshots__/test_pipeline/test_sonar_and_github_together_give_one_result_per_file.json",
+     "status": "added",
+     "additions": 118,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/__snapshots__/test_pipeline/test_sonar_calculate_json.json",
+     "status": "added",
+     "additions": 68,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/conftest.py",
+     "status": "added",
+     "additions": 53,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/data/github_api/issues.json",
+     "status": "added",
+     "additions": 5,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/data/github_api/runs.json",
+     "status": "added",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/data/planned.json",
+     "status": "added",
+     "additions": 4,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/support.py",
+     "status": "added",
+     "additions": 51,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/test_errors.py",
+     "status": "added",
+     "additions": 103,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/test_extract_github.py",
+     "status": "added",
+     "additions": 68,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/test_pipeline.py",
+     "status": "added",
+     "additions": 135,
+     "deletions": 0
+    },
+    {
+     "filename": "tox.ini",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "ad426a2b6ef66a286566c4b0c4585d231c37429d",
    "date": "2026-11-07T13:27:01Z",
@@ -1426,5 +1840,5 @@
    ]
   }
  ],
- "detalhes_novos": 0
+ "detalhes_novos": 8
 }

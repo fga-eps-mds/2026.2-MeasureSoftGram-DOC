@@ -1,10 +1,122 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-15T03:12:19+00:00",
+ "coletado_em": "2026-11-17T22:07:23+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 110,
+   "title": "test: tira os arquivos do Service da faixa de cobertura ≤ 60% (QA-09)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-17T00:27:51Z",
+   "closed_at": null,
+   "updated_at": "2026-11-17T00:33:14Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 598,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/110",
+   "author": "thegm445"
+  },
+  {
+   "number": 109,
+   "title": "refactor: zera as violações critical restantes do SonarCloud no Service (QA-10b)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-16T23:49:48Z",
+   "closed_at": null,
+   "updated_at": "2026-11-17T00:19:09Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 794,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/109",
+   "author": "thegm445"
+  },
+  {
+   "number": 108,
+   "title": "revert(security): remove a característica Segurança do Service",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-16T16:38:39Z",
+   "closed_at": "2026-11-16T17:28:46Z",
+   "updated_at": "2026-11-16T17:29:10Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1209,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/108",
+   "author": "gusrberto"
+  },
+  {
+   "number": 107,
+   "title": "feat(security): integra a característica Segurança no Service",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-16T00:45:15Z",
+   "closed_at": "2026-11-16T01:04:58Z",
+   "updated_at": "2026-11-16T01:05:03Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4537,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/107",
+   "author": "gusrberto"
+  },
+  {
+   "number": 106,
+   "title": "fix(openapi): status e corpo do login social e das importações de organização",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-15T19:00:16Z",
+   "closed_at": "2026-11-15T20:21:00Z",
+   "updated_at": "2026-11-15T20:21:00Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2355,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/106",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 105,
+   "title": "feat(service): [Task36.01] modelagem QualityAnalysis e vínculo nas 5 camadas",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-15T15:36:17Z",
+   "closed_at": null,
+   "updated_at": "2026-11-15T19:30:23Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3287,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/105",
+   "author": "luciano-freitas-melo"
+  },
   {
    "number": 104,
    "title": "Task 36.05 - Refazer os dados mockados do ambiente de homologação na nova estrutura",
@@ -12,13 +124,15 @@
    "is_pull_request": false,
    "created_at": "2026-11-14T23:49:33Z",
    "closed_at": null,
-   "updated_at": "2026-11-14T23:49:36Z",
+   "updated_at": "2026-11-17T20:15:48Z",
    "labels": [],
    "type": "Task",
-   "assignees": [],
-   "milestone": null,
-   "milestone_due_on": null,
-   "body_chars": 858,
+   "assignees": [
+    "Marcosatc147"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 2717,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/104",
    "author": "luciano-freitas-melo"
   },
@@ -29,12 +143,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-14T23:49:13Z",
    "closed_at": null,
-   "updated_at": "2026-11-14T23:49:16Z",
+   "updated_at": "2026-11-17T20:15:46Z",
    "labels": [],
    "type": "Task",
-   "assignees": [],
-   "milestone": null,
-   "milestone_due_on": null,
+   "assignees": [
+    "Marcosatc147"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 770,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/103",
    "author": "luciano-freitas-melo"
@@ -46,12 +162,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-14T23:49:03Z",
    "closed_at": null,
-   "updated_at": "2026-11-14T23:49:06Z",
+   "updated_at": "2026-11-17T20:15:44Z",
    "labels": [],
    "type": "Task",
-   "assignees": [],
-   "milestone": null,
-   "milestone_due_on": null,
+   "assignees": [
+    "Marcosatc147"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 1298,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/102",
    "author": "luciano-freitas-melo"
@@ -63,13 +181,15 @@
    "is_pull_request": false,
    "created_at": "2026-11-14T23:48:15Z",
    "closed_at": null,
-   "updated_at": "2026-11-14T23:48:18Z",
+   "updated_at": "2026-11-17T20:15:43Z",
    "labels": [],
    "type": "Task",
-   "assignees": [],
-   "milestone": null,
-   "milestone_due_on": null,
-   "body_chars": 1374,
+   "assignees": [
+    "Marcosatc147"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 2565,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/101",
    "author": "luciano-freitas-melo"
   },
@@ -80,12 +200,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-14T23:47:57Z",
    "closed_at": null,
-   "updated_at": "2026-11-14T23:48:00Z",
+   "updated_at": "2026-11-17T20:15:41Z",
    "labels": [],
    "type": "Task",
-   "assignees": [],
-   "milestone": null,
-   "milestone_due_on": null,
+   "assignees": [
+    "luciano-freitas-melo"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 1669,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/100",
    "author": "luciano-freitas-melo"
@@ -127,11 +249,11 @@
   {
    "number": 97,
    "title": "feat(math_model): suporta recepção e persistência de métricas de projetos GitLab (TASK15.01.03)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-14T00:27:40Z",
-   "closed_at": null,
-   "updated_at": "2026-11-14T00:30:19Z",
+   "closed_at": "2026-11-16T12:47:14Z",
+   "updated_at": "2026-11-16T12:47:14Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -400,14 +522,14 @@
    "is_pull_request": false,
    "created_at": "2026-11-05T01:29:21Z",
    "closed_at": "2026-11-05T01:36:44Z",
-   "updated_at": "2026-11-05T01:38:47Z",
+   "updated_at": "2026-11-17T20:15:39Z",
    "labels": [],
    "type": "Task",
    "assignees": [
     "storch7"
    ],
-   "milestone": null,
-   "milestone_due_on": null,
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 1891,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/82",
    "author": "Diogo-Barboza"
