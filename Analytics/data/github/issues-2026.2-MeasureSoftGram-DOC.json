@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-17T22:07:23+00:00",
+ "coletado_em": "2026-11-18T03:12:57+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
@@ -46,11 +46,11 @@
   {
    "number": 323,
    "title": "docs(backlog): [TASK33.01.04] exige descrição e prazo na DoR de toda …",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-17T17:49:54Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T17:54:54Z",
+   "closed_at": "2026-11-17T22:36:23Z",
+   "updated_at": "2026-11-17T22:36:25Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -806,17 +806,19 @@
   {
    "number": 285,
    "title": "[TASK13.01.02] Protótipo no Figma das comparações de pesos",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-11T12:34:55Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:14:23Z",
+   "closed_at": "2026-11-18T00:31:54Z",
+   "updated_at": "2026-11-18T00:31:54Z",
    "labels": [
     "task",
     "frontend"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "MilenaFRocha"
+   ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 630,
@@ -826,18 +828,20 @@
   {
    "number": 284,
    "title": "[TASK13.01.01] Explorar o fluxo atual de planejamento de release",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-11T12:34:45Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:14:21Z",
+   "closed_at": "2026-11-18T00:32:14Z",
+   "updated_at": "2026-11-18T00:32:15Z",
    "labels": [
     "task",
     "frontend",
     "service"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "MilenaFRocha"
+   ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 466,
@@ -887,17 +891,19 @@
   {
    "number": 281,
    "title": "[TASK13.02.03] Core: cálculo AHP, consistência e arredondamento",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-11T12:34:23Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:14:16Z",
+   "closed_at": "2026-11-18T00:33:33Z",
+   "updated_at": "2026-11-18T00:33:39Z",
    "labels": [
     "task",
     "core"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "MilenaFRocha"
+   ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 877,
@@ -907,17 +913,19 @@
   {
    "number": 280,
    "title": "[TASK13.02.02] Spike: reproduzir os pesos de referência (oráculo de teste)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-11T12:34:15Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:14:13Z",
+   "closed_at": "2026-11-18T00:33:09Z",
+   "updated_at": "2026-11-18T00:33:16Z",
    "labels": [
     "task",
     "core"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "MilenaFRocha"
+   ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 721,
@@ -997,7 +1005,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:33:26Z",
    "closed_at": null,
-   "updated_at": "2026-11-17T20:14:07Z",
+   "updated_at": "2026-11-18T00:19:18Z",
    "labels": [
     "US",
     "frontend",
@@ -1010,7 +1018,7 @@
    ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
-   "body_chars": 13444,
+   "body_chars": 8883,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/276",
    "author": "MilenaFRocha"
   },
@@ -1307,7 +1315,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:13Z",
    "closed_at": null,
-   "updated_at": "2026-11-16T21:29:59Z",
+   "updated_at": "2026-11-17T22:27:43Z",
    "labels": [
     "task",
     "frontend",
@@ -1319,8 +1327,8 @@
    "assignees": [
     "thegm445"
    ],
-   "milestone": null,
-   "milestone_due_on": null,
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 1051,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/262",
    "author": "LuizaMaluf"
@@ -1420,7 +1428,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:33:26Z",
    "closed_at": null,
-   "updated_at": "2026-11-16T14:53:21Z",
+   "updated_at": "2026-11-17T22:44:50Z",
    "labels": [
     "task"
    ],
@@ -1428,8 +1436,8 @@
    "assignees": [
     "gusrberto"
    ],
-   "milestone": null,
-   "milestone_due_on": null,
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 575,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/257",
    "author": "LuizaMaluf"
@@ -1441,7 +1449,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:33:24Z",
    "closed_at": null,
-   "updated_at": "2026-11-16T14:54:08Z",
+   "updated_at": "2026-11-17T22:44:19Z",
    "labels": [
     "docs",
     "task"

@@ -18,10 +18,10 @@
     "author": "gusrberto"
   },
   "2026.2-MeasureSoftGram-Core": {
-    "number": 32,
-    "last_merged_at": "2026-11-16T18:00:53Z",
-    "title": "chore(release): bump version to 1.5.5rc6",
-    "author": "gusrberto"
+    "number": 33,
+    "last_merged_at": "2026-11-18T00:38:55Z",
+    "title": "Feat/us13.02 definir pesos ahp terminal",
+    "author": "DanielFsR"
   },
   "2026.2-MeasureSoftGram-Front": {
     "number": 157,

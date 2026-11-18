@@ -1,11 +1,44 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-17T22:07:23+00:00",
+ "coletado_em": "2026-11-18T03:12:57+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Core",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "d8fa6236dc9c6934a044f74d7655387b7d396164",
+   "date": "2026-11-18T00:38:54Z",
+   "author": "DanielFsR",
+   "message": "Feat/us13.02 definir pesos ahp terminal (#33)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "requirements.txt",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "src/core/ahp.py",
+     "status": "added",
+     "additions": 207,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_ahp.py",
+     "status": "added",
+     "additions": 326,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "90f9c7574281ea045da6c8f0b850dc7cd484b7e0",
    "date": "2026-11-16T18:00:53Z",
@@ -2883,5 +2916,5 @@
    ]
   }
  ],
- "detalhes_novos": 4
+ "detalhes_novos": 1
 }
