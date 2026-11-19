@@ -1,11 +1,164 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-17T22:07:23+00:00",
+ "coletado_em": "2026-11-19T03:12:35+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "548706b3223bf08f4c94d2e94698ae65f9c0323d",
+   "date": "2026-11-19T02:13:59Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): cenários de aceitação dos fluxos legados do Front por critério (TASK19.08) (#171)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/acceptance-issues.json",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/fixtures/legados/index.ts",
+     "status": "added",
+     "additions": 163,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/leg00-01-organizacoes.e2e.ts",
+     "status": "added",
+     "additions": 110,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/leg00-02-produtos.e2e.ts",
+     "status": "added",
+     "additions": 127,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/leg00-03-repositorios.e2e.ts",
+     "status": "added",
+     "additions": 118,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/leg00-04-releases.e2e.ts",
+     "status": "added",
+     "additions": 72,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "5c5de38eb3a639fbac6f9da0b1b95ee5030669c5",
+   "date": "2026-11-19T00:47:33Z",
+   "author": "LuizaMaluf",
+   "message": "fix(repositorio): badges por característica na página do repositório (BUG00.03) (#168)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/fixtures/repositorio/index.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/leg04-01-badge-repositorio.e2e.ts",
+     "status": "modified",
+     "additions": 27,
+     "deletions": 6
+    },
+    {
+     "filename": "e2e/us07-01-dashboards.e2e.ts-snapshots/repositorio-pulso-chromium-linux.png",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/Repository.tsx",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/RepositoryPulseChart/tests/RepositoryPulseChart.spec.tsx",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/hooks/useRepositoryPulse.ts",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/tests/Repository.spec.tsx",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "6f44d155ded118886e089319636a53584fc3fca5",
+   "date": "2026-11-18T18:04:22Z",
+   "author": "LuizaMaluf",
+   "message": "test(e2e): cenários de aceitação das US de 2026.1 por critério (TASK19.07) (#167)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/acceptance-issues.json",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 1
+    },
+    {
+     "filename": "e2e/bug09-01-excluir-repositorio.e2e.ts",
+     "status": "added",
+     "additions": 88,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/fixtures/planejamento-release/index.ts",
+     "status": "added",
+     "additions": 55,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/leg04-01-badge-repositorio.e2e.ts",
+     "status": "added",
+     "additions": 113,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/leg06-01-timeout-sessao.e2e.ts",
+     "status": "added",
+     "additions": 59,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/leg07-01-sessao-expirada.e2e.ts",
+     "status": "added",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "e2e/leg19-01-release-por-repositorios.e2e.ts",
+     "status": "added",
+     "additions": 72,
+     "deletions": 0
+    },
+    {
+     "filename": "scripts/e2e-acceptance-comment.mjs",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    }
+   ]
+  },
   {
    "sha": "16c847ab71521adaba372e2d08638c9f0ebeace4",
    "date": "2026-11-16T13:59:28Z",
@@ -16075,5 +16228,5 @@
    ]
   }
  ],
- "detalhes_novos": 4
+ "detalhes_novos": 3
 }

@@ -12,22 +12,22 @@
     "author": "DiegoCarlito"
   },
   "2026.2-MeasureSoftGram-CLI": {
-    "number": 31,
-    "last_merged_at": "2026-11-16T17:28:59Z",
-    "title": "revert(security): remove a característica Segurança da CLI",
-    "author": "gusrberto"
+    "number": 30,
+    "last_merged_at": "2026-11-19T02:08:21Z",
+    "title": "fix(extract): sem acesso ao GitHub o extract termina com código 1 em vez de gravar métricas zeradas",
+    "author": "LuizaMaluf"
   },
   "2026.2-MeasureSoftGram-Core": {
-    "number": 33,
-    "last_merged_at": "2026-11-18T00:38:55Z",
-    "title": "Feat/us13.02 definir pesos ahp terminal",
-    "author": "DanielFsR"
+    "number": 34,
+    "last_merged_at": "2026-11-18T15:10:48Z",
+    "title": "chore(release): bump version to 1.5.5rc7",
+    "author": "MilenaFRocha"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 157,
-    "last_merged_at": "2026-11-16T13:59:29Z",
-    "title": "Task 98/tarja ambiente academico",
-    "author": "storch7"
+    "number": 171,
+    "last_merged_at": "2026-11-19T02:13:59Z",
+    "title": "test(e2e): cenários de aceitação dos fluxos legados do Front por critério (TASK19.08)",
+    "author": "LuizaMaluf"
   },
   "2026.2-MeasureSoftGram-Parser": {
     "number": 21,

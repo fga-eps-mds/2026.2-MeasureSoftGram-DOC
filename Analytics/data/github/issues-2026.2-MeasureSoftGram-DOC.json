@@ -1,10 +1,195 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-18T03:12:57+00:00",
+ "coletado_em": "2026-11-19T03:12:35+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 334,
+   "title": "[BUG36.01] Criação/atualização de Release permite end_at < start_at e conflito com Release em andamento",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-19T02:06:58Z",
+   "closed_at": null,
+   "updated_at": "2026-11-19T02:18:37Z",
+   "labels": [],
+   "type": "Bug",
+   "assignees": [],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 2305,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/334",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 333,
+   "title": "[TASK19.08] E2E por critério dos fluxos legados do Front (organizações, produtos, repositórios e releases)",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-11-19T02:05:27Z",
+   "closed_at": "2026-11-19T02:14:01Z",
+   "updated_at": "2026-11-19T02:14:01Z",
+   "labels": [
+    "frontend"
+   ],
+   "type": "Task",
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2650,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/333",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 332,
+   "title": "[BUG00.04] Nome repetido de produto mostra o erro genérico em vez da mensagem de duplicado",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-19T02:05:25Z",
+   "closed_at": null,
+   "updated_at": "2026-11-19T02:05:45Z",
+   "labels": [
+    "bug",
+    "frontend"
+   ],
+   "type": "Bug",
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1699,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/332",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 331,
+   "title": "[LEG00.04] Lista, busca e filtros de releases (fluxo legado)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-19T02:05:21Z",
+   "closed_at": null,
+   "updated_at": "2026-11-19T02:17:43Z",
+   "labels": [
+    "US",
+    "frontend"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2194,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/331",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 330,
+   "title": "[LEG00.03] Edição e cadastro de repositórios (fluxo legado)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-19T02:05:19Z",
+   "closed_at": null,
+   "updated_at": "2026-11-19T02:17:42Z",
+   "labels": [
+    "US",
+    "frontend"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2699,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/330",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 329,
+   "title": "[LEG00.02] Cadastro e edição de produtos (fluxo legado)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-19T02:05:16Z",
+   "closed_at": null,
+   "updated_at": "2026-11-19T02:17:41Z",
+   "labels": [
+    "US",
+    "frontend"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2664,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/329",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 328,
+   "title": "[LEG00.01] Cadastro e edição de organizações (fluxo legado)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-19T02:05:13Z",
+   "closed_at": null,
+   "updated_at": "2026-11-19T02:17:40Z",
+   "labels": [
+    "US",
+    "frontend"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2379,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/328",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 327,
+   "title": "[Task 36.06] Timeline contínua na criação de Release e vínculo automático de AQs soltas",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-19T01:52:32Z",
+   "closed_at": null,
+   "updated_at": "2026-11-19T02:00:46Z",
+   "labels": [],
+   "type": "Task",
+   "assignees": [],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 1156,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/327",
+   "author": "luciano-freitas-melo"
+  },
+  {
+   "number": 326,
+   "title": "[US36.01] Permitir exclusão da última Release do produto",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-19T01:52:03Z",
+   "closed_at": null,
+   "updated_at": "2026-11-19T01:55:53Z",
+   "labels": [],
+   "type": "Feature",
+   "assignees": [
+    "luciano-freitas-melo",
+    "Marcosatc147"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2380,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/326",
+   "author": "luciano-freitas-melo"
+  },
   {
    "number": 325,
    "title": "fix(analytics): corrige a M7, a coleta do Sonar por arquivo e o bloqueio da coleta diária",
@@ -65,11 +250,11 @@
   {
    "number": 322,
    "title": "[BUG00.03] Badges por característica não aparecem na página do repositório",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:24Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:16:47Z",
+   "closed_at": "2026-11-19T00:47:35Z",
+   "updated_at": "2026-11-19T00:47:35Z",
    "labels": [
     "bug",
     "frontend"
@@ -91,7 +276,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:20Z",
    "closed_at": null,
-   "updated_at": "2026-11-17T20:16:45Z",
+   "updated_at": "2026-11-19T02:17:47Z",
    "labels": [
     "US",
     "frontend"
@@ -113,7 +298,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:15Z",
    "closed_at": null,
-   "updated_at": "2026-11-17T20:16:43Z",
+   "updated_at": "2026-11-19T02:17:46Z",
    "labels": [
     "US",
     "frontend"
@@ -135,7 +320,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:12Z",
    "closed_at": null,
-   "updated_at": "2026-11-17T20:16:41Z",
+   "updated_at": "2026-11-19T02:17:45Z",
    "labels": [
     "US",
     "frontend"
@@ -157,7 +342,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:07Z",
    "closed_at": null,
-   "updated_at": "2026-11-17T20:16:38Z",
+   "updated_at": "2026-11-19T02:17:44Z",
    "labels": [
     "US",
     "frontend"
@@ -196,11 +381,11 @@
   {
    "number": 316,
    "title": "[TASK19.07] Testes E2E por critério de aceitação das US do semestre passado",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-16T14:39:54Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T15:02:12Z",
+   "closed_at": "2026-11-18T18:04:25Z",
+   "updated_at": "2026-11-18T18:04:25Z",
    "labels": [
     "task",
     "frontend"
@@ -1005,7 +1190,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:33:26Z",
    "closed_at": null,
-   "updated_at": "2026-11-18T00:19:18Z",
+   "updated_at": "2026-11-18T21:39:37Z",
    "labels": [
     "US",
     "frontend",
@@ -1677,7 +1862,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:28Z",
    "closed_at": "2026-11-12T04:20:39Z",
-   "updated_at": "2026-11-16T14:04:08Z",
+   "updated_at": "2026-11-19T02:17:38Z",
    "labels": [
     "bug",
     "frontend",
@@ -1700,7 +1885,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:07Z",
    "closed_at": "2026-11-12T03:51:27Z",
-   "updated_at": "2026-11-16T14:04:07Z",
+   "updated_at": "2026-11-19T02:17:37Z",
    "labels": [
     "bug",
     "frontend",
@@ -2949,7 +3134,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:51:28Z",
    "closed_at": "2026-11-13T03:47:32Z",
-   "updated_at": "2026-11-16T14:04:24Z",
+   "updated_at": "2026-11-19T02:18:03Z",
    "labels": [
     "US"
    ],
@@ -2975,7 +3160,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:51Z",
    "closed_at": "2026-11-13T03:32:17Z",
-   "updated_at": "2026-11-16T14:04:23Z",
+   "updated_at": "2026-11-19T02:18:02Z",
    "labels": [
     "US"
    ],
@@ -3001,7 +3186,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:08Z",
    "closed_at": "2026-11-13T03:32:14Z",
-   "updated_at": "2026-11-16T14:04:22Z",
+   "updated_at": "2026-11-19T02:18:01Z",
    "labels": [
     "US"
    ],
@@ -3944,7 +4129,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:01Z",
    "closed_at": "2026-11-11T22:21:31Z",
-   "updated_at": "2026-11-16T14:04:12Z",
+   "updated_at": "2026-11-19T02:17:51Z",
    "labels": [
     "US",
     "frontend",
@@ -3972,7 +4157,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:50Z",
    "closed_at": "2026-11-12T03:15:43Z",
-   "updated_at": "2026-11-16T14:04:19Z",
+   "updated_at": "2026-11-19T02:17:59Z",
    "labels": [
     "US"
    ],
@@ -3993,7 +4178,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:46Z",
    "closed_at": "2026-11-10T02:33:45Z",
-   "updated_at": "2026-11-16T14:04:18Z",
+   "updated_at": "2026-11-19T02:17:58Z",
    "labels": [
     "US"
    ],
@@ -4014,7 +4199,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:38Z",
    "closed_at": "2026-11-11T22:21:36Z",
-   "updated_at": "2026-11-16T14:04:17Z",
+   "updated_at": "2026-11-19T02:17:56Z",
    "labels": [
     "US"
    ],
@@ -4035,7 +4220,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:33Z",
    "closed_at": "2026-11-07T19:14:18Z",
-   "updated_at": "2026-11-16T14:04:16Z",
+   "updated_at": "2026-11-19T02:17:55Z",
    "labels": [
     "US"
    ],
@@ -4056,7 +4241,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:28Z",
    "closed_at": "2026-11-12T03:11:01Z",
-   "updated_at": "2026-11-16T14:04:21Z",
+   "updated_at": "2026-11-19T02:18:00Z",
    "labels": [
     "US"
    ],
@@ -4078,7 +4263,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:22Z",
    "closed_at": "2026-11-11T22:21:33Z",
-   "updated_at": "2026-11-16T14:04:15Z",
+   "updated_at": "2026-11-19T02:17:54Z",
    "labels": [
     "US"
    ],
@@ -4151,7 +4336,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:48:20Z",
    "closed_at": "2026-11-12T05:12:26Z",
-   "updated_at": "2026-11-16T14:04:14Z",
+   "updated_at": "2026-11-19T02:17:53Z",
    "labels": [
     "US",
     "frontend"
@@ -4199,7 +4384,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:06:06Z",
    "closed_at": "2026-11-12T04:56:19Z",
-   "updated_at": "2026-11-16T14:04:13Z",
+   "updated_at": "2026-11-19T02:17:52Z",
    "labels": [
     "US"
    ],
@@ -4303,7 +4488,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-28T10:54:25Z",
    "closed_at": "2026-09-29T02:11:12Z",
-   "updated_at": "2026-09-29T02:11:12Z",
+   "updated_at": "2026-11-19T02:17:36Z",
    "labels": [
     "bug",
     "frontend"
@@ -4872,7 +5057,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-25T20:16:41Z",
    "closed_at": "2026-11-12T02:16:25Z",
-   "updated_at": "2026-11-16T14:04:11Z",
+   "updated_at": "2026-11-19T02:17:50Z",
    "labels": [
     "US",
     "frontend",
@@ -5116,7 +5301,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-24T00:34:13Z",
    "closed_at": "2026-11-11T22:35:14Z",
-   "updated_at": "2026-11-16T14:04:09Z",
+   "updated_at": "2026-11-19T02:17:48Z",
    "labels": [
     "US",
     "frontend",

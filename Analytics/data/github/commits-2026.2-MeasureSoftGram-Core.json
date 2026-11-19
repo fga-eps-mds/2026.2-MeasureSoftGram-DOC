@@ -1,11 +1,26 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-18T03:12:57+00:00",
+ "coletado_em": "2026-11-19T03:12:35+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Core",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "82799a097e4428cb74a5bef7f10e9d7f6910339c",
+   "date": "2026-11-18T15:10:48Z",
+   "author": "MilenaFRocha",
+   "message": "chore(release): bump version to 1.5.5rc7 (#34)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
   {
    "sha": "d8fa6236dc9c6934a044f74d7655387b7d396164",
    "date": "2026-11-18T00:38:54Z",

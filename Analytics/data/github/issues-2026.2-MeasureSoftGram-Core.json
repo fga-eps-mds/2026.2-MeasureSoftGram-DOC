@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-18T03:12:57+00:00",
+ "coletado_em": "2026-11-19T03:12:35+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Core",
  "desde": "2026-08-24",
@@ -8,11 +8,11 @@
   {
    "number": 34,
    "title": "chore(release): bump version to 1.5.5rc7",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-18T00:56:40Z",
-   "closed_at": null,
-   "updated_at": "2026-11-18T01:04:32Z",
+   "closed_at": "2026-11-18T15:10:48Z",
+   "updated_at": "2026-11-18T15:10:51Z",
    "labels": [],
    "type": null,
    "assignees": [],
