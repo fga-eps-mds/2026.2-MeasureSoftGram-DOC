@@ -1,11 +1,38 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-17T22:07:23+00:00",
+ "coletado_em": "2026-11-21T03:12:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "d1d2664b870811764cd4454e8951a8625277c6c6",
+   "date": "2026-11-21T01:55:08Z",
+   "author": "storch7",
+   "message": "Feat/235 extracao gitlab (#24)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Dockerfile.gitlab",
+     "status": "added",
+     "additions": 37,
+     "deletions": 0
+    },
+    {
+     "filename": "__tests__/gitlab.test.ts",
+     "status": "added",
+     "additions": 240,
+     "deletions": 0
+    },
+    {
+     "filename": "src/gitlab.ts",
+     "status": "added",
+     "additions": 272,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "1467022d411d23f669c8c40542a58f0987ad154b",
    "date": "2026-11-16T17:27:53Z",
@@ -1111,5 +1138,5 @@
    ]
   }
  ],
- "detalhes_novos": 2
+ "detalhes_novos": 1
 }

@@ -1,9 +1,9 @@
 {
   "2026.2-MeasureSoftGram-Action": {
-    "number": 26,
-    "last_merged_at": "2026-11-16T17:27:54Z",
-    "title": "revert(security): remove a coleta das métricas de segurança",
-    "author": "gusrberto"
+    "number": 24,
+    "last_merged_at": "2026-11-21T01:55:09Z",
+    "title": "Feat/235 extracao gitlab",
+    "author": "storch7"
   },
   "2026.2-MeasureSoftGram-AI": {
     "number": 4,
@@ -42,9 +42,9 @@
     "author": "henriquecq"
   },
   "2026.2-MeasureSoftGram-Service": {
-    "number": 108,
-    "last_merged_at": "2026-11-16T17:28:46Z",
-    "title": "revert(security): remove a característica Segurança do Service",
-    "author": "gusrberto"
+    "number": 105,
+    "last_merged_at": "2026-11-20T11:29:50Z",
+    "title": "feat(service): [Task36.01] modelagem QualityAnalysis e vínculo nas 5 camadas",
+    "author": "luciano-freitas-melo"
   }
 }

@@ -1,10 +1,192 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-19T03:12:35+00:00",
+ "coletado_em": "2026-11-21T03:12:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 342,
+   "title": "[TASK37.01.06] Configuração remota: PRs do Weblate e workflows de template",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-20T19:01:40Z",
+   "closed_at": null,
+   "updated_at": "2026-11-20T20:22:24Z",
+   "labels": [
+    "task",
+    "platform"
+   ],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 2776,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/342",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 341,
+   "title": "[TASK37.01.05] Plugin: localização com vscode.l10n na extensão e no webview",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-20T19:01:37Z",
+   "closed_at": null,
+   "updated_at": "2026-11-20T20:22:21Z",
+   "labels": [
+    "task",
+    "plugin"
+   ],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 2626,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/341",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 340,
+   "title": "[TASK37.01.04] CLI: internacionalização com gettext",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-20T19:01:34Z",
+   "closed_at": null,
+   "updated_at": "2026-11-20T20:22:20Z",
+   "labels": [
+    "task",
+    "cli"
+   ],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 2657,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/340",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 339,
+   "title": "[TASK37.01.03] Front: migrar textos fixos em português para t()",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-20T19:01:31Z",
+   "closed_at": null,
+   "updated_at": "2026-11-20T20:22:19Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 2418,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/339",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 338,
+   "title": "[TASK37.01.02] Front: extração de chaves do i18next e template no CI",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-20T19:01:27Z",
+   "closed_at": null,
+   "updated_at": "2026-11-20T20:22:17Z",
+   "labels": [
+    "task",
+    "frontend"
+   ],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 1962,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/338",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 337,
+   "title": "[TASK37.01.01] Platform: Weblate self-hosted e projeto como código",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-20T19:01:23Z",
+   "closed_at": null,
+   "updated_at": "2026-11-20T20:22:16Z",
+   "labels": [
+    "task",
+    "platform"
+   ],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 2821,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/337",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 336,
+   "title": "[US37.01] Usar o MeasureSoftGram em inglês ou português",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-20T19:01:19Z",
+   "closed_at": null,
+   "updated_at": "2026-11-20T20:22:31Z",
+   "labels": [
+    "US",
+    "frontend",
+    "cli",
+    "plugin",
+    "platform"
+   ],
+   "type": "Feature",
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 5757,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/336",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 335,
+   "title": "[MSG37] Internacionalização com Weblate (Front, CLI e Plugin)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-20T19:01:15Z",
+   "closed_at": null,
+   "updated_at": "2026-11-20T20:22:13Z",
+   "labels": [
+    "epic",
+    "frontend",
+    "cli",
+    "plugin",
+    "platform"
+   ],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 3772,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/335",
+   "author": "zzzBECK"
+  },
   {
    "number": 334,
    "title": "[BUG36.01] Criação/atualização de Release permite end_at < start_at e conflito com Release em andamento",
@@ -975,13 +1157,15 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:35:04Z",
    "closed_at": null,
-   "updated_at": "2026-11-17T20:14:25Z",
+   "updated_at": "2026-11-21T02:18:43Z",
    "labels": [
     "task",
     "service"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "DiegoCarlito"
+   ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 585,
@@ -2078,11 +2262,11 @@
   {
    "number": 235,
    "title": "[TASK15.01.01] Coletor: Implementar extração de métricas e feedback para o GitLab",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-08T20:12:05Z",
-   "closed_at": null,
-   "updated_at": "2026-11-16T14:52:25Z",
+   "closed_at": "2026-11-21T01:55:10Z",
+   "updated_at": "2026-11-21T01:55:10Z",
    "labels": [
     "task",
     "action"

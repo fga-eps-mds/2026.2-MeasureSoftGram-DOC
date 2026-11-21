@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-19T03:12:35+00:00",
+ "coletado_em": "2026-11-21T03:12:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 114,
+   "title": "feat(MSG36): vincula análises às releases e remove o cron de fechamento",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-21T01:06:12Z",
+   "closed_at": null,
+   "updated_at": "2026-11-21T01:11:53Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 8811,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/114",
+   "author": "Marcosatc147"
+  },
   {
    "number": 113,
    "title": "[BUG36.01 - Back] Validar end_at >= start_at, sobreposição completa e bloqueio com release ativa",
@@ -152,11 +169,11 @@
   {
    "number": 105,
    "title": "feat(service): [Task36.01] modelagem QualityAnalysis e vínculo nas 5 camadas",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-15T15:36:17Z",
-   "closed_at": null,
-   "updated_at": "2026-11-19T00:28:36Z",
+   "closed_at": "2026-11-20T11:29:50Z",
+   "updated_at": "2026-11-20T11:29:50Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -247,11 +264,11 @@
   {
    "number": 100,
    "title": "Task 36.01 - Modelagem do Banco: QualityAnalysis e vínculo nas 5 camadas",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-14T23:47:57Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:15:41Z",
+   "closed_at": "2026-11-20T11:29:52Z",
+   "updated_at": "2026-11-20T11:29:52Z",
    "labels": [],
    "type": "Task",
    "assignees": [

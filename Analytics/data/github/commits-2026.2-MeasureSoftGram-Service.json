@@ -1,11 +1,104 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-17T22:07:23+00:00",
+ "coletado_em": "2026-11-21T03:12:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "82951fc4a6ddbd76c6a03a8aed0571c820a5f9ff",
+   "date": "2026-11-20T11:29:49Z",
+   "author": "luciano-freitas-melo",
+   "message": "feat(service): [Task36.01] modelagem QualityAnalysis e vínculo nas 5 camadas (#105)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/characteristics/migrations/0007_alter_calculatedcharacteristic_unique_together_and_more.py",
+     "status": "added",
+     "additions": 24,
+     "deletions": 0
+    },
+    {
+     "filename": "src/characteristics/models.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 1
+    },
+    {
+     "filename": "src/math_model/migrations/0001_initial.py",
+     "status": "added",
+     "additions": 35,
+     "deletions": 0
+    },
+    {
+     "filename": "src/math_model/migrations/__init__.py",
+     "status": "added",
+     "additions": 0,
+     "deletions": 0
+    },
+    {
+     "filename": "src/math_model/models.py",
+     "status": "added",
+     "additions": 42,
+     "deletions": 0
+    },
+    {
+     "filename": "src/math_model/tests/test_quality_analysis_model.py",
+     "status": "added",
+     "additions": 150,
+     "deletions": 0
+    },
+    {
+     "filename": "src/measures/migrations/0003_calculatedmeasure_analysis.py",
+     "status": "added",
+     "additions": 20,
+     "deletions": 0
+    },
+    {
+     "filename": "src/measures/models.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "src/metrics/migrations/0004_collectedmetric_analysis.py",
+     "status": "added",
+     "additions": 20,
+     "deletions": 0
+    },
+    {
+     "filename": "src/metrics/models.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "src/subcharacteristics/migrations/0003_calculatedsubcharacteristic_analysis.py",
+     "status": "added",
+     "additions": 20,
+     "deletions": 0
+    },
+    {
+     "filename": "src/subcharacteristics/models.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tsqmi/migrations/0004_tsqmi_analysis.py",
+     "status": "added",
+     "additions": 20,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tsqmi/models.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "f306bee01fe44c79466482a17052d56b1cc07e32",
    "date": "2026-11-16T17:28:45Z",
@@ -4242,5 +4335,5 @@
    ]
   }
  ],
- "detalhes_novos": 4
+ "detalhes_novos": 1
 }

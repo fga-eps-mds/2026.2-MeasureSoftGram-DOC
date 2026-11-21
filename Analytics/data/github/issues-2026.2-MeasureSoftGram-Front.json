@@ -1,10 +1,48 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-19T03:12:35+00:00",
+ "coletado_em": "2026-11-21T03:12:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 176,
+   "title": "feat(i18n): [TASK37.01.03] migra os textos fixos em português para t()",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-20T22:20:59Z",
+   "closed_at": null,
+   "updated_at": "2026-11-20T22:24:08Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 5966,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/176",
+   "author": "zzzBECK"
+  },
+  {
+   "number": 175,
+   "title": "feat(i18n): [TASK37.01.02] extrai as chaves do i18next e checa o template en",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-20T20:27:06Z",
+   "closed_at": null,
+   "updated_at": "2026-11-20T22:20:17Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "zzzBECK"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4704,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/175",
+   "author": "zzzBECK"
+  },
   {
    "number": 174,
    "title": "fix(produtos): mensagem de nome repetido ao criar e editar produto (BUG00.04)",
