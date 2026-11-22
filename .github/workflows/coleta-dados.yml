@@ -3,6 +3,7 @@ name: Coleta de dados do dashboard
 # Atualiza sozinho os dados do dashboard e commita em Analytics/data/:
 #   - Zenhub (sprints, pontos, backlog)   -> Analytics/data/zenhub/velocity/
 #   - SonarCloud (bugs, code smells, Quality Gate, histórico...) -> Analytics/data/sonar/
+#   - Retrato do SonarCloud de cada release nova (tag v*)      -> Analytics/data/sonar/releases/
 #   - GitHub Actions (execuções de CI de cada repositório)     -> Analytics/data/github/
 # O Streamlit Community Cloud republica o dashboard a cada commit na main.
 #
@@ -81,6 +82,19 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: python scripts/coleta_sonar.py --repos "${{ steps.verificar.outputs.repos_alvo }}"
 
+      # Retrato do SonarCloud de cada release nova (tag v*), com o nome da tag. Substitui o que o
+      # metrics.yml de cada repositório fazia na tag. Roda todo dia, independente de PR novo.
+      # RELEASE_ASSETS_TOKEN (opcional): token com Contents: write nos repositórios, para anexar o JSON na release.
+      - name: Retratos das releases novas
+        id: releases
+        continue-on-error: true
+        working-directory: Analytics
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_ASSETS_TOKEN: ${{ secrets.RELEASE_ASSETS_TOKEN }}
+        run: python scripts/coleta_releases.py --repos "${{ inputs.repositorios || 'todos' }}"
+
       - name: Coletar execuções do GitHub Actions
         id: github
         continue-on-error: true
@@ -135,4 +149,5 @@ jobs:
           echo "- **Detalhes**: ${{ steps.verificar.outputs.resumo_prs || '-' }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- **Zenhub**: ${{ steps.zenhub.outcome }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- **SonarCloud**: ${{ steps.sonar.outcome || 'pulado (sem PR novo)' }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Retratos de release**: ${{ steps.releases.outcome }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- **GitHub Actions**: ${{ steps.github.outcome }}" >> "$GITHUB_STEP_SUMMARY"
