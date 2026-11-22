@@ -1,10 +1,29 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-21T03:12:13+00:00",
+ "coletado_em": "2026-11-22T03:12:46+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 115,
+   "title": "feat(release_configuration): adiciona cálculo e persistência de comparações AHP (TASK13.01.03)",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-21T22:21:36Z",
+   "closed_at": null,
+   "updated_at": "2026-11-21T22:24:10Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "DiegoCarlito"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3043,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/115",
+   "author": "DiegoCarlito"
+  },
   {
    "number": 114,
    "title": "feat(MSG36): vincula análises às releases e remove o cron de fechamento",

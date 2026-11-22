@@ -1,11 +1,25 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-11-21T03:12:13+00:00",
+ "coletado_em": "2026-11-22T03:12:46+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
- "total_count": 367,
+ "total_count": 368,
  "workflow_runs": [
+  {
+   "id": 44956346872,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "feat/286-comparacoes-ahp-release",
+   "event": "pull_request",
+   "created_at": "2026-11-21T22:21:41Z",
+   "run_started_at": "2026-11-21T22:21:41Z",
+   "updated_at": "2026-11-21T22:24:17Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/44956346872",
+   "run_number": 234,
+   "workflow_id": 339749512
+  },
   {
    "id": 44848115252,
    "name": "Rodar Testes",
@@ -19,6 +33,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/44848115252",
    "run_number": 233,
    "workflow_id": 339749512
+  },
+  {
+   "id": 44728075380,
+   "name": "E2E de sistema",
+   "status": "completed",
+   "conclusion": "success",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-11-20T11:29:53Z",
+   "run_started_at": "2026-11-20T11:29:53Z",
+   "updated_at": "2026-11-20T11:43:46Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/44728075380",
+   "run_number": 7,
+   "workflow_id": 418627666
   },
   {
    "id": 44728074768,
@@ -47,20 +75,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/44728074715",
    "run_number": 232,
    "workflow_id": 339749512
-  },
-  {
-   "id": 44728075380,
-   "name": "E2E de sistema",
-   "status": "completed",
-   "conclusion": "success",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-11-20T11:29:53Z",
-   "run_started_at": "2026-11-20T11:29:53Z",
-   "updated_at": "2026-11-20T11:43:46Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/actions/runs/44728075380",
-   "run_number": 7,
-   "workflow_id": 418627666
   },
   {
    "id": 44428941169,
