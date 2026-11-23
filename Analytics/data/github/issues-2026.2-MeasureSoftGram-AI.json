@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-09T11:14:25+00:00",
+ "coletado_em": "2026-11-23T03:14:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-AI",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 5,
+   "title": "chore(ci): remove parser.py e metrics.yml locais",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-22T15:38:56Z",
+   "closed_at": null,
+   "updated_at": "2026-11-22T15:39:53Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1034,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-AI/pull/5",
+   "author": "MilenaFRocha"
+  },
   {
    "number": 4,
    "title": "fix(quality): saneamento de exclusões do server.py e reporte junit no SonarCloud",

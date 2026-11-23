@@ -1,11 +1,353 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-19T03:12:35+00:00",
+ "coletado_em": "2026-11-23T03:14:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "9c4e1d5359577016c0ad6155d9465e5e644ba75a",
+   "date": "2026-11-23T03:08:28Z",
+   "author": "thegm445",
+   "message": "test: tira os arquivos do Front da faixa de cobertura ≤ 60% (QA-09) (#166)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/components/ReferenceValuesForm/tests/ReferenceValuesForm.coverage.spec.tsx",
+     "status": "added",
+     "additions": 91,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/components/CustomTabs/tests/CustomTabs.spec.tsx",
+     "status": "added",
+     "additions": 50,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/manage-repository/tests/RepositoryForm.coverage.spec.tsx",
+     "status": "added",
+     "additions": 198,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/components/ScrollableList/test/ScrollableList.coverage.spec.tsx",
+     "status": "added",
+     "additions": 43,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/products/hooks/tests/useProductQuery.spec.tsx",
+     "status": "added",
+     "additions": 73,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(dashboard)/tests/DashboardProviders.spec.tsx",
+     "status": "added",
+     "additions": 44,
+     "deletions": 0
+    },
+    {
+     "filename": "src/app/(public)/auth/components/AuthHeader.tsx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 26
+    },
+    {
+     "filename": "src/shared/components/Equalizer/Equalizer.tsx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 27
+    },
+    {
+     "filename": "src/shared/components/Equalizer/EqualizerSlider/EqualizerSlider.tsx",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 41
+    },
+    {
+     "filename": "src/shared/components/Equalizer/EqualizerSlider/index.ts",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/components/Equalizer/index.ts",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/components/ReleaseValuesDisplay/tests/ReleaseValuesDisplay.spec.tsx",
+     "status": "added",
+     "additions": 49,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/components/StyledComponentsRegistry/tests/StyledComponentsRegistry.spec.tsx",
+     "status": "added",
+     "additions": 39,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/hooks/tests/useRequestValues.coverage.spec.tsx",
+     "status": "added",
+     "additions": 167,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/services/tests/user.coverage.spec.tsx",
+     "status": "added",
+     "additions": 33,
+     "deletions": 0
+    },
+    {
+     "filename": "src/shared/services/tests/user.spec.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 13
+    },
+    {
+     "filename": "src/shared/services/user.ts",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 22
+    },
+    {
+     "filename": "src/shared/utils/formatEntitiesMetrics.ts",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 14
+    },
+    {
+     "filename": "src/shared/utils/tests/formatDate.coverage.spec.tsx",
+     "status": "added",
+     "additions": 38,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "de5e00be379bee3fdd581eb29cfe27e236565e88",
+   "date": "2026-11-23T03:02:36Z",
+   "author": "thegm445",
+   "message": "fix(front): zera as violações critical do SonarCloud (QA-10) (#179)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/app/(dashboard)/organizations/Organizations.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/Product.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ProductContent/NoReleasesState/NoReleasesState.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/ReleasesList.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/ReleasesList/ReleasesTable/ReleasesTable.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/components/RepositoriesList/RepositoriesTable/RepositoriesTable.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/distribuicao/DistributionDashboard.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/entidade/EntityAnalysisDashboard.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/metamodelo/MetamodeloDashboard.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/overview/OverviewDashboard.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/dashboards/relacoes/CorrelationDashboard.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/releases/create/ReleaseCreation.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/Repositories.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/manage-repository/RepositoryForm.tsx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "src/app/(dashboard)/products/create/ProductsCreation.tsx",
+     "status": "modified",
+     "additions": 60,
+     "deletions": 52
+    },
+    {
+     "filename": "src/app/(dashboard)/products/hooks/useProductQuery.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(public)/auth/AuthError.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/proxy.ts",
+     "status": "modified",
+     "additions": 51,
+     "deletions": 32
+    },
+    {
+     "filename": "src/shared/components/Layout/Layout.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/components/Layout/SideMenu/ProductsSelector/ProductsSelector.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/components/Layout/SideMenu/SideMenu.tsx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "src/shared/components/Layout/SideMenu/UserMenu/UserMenu.tsx",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/shared/services/product.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
+  {
+   "sha": "1f985bd249ee0dedb4add338a54357edb195b25a",
+   "date": "2026-11-23T01:16:31Z",
+   "author": "LuizaMaluf",
+   "message": "fix(front): erros dos catches com console.error em vez de console.log (TASK05.10) (#178)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/hooks/tests/useQuery.spec.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 3
+    },
+    {
+     "filename": "src/app/(dashboard)/products/[product]/repositories/[repository]/hooks/useQuery.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/create/ProductsCreation.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/create/test/ProductsCreation.spec.tsx",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "11524fa787d00a8b4bd32527294129126767f158",
+   "date": "2026-11-22T23:40:27Z",
+   "author": "LuizaMaluf",
+   "message": "fix(produtos): mensagem de nome repetido ao criar e editar produto (BUG00.04) (#174)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "e2e/leg00-02-produtos.e2e.ts",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 3
+    },
+    {
+     "filename": "public/locales/pt/product.json",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/app/(dashboard)/products/create/ProductsCreation.tsx",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 2
+    },
+    {
+     "filename": "src/app/(dashboard)/products/create/test/ProductsCreation.spec.tsx",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "src/shared/services/product.ts",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "548706b3223bf08f4c94d2e94698ae65f9c0323d",
    "date": "2026-11-19T02:13:59Z",
@@ -16228,5 +16570,5 @@
    ]
   }
  ],
- "detalhes_novos": 3
+ "detalhes_novos": 4
 }

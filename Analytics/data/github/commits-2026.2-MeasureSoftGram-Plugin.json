@@ -1,11 +1,44 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-13T03:12:19+00:00",
+ "coletado_em": "2026-11-23T03:14:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Plugin",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "15a2eb90e3d9a6a4d7a33e641d64db175b0ff46c",
+   "date": "2026-11-23T02:27:30Z",
+   "author": "thegm445",
+   "message": "test: cobre o extension.ts e mede o vscode.mock.ts como teste (QA-09) (#14)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "sonar-project.properties",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/tests/extension.test.ts",
+     "status": "added",
+     "additions": 305,
+     "deletions": 0
+    },
+    {
+     "filename": "webview-ui/src/tests/main.test.tsx",
+     "status": "added",
+     "additions": 28,
+     "deletions": 0
+    },
+    {
+     "filename": "webview-ui/vitest.config.ts",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    }
+   ]
+  },
   {
    "sha": "bb553c44e6316f01dfc4efe8b8763f34b86d8974",
    "date": "2026-11-12T22:04:25Z",
@@ -1282,5 +1315,5 @@
    ]
   }
  ],
- "detalhes_novos": 3
+ "detalhes_novos": 1
 }

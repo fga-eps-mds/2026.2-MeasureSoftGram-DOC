@@ -1,11 +1,209 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-21T03:12:13+00:00",
+ "coletado_em": "2026-11-23T03:14:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "df1de7b466111ae9e6903a717f6312eea4222ca0",
+   "date": "2026-11-23T03:14:53Z",
+   "author": "thegm445",
+   "message": "test: tira os arquivos do Service da faixa de cobertura ≤ 60% (QA-09) (#110)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/characteristics/models.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "src/characteristics/test_models_coverage.py",
+     "status": "added",
+     "additions": 140,
+     "deletions": 0
+    },
+    {
+     "filename": "src/config/tests/test_asgi_wsgi.py",
+     "status": "added",
+     "additions": 53,
+     "deletions": 0
+    },
+    {
+     "filename": "src/measures/test_models_coverage.py",
+     "status": "added",
+     "additions": 84,
+     "deletions": 0
+    },
+    {
+     "filename": "src/metrics/test_models_coverage.py",
+     "status": "added",
+     "additions": 154,
+     "deletions": 0
+    },
+    {
+     "filename": "src/subcharacteristics/models.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/utils/decorators.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 32
+    },
+    {
+     "filename": "src/utils/mocks.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 49
+    },
+    {
+     "filename": "src/utils/utils.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 20
+    }
+   ]
+  },
+  {
+   "sha": "7881925c59cc4f7bfa49aefe9e637e0632184808",
+   "date": "2026-11-23T02:28:14Z",
+   "author": "thegm445",
+   "message": "refactor: zera as violações critical restantes do SonarCloud no Service (QA-10b) (#109)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/config/urls.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 6
+    },
+    {
+     "filename": "src/organizations/serializers.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 3
+    },
+    {
+     "filename": "src/organizations/views.py",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 3
+    },
+    {
+     "filename": "src/release_configuration/serializers.py",
+     "status": "modified",
+     "additions": 93,
+     "deletions": 71
+    }
+   ]
+  },
+  {
+   "sha": "943a46a41d48c702a6ac4d075d1eacd59cd6b516",
+   "date": "2026-11-23T00:46:47Z",
+   "author": "LuizaMaluf",
+   "message": "fix(seed): produção sem dados de demonstração, sem admin/admin padrão e comando de limpeza (BUG05.04) (#117)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "deploy/docker-compose.prod.yml",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 3
+    },
+    {
+     "filename": "env-vars-example/.service.env",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "src/organizations/management/commands/limpar_seed_demo.py",
+     "status": "added",
+     "additions": 103,
+     "deletions": 0
+    },
+    {
+     "filename": "src/organizations/management/commands/load_initial_data.py",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 7
+    },
+    {
+     "filename": "src/organizations/tests/test_limpar_seed_demo.py",
+     "status": "added",
+     "additions": 98,
+     "deletions": 0
+    },
+    {
+     "filename": "src/organizations/tests/test_load_initial_data.py",
+     "status": "modified",
+     "additions": 22,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "2c77549e9d2a5126f63becb43cb24a3e46430a89",
+   "date": "2026-11-22T17:50:00Z",
+   "author": "DiegoCarlito",
+   "message": "feat(release_configuration): adiciona cálculo e persistência de comparações AHP (TASK13.01.03) (#115)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 1
+    },
+    {
+     "filename": "src/organizations/routers/products.py",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 0
+    },
+    {
+     "filename": "src/release_configuration/migrations/0002_releaseconfigurationcomparison.py",
+     "status": "added",
+     "additions": 57,
+     "deletions": 0
+    },
+    {
+     "filename": "src/release_configuration/models.py",
+     "status": "modified",
+     "additions": 36,
+     "deletions": 0
+    },
+    {
+     "filename": "src/release_configuration/serializers.py",
+     "status": "modified",
+     "additions": 224,
+     "deletions": 2
+    },
+    {
+     "filename": "src/release_configuration/tests.py",
+     "status": "modified",
+     "additions": 522,
+     "deletions": 1
+    },
+    {
+     "filename": "src/release_configuration/views.py",
+     "status": "modified",
+     "additions": 51,
+     "deletions": 3
+    },
+    {
+     "filename": "uv.lock",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 4
+    }
+   ]
+  },
   {
    "sha": "82951fc4a6ddbd76c6a03a8aed0571c820a5f9ff",
    "date": "2026-11-20T11:29:49Z",
@@ -4335,5 +4533,5 @@
    ]
   }
  ],
- "detalhes_novos": 1
+ "detalhes_novos": 4
 }

@@ -1,10 +1,124 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-21T03:12:13+00:00",
+ "coletado_em": "2026-11-23T03:14:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 348,
+   "title": "fix(analytics): [TASK33.04.05] execuções do Dependabot fora da M10 e da M8 (D7)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-23T01:42:53Z",
+   "closed_at": "2026-11-23T01:44:45Z",
+   "updated_at": "2026-11-23T01:44:48Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1422,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/348",
+   "author": "gusrberto"
+  },
+  {
+   "number": 347,
+   "title": "fix(analytics): [TASK33.01.03] arquivo sem função fica fora da M1",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-23T00:32:31Z",
+   "closed_at": "2026-11-23T00:39:45Z",
+   "updated_at": "2026-11-23T00:39:48Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1885,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/347",
+   "author": "gusrberto"
+  },
+  {
+   "number": 346,
+   "title": "docs(metricas): revisor no histórico da página de Adequação Funcional",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-23T00:17:43Z",
+   "closed_at": "2026-11-23T03:03:47Z",
+   "updated_at": "2026-11-23T03:03:49Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 339,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/346",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 345,
+   "title": "docs(metricas): medidas de Adequação Funcional e linha de base pelo E2E por critério",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-23T00:07:28Z",
+   "closed_at": "2026-11-23T00:14:47Z",
+   "updated_at": "2026-11-23T00:14:50Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2316,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/345",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 344,
+   "title": "[TASK19.09] Medidas de Adequação Funcional: pesquisa e documentação",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-11-23T00:05:07Z",
+   "closed_at": "2026-11-23T00:14:48Z",
+   "updated_at": "2026-11-23T00:14:48Z",
+   "labels": [
+    "documentation"
+   ],
+   "type": "Task",
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2126,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/344",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 343,
+   "title": "feat(analytics): grava o retrato do SonarCloud de cada release nova",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-22T15:38:41Z",
+   "closed_at": null,
+   "updated_at": "2026-11-22T15:39:19Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1931,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/343",
+   "author": "MilenaFRocha"
+  },
   {
    "number": 342,
    "title": "[TASK37.01.06] Configuração remota: PRs do Weblate e workflows de template",
@@ -19,7 +133,8 @@
    ],
    "type": null,
    "assignees": [
-    "zzzBECK"
+    "zzzBECK",
+    "Diogo-Barboza"
    ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
@@ -34,14 +149,15 @@
    "is_pull_request": false,
    "created_at": "2026-11-20T19:01:37Z",
    "closed_at": null,
-   "updated_at": "2026-11-20T20:22:21Z",
+   "updated_at": "2026-11-22T13:56:35Z",
    "labels": [
     "task",
     "plugin"
    ],
    "type": null,
    "assignees": [
-    "zzzBECK"
+    "zzzBECK",
+    "Diogo-Barboza"
    ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
@@ -56,14 +172,15 @@
    "is_pull_request": false,
    "created_at": "2026-11-20T19:01:34Z",
    "closed_at": null,
-   "updated_at": "2026-11-20T20:22:20Z",
+   "updated_at": "2026-11-22T13:56:26Z",
    "labels": [
     "task",
     "cli"
    ],
    "type": null,
    "assignees": [
-    "zzzBECK"
+    "zzzBECK",
+    "Diogo-Barboza"
    ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
@@ -85,7 +202,8 @@
    ],
    "type": null,
    "assignees": [
-    "zzzBECK"
+    "zzzBECK",
+    "Diogo-Barboza"
    ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
@@ -107,7 +225,8 @@
    ],
    "type": null,
    "assignees": [
-    "zzzBECK"
+    "zzzBECK",
+    "Diogo-Barboza"
    ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
@@ -129,7 +248,8 @@
    ],
    "type": null,
    "assignees": [
-    "zzzBECK"
+    "zzzBECK",
+    "Diogo-Barboza"
    ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
@@ -154,7 +274,8 @@
    ],
    "type": "Feature",
    "assignees": [
-    "zzzBECK"
+    "zzzBECK",
+    "Diogo-Barboza"
    ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
@@ -228,11 +349,11 @@
   {
    "number": 332,
    "title": "[BUG00.04] Nome repetido de produto mostra o erro genérico em vez da mensagem de duplicado",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-19T02:05:25Z",
-   "closed_at": null,
-   "updated_at": "2026-11-19T02:05:45Z",
+   "closed_at": "2026-11-22T23:40:30Z",
+   "updated_at": "2026-11-22T23:40:30Z",
    "labels": [
     "bug",
     "frontend"
@@ -250,11 +371,11 @@
   {
    "number": 331,
    "title": "[LEG00.04] Lista, busca e filtros de releases (fluxo legado)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-19T02:05:21Z",
-   "closed_at": null,
-   "updated_at": "2026-11-19T02:17:43Z",
+   "closed_at": "2026-11-23T00:17:17Z",
+   "updated_at": "2026-11-23T03:13:33Z",
    "labels": [
     "US",
     "frontend"
@@ -272,11 +393,11 @@
   {
    "number": 330,
    "title": "[LEG00.03] Edição e cadastro de repositórios (fluxo legado)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-19T02:05:19Z",
-   "closed_at": null,
-   "updated_at": "2026-11-19T02:17:42Z",
+   "closed_at": "2026-11-23T00:17:13Z",
+   "updated_at": "2026-11-23T03:13:31Z",
    "labels": [
     "US",
     "frontend"
@@ -294,11 +415,11 @@
   {
    "number": 329,
    "title": "[LEG00.02] Cadastro e edição de produtos (fluxo legado)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-19T02:05:16Z",
-   "closed_at": null,
-   "updated_at": "2026-11-19T02:17:41Z",
+   "closed_at": "2026-11-23T00:17:09Z",
+   "updated_at": "2026-11-23T03:13:30Z",
    "labels": [
     "US",
     "frontend"
@@ -316,11 +437,11 @@
   {
    "number": 328,
    "title": "[LEG00.01] Cadastro e edição de organizações (fluxo legado)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-19T02:05:13Z",
-   "closed_at": null,
-   "updated_at": "2026-11-19T02:17:40Z",
+   "closed_at": "2026-11-23T00:17:03Z",
+   "updated_at": "2026-11-23T03:13:29Z",
    "labels": [
     "US",
     "frontend"
@@ -454,11 +575,11 @@
   {
    "number": 321,
    "title": "[LEG19.01] Planejamento de release por repositórios selecionados (US19 de 2026.1)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:20Z",
-   "closed_at": null,
-   "updated_at": "2026-11-19T02:17:47Z",
+   "closed_at": "2026-11-23T00:16:58Z",
+   "updated_at": "2026-11-23T03:13:38Z",
    "labels": [
     "US",
     "frontend"
@@ -476,11 +597,11 @@
   {
    "number": 320,
    "title": "[LEG07.01] Notificação de sessão expirada (US007 de 2026.1)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:15Z",
-   "closed_at": null,
-   "updated_at": "2026-11-19T02:17:46Z",
+   "closed_at": "2026-11-23T00:16:53Z",
+   "updated_at": "2026-11-23T03:13:37Z",
    "labels": [
     "US",
     "frontend"
@@ -498,11 +619,11 @@
   {
    "number": 319,
    "title": "[LEG06.01] Timeout de sessão (US006 de 2026.1)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:12Z",
-   "closed_at": null,
-   "updated_at": "2026-11-19T02:17:45Z",
+   "closed_at": "2026-11-23T00:16:49Z",
+   "updated_at": "2026-11-23T03:13:35Z",
    "labels": [
     "US",
     "frontend"
@@ -520,11 +641,11 @@
   {
    "number": 318,
    "title": "[LEG04.01] Badge de qualidade do repositório (US04 de 2026.1)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:07Z",
-   "closed_at": null,
-   "updated_at": "2026-11-19T02:17:44Z",
+   "closed_at": "2026-11-23T00:16:45Z",
+   "updated_at": "2026-11-23T03:13:34Z",
    "labels": [
     "US",
     "frontend"
@@ -858,11 +979,11 @@
   {
    "number": 302,
    "title": "[BUG00.02] CLI aceita sem aviso pesos que não somam 100 no msgram.json",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-11T22:49:26Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:14:39Z",
+   "closed_at": "2026-11-23T02:10:47Z",
+   "updated_at": "2026-11-23T02:10:47Z",
    "labels": [
     "bug",
     "cli"
@@ -880,11 +1001,11 @@
   {
    "number": 301,
    "title": "[BUG00.01] CLI omite sem aviso as medidas sem dados da fonte e anuncia sucesso mesmo com avisos",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-11T22:49:23Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:14:37Z",
+   "closed_at": "2026-11-23T02:10:45Z",
+   "updated_at": "2026-11-23T02:10:45Z",
    "labels": [
     "bug",
     "cli"
@@ -902,11 +1023,11 @@
   {
    "number": 300,
    "title": "[BUG01.01] CLI calcula as medidas por arquivo com componentes TRK e UTS e diverge do Service",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-11T22:49:20Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:14:35Z",
+   "closed_at": "2026-11-23T02:10:43Z",
+   "updated_at": "2026-11-23T02:10:43Z",
    "labels": [
     "bug",
     "cli"
@@ -1153,11 +1274,11 @@
   {
    "number": 286,
    "title": "[TASK13.01.03] Service: comparações da release e endpoint de cálculo",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-11T12:35:04Z",
-   "closed_at": null,
-   "updated_at": "2026-11-21T02:18:43Z",
+   "closed_at": "2026-11-22T17:50:02Z",
+   "updated_at": "2026-11-22T17:50:02Z",
    "labels": [
     "task",
     "service"
@@ -1433,11 +1554,11 @@
   {
    "number": 273,
    "title": "[TASK33.04.05] QA-17 · Action: estabilidade de build de 0,75 para ≥ 0,90",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:57Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T13:25:51Z",
+   "closed_at": "2026-11-23T01:46:44Z",
+   "updated_at": "2026-11-23T01:46:44Z",
    "labels": [
     "task",
     "action"
@@ -1567,11 +1688,11 @@
   {
    "number": 267,
    "title": "[TASK33.03.05] QA-12 · Core, CLI e Parser: 7 arquivos (12 critical)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:35:11Z",
-   "closed_at": null,
-   "updated_at": "2026-11-16T23:05:25Z",
+   "closed_at": "2026-11-23T03:11:03Z",
+   "updated_at": "2026-11-23T03:11:03Z",
    "labels": [
     "task",
     "core",
@@ -1636,11 +1757,11 @@
   {
    "number": 264,
    "title": "[TASK33.03.02] QA-10b · Service: demais arquivos (8 arquivos, 8 critical)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:42Z",
-   "closed_at": null,
-   "updated_at": "2026-11-16T21:30:01Z",
+   "closed_at": "2026-11-23T02:28:16Z",
+   "updated_at": "2026-11-23T02:28:16Z",
    "labels": [
     "task",
     "service"
@@ -1684,7 +1805,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:13Z",
    "closed_at": null,
-   "updated_at": "2026-11-17T22:27:43Z",
+   "updated_at": "2026-11-23T01:58:59Z",
    "labels": [
     "task",
     "frontend",
@@ -1727,11 +1848,11 @@
   {
    "number": 260,
    "title": "[TASK33.02.03] QA-07 · Parser: cobertura de 89,1% para ≥ 90%",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:08Z",
-   "closed_at": null,
-   "updated_at": "2026-11-16T23:05:22Z",
+   "closed_at": "2026-11-23T01:12:32Z",
+   "updated_at": "2026-11-23T01:12:32Z",
    "labels": [
     "task",
     "parser"
@@ -1749,11 +1870,11 @@
   {
    "number": 259,
    "title": "[TASK33.02.02] QA-06 · Core: cobertura de 89,8% para ≥ 90%",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:06Z",
-   "closed_at": null,
-   "updated_at": "2026-11-16T23:05:21Z",
+   "closed_at": "2026-11-23T01:12:26Z",
+   "updated_at": "2026-11-23T01:12:26Z",
    "labels": [
     "task",
     "core"
@@ -1771,11 +1892,11 @@
   {
    "number": 258,
    "title": "[TASK33.02.01] QA-05 · Ativar branch = True no CLI",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:34:03Z",
-   "closed_at": null,
-   "updated_at": "2026-11-16T23:05:19Z",
+   "closed_at": "2026-11-23T01:12:37Z",
+   "updated_at": "2026-11-23T01:12:37Z",
    "labels": [
     "task",
     "cli"
@@ -1814,11 +1935,11 @@
   {
    "number": 256,
    "title": "[TASK33.01.04] QA-18 · M7: issues bem definidas ≥ 0,95",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:33:24Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T22:44:19Z",
+   "closed_at": "2026-11-23T00:01:23Z",
+   "updated_at": "2026-11-23T00:01:23Z",
    "labels": [
     "docs",
     "task"
@@ -1836,11 +1957,11 @@
   {
    "number": 255,
    "title": "[TASK33.01.03] QA-04 · Conferir o cálculo da M1 (Complexity)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:33:21Z",
-   "closed_at": null,
-   "updated_at": "2026-11-16T14:52:40Z",
+   "closed_at": "2026-11-23T00:39:47Z",
+   "updated_at": "2026-11-23T00:39:47Z",
    "labels": [
     "analytics",
     "task"
@@ -2046,7 +2167,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:28Z",
    "closed_at": "2026-11-12T04:20:39Z",
-   "updated_at": "2026-11-19T02:17:38Z",
+   "updated_at": "2026-11-23T03:13:28Z",
    "labels": [
     "bug",
     "frontend",
@@ -2069,7 +2190,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:07Z",
    "closed_at": "2026-11-12T03:51:27Z",
-   "updated_at": "2026-11-19T02:17:37Z",
+   "updated_at": "2026-11-23T03:13:26Z",
    "labels": [
     "bug",
     "frontend",
@@ -3318,7 +3439,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:51:28Z",
    "closed_at": "2026-11-13T03:47:32Z",
-   "updated_at": "2026-11-19T02:18:03Z",
+   "updated_at": "2026-11-23T03:13:55Z",
    "labels": [
     "US"
    ],
@@ -3344,7 +3465,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:51Z",
    "closed_at": "2026-11-13T03:32:17Z",
-   "updated_at": "2026-11-19T02:18:02Z",
+   "updated_at": "2026-11-23T03:13:53Z",
    "labels": [
     "US"
    ],
@@ -3370,7 +3491,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:08Z",
    "closed_at": "2026-11-13T03:32:14Z",
-   "updated_at": "2026-11-19T02:18:01Z",
+   "updated_at": "2026-11-23T03:13:51Z",
    "labels": [
     "US"
    ],
@@ -3884,11 +4005,11 @@
   {
    "number": 151,
    "title": "[BUG05.04] Produção sobe com seed fake e mistura dados de demonstração com produtos reais",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-14T21:43:56Z",
-   "closed_at": null,
-   "updated_at": "2026-10-23T14:35:15Z",
+   "closed_at": "2026-11-23T01:03:26Z",
+   "updated_at": "2026-11-23T01:03:26Z",
    "labels": [
     "bug",
     "service"
@@ -3902,18 +4023,18 @@
    ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 7005,
+   "body_chars": 7055,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/151",
    "author": "LuizaMaluf"
   },
   {
    "number": 150,
    "title": "[BUG05.03] Onboarding grava métricas mock como dados reais quando o workflow do GitHub não é disparado",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-10-14T21:43:36Z",
-   "closed_at": null,
-   "updated_at": "2026-10-24T00:14:12Z",
+   "closed_at": "2026-11-23T01:11:34Z",
+   "updated_at": "2026-11-23T01:11:34Z",
    "labels": [
     "bug",
     "service"
@@ -4313,7 +4434,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:01Z",
    "closed_at": "2026-11-11T22:21:31Z",
-   "updated_at": "2026-11-19T02:17:51Z",
+   "updated_at": "2026-11-23T03:13:41Z",
    "labels": [
     "US",
     "frontend",
@@ -4341,7 +4462,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:50Z",
    "closed_at": "2026-11-12T03:15:43Z",
-   "updated_at": "2026-11-19T02:17:59Z",
+   "updated_at": "2026-11-23T03:13:49Z",
    "labels": [
     "US"
    ],
@@ -4362,7 +4483,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:46Z",
    "closed_at": "2026-11-10T02:33:45Z",
-   "updated_at": "2026-11-19T02:17:58Z",
+   "updated_at": "2026-11-23T03:13:48Z",
    "labels": [
     "US"
    ],
@@ -4383,7 +4504,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:38Z",
    "closed_at": "2026-11-11T22:21:36Z",
-   "updated_at": "2026-11-19T02:17:56Z",
+   "updated_at": "2026-11-23T03:13:46Z",
    "labels": [
     "US"
    ],
@@ -4404,7 +4525,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:33Z",
    "closed_at": "2026-11-07T19:14:18Z",
-   "updated_at": "2026-11-19T02:17:55Z",
+   "updated_at": "2026-11-23T03:13:45Z",
    "labels": [
     "US"
    ],
@@ -4425,7 +4546,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:28Z",
    "closed_at": "2026-11-12T03:11:01Z",
-   "updated_at": "2026-11-19T02:18:00Z",
+   "updated_at": "2026-11-23T03:13:50Z",
    "labels": [
     "US"
    ],
@@ -4447,7 +4568,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:22Z",
    "closed_at": "2026-11-11T22:21:33Z",
-   "updated_at": "2026-11-19T02:17:54Z",
+   "updated_at": "2026-11-23T03:13:44Z",
    "labels": [
     "US"
    ],
@@ -4520,7 +4641,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:48:20Z",
    "closed_at": "2026-11-12T05:12:26Z",
-   "updated_at": "2026-11-19T02:17:53Z",
+   "updated_at": "2026-11-23T03:13:43Z",
    "labels": [
     "US",
     "frontend"
@@ -4543,7 +4664,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:46:08Z",
    "closed_at": null,
-   "updated_at": "2026-10-23T14:45:54Z",
+   "updated_at": "2026-11-23T01:17:27Z",
    "labels": [
     "task",
     "all repos"
@@ -4557,7 +4678,7 @@
    ],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 12185,
+   "body_chars": 12443,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/113",
    "author": "zzzBECK"
   },
@@ -4568,7 +4689,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:06:06Z",
    "closed_at": "2026-11-12T04:56:19Z",
-   "updated_at": "2026-11-19T02:17:52Z",
+   "updated_at": "2026-11-23T03:13:42Z",
    "labels": [
     "US"
    ],
@@ -4672,7 +4793,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-28T10:54:25Z",
    "closed_at": "2026-09-29T02:11:12Z",
-   "updated_at": "2026-11-19T02:17:36Z",
+   "updated_at": "2026-11-23T03:13:25Z",
    "labels": [
     "bug",
     "frontend"
@@ -4864,11 +4985,11 @@
   {
    "number": 90,
    "title": "[MSG19] Testes E2E do Produto e Adequação Funcional",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-09-27T16:09:43Z",
-   "closed_at": null,
-   "updated_at": "2026-11-11T22:19:03Z",
+   "closed_at": "2026-11-23T00:18:02Z",
+   "updated_at": "2026-11-23T00:18:02Z",
    "labels": [
     "epic",
     "all repos"
@@ -4877,7 +4998,7 @@
    "assignees": [],
    "milestone": null,
    "milestone_due_on": null,
-   "body_chars": 5671,
+   "body_chars": 5843,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/90",
    "author": "MilenaFRocha"
   },
@@ -5241,7 +5362,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-25T20:16:41Z",
    "closed_at": "2026-11-12T02:16:25Z",
-   "updated_at": "2026-11-19T02:17:50Z",
+   "updated_at": "2026-11-23T03:13:40Z",
    "labels": [
     "US",
     "frontend",
@@ -5485,7 +5606,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-24T00:34:13Z",
    "closed_at": "2026-11-11T22:35:14Z",
-   "updated_at": "2026-11-19T02:17:48Z",
+   "updated_at": "2026-11-23T03:13:39Z",
    "labels": [
     "US",
     "frontend",

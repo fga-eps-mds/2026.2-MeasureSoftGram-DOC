@@ -1,11 +1,44 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-17T22:07:23+00:00",
+ "coletado_em": "2026-11-23T03:14:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Parser",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "2954c7a0396bf2bd98701076c39b0dbfa629bdf2",
+   "date": "2026-11-23T01:12:30Z",
+   "author": "bottinolucas",
+   "message": "fix(quality): violações critical e cobertura ≥ 90% no Parser (QA-07, QA-12) (#18)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "genericparser/plugins/dinamic/github.py",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 7
+    },
+    {
+     "filename": "tests/unit_tests/test_generic_static_abc_parser.py",
+     "status": "added",
+     "additions": 68,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit_tests/test_genericparser_parse.py",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit_tests/test_github_parser_metrics.py",
+     "status": "modified",
+     "additions": 65,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "0741f5a235d40cb801723cfb925caafb67ca9f7c",
    "date": "2026-11-16T18:00:47Z",
@@ -2035,5 +2068,5 @@
    ]
   }
  ],
- "detalhes_novos": 4
+ "detalhes_novos": 1
 }

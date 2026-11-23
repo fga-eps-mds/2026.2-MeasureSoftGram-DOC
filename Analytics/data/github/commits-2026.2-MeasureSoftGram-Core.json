@@ -1,11 +1,56 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-19T03:12:35+00:00",
+ "coletado_em": "2026-11-23T03:14:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Core",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "20e470b91d9b10ac66ae5d90902032dbdebcbb65",
+   "date": "2026-11-23T01:12:25Z",
+   "author": "bottinolucas",
+   "message": "fix(quality): violações critical e cobertura ≥ 90% no Core (QA-06, QA-12) (#27)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/core/aggregated_normalized_measures.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 1
+    },
+    {
+     "filename": "src/resources/analysis.py",
+     "status": "modified",
+     "additions": 56,
+     "deletions": 49
+    },
+    {
+     "filename": "src/util/check.py",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 24
+    },
+    {
+     "filename": "src/util/run_time_data_operations.py",
+     "status": "modified",
+     "additions": 15,
+     "deletions": 11
+    },
+    {
+     "filename": "tests/unit/test_check.py",
+     "status": "added",
+     "additions": 87,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_run_time_data_operations.py",
+     "status": "modified",
+     "additions": 78,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "82799a097e4428cb74a5bef7f10e9d7f6910339c",
    "date": "2026-11-18T15:10:48Z",

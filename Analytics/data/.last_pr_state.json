@@ -12,39 +12,39 @@
     "author": "DiegoCarlito"
   },
   "2026.2-MeasureSoftGram-CLI": {
-    "number": 30,
-    "last_merged_at": "2026-11-19T02:08:21Z",
-    "title": "fix(extract): sem acesso ao GitHub o extract termina com código 1 em vez de gravar métricas zeradas",
-    "author": "LuizaMaluf"
+    "number": 37,
+    "last_merged_at": "2026-11-23T03:11:01Z",
+    "title": "refactor(cli): zera as S3776 de cmd_calculate e cmd_list (QA-12)",
+    "author": "thegm445"
   },
   "2026.2-MeasureSoftGram-Core": {
-    "number": 34,
-    "last_merged_at": "2026-11-18T15:10:48Z",
-    "title": "chore(release): bump version to 1.5.5rc7",
-    "author": "MilenaFRocha"
+    "number": 27,
+    "last_merged_at": "2026-11-23T01:12:25Z",
+    "title": "fix(quality): violações critical e cobertura ≥ 90% no Core (QA-06, QA-12)",
+    "author": "bottinolucas"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 171,
-    "last_merged_at": "2026-11-19T02:13:59Z",
-    "title": "test(e2e): cenários de aceitação dos fluxos legados do Front por critério (TASK19.08)",
-    "author": "LuizaMaluf"
+    "number": 166,
+    "last_merged_at": "2026-11-23T03:08:28Z",
+    "title": "test: tira os arquivos do Front da faixa de cobertura ≤ 60% (QA-09)",
+    "author": "thegm445"
   },
   "2026.2-MeasureSoftGram-Parser": {
-    "number": 21,
-    "last_merged_at": "2026-11-16T18:00:48Z",
-    "title": "chore: bump 1.2.4rc3",
-    "author": "LuizaMaluf"
+    "number": 18,
+    "last_merged_at": "2026-11-23T01:12:30Z",
+    "title": "fix(quality): violações critical e cobertura ≥ 90% no Parser (QA-07, QA-12)",
+    "author": "bottinolucas"
   },
   "2026.2-MeasureSoftGram-Plugin": {
-    "number": 13,
-    "last_merged_at": "2026-11-12T22:04:25Z",
-    "title": "fix(quality): duplicação do Plugin abaixo de 3% (QA-14)",
-    "author": "henriquecq"
+    "number": 14,
+    "last_merged_at": "2026-11-23T02:27:30Z",
+    "title": "test: cobre o extension.ts e mede o vscode.mock.ts como teste (QA-09)",
+    "author": "thegm445"
   },
   "2026.2-MeasureSoftGram-Service": {
-    "number": 105,
-    "last_merged_at": "2026-11-20T11:29:50Z",
-    "title": "feat(service): [Task36.01] modelagem QualityAnalysis e vínculo nas 5 camadas",
-    "author": "luciano-freitas-melo"
+    "number": 109,
+    "last_merged_at": "2026-11-23T02:28:15Z",
+    "title": "refactor: zera as violações critical restantes do SonarCloud no Service (QA-10b)",
+    "author": "thegm445"
   }
 }

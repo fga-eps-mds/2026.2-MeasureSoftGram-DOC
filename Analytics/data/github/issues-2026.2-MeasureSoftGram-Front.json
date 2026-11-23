@@ -1,10 +1,65 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-21T03:12:13+00:00",
+ "coletado_em": "2026-11-23T03:14:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 179,
+   "title": "fix(front): zera as violações critical do SonarCloud (QA-10)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-23T01:52:29Z",
+   "closed_at": "2026-11-23T03:02:37Z",
+   "updated_at": "2026-11-23T03:02:38Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1437,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/179",
+   "author": "thegm445"
+  },
+  {
+   "number": 178,
+   "title": "fix(front): erros dos catches com console.error em vez de console.log (TASK05.10)",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-23T01:10:37Z",
+   "closed_at": "2026-11-23T01:16:32Z",
+   "updated_at": "2026-11-23T01:16:34Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "LuizaMaluf"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1132,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/178",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 177,
+   "title": "chore(ci): remove parser.py e metrics.yml locais",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-22T15:39:43Z",
+   "closed_at": null,
+   "updated_at": "2026-11-22T15:42:49Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1034,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/177",
+   "author": "MilenaFRocha"
+  },
   {
    "number": 176,
    "title": "feat(i18n): [TASK37.01.03] migra os textos fixos em português para t()",
@@ -12,7 +67,7 @@
    "is_pull_request": true,
    "created_at": "2026-11-20T22:20:59Z",
    "closed_at": null,
-   "updated_at": "2026-11-20T22:24:08Z",
+   "updated_at": "2026-11-22T06:59:09Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -46,11 +101,11 @@
   {
    "number": 174,
    "title": "fix(produtos): mensagem de nome repetido ao criar e editar produto (BUG00.04)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-19T02:29:17Z",
-   "closed_at": null,
-   "updated_at": "2026-11-19T02:31:57Z",
+   "closed_at": "2026-11-22T23:40:28Z",
+   "updated_at": "2026-11-22T23:40:30Z",
    "labels": [],
    "type": null,
    "assignees": [
@@ -190,11 +245,11 @@
   {
    "number": 166,
    "title": "test: tira os arquivos do Front da faixa de cobertura ≤ 60% (QA-09)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-17T00:27:54Z",
-   "closed_at": null,
-   "updated_at": "2026-11-18T00:24:42Z",
+   "closed_at": "2026-11-23T03:08:28Z",
+   "updated_at": "2026-11-23T03:08:31Z",
    "labels": [],
    "type": null,
    "assignees": [

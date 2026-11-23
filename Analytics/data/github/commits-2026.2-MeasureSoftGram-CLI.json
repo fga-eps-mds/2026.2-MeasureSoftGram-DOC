@@ -1,11 +1,179 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-19T03:12:35+00:00",
+ "coletado_em": "2026-11-23T03:14:13+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-CLI",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "3d6eae2739ad00770e06b5d7dadd25f8041b2fb4",
+   "date": "2026-11-23T03:11:00Z",
+   "author": "thegm445",
+   "message": "refactor(cli): zera as S3776 de cmd_calculate e cmd_list (QA-12) (#37)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/commands/cmd_calculate.py",
+     "status": "modified",
+     "additions": 38,
+     "deletions": 22
+    },
+    {
+     "filename": "src/cli/commands/cmd_list.py",
+     "status": "modified",
+     "additions": 71,
+     "deletions": 47
+    },
+    {
+     "filename": "tests/e2e/__snapshots__/test_pipeline.ambr",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 16
+    },
+    {
+     "filename": "tests/e2e/support.py",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "dea476d41885f45babae4f68ca87c74b5251d934",
+   "date": "2026-11-23T02:29:27Z",
+   "author": "thegm445",
+   "message": "test(resources): cobre o perf_eff_measure.py (QA-09, DOC#262) (#32)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "tests/unit/test_perf_eff_measure.py",
+     "status": "added",
+     "additions": 237,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "ddf0e03b6518113aeddc9e20e41c83140089d796",
+   "date": "2026-11-23T02:10:41Z",
+   "author": "bottinolucas",
+   "message": "fix(calculate): valores por arquivo como o Service, avisos de medidas não calculadas e de pesos (#21)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/commands/cmd_calculate.py",
+     "status": "modified",
+     "additions": 73,
+     "deletions": 24
+    },
+    {
+     "filename": "src/cli/commands/cmd_demo.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 26
+    },
+    {
+     "filename": "src/cli/commands/cmd_extract.py",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/commands/cmd_list.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 0
+    },
+    {
+     "filename": "src/cli/resources/measure.py",
+     "status": "modified",
+     "additions": 94,
+     "deletions": 14
+    },
+    {
+     "filename": "src/cli/resources/metrics.py",
+     "status": "modified",
+     "additions": 120,
+     "deletions": 33
+    },
+    {
+     "filename": "src/cli/resources/weights.py",
+     "status": "added",
+     "additions": 90,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/e2e/__snapshots__/test_pipeline.ambr",
+     "status": "modified",
+     "additions": 31,
+     "deletions": 31
+    },
+    {
+     "filename": "tests/e2e/__snapshots__/test_pipeline/test_sonar_and_github_together_give_one_result_per_file.json",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 10
+    },
+    {
+     "filename": "tests/e2e/__snapshots__/test_pipeline/test_sonar_calculate_json.json",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 10
+    },
+    {
+     "filename": "tests/e2e/test_pipeline.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 1
+    },
+    {
+     "filename": "tests/unit/test_calculate_warnings.py",
+     "status": "added",
+     "additions": 157,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_demo_github_measures.py",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 28
+    },
+    {
+     "filename": "tests/unit/test_metrics_qualifiers.py",
+     "status": "added",
+     "additions": 263,
+     "deletions": 0
+    },
+    {
+     "filename": "tests/unit/test_weight_validation.py",
+     "status": "added",
+     "additions": 164,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "caccf6968536f497c7a8121b3903753fce52a48f",
+   "date": "2026-11-23T01:12:35Z",
+   "author": "bottinolucas",
+   "message": "ci(coverage): cobertura de branches e violação do parsers.py no CLI (QA-05, QA-12) (#22)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "src/cli/parsers.py",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 3
+    },
+    {
+     "filename": "tox.ini",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "879218f10d3c83716b53003ce4d2c7e9fdae7bc0",
    "date": "2026-11-19T02:08:21Z",
@@ -2029,5 +2197,5 @@
    ]
   }
  ],
- "detalhes_novos": 3
+ "detalhes_novos": 4
 }
