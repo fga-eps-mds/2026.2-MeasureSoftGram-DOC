@@ -115,6 +115,47 @@ class ClienteTest(unittest.TestCase):
         self.assertEqual(len(arq["linhas"]), 1)
         self.assertEqual(arq["linhas"][0][3:], [1.0] * len(api.METRICAS_ARQUIVO))
 
+    def test_issues_abertas_sem_organization(self):
+        # com ``organization`` + ``componentKeys`` o SonarCloud devolve total 0 (bug da #254)
+        t = Transporte({"api/issues/search": api.Resposta(200, {"total": 70, "facets": []})})
+        r = api.SonarClient(transporte=t, dormir=lambda s: None).issues_abertas("org_CLI", "develop")
+        self.assertEqual(r["total"], 70)
+        params = t.chamadas[0][1]
+        self.assertNotIn("organization", params)
+        self.assertEqual((params["resolved"], params["branch"]), ("false", "develop"))
+
+    def test_issues_graves_com_regra_arquivo_linha_e_testes(self):
+        def busca(p):
+            self.assertEqual(p["severities"], "BLOCKER,CRITICAL")
+            self.assertNotIn("organization", p)
+            if p["p"] == 1:
+                return api.Resposta(200, {"paging": {"total": 501}, "issues": [
+                    {"rule": "python:S3776", "severity": "CRITICAL", "type": "CODE_SMELL",
+                     "component": "org_Plugin:src/a.py", "line": 12, "message": "Complexidade"}],
+                    "components": [{"key": "org_Plugin:src/a.py", "qualifier": "FIL"}]})
+            return api.Resposta(200, {"paging": {"total": 501}, "issues": [
+                {"rule": "python:S2699", "severity": "BLOCKER", "type": "CODE_SMELL",
+                 "component": "org_Plugin:tests/test_a.py", "line": 3}],
+                "components": [{"key": "org_Plugin:tests/test_a.py", "qualifier": "UTS"}]})
+        t = Transporte({"api/issues/search": busca})
+        graves = api.SonarClient(transporte=t, dormir=lambda s: None).issues_graves("org_Plugin", "develop")
+        self.assertEqual(len(t.chamadas), 2)                        # 501 issues = 2 páginas
+        self.assertEqual([(g["regra"], g["arquivo"], g["linha"], g["qualifier"]) for g in graves],
+                         [("python:S3776", "src/a.py", 12, "FIL"), ("python:S2699", "tests/test_a.py", 3, "UTS")])
+        self.assertEqual(graves[1]["severidade"], "BLOCKER")
+
+    def test_falha_na_lista_de_graves_mantem_os_totais(self):
+        r = respostas_ok()
+        r["api/issues/search"] = lambda p: api.Resposta(400, {"errors": [{"msg": "falhou"}]}) \
+            if "severities" in p else api.Resposta(200, {"total": 7, "facets": []})
+        c = api.SonarClient(transporte=Transporte(r), dormir=lambda s: None)
+        snap = api.coletar(c, ["org_Core"], None, log=lambda m: None)
+        p = snap["projetos"][0]
+        self.assertNotIn("erro", p)
+        self.assertEqual(p["issues"]["total"], 7)
+        self.assertNotIn("graves", p["issues"])
+        self.assertTrue(any("BLOCKER/CRITICAL" in a for a in snap["avisos"]))
+
     def test_erro_de_um_projeto_nao_derruba_os_outros(self):
         r = respostas_ok()
         r["api/measures/component"] = lambda p: api.Resposta(404, {"errors": [{"msg": "Component key not found"}]}) \
@@ -139,6 +180,27 @@ class ClienteTest(unittest.TestCase):
 
     def test_sem_snapshot_tabelas_vazias(self):
         self.assertTrue(all(df.empty for df in sn.snapshot_para_tabelas(None).values()))
+
+    def test_cobertura_de_linha_e_de_ramo_por_projeto_e_por_arquivo(self):
+        # #253: sem esses dois campos não dá para recalcular a linha de base da M5
+        cob = ("line_coverage", "branch_coverage")
+        t = Transporte({
+            "api/measures/component": lambda p: api.Resposta(200, {"component": {"measures": [
+                {"metric": m, "value": "80"} for m in p["metricKeys"].split(",") if m in cob]}}),
+            "api/measures/search_history": api.Resposta(200, {"measures": []}),
+            "api/qualitygates/project_status": api.Resposta(200, {"projectStatus": {}}),
+            "api/issues/search": api.Resposta(200, {"total": 0}),
+            "api/measures/component_tree": lambda p: api.Resposta(200, {"paging": {"total": 1}, "components": [
+                {"key": "org_Core:tests/t.py", "path": "tests/t.py", "qualifier": "UTS", "measures": [
+                    {"metric": m, "value": "50"} for m in p["metricKeys"].split(",") if m in cob]}]}),
+        })
+        c = api.SonarClient(transporte=t, dormir=lambda s: None)
+        p = api.coletar(c, ["org_Core"], "develop", log=lambda m: None)["projetos"][0]
+        self.assertEqual({m: p["medidas"].get(m) for m in cob}, {m: "80" for m in cob})
+        arq = p["arquivos"]
+        linha = dict(zip(arq["metricas"], arq["linhas"][0][3:]))
+        self.assertEqual({m: linha.get(m) for m in cob}, {m: 50.0 for m in cob})
+        self.assertTrue(set(cob) <= set(api.METRICAS_HISTORICO))
 
 
 if __name__ == "__main__":

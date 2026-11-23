@@ -9,7 +9,8 @@ Endpoints (https://sonarcloud.io/web_api), todos de leitura:
 * ``api/measures/component``      valores atuais das métricas
 * ``api/measures/search_history`` série histórica de cada métrica
 * ``api/qualitygates/project_status`` situação do Quality Gate e condições
-* ``api/issues/search`` (``ps=1`` + ``facets``) problemas abertos por severidade e tipo
+* ``api/issues/search`` (``ps=1`` + ``facets``) problemas abertos por severidade e tipo; e a lista
+  das issues BLOCKER/CRITICAL abertas (regra, arquivo e linha)
 * ``api/components/search``       descoberta dos projetos da organização
 
 Projetos públicos dispensam token. ``SONAR_TOKEN`` (opcional, no ``.env`` ou no
@@ -153,8 +154,9 @@ class SonarClient:
                                "comparador": c.get("comparator")} for c in d.get("conditions", [])]}
 
     def issues_abertas(self, projeto: str, branch: str | None) -> dict:
-        p = {"componentKeys": projeto, "resolved": "false", "ps": 1, "facets": "severities,types",
-             "organization": self.organizacao}
+        # Sem ``organization``: junto com ``componentKeys`` o SonarCloud devolve total 0 mesmo havendo
+        # issues abertas (o CLI, com 70 violações, aparecia com 0). A chave do projeto já identifica a organização.
+        p = {"componentKeys": projeto, "resolved": "false", "ps": 1, "facets": "severities,types"}
         if branch:
             p["branch"] = branch
         d = self.get("api/issues/search", p)
@@ -162,6 +164,30 @@ class SonarClient:
                    for f in d.get("facets", [])}
         return {"total": d.get("total", (d.get("paging") or {}).get("total")),
                 "severidades": facetas.get("severities", {}), "tipos": facetas.get("types", {})}
+
+    def issues_graves(self, projeto: str, branch: str | None, max_paginas: int = 10) -> list[dict]:
+        """Issues abertas BLOCKER e CRITICAL, uma por registro: regra, arquivo, linha, severidade e tipo.
+        Inclui arquivos de teste (qualifier ``UTS``), onde o Sonar também aponta violações."""
+        saida, pagina = [], 1
+        while pagina <= max_paginas:
+            p = {"componentKeys": projeto, "resolved": "false", "severities": "BLOCKER,CRITICAL",
+                 "ps": 500, "p": pagina}
+            if branch:
+                p["branch"] = branch
+            d = self.get("api/issues/search", p)
+            issues = d.get("issues") or []
+            qualificadores = {c.get("key"): c.get("qualifier") for c in d.get("components") or []}
+            for i in issues:
+                comp = i.get("component") or ""
+                saida.append({"regra": i.get("rule"), "severidade": i.get("severity"), "tipo": i.get("type"),
+                              "arquivo": comp.split(":", 1)[1] if ":" in comp else comp,
+                              "qualifier": qualificadores.get(comp), "linha": i.get("line"),
+                              "mensagem": i.get("message")})
+            total = (d.get("paging") or {}).get("total", d.get("total", 0))
+            if pagina * 500 >= total or not issues:
+                break
+            pagina += 1
+        return saida
 
 
     def arquivos(self, projeto: str, branch: str | None, max_paginas: int = 20) -> dict:
@@ -243,6 +269,10 @@ def coletar(cliente: SonarClient, projetos: list[str], branch: str | None, busca
             if not registro["quality_gate"].get("status") and status_gate:
                 registro["quality_gate"]["status"] = status_gate
             registro["issues"] = cliente.issues_abertas(chave, b)
+            try:
+                registro["issues"]["graves"] = cliente.issues_graves(chave, b)
+            except SonarError as erro:   # sem a lista, os totais continuam valendo
+                avisos.append(f"{repo}: lista de issues BLOCKER/CRITICAL indisponível ({erro})")
             try:
                 registro["arquivos"] = cliente.arquivos(chave, b)
             except SonarError as erro:   # sem a árvore, o resto do projeto continua valendo
