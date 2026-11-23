@@ -477,7 +477,7 @@ QRAPIDS["plano"]["pesos_fatores"] = {indicador: None for indicador in QRAPIDS_AV
 METAS_QRAPIDS = {
     "metricas": QRAPIDS["plano"]["metas"],
     "piso_r2": {"product_quality": .993, "blocking": .929, "process_performance": .400,
-                "product_readiness": .844},
+                "product_readiness": .850},
     "por_repo": {
         "complexity": {"Core": 1., "Parser": 1., "Service": 1., "CLI": 1., "AI": 1.,
                        "Front": .986, "Plugin": 1., "Action": 1.},
