@@ -143,6 +143,7 @@ const sidebars: SidebarsConfig = {
         "metricas/metricas",
         "metricas/guia-dashboard",
         "metricas/modelo-de-gestao",
+        "metricas/adequacao-funcional",
       ],
     },
     {
