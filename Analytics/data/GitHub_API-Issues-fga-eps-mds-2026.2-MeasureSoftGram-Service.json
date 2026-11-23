@@ -758,7 +758,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -784,10 +784,10 @@
             }
         ],
         "milestone": null,
-        "comments": 1,
+        "comments": 2,
         "created_at": "2026-11-17T00:27:51Z",
-        "updated_at": "2026-11-23T02:26:37Z",
-        "closed_at": null,
+        "updated_at": "2026-11-23T03:14:53Z",
+        "closed_at": "2026-11-23T03:14:53Z",
         "assignee": {
             "login": "thegm445",
             "id": 110239666,
@@ -819,10 +819,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/110",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/110.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/110.patch",
-            "merged_at": null
+            "merged_at": "2026-11-23T03:14:53Z"
         },
         "body": "Parte de fga-eps-mds/2026.2-MeasureSoftGram-DOC#262.\n\n| Arquivo | Antes | Depois |\n| --- | --- | --- |\n| `src/utils/mocks.py`, `src/utils/utils.py`, `src/utils/decorators.py` | 0% | removidos: nenhum m\u00f3dulo importa esses arquivos |\n| `src/metrics/models.py` | 47,5% | 100% |\n| `src/measures/models.py` | 56,1% | 100% |\n| `src/characteristics/models.py` | 58,8% | 100% |\n\n`config/asgi.py` e `config/wsgi.py` ficam como est\u00e3o: pela #262, arquivo de bootstrap s\u00f3 sai da medi\u00e7\u00e3o com decis\u00e3o do time.\n\nTestes: `make test-cov` \u2192 515 passed.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
-        "closed_by": null,
+        "closed_by": {
+            "login": "thegm445",
+            "id": 110239666,
+            "node_id": "U_kgDOBpIfsg",
+            "avatar_url": "https://avatars.githubusercontent.com/u/110239666?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/thegm445",
+            "html_url": "https://github.com/thegm445",
+            "followers_url": "https://api.github.com/users/thegm445/followers",
+            "following_url": "https://api.github.com/users/thegm445/following{/other_user}",
+            "gists_url": "https://api.github.com/users/thegm445/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/thegm445/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/thegm445/subscriptions",
+            "organizations_url": "https://api.github.com/users/thegm445/orgs",
+            "repos_url": "https://api.github.com/users/thegm445/repos",
+            "events_url": "https://api.github.com/users/thegm445/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/thegm445/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/110/reactions",
             "total_count": 0,
