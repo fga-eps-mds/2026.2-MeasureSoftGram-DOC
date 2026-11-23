@@ -181,6 +181,27 @@ class ClienteTest(unittest.TestCase):
     def test_sem_snapshot_tabelas_vazias(self):
         self.assertTrue(all(df.empty for df in sn.snapshot_para_tabelas(None).values()))
 
+    def test_cobertura_de_linha_e_de_ramo_por_projeto_e_por_arquivo(self):
+        # #253: sem esses dois campos não dá para recalcular a linha de base da M5
+        cob = ("line_coverage", "branch_coverage")
+        t = Transporte({
+            "api/measures/component": lambda p: api.Resposta(200, {"component": {"measures": [
+                {"metric": m, "value": "80"} for m in p["metricKeys"].split(",") if m in cob]}}),
+            "api/measures/search_history": api.Resposta(200, {"measures": []}),
+            "api/qualitygates/project_status": api.Resposta(200, {"projectStatus": {}}),
+            "api/issues/search": api.Resposta(200, {"total": 0}),
+            "api/measures/component_tree": lambda p: api.Resposta(200, {"paging": {"total": 1}, "components": [
+                {"key": "org_Core:tests/t.py", "path": "tests/t.py", "qualifier": "UTS", "measures": [
+                    {"metric": m, "value": "50"} for m in p["metricKeys"].split(",") if m in cob]}]}),
+        })
+        c = api.SonarClient(transporte=t, dormir=lambda s: None)
+        p = api.coletar(c, ["org_Core"], "develop", log=lambda m: None)["projetos"][0]
+        self.assertEqual({m: p["medidas"].get(m) for m in cob}, {m: "80" for m in cob})
+        arq = p["arquivos"]
+        linha = dict(zip(arq["metricas"], arq["linhas"][0][3:]))
+        self.assertEqual({m: linha.get(m) for m in cob}, {m: 50.0 for m in cob})
+        self.assertTrue(set(cob) <= set(api.METRICAS_HISTORICO))
+
 
 if __name__ == "__main__":
     unittest.main()
