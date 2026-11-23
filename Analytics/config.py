@@ -153,6 +153,9 @@ QRAPIDS = {
     # arquivo, então o filtro é pelo nome; os caminhos entram porque o GitHub usa o caminho como nome quando o
     # arquivo do workflow falha ao carregar. Lista vazia = todos os workflows.
     "workflows_build": ["Rodar Testes", "Testes", ".github/workflows/test.yml", ".github/workflows/tests.yml"],
+    # Branches fora do build (D7): as execuções dos PRs do Dependabot testam a atualização do bot, não a
+    # integração do time; o push na develop depois do merge continua contando.
+    "branches_fora_do_build": ["dependabot/"],
     # pesos do notebook (pm = métrica, psc = fator, pc = aspecto)
     "pesos": {
         "complexidade": 0.33, "comentarios": 0.33, "duplicacao": 0.33,          # → Qualidade do código
