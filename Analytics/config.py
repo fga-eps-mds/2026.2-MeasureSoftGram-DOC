@@ -164,7 +164,7 @@ QRAPIDS = {
     # média das metas das métricas e a do indicador é a fórmula aplicada às metas dos fatores, truncada em 2 casas.
     "plano": {
         "metas": {
-            "complexity": 0.88, "duplication": 0.99,                     # M1, M2
+            "complexity": 0.99, "duplication": 0.99,                     # M1, M2
             "test_success": 1.00, "test_coverage": 0.90,                 # M3, M5
             "non_blocking_files": 1.00, "well_defined_issues": 0.95,     # M6, M7
             "team_throughput": 0.60, "build_stability": 0.95,            # M9, M10
@@ -239,7 +239,7 @@ QRAPIDS_METRICAS = {'complexity': ('M1', 'Complexity', 'code_quality', 'Incluíd
  'timely_feature_delivery': ('—', 'Timely feature delivery', 'development_speed', 'Monitorada'),
  'non_issue_commits': ('—', 'Non-issue component commit', 'development_speed', 'Monitorada')}
 
-QRAPIDS_TIPO_META = {'complexity': 'Relativa por repositório',
+QRAPIDS_TIPO_META = {'complexity': 'Relativa (não regredir)',
  'duplication': 'Relativa (não regredir)',
  'test_success': 'Absoluta (8 de 8 repositórios)',
  'test_coverage': 'Absoluta + piso 0,80 por repositório',
@@ -473,11 +473,11 @@ METAS_QUALIDADE_URL = "https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/
 QRAPIDS["plano"]["pesos_fatores"] = {indicador: None for indicador in QRAPIDS_AVALIADOS}
 METAS_QRAPIDS = {
     "metricas": QRAPIDS["plano"]["metas"],
-    "piso_r2": {"product_quality": .908, "blocking": .929, "process_performance": .400,
-                "product_readiness": .815},
+    "piso_r2": {"product_quality": .993, "blocking": .929, "process_performance": .400,
+                "product_readiness": .844},
     "por_repo": {
-        "complexity": {"Core": .64, "Parser": .83, "Service": .77, "CLI": .89, "AI": 1.,
-                       "Front": .95, "Plugin": .94, "Action": 1.},
+        "complexity": {"Core": 1., "Parser": 1., "Service": 1., "CLI": 1., "AI": 1.,
+                       "Front": .986, "Plugin": 1., "Action": 1.},
         "duplication": {"Core": 1., "Parser": 1., "Service": .989, "CLI": 1., "AI": 1.,
                        "Front": .986, "Plugin": 1., "Action": 1.},
         "test_coverage": {"Core": .86, "Action": .86, "Parser": .83, "Service": .90,
@@ -504,7 +504,7 @@ QRAPIDS_DEFINICOES = {'complexity': {'chave': 'complexity',
                 'indicadores': ['product_quality', 'product_readiness'],
                 'fonte': '`complexity` e `functions` de cada arquivo · SonarCloud',
                 'formula': 'Arquivo não complexo: complexidade ÷ funções < 10. Valor = não complexos ÷ '
-                           'arquivos',
+                           'arquivos com função',
                 'justificativa': 'Mede o custo de entender e alterar o código, núcleo da Manutenibilidade. '
                                  'Funciona como guarda contra regressão enquanto o produto cresce. A fórmula '
                                  'está no modelo de 2019 e no notebook. Tem viés de linguagem, então só é '

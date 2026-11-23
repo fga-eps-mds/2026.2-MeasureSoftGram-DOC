@@ -158,10 +158,10 @@ class ModeloCompletoTest(unittest.TestCase):
 
     def test_metas_seguem_a_regra_do_metas_mdx(self):
         mf, mi = qrapids.metas_agregadas()
-        self.assertAlmostEqual(mf["code_quality"], 0.935)
+        self.assertAlmostEqual(mf["code_quality"], 0.99)
         self.assertAlmostEqual(mf["testing_status"], 0.95)
-        self.assertEqual(mi, {"product_quality": 0.93, "blocking": 0.96, "process_performance": 0.60,
-                              "product_readiness": 0.89})                           # truncadas, não arredondadas
+        self.assertEqual(mi, {"product_quality": 0.99, "blocking": 0.96, "process_performance": 0.60,
+                              "product_readiness": 0.91})                           # truncadas, não arredondadas
         self.assertEqual(qrapids.truncar(0.9667), 0.96)
         self.assertEqual(qrapids.truncar(0.895), 0.89)
 

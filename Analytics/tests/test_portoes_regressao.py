@@ -103,6 +103,18 @@ class PortoesRegressaoTest(unittest.TestCase):
         self.assertEqual(set(r.itens['linguagem']), {'py'})
         self.assertEqual(r.valor, .5)
 
+    def test_m1_tira_da_base_arquivo_sem_funcao(self):
+        comp = pd.DataFrame([
+            {'componente': f, 'tipo': 'FIL', 'linguagem': 'py', 'metrica': m, 'valor': v}
+            for f, (cx, fn) in {'a.py': (10, 2), 'b.py': (40, 2), 'apps.py': (0, 0), 'conf.py': (1, 0)}.items()
+            for m, v in zip(['complexity', 'functions', 'comment_lines_density', 'duplicated_lines_density',
+                             'coverage', 'ncloc'], [cx, fn, 15, 0, 90, 100])])
+        av = {CORE: {'avaliacao': q.nq.avaliar(comp, CORE), 'coleta': pd.Timestamp('2026-11-07'), 'arquivo': 'x.json'}}
+        self.assertEqual(av[CORE]['avaliacao']['metricas']['complexidade']['valor'], .25)   # notebook intacto
+        r = q._sonar_media('complexidade', q._m1_arquivos_com_funcao(av), resultado('complexity'))
+        self.assertEqual((r.valor, r.por_repo.loc[0, 'denominador'], r.por_repo.loc[0, 'fora_da_base']), (.5, 2, 2))
+        self.assertEqual(set(r.itens['componente']), {'a.py', 'b.py'})
+
     def test_catalogo_completo_e_links_estaveis(self):
         self.assertEqual(len(q.catalogo()), 44)
         self.assertEqual(len(config.QRAPIDS_DEFINICOES), 10)

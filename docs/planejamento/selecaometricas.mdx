@@ -54,7 +54,7 @@ As 10 métricas abaixo entram na agregação, e M1 e M2 também alimentam Produc
 
 | Fator · subcaracterística | Métrica | Dado bruto · fonte | Métrica avaliada (cálculo) | Justificativa da inclusão | A confirmar na coleta corrigida |
 |---|---|---|---|---|---|
-| Code Quality · Manutenibilidade › Analisabilidade, Modificabilidade | <span id="m1">**M1**</span> Complexity | `complexity` e `functions` de cada arquivo · SonarCloud | Arquivo não complexo: complexidade ÷ funções < 10. Valor = não complexos ÷ arquivos | Mede o custo de entender e alterar o código, núcleo da Manutenibilidade. Funciona como guarda contra regressão enquanto o produto cresce. A fórmula está no modelo de 2019 e no notebook. Tem viés de linguagem, então só é comparada dentro do mesmo grupo (Python ou TS). | Valor por repositório e quantos arquivos ficam fora da base de cálculo |
+| Code Quality · Manutenibilidade › Analisabilidade, Modificabilidade | <span id="m1">**M1**</span> Complexity | `complexity` e `functions` de cada arquivo · SonarCloud | Arquivo não complexo: complexidade ÷ funções < 10. Valor = não complexos ÷ arquivos com função; arquivo sem função não tem complexidade por função e fica fora da base ([D6](/docs/planejamento/decisoes#d6-arquivo-sem-função-fica-fora-da-m1)) | Mede o custo de entender e alterar o código, núcleo da Manutenibilidade. Funciona como guarda contra regressão enquanto o produto cresce. A fórmula está no modelo de 2019 e no notebook. Tem viés de linguagem, então só é comparada dentro do mesmo grupo (Python ou TS). | Valor por repositório e quantos arquivos ficam fora da base de cálculo |
 | Code Quality · Manutenibilidade › Analisabilidade, Modificabilidade | <span id="m2">**M2**</span> Duplication | `duplicated_lines_density` de cada arquivo · SonarCloud | Arquivo sem duplicação: densidade < 5%. Valor = sem duplicação ÷ arquivos | Código duplicado multiplica o esforço de cada mudança e espalha defeitos. O risco é maior em repositórios de interface, onde componentes são copiados e adaptados. A correção é feita por refatoração dentro do semestre. A fórmula está no modelo e no notebook. | Valor por repositório e quais arquivos passam de 5% |
 
 ### Blocking — características trabalhadas: Manutenibilidade e Confiabilidade
@@ -201,3 +201,4 @@ Q-RAPIDS CONSORTIUM. **Q-Rapids Quality Model (April 2019)**. [*S. l.*]: Q-Rapid
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
 | 1.0 | 08/11/2026 | Criacao do documento | [@storch7](https://github.com/storch7) |  |
+| 1.1 | 22/11/2026 | M1: arquivo sem função fica fora da base (D6) | [@gusrberto](https://github.com/gusrberto) |  |
