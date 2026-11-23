@@ -182,5 +182,9 @@ relatórios em AI/Plugin. Em 10/11, os pipelines públicos da `develop` desses d
 geram e declaram os relatórios de testes; confirmar sua importação depende de nova análise e coleta
 do Sonar. Não foram necessárias alterações adicionais nesses dois repositórios. A habilitação de cobertura de ramos muda a base de comparação: depois dela, coletar
 novamente antes de interpretar a evolução de M5. O coletor da API passa a pedir `line_coverage` e
-`branch_coverage` separadamente, sem preencher dados ausentes nem reescrever snapshots antigos. O Dev Container instala as dependências de
+`branch_coverage` separadamente, sem preencher dados ausentes nem reescrever snapshots antigos. A consulta
+de issues (`api/issues/search`) não envia `organization`: junto com `componentKeys`, esse parâmetro fazia o
+SonarCloud devolver total 0 em todos os repositórios. Snapshots até 23/11 têm `issues.total` zerado e devem
+usar `violations` no lugar. Cada projeto também guarda em `issues.graves` as issues BLOCKER e CRITICAL abertas,
+com regra, arquivo (inclusive de teste, qualifier `UTS`), linha e mensagem. O Dev Container instala as dependências de
 `Analytics/requirements.txt` e do lockfile npm e abre o Streamlit com as proteções padrão.

@@ -115,6 +115,47 @@ class ClienteTest(unittest.TestCase):
         self.assertEqual(len(arq["linhas"]), 1)
         self.assertEqual(arq["linhas"][0][3:], [1.0] * len(api.METRICAS_ARQUIVO))
 
+    def test_issues_abertas_sem_organization(self):
+        # com ``organization`` + ``componentKeys`` o SonarCloud devolve total 0 (bug da #254)
+        t = Transporte({"api/issues/search": api.Resposta(200, {"total": 70, "facets": []})})
+        r = api.SonarClient(transporte=t, dormir=lambda s: None).issues_abertas("org_CLI", "develop")
+        self.assertEqual(r["total"], 70)
+        params = t.chamadas[0][1]
+        self.assertNotIn("organization", params)
+        self.assertEqual((params["resolved"], params["branch"]), ("false", "develop"))
+
+    def test_issues_graves_com_regra_arquivo_linha_e_testes(self):
+        def busca(p):
+            self.assertEqual(p["severities"], "BLOCKER,CRITICAL")
+            self.assertNotIn("organization", p)
+            if p["p"] == 1:
+                return api.Resposta(200, {"paging": {"total": 501}, "issues": [
+                    {"rule": "python:S3776", "severity": "CRITICAL", "type": "CODE_SMELL",
+                     "component": "org_Plugin:src/a.py", "line": 12, "message": "Complexidade"}],
+                    "components": [{"key": "org_Plugin:src/a.py", "qualifier": "FIL"}]})
+            return api.Resposta(200, {"paging": {"total": 501}, "issues": [
+                {"rule": "python:S2699", "severity": "BLOCKER", "type": "CODE_SMELL",
+                 "component": "org_Plugin:tests/test_a.py", "line": 3}],
+                "components": [{"key": "org_Plugin:tests/test_a.py", "qualifier": "UTS"}]})
+        t = Transporte({"api/issues/search": busca})
+        graves = api.SonarClient(transporte=t, dormir=lambda s: None).issues_graves("org_Plugin", "develop")
+        self.assertEqual(len(t.chamadas), 2)                        # 501 issues = 2 páginas
+        self.assertEqual([(g["regra"], g["arquivo"], g["linha"], g["qualifier"]) for g in graves],
+                         [("python:S3776", "src/a.py", 12, "FIL"), ("python:S2699", "tests/test_a.py", 3, "UTS")])
+        self.assertEqual(graves[1]["severidade"], "BLOCKER")
+
+    def test_falha_na_lista_de_graves_mantem_os_totais(self):
+        r = respostas_ok()
+        r["api/issues/search"] = lambda p: api.Resposta(400, {"errors": [{"msg": "falhou"}]}) \
+            if "severities" in p else api.Resposta(200, {"total": 7, "facets": []})
+        c = api.SonarClient(transporte=Transporte(r), dormir=lambda s: None)
+        snap = api.coletar(c, ["org_Core"], None, log=lambda m: None)
+        p = snap["projetos"][0]
+        self.assertNotIn("erro", p)
+        self.assertEqual(p["issues"]["total"], 7)
+        self.assertNotIn("graves", p["issues"])
+        self.assertTrue(any("BLOCKER/CRITICAL" in a for a in snap["avisos"]))
+
     def test_erro_de_um_projeto_nao_derruba_os_outros(self):
         r = respostas_ok()
         r["api/measures/component"] = lambda p: api.Resposta(404, {"errors": [{"msg": "Component key not found"}]}) \
