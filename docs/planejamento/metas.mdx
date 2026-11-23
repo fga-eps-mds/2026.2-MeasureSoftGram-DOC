@@ -13,10 +13,10 @@
 5. [Cálculo dos fatores](#cálculo-dos-fatores)
 6. [Cálculo dos indicadores](#cálculo-dos-indicadores)
 7. [Resumo das metas](#resumo-das-metas)
-8. [Product Quality — meta ≥ 0,93](#product-quality--meta--093)
+8. [Product Quality — meta ≥ 0,99](#product-quality--meta--099)
 9. [Blocking — meta ≥ 0,96](#blocking--meta--096)
 10. [Process Performance — meta ≥ 0,60](#process-performance--meta--060)
-11. [Product Readiness — meta ≥ 0,89](#product-readiness--meta--089)
+11. [Product Readiness — meta ≥ 0,91](#product-readiness--meta--091)
 12. [Portões obrigatórios](#portões-obrigatórios)
 13. [Limitações e pendências](#limitações-e-pendências)
 14. [Referências](#referências)
@@ -133,7 +133,7 @@ $$
 
 | Fator | R1 | R2 | Atual | Meta R3 |
 |---|---|---|---|---|
-| Code Quality (CQ) | (0,807 + 0,980)/2 = 0,894 | (0,828 + 0,988)/2 = 0,908 | (0,835 + 0,997)/2 = 0,916 | (0,88 + 0,99)/2 = **0,935** |
+| Code Quality (CQ) | (0,999 + 0,980)/2 = 0,990 | (0,998 + 0,988)/2 = 0,993 | (0,998 + 0,997)/2 = 0,998 | (0,99 + 0,99)/2 = **0,99** |
 | Quality Issues' Specification (QIS) | 0,838 | 0,932 | 0,931 | **0,95** |
 | Testing Status (TS) | (1,00 + 0,807)/2 = 0,904 | (1,00 + 0,855)/2 = 0,927 | (1,00 + 0,862)/2 = 0,931 | (1,00 + 0,90)/2 = **0,95** |
 | Blocking Code (BC) | sem coleta | sem coleta | 0,938 | **1,00** |
@@ -158,10 +158,10 @@ $$
 
 | Indicador | R1 | R2 (piso) | Atual (07/11) | Meta R3 |
 |---|---|---|---|---|
-| Product Quality | 0,894 | 0,908 | 0,916 | 0,935 → **0,93** |
+| Product Quality | 0,990 | 0,993 | 0,998 | **0,99** |
 | Blocking | (0,838 + 0,904)/2 = 0,871¹ | (0,932 + 0,927)/2 = 0,929¹ | (0,931 + 0,931 + 0,938)/3 = 0,933 | (0,95 + 0,95 + 1,00)/3 = 0,967 → **0,96** |
 | Process Performance | 0,391 | 0,400 | 0,222 | **0,60** |
-| Product Readiness | (0,766 + 0,612 + 0,894)/3 = 0,757 | (0,890 + 0,648 + 0,908)/3 = 0,815 | (0,939 + 0,303 + 0,916)/3 = 0,719 | (0,95 + 0,80 + 0,935)/3 = 0,895 → **0,89** |
+| Product Readiness | (0,766 + 0,612 + 0,990)/3 = 0,789 | (0,890 + 0,648 + 0,993)/3 = 0,844 | (0,939 + 0,303 + 0,998)/3 = 0,747 | (0,95 + 0,80 + 0,99)/3 = 0,913 → **0,91** |
 
 ¹ Na R1 e na R2, Blocking Code não tinha coleta por arquivo, então $n = 2$. A partir da R3, $n = 3$. Por isso o piso de Blocking (0,929) e o valor atual não têm exatamente a mesma base.
 
@@ -171,18 +171,18 @@ Se o time definir pesos diferentes de $1/n$, basta trocar os pesos nesta tabela.
 
 ## Resumo das metas
 
-Em 07/11, nenhum dos quatro indicadores está na meta. Product Quality e Blocking estão entre o piso e a meta. Process Performance está abaixo do piso. Product Readiness também está, mas só vale comparar quando a release fechar.
+Em 07/11, nenhum dos quatro indicadores está na meta. Product Quality já passa da meta no valor, mas reprova no portão de duplicação global (Plugin 3,9%). Blocking está entre o piso e a meta. Process Performance está abaixo do piso. Product Readiness também está, mas só vale comparar quando a release fechar.
 
 | Indicador | Fatores avaliados | R1 | R2 (piso) | Atual (07/11) | Meta R3 | Situação | Portões |
 |---|---|---|---|---|---|---|---|
-| Product Quality | 1 de 3 | 0,89 | 0,91 | 0,92 | ≥ 0,93 | 🟡 Em evolução | Duplicação global ≤ 3% |
+| Product Quality | 1 de 3 | 0,990 | 0,993 | 0,998 | ≥ 0,99 | 🟡 Em evolução (portão) | Duplicação global ≤ 3% |
 | Blocking | 3 de 3 | 0,87 | 0,93 | 0,93 | ≥ 0,96 | 🟡 Em evolução | Cobertura global ≥ 90%; zero blocker/critical; relatório de testes em 8/8 |
 | Process Performance | 1 de 4 na média (+ M8 como portão) | 0,39 | 0,40 | 0,22 | ≥ 0,60 | 🔴 Abaixo do piso | Mediana do `test.yml` ≤ 5 min |
-| Product Readiness | 3 de 4 | 0,76 | 0,82 | 0,72 (parcial) | ≥ 0,89 | 🔴 Abaixo do piso (release em curso) | Duplicação global ≤ 3% (via Code Quality) |
+| Product Readiness | 3 de 4 | 0,79 | 0,84 | 0,75 (parcial) | ≥ 0,91 | 🔴 Abaixo do piso (release em curso) | Duplicação global ≤ 3% (via Code Quality) |
 
 | Métrica | Fator · indicador | Tipo de meta | R2 | Atual | Meta R3 |
 |---|---|---|---|---|---|
-| M1 Complexity | Code Quality · PQ e PR | Relativa por repositório | 0,828 | 0,835 | ≥ 0,88 |
+| M1 Complexity | Code Quality · PQ e PR | Relativa (não regredir) | 0,998 | 0,998 | ≥ 0,99 |
 | M2 Duplication | Code Quality · PQ e PR | Relativa (não regredir) | 0,988 | 0,997 | ≥ 0,99 |
 | M3 Test success | Testing Status · Blocking | Absoluta | 1,00 (6 repos) | 1,00 (6 repos) | 1,00 em 8/8 repos |
 | M5 Test coverage | Testing Status · Blocking | Absoluta + piso por repo | 0,855 | 0,862 | ≥ 0,90; ≥ 0,80 por repo |
@@ -197,35 +197,35 @@ Em 07/11, nenhum dos quatro indicadores está na meta. Product Quality e Blockin
 
 <span id="indicador-product_quality"></span>
 
-## Product Quality — meta ≥ 0,93
+## Product Quality — meta ≥ 0,99
 
-A meta de Product Quality é **0,93**, e o valor atual é 0,92. Só Code Quality tem métrica incluída: Software Stability e Software Usage não têm dado no projeto. Por isso PQ = Code Quality = (M1 + M2) ÷ 2.
+A meta de Product Quality é **0,99**, e o valor atual é 0,998. Só Code Quality tem métrica incluída: Software Stability e Software Usage não têm dado no projeto. Por isso PQ = Code Quality = (M1 + M2) ÷ 2.
 
 | Nível | Item | R1 | R2 | Atual | Meta R3 |
 |---|---|---|---|---|---|
-| Métrica | M1 Complexity | 0,807 | 0,828 | 0,835 | ≥ 0,88 |
+| Métrica | M1 Complexity | 0,999 | 0,998 | 0,998 | ≥ 0,99 |
 | Métrica | M2 Duplication | 0,980 | 0,988 | 0,997 | ≥ 0,99 |
-| Fator | Code Quality | 0,894 | 0,908 | 0,916 | ≥ 0,93 |
-| **Indicador** | **Product Quality** | **0,89** | **0,91** | **0,92** | **≥ 0,93** |
+| Fator | Code Quality | 0,990 | 0,993 | 0,998 | ≥ 0,99 |
+| **Indicador** | **Product Quality** | **0,990** | **0,993** | **0,998** | **≥ 0,99** |
 
-### M1 Complexity — meta ≥ 0,88
+### M1 Complexity — meta ≥ 0,99
 
-M1 = arquivos com complexidade ÷ funções < 10, divididos pelo total de arquivos. A média é calculada entre os 8 repositórios.
+M1 = arquivos com complexidade ÷ funções < 10, divididos pelos arquivos com função. Arquivo sem função (`apps.py`, `admin.py`, `__init__.py`, `models.py`, `settings.py`, serializers) não tem complexidade por função e fica fora da base ([D6](/docs/planejamento/decisoes#d6-arquivo-sem-função-fica-fora-da-m1)). A média é calculada entre os 8 repositórios.
 
-| Repositório | Linguagem | R2 | Atual | Meta R3 | Ação |
+| Repositório | Linguagem | R2 | Atual | Fora da base (sem função) | Meta R3 |
 |---|---|---|---|---|---|
-| Core | Python | 0,50 | 7/14 = 0,50 | ≥ 9/14 = 0,64 | Refatorar 2 arquivos |
-| Parser | Python | 0,67 | 4/6 = 0,67 | ≥ 5/6 = 0,83 | Refatorar 1 arquivo |
-| Service | Python | 0,72 | 67/93 = 0,72 | ≥ 72/93 = 0,77 | Refatorar 5 arquivos |
-| CLI | Python | 0,89 | 17/19 = 0,89 | ≥ 0,89 | Manter |
-| AI | Python | 1,00 | 13/13 = 1,00 | 1,00 | Manter |
-| Front | TypeScript | 0,95 | 140/147 = 0,95 | ≥ 0,95 | Manter |
-| Plugin | TypeScript | 0,89 | 34/36 = 0,94 | ≥ 0,94 | Manter o ganho |
-| Action | TypeScript | 1,00 | 7/7 = 1,00 | 1,00 | Manter |
+| Core | Python | 1,00 | 7/7 = 1,00 | 7 | 1,00 |
+| Parser | Python | 1,00 | 4/4 = 1,00 | 2 | 1,00 |
+| Service | Python | 1,00 | 67/67 = 1,00 | 26 | 1,00 |
+| CLI | Python | 1,00 | 17/17 = 1,00 | 2 | 1,00 |
+| AI | Python | 1,00 | 13/13 = 1,00 | 0 | 1,00 |
+| Front | TypeScript | 0,986 | 140/142 = 0,986 | 5 | ≥ 0,986 |
+| Plugin | TypeScript | 1,00 | 34/34 = 1,00 | 2 | 1,00 |
+| Action | TypeScript | 1,00 | 7/7 = 1,00 | 0 | 1,00 |
 
-**Justificativa.** O plano manda usar meta relativa à linha de base de cada repositório, porque em TypeScript cada callback conta como função e reduz a razão (viés médio). Por isso a meta não compara Python com TypeScript. A regra é: nenhum repositório abaixo do próprio valor, e os três abaixo de 0,80 sobem.
+Pela regra do notebook, o arquivo sem função dá 0 ÷ 0 e conta como complexo. Com ela, a M1 era 0,807 (R1), 0,828 (R2) e 0,835 (atual), e os arquivos "complexos" de Core, Parser e Service eram todos arquivos sem função. Só 2 arquivos do projeto passam do limiar: `src/shared/utils/isSameGithubOrg.ts` e `src/shared/components/MetamodelTreeChart/MetamodelNodeModal.tsx`, no Front.
 
-Os incrementos foram dimensionados em arquivos, para caber em 4 sprints. Core e Parser são bibliotecas publicadas com poucos arquivos, então 1 a 2 arquivos refatorados já mudam bastante a razão. No Service, 5 dos 26 arquivos complexos (cerca de 20%) é o que cabe sem competir com as entregas funcionais da R3. A meta agregada (0,88) é a média dessas metas por repositório, e não um número escolhido à parte.
+**Justificativa.** A métrica já está perto do teto, como a M2. A meta é não regredir em nenhum repositório, e 0,99 é o menor valor agregado compatível com isso. O plano manda usar meta relativa porque em TypeScript cada callback conta como função (viés médio). Com a regra corrigida, só o Front fica abaixo de 1,00, e refatorar os 2 arquivos dele é opcional.
 
 ### M2 Duplication — meta ≥ 0,99
 
@@ -233,9 +233,9 @@ M2 = arquivos com densidade de duplicação < 5%, divididos pelo total de arquiv
 
 **Justificativa.** O plano manda usar meta relativa, porque código declarativo (JSX, tipos, serializers) repete estrutura. A métrica já está perto do teto, então pedir 1,00 em todos os repositórios não muda nenhuma decisão do time. A meta é não regredir em nenhum repositório, e 0,99 é o menor valor agregado compatível com isso. O risco real de duplicação está no portão global da disciplina (≤ 3%), que o Plugin reprova com 3,9%. Ver [Portões obrigatórios](#portões-obrigatórios).
 
-### Indicador — meta ≥ 0,93
+### Indicador — meta ≥ 0,99
 
-(0,880 + 0,990) ÷ 2 = 0,935, truncado para **0,93**. O piso é 0,91 (R2).
+(0,99 + 0,99) ÷ 2 = **0,99**. O piso é 0,99 (R2). Com as duas métricas perto do teto, o que decide o indicador é o portão de duplicação global.
 
 ---
 
@@ -367,9 +367,9 @@ Com um único fator na média, a meta do indicador é a de M9. O piso é 0,40 (R
 
 <span id="indicador-product_readiness"></span>
 
-## Product Readiness — meta ≥ 0,89
+## Product Readiness — meta ≥ 0,91
 
-A meta de Product Readiness é **0,89**. O valor atual, 0,72, é parcial, porque a R3 está no começo. Três dos quatro fatores são avaliados: PR = (Product Stability + Activities Completion + Code Quality) ÷ 3. Code Quality é reaproveitado de Product Quality, com os mesmos valores e a mesma meta, porque o modelo de 2019 o coloca também neste indicador.
+A meta de Product Readiness é **0,91**. O valor atual, 0,75, é parcial, porque a R3 está no começo. Três dos quatro fatores são avaliados: PR = (Product Stability + Activities Completion + Code Quality) ÷ 3. Code Quality é reaproveitado de Product Quality, com os mesmos valores e a mesma meta, porque o modelo de 2019 o coloca também neste indicador.
 
 | Nível | Item | R1 | R2 | Atual | Meta R3 |
 |---|---|---|---|---|---|
@@ -377,8 +377,8 @@ A meta de Product Readiness é **0,89**. O valor atual, 0,72, é parcial, porque
 | Fator | Product Stability | 0,766 | 0,890 | 0,939 | ≥ 0,95 |
 | Métrica | DT Development task completion | 0,612 | 0,648 | 0,303 (parcial) | ≥ 0,80 |
 | Fator | Activities Completion | 0,612 | 0,648 | 0,303 | ≥ 0,80 |
-| Fator | Code Quality (M1, M2) | 0,894 | 0,908 | 0,916 | ≥ 0,93 |
-| **Indicador** | **Product Readiness** | **0,76** | **0,82** | **0,72 (parcial)** | **≥ 0,89** |
+| Fator | Code Quality (M1, M2) | 0,990 | 0,993 | 0,998 | ≥ 0,99 |
+| **Indicador** | **Product Readiness** | **0,79** | **0,84** | **0,75 (parcial)** | **≥ 0,91** |
 
 ### M10 Build stability — meta ≥ 0,95 e ≥ 0,90 por repositório
 
@@ -403,9 +403,9 @@ DT = Tasks e Sub-tasks das sprints da release fechadas até a data da release ÷
 
 **Justificativa.** 0,80 é a meta de conclusão (`META_TAXA_CONCLUSAO = 80`) que o time já usa no painel de gestão ágil. Ela foi aplicada aqui ao escopo da release, para que DT e a gestão ágil cobrem o mesmo patamar. As duas releases anteriores fecharam com 0,61 e 0,65, então 0,80 pede uma melhoria real, sem exigir 100% de um escopo que muda durante a release. Para chegar a 0,80 em 30/11 faltam pelo menos 17 tarefas fechadas (27 de 33), mais as que entrarem no escopo. O valor atual é parcial por natureza: o indicador só deve ser comparado com o piso no fechamento da release.
 
-### Indicador — meta ≥ 0,89
+### Indicador — meta ≥ 0,91
 
-(0,95 + 0,80 + 0,935) ÷ 3 = 0,895, truncado para **0,89**. O piso é 0,82 (R2).
+(0,95 + 0,80 + 0,99) ÷ 3 = 0,913, truncado para **0,91**. O piso é 0,84 (R2).
 
 ---
 
@@ -466,3 +466,4 @@ Q-RAPIDS CONSORTIUM. **Q-Rapids Quality Model (April 2019)**. [*S. l.*]: Q-Rapid
 | Versão | Data | Descrição | Autor | Revisor |
 | --- | --- | --- | --- | --- |
 | 1.0 | 08/11/2026 | Criacao do documento | [@storch7](https://github.com/storch7) |  |
+| 1.1 | 22/11/2026 | M1 sem os arquivos sem função (D6): valores, meta ≥ 0,99 e metas de Code Quality, Product Quality e Product Readiness recalculadas | [@gusrberto](https://github.com/gusrberto) |  |

@@ -176,6 +176,23 @@ def avaliacoes_por_repo(ctx, f: dict, rec: dict) -> dict:
     return saida
 
 
+def _m1_arquivos_com_funcao(notas: dict) -> dict:
+    """M1: arquivo sem função não tem complexidade por função e sai da base (o notebook o conta como complexo)."""
+    saida = {}
+    for repo, n in notas.items():
+        m = n["avaliacao"]["metricas"]["complexidade"]
+        it = m["itens"]
+        base = it[it["valor"].abs() < math.inf] if not it.empty else it
+        den = len(base)
+        k = int(base["passa"].sum()) if den else 0
+        m = {**m, "valor": k / den if den else 0.0, "numerador": k, "denominador": den, "itens": base,
+             "fora_da_base": len(it) - den,
+             "zero_por_falta": m["zero_por_falta"] or (None if den else "nenhum arquivo com função")}
+        saida[repo] = {**n, "avaliacao": {**n["avaliacao"], "metricas": {**n["avaliacao"]["metricas"],
+                                                                         "complexidade": m}}}
+    return saida
+
+
 def _sonar_media(chave_nb: str, notas: dict, r: Resultado) -> Resultado:
     """Métrica do notebook como média simples dos repositórios (o detalhe por repositório vai junto)."""
     linhas, itens = [], []
@@ -186,6 +203,7 @@ def _sonar_media(chave_nb: str, notas: dict, r: Resultado) -> Resultado:
                                          coleta=n["coleta"], arquivo_coleta=n["arquivo"]))
         linhas.append({"repositorio": nq_nome(repo), "linguagem": n["avaliacao"]["linguagem"], "valor": m["valor"], "numerador": m["numerador"],
                        "denominador": m["denominador"], "zero_por_falta": m["zero_por_falta"] or "",
+                       **({"fora_da_base": m["fora_da_base"]} if "fora_da_base" in m else {}),
                        "coleta": n["coleta"], "arquivo": n["arquivo"]})
     if not linhas:
         r.situacao, r.motivo = SEM_DADO, "nenhuma coleta do pipeline até o fim do período"
@@ -324,13 +342,14 @@ def calcular(ctx, f: dict, rec: dict, ultima_sprint: bool = False) -> dict:
         return r
 
     # ── Code Quality: M1, M2 (incluídas) e Mc (monitorada) ──
-    for chave_nb, chave, desc in (
-            ("complexidade", "complexity", "arquivos abaixo do limiar de complexidade ciclomática"),
-            ("duplicacao", "duplication", "arquivos abaixo do limiar de linhas duplicadas"),
-            ("comentarios", "comments", "arquivos com densidade de comentários dentro da faixa")):
+    for chave_nb, chave, desc, notas, base in (
+            ("complexidade", "complexity", "arquivos abaixo do limiar de complexidade ciclomática",
+             _m1_arquivos_com_funcao(avs), " · arquivo sem função fica fora da base"),
+            ("duplicacao", "duplication", "arquivos abaixo do limiar de linhas duplicadas", avs, ""),
+            ("comentarios", "comments", "arquivos com densidade de comentários dentro da faixa", avs, "")):
         _, _, _, regra, formula = nq.METRICAS[chave_nb]
-        _sonar_media(chave_nb, avs, novo(chave, desc, f"{formula} · {regra}", "medidas de cada arquivo (.json do pipeline)",
-                                         "SonarCloud via metrics.yml"))
+        _sonar_media(chave_nb, notas, novo(chave, desc, f"{formula} · {regra}{base}",
+                                           "medidas de cada arquivo (.json do pipeline)", "SonarCloud via metrics.yml"))
 
     # ── Quality Issues' Specification: M7 ──
     r = novo("well_defined_issues", "issues com descrição e prazo preenchidos",
