@@ -174,6 +174,14 @@ class ModeloCompletoTest(unittest.TestCase):
         self.assertEqual(list(qrapids.runs_de_build(runs).index), [0, 1, 2])
         self.assertTrue(qrapids.runs_de_build(pd.DataFrame()).empty)
 
+    def test_execucoes_do_dependabot_nao_contam_como_build(self):
+        """D7: PR do Dependabot e o disparo no commit do dist/ ficam fora; o push na develop conta."""
+        runs = pd.DataFrame({"workflow": ["Rodar Testes"] * 4,
+                             "branch": ["develop", "dependabot/npm_and_yarn/axios-1.20.0",
+                                        "dependabot/npm_and_yarn/axios-1.20.0", None],
+                             "conclusao": ["success", "failure", "success", "failure"]})
+        self.assertEqual(list(qrapids.runs_de_build(runs).index), [0, 3])
+
 
 if __name__ == "__main__":
     unittest.main()

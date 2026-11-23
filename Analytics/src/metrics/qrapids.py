@@ -261,13 +261,16 @@ def _issues(ctx, f: dict) -> pd.DataFrame:
 
 
 def runs_de_build(runs: pd.DataFrame) -> pd.DataFrame:
-    """Execuções que contam como build: só os workflows de ``config.QRAPIDS["workflows_build"]`` e só as
-    que terminaram em sucesso ou falha (cancelada e ignorada não dizem se o build está estável nem quanto
-    ele demora). Lista de workflows vazia = todos."""
+    """Execuções que contam como build: só os workflows de ``config.QRAPIDS["workflows_build"]``, fora das
+    branches de ``config.QRAPIDS["branches_fora_do_build"]`` (D7), e só as que terminaram em sucesso ou falha
+    (cancelada e ignorada não dizem se o build está estável nem quanto ele demora). Lista de workflows vazia = todos."""
     if runs is None or runs.empty:
         return runs if runs is not None else pd.DataFrame()
     nomes = set(config.QRAPIDS.get("workflows_build") or [])
     r = runs[runs["workflow"].isin(nomes)] if nomes else runs
+    fora = tuple(config.QRAPIDS.get("branches_fora_do_build") or ())
+    if fora and "branch" in r:
+        r = r[~r["branch"].fillna("").str.startswith(fora)]
     return r[r["conclusao"].isin(["success", "failure"])]
 
 

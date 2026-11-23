@@ -138,7 +138,7 @@ $$
 | Testing Status (TS) | (1,00 + 0,807)/2 = 0,904 | (1,00 + 0,855)/2 = 0,927 | (1,00 + 0,862)/2 = 0,931 | (1,00 + 0,90)/2 = **0,95** |
 | Blocking Code (BC) | sem coleta | sem coleta | 0,938 | **1,00** |
 | Issues' Velocity (IV) | 27/69 = 0,391 | 62/155 = 0,400 | 6/27 = 0,222 (S8) | **0,60** |
-| Product Stability (PS) | 0,766 | 0,890 | 0,939 | **0,95** |
+| Product Stability (PS) | 0,798 | 0,910 | 0,939 | **0,95** |
 | Activities Completion (AC) | 30/49 = 0,612 | 35/54 = 0,648 | 10/33 = 0,303 (parcial) | **0,80** |
 
 ---
@@ -161,7 +161,7 @@ $$
 | Product Quality | 0,990 | 0,993 | 0,998 | **0,99** |
 | Blocking | (0,838 + 0,904)/2 = 0,871¹ | (0,932 + 0,927)/2 = 0,929¹ | (0,931 + 0,931 + 0,938)/3 = 0,933 | (0,95 + 0,95 + 1,00)/3 = 0,967 → **0,96** |
 | Process Performance | 0,391 | 0,400 | 0,222 | **0,60** |
-| Product Readiness | (0,766 + 0,612 + 0,990)/3 = 0,789 | (0,890 + 0,648 + 0,993)/3 = 0,844 | (0,939 + 0,303 + 0,998)/3 = 0,747 | (0,95 + 0,80 + 0,99)/3 = 0,913 → **0,91** |
+| Product Readiness | (0,798 + 0,612 + 0,990)/3 = 0,800 | (0,910 + 0,648 + 0,993)/3 = 0,850 | (0,939 + 0,303 + 0,998)/3 = 0,747 | (0,95 + 0,80 + 0,99)/3 = 0,913 → **0,91** |
 
 ¹ Na R1 e na R2, Blocking Code não tinha coleta por arquivo, então $n = 2$. A partir da R3, $n = 3$. Por isso o piso de Blocking (0,929) e o valor atual não têm exatamente a mesma base.
 
@@ -178,7 +178,7 @@ Em 07/11, nenhum dos quatro indicadores está na meta. Product Quality já passa
 | Product Quality | 1 de 3 | 0,990 | 0,993 | 0,998 | ≥ 0,99 | 🟡 Em evolução (portão) | Duplicação global ≤ 3% |
 | Blocking | 3 de 3 | 0,87 | 0,93 | 0,93 | ≥ 0,96 | 🟡 Em evolução | Cobertura global ≥ 90%; zero blocker/critical; relatório de testes em 8/8 |
 | Process Performance | 1 de 4 na média (+ M8 como portão) | 0,39 | 0,40 | 0,22 | ≥ 0,60 | 🔴 Abaixo do piso | Mediana do `test.yml` ≤ 5 min |
-| Product Readiness | 3 de 4 | 0,79 | 0,84 | 0,75 (parcial) | ≥ 0,91 | 🔴 Abaixo do piso (release em curso) | Duplicação global ≤ 3% (via Code Quality) |
+| Product Readiness | 3 de 4 | 0,80 | 0,85 | 0,75 (parcial) | ≥ 0,91 | 🔴 Abaixo do piso (release em curso) | Duplicação global ≤ 3% (via Code Quality) |
 
 | Métrica | Fator · indicador | Tipo de meta | R2 | Atual | Meta R3 |
 |---|---|---|---|---|---|
@@ -188,9 +188,9 @@ Em 07/11, nenhum dos quatro indicadores está na meta. Product Quality já passa
 | M5 Test coverage | Testing Status · Blocking | Absoluta + piso por repo | 0,855 | 0,862 | ≥ 0,90; ≥ 0,80 por repo |
 | M6 Non-blocking files | Blocking Code · Blocking | Absoluta (zero) | — | 0,938 | 1,00 |
 | M7 Well defined issues | Quality Issues' Specification · Blocking | Absoluta | 0,932 | 0,931 | ≥ 0,95 |
-| M8 CI feedback time | Testing Performance · PP | Portão, em minutos | 2,2 min | 3,0 min | Mediana ≤ 5 min por repo |
+| M8 CI feedback time | Testing Performance · PP | Portão, em minutos | 2,3 min | 3,0 min | Mediana ≤ 5 min por repo |
 | M9 Team throughput | Issues' Velocity · PP | Absoluta por sprint | 0,40 | 0,22 (S8) | ≥ 0,60 por sprint |
-| M10 Build stability | Product Stability · PR | Absoluta + piso por repo | 0,890 | 0,939 | ≥ 0,95; ≥ 0,90 por repo |
+| M10 Build stability | Product Stability · PR | Absoluta + piso por repo | 0,910 | 0,939 | ≥ 0,95; ≥ 0,90 por repo |
 | DT Development task completion | Activities Completion · PR | Absoluta (escopo da release) | 0,648 | 0,303 (parcial) | ≥ 0,80 |
 
 ---
@@ -320,7 +320,7 @@ A meta de Process Performance é **0,60**, e o valor atual é 0,22. O indicador 
 |---|---|---|---|---|---|
 | Métrica | M9 Team throughput | 0,39 | 0,40 | 0,22 (S8) | ≥ 0,60 por sprint |
 | Fator | Issues' Velocity | 0,39 | 0,40 | 0,22 | ≥ 0,60 |
-| Métrica | M8 CI feedback time (mediana) | 1,6 min | 2,2 min | 3,0 min | ≤ 5 min por repo (portão) |
+| Métrica | M8 CI feedback time (mediana) | 1,6 min | 2,3 min | 3,0 min | ≤ 5 min por repo (portão) |
 | Fator | Testing Performance | — | — | — | fora da média |
 | **Indicador** | **Process Performance** | **0,39** | **0,40** | **0,22** | **≥ 0,60** |
 
@@ -342,17 +342,17 @@ M9 = issues da sprint fechadas até o prazo de fechamento ÷ issues da sprint. A
 
 ### M8 CI feedback time — portão: mediana ≤ 5 min por repositório
 
-M8 = duração das execuções do workflow de testes (`test.yml`, decisão D5), em minutos.
+M8 = duração das execuções do workflow de testes (`test.yml`, decisão D5), em minutos. Execuções nas branches do Dependabot ficam fora ([D7](/docs/planejamento/decisoes#d7-execuções-do-dependabot-fora-do-build)).
 
 | Repositório | R1 | R2 | Atual | Execuções (atual) |
 |---|---:|---:|---:|---:|
-| Front | 1,9 | 7,0 | 7,2 | 13 |
+| Front | 1,9 | 7,1 | 7,2 | 13 |
 | Plugin | 2,8 | 2,6 | 3,2 | 4 |
 | Service | 1,8 | 2,2 | 2,6 | 6 |
 | CLI | 1,9 | 1,9 | 1,7 | 1 |
 | Parser | 1,3 | 1,4 | 1,6 | 2 |
 | Core | 1,6 | 1,8 | 1,5 | 1 |
-| Action | 1,0 | 1,1 | 1,4 | 4 |
+| Action | 1,3 | 1,2 | 1,4 | 4 |
 | AI | 0,4 | 1,0 | 1,1 | 2 |
 
 *Valores em minutos (mediana).*
@@ -373,29 +373,29 @@ A meta de Product Readiness é **0,91**. O valor atual, 0,75, é parcial, porque
 
 | Nível | Item | R1 | R2 | Atual | Meta R3 |
 |---|---|---|---|---|---|
-| Métrica | M10 Build stability | 0,766 | 0,890 | 0,939 | ≥ 0,95 |
-| Fator | Product Stability | 0,766 | 0,890 | 0,939 | ≥ 0,95 |
+| Métrica | M10 Build stability | 0,798 | 0,910 | 0,939 | ≥ 0,95 |
+| Fator | Product Stability | 0,798 | 0,910 | 0,939 | ≥ 0,95 |
 | Métrica | DT Development task completion | 0,612 | 0,648 | 0,303 (parcial) | ≥ 0,80 |
 | Fator | Activities Completion | 0,612 | 0,648 | 0,303 | ≥ 0,80 |
 | Fator | Code Quality (M1, M2) | 0,990 | 0,993 | 0,998 | ≥ 0,99 |
-| **Indicador** | **Product Readiness** | **0,79** | **0,84** | **0,75 (parcial)** | **≥ 0,91** |
+| **Indicador** | **Product Readiness** | **0,80** | **0,85** | **0,75 (parcial)** | **≥ 0,91** |
 
 ### M10 Build stability — meta ≥ 0,95 e ≥ 0,90 por repositório
 
-M10 = execuções do `test.yml` com sucesso ÷ execuções com sucesso ou falha.
+M10 = execuções do `test.yml` com sucesso ÷ execuções com sucesso ou falha. Execuções nas branches do Dependabot ficam fora: elas testam a atualização do bot, e o push na `develop` depois do merge continua contando ([D7](/docs/planejamento/decisoes#d7-execuções-do-dependabot-fora-do-build)).
 
 | Repositório | R1 | R2 | Atual |
 |---|---:|---:|---:|
-| Action | 0,65 | 0,45 | 3/4 = 0,75 |
-| Front | 0,69 | 0,86 | 12/13 = 0,92 |
+| Action | 1,00 | 0,56 | 3/4 = 0,75 |
+| Front | 0,69 | 0,90 | 12/13 = 0,92 |
 | AI | 0,56 | 0,64 | 2/2 = 1,00 |
 | Service | 0,69 | 0,93 | 6/6 = 1,00 |
 | Plugin | 1,00 | 0,91 | 4/4 = 1,00 |
 | CLI | 0,94 | 0,97 | 1/1 = 1,00 |
-| Core | 0,87 | 1,00 | 1/1 = 1,00 |
+| Core | 0,86 | 1,00 | 1/1 = 1,00 |
 | Parser | 0,92 | 1,00 | 2/2 = 1,00 |
 
-**Justificativa.** A métrica sobe a cada release (0,77, 0,89, 0,94), então 0,95 continua a tendência em vez de fixar um salto. O piso de 0,90 por repositório existe porque uma build quebrada bloqueia o merge do time inteiro naquele repositório, e a média global esconde isso: o Action está em 0,75 com a média em 0,94. A meta de 80% (`META_CI_SUCESSO`) hoje no `config.py` está abaixo do que o time já entrega e deve subir para 95% quando o dashboard for alinhado. A R3 tem só 33 execuções até agora: no Action, uma falha a mais derruba o repositório em 25 pontos.
+**Justificativa.** A métrica sobe a cada release (0,80, 0,91, 0,94), então 0,95 continua a tendência em vez de fixar um salto. O piso de 0,90 por repositório existe porque uma build quebrada bloqueia o merge do time inteiro naquele repositório, e a média global esconde isso: o Action está em 0,75 com a média em 0,94. A meta de 80% (`META_CI_SUCESSO`) hoje no `config.py` está abaixo do que o time já entrega e deve subir para 95% quando o dashboard for alinhado. A R3 tem só 33 execuções até agora: no Action, uma falha a mais derruba o repositório em 25 pontos.
 
 ### DT Development task completion — meta ≥ 0,80
 
@@ -405,7 +405,7 @@ DT = Tasks e Sub-tasks das sprints da release fechadas até a data da release ÷
 
 ### Indicador — meta ≥ 0,91
 
-(0,95 + 0,80 + 0,99) ÷ 3 = 0,913, truncado para **0,91**. O piso é 0,84 (R2).
+(0,95 + 0,80 + 0,99) ÷ 3 = 0,913, truncado para **0,91**. O piso é 0,85 (R2).
 
 ---
 
@@ -467,3 +467,4 @@ Q-RAPIDS CONSORTIUM. **Q-Rapids Quality Model (April 2019)**. [*S. l.*]: Q-Rapid
 | --- | --- | --- | --- | --- |
 | 1.0 | 08/11/2026 | Criacao do documento | [@storch7](https://github.com/storch7) |  |
 | 1.1 | 22/11/2026 | M1 sem os arquivos sem função (D6): valores, meta ≥ 0,99 e metas de Code Quality, Product Quality e Product Readiness recalculadas | [@gusrberto](https://github.com/gusrberto) |  |
+| 1.2 | 23/11/2026 | M10 e M8 sem as execuções das branches do Dependabot (D7): valores de R1 e R2 e piso de Product Readiness recalculados | [@gusrberto](https://github.com/gusrberto) |  |

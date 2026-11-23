@@ -36,14 +36,14 @@ F = {"periodo": (pd.Timestamp(config.INICIO_SEMESTRE), pd.Timestamp(config.RELEA
 # M7, Quality Issues' Specification e Blocking já contam issue sem sprint como sem prazo; o metas.mdx ainda não.
 METRICAS = {"M1": (.999, .998, .998), "M2": (.980, .988, .997), "M3": (1.0, 1.0, 1.0), "M5": (.807, .855, .862),
             "M6": (None, None, .938), "M7": (.687, .781, .759), "M9": (.391, .400, .222),
-            "M10": (.766, .890, .939), "DT": (.612, .648, .303)}
-M8_MIN = (1.6, 2.2, 3.0)                      # medianas de test.yml, em minutos
+            "M10": (.798, .910, .939), "DT": (.612, .648, .303)}
+M8_MIN = (1.6, 2.3, 3.0)                      # medianas de test.yml, em minutos
 FATORES = {"code_quality": (.990, .993, .998), "quality_issues_specification": (.687, .781, .759),
            "testing_status": (.904, .927, .931), "blocking_code": (None, None, .938),
-           "issues_velocity": (.391, .400, .222), "product_stability": (.766, .890, .939),
+           "issues_velocity": (.391, .400, .222), "product_stability": (.798, .910, .939),
            "activities_completion": (.612, .648, .303)}
 INDICADORES = {"product_quality": (.990, .993, .998), "blocking": (.795, .854, .876),
-               "process_performance": (.391, .400, .222), "product_readiness": (.789, .844, .747)}
+               "process_performance": (.391, .400, .222), "product_readiness": (.800, .850, .747)}
 METAS_FATOR = {"code_quality": .99, "quality_issues_specification": .95, "testing_status": .95,
                "blocking_code": 1.0, "issues_velocity": .60, "product_stability": .95, "activities_completion": .80}
 METAS_INDICADOR = {"product_quality": .99, "blocking": .96, "process_performance": .60, "product_readiness": .91}

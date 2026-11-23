@@ -35,6 +35,7 @@ Cada decisão tem:
 | D4 | 8 | Gerencial | Velocity, SPI e CPI só com story points de US aceitas pelo PO | Vigente | A medir na S9 |
 | D5 | 8 | Técnica | Build stability, Build performance e CI feedback time só com o workflow de testes | Provisória | Pendente de validação do time |
 | D6 | 10 | Técnica | Arquivo sem função fica fora da base da M1 (Complexity) | Vigente | M1 = 0,998 em 07/11; meta da R3 revista para ≥ 0,99 |
+| D7 | 10 | Técnica | Execuções nas branches do Dependabot não contam como build (M10, M8 e Build performance) | Vigente | Action na R3: 0,81 → 0,93 |
 
 :::caution[A preencher]
 D1 a D3 foram tomadas em 27/09/2026, na construção do DA-R1, e ainda não têm
@@ -203,6 +204,37 @@ Quality e Product Readiness foram recalculados no [metas.mdx](/docs/planejamento
 
 **Resultado.** *A medir* no fechamento da R3.
 
+## D7: Execuções do Dependabot fora do build
+
+**Contexto e dado.** Na R3, 2 das 3 falhas do `test.yml` do Action vieram de PRs do Dependabot (#16 e
+#23 do Action): o bot atualiza só o `package.json` e o `yarn.lock`, e a validação do `dist/` reprova.
+A terceira foi o Quality Gate de um PR do time, corrigido 13 minutos depois. Com elas, a M10 do Action
+ficou em 13/16 = 0,81 na coleta de 22/11, abaixo do piso de 0,90 por repositório. No Front, 1 das 14
+falhas também veio do Dependabot. A correção do fluxo no Action (PR #20 do Action) recompila o `dist/`
+em um job separado, só com leitura, e por segurança mantém vermelha a execução do commit original do
+bot quando o `dist/` muda: o verde vem da execução no commit novo.
+
+**Decisão.** Execuções nas branches `dependabot/...` não contam como build. Isso vale para M10, M8 e
+Build performance, que usam o mesmo critério da D5. Elas testam a atualização proposta pelo bot, que
+nunca entra sem aprovação de alguém do time. O push na `develop` depois do merge continua contando, e é
+ele que mostra se a integração quebrou. A lista fica em `config.QRAPIDS["branches_fora_do_build"]`.
+
+| Dados de 07/11 | R1 | R2 | Atual |
+| --- | --- | --- | --- |
+| M10 com as branches do Dependabot | 0,766 | 0,890 | 0,939 |
+| M10 sem elas | 0,798 | 0,910 | 0,939 |
+
+O "Atual" de 07/11 não muda porque os PRs do Dependabot da R3 abriram depois do corte. Na coleta de
+22/11, o Action vai de 13/16 = 0,81 para 13/14 = 0,93.
+
+**Evidência.** `Analytics/config.py` (`branches_fora_do_build`), `Analytics/src/metrics/qrapids.py`
+(`runs_de_build`), `Analytics/tests/test_qrapids.py`, `docs/planejamento/metas.mdx`, issue #273.
+
+**Critério de sucesso.** Nenhuma falha do `test.yml` na `develop` do Action até o fim da R3 e M10 do
+Action ≥ 0,90.
+
+**Resultado.** *A medir* no fechamento da R3.
+
 ## Histórico de versão
 
 | Versão | Data | Descrição | Autor | Revisor |
@@ -211,3 +243,4 @@ Quality e Product Readiness foram recalculados no [metas.mdx](/docs/planejamento
 | 1.1 | 21/10/2026 | Resultados de D1 e D2, coluna de resultado no resumo | [@MilenaFRocha](https://github.com/MilenaFRocha) |  |
 | 1.2 | 06/11/2026 | D4 (Velocity, SPI e CPI só com US aceitas pelo PO) e D5 (workflows de CI), DA-R3.02 | [@zzzBECK](https://github.com/zzzBECK) |  |
 | 1.3 | 22/11/2026 | D6 (arquivo sem função fora da M1), TASK33.01.03 | [@gusrberto](https://github.com/gusrberto) |  |
+| 1.4 | 23/11/2026 | D7 (execuções do Dependabot fora do build), TASK33.04.05 | [@gusrberto](https://github.com/gusrberto) |  |
