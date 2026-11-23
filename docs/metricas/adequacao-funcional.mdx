@@ -1,0 +1,105 @@
+---
+title: Adequação Funcional
+sidebar_label: Adequação Funcional
+description: As medidas de Adequação Funcional que a equipe adotou, de onde sai cada dado e a linha de base de 22/11/2026.
+---
+
+# Adequação Funcional
+
+Esta página registra como a equipe mede a **Adequação Funcional** do MeasureSoftGram: quais medidas da ISO/IEC 25023 foram adotadas, de onde sai cada dado no projeto e a linha de base medida em 22/11/2026. Ela fecha as TASKs 1.3 e 1.6 do épico [MSG19 (#90)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/90). A coleta automática no pipeline ou no dashboard fica para o próximo semestre, como diz a seção 4 do épico.
+
+## Por que não pelo Q-Rapids
+
+A [Seleção de Métricas](/docs/planejamento/selecaometricas) segue o Q-Rapids, e as duas métricas que o modelo liga à Adequação Funcional foram excluídas por falta de fonte:
+
+| Métrica do Q-Rapids | Subcaracterística | Por que ficou fora |
+| --- | --- | --- |
+| Feature usage | Aptidão funcional | O produto não tem telemetria de uso. |
+| End user feedback | Correção funcional | O feedback do cliente não é registrado em ferramenta. |
+
+Os *Passed tests* do Q-Rapids medem os testes unitários e ficam em Confiabilidade, não em Adequação Funcional (Martínez-Fernández *et al.*, 2018). A equipe já os acompanha como **M3 Test success**.
+
+No modelo do próprio MeasureSoftGram (Core), a Adequação Funcional tem só a Completude funcional, medida por `team_throughput` (issues resolvidas ÷ issues totais). É uma medida de processo: diz quanto o time fecha, e não se a função entregue faz o que foi pedido.
+
+Por isso a equipe usou a fonte que já existe: o **E2E por critério de aceitação**. Cada critério de aceitação (CA) de uma US tem o seu teste, e o resultado de cada CA é publicado na issue da US a cada push na `develop` (ver [Validação por testes E2E](/docs/processo/testes-e2e)).
+
+## Medidas adotadas
+
+A ISO/IEC 25010 divide a Adequação Funcional em três subcaracterísticas. A ISO/IEC 25023 dá uma medida para cada. No projeto, a **função** da norma é o **critério de aceitação** de uma US, e a função especificada é a **US** do backlog.
+
+| Subcaracterística (ISO/IEC 25010) | Medida (ISO/IEC 25023) | Fórmula | No projeto |
+| --- | --- | --- | --- |
+| Completude funcional | FCp-1-G, cobertura funcional | X = 1 − A/B. A: funções que faltam; B: funções especificadas | A: US do semestre ainda não entregues; B: US do semestre no DOC |
+| Correção funcional | FCr-1-G, correção funcional | X = 1 − A/B. A: funções com resultado incorreto; B: funções verificadas | A: CAs com teste falhando ou com bug conhecido; B: CAs verificados pelo E2E |
+| Aptidão funcional | FAp-1-G e FAp-2-G | Na norma | Não medida (ver abaixo) |
+
+Como apoio, a equipe acompanha também a **cobertura de verificação dos critérios**: os CAs verificados pelo E2E ÷ os CAs com teste no E2E. Não é uma medida da norma. Ela mostra quanto da correção funcional é medido pela máquina e quanto ainda depende de verificação manual.
+
+:::note[Fonte das fórmulas]
+A equipe não teve acesso ao texto completo da ISO/IEC 25023:2016. Os IDs e as fórmulas vêm de trabalhos que reproduzem a tabela da norma (Karnouskos *et al.*, 2018; Kudo; Bulcão-Neto; Vincenzi, 2020). A fórmula da aptidão funcional não foi conferida, por isso não está aqui.
+:::
+
+## Linha de base (22/11/2026)
+
+Dados: o último comentário "Aceitação automática (E2E)" das issues mapeadas no Front (`e2e/acceptance-issues.json`: 28 issues, 25 com comentário) e as 25 US do semestre no DOC. As US06.02 e US06.03 não têm comentário próprio porque os cenários delas são as CAs 4 a 7 da US06.01.
+
+| Medida | A | B | Valor |
+| --- | --- | --- | --- |
+| Completude funcional (FCp-1-G) | 7 US abertas | 25 US | **0,72** |
+| Correção funcional (FCr-1-G) | 0 CAs | 125 CAs | **1,00** |
+| Cobertura de verificação dos critérios | 125 CAs verificados | 131 CAs com teste | **95,4%** |
+
+Correção funcional por grupo:
+
+| Grupo | Issues | CAs com teste | Verificados pelo E2E | Atendidos |
+| --- | --- | --- | --- | --- |
+| US de 2026.2 | 14 | 98 | 92 | 92 |
+| US de 2026.1 (LEG) | 4 | 10 | 10 | 10 |
+| Fluxos legados (LEG00) | 4 | 17 | 17 | 17 |
+| Bugs com regressão | 3 | 6 | 6 | 6 |
+| **Total** | **25** | **131** | **125** | **125** |
+
+Os 6 CAs sem verificação automática dependem de passar o mouse num gráfico em canvas ou de um provedor real: US06.01 CA4 e CA5, US11.03 CA4, US21.04 CA6 e US30.03 CA1 e CA4. A verificação deles é manual, com print, por quem não desenvolveu a US.
+
+A correção funcional chegou a 1,00 depois de dois defeitos achados pelo próprio E2E nesta sprint: o [BUG00.03 (#322)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/322), badges por característica que não apareciam, e o [BUG00.04 (#332)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/332), mensagem errada para nome de produto repetido. Enquanto estavam abertos, cada um deixava um CA como "não atendido (bug conhecido)".
+
+As 7 US abertas que baixam a completude são US13.01 a US13.04 (pesos por AHP), US15.01 (coleta no GitLab CI), US36.01 (exclusão da última release) e US37.01 (inglês e português).
+
+:::caution[A preencher]
+- **Aptidão funcional:** falta uma fonte de dado. A mais próxima é a homologação do PO em cada US, que hoje fica nos comentários da issue e não é contada. Responsável: equipe do próximo semestre, ao definir o dashboard.
+- **CLI:** o resultado por critério da US01.01 ([#76](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/76)) ainda não foi publicado na issue, por isso a CLI fica fora da correção funcional. Responsável: @LuizaMaluf, depois do próximo push na `develop` da CLI.
+- **US sem resultado por critério:** a US14.01 ([#132](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/132)) não tem E2E, e a US21.04 não tem o teste da CA8. Responsável: @LuizaMaluf, conferir com quem desenvolveu.
+:::
+
+## Como recalcular
+
+1. Para cada issue de `e2e/acceptance-issues.json`, abrir o último comentário "Aceitação automática (E2E)" e somar, por CA, a coluna **Resultado**: "passou" e "passou (com itens manuais)" contam como atendidos; "não atendido (bug conhecido)" e "falhou" contam em A; "manual" fica fora de B.
+2. Para a completude, contar no DOC as issues `[USxx.yy]` do semestre e as que ainda estão abertas.
+3. Registrar o valor e a data numa linha nova da tabela de linha de base.
+
+## Evidências
+
+- [Validação por testes E2E](/docs/processo/testes-e2e)
+- [Seleção de Métricas: Q-Rapids](/docs/planejamento/selecaometricas), seção 3.3
+- Comentários do E2E, por exemplo em [US22.01 (#125)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/125) e [LEG00.02 (#329)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/329)
+- Tasks do épico: [TASK19.07 (#316)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/316), [TASK19.08 (#333)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/333) e [TASK19.09 (#344)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/344)
+
+## Referências
+
+INTERNATIONAL ORGANIZATION FOR STANDARDIZATION. **ISO/IEC 25010:2023**: systems and software engineering — systems and software Quality Requirements and Evaluation (SQuaRE) — product quality model. Geneva: ISO, 2023.
+
+INTERNATIONAL ORGANIZATION FOR STANDARDIZATION. **ISO/IEC 25023:2016**: systems and software engineering — systems and software Quality Requirements and Evaluation (SQuaRE) — measurement of system and software product quality. Geneva: ISO, 2016.
+
+KARNOUSKOS, S.; SINHA, R.; LEITÃO, P.; RIBEIRO, L.; STRASSER, T. I. The applicability of ISO/IEC 25023 measures to the integration of agents and automation systems. *In*: ANNUAL CONFERENCE OF THE IEEE INDUSTRIAL ELECTRONICS SOCIETY (IECON), 44., 2018, Washington. **Proceedings** [...]. [*S. l.*]: IEEE, 2018. p. 2927-2934. DOI: 10.1109/IECON.2018.8592777. Disponível em: [https://arxiv.org/abs/2108.02921](https://arxiv.org/abs/2108.02921).
+
+MARTÍNEZ-FERNÁNDEZ, S. *et al*. A quality model for actionable analytics in rapid software development. *In*: EUROMICRO CONFERENCE ON SOFTWARE ENGINEERING AND ADVANCED APPLICATIONS, 44., 2018, Praga. **Proceedings** [...]. [*S. l.*]: IEEE, 2018. Disponível em: [https://arxiv.org/abs/1803.09670](https://arxiv.org/abs/1803.09670).
+
+KUDO, T. N.; BULCÃO-NETO, R. F.; VINCENZI, A. M. R. **Metamodel Quality Requirements and Evaluation (MQuaRE)**. arXiv, 2020. Disponível em: [https://arxiv.org/abs/2008.09459](https://arxiv.org/abs/2008.09459).
+
+---
+
+## Histórico de versão
+
+| Versão | Data | Descrição | Autor | Revisor |
+| --- | --- | --- | --- | --- |
+| 1.0 | 22/11/2026 | Criação da página, com a linha de base de 22/11/2026 | [@LuizaMaluf](https://github.com/LuizaMaluf) |  |
