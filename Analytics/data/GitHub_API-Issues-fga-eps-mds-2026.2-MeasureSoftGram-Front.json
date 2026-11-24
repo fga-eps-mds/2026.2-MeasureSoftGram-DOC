@@ -1,5 +1,192 @@
 [
     {
+        "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/181",
+        "repository_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front",
+        "labels_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/181/labels{/name}",
+        "comments_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/181/comments",
+        "events_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/181/events",
+        "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/181",
+        "id": 6583763715,
+        "node_id": "PR_kwDOULOMpc8AAAABRkP1Pw",
+        "number": 181,
+        "title": "ci(e2e): publica o resultado nas issues das US pelo GitHub App da org\u2026",
+        "user": {
+            "login": "MilenaFRocha",
+            "id": 104432227,
+            "node_id": "U_kgDOBjmCYw",
+            "avatar_url": "https://avatars.githubusercontent.com/u/104432227?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/MilenaFRocha",
+            "html_url": "https://github.com/MilenaFRocha",
+            "followers_url": "https://api.github.com/users/MilenaFRocha/followers",
+            "following_url": "https://api.github.com/users/MilenaFRocha/following{/other_user}",
+            "gists_url": "https://api.github.com/users/MilenaFRocha/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/MilenaFRocha/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/MilenaFRocha/subscriptions",
+            "organizations_url": "https://api.github.com/users/MilenaFRocha/orgs",
+            "repos_url": "https://api.github.com/users/MilenaFRocha/repos",
+            "events_url": "https://api.github.com/users/MilenaFRocha/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/MilenaFRocha/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "labels": [],
+        "state": "closed",
+        "locked": false,
+        "assignees": [],
+        "milestone": null,
+        "comments": 1,
+        "created_at": "2026-11-24T14:14:14Z",
+        "updated_at": "2026-11-24T14:35:03Z",
+        "closed_at": "2026-11-24T14:34:59Z",
+        "assignee": null,
+        "author_association": "NONE",
+        "issue_field_values": [],
+        "type": null,
+        "active_lock_reason": null,
+        "draft": false,
+        "pull_request": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/pulls/181",
+            "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/181",
+            "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/181.diff",
+            "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/181.patch",
+            "merged_at": "2026-11-24T14:34:59Z"
+        },
+        "body": "# Resultado dos testes e2e nas issues das US pelo GitHub App\n\n## Descri\u00e7\u00e3o\nTroca o token pessoal `DOC_ISSUES_TOKEN` por um token de curta dura\u00e7\u00e3o gerado a cada execu\u00e7\u00e3o pelo GitHub App da organiza\u00e7\u00e3o (`msgram-bot`). O token s\u00f3 tem acesso \u00e0s issues do `2026.2-MeasureSoftGram-DOC`, e os coment\u00e1rios com o resultado de cada crit\u00e9rio de aceita\u00e7\u00e3o passam a aparecer como `msgram-bot[bot]`, sem ficar vinculados \u00e0 conta de nenhum integrante.\n\n\n### Mudan\u00e7as em `.github/workflows/test.yml`\n- Nova etapa **\"Gerar token do App para o DOC\"** com `actions/create-github-app-token` (fixada no SHA da v3.4.0), usando a vari\u00e1vel `DOC_APP_CLIENT_ID` e o secret `DOC_APP_PRIVATE_KEY` da organiza\u00e7\u00e3o.\n- A etapa **\"Publicar resultado nas issues das US\"** passa a usar esse token (`steps.doc-token.outputs.token`). O script `scripts/acceptance_comment.py` n\u00e3o muda.\n- As duas etapas continuam rodando s\u00f3 em `push` para `main`/`develop` e com `continue-on-error`, ent\u00e3o n\u00e3o quebram o CI.\n\n",
+        "closed_by": {
+            "login": "DanielFsR",
+            "id": 118537519,
+            "node_id": "U_kgDOBxC9Lw",
+            "avatar_url": "https://avatars.githubusercontent.com/u/118537519?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/DanielFsR",
+            "html_url": "https://github.com/DanielFsR",
+            "followers_url": "https://api.github.com/users/DanielFsR/followers",
+            "following_url": "https://api.github.com/users/DanielFsR/following{/other_user}",
+            "gists_url": "https://api.github.com/users/DanielFsR/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/DanielFsR/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/DanielFsR/subscriptions",
+            "organizations_url": "https://api.github.com/users/DanielFsR/orgs",
+            "repos_url": "https://api.github.com/users/DanielFsR/repos",
+            "events_url": "https://api.github.com/users/DanielFsR/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/DanielFsR/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "reactions": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/181/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/181/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null
+    },
+    {
+        "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/180",
+        "repository_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front",
+        "labels_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/180/labels{/name}",
+        "comments_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/180/comments",
+        "events_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/180/events",
+        "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/180",
+        "id": 6576913014,
+        "node_id": "PR_kwDOULOMpc8AAAABRetHhA",
+        "number": 180,
+        "title": "chore(deps): bump i18next from 23.16.8 to 26.3.4",
+        "user": {
+            "login": "dependabot[bot]",
+            "id": 49699333,
+            "node_id": "MDM6Qm90NDk2OTkzMzM=",
+            "avatar_url": "https://avatars.githubusercontent.com/in/29110?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/dependabot%5Bbot%5D",
+            "html_url": "https://github.com/apps/dependabot",
+            "followers_url": "https://api.github.com/users/dependabot%5Bbot%5D/followers",
+            "following_url": "https://api.github.com/users/dependabot%5Bbot%5D/following{/other_user}",
+            "gists_url": "https://api.github.com/users/dependabot%5Bbot%5D/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/dependabot%5Bbot%5D/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/dependabot%5Bbot%5D/subscriptions",
+            "organizations_url": "https://api.github.com/users/dependabot%5Bbot%5D/orgs",
+            "repos_url": "https://api.github.com/users/dependabot%5Bbot%5D/repos",
+            "events_url": "https://api.github.com/users/dependabot%5Bbot%5D/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/dependabot%5Bbot%5D/received_events",
+            "type": "Bot",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "labels": [
+            {
+                "id": 12543416002,
+                "node_id": "LA_kwDOULOMpc8AAAAC66VWwg",
+                "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/labels/dependencies",
+                "name": "dependencies",
+                "color": "0366d6",
+                "default": false,
+                "description": "Pull requests that update a dependency file",
+                "archived_at": null,
+                "archived_by": null
+            },
+            {
+                "id": 12543416393,
+                "node_id": "LA_kwDOULOMpc8AAAAC66VYSQ",
+                "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/labels/javascript",
+                "name": "javascript",
+                "color": "168700",
+                "default": false,
+                "description": "Pull requests that update javascript code",
+                "archived_at": null,
+                "archived_by": null
+            }
+        ],
+        "state": "open",
+        "locked": false,
+        "assignees": [],
+        "milestone": null,
+        "comments": 0,
+        "created_at": "2026-11-24T07:32:57Z",
+        "updated_at": "2026-11-24T07:33:00Z",
+        "closed_at": null,
+        "assignee": null,
+        "author_association": "NONE",
+        "issue_field_values": [],
+        "type": null,
+        "active_lock_reason": null,
+        "draft": false,
+        "pull_request": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/pulls/180",
+            "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/180",
+            "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/180.diff",
+            "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/180.patch",
+            "merged_at": null
+        },
+        "body": "Bumps [i18next](https://github.com/i18next/i18next) from 23.16.8 to 26.3.4.\n<details>\n<summary>Release notes</summary>\n<p><em>Sourced from <a href=\"https://github.com/i18next/i18next/releases\">i18next's releases</a>.</em></p>\n<blockquote>\n<h2>v26.3.4</h2>\n<ul>\n<li>fix(security): <code>deepExtend</code> (used by <code>addResourceBundle(..., deep, overwrite)</code>) no longer recurses into inherited properties. It checked key existence with the <code>in</code> operator, which walks the prototype chain, so a source key matching an inherited built-in (e.g. <code>hasOwnProperty</code>, <code>toString</code>) caused recursion into the shared <code>Object.prototype</code> function and, with <code>overwrite: true</code>, could overwrite e.g. <code>Object.prototype.hasOwnProperty.call</code> with a non-callable value \u2014 corrupting a shared built-in process-wide (DoS). Existence is now checked with <code>Object.prototype.hasOwnProperty.call</code>, so such keys are copied as plain own data instead. This complements the existing <code>__proto__</code>/<code>constructor</code> guard and is also strictly more correct for an own-property merge. Only affects applications that pass attacker-controlled data with <code>deep: true</code> and <code>overwrite: true</code>; no standard backend/integration does this. Distinct from CVE-2026-48713 / CVE-2026-48714 (different packages, <code>setPath</code> mechanism). Thanks to zx (Jace) for the responsible disclosure.</li>\n</ul>\n<h2>v26.3.3</h2>\n<ul>\n<li>fix(types): selector <code>t($ =&gt; $.arr, { returnObjects: true, context })</code> on a JSON array of <strong>heterogeneous</strong> objects now preserves each element's full shape (e.g. <code>{ transKey1: string; transKey2: string }[]</code>) instead of collapsing to a union of partial element types. Two type-level causes: (1) <code>FilterKeys</code> evaluated the whole array element type at once, so <code>keyof (A | B)</code> only saw the keys common to every element \u2014 it now distributes over the object union and filters each element independently; (2) when TypeScript merges mismatched array element types it injects phantom optional <code>undefined</code> keys (e.g. <code>transKey1_withContext?: undefined</code> on elements that don't define it), which the context-detection helpers mistook for real context variants \u2014 they now skip keys typed as <code>undefined</code>. Also adds a dedicated <code>context</code> + <code>returnObjects: true</code> selector overload using <code>const Fn</code> + <code>ReturnType&lt;Fn&gt;</code>, so <code>Target</code> is no longer collapsed to <code>unknown</code> via <code>ApplyTarget</code>. Resolves Problem 1 of <a href=\"https://redirect.github.com/i18next/i18next/issues/2398\">#2398</a> (Problem 2 was already fixed on master). Thanks <a href=\"https://github.com/sauravgupta-dotcom\"><code>@\u200bsauravgupta-dotcom</code></a> (<a href=\"https://redirect.github.com/i18next/i18next/pull/2438\">#2438</a>). Fixes <a href=\"https://redirect.github.com/i18next/i18next/issues/2398\">#2398</a>.</li>\n</ul>\n<h2>v26.3.2</h2>\n<ul>\n<li>fix: chained formatters with a parenthesised option that contains the format separator (e.g. <code>join(separator: ', ')</code>) now work at <strong>any</strong> position in the chain, not just first. Previously the comma-in-parens reassembly only repaired <code>formats[0]</code>, so <code>{{v, uppercase, join(separator: ', ')}}</code> split the <code>join(...)</code> option on the inner comma and never rejoined it, producing corrupt output. Replaced the first-position-only repair with a position-independent pass that re-joins fragments until each open paren closes. Thanks <a href=\"https://github.com/spokodev\"><code>@\u200bspokodev</code></a> (<a href=\"https://redirect.github.com/i18next/i18next/pull/2437\">#2437</a>).</li>\n</ul>\n<h2>v26.3.1</h2>\n<ul>\n<li>fix(types): <code>t()</code> with a <code>keyPrefix</code> no longer pollutes its return type with sibling keys' values. A regression in 26.3.0 \u2014 the <code>[Res] extends [never]</code> guards added to <code>KeysBuilderWithReturnObjects</code> / <code>KeysBuilderWithoutReturnObjects</code> turned the builders into deferred conditional types, so <code>KeyPrefix&lt;Ns&gt;</code> stopped resolving to a literal union and <code>keyPrefix</code> inference widened to the whole namespace. Symptom: <code>useTranslation(ns, { keyPrefix: 'a.b' })</code> then <code>t('title')</code> would resolve to <code>'&lt;a.b&gt;.title' | '&lt;other.path&gt;.title' | ...</code> instead of just the scoped value. Affected every <code>react-i18next</code> user using <code>keyPrefix</code>. Restored to the eager 26.2.0 form. The same-namespace conflict handling from <a href=\"https://redirect.github.com/i18next/i18next/issues/2434\">#2434</a> still works via <code>_DropConflictKeys</code> at the merge layer (in <code>options.d.ts</code>). Thanks <a href=\"https://github.com/aaronrosenthal\"><code>@\u200baaronrosenthal</code></a> (<a href=\"https://redirect.github.com/i18next/i18next/pull/2436\">#2436</a>).</li>\n</ul>\n<h2>v26.3.0</h2>\n<ul>\n<li>feat(types): introduce <code>ResourceNamespaceMap</code> \u2014 a separate mergeable augmentation surface for namespace resource types, designed for monorepos where multiple packages each want to contribute their own namespaces. Previously, every package had to coordinate on a single <code>CustomTypeOptions.resources</code> declaration (or fall back to typing dependency namespaces as <code>any</code>) because <code>resources</code> is a single property of an interface and TypeScript reports TS2717 when two declarations of the same property disagree. The new interface merges naturally across <code>declare module 'i18next'</code> blocks, so each package can ship its own <code>i18next.d.ts</code> independently. Per-property merge handles same-namespace contributions from multiple packages, and same-key/different-literal conflicts are silently dropped to avoid poisoning <code>t()</code> overload resolution. Fully backwards-compatible \u2014 existing <code>CustomTypeOptions.resources</code> augmentations continue to work, and both surfaces can coexist. Scalar options (<code>defaultNS</code>, <code>returnNull</code>, <code>enableSelector</code>, etc.) still belong on <code>CustomTypeOptions</code>. Thanks <a href=\"https://github.com/sh3xu\"><code>@\u200bsh3xu</code></a> (<a href=\"https://redirect.github.com/i18next/i18next/pull/2434\">#2434</a>). Fixes <a href=\"https://redirect.github.com/i18next/i18next/issues/2409\">#2409</a>.</li>\n</ul>\n<h2>v26.2.0</h2>\n<ul>\n<li>feat(types): new <code>parseInterpolation</code> TypeOption (default <code>true</code>). When set to <code>false</code> in <code>CustomTypeOptions</code>, the type-level extractor stops parsing translation strings for <code>{{variable}}</code> patterns. Required by <code>i18next-icu</code> users \u2014 the default extractor mistakes ICU MessageFormat nested-brace plurals like <code>{count, plural, one {{count} row} other {{count} rows}}</code> for an interpolation block and demands a phantom variable name. The flag is type-only; runtime interpolation is governed by <code>InterpolationOptions</code> and is unaffected. Fixes <a href=\"https://redirect.github.com/i18next/i18next-icu/issues/85\">i18next-icu#85</a>.</li>\n<li>fix(types): expose <code>enableSelector</code> on <code>InitOptions</code> so <code>i18next.init({ enableSelector: 'strict' })</code> typechecks without a module augmentation. The runtime already reads <code>opts?.enableSelector</code> from init options; this lands the matching type declaration next to the other selector-resolution knobs. Accepts <code>false | true | 'optimize' | 'strict'</code>. Thanks <a href=\"https://github.com/Faithfinder\"><code>@\u200bFaithfinder</code></a> (<a href=\"https://redirect.github.com/i18next/i18next/pull/2431\">#2431</a>)</li>\n</ul>\n<h2>v26.1.0</h2>\n<ul>\n<li>feat: <code>enableSelector: 'strict'</code> (TypeOptions + runtime option). Opt-in mode that drops the flattened-primary form from <code>NsResource</code> at the type level \u2014 every namespace (primary included) is exposed only under its own key on <code>$</code>, uniformly across single- and multi-ns hooks. At runtime, a leading selector path segment matching the scope's namespace list is always rewritten as a namespace prefix, including the primary. Eliminates the silent-miss surface area where <code>t($ =&gt; $.primary.foo)</code> typechecks but doesn't resolve under the default mode (see <a href=\"https://redirect.github.com/i18next/i18next/issues/2429\">#2429</a>). Backward-compatible: default <code>enableSelector: false | true | 'optimize'</code> behavior is unchanged. Note: strict mode is incompatible with the <a href=\"https://redirect.github.com/i18next/i18next/issues/2405\">#2405</a> pattern (keys whose names match sibling namespaces) \u2014 those users should stay on default mode.</li>\n</ul>\n<h2>v26.0.10</h2>\n<ul>\n<li>feat: <code>getFixedT</code> accepts a fourth optional <code>fixedOpts</code> argument carrying <code>scopeNs</code> \u2014 the full namespace list the bound <code>t</code> was created for. The selector API uses <code>scopeNs</code> to detect when a path's first segment is a namespace prefix, <strong>without</strong> changing resolution scope. Resolution still uses the bound <code>ns</code> (a single primary string in the typical react-i18next setup), so plain <code>t('key')</code> lookups stay isolated to the primary namespace exactly as before \u2014 only <code>t($ =&gt; $.secondaryNs.foo)</code> selectors now route correctly under <code>useTranslation([nsA, nsB])</code>. Fixes the runtime side of <a href=\"https://redirect.github.com/i18next/i18next/issues/2429\">#2429</a> for the <code>react-i18next</code> default-<code>nsMode</code> case. The 4th argument is opt-in: existing 3-arg <code>getFixedT(lng, ns, keyPrefix)</code> callers see no behavior change.</li>\n</ul>\n<h2>v26.0.9</h2>\n<ul>\n<li>fix(types): unformatted interpolation values are now typed as <code>string | number</code> (was <code>string</code>). i18next stringifies values at runtime, so requiring callers to wrap numbers in <code>String(...)</code> for plain <code>{{var}}</code> placeholders was unnecessary friction \u2014 and could mask the real problem when a non-string value was passed alongside multiple interpolation slots (the <code>t()</code> overload resolution would fall through to the 3-arg form and report a confusing &quot;not assignable to string&quot; error against the options object). Typed format specifiers like <code>{{x, number}}</code>, <code>{{x, currency}}</code>, <code>{{x, datetime}}</code>, etc. keep their precise types; this only relaxes the no-format default. The <code>count</code> variable remains <code>number</code>-only</li>\n</ul>\n<h2>v26.0.8</h2>\n<ul>\n<li>fix(types): restore the pre-v25.10.4 <code>ExistsFunction</code> shape so plain arrow functions can again be assigned to <code>ExistsFunction</code>-typed variables (TypeScript cannot infer type predicates through multi-overload assignment). Direct <code>i18next.exists(key)</code> calls still narrow <code>key</code> to <code>SelectorKey</code> \u2014 the predicate is now declared inline on <code>i18n.exists</code>. Custom wrappers that want the narrowing can type themselves as <code>typeof i18next.exists</code> <a href=\"https://redirect.github.com/i18next/i18next/issues/2425\">2425</a></li>\n</ul>\n<h2>v26.0.7</h2>\n<ul>\n<li>fix: when a plural lookup misses, the <code>missingKey</code> debug log now shows the actual plural-resolved key (e.g. <code>foo.bar_many</code> for Polish <code>count: 14</code>) instead of the base key \u2014 making it obvious which plural category was expected and missing <a href=\"https://redirect.github.com/i18next/i18next/issues/2423\">2423</a></li>\n<li>chore: drop <code>@babel/runtime</code> runtime dependency. The build no longer generates any <code>@babel/runtime</code> imports, so the package is unused by consumers. Rollup now uses <code>babelHelpers: 'bundled'</code> so any helpers that are ever needed in the future will be inlined rather than imported externally <a href=\"https://redirect.github.com/i18next/i18next/issues/2424\">2424</a></li>\n<li>chore: stop emitting <code>dist/esm/i18next.bundled.js</code>. It was byte-identical to <code>dist/esm/i18next.js</code> because no helpers were being imported <a href=\"https://redirect.github.com/i18next/i18next/issues/2424\">2424</a></li>\n</ul>\n<h2>v26.0.6</h2>\n<p>Security release \u2014 all issues found via an internal audit. GHSA advisory filed after release.</p>\n<ul>\n<li>security: warn when a translation string combines <code>escapeValue: false</code> with interpolated variables inside a <code>$t(key, { ... &quot;{{var}}&quot; ... })</code> nesting-options block. In that narrow combination, attacker-controlled string values containing <code>&quot;</code> can break out of the JSON options literal and inject additional nesting options (e.g. redirect <code>lng</code>/<code>ns</code>). The default <code>escapeValue: true</code> configuration is unaffected because HTML-escaping neutralises the quote before <code>JSON.parse</code>. See the security docs for mitigation guidance (GHSA-TBD)</li>\n<li>security: apply <code>regexEscape</code> to <code>unescapePrefix</code> / <code>unescapeSuffix</code> on par with the other interpolation delimiters. Prevents ReDoS (catastrophic-backtracking) when a misconfigured delimiter contains regex metacharacters, and fixes silent breakage of the <code>{{- var}}</code> syntax when the delimiter contains characters like <code>(</code>, <code>[</code>, <code>.</code></li>\n<li>security: strip CR/LF/NUL and other C0/C1 control characters from string log arguments to prevent log forging via user-controlled translation keys, language codes, namespaces, or interpolation variable names (CWE-117)</li>\n<li>chore: ignore <code>.env*</code> and <code>*.pem</code>/<code>*.key</code> files in <code>.gitignore</code></li>\n</ul>\n<h2>v26.0.5</h2>\n<ul>\n<li>fix: <code>cloneInstance().changeLanguage()</code> no longer fails to update language state when the target language is not yet loaded \u2014 a race between <code>init()</code>'s deferred <code>load()</code> and the user's <code>changeLanguage()</code> could overwrite <code>isLanguageChangingTo</code>, causing <code>setLngProps</code> to be skipped <a href=\"https://redirect.github.com/i18next/i18next/issues/2422\">2422</a></li>\n</ul>\n<h2>v26.0.4</h2>\n<ul>\n<li>fix(types): inline formatting options like <code>{{price, currency(EUR)}}</code> are now correctly resolved to their base format type (e.g. <code>number</code> for <code>currency</code>) instead of falling back to <code>string</code> <a href=\"https://redirect.github.com/i18next/i18next/issues/2378\">2378</a></li>\n</ul>\n<!-- raw HTML omitted -->\n</blockquote>\n<p>... (truncated)</p>\n</details>\n<details>\n<summary>Changelog</summary>\n<p><em>Sourced from <a href=\"https://github.com/i18next/i18next/blob/master/CHANGELOG.md\">i18next's changelog</a>.</em></p>\n<blockquote>\n<h2>26.3.4</h2>\n<ul>\n<li>fix(security): <code>deepExtend</code> (used by <code>addResourceBundle(..., deep, overwrite)</code>) no longer recurses into inherited properties. It checked key existence with the <code>in</code> operator, which walks the prototype chain, so a source key matching an inherited built-in (e.g. <code>hasOwnProperty</code>, <code>toString</code>) caused recursion into the shared <code>Object.prototype</code> function and, with <code>overwrite: true</code>, could overwrite e.g. <code>Object.prototype.hasOwnProperty.call</code> with a non-callable value \u2014 corrupting a shared built-in process-wide (DoS). Existence is now checked with <code>Object.prototype.hasOwnProperty.call</code>, so such keys are copied as plain own data instead. This complements the existing <code>__proto__</code>/<code>constructor</code> guard and is also strictly more correct for an own-property merge. Only affects applications that pass attacker-controlled data with <code>deep: true</code> and <code>overwrite: true</code>; no standard backend/integration does this. Distinct from CVE-2026-48713 / CVE-2026-48714 (different packages, <code>setPath</code> mechanism). See advisory <a href=\"https://github.com/i18next/i18next/security/advisories/GHSA-6jcc-5g8w-32mx\">GHSA-6jcc-5g8w-32mx</a>, CVSS 5.9 (<code>CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:H</code>). Thanks to zx (Jace) <a href=\"https://github.com/manus-use\"><code>@\u200bmanus-use</code></a> for the responsible disclosure.</li>\n</ul>\n<h2>26.3.3</h2>\n<ul>\n<li>fix(types): selector <code>t($ =&gt; $.arr, { returnObjects: true, context })</code> on a JSON array of <strong>heterogeneous</strong> objects now preserves each element's full shape (e.g. <code>{ transKey1: string; transKey2: string }[]</code>) instead of collapsing to a union of partial element types. Two type-level causes: (1) <code>FilterKeys</code> evaluated the whole array element type at once, so <code>keyof (A | B)</code> only saw the keys common to every element \u2014 it now distributes over the object union and filters each element independently; (2) when TypeScript merges mismatched array element types it injects phantom optional <code>undefined</code> keys (e.g. <code>transKey1_withContext?: undefined</code> on elements that don't define it), which the context-detection helpers mistook for real context variants \u2014 they now skip keys typed as <code>undefined</code>. Also adds a dedicated <code>context</code> + <code>returnObjects: true</code> selector overload using <code>const Fn</code> + <code>ReturnType&lt;Fn&gt;</code>, so <code>Target</code> is no longer collapsed to <code>unknown</code> via <code>ApplyTarget</code>. Resolves Problem 1 of <a href=\"https://redirect.github.com/i18next/i18next/issues/2398\">#2398</a> (Problem 2 was already fixed on master). Thanks <a href=\"https://github.com/sauravgupta-dotcom\"><code>@\u200bsauravgupta-dotcom</code></a> (<a href=\"https://redirect.github.com/i18next/i18next/pull/2438\">#2438</a>). Fixes <a href=\"https://redirect.github.com/i18next/i18next/issues/2398\">#2398</a>.</li>\n</ul>\n<h2>26.3.2</h2>\n<ul>\n<li>fix: chained formatters with a parenthesised option that contains the format separator (e.g. <code>join(separator: ', ')</code>) now work at <strong>any</strong> position in the chain, not just first. Previously the comma-in-parens reassembly only repaired <code>formats[0]</code>, so <code>{{v, uppercase, join(separator: ', ')}}</code> split the <code>join(...)</code> option on the inner comma and never rejoined it, producing corrupt output. Replaced the first-position-only repair with a position-independent pass that re-joins fragments until each open paren closes. Thanks <a href=\"https://github.com/spokodev\"><code>@\u200bspokodev</code></a> (<a href=\"https://redirect.github.com/i18next/i18next/pull/2437\">#2437</a>).</li>\n</ul>\n<h2>26.3.1</h2>\n<ul>\n<li>fix(types): <code>t()</code> with a <code>keyPrefix</code> no longer pollutes its return type with sibling keys' values. A regression in 26.3.0 \u2014 the <code>[Res] extends [never]</code> guards added to <code>KeysBuilderWithReturnObjects</code> / <code>KeysBuilderWithoutReturnObjects</code> turned the builders into deferred conditional types, so <code>KeyPrefix&lt;Ns&gt;</code> stopped resolving to a literal union and <code>keyPrefix</code> inference widened to the whole namespace. Symptom: <code>useTranslation(ns, { keyPrefix: 'a.b' })</code> then <code>t('title')</code> would resolve to <code>'&lt;a.b&gt;.title' | '&lt;other.path&gt;.title' | ...</code> instead of just the scoped value. Affected every <code>react-i18next</code> user using <code>keyPrefix</code>. Restored to the eager 26.2.0 form. The same-namespace conflict handling from <a href=\"https://redirect.github.com/i18next/i18next/issues/2434\">#2434</a> still works via <code>_DropConflictKeys</code> at the merge layer (in <code>options.d.ts</code>). Thanks <a href=\"https://github.com/aaronrosenthal\"><code>@\u200baaronrosenthal</code></a> (<a href=\"https://redirect.github.com/i18next/i18next/pull/2436\">#2436</a>).</li>\n</ul>\n<h2>26.3.0</h2>\n<ul>\n<li>feat(types): introduce <code>ResourceNamespaceMap</code> \u2014 a separate mergeable augmentation surface for namespace resource types, designed for monorepos where multiple packages each want to contribute their own namespaces. Previously, every package had to coordinate on a single <code>CustomTypeOptions.resources</code> declaration (or fall back to typing dependency namespaces as <code>any</code>) because <code>resources</code> is a single property of an interface and TypeScript reports TS2717 when two declarations of the same property disagree. The new interface merges naturally across <code>declare module 'i18next'</code> blocks, so each package can ship its own <code>i18next.d.ts</code> independently. Per-property merge handles same-namespace contributions from multiple packages, and same-key/different-literal conflicts are silently dropped to avoid poisoning <code>t()</code> overload resolution. Fully backwards-compatible \u2014 existing <code>CustomTypeOptions.resources</code> augmentations continue to work, and both surfaces can coexist. Scalar options (<code>defaultNS</code>, <code>returnNull</code>, <code>enableSelector</code>, etc.) still belong on <code>CustomTypeOptions</code>. Thanks <a href=\"https://github.com/sh3xu\"><code>@\u200bsh3xu</code></a> (<a href=\"https://redirect.github.com/i18next/i18next/pull/2434\">#2434</a>). Fixes <a href=\"https://redirect.github.com/i18next/i18next/issues/2409\">#2409</a>.</li>\n</ul>\n<h2>26.2.0</h2>\n<ul>\n<li>feat(types): new <code>parseInterpolation</code> TypeOption (default <code>true</code>). When set to <code>false</code> in <code>CustomTypeOptions</code>, the type-level extractor stops parsing translation strings for <code>{{variable}}</code> patterns. Required by <code>i18next-icu</code> users \u2014 the default extractor mistakes ICU MessageFormat nested-brace plurals like <code>{count, plural, one {{count} row} other {{count} rows}}</code> for an interpolation block and demands a phantom variable name. The flag is type-only; runtime interpolation is governed by <code>InterpolationOptions</code> and is unaffected. Fixes <a href=\"https://redirect.github.com/i18next/i18next-icu/issues/85\">i18next-icu#85</a>.</li>\n<li>fix(types): expose <code>enableSelector</code> on <code>InitOptions</code> so <code>i18next.init({ enableSelector: 'strict' })</code> typechecks without a module augmentation. The runtime already reads <code>opts?.enableSelector</code> from init options; this lands the matching type declaration next to the other selector-resolution knobs. Accepts <code>false | true | 'optimize' | 'strict'</code>. Thanks <a href=\"https://github.com/Faithfinder\"><code>@\u200bFaithfinder</code></a> (<a href=\"https://redirect.github.com/i18next/i18next/pull/2431\">#2431</a>)</li>\n</ul>\n<h2>26.1.0</h2>\n<ul>\n<li>feat: <code>enableSelector: 'strict'</code> (TypeOptions + runtime option). Opt-in mode that drops the flattened-primary form from <code>NsResource</code> at the type level \u2014 every namespace (primary included) is exposed only under its own key on <code>$</code>, uniformly across single- and multi-ns hooks. At runtime, a leading selector path segment matching the scope's namespace list is always rewritten as a namespace prefix, including the primary. Eliminates the silent-miss surface area where <code>t($ =&gt; $.primary.foo)</code> typechecks but doesn't resolve under the default mode (see <a href=\"https://redirect.github.com/i18next/i18next/issues/2429\">#2429</a>). Backward-compatible: default <code>enableSelector: false | true | 'optimize'</code> behavior is unchanged. Note: strict mode is incompatible with the <a href=\"https://redirect.github.com/i18next/i18next/issues/2405\">#2405</a> pattern (keys whose names match sibling namespaces) \u2014 those users should stay on default mode.</li>\n</ul>\n<h2>26.0.10</h2>\n<ul>\n<li>feat: <code>getFixedT</code> accepts a fourth optional <code>fixedOpts</code> argument carrying <code>scopeNs</code> \u2014 the full namespace list the bound <code>t</code> was created for. The selector API uses <code>scopeNs</code> to detect when a path's first segment is a namespace prefix, <strong>without</strong> changing resolution scope. Resolution still uses the bound <code>ns</code> (a single primary string in the typical react-i18next setup), so plain <code>t('key')</code> lookups stay isolated to the primary namespace exactly as before \u2014 only <code>t($ =&gt; $.secondaryNs.foo)</code> selectors now route correctly under <code>useTranslation([nsA, nsB])</code>. Fixes the runtime side of <a href=\"https://redirect.github.com/i18next/i18next/issues/2429\">#2429</a> for the <code>react-i18next</code> default-<code>nsMode</code> case. The 4th argument is opt-in: existing 3-arg <code>getFixedT(lng, ns, keyPrefix)</code> callers see no behavior change.</li>\n</ul>\n<h2>26.0.9</h2>\n<ul>\n<li>fix(types): unformatted interpolation values are now typed as <code>string | number</code> (was <code>string</code>). i18next stringifies values at runtime, so requiring callers to wrap numbers in <code>String(...)</code> for plain <code>{{var}}</code> placeholders was unnecessary friction \u2014 and could mask the real problem when a non-string value was passed alongside multiple interpolation slots (the <code>t()</code> overload resolution would fall through to the 3-arg form and report a confusing &quot;not assignable to string&quot; error against the options object). Typed format specifiers like <code>{{x, number}}</code>, <code>{{x, currency}}</code>, <code>{{x, datetime}}</code>, etc. keep their precise types; this only relaxes the no-format default. The <code>count</code> variable remains <code>number</code>-only</li>\n</ul>\n<h2>26.0.8</h2>\n<ul>\n<li>fix(types): restore the pre-v25.10.4 <code>ExistsFunction</code> shape so plain arrow functions can again be assigned to <code>ExistsFunction</code>-typed variables (TypeScript cannot infer type predicates through multi-overload assignment). Direct <code>i18next.exists(key)</code> calls still narrow <code>key</code> to <code>SelectorKey</code> \u2014 the predicate is now declared inline on <code>i18n.exists</code>. Custom wrappers that want the narrowing can type themselves as <code>typeof i18next.exists</code> <a href=\"https://redirect.github.com/i18next/i18next/issues/2425\">2425</a></li>\n</ul>\n<h2>26.0.7</h2>\n<ul>\n<li>fix: when a plural lookup misses, the <code>missingKey</code> debug log now shows the actual plural-resolved key (e.g. <code>foo.bar_many</code> for Polish <code>count: 14</code>) instead of the base key \u2014 making it obvious which plural category was expected and missing <a href=\"https://redirect.github.com/i18next/i18next/issues/2423\">2423</a></li>\n<li>chore: drop <code>@babel/runtime</code> runtime dependency. The build no longer generates any <code>@babel/runtime</code> imports, so the package is unused by consumers. Rollup now uses <code>babelHelpers: 'bundled'</code> so any helpers that are ever needed in the future will be inlined rather than imported externally <a href=\"https://redirect.github.com/i18next/i18next/issues/2424\">2424</a></li>\n<li>chore: stop emitting <code>dist/esm/i18next.bundled.js</code>. It was byte-identical to <code>dist/esm/i18next.js</code> because no helpers were being imported <a href=\"https://redirect.github.com/i18next/i18next/issues/2424\">2424</a></li>\n</ul>\n<h2>26.0.6</h2>\n<p>Security release \u2014 all issues found via an internal audit.</p>\n<!-- raw HTML omitted -->\n</blockquote>\n<p>... (truncated)</p>\n</details>\n<details>\n<summary>Commits</summary>\n<ul>\n<li><a href=\"https://github.com/i18next/i18next/commit/817ede5146e6d366645982885b0a729861d10a3a\"><code>817ede5</code></a> 26.3.4</li>\n<li><a href=\"https://github.com/i18next/i18next/commit/46d0dd80b505b6b69feccebbe7d9c4fd66c8f85c\"><code>46d0dd8</code></a> build</li>\n<li><a href=\"https://github.com/i18next/i18next/commit/642137b7786d83661ec3ee53027798dc4b81d30a\"><code>642137b</code></a> fix(security): prevent deepExtend from recursing into inherited built-ins</li>\n<li><a href=\"https://github.com/i18next/i18next/commit/cf7080d363c0bc775681215bba6513a3610dee8b\"><code>cf7080d</code></a> 26.3.3</li>\n<li><a href=\"https://github.com/i18next/i18next/commit/05fd7be281a3c2175da16c9e867a91d95e034889\"><code>05fd7be</code></a> build</li>\n<li><a href=\"https://github.com/i18next/i18next/commit/cc0bd80943eae4f45867abbd78c0ae8dd964bb82\"><code>cc0bd80</code></a> changelog: 26.3.3 entry for <a href=\"https://redirect.github.com/i18next/i18next/issues/2438\">#2438</a></li>\n<li><a href=\"https://github.com/i18next/i18next/commit/9cbfa6353b6ab726c42be1e6ed52aab5b0601612\"><code>9cbfa63</code></a> fix(types): preserve selector returnObjects shape with context (<a href=\"https://redirect.github.com/i18next/i18next/issues/2438\">#2438</a>)</li>\n<li><a href=\"https://github.com/i18next/i18next/commit/3b047122f5ad5b99a29f9138bb8542de125c8783\"><code>3b04712</code></a> 26.3.2</li>\n<li><a href=\"https://github.com/i18next/i18next/commit/fc20f5dd5ae9744045942e135e93dd787e4bc869\"><code>fc20f5d</code></a> changelog: 26.3.2 entry for <a href=\"https://redirect.github.com/i18next/i18next/issues/2437\">#2437</a></li>\n<li><a href=\"https://github.com/i18next/i18next/commit/6901e04f07f0eec1848242d8af26509ab5438920\"><code>6901e04</code></a> fix: reassemble comma-in-parens formatters at any chain position (<a href=\"https://redirect.github.com/i18next/i18next/issues/2437\">#2437</a>)</li>\n<li>Additional commits viewable in <a href=\"https://github.com/i18next/i18next/compare/v23.16.8...v26.3.4\">compare view</a></li>\n</ul>\n</details>\n<details>\n<summary>Install script changes</summary>\n<p>This version modifies <code>prepare</code> script that runs during installation. Review the package contents before updating.</p>\n</details>\n<br />\n\n\n[![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=i18next&package-manager=npm_and_yarn&previous-version=23.16.8&new-version=26.3.4)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)\n\nDependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`.\n\n[//]: # (dependabot-automerge-start)\n[//]: # (dependabot-automerge-end)\n\n---\n\n<details>\n<summary>Dependabot commands and options</summary>\n<br />\n\nYou can trigger Dependabot actions by commenting on this PR:\n- `@dependabot rebase` will rebase this PR\n- `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it\n- `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency\n- `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself)\n- `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself)\n- `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself)\nYou can disable automated security fix PRs for this repo from the [Security Alerts page](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/network/alerts).\n\n</details>",
+        "closed_by": null,
+        "reactions": {
+            "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/180/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/180/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null
+    },
+    {
         "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/179",
         "repository_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front",
         "labels_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/179/labels{/name}",
@@ -400,7 +587,7 @@
         "milestone": null,
         "comments": 2,
         "created_at": "2026-11-20T22:20:59Z",
-        "updated_at": "2026-11-22T06:59:09Z",
+        "updated_at": "2026-11-23T14:24:15Z",
         "closed_at": null,
         "assignee": {
             "login": "zzzBECK",
@@ -435,7 +622,7 @@
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/176.patch",
             "merged_at": null
         },
-        "body": "## Issue\n\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#339\n\nSub-task da fga-eps-mds/2026.2-MeasureSoftGram-DOC#336 `[US37.01]`, \u00e9pico fga-eps-mds/2026.2-MeasureSoftGram-DOC#335 `[MSG37]` Internacionaliza\u00e7\u00e3o com Weblate.\n\n**Depende do #175** (`[TASK37.01.02]`): esta branch parte dele, ent\u00e3o o commit do #175 aparece aqui at\u00e9 ele ser mergeado. O commit desta task \u00e9 o \u00faltimo.\n\n## Etapa do fluxo\n\n- [x] 1. Branch de trabalho \u2192 `develop` do fork `2026.2-*`\n- [ ] 2. `develop` do fork \u2192 `develop` do reposit\u00f3rio central (liste as issues inclu\u00eddas abaixo)\n- [ ] 3. `develop` \u2192 `main` do reposit\u00f3rio central (release `vX.Y.Z`)\n\n## O que muda e por qu\u00ea\n\nCom o idioma em ingl\u00eas, boa parte do Front ainda aparecia em portugu\u00eas: os seis dashboards, os formatadores de gr\u00e1fico e de CSV, as telas de produto, reposit\u00f3rio, release, configura\u00e7\u00f5es e autentica\u00e7\u00e3o, e v\u00e1rios componentes compartilhados tinham texto fixo. Este PR passa tudo isso para o i18n. O `en` recebe o texto em ingl\u00eas, e o `pt` recebe o portugu\u00eas atual, sem mudar nenhuma frase.\n\n- **Namespaces novos:** `dashboards` e `auth`. O restante entra nos namespaces que j\u00e1 existiam (`product`, `repositories`, `settings`, `sidebar`, `plan_release`, `organization`, `translation`).\n- **Fora do React:** os formatadores de gr\u00e1fico e de CSV e os servi\u00e7os usam a inst\u00e2ncia compartilhada `src/shared/i18n/i18n.ts`.\n  - Constantes com texto (r\u00f3tulos de n\u00edvel, colunas de CSV, faixas de qualidade) usam `translatedRecord` e `translatedColumns`, que traduzem na leitura e acompanham a troca de idioma.\n  - Frases montadas por concatena\u00e7\u00e3o viraram chaves inteiras com interpola\u00e7\u00e3o, com plural (`_one`, `_other` e `_zero`) onde h\u00e1 contagem.\n  - Nomes de m\u00eas (`date-fns`) e listas (`Intl.ListFormat`) seguem o idioma.\n- **Termos do provedor:** reposit\u00f3rio/projeto e organiza\u00e7\u00e3o/grupo v\u00eam do i18n, com o contexto `_gitlab` que o projeto j\u00e1 usa.\n- **Flash do login e do logout:** guarda a chave, e o `FlashMessage` traduz no idioma salvo. A mensagem \u00e9 gravada antes de o idioma ser aplicado na p\u00e1gina, e sem isso sairia sempre em ingl\u00eas.\n- **Fallbacks:** as chamadas `t('chave', 'texto em portugu\u00eas')` perderam o fallback; as chaves j\u00e1 existiam nos dois idiomas.\n- **Todos os namespaces carregados:** a inst\u00e2ncia passa a carregar todos os namespaces do bundle (`ns: Object.keys(en)`). Antes s\u00f3 os 12 listados no `config.ts` carregavam em `pt`.\n- **Testes:**\n  - O Jest roda em portugu\u00eas, com tradu\u00e7\u00e3o real (o mock do `react-i18next` usa `getFixedT('pt', ns)`), como os E2E.\n  - Os specs que procuravam a chave crua passam a procurar o texto, e os snapshots foram atualizados (s\u00f3 mudaram de chave crua para texto `pt`).\n- **README:** se\u00e7\u00e3o \"Tradu\u00e7\u00f5es (i18n)\" atualizada.\n\n**Fica de fora:** as mensagens do servidor (rotas do BFF) e os metadados de SEO (`layout.tsx`, `landing/metadata.ts`), porque o servidor n\u00e3o conhece o idioma salvo no navegador. Tamb\u00e9m ficam de fora os logs de console e a formata\u00e7\u00e3o de n\u00fameros (`toLocaleString('pt-BR')`).\n\n## Tipo de mudan\u00e7a\n\n- [x] `feat` nova funcionalidade\n- [ ] `fix` corre\u00e7\u00e3o de defeito\n- [ ] `refactor` sem mudan\u00e7a de comportamento\n- [x] `test` \u00b7 `docs` \u00b7 `ci` \u00b7 `build` \u00b7 `chore`\n- [x] Muda comportamento vis\u00edvel para o usu\u00e1rio (exige valida\u00e7\u00e3o do PO): em ingl\u00eas, as telas migradas passam a aparecer em ingl\u00eas. Escopo j\u00e1 aprovado no \u00e9pico.\n\n## Como testar\n\n1. `pnpm install` e `pnpm dev`. Entre e abra um produto com releases.\n2. No cabe\u00e7alho, escolha ingl\u00eas e percorra os seis dashboards, as configura\u00e7\u00f5es, um reposit\u00f3rio, a cria\u00e7\u00e3o de release e a importa\u00e7\u00e3o de reposit\u00f3rios. Nenhum texto deve aparecer em portugu\u00eas.\n3. Troque para portugu\u00eas: os mesmos textos voltam como antes.\n4. Exporte um CSV em cada idioma: as colunas acompanham o idioma.\n5. Saia pelo menu do usu\u00e1rio com o idioma em portugu\u00eas: a despedida aparece em portugu\u00eas.\n6. `pnpm i18n:check` (Node \u2265 22): nenhuma chave faltando.\n\n## Evid\u00eancias\n\n```\n$ pnpm typecheck                      -> exit 0\n$ pnpm lint                           -> exit 0\n$ pnpm i18n:check                     -> \u2705 No files were updated. (789 chaves)\n$ jest --ci\nTest Suites: 188 passed, 188 total\nTests:       1680 passed, 1680 total\nSnapshots:   38 passed, 38 total\n$ pnpm e2e                            (su\u00edte completa, em pt)\n345 passed, 31 skipped, 21 failed\n```\n\nAs 21 falhas da primeira rodada tinham duas causas, as duas corrigidas:\n- **Namespaces `auth` e `dashboards` sem carregar em `pt`:** o flash e o submenu dos dashboards sa\u00edam em ingl\u00eas. Corrigido com `ns: Object.keys(en)`.\n- **Toasts de reposit\u00f3rio:** usavam chaves com `sucess`, corrigidas no #175.\n\nAs demais foram timeouts de `page.goto` sob carga. A segunda rodada, com todos os arquivos que tinham falhado:\n\n```\n$ pnpm e2e <12 arquivos que falharam>\n148 passed, 19 skipped, 0 failed\n```\n\n## Impacto na qualidade\n\n- **Testes adicionados ou alterados:**\n  - Testes novos no `flashMessage.spec` (tradu\u00e7\u00e3o no idioma salvo e ingl\u00eas sem idioma salvo).\n  - Specs ajustados para o texto em `pt` e snapshots atualizados.\n- **Quality gate do SonarCloud:** a conferir na CI.\n- **Problemas novos apontados pelo SonarCloud:** a conferir na CI.\n- **Tamanho:** o PR \u00e9 grande, como combinado para esta task. A maior parte \u00e9 JSON de tradu\u00e7\u00e3o e troca de texto por `t()`.\n\n## Checklist do autor\n\n- [x] Branch e commits seguem o padr\u00e3o (`tipo/CODIGO-descricao`, Conventional Commits).\n- [x] A CI est\u00e1 verde (lint, build, testes, SonarCloud).\n- [x] Os crit\u00e9rios de aceita\u00e7\u00e3o da issue est\u00e3o atendidos.\n- [x] A documenta\u00e7\u00e3o afetada foi atualizada.\n- [x] Sei explicar qualquer trecho deste PR em revis\u00e3o s\u00edncrona.\n- [ ] Uso relevante de IA registrado no meu `MD_Template.md` (ou n\u00e3o houve).\n\n## Checklist do revisor\n\n- [ ] Li a issue e os crit\u00e9rios de aceita\u00e7\u00e3o antes do c\u00f3digo.\n- [ ] Testei seguindo o \"Como testar\" (ou na homologa\u00e7\u00e3o).\n- [ ] O c\u00f3digo \u00e9 compreens\u00edvel e segue os padr\u00f5es do reposit\u00f3rio.\n- [ ] H\u00e1 testes para a mudan\u00e7a.\n- [ ] A revis\u00e3o foi feita por mim, n\u00e3o por uma ferramenta de IA.\n",
+        "body": "## Issue\n\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#339\n\nSub-task da fga-eps-mds/2026.2-MeasureSoftGram-DOC#336 `[US37.01]`, \u00e9pico fga-eps-mds/2026.2-MeasureSoftGram-DOC#335 `[MSG37]` Internacionaliza\u00e7\u00e3o com Weblate.\n\n**Depende do #175** (`[TASK37.01.02]`): esta branch parte dele, ent\u00e3o o commit do #175 aparece aqui at\u00e9 ele ser mergeado. O commit desta task \u00e9 o \u00faltimo.\n\n## Etapa do fluxo\n\n- [x] 1. Branch de trabalho \u2192 `develop` do fork `2026.2-*`\n- [ ] 2. `develop` do fork \u2192 `develop` do reposit\u00f3rio central (liste as issues inclu\u00eddas abaixo)\n- [ ] 3. `develop` \u2192 `main` do reposit\u00f3rio central (release `vX.Y.Z`)\n\n## O que muda e por qu\u00ea\n\nCom o idioma em ingl\u00eas, boa parte do Front ainda aparecia em portugu\u00eas: os seis dashboards, os formatadores de gr\u00e1fico e de CSV, as telas de produto, reposit\u00f3rio, release, configura\u00e7\u00f5es e autentica\u00e7\u00e3o, e v\u00e1rios componentes compartilhados tinham texto fixo. Este PR passa tudo isso para o i18n. O `en` recebe o texto em ingl\u00eas, e o `pt` recebe o portugu\u00eas atual, sem mudar nenhuma frase.\n\n- **Namespaces novos:** `dashboards` e `auth`. O restante entra nos namespaces que j\u00e1 existiam (`product`, `repositories`, `settings`, `sidebar`, `plan_release`, `organization`, `translation`).\n- **Fora do React:** os formatadores de gr\u00e1fico e de CSV e os servi\u00e7os usam a inst\u00e2ncia compartilhada `src/shared/i18n/i18n.ts`.\n  - Constantes com texto (r\u00f3tulos de n\u00edvel, colunas de CSV, faixas de qualidade) usam `translatedRecord` e `translatedColumns`, que traduzem na leitura e acompanham a troca de idioma.\n  - Frases montadas por concatena\u00e7\u00e3o viraram chaves inteiras com interpola\u00e7\u00e3o, com plural (`_one`, `_other` e `_zero`) onde h\u00e1 contagem.\n  - Nomes de m\u00eas (`date-fns`) e listas (`Intl.ListFormat`) seguem o idioma.\n- **Termos do provedor:** reposit\u00f3rio/projeto e organiza\u00e7\u00e3o/grupo v\u00eam do i18n, com o contexto `_gitlab` que o projeto j\u00e1 usa.\n- **Flash do login e do logout:** guarda a chave, e o `FlashMessage` traduz no idioma salvo. A mensagem \u00e9 gravada antes de o idioma ser aplicado na p\u00e1gina, e sem isso sairia sempre em ingl\u00eas.\n- **Fallbacks:** as chamadas `t('chave', 'texto em portugu\u00eas')` perderam o fallback; as chaves j\u00e1 existiam nos dois idiomas.\n- **Todos os namespaces carregados:** a inst\u00e2ncia passa a carregar todos os namespaces do bundle (`ns: Object.keys(en)`). Antes s\u00f3 os 12 listados no `config.ts` carregavam em `pt`.\n- **Testes:**\n  - O Jest roda em portugu\u00eas, com tradu\u00e7\u00e3o real (o mock do `react-i18next` usa `getFixedT('pt', ns)`), como os E2E.\n  - Os specs que procuravam a chave crua passam a procurar o texto, e os snapshots foram atualizados (s\u00f3 mudaram de chave crua para texto `pt`).\n- **README:** se\u00e7\u00e3o \"Tradu\u00e7\u00f5es (i18n)\" atualizada.\n- **Rebase sobre o `develop` (23/11):**\n  - A constante `PRODUCT_NAME_EXISTS` do #174 virou a fun\u00e7\u00e3o `productNameExistsMessage()`, para a compara\u00e7\u00e3o com a mensagem de nome repetido usar o idioma do momento, e n\u00e3o o da importa\u00e7\u00e3o do m\u00f3dulo.\n  - Dois specs novos do `develop` (`ReleaseValuesDisplay` e `RepositoryForm.coverage`) passaram a procurar o texto em `pt`, em vez da chave crua.\n\n**Fica de fora:** as mensagens do servidor (rotas do BFF) e os metadados de SEO (`layout.tsx`, `landing/metadata.ts`), porque o servidor n\u00e3o conhece o idioma salvo no navegador. Tamb\u00e9m ficam de fora os logs de console e a formata\u00e7\u00e3o de n\u00fameros (`toLocaleString('pt-BR')`).\n\n## Tipo de mudan\u00e7a\n\n- [x] `feat` nova funcionalidade\n- [ ] `fix` corre\u00e7\u00e3o de defeito\n- [ ] `refactor` sem mudan\u00e7a de comportamento\n- [x] `test` \u00b7 `docs` \u00b7 `ci` \u00b7 `build` \u00b7 `chore`\n- [x] Muda comportamento vis\u00edvel para o usu\u00e1rio (exige valida\u00e7\u00e3o do PO): em ingl\u00eas, as telas migradas passam a aparecer em ingl\u00eas. Escopo j\u00e1 aprovado no \u00e9pico.\n\n## Como testar\n\n1. `pnpm install` e `pnpm dev`. Entre e abra um produto com releases.\n2. No cabe\u00e7alho, escolha ingl\u00eas e percorra os seis dashboards, as configura\u00e7\u00f5es, um reposit\u00f3rio, a cria\u00e7\u00e3o de release e a importa\u00e7\u00e3o de reposit\u00f3rios. Nenhum texto deve aparecer em portugu\u00eas.\n3. Troque para portugu\u00eas: os mesmos textos voltam como antes.\n4. Exporte um CSV em cada idioma: as colunas acompanham o idioma.\n5. Saia pelo menu do usu\u00e1rio com o idioma em portugu\u00eas: a despedida aparece em portugu\u00eas.\n6. `pnpm i18n:check` (Node \u2265 22): nenhuma chave faltando.\n\n## Evid\u00eancias\n\n```\n$ pnpm typecheck                      -> exit 0\n$ pnpm lint                           -> exit 0\n$ pnpm i18n:check                     -> \u2705 No files were updated. (789 chaves)\n$ jest --ci\nTest Suites: 199 passed, 199 total\nTests:       1708 passed, 1708 total\nSnapshots:   38 passed, 38 total\n$ pnpm e2e                            (su\u00edte completa, em pt)\n345 passed, 31 skipped, 21 failed\n```\n\nAs 21 falhas da primeira rodada tinham duas causas, as duas corrigidas:\n- **Namespaces `auth` e `dashboards` sem carregar em `pt`:** o flash e o submenu dos dashboards sa\u00edam em ingl\u00eas. Corrigido com `ns: Object.keys(en)`.\n- **Toasts de reposit\u00f3rio:** usavam chaves com `sucess`, corrigidas no #175.\n\nAs demais foram timeouts de `page.goto` sob carga. A segunda rodada, com todos os arquivos que tinham falhado:\n\n```\n$ pnpm e2e <12 arquivos que falharam>\n148 passed, 19 skipped, 0 failed\n```\n\n## Impacto na qualidade\n\n- **Testes adicionados ou alterados:**\n  - Testes novos no `flashMessage.spec` (tradu\u00e7\u00e3o no idioma salvo e ingl\u00eas sem idioma salvo).\n  - Specs ajustados para o texto em `pt` e snapshots atualizados.\n- **Quality gate do SonarCloud:** a conferir na CI.\n- **Problemas novos apontados pelo SonarCloud:** a conferir na CI.\n- **Tamanho:** o PR \u00e9 grande, como combinado para esta task. A maior parte \u00e9 JSON de tradu\u00e7\u00e3o e troca de texto por `t()`.\n\n## Checklist do autor\n\n- [x] Branch e commits seguem o padr\u00e3o (`tipo/CODIGO-descricao`, Conventional Commits).\n- [x] A CI est\u00e1 verde (lint, build, testes, SonarCloud).\n- [x] Os crit\u00e9rios de aceita\u00e7\u00e3o da issue est\u00e3o atendidos.\n- [x] A documenta\u00e7\u00e3o afetada foi atualizada.\n- [x] Sei explicar qualquer trecho deste PR em revis\u00e3o s\u00edncrona.\n- [ ] Uso relevante de IA registrado no meu `MD_Template.md` (ou n\u00e3o houve).\n\n## Checklist do revisor\n\n- [ ] Li a issue e os crit\u00e9rios de aceita\u00e7\u00e3o antes do c\u00f3digo.\n- [ ] Testei seguindo o \"Como testar\" (ou na homologa\u00e7\u00e3o).\n- [ ] O c\u00f3digo \u00e9 compreens\u00edvel e segue os padr\u00f5es do reposit\u00f3rio.\n- [ ] H\u00e1 testes para a mudan\u00e7a.\n- [ ] A revis\u00e3o foi feita por mim, n\u00e3o por uma ferramenta de IA.\n\n",
         "closed_by": null,
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/176/reactions",
@@ -514,7 +701,7 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-11-20T20:27:06Z",
-        "updated_at": "2026-11-20T22:20:17Z",
+        "updated_at": "2026-11-23T14:24:04Z",
         "closed_at": null,
         "assignee": {
             "login": "zzzBECK",
@@ -736,7 +923,29 @@
         "labels": [],
         "state": "open",
         "locked": false,
-        "assignees": [],
+        "assignees": [
+            {
+                "login": "luciano-freitas-melo",
+                "id": 88516249,
+                "node_id": "MDQ6VXNlcjg4NTE2MjQ5",
+                "avatar_url": "https://avatars.githubusercontent.com/u/88516249?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/luciano-freitas-melo",
+                "html_url": "https://github.com/luciano-freitas-melo",
+                "followers_url": "https://api.github.com/users/luciano-freitas-melo/followers",
+                "following_url": "https://api.github.com/users/luciano-freitas-melo/following{/other_user}",
+                "gists_url": "https://api.github.com/users/luciano-freitas-melo/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/luciano-freitas-melo/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/luciano-freitas-melo/subscriptions",
+                "organizations_url": "https://api.github.com/users/luciano-freitas-melo/orgs",
+                "repos_url": "https://api.github.com/users/luciano-freitas-melo/repos",
+                "events_url": "https://api.github.com/users/luciano-freitas-melo/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/luciano-freitas-melo/received_events",
+                "type": "User",
+                "user_view_type": "public",
+                "site_admin": false
+            }
+        ],
         "milestone": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Front/milestones/1",
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/milestone/1",
@@ -777,9 +986,29 @@
         },
         "comments": 0,
         "created_at": "2026-11-19T02:07:31Z",
-        "updated_at": "2026-11-19T02:30:29Z",
+        "updated_at": "2026-11-23T15:01:47Z",
         "closed_at": null,
-        "assignee": null,
+        "assignee": {
+            "login": "luciano-freitas-melo",
+            "id": 88516249,
+            "node_id": "MDQ6VXNlcjg4NTE2MjQ5",
+            "avatar_url": "https://avatars.githubusercontent.com/u/88516249?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/luciano-freitas-melo",
+            "html_url": "https://github.com/luciano-freitas-melo",
+            "followers_url": "https://api.github.com/users/luciano-freitas-melo/followers",
+            "following_url": "https://api.github.com/users/luciano-freitas-melo/following{/other_user}",
+            "gists_url": "https://api.github.com/users/luciano-freitas-melo/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/luciano-freitas-melo/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/luciano-freitas-melo/subscriptions",
+            "organizations_url": "https://api.github.com/users/luciano-freitas-melo/orgs",
+            "repos_url": "https://api.github.com/users/luciano-freitas-melo/repos",
+            "events_url": "https://api.github.com/users/luciano-freitas-melo/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/luciano-freitas-melo/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "author_association": "NONE",
         "issue_field_values": [],
         "type": {
@@ -792,6 +1021,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -906,6 +1136,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -1154,6 +1385,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -1231,6 +1463,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -6571,6 +6804,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -8319,6 +8553,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -8516,6 +8751,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -8928,6 +9164,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -9195,6 +9432,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -9462,6 +9700,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -9729,6 +9968,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -9996,6 +10236,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -11134,6 +11375,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -11296,6 +11538,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -11458,6 +11701,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -11620,6 +11864,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -12824,6 +13069,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -12986,6 +13232,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -13332,6 +13579,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -13494,6 +13742,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -15924,6 +16173,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -16085,6 +16335,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -16247,6 +16498,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -16409,6 +16661,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -16571,6 +16824,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -16733,6 +16987,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -16895,6 +17150,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -17057,6 +17313,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -17219,6 +17476,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -18197,6 +18455,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -18857,6 +19116,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -20330,6 +20590,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -20841,6 +21102,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -20992,6 +21254,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -21184,6 +21447,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -21366,6 +21630,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
