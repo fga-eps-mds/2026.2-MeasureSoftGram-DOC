@@ -26,8 +26,8 @@ import streamlit as st  # noqa: E402
 st.set_page_config(page_title="MeasureSoftGram — Dashboard de Gestão de Projeto", layout="wide",
                    initial_sidebar_state="expanded")
 
-from pages import (custos, decisoes, evm, fluxo, metodologia, processo, qualidade, riscos, sonar,  # noqa: E402
-                   visao_executiva, zenhub)
+from pages import (canvas, custos, decisoes, evm, fluxo, metodologia, processo, qualidade, riscos,  # noqa: E402
+                   sonar, visao_executiva, zenhub)
 from src.components import filters, layout  # noqa: E402
 from src.data import contexto  # noqa: E402
 
@@ -54,6 +54,7 @@ navegacao = st.navigation({
     "Gestão": [
         st.Page(visao_executiva.pagina, title="Visão Executiva", url_path="visao-executiva",
                 icon=":material/dashboard:", default=True),
+        st.Page(canvas.pagina, title="Canvas Analytics", url_path="canvas", icon=":material/grid_view:"),
         st.Page(zenhub.pagina, title="Gestão ágil", url_path="zenhub", icon=":material/view_kanban:"),
         st.Page(_evm_e_custos, title="Agile EVM e custos", url_path="agile-evm",
                 icon=":material/stacked_line_chart:"),
