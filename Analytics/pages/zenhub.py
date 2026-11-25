@@ -16,11 +16,12 @@ import pandas as pd
 import streamlit as st
 
 import config
-from pages import zenhub_dados as apoio
+from src.components import zenhub_apoio as apoio
 from src import theme
 from src.data import contexto
 from src.components import charts, filters, layout
 from src.components.kpi import kpi
+from src.metrics import fluxo
 from src.metrics import gestao_agil as ga
 from src.metrics import velocity as vel
 from src.metrics.calculations import data_br, num, pct, status_taxa
@@ -403,6 +404,55 @@ def _comparacao(R, d, rel):
 
 # ───────────────────────── 6. velocity ─────────────────────────
 
+def _sprint_x_sprint(ctx, R):
+    """Compara duas sprints lado a lado: pontos de US (velocity) e fluxo de Tasks e Bugs (#194)."""
+    layout.secao("Sprint × sprint", "O que mudou de uma sprint para a outra?", ["ZENHUB", "CALCULADO"])
+    feitas = R[R["sprint_status"] != vel.STATUS_FUTURA]
+    opcoes = list(feitas["sprint"])
+    if len(opcoes) < 2:
+        st.caption("A comparação precisa de pelo menos duas sprints iniciadas no recorte.")
+        return
+    concl = list(feitas.loc[feitas["sprint_status"] == vel.STATUS_CONCLUIDA, "sprint"])
+    padrao_b = concl[-1] if concl else opcoes[-1]
+    padrao_a = opcoes[max(0, opcoes.index(padrao_b) - 1)]
+    rot = {r.sprint: f"{r.sprint} ({r.release if isinstance(r.release, str) else 'sem release'}, {r.sprint_status})"
+           for r in feitas.itertuples()}
+    c1, c2 = st.columns(2)
+    a = c1.selectbox("Sprint A", opcoes, index=opcoes.index(padrao_a), format_func=rot.get, key="ga_cmp_a")
+    b = c2.selectbox("Sprint B", opcoes, index=opcoes.index(padrao_b), format_func=rot.get, key="ga_cmp_b")
+    if a == b:
+        st.caption("Escolha duas sprints diferentes.")
+        return
+    itens = fluxo.itens_de_fluxo(ctx.zh_issues, transferencias=(ctx.zh_snap or {}).get("transferencias_pipeline"))
+    tab = ga.comparar_sprints(R, a, b, itens)
+    if tab.empty:
+        layout.indisponivel("Comparação indisponível", "as sprints escolhidas não estão no recorte.")
+        return
+
+    def fmt(v, u):
+        if pd.isna(v):
+            return "—"
+        return f"{num(v)}%" if u == "%" else num(v, 1 if u == "dias" else 0)
+
+    def fmt_dif(v, u):
+        if pd.isna(v):
+            return "—"
+        return ("+" if v > 0 else "") + (f"{num(v)} p.p." if u == "%" else num(v, 1 if u == "dias" else 0))
+
+    seta = {"melhorou": "▲ melhorou", "piorou": "▼ piorou", "igual": "= igual", "": "contexto"}
+    vis = pd.DataFrame({"indicador": tab["indicador"] + " (" + tab["unidade"] + ")",
+                        "a": [fmt(v, u) for v, u in zip(tab["a"], tab["unidade"])],
+                        "b": [fmt(v, u) for v, u in zip(tab["b"], tab["unidade"])],
+                        "dif": [fmt_dif(v, u) for v, u in zip(tab["diferenca"], tab["unidade"])],
+                        "leitura": tab["leitura"].map(seta)})
+    layout.tabela_html(vis, {"indicador": "Indicador", "a": a, "b": b, "dif": f"Diferença ({b} − {a})",
+                             "leitura": "Leitura"}, altura=None)
+    nota = ga.analise_comparacao(tab, a, b)
+    st.caption("SP contam só US (Feature) aceitas pelo PO, como a velocity. Tasks e Bugs não têm pontos: entram pelo "
+               "throughput e pelo Lead Time das issues fechadas entre o primeiro e o último dia de cada sprint. "
+               "Indicador de contexto não tem lado bom ou ruim." + (f" {nota}" if nota else ""))
+
+
 def _velocity(ctx, R, d):
     layout.secao("Velocity", "Quanto foi planejado e entregue em cada sprint, e como o ritmo variou?", ["ZENHUB"])
     concl = R[R["sprint_status"] == vel.STATUS_CONCLUIDA]
@@ -632,6 +682,7 @@ def pagina():
                    "épico, pessoa e issue.")
     _burndown(ctx, sprints_rec, desc["burndown"])       # 4
     _comparacao(R, d, rel)            # 5
+    _sprint_x_sprint(ctx, R)          # 6
 
     # Painel enxuto: planejamento e realizado por story, análises, issues e conferências com o Zenhub
     # ficam atrás do interruptor (a velocity e o burnup acima já mostram planejado × realizado).

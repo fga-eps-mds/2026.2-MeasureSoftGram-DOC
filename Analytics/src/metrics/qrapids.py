@@ -24,6 +24,7 @@ from dataclasses import dataclass, field
 import pandas as pd
 
 import config
+from src.metrics import ci
 from src.metrics import qualidade as nq
 
 L = config.QRAPIDS["limiares"]
@@ -263,14 +264,11 @@ def _issues(ctx, f: dict) -> pd.DataFrame:
 def runs_de_build(runs: pd.DataFrame) -> pd.DataFrame:
     """Execuções que contam como build: só os workflows de ``config.QRAPIDS["workflows_build"]``, fora das
     branches de ``config.QRAPIDS["branches_fora_do_build"]`` (D7), e só as que terminaram em sucesso ou falha
-    (cancelada e ignorada não dizem se o build está estável nem quanto ele demora). Lista de workflows vazia = todos."""
+    (cancelada e ignorada não dizem se o build está estável nem quanto ele demora). Lista de workflows vazia = todos.
+    O recorte de workflow e branch é o mesmo da página Integração contínua (``src/metrics/ci.so_build``)."""
     if runs is None or runs.empty:
         return runs if runs is not None else pd.DataFrame()
-    nomes = set(config.QRAPIDS.get("workflows_build") or [])
-    r = runs[runs["workflow"].isin(nomes)] if nomes else runs
-    fora = tuple(config.QRAPIDS.get("branches_fora_do_build") or ())
-    if fora and "branch" in r:
-        r = r[~r["branch"].fillna("").str.startswith(fora)]
+    r = ci.so_build(runs)
     return r[r["conclusao"].isin(["success", "failure"])]
 
 
