@@ -7,7 +7,8 @@ Método de Sulaiman, Barton & Blackburn (2006). A página vai do resumo ao dado 
 3. indicadores de prazo e de custo — cada cartão diz a fórmula e linka a fonte;
 4. legenda das siglas;
 5. evolução (PV × EV × AC, PPC × APC, SPI × CPI, burndown da release);
-6. rastreabilidade: as stories que formam o escopo e o entregue, o custo do time por sprint e o
+6. semestre inteiro: PV × EV × AC e SPI × CPI acumulados com as releases encadeadas, e o fechamento de cada uma;
+7. rastreabilidade: as stories que formam o escopo e o entregue, o custo do time por sprint e o
    orçamento por semana, com link para a issue e para a aba da planilha.
 
 Estimativa em Story Points e custo pelo custo do time (run rate), como na literatura de EVM ágil:
@@ -271,6 +272,84 @@ def _graficos(rel, feitas, u, analise):
                             + analise.get("burndown", ""))
 
 
+def _semestre(e):
+    """PV × EV × AC e SPI × CPI acumulados no semestre inteiro, com o fechamento de cada release (TASK38.02.01)."""
+    sem = evm_calc.evm_semestre(e)
+    fech = evm_calc.fechamento_releases(e)
+    layout.secao("Semestre inteiro", "Somando as releases, quanto do planejado virou entrega aceita?", ["CALCULADO"])
+    if sem.empty or sem["PV"].isna().all():
+        layout.indisponivel("Curvas do semestre indisponíveis", "orçamento das releases não encontrado na planilha.",
+                            "abas Custos e Planejamento da planilha.")
+        return
+    analise = evm_calc.analise_semestre(sem, fech)
+    nomes = {"PV": "Planejado (PV)", "EV": "Entregue em valor (EV)", "AC": "Gasto (AC)"}
+    longo = sem.melt(id_vars=["release", "sprint", "fim_da_sprint"], value_vars=["PV", "EV", "AC"], var_name="serie",
+                     value_name="valor").dropna(subset=["valor"])
+    longo["nome"] = longo["serie"].map(nomes)
+    dom = [nomes[k] for k in ("PV", "EV", "AC") if nomes[k] in set(longo["nome"])]
+    cor = {nomes["PV"]: theme.SERIES[2], nomes["EV"]: theme.SERIES[0], nomes["AC"]: theme.SERIES[1]}
+    traco = {nomes["PV"]: [6, 4], nomes["EV"]: [1, 0], nomes["AC"]: [2, 2]}
+    linhas = (alt.Chart(longo).mark_line(strokeWidth=2, point=alt.OverlayMarkDef(size=60, filled=True))
+              .encode(x=alt.X("fim_da_sprint:T", title="Fim da sprint", axis=alt.Axis(format="%d/%m")),
+                      y=alt.Y("valor:Q", title="R$ acumulado no semestre"),
+                      color=alt.Color("nome:N", title=None, scale=alt.Scale(domain=dom, range=[cor[x] for x in dom])),
+                      strokeDash=alt.StrokeDash("nome:N", legend=None,
+                                                scale=alt.Scale(domain=dom, range=[traco[x] for x in dom])),
+                      tooltip=[alt.Tooltip("sprint:N", title="Sprint"), alt.Tooltip("release:N", title="Release"),
+                               alt.Tooltip("nome:N", title="Série"),
+                               alt.Tooltip("valor:Q", title="R$", format=",.2f")]))
+    camadas = linhas + charts.marcos_release(sem["inicio_da_sprint"].min(), sem["fim_da_sprint"].max())
+    bac = sem["BAC"].iloc[0]
+    if not vazio(bac):
+        camadas += charts.regra_horizontal(bac, f"orçamento do semestre {brl(bac, 0)}", theme.INK["muted"])
+    nota = ("Cada release recomeça o próprio EVM; aqui o fechamento de cada uma é somado ao da seguinte. O planejado "
+            "vai até a última sprint do plano; entregue e gasto só até a última sprint iniciada.")
+    if "AC" in set(longo["serie"]) and sem["AC"].dropna().size < sem["EV"].dropna().size:
+        nota += " A curva de gasto para na sprint em que falta o custo do time na aba Planejamento (não é inventado)."
+    elif "AC" not in set(longo["serie"]):
+        nota += " O gasto não aparece: a aba Planejamento não tem o custo do time das sprints."
+    fora = evm_calc.releases_sem_orcamento(e)
+    if fora:
+        nota += (f" Sem orçamento na planilha (fora do orçamento do semestre e das curvas): {', '.join(fora)}.")
+    charts.mostrar(camadas, "Planejado × entregue × gasto — semestre", "R$ acumulado · uma marca por sprint · linhas "
+                   "pontilhadas = entregas das releases", nota=" ".join(x for x in (nota, analise.get("curvas")) if x),
+                   altura=300)
+
+    e2, d2 = st.columns([3, 2])
+    with e2:
+        idx = sem.melt(id_vars=["sprint", "fim_da_sprint"], value_vars=["SPI", "CPI"], var_name="indice",
+                       value_name="valor").dropna()
+        if idx.empty:
+            layout.indisponivel("Índices do semestre indisponíveis", "sem valor planejado nem custo real.")
+        else:
+            idx["nome"] = idx["indice"].map({"SPI": "Prazo (SPI)", "CPI": "Custo (CPI)"})
+            dom = [x for x in ("Prazo (SPI)", "Custo (CPI)") if x in set(idx["nome"])]
+            g = (alt.Chart(idx).mark_line(strokeWidth=2, point=alt.OverlayMarkDef(size=60, filled=True))
+                 .encode(x=alt.X("fim_da_sprint:T", title="Fim da sprint", axis=alt.Axis(format="%d/%m")),
+                         y=alt.Y("valor:Q", title="Índice", scale=alt.Scale(domain=[0, max(1.2, idx["valor"].max() + .1)])),
+                         color=alt.Color("nome:N", title=None, scale=alt.Scale(domain=dom, range=theme.SERIES[:len(dom)])),
+                         tooltip=[alt.Tooltip("sprint:N", title="Sprint"), alt.Tooltip("nome:N", title="Índice"),
+                                  alt.Tooltip("valor:Q", title="Valor", format=".2f")]))
+            charts.mostrar(g + charts.regra_horizontal(1.0, "1,0 = no plano")
+                           + charts.marcos_release(sem["inicio_da_sprint"].min(), sem["fim_da_sprint"].max()),
+                           "Índices de prazo e custo — semestre", "EV ÷ PV e EV ÷ AC sobre os acumulados do semestre",
+                           altura=220, nota=analise.get("indices"))
+    with d2:
+        if not fech.empty:
+            situacao = fech["encerrada"].map({True: "encerrada", False: "em andamento"})
+            t = fech.assign(situacao=situacao.where(~fech["sem_us"], situacao + " · sem US"),
+                            **{c: fech[c].map(lambda v: brl(v, 0)) for c in ("BAC", "PV", "EV", "AC")},
+                            **{c: fech[c].map(lambda v: num(v, 2)) for c in ("SPI", "CPI")})
+            st.markdown("**Fechamento de cada release**")
+            layout.tabela_html(t[["release", "situacao", "sprint", "BAC", "PV", "EV", "AC", "SPI", "CPI"]],
+                               {"release": "Release", "situacao": "Situação", "sprint": "Última sprint iniciada",
+                                "BAC": "Orçamento (BAC)", "PV": "PV", "EV": "EV", "AC": "AC", "SPI": "SPI",
+                                "CPI": "CPI"}, altura=None)
+            st.caption("SPI e CPI contam só Story Points de US (Feature) fechadas, ou seja, aceitas pelo PO. Task e "
+                       "Bug ficam de fora e vão para a página Fluxo. Release 'sem US': nenhuma US passou pelas sprints "
+                       "dela, então o entregue em valor é zero.")
+
+
 def _rastreabilidade(ctx, rel, d, u):
     """De onde vem cada número: stories (Zenhub), custo do time por sprint e orçamento por semana (planilha)."""
     ate = d[(d["n"] <= u["n"]) & d["PRP"].notna()]
@@ -425,6 +504,7 @@ def pagina():
 
     layout.secao("Análise", "Como prazo, custo e escopo evoluíram sprint a sprint?", ["CALCULADO"])
     _graficos(rel, feitas, u, evm_calc.analise_critica(u, agile.sp_aguardando_aceite(ctx.zh_issues)))
+    _semestre(e)
 
     if layout.detalhes("evm", "Mostrar stories, semanas e a tabela completa do EVM"):
         layout.secao("Dado bruto", "Quais stories e semanas formam o EVM?", ["ZENHUB", "PLANILHA"])

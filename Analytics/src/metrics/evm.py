@@ -188,6 +188,158 @@ def sumario(evm: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(out)
 
 
+# ───────────────────────── semestre inteiro (TASK38.02.01) ─────────────────────────
+
+def _ev_da_sprint(r) -> float:
+    """EV da sprint iniciada; sem nenhuma US no escopo (PRP = 0) nada virou valor, então é 0, não vazio."""
+    if not pd.isna(r["PRP"]) and r["PRP"] == 0 and pd.isna(r["EV"]) and not pd.isna(r["BAC"]):
+        return 0.0
+    return r["EV"]
+
+
+def releases_sem_orcamento(evm: pd.DataFrame) -> list[str]:
+    """Releases sem orçamento (BAC) na planilha: ficam fora do orçamento do semestre."""
+    if evm is None or evm.empty:
+        return []
+    b = evm.groupby("release", sort=False)["BAC"].first()
+    return [str(r) for r, v in b.items() if pd.isna(v)]
+
+
+def evm_semestre(evm: pd.DataFrame) -> pd.DataFrame:
+    """PV, EV e AC acumulados no semestre: as releases encadeadas numa linha do tempo só.
+
+    Cada release tem o próprio orçamento (BAC) e o EVM dela recomeça do zero. No semestre, a sprint ``n``
+    da release ``k`` soma o fechamento das releases anteriores (o valor da última sprint iniciada de cada
+    uma) com o acumulado da release ``k`` até a sprint ``n``:
+
+    * **BAC do semestre** = Σ BAC das releases que têm orçamento na planilha (as sem orçamento ficam de
+      fora e são listadas por ``releases_sem_orcamento``);
+    * **PV, EV, AC do semestre** = Σ fechamento das releases anteriores + acumulado da release atual;
+    * **SPI** = EV ÷ PV e **CPI** = EV ÷ AC sobre esses acumulados.
+
+    O PV vai até a última sprint planejada (é a curva do plano); EV e AC só existem nas sprints iniciadas.
+    Sprint iniciada sem nenhuma US no escopo entrega EV = 0 (houve custo, não houve valor aceito). Custo ou
+    orçamento sem dado numa release iniciada deixa o acumulado indisponível dali em diante: nunca é inventado.
+    Os pontos (SP) são os mesmos do EVM da release, então SPI e CPI seguem contando só US aceitas pelo PO.
+    """
+    if evm is None or evm.empty:
+        return pd.DataFrame()
+    d = evm.sort_values(["inicio_da_sprint", "n"]).reset_index(drop=True)
+    d["EV"] = d.apply(_ev_da_sprint, axis=1)
+    ordem = list(dict.fromkeys(d["release"]))
+    bacs = d.groupby("release", sort=False)["BAC"].first()
+    bac_sem = float(bacs.sum(min_count=1))
+    linhas = []
+    base = {"PV": 0.0, "EV": 0.0, "AC": 0.0}
+    for rel in ordem:
+        g = d[d["release"] == rel]
+        iniciadas = g.dropna(subset=["PRP"])
+        if iniciadas.empty and pd.isna(g["BAC"].iloc[0]):
+            # release futura sem orçamento: não há plano para somar, a curva termina na anterior
+            linhas += [{"release": rel, "sprint": r.sprint, "status": r.status, "inicio_da_sprint": r.inicio_da_sprint,
+                        "fim_da_sprint": r.fim_da_sprint, "BAC_release": NAN, "BAC": bac_sem,
+                        **{k: NAN for k in ("PV", "EV", "AC", "SPI", "CPI")}} for r in g.itertuples()]
+            continue
+        for r in g.itertuples():
+            iniciou = not pd.isna(r.PRP)
+            val = {}
+            for k in ("PV", "EV", "AC"):
+                atual = getattr(r, k)
+                if k != "PV" and not iniciou:
+                    val[k] = NAN
+                else:
+                    val[k] = base[k] + atual if not (pd.isna(base[k]) or pd.isna(atual)) else NAN
+            linhas.append({"release": rel, "sprint": r.sprint, "status": r.status,
+                           "inicio_da_sprint": r.inicio_da_sprint, "fim_da_sprint": r.fim_da_sprint,
+                           "BAC_release": r.BAC, "BAC": bac_sem, **val,
+                           "SPI": _div(val["EV"], val["PV"]) if not pd.isna(val["EV"]) else NAN,
+                           "CPI": _div(val["EV"], val["AC"]) if not pd.isna(val["AC"]) else NAN})
+        # fechamento da release: PV vai até o fim do plano dela; EV e AC até a última sprint iniciada
+        fech = {"PV": float(g["PV"].iloc[-1]) if not pd.isna(g["PV"].iloc[-1]) else NAN,
+                "EV": float(iniciadas["EV"].iloc[-1]) if not iniciadas.empty else 0.0,
+                "AC": float(iniciadas["AC"].iloc[-1]) if not iniciadas.empty else 0.0}
+        for k in base:
+            base[k] = base[k] + fech[k] if not (pd.isna(base[k]) or pd.isna(fech[k])) else NAN
+    return pd.DataFrame(linhas)
+
+
+def fechamento_releases(evm: pd.DataFrame) -> pd.DataFrame:
+    """Uma linha por release com PV, EV e AC da última sprint iniciada e os índices nela."""
+    if evm is None or evm.empty:
+        return pd.DataFrame()
+    out = []
+    for rel, g in evm.sort_values(["inicio_da_sprint", "n"]).groupby("release", sort=False):
+        feitas = g.dropna(subset=["PRP"])
+        if feitas.empty:
+            continue
+        u = feitas.iloc[-1]
+        ev = _ev_da_sprint(u)
+        sem_us = u["PRP"] == 0
+        out.append({"release": rel, "sprint": u["sprint"], "encerrada": len(feitas) == len(g)
+                    and u["status"] == vel.STATUS_CONCLUIDA, "sem_us": sem_us, "BAC": u["BAC"], "PV": u["PV"],
+                    "EV": ev, "AC": u["AC"], "SPI": _div(ev, u["PV"]) if sem_us else u["SPI"],
+                    "CPI": _div(ev, u["AC"]) if sem_us else u["CPI"], "APC": 0.0 if sem_us else u["APC"]})
+    return pd.DataFrame(out)
+
+
+def analise_semestre(sem: pd.DataFrame, releases: pd.DataFrame) -> dict[str, str]:
+    """Leitura crítica das curvas do semestre: ``curvas`` (PV × EV × AC) e ``indices`` (SPI × CPI).
+
+    ``sem`` é a saída de ``evm_semestre`` e ``releases`` a de ``fechamento_releases``. Chave ausente = sem
+    leitura possível. Cada texto diz o que a curva mostra, onde a distância surgiu e que decisão apoia.
+    """
+    from src.metrics.calculations import brl, num, pct
+    saida: dict[str, str] = {}
+    if sem is None or sem.empty:
+        return saida
+    feitas = sem.dropna(subset=["EV"])
+    if feitas.empty:
+        return saida
+    u = feitas.iloc[-1]
+    pv, ev, ac, bac = u["PV"], u["EV"], u["AC"], u["BAC"]
+
+    if not any(pd.isna(x) for x in (pv, ev)) and pv > 0:
+        t = (f"Leitura crítica: até a {u['sprint']} ({u['release']}) o semestre planejou {brl(pv, 0)} (PV) e "
+             f"entregou {brl(ev, 0)} em valor (EV)")
+        t += f", {pct(ev / bac)} do orçamento do semestre ({brl(bac, 0)})." if not pd.isna(bac) and bac else "."
+        if releases is not None and not releases.empty:
+            r = releases.assign(gap=releases["PV"] - releases["EV"]).dropna(subset=["gap"])
+            if not r.empty:
+                pior = r.sort_values("gap").iloc[-1]
+                if pior["gap"] > 0:
+                    t += (f" A maior distância entre o planejado e o entregue está na {pior['release']}: "
+                          f"{brl(pior['gap'], 0)} ({pct(pior['APC']) if not pd.isna(pior['APC']) else '—'} do "
+                          "escopo dela aceito).")
+                melhor = r.sort_values("gap").iloc[0]
+                if len(r) > 1 and melhor["release"] != pior["release"]:
+                    t += f" A {melhor['release']} foi a que mais se aproximou do plano."
+        if ev < pv:
+            t += (" Como só US aceitas pelo PO viram valor, a distância acumulada mede trabalho não aceito ou "
+                  "escopo não entregue, e se arrasta entre as releases. Decisão que isso apoia: priorizar o aceite "
+                  "das US prontas e cortar escopo da release final em vez de abrir novas frentes.")
+        else:
+            t += " Decisão que isso apoia: manter escopo e ritmo de aceite até a release final."
+        if not pd.isna(ac) and ac > 0:
+            t += (f" O gasto acumulado (AC, {brl(ac, 0)}) " + ("passa do entregue: o semestre custou mais do que "
+                  "entregou em valor." if ac > ev else "está dentro do entregue."))
+        saida["curvas"] = t
+
+    spi, cpi = u["SPI"], u["CPI"]
+    if not pd.isna(spi):
+        t = f"Leitura crítica: SPI do semestre {num(spi, 2)}"
+        if releases is not None and not releases.empty:
+            serie = ", ".join(f"{r.release} {num(r.SPI, 2)}" for r in releases.itertuples() if not pd.isna(r.SPI))
+            if serie:
+                t += f" (no fechamento de cada release: {serie})"
+        t += ". " + ("O semestre está no ritmo planejado (meta ≥ 0,95)." if spi >= 0.95 else
+                     f"Para cada R$ 1 planejado no semestre, R$ {num(spi, 2)} virou entrega aceita.")
+        if not pd.isna(cpi):
+            t += f" CPI {num(cpi, 2)}: " + ("o custo acompanha a entrega." if cpi >= 0.95 else
+                                           "gasta-se mais do que se entrega.")
+        saida["indices"] = t
+    return saida
+
+
 # ───────────────────────── análise crítica dos gráficos ─────────────────────────
 
 def _fila_aceite(aceite: dict | None) -> str:
