@@ -1,10 +1,436 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-24T03:13:52+00:00",
+ "coletado_em": "2026-11-25T03:13:31+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 369,
+   "title": "[BUG13.01] msgram weights trata Enter vazio como resposta: escolhe a 2ª entidade em silêncio ou quebra com TypeError",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T17:13:35Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T17:15:01Z",
+   "labels": [
+    "bug"
+   ],
+   "type": "Bug",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4766,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/369",
+   "author": "MilenaFRocha"
+  },
+  {
+   "number": 368,
+   "title": "feat(analytics): [TASK38.01.02] página Canvas Analytics com R1, R2 e R3 contra a meta da R3",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-24T13:20:15Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T14:22:48Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3518,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/368",
+   "author": "thegm445"
+  },
+  {
+   "number": 367,
+   "title": "docs(analytics): [TASK38.01.01] define os blocos do Canvas Analytics e suas fontes de dado",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-24T12:42:06Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T14:23:18Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2434,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/367",
+   "author": "thegm445"
+  },
+  {
+   "number": 366,
+   "title": "[TASK38.05.01] Conferir as pendências da ata da R2",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:42Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:43Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 432,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/366",
+   "author": "thegm445"
+  },
+  {
+   "number": 365,
+   "title": "[TASK38.04.02] Evidências de uso de IA",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:40Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:17:45Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 406,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/365",
+   "author": "thegm445"
+  },
+  {
+   "number": 364,
+   "title": "[TASK38.04.01] Página \"Uso de IA\": retrospectiva crítica",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:37Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:38Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 267,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/364",
+   "author": "thegm445"
+  },
+  {
+   "number": 363,
+   "title": "[TASK38.03.01] Completar as decisões gerenciais",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:35Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:36Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 417,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/363",
+   "author": "thegm445"
+  },
+  {
+   "number": 362,
+   "title": "[TASK38.02.03] Qualidade: metas × medido",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:32Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:33Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 251,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/362",
+   "author": "thegm445"
+  },
+  {
+   "number": 361,
+   "title": "[TASK38.02.02] Tempo e escopo: planejado × entregue",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:29Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:30Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 271,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/361",
+   "author": "thegm445"
+  },
+  {
+   "number": 360,
+   "title": "[TASK38.02.01] Custo: curvas VP, VA e CR",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:27Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:27Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 324,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/360",
+   "author": "thegm445"
+  },
+  {
+   "number": 359,
+   "title": "[TASK38.01.03] Evolução no semestre: R1 × R2 × R3",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:24Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:25Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "bottinolucas"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 453,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/359",
+   "author": "thegm445"
+  },
+  {
+   "number": 358,
+   "title": "[TASK38.01.02] Implementar a página Canvas Analytics",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:22Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T13:20:38Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 486,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/358",
+   "author": "thegm445"
+  },
+  {
+   "number": 357,
+   "title": "[TASK38.01.01] Definir os blocos do Canvas e mapear aos dados",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:20Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:54:30Z",
+   "labels": [
+    "task"
+   ],
+   "type": null,
+   "assignees": [
+    "thegm445"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 471,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/357",
+   "author": "thegm445"
+  },
+  {
+   "number": 356,
+   "title": "[TASK38.05] Pendências do feedback da R2",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:18Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:49Z",
+   "labels": [
+    "US",
+    "analytics"
+   ],
+   "type": "Task",
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 274,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/356",
+   "author": "thegm445"
+  },
+  {
+   "number": 355,
+   "title": "[TASK38.04] Uso de IA generativa",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:15Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:48Z",
+   "labels": [
+    "US",
+    "analytics"
+   ],
+   "type": "Task",
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 422,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/355",
+   "author": "thegm445"
+  },
+  {
+   "number": 354,
+   "title": "[TASK38.03] Decisões gerenciais",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:13Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:47Z",
+   "labels": [
+    "US",
+    "analytics"
+   ],
+   "type": "Task",
+   "assignees": [
+    "gusrberto"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 310,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/354",
+   "author": "thegm445"
+  },
+  {
+   "number": 353,
+   "title": "[TASK38.02] Planejado × realizado",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:10Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:46Z",
+   "labels": [
+    "US",
+    "analytics"
+   ],
+   "type": "Task",
+   "assignees": [
+    "gusrberto",
+    "bottinolucas",
+    "devwallyson"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 557,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/353",
+   "author": "thegm445"
+  },
+  {
+   "number": 352,
+   "title": "[TASK38.01] Canvas Analytics",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:07Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:45Z",
+   "labels": [
+    "US",
+    "analytics"
+   ],
+   "type": "Task",
+   "assignees": [
+    "bottinolucas",
+    "thegm445"
+   ],
+   "milestone": "R3",
+   "milestone_due_on": "2026-11-30T00:00:00Z",
+   "body_chars": 594,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/352",
+   "author": "thegm445"
+  },
+  {
+   "number": 351,
+   "title": "[MSG38] Dashboard Analítico: forma final da R3 (Canvas Analytics)",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T12:15:04Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T12:15:44Z",
+   "labels": [
+    "analytics",
+    "epic"
+   ],
+   "type": null,
+   "assignees": [
+    "gusrberto",
+    "bottinolucas",
+    "thegm445",
+    "henriquecq",
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1915,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/351",
+   "author": "thegm445"
+  },
+  {
+   "number": 350,
+   "title": "[TASK13.02.06] Core: uma única validação da soma dos pesos para a CLI e o Service",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-24T11:27:26Z",
+   "closed_at": null,
+   "updated_at": "2026-11-24T17:09:52Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "MilenaFRocha",
+    "DanielFsR"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 7680,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/350",
+   "author": "MilenaFRocha"
+  },
   {
    "number": 349,
    "title": "fix(analytics): [TASK33.01.02] corrige a coleta de issues do Sonar e lista BLOCKER/CRITICAL",
@@ -394,7 +820,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-19T02:05:21Z",
    "closed_at": "2026-11-23T00:17:17Z",
-   "updated_at": "2026-11-23T03:13:33Z",
+   "updated_at": "2026-11-24T14:39:15Z",
    "labels": [
     "US",
     "frontend"
@@ -416,7 +842,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-19T02:05:19Z",
    "closed_at": "2026-11-23T00:17:13Z",
-   "updated_at": "2026-11-23T03:13:31Z",
+   "updated_at": "2026-11-24T14:39:14Z",
    "labels": [
     "US",
     "frontend"
@@ -438,7 +864,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-19T02:05:16Z",
    "closed_at": "2026-11-23T00:17:09Z",
-   "updated_at": "2026-11-23T03:13:30Z",
+   "updated_at": "2026-11-24T14:39:13Z",
    "labels": [
     "US",
     "frontend"
@@ -460,7 +886,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-19T02:05:13Z",
    "closed_at": "2026-11-23T00:17:03Z",
-   "updated_at": "2026-11-23T03:13:29Z",
+   "updated_at": "2026-11-24T14:39:12Z",
    "labels": [
     "US",
     "frontend"
@@ -600,7 +1026,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:20Z",
    "closed_at": "2026-11-23T00:16:58Z",
-   "updated_at": "2026-11-23T03:13:38Z",
+   "updated_at": "2026-11-24T14:39:20Z",
    "labels": [
     "US",
     "frontend"
@@ -622,7 +1048,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:15Z",
    "closed_at": "2026-11-23T00:16:53Z",
-   "updated_at": "2026-11-23T03:13:37Z",
+   "updated_at": "2026-11-24T14:39:19Z",
    "labels": [
     "US",
     "frontend"
@@ -644,7 +1070,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:12Z",
    "closed_at": "2026-11-23T00:16:49Z",
-   "updated_at": "2026-11-23T03:13:35Z",
+   "updated_at": "2026-11-24T14:39:17Z",
    "labels": [
     "US",
     "frontend"
@@ -666,7 +1092,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-17T14:59:07Z",
    "closed_at": "2026-11-23T00:16:45Z",
-   "updated_at": "2026-11-23T03:13:34Z",
+   "updated_at": "2026-11-24T14:39:16Z",
    "labels": [
     "US",
     "frontend"
@@ -1446,28 +1872,6 @@
    "author": "MilenaFRocha"
   },
   {
-   "number": 278,
-   "title": "[US13.04] Informar o grau de certeza nas comparações (AHP fuzzy)",
-   "state": "open",
-   "is_pull_request": false,
-   "created_at": "2026-11-11T12:33:52Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:14:11Z",
-   "labels": [
-    "US",
-    "frontend",
-    "core",
-    "cli"
-   ],
-   "type": "Feature",
-   "assignees": [],
-   "milestone": "R3",
-   "milestone_due_on": "2026-11-30T00:00:00Z",
-   "body_chars": 1188,
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/278",
-   "author": "MilenaFRocha"
-  },
-  {
    "number": 276,
    "title": "[US13.01] Definir pesos por comparação (AHP) no planejamento da release na web",
    "state": "open",
@@ -1894,11 +2298,11 @@
   {
    "number": 257,
    "title": "[TASK33.01.05] QA-19 · M9 e DT: vazão por sprint ≥ 0,60 e conclusão de tarefas ≥ 0,80",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:33:26Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T22:44:50Z",
+   "closed_at": "2026-11-24T11:47:06Z",
+   "updated_at": "2026-11-24T11:47:06Z",
    "labels": [
     "task"
    ],
@@ -2003,11 +2407,11 @@
   {
    "number": 252,
    "title": "[TASK33.04] Duplicação e CI",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:32:46Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:16:20Z",
+   "closed_at": "2026-11-24T11:45:34Z",
+   "updated_at": "2026-11-24T11:45:34Z",
    "labels": [
     "US",
     "all repos"
@@ -2052,11 +2456,11 @@
   {
    "number": 250,
    "title": "[TASK33.02] Cobertura de testes",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:32:35Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:16:15Z",
+   "closed_at": "2026-11-24T11:45:32Z",
+   "updated_at": "2026-11-24T11:45:32Z",
    "labels": [
     "US",
     "all repos"
@@ -2076,11 +2480,11 @@
   {
    "number": 249,
    "title": "[TASK33.01] Medição e processo",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:32:29Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:16:12Z",
+   "closed_at": "2026-11-24T11:47:18Z",
+   "updated_at": "2026-11-24T11:47:18Z",
    "labels": [
     "US",
     "analytics"
@@ -2102,11 +2506,11 @@
   {
    "number": 248,
    "title": "[MSG33] Execução do Plano de Qualidade (R3)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-10T02:32:00Z",
-   "closed_at": null,
-   "updated_at": "2026-11-10T02:32:00Z",
+   "closed_at": "2026-11-24T11:47:26Z",
+   "updated_at": "2026-11-24T11:47:26Z",
    "labels": [
     "epic",
     "all repos"
@@ -2147,7 +2551,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:28Z",
    "closed_at": "2026-11-12T04:20:39Z",
-   "updated_at": "2026-11-23T03:13:28Z",
+   "updated_at": "2026-11-24T14:39:10Z",
    "labels": [
     "bug",
     "frontend",
@@ -2170,7 +2574,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-10T01:44:07Z",
    "closed_at": "2026-11-12T03:51:27Z",
-   "updated_at": "2026-11-23T03:13:26Z",
+   "updated_at": "2026-11-24T14:39:09Z",
    "labels": [
     "bug",
     "frontend",
@@ -3419,7 +3823,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:51:28Z",
    "closed_at": "2026-11-13T03:47:32Z",
-   "updated_at": "2026-11-23T03:13:55Z",
+   "updated_at": "2026-11-24T14:39:37Z",
    "labels": [
     "US"
    ],
@@ -3445,7 +3849,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:51Z",
    "closed_at": "2026-11-13T03:32:17Z",
-   "updated_at": "2026-11-23T03:13:53Z",
+   "updated_at": "2026-11-24T14:39:35Z",
    "labels": [
     "US"
    ],
@@ -3471,7 +3875,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-04T01:50:08Z",
    "closed_at": "2026-11-13T03:32:14Z",
-   "updated_at": "2026-11-23T03:13:51Z",
+   "updated_at": "2026-11-24T14:39:34Z",
    "labels": [
     "US"
    ],
@@ -4368,7 +4772,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:23Z",
    "closed_at": null,
-   "updated_at": "2026-11-16T13:48:11Z",
+   "updated_at": "2026-11-24T12:52:57Z",
    "labels": [
     "US",
     "core",
@@ -4414,7 +4818,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:01Z",
    "closed_at": "2026-11-11T22:21:31Z",
-   "updated_at": "2026-11-23T03:13:41Z",
+   "updated_at": "2026-11-24T14:39:23Z",
    "labels": [
     "US",
     "frontend",
@@ -4442,7 +4846,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:50Z",
    "closed_at": "2026-11-12T03:15:43Z",
-   "updated_at": "2026-11-23T03:13:49Z",
+   "updated_at": "2026-11-24T14:39:32Z",
    "labels": [
     "US"
    ],
@@ -4463,7 +4867,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:46Z",
    "closed_at": "2026-11-10T02:33:45Z",
-   "updated_at": "2026-11-23T03:13:48Z",
+   "updated_at": "2026-11-24T14:39:31Z",
    "labels": [
     "US"
    ],
@@ -4484,7 +4888,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:38Z",
    "closed_at": "2026-11-11T22:21:36Z",
-   "updated_at": "2026-11-23T03:13:46Z",
+   "updated_at": "2026-11-24T14:39:29Z",
    "labels": [
     "US"
    ],
@@ -4505,7 +4909,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:33Z",
    "closed_at": "2026-11-07T19:14:18Z",
-   "updated_at": "2026-11-23T03:13:45Z",
+   "updated_at": "2026-11-24T14:39:28Z",
    "labels": [
     "US"
    ],
@@ -4526,7 +4930,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:28Z",
    "closed_at": "2026-11-12T03:11:01Z",
-   "updated_at": "2026-11-23T03:13:50Z",
+   "updated_at": "2026-11-24T14:39:33Z",
    "labels": [
     "US"
    ],
@@ -4548,7 +4952,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:39:22Z",
    "closed_at": "2026-11-11T22:21:33Z",
-   "updated_at": "2026-11-23T03:13:44Z",
+   "updated_at": "2026-11-24T14:39:27Z",
    "labels": [
     "US"
    ],
@@ -4621,7 +5025,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:48:20Z",
    "closed_at": "2026-11-12T05:12:26Z",
-   "updated_at": "2026-11-23T03:13:43Z",
+   "updated_at": "2026-11-24T14:39:26Z",
    "labels": [
     "US",
     "frontend"
@@ -4669,7 +5073,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-06T00:06:06Z",
    "closed_at": "2026-11-12T04:56:19Z",
-   "updated_at": "2026-11-23T03:13:42Z",
+   "updated_at": "2026-11-24T14:39:25Z",
    "labels": [
     "US"
    ],
@@ -4773,7 +5177,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-28T10:54:25Z",
    "closed_at": "2026-09-29T02:11:12Z",
-   "updated_at": "2026-11-23T03:13:25Z",
+   "updated_at": "2026-11-24T14:39:08Z",
    "labels": [
     "bug",
     "frontend"
@@ -5321,7 +5725,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-25T20:16:41Z",
    "closed_at": "2026-11-12T02:16:25Z",
-   "updated_at": "2026-11-23T03:13:40Z",
+   "updated_at": "2026-11-24T14:39:22Z",
    "labels": [
     "US",
     "frontend",
@@ -5537,7 +5941,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-24T00:57:37Z",
    "closed_at": "2026-11-11T22:28:23Z",
-   "updated_at": "2026-11-11T22:28:23Z",
+   "updated_at": "2026-11-24T12:52:56Z",
    "labels": [
     "US",
     "service",
@@ -5565,7 +5969,7 @@
    "is_pull_request": false,
    "created_at": "2026-09-24T00:34:13Z",
    "closed_at": "2026-11-11T22:35:14Z",
-   "updated_at": "2026-11-23T03:13:39Z",
+   "updated_at": "2026-11-24T14:39:21Z",
    "labels": [
     "US",
     "frontend",

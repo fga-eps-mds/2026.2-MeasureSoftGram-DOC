@@ -1,11 +1,26 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-23T03:14:13+00:00",
+ "coletado_em": "2026-11-25T03:13:31+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-CLI",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "6918b74bac7490234a47a84313a56d2215a723b6",
+   "date": "2026-11-24T12:49:04Z",
+   "author": "MilenaFRocha",
+   "message": "ci(e2e): publica o resultado nas issues das US pelo GitHub App da organização (#38)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/test.yml",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 2
+    }
+   ]
+  },
   {
    "sha": "3d6eae2739ad00770e06b5d7dadd25f8041b2fb4",
    "date": "2026-11-23T03:11:00Z",
@@ -2197,5 +2212,5 @@
    ]
   }
  ],
- "detalhes_novos": 4
+ "detalhes_novos": 1
 }

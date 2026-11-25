@@ -12,10 +12,10 @@
     "author": "DiegoCarlito"
   },
   "2026.2-MeasureSoftGram-CLI": {
-    "number": 37,
-    "last_merged_at": "2026-11-23T03:11:01Z",
-    "title": "refactor(cli): zera as S3776 de cmd_calculate e cmd_list (QA-12)",
-    "author": "thegm445"
+    "number": 38,
+    "last_merged_at": "2026-11-24T12:49:05Z",
+    "title": "ci(e2e): publica o resultado nas issues das US pelo GitHub App da org…",
+    "author": "MilenaFRocha"
   },
   "2026.2-MeasureSoftGram-Core": {
     "number": 27,
@@ -24,10 +24,10 @@
     "author": "bottinolucas"
   },
   "2026.2-MeasureSoftGram-Front": {
-    "number": 166,
-    "last_merged_at": "2026-11-23T03:08:28Z",
-    "title": "test: tira os arquivos do Front da faixa de cobertura ≤ 60% (QA-09)",
-    "author": "thegm445"
+    "number": 181,
+    "last_merged_at": "2026-11-24T14:34:59Z",
+    "title": "ci(e2e): publica o resultado nas issues das US pelo GitHub App da org…",
+    "author": "MilenaFRocha"
   },
   "2026.2-MeasureSoftGram-Parser": {
     "number": 18,

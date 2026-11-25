@@ -308,5 +308,21 @@
   "planned_unestimated_issues": 0,
   "regra": 2,
   "sprint_name": "Sprint: Nov 16 - Nov 22, 2026"
+ },
+ "Z2lkOi8vcmFwdG9yL1NwcmludC81MzMxODk4": {
+  "congelado_em": "2026-11-25T03:12:11+00:00",
+  "corte": "2026-11-24T03:59:00+00:00",
+  "fonte": "histórico do Zenhub (scopeChange) + 4 issue(s) que já estavam na sprint no início (estimativa atual)",
+  "issues": {
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMjEzMjQxOA": 8.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzMjEzMjQxOQ": 8.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzNDYyNDkzMA": 13.0,
+   "Z2lkOi8vcmFwdG9yL0lzc3VlLzQzNTUxMjA4MA": null
+  },
+  "planned_issues": 4,
+  "planned_story_points": 29.0,
+  "planned_unestimated_issues": 1,
+  "regra": 2,
+  "sprint_name": "Sprint: Nov 23 - Nov 29, 2026"
  }
 }
