@@ -1,10 +1,307 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-25T03:13:31+00:00",
+ "coletado_em": "2026-11-26T03:12:45+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 384,
+   "title": "feat(analytics): [TASK38.04] página Uso de IA como análise do time",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-26T02:27:55Z",
+   "closed_at": "2026-11-26T02:54:55Z",
+   "updated_at": "2026-11-26T02:54:58Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2213,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/384",
+   "author": "henriquecq"
+  },
+  {
+   "number": 383,
+   "title": "fix(analytics): [BUG38.01] evita cópias da tabela do Sonar por sessão e derrubada do app por memória",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-26T01:46:31Z",
+   "closed_at": "2026-11-26T01:52:58Z",
+   "updated_at": "2026-11-26T01:53:24Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3127,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/383",
+   "author": "henriquecq"
+  },
+  {
+   "number": 382,
+   "title": "[BUG38.01] Dashboard Analítico cai no Streamlit Cloud por falta de memória com poucas sessões abertas",
+   "state": "closed",
+   "is_pull_request": false,
+   "created_at": "2026-11-26T01:45:46Z",
+   "closed_at": "2026-11-26T01:53:00Z",
+   "updated_at": "2026-11-26T02:02:09Z",
+   "labels": [
+    "analytics",
+    "bug"
+   ],
+   "type": "Bug",
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 2829,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/382",
+   "author": "henriquecq"
+  },
+  {
+   "number": 381,
+   "title": "feat(analytics): [TASK38.04] página Uso de IA com retrospectiva crítica e evidências",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-26T00:30:22Z",
+   "closed_at": "2026-11-26T00:39:59Z",
+   "updated_at": "2026-11-26T02:28:11Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "henriquecq"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 3284,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/381",
+   "author": "henriquecq"
+  },
+  {
+   "number": 380,
+   "title": "[TASK32.09] Alinhar a hierarquia do ZenHub com a EAP",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-25T18:49:44Z",
+   "closed_at": null,
+   "updated_at": "2026-11-25T18:50:05Z",
+   "labels": [
+    "docs",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 980,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/380",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 379,
+   "title": "[TASK32.08] Documento de evolução do plano de qualidade para o próximo semestre",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-25T18:49:40Z",
+   "closed_at": null,
+   "updated_at": "2026-11-25T18:49:42Z",
+   "labels": [
+    "docs",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 582,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/379",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 378,
+   "title": "[TASK32.07] Pasta de pós-morte na documentação do semestre",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-25T18:49:37Z",
+   "closed_at": null,
+   "updated_at": "2026-11-25T18:50:04Z",
+   "labels": [
+    "docs",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1012,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/378",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 377,
+   "title": "[TASK32.06] Atualizar roadmap, Release 3, backlog e repositórios com o escopo final",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-25T18:49:34Z",
+   "closed_at": null,
+   "updated_at": "2026-11-25T18:49:36Z",
+   "labels": [
+    "docs",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 756,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/377",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 376,
+   "title": "[TASK32.05] Atualizar a arquitetura e os READMEs com o que já está na develop",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-25T18:49:32Z",
+   "closed_at": null,
+   "updated_at": "2026-11-25T18:50:04Z",
+   "labels": [
+    "docs",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 1536,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/376",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 375,
+   "title": "[TASK32.04] Conformidade com padrões de software livre nos repositórios",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-25T18:49:28Z",
+   "closed_at": null,
+   "updated_at": "2026-11-25T18:49:30Z",
+   "labels": [
+    "task",
+    "all repos"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 563,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/375",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 374,
+   "title": "[TASK32.03] Tags da R3 em todos os repositórios e documento de gerência de configuração",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-25T18:49:23Z",
+   "closed_at": null,
+   "updated_at": "2026-11-25T18:49:26Z",
+   "labels": [
+    "task",
+    "all repos"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 794,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/374",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 373,
+   "title": "[TASK32.02] Relatório de Encerramento com a seção \"Como usamos IA neste semestre\"",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-25T18:49:20Z",
+   "closed_at": null,
+   "updated_at": "2026-11-25T18:49:21Z",
+   "labels": [
+    "docs",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 730,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/373",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 372,
+   "title": "[TASK32.01] Manual de instalação do produto para o usuário",
+   "state": "open",
+   "is_pull_request": false,
+   "created_at": "2026-11-25T18:48:33Z",
+   "closed_at": null,
+   "updated_at": "2026-11-25T18:48:34Z",
+   "labels": [
+    "docs",
+    "task"
+   ],
+   "type": "Task",
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 816,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/372",
+   "author": "LuizaMaluf"
+  },
+  {
+   "number": 371,
+   "title": "fix(analytics): [TASK38.05.01] fecha as pendências da ata da R2",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-25T18:12:31Z",
+   "closed_at": null,
+   "updated_at": "2026-11-25T18:14:08Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4694,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/371",
+   "author": "devwallyson"
+  },
+  {
+   "number": 370,
+   "title": "feat(analytics): [TASK38.02.01] curvas VP, VA e CR acumuladas no semestre",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-25T18:12:26Z",
+   "closed_at": null,
+   "updated_at": "2026-11-25T18:13:17Z",
+   "labels": [],
+   "type": null,
+   "assignees": [
+    "devwallyson"
+   ],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4388,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/370",
+   "author": "devwallyson"
+  },
   {
    "number": 369,
    "title": "[BUG13.01] msgram weights trata Enter vazio como resposta: escolhe a 2ª entidade em silêncio ou quebra com TypeError",
@@ -69,7 +366,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-24T12:15:42Z",
    "closed_at": null,
-   "updated_at": "2026-11-24T12:15:43Z",
+   "updated_at": "2026-11-25T18:12:34Z",
    "labels": [
     "task"
    ],
@@ -86,11 +383,11 @@
   {
    "number": 365,
    "title": "[TASK38.04.02] Evidências de uso de IA",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-24T12:15:40Z",
-   "closed_at": null,
-   "updated_at": "2026-11-24T12:17:45Z",
+   "closed_at": "2026-11-26T02:54:59Z",
+   "updated_at": "2026-11-26T02:54:59Z",
    "labels": [
     "task"
    ],
@@ -107,11 +404,11 @@
   {
    "number": 364,
    "title": "[TASK38.04.01] Página \"Uso de IA\": retrospectiva crítica",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-24T12:15:37Z",
-   "closed_at": null,
-   "updated_at": "2026-11-24T12:15:38Z",
+   "closed_at": "2026-11-26T02:54:57Z",
+   "updated_at": "2026-11-26T02:54:57Z",
    "labels": [
     "task"
    ],
@@ -195,7 +492,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-24T12:15:27Z",
    "closed_at": null,
-   "updated_at": "2026-11-24T12:15:27Z",
+   "updated_at": "2026-11-25T18:12:28Z",
    "labels": [
     "task"
    ],
@@ -297,11 +594,11 @@
   {
    "number": 355,
    "title": "[TASK38.04] Uso de IA generativa",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-24T12:15:15Z",
-   "closed_at": null,
-   "updated_at": "2026-11-24T12:15:48Z",
+   "closed_at": "2026-11-26T01:20:30Z",
+   "updated_at": "2026-11-26T01:20:30Z",
    "labels": [
     "US",
     "analytics"
@@ -1663,14 +1960,16 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:35:20Z",
    "closed_at": null,
-   "updated_at": "2026-11-17T20:14:30Z",
+   "updated_at": "2026-11-25T20:04:15Z",
    "labels": [
     "task",
     "frontend",
     "service"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "storch7"
+   ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 351,
@@ -1684,13 +1983,15 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:35:11Z",
    "closed_at": null,
-   "updated_at": "2026-11-17T20:14:28Z",
+   "updated_at": "2026-11-25T20:03:52Z",
    "labels": [
     "task",
     "frontend"
    ],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "storch7"
+   ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
    "body_chars": 404,
@@ -3492,13 +3793,15 @@
    "is_pull_request": false,
    "created_at": "2026-11-06T22:54:43Z",
    "closed_at": null,
-   "updated_at": "2026-11-17T20:14:47Z",
+   "updated_at": "2026-11-25T22:19:21Z",
    "labels": [],
    "type": null,
-   "assignees": [],
+   "assignees": [
+    "LuizaMaluf"
+   ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
-   "body_chars": 241,
+   "body_chars": 2166,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/197",
    "author": "luciano-freitas-melo"
   },

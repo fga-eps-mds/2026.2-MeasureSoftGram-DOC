@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-11-25T03:13:31+00:00",
+ "coletado_em": "2026-11-26T03:12:45+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
@@ -329,20 +329,6 @@
    "workflow_id": 374076414
   },
   {
-   "id": 45193258952,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "task/TASK37.01.03-migrar-textos-fixos-t",
-   "event": "pull_request",
-   "created_at": "2026-11-23T14:21:06Z",
-   "run_started_at": "2026-11-23T14:21:06Z",
-   "updated_at": "2026-11-23T14:21:08Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45193258952",
-   "run_number": 358,
-   "workflow_id": 368685720
-  },
-  {
    "id": 45193258886,
    "name": "Rodar Testes",
    "status": "completed",
@@ -371,17 +357,17 @@
    "workflow_id": 412115209
   },
   {
-   "id": 45193249502,
+   "id": 45193258952,
    "name": "Dependabot Auto-merge",
    "status": "completed",
    "conclusion": "skipped",
-   "head_branch": "task/TASK37.01.02-extracao-chaves-i18n",
+   "head_branch": "task/TASK37.01.03-migrar-textos-fixos-t",
    "event": "pull_request",
-   "created_at": "2026-11-23T14:21:03Z",
-   "run_started_at": "2026-11-23T14:21:03Z",
-   "updated_at": "2026-11-23T14:21:05Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45193249502",
-   "run_number": 357,
+   "created_at": "2026-11-23T14:21:06Z",
+   "run_started_at": "2026-11-23T14:21:06Z",
+   "updated_at": "2026-11-23T14:21:08Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45193258952",
+   "run_number": 358,
    "workflow_id": 368685720
   },
   {
@@ -411,6 +397,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45193249441",
    "run_number": 292,
    "workflow_id": 412115209
+  },
+  {
+   "id": 45193249502,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "task/TASK37.01.02-extracao-chaves-i18n",
+   "event": "pull_request",
+   "created_at": "2026-11-23T14:21:03Z",
+   "run_started_at": "2026-11-23T14:21:03Z",
+   "updated_at": "2026-11-23T14:21:05Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45193249502",
+   "run_number": 357,
+   "workflow_id": 368685720
   },
   {
    "id": 45104188302,
@@ -469,20 +469,6 @@
    "workflow_id": 347831686
   },
   {
-   "id": 45103658050,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "test/qa-09-front-cobertura-arquivos",
-   "event": "pull_request",
-   "created_at": "2026-11-23T03:03:14Z",
-   "run_started_at": "2026-11-23T03:03:14Z",
-   "updated_at": "2026-11-23T03:03:23Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45103658050",
-   "run_number": 356,
-   "workflow_id": 368685720
-  },
-  {
    "id": 45103658002,
    "name": "Rodar Testes",
    "status": "completed",
@@ -511,6 +497,20 @@
    "workflow_id": 412115209
   },
   {
+   "id": 45103658050,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "test/qa-09-front-cobertura-arquivos",
+   "event": "pull_request",
+   "created_at": "2026-11-23T03:03:14Z",
+   "run_started_at": "2026-11-23T03:03:14Z",
+   "updated_at": "2026-11-23T03:03:23Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45103658050",
+   "run_number": 356,
+   "workflow_id": 368685720
+  },
+  {
    "id": 45103602482,
    "name": "E2E de sistema",
    "status": "completed",
@@ -523,20 +523,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45103602482",
    "run_number": 11,
    "workflow_id": 418629557
-  },
-  {
-   "id": 45103602229,
-   "name": "Export de métricas",
-   "status": "completed",
-   "conclusion": "failure",
-   "head_branch": "develop",
-   "event": "push",
-   "created_at": "2026-11-23T03:02:39Z",
-   "run_started_at": "2026-11-23T03:02:39Z",
-   "updated_at": "2026-11-23T03:03:12Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45103602229",
-   "run_number": 136,
-   "workflow_id": 347831685
   },
   {
    "id": 45103602227,
@@ -567,6 +553,34 @@
    "workflow_id": 412115209
   },
   {
+   "id": 45103602229,
+   "name": "Export de métricas",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "develop",
+   "event": "push",
+   "created_at": "2026-11-23T03:02:39Z",
+   "run_started_at": "2026-11-23T03:02:39Z",
+   "updated_at": "2026-11-23T03:03:12Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45103602229",
+   "run_number": 136,
+   "workflow_id": 347831685
+  },
+  {
+   "id": 45103068897,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "test/qa-09-front-cobertura-arquivos",
+   "event": "pull_request",
+   "created_at": "2026-11-23T02:56:55Z",
+   "run_started_at": "2026-11-23T02:56:55Z",
+   "updated_at": "2026-11-23T02:56:56Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45103068897",
+   "run_number": 355,
+   "workflow_id": 368685720
+  },
+  {
    "id": 45103068873,
    "name": "Rodar Testes",
    "status": "completed",
@@ -595,17 +609,17 @@
    "workflow_id": 412115209
   },
   {
-   "id": 45103068897,
+   "id": 45103062314,
    "name": "Dependabot Auto-merge",
    "status": "completed",
    "conclusion": "skipped",
-   "head_branch": "test/qa-09-front-cobertura-arquivos",
+   "head_branch": "fix/front-sonar-critical",
    "event": "pull_request",
-   "created_at": "2026-11-23T02:56:55Z",
-   "run_started_at": "2026-11-23T02:56:55Z",
-   "updated_at": "2026-11-23T02:56:56Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45103068897",
-   "run_number": 355,
+   "created_at": "2026-11-23T02:56:51Z",
+   "run_started_at": "2026-11-23T02:56:51Z",
+   "updated_at": "2026-11-23T02:56:52Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45103062314",
+   "run_number": 354,
    "workflow_id": 368685720
   },
   {
@@ -635,20 +649,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45103062272",
    "run_number": 287,
    "workflow_id": 412115209
-  },
-  {
-   "id": 45103062314,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "fix/front-sonar-critical",
-   "event": "pull_request",
-   "created_at": "2026-11-23T02:56:51Z",
-   "run_started_at": "2026-11-23T02:56:51Z",
-   "updated_at": "2026-11-23T02:56:52Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/45103062314",
-   "run_number": 354,
-   "workflow_id": 368685720
   },
   {
    "id": 45098507833,
