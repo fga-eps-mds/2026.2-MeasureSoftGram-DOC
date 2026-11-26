@@ -22,9 +22,9 @@ def sprint(sid, ini, dias, ids, eventos, estado="CLOSED"):
             "scope_changes": eventos, "coletada": True}
 
 
-def issue(iid, est, fechada=None):
+def issue(iid, est, fechada=None, tipo="Feature"):
     return {"issue_id": iid, "state": "CLOSED" if fechada else "OPEN", "closed_at": fechada, "estimate": est,
-            "issue_type": "Feature", "is_pull_request": False, "parent_id": None, "pipeline": None}
+            "issue_type": tipo, "is_pull_request": False, "parent_id": None, "pipeline": None}
 
 
 def ev(iid, quando, est):
@@ -167,6 +167,137 @@ class AnaliseCriticaTest(unittest.TestCase):
         self.assertNotIn("indices", a)
         sem_us = evm.analise_critica(self.u(PRP=0.0, RPC=0.0, prp_linha_de_base=0.0))
         self.assertIn("nenhuma US", sem_us["burndown"])
+
+
+NAN = float("nan")
+
+
+def linha(rel, sprint, n, ini, pv, ev, ac, bac, status="concluída", prp=10.0, apc=None, spi=None, cpi=None):
+    """Linha mínima do ``agile_evm`` (só as colunas que o semestre usa)."""
+    return {"release": rel, "sprint": sprint, "n": n, "status": status, "inicio_da_sprint": pd.Timestamp(ini),
+            "fim_da_sprint": pd.Timestamp(ini) + pd.Timedelta(days=13), "BAC": bac, "PV": pv, "EV": ev, "AC": ac,
+            "PRP": prp, "APC": apc if apc is not None else (ev / bac if bac else NAN),
+            "SPI": spi if spi is not None else (ev / pv if pv else NAN),
+            "CPI": cpi if cpi is not None else (ev / ac if ac else NAN)}
+
+
+class EvmSemestreTest(unittest.TestCase):
+    """TASK38.02.01: curvas VP, VA e CR acumuladas no semestre, não só por release."""
+
+    def evm_tres_releases(self):
+        return pd.DataFrame([
+            linha("R1", "S1", 1, "2026-09-01", 50.0, 40.0, 50.0, 100.0),
+            linha("R1", "S2", 2, "2026-09-15", 100.0, 80.0, 100.0, 100.0),
+            linha("R2", "S3", 1, "2026-09-29", 100.0, 100.0, 100.0, 200.0),
+            linha("R2", "S4", 2, "2026-10-13", 200.0, 150.0, 200.0, 200.0),
+            linha("R3", "S5", 1, "2026-10-27", 60.0, 30.0, 60.0, 120.0, status="em andamento"),
+            linha("R3", "S6", 2, "2026-11-10", 120.0, NAN, NAN, 120.0, status="futura", prp=NAN),
+        ])
+
+    def test_acumula_o_fechamento_das_releases_anteriores(self):
+        s = evm.evm_semestre(self.evm_tres_releases())
+        self.assertEqual(list(s["sprint"]), ["S1", "S2", "S3", "S4", "S5", "S6"])
+        self.assertEqual(set(s["BAC"]), {420.0})                       # 100 + 200 + 120
+        self.assertEqual(list(s["PV"]), [50, 100, 200, 300, 360, 420])  # o plano vai até a última sprint
+        self.assertEqual(list(s["EV"][:5]), [40, 80, 180, 230, 260])    # R1 fecha em 80, R2 em 150
+        self.assertEqual(list(s["AC"][:5]), [50, 100, 200, 300, 360])
+        self.assertAlmostEqual(s.loc[4, "SPI"], 260 / 360)
+        self.assertAlmostEqual(s.loc[4, "CPI"], 260 / 360)
+
+    def test_sprint_futura_nao_tem_entregue_nem_gasto(self):
+        s = evm.evm_semestre(self.evm_tres_releases())
+        for col in ("EV", "AC", "SPI", "CPI"):
+            self.assertTrue(math.isnan(s.loc[5, col]), col)
+
+    def test_custo_indisponivel_numa_release_nao_e_inventado_depois(self):
+        e = self.evm_tres_releases()
+        e.loc[e["sprint"] == "S4", ["AC", "CPI"]] = NAN                # R2 fecha sem custo
+        s = evm.evm_semestre(e)
+        self.assertEqual(s.loc[2, "AC"], 200)
+        for i in (3, 4):
+            self.assertTrue(math.isnan(s.loc[i, "AC"]), i)
+            self.assertTrue(math.isnan(s.loc[i, "CPI"]), i)
+        self.assertFalse(math.isnan(s.loc[4, "EV"]))                   # prazo continua: não depende de custo
+
+    def test_release_futura_sem_orcamento_fica_fora_do_bac(self):
+        e = pd.concat([self.evm_tres_releases(), pd.DataFrame([
+            linha("Final", "S7", 1, "2026-11-24", NAN, NAN, NAN, NAN, status="futura", prp=NAN)])],
+            ignore_index=True)
+        s = evm.evm_semestre(e)
+        self.assertEqual(set(s["BAC"]), {420.0})                       # só o orçamento conhecido
+        self.assertEqual(evm.releases_sem_orcamento(e), ["Final"])
+        self.assertEqual(s.loc[4, "EV"], 260)                          # não apaga o que já foi calculado
+        self.assertTrue(math.isnan(s.loc[6, "PV"]))
+
+    def test_release_iniciada_sem_orcamento_deixa_o_plano_indisponivel_dali_em_diante(self):
+        e = self.evm_tres_releases()
+        e.loc[e["release"] == "R2", ["BAC", "PV", "EV"]] = NAN
+        s = evm.evm_semestre(e)
+        self.assertEqual(s.loc[1, "PV"], 100)                          # R1 segue com plano
+        for i in (2, 3, 4):
+            self.assertTrue(math.isnan(s.loc[i, "PV"]), i)
+            self.assertTrue(math.isnan(s.loc[i, "SPI"]), i)
+
+    def test_sprint_sem_nenhuma_us_entrega_zero_e_nao_apaga_o_semestre(self):
+        """Caso real: a S1 caiu numa release sem US (PRP = 0) e o EVM dela tem EV vazio (0 ÷ 0)."""
+        e = self.evm_tres_releases()
+        e.loc[e["sprint"].isin(["S1", "S2"]), ["PRP", "EV", "APC", "SPI", "CPI"]] = [0.0, NAN, NAN, NAN, NAN]
+        s = evm.evm_semestre(e)
+        self.assertEqual(list(s["EV"][:5]), [0, 0, 100, 150, 180])
+        f = evm.fechamento_releases(e)
+        self.assertEqual(f.loc[0, "EV"], 0)
+        self.assertEqual(f.loc[0, "SPI"], 0)
+        self.assertTrue(f.loc[0, "sem_us"])
+
+    def test_vazio(self):
+        self.assertTrue(evm.evm_semestre(pd.DataFrame()).empty)
+        self.assertEqual(evm.analise_semestre(pd.DataFrame(), pd.DataFrame()), {})
+
+    def test_fechamento_de_cada_release(self):
+        f = evm.fechamento_releases(self.evm_tres_releases())
+        self.assertEqual(list(f["release"]), ["R1", "R2", "R3"])
+        self.assertEqual(list(f["EV"]), [80, 150, 30])
+        self.assertEqual(list(f["encerrada"]), [True, True, False])
+
+    def test_analise_aponta_a_release_com_maior_distancia(self):
+        e = self.evm_tres_releases()
+        a = evm.analise_semestre(evm.evm_semestre(e), evm.fechamento_releases(e))
+        self.assertIn("até a S5 (R3)", a["curvas"])
+        self.assertIn("planejou R$ 360", a["curvas"])
+        self.assertIn("maior distância", a["curvas"])
+        self.assertIn("na R2: R$ 50", a["curvas"])
+        self.assertIn("Decisão que isso apoia", a["curvas"])
+        self.assertIn("SPI do semestre 0,72", a["indices"])
+        self.assertIn("R1 0,80, R2 0,75", a["indices"])
+
+    def test_no_plano_nao_inventa_atraso(self):
+        e = pd.DataFrame([linha("R1", "S1", 1, "2026-09-01", 100.0, 100.0, 100.0, 100.0)])
+        a = evm.analise_semestre(evm.evm_semestre(e), evm.fechamento_releases(e))
+        self.assertNotIn("maior distância", a["curvas"])
+        self.assertIn("no ritmo planejado", a["indices"])
+
+
+class SoUsAceitaPontuaTest(AgileEvmTest):
+    """Feedback da R2: SPI e CPI só com SP de US aceitas pelo PO (fechadas); Task e Bug não entram."""
+
+    def test_task_e_bug_fechados_nao_mudam_spi_nem_cpi(self):
+        antes = self.calc()
+        self.issues["T"] = issue("T", 8, (S1 + timedelta(days=2)).isoformat(), tipo="Task")
+        self.issues["G"] = issue("G", 3, (S1 + timedelta(days=2)).isoformat(), tipo="Bug")
+        snap = {"issues": self.issues, "releases": [], "sprints": [
+            sprint("s1", S1, 14, ["A", "B", "T", "G"], [ev(i, S1 - timedelta(hours=1), e)
+                                                        for i, e in (("A", 5), ("B", 5), ("T", 8), ("G", 3))]),
+            sprint("s2", S2, 7, ["B", "C"], [ev("B", S2, 5), ev("C", S2 + timedelta(days=2), 10)], "OPEN"),
+            sprint("s3", S3, 7, [], [], "OPEN")]}
+        self.vel = v.calculate_velocity(snap, agora=S2 + timedelta(days=3), incluir_futuras=True)
+        depois = self.calc()
+        for col in ("PRP", "RPC", "SPI", "CPI"):
+            pd.testing.assert_series_equal(antes[col], depois[col], check_names=False)
+
+    def test_us_aberta_vale_zero_ate_o_aceite(self):
+        r1 = self.calc()
+        r1 = r1[r1["release"] == "R1"].reset_index(drop=True)
+        self.assertEqual(r1.loc[1, "RPC"], 15)                         # B (5 SP) segue aberta: não conta
 
 
 if __name__ == "__main__":
