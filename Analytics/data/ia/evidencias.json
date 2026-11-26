@@ -1,75 +1,39 @@
 [
   {
-    "data": "2026-09-28",
-    "area": "Código",
-    "pedido": "Triar as 44 issues de bug herdadas de 2026.1, rodando a suíte de cada repositório e dando um veredito com evidência para cada uma",
-    "onde": "DOC#38 [TASK05.01]",
-    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/38",
-    "resultado": "descartado",
-    "motivo": "O veredito de que o bug do qualifier TRK/FIL continuava aberto veio de uma leitura estática superficial. A reprodução no fluxo real mostrou que já estava corrigido, e o veredito foi trocado."
-  },
-  {
-    "data": "2026-09-28",
-    "area": "Código",
-    "pedido": "Aplicar a sugestão da revisão do PR de logout (apagar o token com filter().delete()), com teste antes da correção",
-    "onde": "Service#25",
-    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/25",
+    "data": "2026-09-23",
+    "area": "Planejamento e gestão",
+    "pedido": "Rascunhar épicos, tasks, cenários BDD e critérios de aceite a partir do escopo do MVP, para entender o trabalho da release",
+    "onde": "Backlog no ZenHub (épicos MSG e suas tasks)",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/planejamento/backlog.mdx",
     "resultado": "aceito",
-    "motivo": "O teste RED falhou pelo motivo certo (RelatedObjectDoesNotExist). A IA também mostrou que o make test não coletava accounts/tests.py: os 187 testes citados no PR eram, na coleta do CI, 315."
+    "motivo": "Aceito só como rascunho: o grupo foi avisado de que tarefas, cenários e critérios precisavam ser validados, e o escopo das issues foi levado ao PO na reunião daquela noite, junto com a DoR e a DoD."
   },
   {
-    "data": "2026-10-13",
-    "area": "Código",
-    "pedido": "Revisar o PR do login com GitHub, testar com credenciais reais sem expô-las e implementar o que faltava para fechar a #105",
-    "onde": "Service#32",
-    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/32",
+    "data": "2026-09-26",
+    "area": "Planejamento e gestão",
+    "pedido": "Mapear as dependências entre as partes da medida de Dívida Técnica (o que depende do quê)",
+    "onde": "[MSG01] Operacionalizar a medição de Dívida Técnica",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/41",
     "resultado": "aceito",
-    "motivo": "Causas reproduzidas em teste e no navegador, correção em TDD. Foi aceita a resposta 400 com mensagem clara; a vinculação automática de contas foi recusada por decisão humana, porque o allauth apagaria a senha local."
+    "motivo": "Usado como apoio para organizar o épico, que depois foi dividido em uma US da CLI (#76) e uma do Front (#77), as duas concluídas."
   },
   {
-    "data": "2026-10-18",
-    "area": "Código",
-    "pedido": "Revisar tudo o que está no fork e não na main, para levar a correção do login para produção",
-    "onde": "Front#31",
-    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/31",
+    "data": "2026-10-24",
+    "area": "Planejamento e gestão",
+    "pedido": "Estudar o modelo matemático do professor e o código atual para propor uma reestruturação da US do squad",
+    "onde": "Proposta de extensão do modelo (extensão espacial e modelo de déficit)",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core",
     "resultado": "descartado",
-    "motivo": "A IA incluiu no PR a remoção de um console.error do Auth.tsx, que é code smell e não bug do Sonar. Saiu na revisão de escopo; o PR ficou só com o que reprovava o quality gate."
+    "motivo": "A proposta saiu técnica demais para ser entendida sem explicação do contexto. O squad discutiu em reunião e a regra foi não mudar o Core sem a validação do professor. Até 26/11, nada dela entrou no Core."
   },
   {
-    "data": "2026-10-19",
-    "area": "Código",
-    "pedido": "Corrigir o login CSRF do OAuth (state ausente ou forjado), reproduzindo no Chrome antes e depois da correção",
-    "onde": "Front#46",
-    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/46",
-    "resultado": "descartado",
-    "motivo": "O plano da IA previa corrigir também um redirecionamento para domínio externo (//example.com). O teste no navegador mostrou que isso não acontece no Next 12, e o item saiu do plano. O restante foi aceito (5 pares RED/GREEN)."
-  },
-  {
-    "data": "2026-10-20",
-    "area": "Código",
-    "pedido": "Remover o Grafana do Platform e validar o ambiente local",
-    "onde": "Platform#2",
-    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Platform/pull/2",
-    "resultado": "descartado",
-    "motivo": "A tentativa de testar com os ponteiros novos dos submódulos entrou em loop por uma variável que o compose não repassa. A IA parou e perguntou; a decisão humana foi não avançar os ponteiros, porque isso já estava com outra pessoa."
-  },
-  {
-    "data": "2026-10-28",
-    "area": "Código",
-    "pedido": "Gravar no fechamento da release todas as características da configuração, mostrando primeiro que não funciona",
-    "onde": "Service#78",
-    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/78",
+    "data": "2026-10-21",
+    "area": "Documentação",
+    "pedido": "Reestruturar o site de documentação: uma página por sprint e por release, guia de documentação, modelos de página e títulos padronizados",
+    "onde": "Site do DOC (13 commits de reestruturação)",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/commit/05e2d02",
     "resultado": "aceito",
-    "motivo": "Bug reproduzido com o Core real num script fora do repositório; o valor de 0,8815 da configuração 80/20 foi conferido à mão pela fórmula do Core antes do aceite."
-  },
-  {
-    "data": "2026-11-12",
-    "area": "Código",
-    "pedido": "Reduzir a complexidade cognitiva das 6 funções do Plugin apontadas pelo Sonar (S3776)",
-    "onde": "Plugin#12",
-    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/12",
-    "resultado": "aceito",
-    "motivo": "17 testes de caracterização escritos e verdes no código original antes do refactor; a complexidade foi medida com o eslint-plugin-sonarjs, que reproduziu os valores do SonarCloud."
+    "motivo": "Integrado ao site; os commits estão marcados com coautoria da IA, como pede o combinado da equipe."
   },
   {
     "data": "2026-10-20",
@@ -78,16 +42,7 @@
     "onde": "DOC#161",
     "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/161",
     "resultado": "aceito",
-    "motivo": "Build do Docusaurus antes e depois e diagramas conferidos no navegador. As 8 decisões em aberto (P1 a P8) ficaram como perguntas e foram respondidas por mim, não pela IA."
-  },
-  {
-    "data": "2026-10-26",
-    "area": "Documentação",
-    "pedido": "Redigir o Memorando de Decisão da R2 a partir do histórico do GitHub e do ZenHub",
-    "onde": "MD-R2 (individual, Aprender 3)",
-    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/69",
-    "resultado": "descartado",
-    "motivo": "O rascunho atribuía a mim o ExportCsvButton, que veio da Front#69, e dizia 'em produção' para o que estava na VM de homologação. Os dois trechos foram corrigidos ao conferir as fontes."
+    "motivo": "Build do Docusaurus antes e depois e diagramas conferidos no navegador. As decisões em aberto ficaram como perguntas para o time, não foram decididas pela IA."
   },
   {
     "data": "2026-11-12",
@@ -99,13 +54,103 @@
     "motivo": "Campos conferidos no models.py da develop do Service antes do aceite; o build do Docusaurus passou."
   },
   {
+    "data": "2026-11-24",
+    "area": "Documentação",
+    "pedido": "Levantar o Analytics/ e definir os blocos do Canvas Analytics, com a fonte de dado de cada bloco e um wireframe",
+    "onde": "DOC#367 · mapa bloco → fonte",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/367",
+    "resultado": "aceito",
+    "motivo": "O mapa bloco → fonte e a lista de lacunas foram aceitos depois de conferidos no código; um segundo modelo checou se as funções citadas existem."
+  },
+  {
+    "data": "2026-11-24",
+    "area": "Documentação",
+    "pedido": "Desenhar o wireframe do Canvas Analytics",
+    "onde": "DOC#367 · estilo do wireframe",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/367",
+    "resultado": "descartado",
+    "motivo": "Os cantos arredondados e a fonte de título sugeridos pareciam genéricos; foram trocados por cantos retos e pela fonte Inter."
+  },
+  {
+    "data": "2026-11-24",
+    "area": "Código",
+    "pedido": "Implementar a página Canvas Analytics e seus testes a partir de uma especificação com critérios de aceite",
+    "onde": "DOC#368 · módulo, página e testes",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/368",
+    "resultado": "aceito",
+    "motivo": "Um modelo escreveu a especificação, outro o código e os testes, e um terceiro conferiu o diff contra os critérios de aceite antes da revisão humana."
+  },
+  {
+    "data": "2026-11-24",
+    "area": "Código",
+    "pedido": "Implementar a página Canvas Analytics e seus testes a partir de uma especificação com critérios de aceite",
+    "onde": "DOC#368 · link fixo e valor esperado de um teste",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/368",
+    "resultado": "descartado",
+    "motivo": "Um link fixo para outra página foi trocado pelo mapa de links do painel. Um teste esperava '1,00' para 0,995, mas em ponto flutuante o valor arredonda para '0,99': o valor do teste foi corrigido e o código mantido."
+  },
+  {
+    "data": "2026-09-28",
+    "area": "Código",
+    "pedido": "Triar as 44 issues de bug herdadas de 2026.1, rodando a suíte de cada repositório e dando um veredito com evidência para cada uma",
+    "onde": "DOC#38 [TASK05.01]",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/38",
+    "resultado": "descartado",
+    "motivo": "O veredito de que o bug do qualifier TRK/FIL continuava aberto veio de uma leitura estática superficial. A reprodução no fluxo real mostrou que já estava corrigido, e o veredito foi trocado."
+  },
+  {
+    "data": "2026-10-13",
+    "area": "Código",
+    "pedido": "Corrigir o erro no login com GitHub, reproduzindo as causas antes da correção",
+    "onde": "Service#32",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/32",
+    "resultado": "aceito",
+    "motivo": "Causas reproduzidas em teste e no navegador, correção em TDD. A vinculação automática de contas foi recusada por decisão humana, porque a biblioteca de login apagaria a senha local."
+  },
+  {
+    "data": "2026-10-19",
+    "area": "Código",
+    "pedido": "Corrigir o login CSRF do OAuth (state ausente ou forjado), reproduzindo no navegador antes e depois",
+    "onde": "Front#46",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/46",
+    "resultado": "descartado",
+    "motivo": "O plano previa corrigir também um redirecionamento para domínio externo que não acontece no Next 12; o teste no navegador mostrou isso e o item saiu do plano."
+  },
+  {
+    "data": "2026-10-20",
+    "area": "Código",
+    "pedido": "Remover o Grafana do Platform e validar o ambiente local",
+    "onde": "Platform#2",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Platform/pull/2",
+    "resultado": "descartado",
+    "motivo": "A tentativa de testar com os ponteiros novos dos submódulos entrou em loop. A decisão humana foi não avançar os ponteiros, porque isso já estava com outra frente do time."
+  },
+  {
+    "data": "2026-11-12",
+    "area": "Código",
+    "pedido": "Reduzir a complexidade cognitiva das 6 funções do Plugin apontadas pelo Sonar",
+    "onde": "Plugin#12",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/12",
+    "resultado": "aceito",
+    "motivo": "Testes de caracterização escritos e verdes no código original antes do refactor; a complexidade foi medida com a mesma regra do SonarCloud."
+  },
+  {
+    "data": "2026-11-26",
+    "area": "Código",
+    "pedido": "Descobrir por que o dashboard caía no Streamlit Cloud e corrigir sem mudar o que as páginas mostram",
+    "onde": "DOC#383 [BUG38.01]",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/383",
+    "resultado": "aceito",
+    "motivo": "A causa foi medida antes de mexer (uma tabela de 186 MiB copiada a cada sessão). A primeira versão da correção mudava a numeração de uma tabela; a regressão de todas as páginas pegou isso e ela foi ajustada antes do merge."
+  },
+  {
     "data": "2026-10-27",
     "area": "Análise de dados do dashboard",
-    "pedido": "Calcular os números da apresentação da R2 a partir dos dados do dashboard (Analytics/data), do ZenHub e do GitHub",
+    "pedido": "Calcular os números da apresentação da R2 a partir dos dados do dashboard, do ZenHub e do GitHub",
     "onde": "Apresentação da R2 · contagem de autores",
     "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/releases/release-2.mdx",
     "resultado": "descartado",
-    "motivo": "O filtro de bots ('bot' contido no login) excluía o integrante bottinolucas e subestimava commits e autores. Recalculado com o sufixo [bot]."
+    "motivo": "O filtro de bots ('bot' contido no login) excluía um integrante cujo login contém 'bot' e subestimava commits e autores. Recalculado com o sufixo [bot]."
   },
   {
     "data": "2026-10-27",
@@ -123,6 +168,6 @@
     "onde": "Agile EVM · custo real",
     "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/commit/bec8394",
     "resultado": "descartado",
-    "motivo": "A IA tinha afirmado que os 16 integrantes lançaram horas. A aba só mostra que há números, não quem os lançou (eu não lancei as minhas). A afirmação foi retirada; o EVM já usava o custo do time no lugar das horas."
+    "motivo": "A IA afirmou que todos os integrantes lançaram horas, mas a planilha só mostra que há números, não quem os lançou. A afirmação foi retirada; o EVM já usava o custo do time no lugar das horas."
   }
 ]
