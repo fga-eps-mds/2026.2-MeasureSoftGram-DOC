@@ -70,5 +70,32 @@
     "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/12",
     "resultado": "aceito",
     "motivo": "17 testes de caracterização escritos e verdes no código original antes do refactor; a complexidade foi medida com o eslint-plugin-sonarjs, que reproduziu os valores do SonarCloud."
+  },
+  {
+    "data": "2026-10-20",
+    "area": "Documentação",
+    "pedido": "Atualizar a arquitetura sem o Grafana, a partir da auditoria da US07.01",
+    "onde": "DOC#161",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/161",
+    "resultado": "aceito",
+    "motivo": "Build do Docusaurus antes e depois e diagramas conferidos no navegador. As 8 decisões em aberto (P1 a P8) ficaram como perguntas e foram respondidas por mim, não pela IA."
+  },
+  {
+    "data": "2026-10-26",
+    "area": "Documentação",
+    "pedido": "Redigir o Memorando de Decisão da R2 a partir do histórico do GitHub e do ZenHub",
+    "onde": "MD-R2 (individual, Aprender 3)",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/issues/69",
+    "resultado": "descartado",
+    "motivo": "O rascunho atribuía a mim o ExportCsvButton, que veio da Front#69, e dizia 'em produção' para o que estava na VM de homologação. Os dois trechos foram corrigidos ao conferir as fontes."
+  },
+  {
+    "data": "2026-11-12",
+    "area": "Documentação",
+    "pedido": "Trocar os limites do velocímetro antigo pelas faixas de qualidade no diagrama ER",
+    "onde": "DOC#307",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/307",
+    "resultado": "aceito",
+    "motivo": "Campos conferidos no models.py da develop do Service antes do aceite; o build do Docusaurus passou."
   }
 ]
