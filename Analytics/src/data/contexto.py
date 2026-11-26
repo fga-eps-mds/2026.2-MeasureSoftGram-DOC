@@ -186,6 +186,8 @@ def _so_do_projeto(ctx: "Contexto", fonte: str, df: pd.DataFrame) -> pd.DataFram
     if df is None or df.empty or "repositorio" not in df:
         return df
     fora = ~df["repositorio"].map(do_projeto)
+    if not fora.any() and df.index.equals(pd.RangeIndex(len(df))):
+        return df  # nada a filtrar nem a renumerar: sem cópia (a tabela de componentes do Sonar tem ~800 mil linhas)
     if fora.any():
         ctx.repos_ignorados.setdefault(fonte, set()).update(df.loc[fora, "repositorio"].unique())
     return df[~fora].reset_index(drop=True)
