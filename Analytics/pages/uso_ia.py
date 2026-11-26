@@ -22,6 +22,9 @@ de dependências; propostas de reestruturação), **código** (correções com T
 dashboard), **documentação** (reestruturação do site, arquitetura, modelo de dados) e **análise de dados do
 dashboard** (números das apresentações de release).
 
+O uso foi amplo: só no GitHub, pelo menos 38 PRs em 8 repositórios declaram no corpo que foram gerados com o Claude
+Code.
+
 Esta análise consolida o que está registrado em PRs, commits com coautoria de IA e conversas do grupo do time. As
 evidências abaixo são do grupo, sem identificar integrantes; o registro individual de cada pessoa fica no seu
 `MD_Template.md` ([combinado da equipe]({COMBINADOS})).
