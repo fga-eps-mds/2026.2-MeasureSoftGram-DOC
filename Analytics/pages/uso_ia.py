@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import streamlit as st
 
-from src.components import layout
+from src.components import layout, rastreio
 
 DOC = "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC"
 COMBINADOS = "https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/equipe/uso-de-ia/"
@@ -58,7 +58,26 @@ Todos os erros acima foram pegos na revisão humana ou num teste que a própria 
 """)
 
 
+def _critica_ao_dashboard() -> None:
+    layout.secao("Crítica aos outputs automáticos do dashboard",
+                 "Onde um texto ou status gerado pelo painel pode levar a uma leitura errada?")
+    st.markdown(f"""
+| Output automático | Onde | Risco de leitura | Como ler |
+|---|---|---|---|
+| **Pontos de atenção** ordenados por gravidade | Visão Executiva | "Sem dado" aparece ao lado de "crítico" e pode parecer desempenho ruim | Ausência de dado não vale zero: ler o motivo e corrigir a coleta antes de agir no indicador |
+| **Velocity** e pontos entregues | Gestão ágil | Conta a issue só por estar fechada: issue fechada sem aceite conta, e trabalho pronto em issue aberta não conta | Cruzar com o pipeline de validação dos critérios de aceite |
+| **CPI e custo real** do Agile EVM | Agile EVM e custos | O custo real é o custo do time por sprint, não horas apontadas; o CPI não mede esforço extra | Usar o CPI como tendência de custo do calendário, não como produtividade |
+| **Taxa de sucesso da CI** | Integração contínua | Muda com o recorte de repositórios (71,4% com o DOC, 82,8% sem ele na R2) | Conferir o filtro de repositórios antes de citar o número |
+| **Cobertura global** | Qualidade técnica | Repositório bem coberto na média pode ter arquivos pouco testados | Olhar a cobertura por arquivo (M1 do Q-Rapids) |
+| **Tendência R1 → R2 → R3** | Canvas e Q-Rapids | Três pontos, e a R3 só fecha em 30/11 | Tratar como direção, não como tendência estatística |
+
+Esses pontos vieram de erros reais de leitura no semestre (registrados nas evidências abaixo) e da seção de limitações
+de [Metodologia e Fontes]({rastreio.pagina('Metodologia')}).
+""")
+
+
 def pagina():
     layout.titulo_pagina("Uso de IA", "Retrospectiva crítica do uso de IA generativa no semestre: o que acertou, o que "
                          "errou, o que exigiu julgamento humano e as evidências de cada caso.")
     _retrospectiva()
+    _critica_ao_dashboard()
