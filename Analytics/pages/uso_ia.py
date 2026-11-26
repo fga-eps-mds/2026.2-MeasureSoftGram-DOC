@@ -6,6 +6,7 @@ from __future__ import annotations
 import streamlit as st
 
 from src.components import layout, rastreio
+from src.data import uso_ia
 
 DOC = "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC"
 COMBINADOS = "https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/equipe/uso-de-ia/"
@@ -76,8 +77,37 @@ de [Metodologia e Fontes]({rastreio.pagina('Metodologia')}).
 """)
 
 
+def _evidencias() -> None:
+    layout.secao("Evidências de uso de IA", "O que pedimos à IA, onde, e o que aceitamos ou descartamos?")
+    try:
+        df = uso_ia.evidencias()
+    except (OSError, ValueError) as e:
+        layout.indisponivel("Evidências indisponíveis", str(e), "corrigir data/ia/evidencias.json")
+        return
+    c1, c2 = st.columns(2)
+    areas = c1.multiselect("Área", uso_ia.AREAS, placeholder="Todas", key="ia_area")
+    resultados = c2.multiselect("Resultado", uso_ia.RESULTADOS, placeholder="Todos", key="ia_resultado")
+    if areas:
+        df = df[df["area"].isin(areas)]
+    if resultados:
+        df = df[df["resultado"].isin(resultados)]
+    st.caption(f"{len(df)} evidência(s): {int((df['resultado'] == 'aceito').sum())} aceita(s), "
+               f"{int((df['resultado'] == 'descartado').sum())} descartada(s). O pedido é o resumo do prompt, "
+               "registrado no MD_Template.md de quem usou a IA.")
+    st.dataframe(
+        df.rename(columns={"data": "Data", "area": "Área", "pedido": "Pedido à IA (resumo do prompt)",
+                           "onde": "Onde", "link": "Link", "resultado": "Resultado", "motivo": "Motivo"}),
+        use_container_width=True, hide_index=True,
+        column_config={"Data": st.column_config.DateColumn(format="DD/MM/YYYY"),
+                       "Link": st.column_config.LinkColumn(display_text="abrir"),
+                       "Pedido à IA (resumo do prompt)": st.column_config.TextColumn(width="large"),
+                       "Motivo": st.column_config.TextColumn(width="large")},
+    )
+
+
 def pagina():
     layout.titulo_pagina("Uso de IA", "Retrospectiva crítica do uso de IA generativa no semestre: o que acertou, o que "
                          "errou, o que exigiu julgamento humano e as evidências de cada caso.")
     _retrospectiva()
     _critica_ao_dashboard()
+    _evidencias()
