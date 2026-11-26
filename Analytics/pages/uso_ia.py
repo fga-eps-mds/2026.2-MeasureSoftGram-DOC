@@ -13,6 +13,21 @@ COMBINADOS = "https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/equi
 GH = "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-"
 
 
+def _como_o_time_usou() -> None:
+    layout.secao("Como o time usou IA", "Em que frentes a IA entrou no trabalho do semestre?")
+    st.markdown(f"""
+O time usou principalmente o **Claude** (Claude Code e o chat) e, numa parte do dashboard, o **Gemini**
+(Antigravity), em quatro frentes: **planejamento e gestão** (rascunho de épicos, tasks e critérios de aceite; análise
+de dependências; propostas de reestruturação), **código** (correções com TDD, refactors guiados pelo Sonar, páginas do
+dashboard), **documentação** (reestruturação do site, arquitetura, modelo de dados) e **análise de dados do
+dashboard** (números das apresentações de release).
+
+Esta análise consolida o que está registrado em PRs, commits com coautoria de IA e conversas do grupo do time. As
+evidências abaixo são do grupo, sem identificar integrantes; o registro individual de cada pessoa fica no seu
+`MD_Template.md` ([combinado da equipe]({COMBINADOS})).
+""")
+
+
 def _retrospectiva() -> None:
     layout.secao("O que a IA acertou", "Onde a IA poupou trabalho sem perder qualidade?")
     st.markdown(f"""
@@ -106,8 +121,9 @@ def _evidencias() -> None:
 
 
 def pagina():
-    layout.titulo_pagina("Uso de IA", "Retrospectiva crítica do uso de IA generativa no semestre: o que acertou, o que "
-                         "errou, o que exigiu julgamento humano e as evidências de cada caso.")
+    layout.titulo_pagina("Uso de IA", "Retrospectiva crítica do time sobre o uso de IA generativa no semestre: o que "
+                         "acertou, o que errou, o que exigiu julgamento humano e as evidências de cada caso.")
+    _como_o_time_usou()
     _retrospectiva()
     _critica_ao_dashboard()
     _evidencias()
