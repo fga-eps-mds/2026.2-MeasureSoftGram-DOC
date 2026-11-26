@@ -110,8 +110,8 @@ def _evidencias() -> None:
     if resultados:
         df = df[df["resultado"].isin(resultados)]
     st.caption(f"{len(df)} evidência(s): {int((df['resultado'] == 'aceito').sum())} aceita(s), "
-               f"{int((df['resultado'] == 'descartado').sum())} descartada(s). O pedido é o resumo do prompt, "
-               "registrado no MD_Template.md de quem usou a IA.")
+               f"{int((df['resultado'] == 'descartado').sum())} descartada(s). O pedido é o resumo do prompt, a partir "
+               "do que ficou registrado em PRs, commits e conversas do time.")
     st.dataframe(
         df.rename(columns={"data": "Data", "area": "Área", "pedido": "Pedido à IA (resumo do prompt)",
                            "onde": "Onde", "link": "Link", "resultado": "Resultado", "motivo": "Motivo"}),
