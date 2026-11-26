@@ -128,7 +128,9 @@ class Contexto:
 
 # ───────────────────────── carregadores com cache ─────────────────────────
 
-@st.cache_data(show_spinner="Lendo as métricas do SonarCloud...")
+# cache_resource: uma cópia só, compartilhada pelas sessões (cache_data entregava uma cópia de ~200 MB a cada uma
+# e o Streamlit Cloud derrubava o app). As tabelas só são lidas; max_entries=1 descarta a versão anterior dos dados.
+@st.cache_resource(max_entries=1, show_spinner="Lendo as métricas do SonarCloud...")
 def _sonar(pastas: tuple[str, ...], marca_arquivos: tuple):
     p = [Path(x) for x in pastas]
     agregado, componentes = sonar.carregar_sonar(p)
