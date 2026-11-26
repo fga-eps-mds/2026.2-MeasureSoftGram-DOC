@@ -20,6 +20,13 @@ def ctx():
 
 
 class SoDoProjetoTest(unittest.TestCase):
+    def test_sem_repositorio_de_fora_devolve_a_propria_tabela_sem_copiar(self):
+        # a tabela de componentes do Sonar tem ~800 mil linhas: copiá-la a cada sessão derrubava o app
+        df = pd.DataFrame({"repositorio": [DO_PROJETO, DO_PROJETO], "valor": [1, 2]})
+        c = ctx()
+        self.assertIs(contexto._so_do_projeto(c, "SONAR", df), df)
+        self.assertEqual(c.repos_ignorados, {})
+
     def test_sem_repositorio_de_fora_mas_indice_fora_de_ordem_renumera_como_antes(self):
         df = pd.DataFrame({"repositorio": [DO_PROJETO, DO_PROJETO], "valor": [1, 2]}, index=[7, 3])
         saida = contexto._so_do_projeto(ctx(), "SONAR", df)
