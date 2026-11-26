@@ -1,6 +1,7 @@
 """Evidências de uso de IA generativa: o que foi pedido, onde, se o resultado foi aceito ou descartado e por quê.
 
-Fonte: ``data/ia/evidencias.json``, curado à mão pela equipe (não há coleta automática).
+Fonte: ``data/ia/evidencias.json``, consolidado pela equipe a partir de PRs, commits e conversas do time
+(não há coleta automática). Texto impessoal: é análise do grupo, sem dados de um integrante.
 """
 
 from __future__ import annotations
@@ -12,7 +13,7 @@ import pandas as pd
 
 ARQUIVO = Path(__file__).resolve().parents[2] / "data" / "ia" / "evidencias.json"
 CAMPOS = ("data", "area", "pedido", "onde", "link", "resultado", "motivo")
-AREAS = ("Código", "Documentação", "Análise de dados do dashboard")
+AREAS = ("Código", "Documentação", "Planejamento e gestão", "Análise de dados do dashboard")
 RESULTADOS = ("aceito", "descartado")
 
 
