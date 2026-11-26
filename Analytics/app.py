@@ -27,7 +27,7 @@ st.set_page_config(page_title="MeasureSoftGram — Dashboard de Gestão de Proje
                    initial_sidebar_state="expanded")
 
 from pages import (custos, decisoes, evm, fluxo, metodologia, processo, qualidade, riscos, sonar,  # noqa: E402
-                   visao_executiva, zenhub)
+                   uso_ia, visao_executiva, zenhub)
 from src.components import filters, layout  # noqa: E402
 from src.data import contexto  # noqa: E402
 
@@ -68,6 +68,7 @@ navegacao = st.navigation({
     "Referência": [
         st.Page(metodologia.pagina, title="Metodologia e Fontes", url_path="metodologia",
                 icon=":material/info:"),
+        st.Page(uso_ia.pagina, title="Uso de IA", url_path="uso-de-ia", icon=":material/smart_toy:"),
     ],
 })
 layout.cabecalho(ctx, filtros)

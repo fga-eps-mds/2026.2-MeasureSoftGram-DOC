@@ -15,6 +15,7 @@ PAGINAS = {
     "Visão Executiva": "./visao-executiva", "Agile EVM": "./agile-evm", "Gestão ágil": "./zenhub",
     "Qualidade técnica": "./sonar", "Custos": "./custos", "Riscos": "./riscos", "Decisões": "./decisoes",
     "Integração contínua": "./processo", "Metodologia": "./metodologia", "Qualidade (Q-Rapids)": "./qualidade",
+    "Uso de IA": "./uso-de-ia",
 }
 
 
