@@ -97,5 +97,32 @@
     "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/307",
     "resultado": "aceito",
     "motivo": "Campos conferidos no models.py da develop do Service antes do aceite; o build do Docusaurus passou."
+  },
+  {
+    "data": "2026-10-27",
+    "area": "Análise de dados do dashboard",
+    "pedido": "Calcular os números da apresentação da R2 a partir dos dados do dashboard (Analytics/data), do ZenHub e do GitHub",
+    "onde": "Apresentação da R2 · contagem de autores",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/releases/release-2.mdx",
+    "resultado": "descartado",
+    "motivo": "O filtro de bots ('bot' contido no login) excluía o integrante bottinolucas e subestimava commits e autores. Recalculado com o sufixo [bot]."
+  },
+  {
+    "data": "2026-10-27",
+    "area": "Análise de dados do dashboard",
+    "pedido": "Calcular a taxa de sucesso da CI da R2 com as execuções coletadas pelo dashboard",
+    "onde": "Apresentação da R2 · taxa de CI",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/blob/main/docs/reunioes/feedback-release/ata-feedback-r2.mdx",
+    "resultado": "aceito",
+    "motivo": "A primeira versão (71,4%) misturava o repositório de documentação; o valor aceito (82,8%) considera só os repositórios de código e é o '~82%' registrado na ata do feedback da R2."
+  },
+  {
+    "data": "2026-10-28",
+    "area": "Análise de dados do dashboard",
+    "pedido": "Explicar de onde vêm as horas usadas no custo real do Agile EVM",
+    "onde": "Agile EVM · custo real",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/commit/bec8394",
+    "resultado": "descartado",
+    "motivo": "A IA tinha afirmado que os 16 integrantes lançaram horas. A aba só mostra que há números, não quem os lançou (eu não lancei as minhas). A afirmação foi retirada; o EVM já usava o custo do time no lugar das horas."
   }
 ]
