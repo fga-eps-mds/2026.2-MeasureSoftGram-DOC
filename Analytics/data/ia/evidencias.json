@@ -169,5 +169,41 @@
     "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/commit/bec8394",
     "resultado": "descartado",
     "motivo": "A IA afirmou que todos os integrantes lançaram horas, mas a planilha só mostra que há números, não quem os lançou. A afirmação foi retirada; o EVM já usava o custo do time no lugar das horas."
+  },
+  {
+    "data": "2026-11-10",
+    "area": "Código",
+    "pedido": "Criar uma skill do Claude Code que escreve o E2E de uma US a partir dos critérios de aceite da issue",
+    "onde": "Front#115 · skill msg-e2e-por-criterio",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/115",
+    "resultado": "aceito",
+    "motivo": "Mergeada no Front. A skill para quando a issue não tem critério, classifica cada critério (E2E, snapshot, manual) e espera o OK de uma pessoa antes de escrever os testes, que rodam 3 vezes."
+  },
+  {
+    "data": "2026-11-13",
+    "area": "Código",
+    "pedido": "Montar a suíte E2E de sistema com Front, Service e Postgres reais e um GitLab falso",
+    "onde": "Platform#5 · E2E de sistema",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Platform/pull/5",
+    "resultado": "aceito",
+    "motivo": "Conferida localmente com 35/35 em 5 repetições. Os desvios impostos pelo produto (sem login por senha no Front, URL do GitLab fixa) ficaram documentados no PR em vez de contornados."
+  },
+  {
+    "data": "2026-11-23",
+    "area": "Código",
+    "pedido": "Refatorar cmd_calculate e cmd_list da CLI para zerar a complexidade cognitiva apontada pelo Sonar, sem mudar o comportamento",
+    "onde": "CLI#37 · QA-12",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/pull/37",
+    "resultado": "aceito",
+    "motivo": "Um modelo escreveu o refactor e outro rodou a suíte: 281 testes passando antes e depois e lint OK; as mensagens e a ordem da saída continuaram as mesmas."
+  },
+  {
+    "data": "2026-11-23",
+    "area": "Código",
+    "pedido": "Zerar as violações críticas restantes do SonarCloud no Service (literais repetidos)",
+    "onde": "Service#109 · QA-10b",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/109",
+    "resultado": "aceito",
+    "motivo": "Literais trocados por constantes sem mudar rotas nem mensagens; 498 testes passando antes do merge."
   }
 ]
