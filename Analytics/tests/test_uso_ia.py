@@ -23,6 +23,11 @@ class EvidenciasTest(unittest.TestCase):
         caminho.write_text(json.dumps(itens), encoding="utf-8")
         return caminho
 
+    def test_arquivo_versionado_cobre_as_tres_areas_com_aceito_e_descartado(self):
+        df = uso_ia.evidencias()
+        self.assertEqual(set(df["area"]), set(uso_ia.AREAS))
+        self.assertEqual(set(df["resultado"]), set(uso_ia.RESULTADOS))
+
     def test_le_ordenado_da_mais_recente(self):
         with tempfile.TemporaryDirectory() as d:
             df = uso_ia.evidencias(self._gravar(d, [evidencia(data="2026-09-01"), evidencia(data="2026-11-01")]))
