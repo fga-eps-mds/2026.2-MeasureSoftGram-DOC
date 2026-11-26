@@ -1,0 +1,74 @@
+[
+  {
+    "data": "2026-09-28",
+    "area": "Código",
+    "pedido": "Triar as 44 issues de bug herdadas de 2026.1, rodando a suíte de cada repositório e dando um veredito com evidência para cada uma",
+    "onde": "DOC#38 [TASK05.01]",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/38",
+    "resultado": "descartado",
+    "motivo": "O veredito de que o bug do qualifier TRK/FIL continuava aberto veio de uma leitura estática superficial. A reprodução no fluxo real mostrou que já estava corrigido, e o veredito foi trocado."
+  },
+  {
+    "data": "2026-09-28",
+    "area": "Código",
+    "pedido": "Aplicar a sugestão da revisão do PR de logout (apagar o token com filter().delete()), com teste antes da correção",
+    "onde": "Service#25",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/25",
+    "resultado": "aceito",
+    "motivo": "O teste RED falhou pelo motivo certo (RelatedObjectDoesNotExist). A IA também mostrou que o make test não coletava accounts/tests.py: os 187 testes citados no PR eram, na coleta do CI, 315."
+  },
+  {
+    "data": "2026-10-13",
+    "area": "Código",
+    "pedido": "Revisar o PR do login com GitHub, testar com credenciais reais sem expô-las e implementar o que faltava para fechar a #105",
+    "onde": "Service#32",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/32",
+    "resultado": "aceito",
+    "motivo": "Causas reproduzidas em teste e no navegador, correção em TDD. Foi aceita a resposta 400 com mensagem clara; a vinculação automática de contas foi recusada por decisão humana, porque o allauth apagaria a senha local."
+  },
+  {
+    "data": "2026-10-18",
+    "area": "Código",
+    "pedido": "Revisar tudo o que está no fork e não na main, para levar a correção do login para produção",
+    "onde": "Front#31",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/31",
+    "resultado": "descartado",
+    "motivo": "A IA incluiu no PR a remoção de um console.error do Auth.tsx, que é code smell e não bug do Sonar. Saiu na revisão de escopo; o PR ficou só com o que reprovava o quality gate."
+  },
+  {
+    "data": "2026-10-19",
+    "area": "Código",
+    "pedido": "Corrigir o login CSRF do OAuth (state ausente ou forjado), reproduzindo no Chrome antes e depois da correção",
+    "onde": "Front#46",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/pull/46",
+    "resultado": "descartado",
+    "motivo": "O plano da IA previa corrigir também um redirecionamento para domínio externo (//example.com). O teste no navegador mostrou que isso não acontece no Next 12, e o item saiu do plano. O restante foi aceito (5 pares RED/GREEN)."
+  },
+  {
+    "data": "2026-10-20",
+    "area": "Código",
+    "pedido": "Remover o Grafana do Platform e validar o ambiente local",
+    "onde": "Platform#2",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Platform/pull/2",
+    "resultado": "descartado",
+    "motivo": "A tentativa de testar com os ponteiros novos dos submódulos entrou em loop por uma variável que o compose não repassa. A IA parou e perguntou; a decisão humana foi não avançar os ponteiros, porque isso já estava com outra pessoa."
+  },
+  {
+    "data": "2026-10-28",
+    "area": "Código",
+    "pedido": "Gravar no fechamento da release todas as características da configuração, mostrando primeiro que não funciona",
+    "onde": "Service#78",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/78",
+    "resultado": "aceito",
+    "motivo": "Bug reproduzido com o Core real num script fora do repositório; o valor de 0,8815 da configuração 80/20 foi conferido à mão pela fórmula do Core antes do aceite."
+  },
+  {
+    "data": "2026-11-12",
+    "area": "Código",
+    "pedido": "Reduzir a complexidade cognitiva das 6 funções do Plugin apontadas pelo Sonar (S3776)",
+    "onde": "Plugin#12",
+    "link": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Plugin/pull/12",
+    "resultado": "aceito",
+    "motivo": "17 testes de caracterização escritos e verdes no código original antes do refactor; a complexidade foi medida com o eslint-plugin-sonarjs, que reproduziu os valores do SonarCloud."
+  }
+]
