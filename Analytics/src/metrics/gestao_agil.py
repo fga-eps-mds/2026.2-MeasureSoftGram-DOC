@@ -392,3 +392,125 @@ def analises(por_sprint: pd.DataFrame, linhas: pd.DataFrame) -> pd.DataFrame:
         add("Dado ausente", "várias", f"{len(sem)} story(ies) seguem sem estimativa e contam 0 SP",
             "planejado e realizado ficam subestimados até alguém estimar", _lista(sem))
     return pd.DataFrame(out)
+
+
+# ───────────────────────── sprint × sprint (#194, TASK38.05.01) ─────────────────────────
+
+# (chave, rótulo, unidade, sentido): sentido +1 = maior é melhor, -1 = menor é melhor, 0 = só contexto
+INDICADORES_COMPARACAO = [
+    ("sp_planejado", "SP planejados", "SP", 0),
+    ("sp_realizado", "SP entregues (velocity)", "SP", +1),
+    ("taxa", "Entregue ÷ planejado", "%", +1),
+    ("sp_realizado_fora_do_plano", "SP entregues fora do plano", "SP", 0),
+    ("sp_adicionado", "SP adicionados depois da planning", "SP", -1),
+    ("sp_removido", "SP removidos sem concluir", "SP", -1),
+    ("stories_levadas", "Stories levadas para a sprint seguinte", "stories", -1),
+    ("fluxo_concluidos", "Tasks e Bugs concluídos (throughput)", "itens", +1),
+    ("bugs_concluidos", "Bugs concluídos", "itens", 0),
+    ("lead_mediano", "Lead Time mediano de Tasks e Bugs", "dias", -1),
+]
+
+
+def _dia(t) -> pd.Timestamp | None:
+    if t is None or pd.isna(t):
+        return None
+    t = pd.Timestamp(t)
+    return (_local(t) if t.tzinfo is not None else t).normalize()
+
+
+def _fluxo_na_sprint(itens: pd.DataFrame | None, ini, fim) -> dict:
+    """Tasks/Bugs fechados entre o primeiro e o último dia da sprint (Brasília) e o Lead Time mediano deles."""
+    vazio = {"fluxo_concluidos": float("nan"), "bugs_concluidos": float("nan"), "lead_mediano": float("nan")}
+    a, b = _dia(ini), _dia(fim)
+    if itens is None or a is None or b is None:
+        return vazio
+    if itens.empty:
+        return {"fluxo_concluidos": 0, "bugs_concluidos": 0, "lead_mediano": float("nan")}
+    f = itens[itens["fechada"].notna() & (itens["fechada"] >= a) & (itens["fechada"] < b + pd.Timedelta(days=1))]
+    lead = f["lead_dias"].dropna()
+    return {"fluxo_concluidos": len(f), "bugs_concluidos": int((f["tipo"] == "Bug").sum()),
+            "lead_mediano": float(lead.median()) if not lead.empty else float("nan")}
+
+
+def comparar_sprints(por_sprint: pd.DataFrame, a: str, b: str, itens: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Sprint ``a`` × sprint ``b``: uma linha por indicador com os dois valores, a diferença (b − a) e a leitura.
+
+    ``por_sprint`` é a saída de ``resumo_por_sprint`` (pontos só de US, como a velocity) e ``itens`` a de
+    ``fluxo.itens_de_fluxo`` (Tasks e Bugs, sem pontos). ``leitura``: "melhorou", "piorou", "igual" ou "" (indicador
+    de contexto, sem lado bom). Sprint fora do resumo = DataFrame vazio.
+    """
+    if por_sprint is None or por_sprint.empty:
+        return pd.DataFrame()
+    s = por_sprint.set_index("sprint")
+    if a not in s.index or b not in s.index:
+        return pd.DataFrame()
+    va = {**s.loc[a].to_dict(), **_fluxo_na_sprint(itens, s.loc[a, "sprint_inicio"], s.loc[a, "sprint_fim"])}
+    vb = {**s.loc[b].to_dict(), **_fluxo_na_sprint(itens, s.loc[b, "sprint_inicio"], s.loc[b, "sprint_fim"])}
+    linhas = []
+    for chave, rotulo, unidade, sentido in INDICADORES_COMPARACAO:
+        x, y = va.get(chave), vb.get(chave)
+        x = float("nan") if x is None or pd.isna(x) else float(x)
+        y = float("nan") if y is None or pd.isna(y) else float(y)
+        dif = y - x
+        if sentido == 0 or pd.isna(dif):
+            leitura = ""
+        elif abs(dif) < 1e-9:
+            leitura = "igual"
+        else:
+            leitura = "melhorou" if dif * sentido > 0 else "piorou"
+        linhas.append({"chave": chave, "indicador": rotulo, "unidade": unidade, "a": x, "b": y, "diferenca": dif,
+                       "leitura": leitura})
+    return pd.DataFrame(linhas)
+
+
+def analise_comparacao(tab: pd.DataFrame, a: str, b: str) -> str | None:
+    """Leitura crítica da comparação: o que melhorou, o que piorou e a decisão que isso apoia."""
+    from src.metrics.calculations import num
+    if tab is None or tab.empty:
+        return None
+    t = tab.set_index("chave")
+
+    singular = {"stories": "story", "itens": "item", "dias": "dia"}
+
+    def fmt(chave, v):
+        u = t.loc[chave, "unidade"]
+        if u == "%":
+            return f"{num(v)}%"
+        return f"{num(v, 1 if u == 'dias' else 0)} {singular.get(u, u) if v == 1 else u}"
+
+    def nome(r):
+        return r.indicador
+
+    melhor = [r for r in tab.itertuples() if r.leitura == "melhorou"]
+    pior = [r for r in tab.itertuples() if r.leitura == "piorou"]
+    partes = [f"Leitura crítica: da {a} para a {b}"]
+    va, vb = t.loc["sp_realizado", "a"], t.loc["sp_realizado", "b"]
+    if not (pd.isna(va) or pd.isna(vb)):
+        partes.append(f", a entrega de US foi de {fmt('sp_realizado', va)} para {fmt('sp_realizado', vb)}")
+        ta, tb = t.loc["taxa", "a"], t.loc["taxa", "b"]
+        if not (pd.isna(ta) or pd.isna(tb)):
+            partes.append(f" ({fmt('taxa', ta)} → {fmt('taxa', tb)} do planejado)")
+    partes.append(".")
+    if melhor:
+        partes.append(" Melhorou: " + "; ".join(f"{nome(r)} ({fmt(r.chave, r.a)} → {fmt(r.chave, r.b)})"
+                                              for r in melhor) + ".")
+    if pior:
+        partes.append(" Piorou: " + "; ".join(f"{nome(r)} ({fmt(r.chave, r.a)} → {fmt(r.chave, r.b)})"
+                                            for r in pior) + ".")
+    if not melhor and not pior:
+        partes.append(" Nenhum indicador mudou de forma comparável.")
+    chaves_pior = {r.chave for r in pior}
+    if chaves_pior & {"sp_realizado", "taxa"}:
+        partes.append(" Decisão que isso apoia: investigar o que travou o aceite das US nesta sprint (bloqueios, "
+                      "revisão, validação do PO) antes de planejar a próxima com o mesmo volume.")
+        if chaves_pior & {"sp_adicionado", "sp_removido", "stories_levadas"}:
+            partes.append(" Houve também mais mudança de escopo: proteger o que foi planejado depois da planning.")
+    elif chaves_pior & {"sp_adicionado", "sp_removido", "stories_levadas"}:
+        partes.append(" Decisão que isso apoia: proteger o escopo depois da planning (menos entrada e saída de "
+                      "stories no meio da sprint) e estimar só o que cabe.")
+    elif chaves_pior & {"lead_mediano", "fluxo_concluidos"}:
+        partes.append(" Decisão que isso apoia: olhar a fila de Tasks e Bugs (página Fluxo); o trabalho técnico "
+                      "ficou mais lento.")
+    elif melhor:
+        partes.append(" Decisão que isso apoia: manter as práticas da última sprint na próxima planning.")
+    return "".join(partes)

@@ -97,5 +97,73 @@ class GestaoAgilTest(unittest.TestCase):
         self.assertIsNone(ga.tendencia(ga.resumo_por_sprint(self.linhas))["valor"])
 
 
+class SprintXSprintTest(unittest.TestCase):
+    """#194 / TASK38.05.01: comparar uma sprint com outra."""
+
+    def setUp(self):
+        import pandas as pd
+        self.pd = pd
+        self.R = pd.DataFrame([
+            {"sprint": "S10", "release": "R3", "sprint_status": "concluída", "sp_planejado": 20.0, "sp_realizado": 10.0,
+             "taxa": 50.0, "sp_realizado_fora_do_plano": 2.0, "sp_adicionado": 8.0, "sp_removido": 3.0,
+             "stories_levadas": 4, "sprint_inicio": datetime(2026, 11, 9, 3, 59, tzinfo=UTC),
+             "sprint_fim": datetime(2026, 11, 16, 2, 59, tzinfo=UTC)},
+            {"sprint": "S11", "release": "R3", "sprint_status": "concluída", "sp_planejado": 20.0, "sp_realizado": 18.0,
+             "taxa": 90.0, "sp_realizado_fora_do_plano": 0.0, "sp_adicionado": 2.0, "sp_removido": 5.0,
+             "stories_levadas": 1, "sprint_inicio": datetime(2026, 11, 16, 3, 59, tzinfo=UTC),
+             "sprint_fim": datetime(2026, 11, 23, 2, 59, tzinfo=UTC)}])
+        dia = lambda d, h=12: pd.Timestamp(2026, 11, d, h)          # noqa: E731  (hora de Brasília, sem fuso)
+        self.itens = pd.DataFrame([
+            {"tipo": "Task", "fechada": dia(9), "lead_dias": 2.0},
+            {"tipo": "Bug", "fechada": dia(15, 23), "lead_dias": 4.0},     # último dia da S10, 23h
+            {"tipo": "Task", "fechada": dia(16), "lead_dias": 6.0},
+            {"tipo": "Task", "fechada": dia(18), "lead_dias": 8.0},
+            {"tipo": "Bug", "fechada": dia(22), "lead_dias": 10.0},
+            {"tipo": "Task", "fechada": pd.NaT, "lead_dias": float("nan")}])
+
+    def test_valores_diferenca_e_leitura(self):
+        t = ga.comparar_sprints(self.R, "S10", "S11", self.itens).set_index("chave")
+        self.assertEqual((t.loc["sp_realizado", "a"], t.loc["sp_realizado", "b"]), (10, 18))
+        self.assertEqual(t.loc["sp_realizado", "diferenca"], 8)
+        self.assertEqual(t.loc["sp_realizado", "leitura"], "melhorou")
+        self.assertEqual(t.loc["sp_adicionado", "leitura"], "melhorou")    # menos entrada no meio da sprint
+        self.assertEqual(t.loc["sp_removido", "leitura"], "piorou")
+        self.assertEqual(t.loc["sp_planejado", "leitura"], "")             # contexto: sem lado bom
+        self.assertEqual(t.loc["sp_planejado", "diferenca"], 0)
+
+    def test_fluxo_conta_os_fechados_dentro_dos_dias_da_sprint(self):
+        t = ga.comparar_sprints(self.R, "S10", "S11", self.itens).set_index("chave")
+        self.assertEqual((t.loc["fluxo_concluidos", "a"], t.loc["fluxo_concluidos", "b"]), (2, 3))
+        self.assertEqual((t.loc["bugs_concluidos", "a"], t.loc["bugs_concluidos", "b"]), (1, 1))
+        self.assertEqual((t.loc["lead_mediano", "a"], t.loc["lead_mediano", "b"]), (3.0, 8.0))
+        self.assertEqual(t.loc["lead_mediano", "leitura"], "piorou")
+
+    def test_sem_itens_de_fluxo_nao_inventa(self):
+        t = ga.comparar_sprints(self.R, "S10", "S11", None).set_index("chave")
+        self.assertTrue(self.pd.isna(t.loc["fluxo_concluidos", "a"]))
+        self.assertEqual(t.loc["fluxo_concluidos", "leitura"], "")
+
+    def test_sprint_fora_do_recorte(self):
+        self.assertTrue(ga.comparar_sprints(self.R, "S10", "S99").empty)
+        self.assertTrue(ga.comparar_sprints(self.pd.DataFrame(), "S10", "S11").empty)
+        self.assertIsNone(ga.analise_comparacao(self.pd.DataFrame(), "S10", "S11"))
+
+    def test_analise(self):
+        tab = ga.comparar_sprints(self.R, "S10", "S11", self.itens)
+        a = ga.analise_comparacao(tab, "S10", "S11")
+        self.assertIn("da S10 para a S11, a entrega de US foi de 10 SP para 18 SP (50% → 90% do planejado)", a)
+        self.assertIn("Melhorou:", a)
+        self.assertIn("Piorou: SP removidos sem concluir (3 SP → 5 SP)", a)
+        self.assertIn("proteger o escopo depois da planning", a)     # entrega melhorou; o que piorou foi o escopo
+        self.assertIn("Stories levadas para a sprint seguinte (4 stories → 1 story)", a)
+
+    def test_queda_de_entrega_vem_antes_do_escopo_na_decisao(self):
+        R = self.R.copy()
+        R.loc[1, ["sp_realizado", "taxa", "stories_levadas"]] = [0.0, 0.0, 6]
+        a = ga.analise_comparacao(ga.comparar_sprints(R, "S10", "S11", self.itens), "S10", "S11")
+        self.assertIn("investigar o que travou o aceite das US", a)
+        self.assertIn("Houve também mais mudança de escopo", a)
+
+
 if __name__ == "__main__":
     unittest.main()

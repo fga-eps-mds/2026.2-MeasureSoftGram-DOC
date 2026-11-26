@@ -11,6 +11,7 @@ from src import theme
 from src.components import charts, filters, layout, rastreio
 from src.components.kpi import kpi
 from src.data.sonar import nome_curto
+from src.metrics import ci
 from src.metrics.calculations import data_br, num, status_taxa
 
 CONCLUSOES = ["success", "failure", "cancelled", "skipped"]
@@ -94,6 +95,12 @@ def pagina():
         return
     r = filters.por_periodo(filters.por_repo(runs, f["repos"]), "criado_em", f["periodo"])
     caixa = filters.da_pagina(f, ESCOPO)
+    todos_wf = caixa.toggle("Incluir todos os workflows", value=False, key="ci_todos_workflows",
+                            help="Desligado (padrão): só o workflow de testes (test.yml), fora dos PRs do Dependabot, "
+                                 "o mesmo recorte do Build stability (M10) do Q-Rapids (decisão D5). Ligado: deploy, "
+                                 "coleta de dados, dependabot e publicação também entram.")
+    if not todos_wf:
+        r = ci.so_build(r)
     wfs = sorted(r["workflow"].dropna().unique())
     sel_wf = caixa.multiselect("Workflow", wfs, key="ci_workflow", placeholder="Todos",
                                help="nome do workflow do GitHub Actions (CI, deploy, métricas...)")
@@ -104,6 +111,8 @@ def pagina():
     if sel_br:
         r = r[r["branch"].isin(sel_br)]
     st.caption(f"Recorte: {filters.resumo_ativos(f, ESCOPO)}"
+               + (" · todos os workflows" if todos_wf else " · só o workflow de testes (test.yml), como o Build "
+                  "stability do Q-Rapids")
                + (f" · workflow: {', '.join(sel_wf)}" if sel_wf else "")
                + (f" · branch: {', '.join(sel_br)}" if sel_br else ""))
     conc = r[r["conclusao"].isin(["success", "failure"])]
@@ -114,7 +123,7 @@ def pagina():
     layout.secao("Resumo", "A CI é confiável o bastante para servir de portão de qualidade?", ["GITHUB"])
     k = st.columns(4)
     with k[0]:
-        kpi("Taxa de sucesso", f"{num(taxa)}%", "GITHUB",
+        kpi("Taxa de sucesso" if todos_wf else "Build stability (test.yml)", f"{num(taxa)}%", "GITHUB",
             status=status_taxa(taxa, config.META_CI_SUCESSO, config.LIMITE_CI_CRITICO), nota=f"meta ≥ {num(config.META_CI_SUCESSO)}%")
     with k[1]:
         outras = len(r) - len(conc)
@@ -144,7 +153,10 @@ def pagina():
                           alt.Tooltip("execucoes:Q", title="Execuções")]))
     charts.mostrar(g + charts.regra_horizontal(config.META_CI_SUCESSO, f"meta {num(config.META_CI_SUCESSO)}%",
                                                theme.STATUS["critical"]),
-                   "Taxa de sucesso da CI por semana", "% de execuções com sucesso · semanas com execução", s, altura=240)
+                   "Taxa de sucesso da CI por semana", "% de execuções com sucesso · semanas com execução"
+                   + ("" if todos_wf else " · só test.yml"), s, altura=240,
+                   nota=ci.analise_critica(s, conc, config.META_CI_SUCESSO, config.LIMITE_CI_CRITICO,
+                                           so_testes=not todos_wf))
 
     if layout.detalhes("processo", "Mostrar execuções por repositório"):
         layout.secao("Dado bruto", "Os números batem com a aba Actions de cada repositório?", ["GITHUB"])

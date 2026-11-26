@@ -1,5 +1,8 @@
 """Blocos de apoio da página Gestão ágil: backlog atual e confiabilidade dos dados do Zenhub.
 
+Não é uma página: é chamado por ``pages/zenhub.py`` atrás do interruptor de detalhes. Ficava em
+``pages/zenhub_dados.py`` e parecia uma página fora da navegação (pendência da ata da R2, TASK38.05.01).
+
 Ficam separados para a página principal seguir a ordem de análise (filtros → KPIs →
 planejado → realizado → velocity → burndown → análises → issues).
 """
