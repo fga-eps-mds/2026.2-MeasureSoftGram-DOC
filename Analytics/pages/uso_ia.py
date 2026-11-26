@@ -31,44 +31,47 @@ evidências abaixo são do grupo, sem identificar integrantes; o registro indivi
 def _retrospectiva() -> None:
     layout.secao("O que a IA acertou", "Onde a IA poupou trabalho sem perder qualidade?")
     st.markdown(f"""
+- **Rascunho para começar, não para entregar.** Épicos, tasks, cenários e critérios de aceite rascunhados com IA
+  deram ao time uma visão do trabalho da release logo no início; o escopo foi validado com o PO antes de virar
+  compromisso.
 - **Reproduzir antes de corrigir.** Os bugs do login com GitHub ([Service#32]({GH}Service/pull/32)), do `state` do
   OAuth ([Front#46]({GH}Front/pull/46)) e do fechamento da release ([Service#78]({GH}Service/pull/78)) foram
-  reproduzidos antes da correção, com teste RED falhando pelo motivo certo e o GREEN em commit separado.
-- **Ler muito volume com evidência.** A triagem das 44 issues de bug herdadas de 2026.1
-  ([DOC#38]({DOC}/issues/38)) deu um veredito por issue, com o comando executado ou o arquivo e a linha.
-- **Achar o que ninguém tinha visto.** O `make test` do Service não coletava `accounts/tests.py` (187 testes no PR
-  contra 315 na coleta do CI); o total de métricas zerado no seed ([Service#86]({GH}Service/pull/86)); o conflito de
-  migrações `0018` entre duas branches.
-- **Medir em vez de supor.** A complexidade cognitiva do Plugin e do Front foi medida com o `eslint-plugin-sonarjs`,
-  que reproduziu os números do SonarCloud antes do refactor ([Plugin#12]({GH}Plugin/pull/12)).
+  reproduzidos antes da correção, com teste falhando pelo motivo certo e a correção em commit separado.
+- **Volume com evidência.** A triagem das 44 issues de bug herdadas de 2026.1 ([DOC#38]({DOC}/issues/38)) deu um
+  veredito por issue com a fonte para conferir, e a reestruturação do site de documentação (13 commits) foi feita com
+  apoio de IA e integrada ao site.
+- **Medir em vez de supor.** A complexidade do Plugin foi medida com a mesma regra do SonarCloud antes do refactor
+  ([Plugin#12]({GH}Plugin/pull/12)), e a queda do dashboard no Streamlit Cloud foi resolvida medindo a memória de cada
+  fonte de dados antes de mexer ([DOC#383]({DOC}/pull/383)).
+- **Vários modelos se conferindo.** Na página Canvas Analytics ([DOC#368]({DOC}/pull/368)) um modelo escreveu a
+  especificação, outro o código e um terceiro conferiu o diff contra os critérios de aceite.
 """)
 
     layout.secao("O que a IA errou", "Que erros só apareceram porque alguém conferiu?")
     st.markdown("""
-- **Conclusão apressada por leitura estática:** o bug do qualifier TRK/FIL foi dado como aberto e já estava corrigido.
-- **Plano baseado numa suposição:** o redirecionamento para domínio externo no OAuth não acontece no Next 12; só o teste
-  no navegador mostrou isso.
-- **Números errados na análise de dados:** o filtro de bots excluía um integrante cujo login contém "bot"; a taxa de CI
-  misturava o repositório de documentação (71,4% em vez de 82,8%); e a IA afirmou que todos lançaram horas quando os
+- **Números errados na análise de dados:** o filtro de bots excluía um integrante cujo login contém "bot"; a taxa de
+  CI misturava o repositório de documentação (71,4% em vez de 82,8%); e a IA afirmou que todos lançaram horas quando os
   dados não mostram quem lançou.
-- **Fatos trocados em texto:** o rascunho do MD-R2 atribuiu um componente à pessoa errada e chamou homologação de
-  produção.
-- **Escopo e regras:** propôs mudanças fora do pedido (um `console.error` que não reprovava o Sonar) e, numa sessão,
-  digitou um comando proibido pelas regras do repositório (`gh api` sem argumentos, sem requisição feita).
-
-Todos os erros acima foram pegos na revisão humana ou num teste que a própria IA rodou a pedido, antes de publicar.
+- **Conclusões por leitura estática ou suposição:** um bug foi dado como aberto e já estava corrigido; um plano de
+  correção previa um problema que o framework usado nem permitia.
+- **Detalhes que parecem certos e não são:** um teste esperava "1,00" para 0,995, que em ponto flutuante vira "0,99";
+  um link fixo entre páginas; um estilo de wireframe genérico.
+- **Propostas difíceis de usar:** uma proposta de extensão do modelo matemático saiu técnica demais para ser entendida
+  sem explicação e não foi adotada.
+- **Texto com "cara de IA":** texto gerado chegou a ser passado para outra pessoa do time conferir se não estava
+  "com cara de IA" antes de publicar.
+- **Escopo:** sugestões de mudanças fora do que foi pedido, cortadas na revisão.
 """)
 
-    layout.secao("O que exigiu julgamento humano", "O que não delegamos, e por quê?")
+    layout.secao("O que exigiu julgamento humano", "O que o time não delegou, e por quê?")
     st.markdown(f"""
-- **Segurança:** não vincular contas no login OAuth (o allauth apagaria a senha local) e aceitar que a chave antiga
-  vire o token da GitHub Action (não quebra integrações, mas não expira no logout).
-- **Escopo e dependências:** não avançar os ponteiros dos submódulos do Platform (já estavam com outra pessoa) e adiar o
-  upgrade do TypeScript do Front.
-- **O que só uma pessoa faz:** login real no navegador, autorizar o App do GitHub, reiniciar o Docker e homologar com o
-  PO.
-- **Publicação:** push, PR, comentário, merge e fechamento de issue só com aval explícito, caso a caso. A IA não revisa
-  nem aprova PR; as exceções de merge foram registradas no próprio PR.
+- **Validação com o PO e com o professor:** critérios de aceite, escopo das issues e qualquer mudança no modelo
+  matemático do Core passaram pelo PO ou pelo professor antes de entrar.
+- **Segurança:** não vincular contas no login OAuth (a biblioteca de login apagaria a senha local).
+- **Escopo e dependências:** o que entra em cada PR, quem toca em cada parte (por exemplo, os submódulos do Platform)
+  e quando atualizar dependências grandes.
+- **O que só uma pessoa faz:** login real no navegador, autorizações de conta e homologação com o PO.
+- **Revisão e publicação:** a IA não revisa nem aprova PR; push, merge e fechamento de issue são decisões do time.
 - **O que nunca passa pela IA** ([combinado da equipe]({COMBINADOS})): atas com o PO, decisões gerenciais,
   autoavaliação e defesa oral.
 """)
