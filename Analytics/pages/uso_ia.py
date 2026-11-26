@@ -1,0 +1,64 @@
+"""Uso de IA — retrospectiva crítica do uso de IA generativa no semestre e as evidências (pedido, onde, aceito ou
+descartado e por quê). Combinados da equipe em docs/equipe/uso-de-ia.mdx; evidências em data/ia/evidencias.json."""
+
+from __future__ import annotations
+
+import streamlit as st
+
+from src.components import layout
+
+DOC = "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC"
+COMBINADOS = "https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-DOC/docs/equipe/uso-de-ia/"
+GH = "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-"
+
+
+def _retrospectiva() -> None:
+    layout.secao("O que a IA acertou", "Onde a IA poupou trabalho sem perder qualidade?")
+    st.markdown(f"""
+- **Reproduzir antes de corrigir.** Os bugs do login com GitHub ([Service#32]({GH}Service/pull/32)), do `state` do
+  OAuth ([Front#46]({GH}Front/pull/46)) e do fechamento da release ([Service#78]({GH}Service/pull/78)) foram
+  reproduzidos antes da correção, com teste RED falhando pelo motivo certo e o GREEN em commit separado.
+- **Ler muito volume com evidência.** A triagem das 44 issues de bug herdadas de 2026.1
+  ([DOC#38]({DOC}/issues/38)) deu um veredito por issue, com o comando executado ou o arquivo e a linha.
+- **Achar o que ninguém tinha visto.** O `make test` do Service não coletava `accounts/tests.py` (187 testes no PR
+  contra 315 na coleta do CI); o total de métricas zerado no seed ([Service#86]({GH}Service/pull/86)); o conflito de
+  migrações `0018` entre duas branches.
+- **Medir em vez de supor.** A complexidade cognitiva do Plugin e do Front foi medida com o `eslint-plugin-sonarjs`,
+  que reproduziu os números do SonarCloud antes do refactor ([Plugin#12]({GH}Plugin/pull/12)).
+""")
+
+    layout.secao("O que a IA errou", "Que erros só apareceram porque alguém conferiu?")
+    st.markdown("""
+- **Conclusão apressada por leitura estática:** o bug do qualifier TRK/FIL foi dado como aberto e já estava corrigido.
+- **Plano baseado numa suposição:** o redirecionamento para domínio externo no OAuth não acontece no Next 12; só o teste
+  no navegador mostrou isso.
+- **Números errados na análise de dados:** o filtro de bots excluía um integrante cujo login contém "bot"; a taxa de CI
+  misturava o repositório de documentação (71,4% em vez de 82,8%); e a IA afirmou que todos lançaram horas quando os
+  dados não mostram quem lançou.
+- **Fatos trocados em texto:** o rascunho do MD-R2 atribuiu um componente à pessoa errada e chamou homologação de
+  produção.
+- **Escopo e regras:** propôs mudanças fora do pedido (um `console.error` que não reprovava o Sonar) e, numa sessão,
+  digitou um comando proibido pelas regras do repositório (`gh api` sem argumentos, sem requisição feita).
+
+Todos os erros acima foram pegos na revisão humana ou num teste que a própria IA rodou a pedido, antes de publicar.
+""")
+
+    layout.secao("O que exigiu julgamento humano", "O que não delegamos, e por quê?")
+    st.markdown(f"""
+- **Segurança:** não vincular contas no login OAuth (o allauth apagaria a senha local) e aceitar que a chave antiga
+  vire o token da GitHub Action (não quebra integrações, mas não expira no logout).
+- **Escopo e dependências:** não avançar os ponteiros dos submódulos do Platform (já estavam com outra pessoa) e adiar o
+  upgrade do TypeScript do Front.
+- **O que só uma pessoa faz:** login real no navegador, autorizar o App do GitHub, reiniciar o Docker e homologar com o
+  PO.
+- **Publicação:** push, PR, comentário, merge e fechamento de issue só com aval explícito, caso a caso. A IA não revisa
+  nem aprova PR; as exceções de merge foram registradas no próprio PR.
+- **O que nunca passa pela IA** ([combinado da equipe]({COMBINADOS})): atas com o PO, decisões gerenciais,
+  autoavaliação e defesa oral.
+""")
+
+
+def pagina():
+    layout.titulo_pagina("Uso de IA", "Retrospectiva crítica do uso de IA generativa no semestre: o que acertou, o que "
+                         "errou, o que exigiu julgamento humano e as evidências de cada caso.")
+    _retrospectiva()
