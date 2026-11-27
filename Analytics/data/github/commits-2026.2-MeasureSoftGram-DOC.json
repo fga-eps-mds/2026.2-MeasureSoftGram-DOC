@@ -1,11 +1,269 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-27T03:13:10+00:00",
+ "coletado_em": "2026-11-27T18:09:38+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "branch": "(padrão)",
  "commits": [
+  {
+   "sha": "917bab096adc7f29fa22affa5c954b0402d2c08f",
+   "date": "2026-11-27T18:05:29Z",
+   "author": "MilenaFRocha",
+   "message": "Merge pull request #385 from fga-eps-mds/fix/qrapids-arquivos-api",
+   "parents": 2,
+   "files": [
+    {
+     "filename": "Analytics/config.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/data/sonar_api.py",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/src/metrics/qrapids.py",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 6
+    },
+    {
+     "filename": "Analytics/src/metrics/qualidade.py",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/tests/test_qrapids.py",
+     "status": "modified",
+     "additions": 54,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_qualidade_notebook.py",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_sonar.py",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "d00790f5f4397465391c423dda57d552bbc2a3c7",
+   "date": "2026-11-27T17:28:35Z",
+   "author": "MilenaFRocha",
+   "message": "fix(analytics): plano de qualidade usa a coleta da API além do metrics.yml",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/config.py",
+     "status": "modified",
+     "additions": 4,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/src/metrics/qrapids.py",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 6
+    },
+    {
+     "filename": "Analytics/src/metrics/qualidade.py",
+     "status": "modified",
+     "additions": 11,
+     "deletions": 2
+    }
+   ]
+  },
+  {
+   "sha": "be147686de2c10674504f05e5ccefe9c9fdc596e",
+   "date": "2026-11-27T17:28:35Z",
+   "author": "MilenaFRocha",
+   "message": "fix(analytics): coleta do SonarCloud traz as pastas (DIR) na árvore por arquivo",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/src/data/sonar_api.py",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 4
+    }
+   ]
+  },
+  {
+   "sha": "7fbc284ccac9ad9d90210970c80ca9e21adfbed6",
+   "date": "2026-11-27T17:27:57Z",
+   "author": "MilenaFRocha",
+   "message": "test(analytics): caracteriza a avaliação por arquivo sem os .json do metrics.yml",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/tests/test_qrapids.py",
+     "status": "modified",
+     "additions": 54,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_qualidade_notebook.py",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/tests/test_sonar.py",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "f99bede4e9db9ead4fac8370037179740a02f1aa",
+   "date": "2026-11-27T15:04:28Z",
+   "author": "github-actions[bot]",
+   "message": "Adicionando métricas do repositório 2026.2-MeasureSoftGram-Action develop",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/GitHub_API-Issues-fga-eps-mds-2026.2-MeasureSoftGram-Action.json",
+     "status": "modified",
+     "additions": 29,
+     "deletions": 6
+    },
+    {
+     "filename": "Analytics/data/GitHub_API-Runs-fga-eps-mds-2026.2-MeasureSoftGram-Action-11-27-2026-15-04-15.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    },
+    {
+     "filename": "Analytics/data/fga-eps-mds-2026.2-MeasureSoftGram-Action-11-27-2026-15-04-15-develop.json",
+     "status": "added",
+     "additions": 1,
+     "deletions": 0
+    }
+   ]
+  },
+  {
+   "sha": "045452228c0e66e0b248af4679de0d10d8238526",
+   "date": "2026-11-27T03:16:23Z",
+   "author": "github-actions[bot]",
+   "message": "chore(dados): coleta automática do Zenhub, SonarCloud e GitHub Actions",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "Analytics/data/github/commits-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 59,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 16,
+     "deletions": 16
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 20,
+     "deletions": 3
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 1
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 19,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/issues-2026.2-MeasureSoftGram-Service.json",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-AI.json",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-CLI.json",
+     "status": "modified",
+     "additions": 86,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Core.json",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-DOC.json",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 4
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Front.json",
+     "status": "modified",
+     "additions": 127,
+     "deletions": 127
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Parser.json",
+     "status": "modified",
+     "additions": 30,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/github/runs-2026.2-MeasureSoftGram-Plugin.json",
+     "status": "modified",
+     "additions": 44,
+     "deletions": 2
+    },
+    {
+     "filename": "Analytics/data/zenhub/velocity/zenhub-velocity-2026-11-27T0312.json",
+     "status": "added",
+     "additions": 20269,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "793d5ac65a2bdb46c49c21cbb799d6b2d5a67d2b",
    "date": "2026-11-26T03:16:17Z",
@@ -48004,5 +48262,5 @@
    ]
   }
  ],
- "detalhes_novos": 1
+ "detalhes_novos": 6
 }

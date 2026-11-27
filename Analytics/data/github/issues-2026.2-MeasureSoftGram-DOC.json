@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-27T03:13:10+00:00",
+ "coletado_em": "2026-11-27T18:09:38+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-DOC",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 385,
+   "title": "Fix/qrapids arquivos api",
+   "state": "closed",
+   "is_pull_request": true,
+   "created_at": "2026-11-27T17:54:08Z",
+   "closed_at": "2026-11-27T18:05:29Z",
+   "updated_at": "2026-11-27T18:05:32Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4440,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/pull/385",
+   "author": "MilenaFRocha"
+  },
   {
    "number": 384,
    "title": "feat(analytics): [TASK38.04] página Uso de IA como análise do time",
@@ -309,12 +326,15 @@
    "is_pull_request": false,
    "created_at": "2026-11-24T17:13:35Z",
    "closed_at": null,
-   "updated_at": "2026-11-24T17:15:01Z",
+   "updated_at": "2026-11-27T15:04:56Z",
    "labels": [
     "bug"
    ],
    "type": "Bug",
-   "assignees": [],
+   "assignees": [
+    "MilenaFRocha",
+    "DanielFsR"
+   ],
    "milestone": null,
    "milestone_due_on": null,
    "body_chars": 4766,
@@ -2179,7 +2199,7 @@
    "is_pull_request": false,
    "created_at": "2026-11-11T12:33:26Z",
    "closed_at": null,
-   "updated_at": "2026-11-18T21:39:37Z",
+   "updated_at": "2026-11-27T03:56:55Z",
    "labels": [
     "US",
     "frontend",
@@ -2192,7 +2212,7 @@
    ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
-   "body_chars": 8883,
+   "body_chars": 9690,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/276",
    "author": "MilenaFRocha"
   },
@@ -3047,11 +3067,11 @@
   {
    "number": 236,
    "title": "[TASK15.01.02] GitLab CI: Desenvolver componente do CI/CD Catalog e template de job",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-08T20:15:35Z",
-   "closed_at": null,
-   "updated_at": "2026-11-15T00:22:10Z",
+   "closed_at": "2026-11-27T15:04:00Z",
+   "updated_at": "2026-11-27T15:04:00Z",
    "labels": [
     "task"
    ],
@@ -5050,7 +5070,7 @@
    "is_pull_request": false,
    "created_at": "2026-10-07T20:40:31Z",
    "closed_at": null,
-   "updated_at": "2026-11-27T03:11:38Z",
+   "updated_at": "2026-11-27T03:19:25Z",
    "labels": [
     "US",
     "service",
@@ -5064,7 +5084,7 @@
    ],
    "milestone": "R3",
    "milestone_due_on": "2026-11-30T00:00:00Z",
-   "body_chars": 4848,
+   "body_chars": 4197,
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/136",
    "author": "MilenaFRocha"
   },

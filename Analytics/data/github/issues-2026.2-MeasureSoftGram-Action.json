@@ -1,10 +1,30 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-24T03:13:52+00:00",
+ "coletado_em": "2026-11-27T18:09:38+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 29,
+   "title": "build(deps): bump js-yaml from 3.14.1 to 3.15.2",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-27T15:05:20Z",
+   "closed_at": null,
+   "updated_at": "2026-11-27T15:05:23Z",
+   "labels": [
+    "dependencies",
+    "javascript"
+   ],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 4489,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/29",
+   "author": "dependabot[bot]"
+  },
   {
    "number": 28,
    "title": "chore(ci): remove parser.py e metrics.yml locais",
@@ -25,11 +45,11 @@
   {
    "number": 27,
    "title": "feat(gitlab): adiciona componente measure.yml e guia de uso para GitLab CI/CD (#236)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-21T02:09:29Z",
-   "closed_at": null,
-   "updated_at": "2026-11-23T14:16:53Z",
+   "closed_at": "2026-11-27T15:03:59Z",
+   "updated_at": "2026-11-27T15:04:02Z",
    "labels": [],
    "type": null,
    "assignees": [

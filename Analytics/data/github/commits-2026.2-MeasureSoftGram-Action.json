@@ -1,11 +1,38 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-24T03:13:52+00:00",
+ "coletado_em": "2026-11-27T18:09:38+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Action",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "fa7f5f82eed10f6a06de2e993cf39ed44d527520",
+   "date": "2026-11-27T15:03:58Z",
+   "author": "DiegoCarlito",
+   "message": "feat(gitlab): adiciona componente measure.yml e guia de uso para GitLab CI/CD (#236) (#27)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": ".github/workflows/docker-publish.yml",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 1
+    },
+    {
+     "filename": "templates/README.md",
+     "status": "added",
+     "additions": 68,
+     "deletions": 0
+    },
+    {
+     "filename": "templates/measure.yml",
+     "status": "added",
+     "additions": 70,
+     "deletions": 0
+    }
+   ]
+  },
   {
    "sha": "40bb3aa4e1a3852da310f906b90df68e82d88712",
    "date": "2026-11-23T03:23:28Z",

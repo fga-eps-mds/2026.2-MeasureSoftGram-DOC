@@ -1,9 +1,9 @@
 {
   "2026.2-MeasureSoftGram-Action": {
-    "number": 20,
-    "last_merged_at": "2026-11-23T03:23:28Z",
-    "title": "ci: corrige falhas do pipeline (Node 24 e dist do Dependabot)",
-    "author": "bottinolucas"
+    "number": 27,
+    "last_merged_at": "2026-11-27T15:03:59Z",
+    "title": "feat(gitlab): adiciona componente measure.yml e guia de uso para GitLab CI/CD (#236)",
+    "author": "DiegoCarlito"
   },
   "2026.2-MeasureSoftGram-AI": {
     "number": 4,
