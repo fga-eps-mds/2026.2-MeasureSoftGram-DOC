@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-23T03:14:13+00:00",
+ "coletado_em": "2026-11-27T03:13:10+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-AI",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 6,
+   "title": "docs: [TASK32.04] aponta o CONTRIBUTING para as políticas atuais do projeto",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-26T14:59:33Z",
+   "closed_at": null,
+   "updated_at": "2026-11-26T15:00:35Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 603,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-AI/pull/6",
+   "author": "LuizaMaluf"
+  },
   {
    "number": 5,
    "title": "chore(ci): remove parser.py e metrics.yml locais",

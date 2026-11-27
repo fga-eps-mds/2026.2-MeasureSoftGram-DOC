@@ -1,10 +1,27 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-25T03:13:31+00:00",
+ "coletado_em": "2026-11-27T03:13:10+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Core",
  "desde": "2026-08-24",
  "issues": [
+  {
+   "number": 36,
+   "title": "docs: [TASK32.04] tira a referência ao fork 2026.1 do PUBLISHING",
+   "state": "open",
+   "is_pull_request": true,
+   "created_at": "2026-11-26T15:00:15Z",
+   "closed_at": null,
+   "updated_at": "2026-11-26T15:02:04Z",
+   "labels": [],
+   "type": null,
+   "assignees": [],
+   "milestone": null,
+   "milestone_due_on": null,
+   "body_chars": 382,
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Core/pull/36",
+   "author": "LuizaMaluf"
+  },
   {
    "number": 35,
    "title": "chore(ci): remove parser.py e metrics.yml locais",
