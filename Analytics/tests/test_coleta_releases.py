@@ -46,8 +46,27 @@ class SessaoFalsa:
         return Resp(201, {})
 
 
-def coletar_falso(cliente, projetos, branch, log=print):
-    return {"versao": 1, "branch": branch, "projetos": [{"key": projetos[0], "medidas": {"coverage": 90.3}}]}
+def medidas(*nomes):
+    return [{"metric": m, "value": "1"} for m in nomes]
+
+
+class SonarFalso:
+    """component_tree cru: ``n`` arquivos, paginados de 500 em 500; ``erro`` simula falha."""
+
+    def __init__(self, n=2, erro=None, base_medidas=("files", "ncloc", "test_errors", "test_failures")):
+        self.n, self.erro, self.base, self.chamadas = n, erro, base_medidas, []
+
+    def get(self, caminho, params):
+        self.chamadas.append((caminho, dict(params)))
+        if self.erro:
+            raise cr.sonar_api.SonarError(self.erro)
+        ini = (params["p"] - 1) * 500
+        comps = [{"key": f"k:src/a{i}.py", "path": f"src/a{i}.py", "qualifier": "FIL", "measures": medidas("ncloc")}
+                 for i in range(ini, min(ini + 500, self.n))]
+        return {"paging": {"pageIndex": params["p"], "pageSize": 500, "total": self.n},
+                "baseComponent": {"id": "x", "key": params["component"], "name": "Service", "qualifier": "TRK",
+                                  "measures": medidas(*self.base)},
+                "components": comps}
 
 
 AGORA = datetime(2026, 11, 10, 3, 13, tzinfo=timezone.utc)
@@ -64,9 +83,11 @@ class RegrasTest(unittest.TestCase):
         novas = cr.releases_novas(rels, {"v1.0.0": {}})
         self.assertEqual([r["tag_name"] for r in novas], ["v2.0.0", "v2.1.0"])
 
-    def test_nome_do_arquivo_e_atraso(self):
-        self.assertEqual(cr.nome_arquivo(SERVICE, "v2.1.0"), "Service-v2.1.0.json")
-        self.assertEqual(cr.nome_arquivo(SERVICE, "v2/rc 1"), "Service-v2_rc_1.json")
+    def test_nome_do_arquivo_igual_ao_do_parser_e_atraso(self):
+        self.assertEqual(cr.nome_arquivo(SERVICE, "v2.1.0", AGORA),
+                         f"fga-eps-mds-{SERVICE}-11-10-2026-03-13-00-v2.1.0.json")
+        self.assertEqual(cr.nome_arquivo(SERVICE, "v2/rc 1", AGORA),
+                         f"fga-eps-mds-{SERVICE}-11-10-2026-03-13-00-v2_rc_1.json")
         self.assertEqual(cr.atraso_horas("2026-11-10T02:13:00Z", AGORA), 1.0)
         self.assertIsNone(cr.atraso_horas(None, AGORA))
 
@@ -78,36 +99,60 @@ class RegrasTest(unittest.TestCase):
 class ExecutarTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
-        self.pasta = Path(self.tmp.name)
+        self.pasta = Path(self.tmp.name) / "releases"
+        self.dados = Path(self.tmp.name) / "data"
 
     def tearDown(self):
         self.tmp.cleanup()
 
-    def rodar(self, sessao, sessao_assets=None, coletar=coletar_falso):
-        return cr.executar(self.pasta, "Service", sessao=sessao, sessao_assets=sessao_assets, cliente=object(),
-                           coletar=coletar, agora=AGORA, log=lambda *_: None)
+    def rodar(self, sessao, sessao_assets=None, cliente=None):
+        return cr.executar(self.pasta, "Service", pasta_dados=self.dados, sessao=sessao, sessao_assets=sessao_assets,
+                           cliente=cliente or SonarFalso(), agora=AGORA, log=lambda *_: None)
 
     def test_primeira_vez_marca_existentes_como_anteriores_sem_coletar(self):
         sessao = SessaoFalsa({SERVICE: [rel("v1.0.0"), rel("v2.1.0")]})
         self.assertEqual(self.rodar(sessao), [])
         reg = cr.carregar_registro(self.pasta)["repositorios"][SERVICE]
         self.assertEqual({t: i["situacao"] for t, i in reg.items()}, {"v1.0.0": "anterior", "v2.1.0": "anterior"})
-        self.assertFalse(list(self.pasta.glob("Service-*.json")))
+        self.assertFalse(self.dados.exists() and list(self.dados.glob("*.json")))
 
-    def test_release_nova_grava_retrato_com_a_tag(self):
+    def test_release_nova_grava_o_json_no_formato_do_msgram(self):
         self.rodar(SessaoFalsa({SERVICE: [rel("v2.0.0")]}))
-        gravados = self.rodar(SessaoFalsa({SERVICE: [rel("v2.0.0"), rel("v2.1.0")]}))
-        self.assertEqual([g.name for g in gravados], ["Service-v2.1.0.json"])
-        snap = json.loads(gravados[0].read_text(encoding="utf-8"))
-        self.assertEqual(snap["branch"], "develop")
-        self.assertEqual(snap["release"]["tag"], "v2.1.0")
-        self.assertEqual(snap["release"]["atraso_horas"], 1.0)
+        sonar = SonarFalso(n=3)
+        gravados = self.rodar(SessaoFalsa({SERVICE: [rel("v2.0.0"), rel("v2.1.0")]}), cliente=sonar)
+        self.assertEqual([g.name for g in gravados], [f"fga-eps-mds-{SERVICE}-11-10-2026-03-13-00-v2.1.0.json"])
+        self.assertEqual(gravados[0].parent, self.dados)                    # junto dos .json do pipeline
+        arv = json.loads(gravados[0].read_text(encoding="utf-8"))
+        self.assertEqual(set(arv), {"paging", "baseComponent", "components"})   # jsonReader do CLI
+        self.assertEqual(len(arv["components"]), 3)
+        self.assertEqual(set(arv["baseComponent"]) >= {"id", "key", "name", "qualifier", "measures"}, True)
+        params = sonar.chamadas[0][1]
+        self.assertNotIn("branch", params)                                  # branch padrão, como o parser.py
+        self.assertEqual(params["metricKeys"].split(","), cr.METRICAS_MSGRAM)
+        self.assertLessEqual(len(cr.METRICAS_MSGRAM), 15)                   # limite do component_tree
         item = cr.carregar_registro(self.pasta)["repositorios"][SERVICE]["v2.1.0"]
-        self.assertEqual((item["situacao"], item["asset"]), ("coletado", "sem_token"))
+        self.assertEqual((item["situacao"], item["asset"], item["atraso_horas"]), ("coletado", "sem_token", 1.0))
+        self.assertEqual(item["faltam_no_msgram"], [])
         # rodar de novo não coleta a mesma release outra vez
         self.assertEqual(self.rodar(SessaoFalsa({SERVICE: [rel("v2.0.0"), rel("v2.1.0")]})), [])
 
-    def test_anexa_na_release_quando_ha_token_inclusive_pendente(self):
+    def test_junta_todas_as_paginas(self):
+        # o parser.py pedia só a 1ª página (500 componentes)
+        self.rodar(SessaoFalsa({SERVICE: []}))
+        sonar = SonarFalso(n=1203)
+        gravados = self.rodar(SessaoFalsa({SERVICE: [rel("v2.1.0")]}), cliente=sonar)
+        arv = json.loads(gravados[0].read_text(encoding="utf-8"))
+        self.assertEqual(len(sonar.chamadas), 3)
+        self.assertEqual(len(arv["components"]), 1203)
+        self.assertEqual(arv["paging"]["total"], 1203)
+
+    def test_avisa_quando_o_msgram_vai_recusar(self):
+        self.rodar(SessaoFalsa({SERVICE: []}))
+        self.rodar(SessaoFalsa({SERVICE: [rel("v2.1.0")]}), cliente=SonarFalso(base_medidas=("files", "ncloc")))
+        item = cr.carregar_registro(self.pasta)["repositorios"][SERVICE]["v2.1.0"]
+        self.assertEqual(item["faltam_no_msgram"], ["test_failures", "test_errors"])
+
+    def test_anexa_na_release_com_o_mesmo_nome_inclusive_pendente(self):
         self.rodar(SessaoFalsa({SERVICE: []}))
         self.rodar(SessaoFalsa({SERVICE: [rel("v2.1.0", id_=42)]}))          # sem token: fica pendente
         assets = SessaoFalsa()
@@ -115,18 +160,24 @@ class ExecutarTest(unittest.TestCase):
         self.assertEqual(len(assets.uploads), 1)
         url, nome, corpo = assets.uploads[0]
         self.assertIn(f"/repos/fga-eps-mds/{SERVICE}/releases/42/assets", url)
-        self.assertEqual(nome, "metricas-sonar-Service-v2.1.0.json")
-        self.assertEqual(corpo["release"]["tag"], "v2.1.0")
+        self.assertEqual(nome, f"fga-eps-mds-{SERVICE}-11-10-2026-03-13-00-v2.1.0.json")
+        self.assertIn("baseComponent", corpo)
         self.assertEqual(cr.carregar_registro(self.pasta)["repositorios"][SERVICE]["v2.1.0"]["asset"], "anexado")
+        # já anexado: não sobe de novo
+        self.rodar(SessaoFalsa({SERVICE: [rel("v2.1.0", id_=42)]}), sessao_assets=assets)
+        self.assertEqual(len(assets.uploads), 1)
 
     def test_falha_no_sonar_nao_registra_e_tenta_de_novo(self):
-        def coletar_com_erro(cliente, projetos, branch, log=print):
-            return {"projetos": [{"key": projetos[0], "erro": "HTTP 500"}]}
-
         self.rodar(SessaoFalsa({SERVICE: []}))
-        self.assertEqual(self.rodar(SessaoFalsa({SERVICE: [rel("v2.1.0")]}), coletar=coletar_com_erro), [])
+        self.assertEqual(self.rodar(SessaoFalsa({SERVICE: [rel("v2.1.0")]}), cliente=SonarFalso(erro="HTTP 500")), [])
         self.assertNotIn("v2.1.0", cr.carregar_registro(self.pasta)["repositorios"][SERVICE])
+        self.assertEqual(self.rodar(SessaoFalsa({SERVICE: []})), [])
         self.assertEqual(len(self.rodar(SessaoFalsa({SERVICE: [rel("v2.1.0")]}))), 1)
+
+    def test_arvore_vazia_conta_como_falha(self):
+        self.rodar(SessaoFalsa({SERVICE: []}))
+        self.assertEqual(self.rodar(SessaoFalsa({SERVICE: [rel("v2.1.0")]}), cliente=SonarFalso(n=0)), [])
+        self.assertNotIn("v2.1.0", cr.carregar_registro(self.pasta)["repositorios"][SERVICE])
 
 
 if __name__ == "__main__":

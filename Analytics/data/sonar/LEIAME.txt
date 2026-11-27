@@ -1,5 +1,7 @@
 Snapshots da API do SonarCloud gravados por scripts/coleta_sonar.py (sonar-AAAA-MM-DDTHHMM.json).
 
-releases/: retrato de cada release nova (tag v*) gravado por scripts/coleta_releases.py (<Repo>-<tag>.json, mesmo formato
-dos sonar-*.json com um bloco "release"). registro.json guarda as releases já vistas; as que já existiam na primeira
-verificação ficam como "anterior" (os retratos de R1 a R3 estão em data/*.json, gravados pelo metrics.yml de cada repositório).
+releases/registro.json: releases já vistas por scripts/coleta_releases.py (tag, publicação, atraso da coleta, arquivo e
+situação do anexo). O JSON de cada release nova vai para Analytics/data/ no formato e com o nome que o metrics.yml gravava
+(fga-eps-mds-<repo>-MM-DD-AAAA-HH-MM-SS-<tag>.json, entrada do msgram), tirado da branch padrão do SonarCloud, e é
+anexado nos Assets da release. As releases que já existiam na primeira verificação ficam como "anterior" (R1 a R3 já
+estão em data/*.json, gravados pelo metrics.yml de cada repositório).
