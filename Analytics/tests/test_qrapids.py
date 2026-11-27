@@ -183,5 +183,59 @@ class ModeloCompletoTest(unittest.TestCase):
         self.assertEqual(list(qrapids.runs_de_build(runs).index), [0, 3])
 
 
+class AvaliacoesPipelineMaisApiTest(unittest.TestCase):
+    """Sem o metrics.yml nos repositórios, a avaliação por arquivo precisa vir também da coleta da API."""
+    REPO = "2026.2-MeasureSoftGram-Core"
+
+    @staticmethod
+    def comp(coleta, cobertura, branch="develop", arquivo="x.json"):
+        return pd.DataFrame([
+            {"repositorio": AvaliacoesPipelineMaisApiTest.REPO, "branch": branch, "coleta": pd.Timestamp(coleta),
+             "arquivo": arquivo, "componente": "src/a.py", "tipo": "FIL", "linguagem": "py", "metrica": m,
+             "valor": v}
+            for m, v in (("complexity", 2), ("functions", 1), ("comment_lines_density", 15),
+                         ("duplicated_lines_density", 0), ("coverage", cobertura), ("ncloc", 50))])
+
+    def avaliar(self, pipeline, api_arquivos, branch=None):
+        ctx = SimpleNamespace(sonar_componentes=pipeline, sonar_api={"arquivos": api_arquivos})
+        f = {"periodo": (pd.Timestamp("2026-11-01"), pd.Timestamp("2026-12-31")), "branch": branch}
+        return qrapids.avaliacoes_por_repo(ctx, f, {"fim": pd.Timestamp("2026-12-31"), "repos": [self.REPO]})
+
+    def cobertura(self, av):
+        return av[self.REPO]["avaliacao"]["metricas"]["cobertura"]["valor"]
+
+    def test_api_mais_recente_que_o_pipeline_vale(self):
+        av = self.avaliar(self.comp("2026-11-29", 10, arquivo="pipe.json"),
+                          self.comp("2026-12-02", 90, arquivo="sonar-2026-12-02T0313.json"))
+        self.assertEqual(self.cobertura(av), 1.0)
+        self.assertEqual(av[self.REPO]["arquivo"], "sonar-2026-12-02T0313.json")
+        self.assertEqual(av[self.REPO]["coleta"], pd.Timestamp("2026-12-02"))
+
+    def test_pipeline_mais_recente_que_a_api_vale(self):
+        av = self.avaliar(self.comp("2026-12-03", 10, arquivo="pipe.json"),
+                          self.comp("2026-12-02", 90, arquivo="sonar-2026-12-02T0313.json"))
+        self.assertEqual(self.cobertura(av), 0.0)
+        self.assertEqual(av[self.REPO]["arquivo"], "pipe.json")
+
+    def test_so_api_sem_nenhum_json_do_pipeline(self):
+        av = self.avaliar(pd.DataFrame(), self.comp("2026-12-02", 90))
+        self.assertEqual(self.cobertura(av), 1.0)
+
+    def test_filtro_de_branch_vale_para_a_api(self):
+        av = self.avaliar(self.comp("2026-11-10", 10, branch="main", arquivo="pipe.json"),
+                          self.comp("2026-12-02", 90, branch="develop"), branch="main")
+        self.assertEqual(av[self.REPO]["arquivo"], "pipe.json")
+
+    def test_api_antes_da_data_de_corte_nao_entra(self):
+        # números publicados no metas.mdx (ex.: 07/11) foram calculados só com o pipeline
+        av = self.avaliar(self.comp("2026-11-07", 10, arquivo="pipe.json"),
+                          self.comp("2026-11-07 11:00", 90, arquivo="sonar-2026-11-07T1100.json"))
+        self.assertEqual(av[self.REPO]["arquivo"], "pipe.json")
+        self.assertEqual(self.avaliar(pd.DataFrame(), self.comp("2026-11-07", 90)), {})
+
+    def test_sem_dado_nenhum(self):
+        self.assertEqual(self.avaliar(pd.DataFrame(), pd.DataFrame()), {})
+
+
 if __name__ == "__main__":
     unittest.main()

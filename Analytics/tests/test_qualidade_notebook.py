@@ -70,6 +70,27 @@ class NotebookTest(unittest.TestCase):
         self.assertEqual(r["valor"], 0.0)                     # sem suíte: 0, marcado como falta de dado
         self.assertTrue(r["zero_por_falta"])
 
+    def test_testes_passando_sem_pasta_soma_as_suites(self):
+        # a coleta da API (component_tree até 25/11) não trazia pastas (DIR): sem elas, soma as suítes (UTS)
+        comp = pd.DataFrame([
+            {"componente": "a.py", "tipo": "FIL", "linguagem": "py", "metrica": m, "valor": v}
+            for m, v in (("complexity", 5), ("functions", 1), ("comment_lines_density", 15),
+                         ("duplicated_lines_density", 0), ("coverage", 90), ("ncloc", 100))] + [
+            {"componente": f, "tipo": "UTS", "linguagem": "py", "metrica": m, "valor": v}
+            for f, vals in {"tests/test_a.py": (6, 1, 0), "tests/test_b.py": (4, 0, 1)}.items()
+            for m, v in zip(["tests", "test_errors", "test_failures"], vals)])
+        r = qualidade.avaliar(comp, "2026.2-MeasureSoftGram-Core")["metricas"]["testes_passando"]
+        self.assertEqual((r["numerador"], r["denominador"], r["valor"]), (8, 10, 0.8))
+        self.assertFalse(r["zero_por_falta"])
+        self.assertIn("suítes", r.get("observacao", ""))
+
+    def test_testes_passando_sem_pasta_nem_suite_continua_zero_por_falta(self):
+        comp = pd.DataFrame([{"componente": "a.py", "tipo": "FIL", "linguagem": "py", "metrica": "ncloc",
+                              "valor": 10}])
+        r = qualidade.avaliar(comp, "2026.2-MeasureSoftGram-Core")["metricas"]["testes_passando"]
+        self.assertEqual(r["valor"], 0.0)
+        self.assertTrue(r["zero_por_falta"])
+
 
 if __name__ == "__main__":
     unittest.main()
