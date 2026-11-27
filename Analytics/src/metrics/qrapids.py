@@ -153,13 +153,20 @@ def restricoes_por_repo(res: dict, rec: dict) -> pd.DataFrame:
 # ───────────────────────── dados do SonarCloud por repositório ─────────────────────────
 
 def avaliacoes_por_repo(ctx, f: dict, rec: dict) -> dict:
-    """Avaliação das métricas do notebook na última coleta do pipeline dentro do período, por repositório.
+    """Avaliação das métricas do notebook na última coleta dentro do período, por repositório.
 
+    Junta os .json do pipeline (metrics.yml, histórico) e a árvore da API do SonarCloud (coleta central,
+    ``ctx.sonar_api["arquivos"]``) das coletas a partir de ``config.SONAR_API_POR_ARQUIVO_DESDE``; a coleta
+    mais recente de cada repositório vale.
     ``{repo: {"avaliacao": ..., "coleta": Timestamp, "arquivo": nome do .json}}``.
     """
-    comp = ctx.sonar_componentes
-    if comp is None or comp.empty:
+    api = (getattr(ctx, "sonar_api", None) or {}).get("arquivos")
+    if api is not None and not api.empty:
+        api = api[pd.to_datetime(api["coleta"]) >= pd.Timestamp(config.SONAR_API_POR_ARQUIVO_DESDE)]
+    partes = [x for x in (ctx.sonar_componentes, api) if x is not None and not x.empty]
+    if not partes:
         return {}
+    comp = pd.concat(partes, ignore_index=True) if len(partes) > 1 else partes[0]
     fim = pd.Timestamp(rec["fim"]) + pd.Timedelta(days=1)
     inicio = pd.Timestamp(f["periodo"][0])
     coletas = pd.to_datetime(comp["coleta"])
@@ -206,21 +213,21 @@ def _sonar_media(chave_nb: str, notas: dict, r: Resultado) -> Resultado:
                        **({"fora_da_base": m["fora_da_base"]} if "fora_da_base" in m else {}),
                        "coleta": n["coleta"], "arquivo": n["arquivo"]})
     if not linhas:
-        r.situacao, r.motivo = SEM_DADO, "nenhuma coleta do pipeline até o fim do período"
+        r.situacao, r.motivo = SEM_DADO, "nenhuma coleta do SonarCloud (pipeline ou API) até o fim do período"
         return r
     d = pd.DataFrame(linhas)
     r.por_repo = d
     r.itens = pd.concat(itens, ignore_index=True) if itens else pd.DataFrame()
     com = d[d["zero_por_falta"] == ""]
     if com.empty:
-        r.situacao, r.motivo = SEM_DADO, "nenhum repositório com esse dado no .json do pipeline"
+        r.situacao, r.motivo = SEM_DADO, "nenhum repositório com esse dado na coleta do SonarCloud"
         return r
     r.valor = float(com["valor"].mean())
     r.situacao = CALCULADA
     r.bruto = f"média de {len(com)} repositórios"
     zeros = d[d["zero_por_falta"] != ""]
     if len(zeros):
-        r.motivo = ("sem o dado no .json do pipeline (fora da média): " + ", ".join(zeros["repositorio"]))
+        r.motivo = ("sem o dado na coleta do SonarCloud (fora da média): " + ", ".join(zeros["repositorio"]))
     return r
 
 
