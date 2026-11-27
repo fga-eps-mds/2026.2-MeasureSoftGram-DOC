@@ -372,14 +372,14 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [],
         "milestone": null,
-        "comments": 1,
+        "comments": 2,
         "created_at": "2026-11-21T01:06:12Z",
-        "updated_at": "2026-11-21T01:11:53Z",
-        "closed_at": null,
+        "updated_at": "2026-11-27T18:39:00Z",
+        "closed_at": "2026-11-27T18:38:52Z",
         "assignee": null,
         "author_association": "NONE",
         "issue_field_values": [],
@@ -391,10 +391,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/114",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/114.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/114.patch",
-            "merged_at": null
+            "merged_at": "2026-11-27T18:38:52Z"
         },
         "body": "## Issue\r\n\r\nCloses fga-eps-mds/2026.2-MeasureSoftGram-Service#101\r\nCloses fga-eps-mds/2026.2-MeasureSoftGram-Service#102\r\nCloses fga-eps-mds/2026.2-MeasureSoftGram-Service#103\r\nRefs fga-eps-mds/2026.2-MeasureSoftGram-Service#104\r\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#309\r\n\r\nA #104 permanece referenciada porque sua aplica\u00e7\u00e3o e valida\u00e7\u00e3o em homologa\u00e7\u00e3o ainda est\u00e3o pendentes.\r\n\r\n## Etapa do fluxo\r\n\r\n- [x] 1. Branch de trabalho \u2192 `develop` do fork `2026.2-*`\r\n- [ ] 2. `develop` do fork \u2192 `develop` do reposit\u00f3rio central (liste as issues inclu\u00eddas abaixo)\r\n- [ ] 3. `develop` \u2192 `main` do reposit\u00f3rio central (release `vX.Y.Z`)\r\n\r\n## O que muda e por qu\u00ea\r\n\r\nO cron de fechamento produzia resultados sint\u00e9ticos, e resultados sem identidade de execu\u00e7\u00e3o permitiam misturar valores de an\u00e1lises diferentes. Esta PR implementa as Tasks 36.02\u201336.05 sobre a modelagem da #105, j\u00e1 integrada \u00e0 `develop` pelo commit `82951fc`. A base de destino \u00e9 `develop`.\r\n\r\nCada execu\u00e7\u00e3o da Action cria uma `QualityAnalysis` (AQ), com a configura\u00e7\u00e3o usada e o v\u00ednculo com a release ativa, agrupando m\u00e9tricas, medidas, subcaracter\u00edsticas, caracter\u00edsticas e TSQMI. As consultas passam a usar esse v\u00ednculo expl\u00edcito; encerrar uma release n\u00e3o dispara um novo c\u00e1lculo.\r\n\r\n- **Task 36.02 (#101):** persiste a AQ e as cinco camadas em uma transa\u00e7\u00e3o, preservando m\u00faltiplas execu\u00e7\u00f5es na mesma release. Resolve a release ativa por produto/reposit\u00f3rio e rejeita sobreposi\u00e7\u00e3o sem gravar. Fora de release ativa, mant\u00e9m HTTP `201` com `release: null` e aviso. Omite m\u00e9tricas nulas e registra `is_partial` / `missing_inputs`.\r\n- **Task 36.03 (#102):** consulta a \u00faltima AQ por reposit\u00f3rio com `DISTINCT ON`, desempate por id e hist\u00f3rico ordenado. Uma AQ parcial recente n\u00e3o recebe valores de execu\u00e7\u00f5es anteriores; a associa\u00e7\u00e3o n\u00e3o \u00e9 inferida pelas datas.\r\n- **Task 36.04 (#103):** remove o cron, os hooks de inicializa\u00e7\u00e3o, os testes exclusivos e a depend\u00eancia de `django-apscheduler`, incluindo as depend\u00eancias exclusivas no lock.\r\n- **Task 36.05 (#104), parte de c\u00f3digo:** migra os registros legados antes de tornar as cinco FKs obrigat\u00f3rias e remover `CalculatedCharacteristic.release`. Preserva valores e releases explicitamente conhecidas; AQs reconstru\u00eddas ficam marcadas como legadas/parciais. Atualiza seeds e fixtures para usar an\u00e1lises identificadas; a massa calculada usa o pipeline da Action e o reset de demonstra\u00e7\u00e3o preserva dados de usu\u00e1rios fora desse escopo.\r\n\r\nA implementa\u00e7\u00e3o preserva a ingest\u00e3o GitLab (#97) e a revers\u00e3o da caracter\u00edstica Seguran\u00e7a (#108). Os documentos de apoio permanecem locais e n\u00e3o integram esta PR.\r\n\r\n### Fora do escopo\r\n\r\nA exclus\u00e3o segura da \u00faltima release, a associa\u00e7\u00e3o retroativa de AQs sem release e as novas valida\u00e7\u00f5es de datas ser\u00e3o tratadas nas issues #111, #112 e #113. Esta PR preserva AQs sem release, mas ainda n\u00e3o as reassocia automaticamente.\r\n\r\n### Implanta\u00e7\u00e3o e limites\r\n\r\nNenhuma altera\u00e7\u00e3o foi aplicada em homologa\u00e7\u00e3o. A atualiza\u00e7\u00e3o exige backup e parada dos escritores antigos, que n\u00e3o preenchem `analysis`, antes de aplicar o esquema final. Em seguida, aplicar as migrations e recriar/validar a massa de demonstra\u00e7\u00e3o.\r\n\r\nO backfill preserva o hist\u00f3rico, mas n\u00e3o garante reconstruir a execu\u00e7\u00e3o original de cada registro e n\u00e3o infere release por janela temporal. Para retorno exato aos dados/esquema anteriores, \u00e9 necess\u00e1rio restaurar o backup.\r\n\r\n## Tipo de mudan\u00e7a\r\n\r\n- [x] `feat` nova funcionalidade\r\n- [ ] `fix` corre\u00e7\u00e3o de defeito\r\n- [ ] `refactor` sem mudan\u00e7a de comportamento\r\n- [x] `test` \u00b7 `build` \u2014 testes e atualiza\u00e7\u00e3o das depend\u00eancias do agendador\r\n- [x] Muda comportamento vis\u00edvel para o usu\u00e1rio (exige valida\u00e7\u00e3o do PO)\r\n\r\n## Como testar\r\n\r\nExecutar na raiz do reposit\u00f3rio Service, com Docker Compose e `uv` dispon\u00edveis. Usar um banco local de testes. A branch j\u00e1 est\u00e1 baseada na `develop` com a #105 integrada; n\u00e3o \u00e9 necess\u00e1rio fazer rebase para testar.\r\n\r\n1. Preparar o ambiente:\r\n\r\n   ```sh\r\n   make env\r\n   ```\r\n\r\n   Ajustar os arquivos em `env-vars/`, incluindo `GITHUB_TOKEN_ENCRYPTION_KEYS`, e deixar `CREATE_FAKE_DATA=FALSE` para carregar a massa explicitamente. Em banco existente, preservar as chaves de criptografia j\u00e1 utilizadas.\r\n\r\n2. Construir a imagem e subir a aplica\u00e7\u00e3o:\r\n\r\n   ```sh\r\n   docker compose build service\r\n   docker compose up -d db service\r\n   docker compose logs --tail=100 service\r\n   curl -fsS http://localhost:8080/health/\r\n   ```\r\n\r\n   O Compose aplica as migrations e carrega a metodologia antes de iniciar o servidor. Em banco com dados a preservar, seguir os cuidados de backup e parada dos escritores antigos descritos em \u201cImplanta\u00e7\u00e3o e limites\u201d antes de subir a vers\u00e3o nova.\r\n\r\n3. Conferir migrations e configura\u00e7\u00e3o:\r\n\r\n   ```sh\r\n   make migrations-check\r\n   docker compose exec service python manage.py check\r\n   ```\r\n\r\n   Esperado: `No changes detected` e nenhuma falha nas verifica\u00e7\u00f5es do Django.\r\n\r\n4. Executar a su\u00edte completa e o lint:\r\n\r\n   ```sh\r\n   make test\r\n   uvx flake8==7.1.1 -j1 src/\r\n   git diff --check\r\n   ```\r\n\r\n   O target de testes utiliza `config.settings.test` e banco de testes separado. A su\u00edte cobre m\u00faltiplos POSTs na mesma release, m\u00e9tricas nulas de GitHub/GitLab, resposta `201` com aviso fora de release ativa, rollback, rejei\u00e7\u00e3o de sobreposi\u00e7\u00e3o, exclus\u00e3o de release preservando as cinco camadas, consulta sem misturar execu\u00e7\u00f5es e migra\u00e7\u00e3o de dados legados.\r\n\r\n5. Validar a massa calculada de demonstra\u00e7\u00e3o no banco local:\r\n\r\n   ```sh\r\n   docker compose exec service python manage.py load_initial_data --reset-demo-analyses\r\n   ```\r\n\r\n   Conferir as an\u00e1lises dos reposit\u00f3rios de demonstra\u00e7\u00e3o: cinco camadas vinculadas \u00e0 mesma AQ, configura\u00e7\u00e3o registrada e release associada quando aplic\u00e1vel. Repetir o comando deve recriar a massa sem aumentar sua quantidade; an\u00e1lises de usu\u00e1rios fora do escopo de demonstra\u00e7\u00e3o devem ser preservadas. As fixtures especiais de badges s\u00e3o parciais e t\u00eam notas fixas para inspe\u00e7\u00e3o visual.\r\n\r\n6. Na valida\u00e7\u00e3o integrada, disparar duas execu\u00e7\u00f5es reais da Action e conferir que criam AQs distintas, sem substituir o hist\u00f3rico. Nas telas do Front, conferir o resultado mais recente por reposit\u00f3rio e o hist\u00f3rico da release. Essa valida\u00e7\u00e3o e a aplica\u00e7\u00e3o em homologa\u00e7\u00e3o permanecem pendentes.\r\n\r\n## Evid\u00eancias\r\n\r\nValida\u00e7\u00e3o sobre a `develop` com a #105 integrada por squash (`82951fc`), usando Python 3.12, depend\u00eancias do `uv.lock` e PostgreSQL 18 tempor\u00e1rio:\r\n\r\n- Su\u00edte completa repetida ap\u00f3s reaplicar os cinco commits sobre o squash da #105: **702 casos no JUnit**, zero falhas, erros ou skips.\r\n- `makemigrations --check --dry-run`: `No changes detected`.\r\n- `flake8 -j1 src/`, `git diff --check` e `manage.py check`: aprovados.\r\n- Gera\u00e7\u00e3o do OpenAPI: aprovada.\r\n\r\nA aplica\u00e7\u00e3o em homologa\u00e7\u00e3o e a valida\u00e7\u00e3o integrada com o Front e a Action n\u00e3o foram realizadas nesta execu\u00e7\u00e3o local.\r\n\r\n## Impacto na qualidade\r\n\r\n- Testes adicionados ou alterados: fluxo da Action e suas fixtures, incluindo `src/math_model/tests/test_analysis_flow.py`, `src/math_model/tests/test_legacy_migration.py`, `src/releases/tests/test_quality_analyses.py` e testes dos seeds e consumidores de releases.\r\n- Cobertura funcional: m\u00faltiplos POSTs, m\u00e9tricas nulas de GitHub/GitLab, parcialidade, sobreposi\u00e7\u00e3o de releases, rollback durante a persist\u00eancia, exclus\u00e3o de release sem perda das camadas, isolamento entre execu\u00e7\u00f5es e upgrade de banco com dados nas cinco camadas.\r\n- Quality gate do SonarCloud: aguardando execu\u00e7\u00e3o na CI desta PR.\r\n- Problemas novos apontados pelo SonarCloud: a verificar na execu\u00e7\u00e3o desta PR.\r\n\r\n## Checklist do autor\r\n\r\n- [x] Branch e commits seguem o padr\u00e3o (`tipo/CODIGO-descricao`, Conventional Commits), com t\u00edtulos em portugu\u00eas do Brasil.\r\n- [x] A branch foi atualizada sobre a `develop` ap\u00f3s o squash da #105.\r\n- [x] As verifica\u00e7\u00f5es foram repetidas e aprovadas na branch resultante.\r\n- [x] A CI est\u00e1 verde (lint, build, testes, SonarCloud).\r\n- [x] Persist\u00eancia, consultas, remo\u00e7\u00e3o do cron e atualiza\u00e7\u00e3o do esquema/seeds est\u00e3o implementadas.\r\n- [ ] Todos os crit\u00e9rios de aceita\u00e7\u00e3o da #104 foram atendidos: aplica\u00e7\u00e3o e valida\u00e7\u00e3o em homologa\u00e7\u00e3o pendentes.\r\n- [ ] Integra\u00e7\u00e3o com o Front, execu\u00e7\u00e3o real da Action e comportamento vis\u00edvel validados.\r\n- [x] Sei explicar qualquer trecho desta PR em revis\u00e3o s\u00edncrona.\r\n- [ ] Uso relevante de IA registrado no meu `MD_Template.md`. A implementa\u00e7\u00e3o foi produzida com aux\u00edlio de IA e requer revis\u00e3o humana.\r\n\r\n## Checklist do revisor\r\n\r\n- [ ] Li as issues e os crit\u00e9rios de aceita\u00e7\u00e3o antes do c\u00f3digo.\r\n- [ ] Testei seguindo o \u201cComo testar\u201d (ou na homologa\u00e7\u00e3o).\r\n- [ ] O c\u00f3digo \u00e9 compreens\u00edvel e segue os padr\u00f5es do reposit\u00f3rio.\r\n- [ ] H\u00e1 testes para a mudan\u00e7a.\r\n- [ ] Conferi as migrations, o tratamento dos dados legados e os cuidados de implanta\u00e7\u00e3o.\r\n- [ ] Formei meu pr\u00f3prio parecer de revis\u00e3o, com eventual apoio de IA declarado.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "luciano-freitas-melo",
+            "id": 88516249,
+            "node_id": "MDQ6VXNlcjg4NTE2MjQ5",
+            "avatar_url": "https://avatars.githubusercontent.com/u/88516249?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/luciano-freitas-melo",
+            "html_url": "https://github.com/luciano-freitas-melo",
+            "followers_url": "https://api.github.com/users/luciano-freitas-melo/followers",
+            "following_url": "https://api.github.com/users/luciano-freitas-melo/following{/other_user}",
+            "gists_url": "https://api.github.com/users/luciano-freitas-melo/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/luciano-freitas-melo/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/luciano-freitas-melo/subscriptions",
+            "organizations_url": "https://api.github.com/users/luciano-freitas-melo/orgs",
+            "repos_url": "https://api.github.com/users/luciano-freitas-melo/repos",
+            "events_url": "https://api.github.com/users/luciano-freitas-melo/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/luciano-freitas-melo/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/114/reactions",
             "total_count": 0,
@@ -477,11 +497,11 @@
                 "user_view_type": "public",
                 "site_admin": false
             },
-            "open_issues": 6,
-            "closed_issues": 2,
+            "open_issues": 3,
+            "closed_issues": 5,
             "state": "open",
             "created_at": "2026-11-17T19:59:19Z",
-            "updated_at": "2026-11-20T11:29:52Z",
+            "updated_at": "2026-11-27T18:39:00Z",
             "due_on": "2026-11-30T00:00:00Z",
             "closed_at": null
         },
@@ -493,6 +513,7 @@
         "author_association": "COLLABORATOR",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -591,31 +612,23 @@
                 "user_view_type": "public",
                 "site_admin": false
             },
-            "open_issues": 6,
-            "closed_issues": 2,
+            "open_issues": 3,
+            "closed_issues": 5,
             "state": "open",
             "created_at": "2026-11-17T19:59:19Z",
-            "updated_at": "2026-11-20T11:29:52Z",
+            "updated_at": "2026-11-27T18:39:00Z",
             "due_on": "2026-11-30T00:00:00Z",
             "closed_at": null
         },
         "comments": 0,
         "created_at": "2026-11-19T01:52:41Z",
-        "updated_at": "2026-11-19T02:04:21Z",
+        "updated_at": "2026-11-23T15:00:55Z",
         "closed_at": null,
         "assignee": null,
         "author_association": "COLLABORATOR",
         "issue_field_values": [],
-        "type": {
-            "id": 2672256,
-            "node_id": "IT_kwDOASpV3s4AKMaA",
-            "name": "Task",
-            "description": "A specific piece of work",
-            "color": "yellow",
-            "created_at": "2024-01-25T20:14:11Z",
-            "updated_at": "2024-07-26T10:44:55Z",
-            "is_enabled": true
-        },
+        "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -693,6 +706,7 @@
         "author_association": "COLLABORATOR",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -1524,6 +1538,27 @@
         "locked": false,
         "assignees": [
             {
+                "login": "luciano-freitas-melo",
+                "id": 88516249,
+                "node_id": "MDQ6VXNlcjg4NTE2MjQ5",
+                "avatar_url": "https://avatars.githubusercontent.com/u/88516249?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/luciano-freitas-melo",
+                "html_url": "https://github.com/luciano-freitas-melo",
+                "followers_url": "https://api.github.com/users/luciano-freitas-melo/followers",
+                "following_url": "https://api.github.com/users/luciano-freitas-melo/following{/other_user}",
+                "gists_url": "https://api.github.com/users/luciano-freitas-melo/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/luciano-freitas-melo/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/luciano-freitas-melo/subscriptions",
+                "organizations_url": "https://api.github.com/users/luciano-freitas-melo/orgs",
+                "repos_url": "https://api.github.com/users/luciano-freitas-melo/repos",
+                "events_url": "https://api.github.com/users/luciano-freitas-melo/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/luciano-freitas-melo/received_events",
+                "type": "User",
+                "user_view_type": "public",
+                "site_admin": false
+            },
+            {
                 "login": "Marcosatc147",
                 "id": 130991577,
                 "node_id": "U_kgDOB87F2Q",
@@ -1575,35 +1610,35 @@
                 "user_view_type": "public",
                 "site_admin": false
             },
-            "open_issues": 6,
-            "closed_issues": 2,
+            "open_issues": 3,
+            "closed_issues": 5,
             "state": "open",
             "created_at": "2026-11-17T19:59:19Z",
-            "updated_at": "2026-11-20T11:29:52Z",
+            "updated_at": "2026-11-27T18:39:00Z",
             "due_on": "2026-11-30T00:00:00Z",
             "closed_at": null
         },
         "comments": 1,
         "created_at": "2026-11-14T23:49:33Z",
-        "updated_at": "2026-11-18T23:53:37Z",
+        "updated_at": "2026-11-23T15:01:50Z",
         "closed_at": null,
         "assignee": {
-            "login": "Marcosatc147",
-            "id": 130991577,
-            "node_id": "U_kgDOB87F2Q",
-            "avatar_url": "https://avatars.githubusercontent.com/u/130991577?v=4",
+            "login": "luciano-freitas-melo",
+            "id": 88516249,
+            "node_id": "MDQ6VXNlcjg4NTE2MjQ5",
+            "avatar_url": "https://avatars.githubusercontent.com/u/88516249?v=4",
             "gravatar_id": "",
-            "url": "https://api.github.com/users/Marcosatc147",
-            "html_url": "https://github.com/Marcosatc147",
-            "followers_url": "https://api.github.com/users/Marcosatc147/followers",
-            "following_url": "https://api.github.com/users/Marcosatc147/following{/other_user}",
-            "gists_url": "https://api.github.com/users/Marcosatc147/gists{/gist_id}",
-            "starred_url": "https://api.github.com/users/Marcosatc147/starred{/owner}{/repo}",
-            "subscriptions_url": "https://api.github.com/users/Marcosatc147/subscriptions",
-            "organizations_url": "https://api.github.com/users/Marcosatc147/orgs",
-            "repos_url": "https://api.github.com/users/Marcosatc147/repos",
-            "events_url": "https://api.github.com/users/Marcosatc147/events{/privacy}",
-            "received_events_url": "https://api.github.com/users/Marcosatc147/received_events",
+            "url": "https://api.github.com/users/luciano-freitas-melo",
+            "html_url": "https://github.com/luciano-freitas-melo",
+            "followers_url": "https://api.github.com/users/luciano-freitas-melo/followers",
+            "following_url": "https://api.github.com/users/luciano-freitas-melo/following{/other_user}",
+            "gists_url": "https://api.github.com/users/luciano-freitas-melo/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/luciano-freitas-melo/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/luciano-freitas-melo/subscriptions",
+            "organizations_url": "https://api.github.com/users/luciano-freitas-melo/orgs",
+            "repos_url": "https://api.github.com/users/luciano-freitas-melo/repos",
+            "events_url": "https://api.github.com/users/luciano-freitas-melo/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/luciano-freitas-melo/received_events",
             "type": "User",
             "user_view_type": "public",
             "site_admin": false
@@ -1620,6 +1655,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -1685,7 +1721,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -1740,18 +1776,18 @@
                 "user_view_type": "public",
                 "site_admin": false
             },
-            "open_issues": 6,
-            "closed_issues": 2,
+            "open_issues": 3,
+            "closed_issues": 5,
             "state": "open",
             "created_at": "2026-11-17T19:59:19Z",
-            "updated_at": "2026-11-20T11:29:52Z",
+            "updated_at": "2026-11-27T18:39:00Z",
             "due_on": "2026-11-30T00:00:00Z",
             "closed_at": null
         },
         "comments": 0,
         "created_at": "2026-11-14T23:49:13Z",
-        "updated_at": "2026-11-17T20:15:46Z",
-        "closed_at": null,
+        "updated_at": "2026-11-27T18:38:59Z",
+        "closed_at": "2026-11-27T18:38:59Z",
         "assignee": {
             "login": "Marcosatc147",
             "id": 130991577,
@@ -1785,6 +1821,11 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": {
+            "id": 5,
+            "name": "Done",
+            "category": "completed"
+        },
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -1799,7 +1840,27 @@
             "total_blocking": 0
         },
         "body": "## Bloqueado por\n- Task 36.01, Task 36.02 e Task 36.03\n\n## O que fazer\n- Remover `releases/jobs.py` e seus testes (`test_jobs.py`, `test_scheduler_lock.py`, `test_release_results_job.py`).\n- Remover chamada `jobs.check_the_need_to_calculate_releases()` de `ReleasesConfig.ready()` (`releases/apps.py`).\n- Limpar `django_apscheduler`, `SCHEDULER_CONFIG` e `SCHEDULER_AUTOSTART` de `config/settings/base.py`, `config/settings/test.py` e `pyproject.toml`.\n\n## Crit\u00e9rios t\u00e9cnicos (o que esperar ao final)\n- Boot do Django/Gunicorn com `AMBIENT_TEST_OR_DEV=FALSE` n\u00e3o inicia nenhum `BackgroundScheduler` nem adquire `pg_try_advisory_lock`.\n- Nenhuma refer\u00eancia a `releases.jobs` ou `apscheduler` permanece no projeto.\n- Toda a su\u00edte de testes do servi\u00e7o passa sem regress\u00f5es.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "luciano-freitas-melo",
+            "id": 88516249,
+            "node_id": "MDQ6VXNlcjg4NTE2MjQ5",
+            "avatar_url": "https://avatars.githubusercontent.com/u/88516249?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/luciano-freitas-melo",
+            "html_url": "https://github.com/luciano-freitas-melo",
+            "followers_url": "https://api.github.com/users/luciano-freitas-melo/followers",
+            "following_url": "https://api.github.com/users/luciano-freitas-melo/following{/other_user}",
+            "gists_url": "https://api.github.com/users/luciano-freitas-melo/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/luciano-freitas-melo/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/luciano-freitas-melo/subscriptions",
+            "organizations_url": "https://api.github.com/users/luciano-freitas-melo/orgs",
+            "repos_url": "https://api.github.com/users/luciano-freitas-melo/repos",
+            "events_url": "https://api.github.com/users/luciano-freitas-melo/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/luciano-freitas-melo/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/103/reactions",
             "total_count": 0,
@@ -1814,7 +1875,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/103/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -1850,7 +1911,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -1905,18 +1966,18 @@
                 "user_view_type": "public",
                 "site_admin": false
             },
-            "open_issues": 6,
-            "closed_issues": 2,
+            "open_issues": 3,
+            "closed_issues": 5,
             "state": "open",
             "created_at": "2026-11-17T19:59:19Z",
-            "updated_at": "2026-11-20T11:29:52Z",
+            "updated_at": "2026-11-27T18:39:00Z",
             "due_on": "2026-11-30T00:00:00Z",
             "closed_at": null
         },
         "comments": 0,
         "created_at": "2026-11-14T23:49:03Z",
-        "updated_at": "2026-11-17T20:15:44Z",
-        "closed_at": null,
+        "updated_at": "2026-11-27T18:38:57Z",
+        "closed_at": "2026-11-27T18:38:56Z",
         "assignee": {
             "login": "Marcosatc147",
             "id": 130991577,
@@ -1950,6 +2011,11 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": {
+            "id": 5,
+            "name": "Done",
+            "category": "completed"
+        },
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -1964,7 +2030,27 @@
             "total_blocking": 0
         },
         "body": "## Bloqueado por\n- Task 36.01 (executa em paralelo com Task 36.02)\n\n## O que fazer\n- Criar helpers/servi\u00e7os de consulta em `releases/`:\n  - `get_latest_release_analyses(release, repository_ids)` usando `DISTINCT ON (\"repository_id\")` em `QualityAnalysis` para retornar a AQ mais recente de cada reposit\u00f3rio da release em 1 query.\n  - `get_release_analyses_history(release, repository_ids)` ordenado cronologicamente para gera\u00e7\u00e3o de gr\u00e1ficos da release.\n- Adaptar `get_accomplished_values` (`releases/service.py`) e `planned_x_accomplished` (`releases/views.py`) para ler diretamente da AQ mais recente vinculada \u00e0 release.\n- Migrar `dashboard.py`, `analysis_distribution.py`, `entity_matrix.py`, `entity_analysis.py` e `correlation.py` para consultar via `analysis__release=release` / `QualityAnalysis`, eliminando a depend\u00eancia de `filter_release_window`.\n\n## Crit\u00e9rios t\u00e9cnicos (o que esperar ao final)\n- Consulta da AQ mais recente retorna a \u00faltima execu\u00e7\u00e3o vinculada \u00e0 release por reposit\u00f3rio, sem misturar reposit\u00f3rios ou execu\u00e7\u00f5es diferentes.\n- Consulta de hist\u00f3rico/gr\u00e1ficos retorna todas as AQs da release diretamente pelo \u00edndice de `release_id`, sem depender de `start_at`/`end_at` (`filter_release_window`).\n- Editar `start_at`/`end_at` da release n\u00e3o altera os dados j\u00e1 vinculados a ela.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "luciano-freitas-melo",
+            "id": 88516249,
+            "node_id": "MDQ6VXNlcjg4NTE2MjQ5",
+            "avatar_url": "https://avatars.githubusercontent.com/u/88516249?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/luciano-freitas-melo",
+            "html_url": "https://github.com/luciano-freitas-melo",
+            "followers_url": "https://api.github.com/users/luciano-freitas-melo/followers",
+            "following_url": "https://api.github.com/users/luciano-freitas-melo/following{/other_user}",
+            "gists_url": "https://api.github.com/users/luciano-freitas-melo/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/luciano-freitas-melo/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/luciano-freitas-melo/subscriptions",
+            "organizations_url": "https://api.github.com/users/luciano-freitas-melo/orgs",
+            "repos_url": "https://api.github.com/users/luciano-freitas-melo/repos",
+            "events_url": "https://api.github.com/users/luciano-freitas-melo/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/luciano-freitas-melo/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/102/reactions",
             "total_count": 0,
@@ -1979,7 +2065,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/102/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -2015,7 +2101,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -2070,18 +2156,18 @@
                 "user_view_type": "public",
                 "site_admin": false
             },
-            "open_issues": 6,
-            "closed_issues": 2,
+            "open_issues": 3,
+            "closed_issues": 5,
             "state": "open",
             "created_at": "2026-11-17T19:59:19Z",
-            "updated_at": "2026-11-20T11:29:52Z",
+            "updated_at": "2026-11-27T18:39:00Z",
             "due_on": "2026-11-30T00:00:00Z",
             "closed_at": null
         },
         "comments": 0,
         "created_at": "2026-11-14T23:48:15Z",
-        "updated_at": "2026-11-18T23:53:25Z",
-        "closed_at": null,
+        "updated_at": "2026-11-27T18:38:54Z",
+        "closed_at": "2026-11-27T18:38:54Z",
         "assignee": {
             "login": "Marcosatc147",
             "id": 130991577,
@@ -2115,6 +2201,11 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": {
+            "id": 5,
+            "name": "Done",
+            "category": "completed"
+        },
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -2129,7 +2220,27 @@
             "total_blocking": 0
         },
         "body": "## Bloqueado por\n- Task 36.01 (executa em paralelo com Task 36.03)\n\n## O que fazer\n- Implementar resolu\u00e7\u00e3o da `Release` ativa do reposit\u00f3rio no momento da execu\u00e7\u00e3o da Action (garantindo no m\u00e1ximo 1 release ativa por reposit\u00f3rio).\n- Atualizar `CalculateMathModelViewSet` (`math_model/views.py`) e `MathModelServices` (`math_model/services.py`) para criar `QualityAnalysis` dentro de `persist_all` (`@transaction.atomic`) e associar todas as 5 camadas (`CollectedMetric`, `CalculatedMeasure`, `CalculatedSubCharacteristic`, `CalculatedCharacteristic`, `TSQMI`) a esse `analysis_id`.\n- Quando n\u00e3o houver release ativa, salvar `QualityAnalysis` com `release=None`, retornar HTTP `201 Created` (para n\u00e3o quebrar o CI na `MSGram-Action`) e incluir `\"release\": null` + `\"warning\"` no JSON de resposta.\n- Adicionar guarda contra valores `null` em `build_collected_metrics` e preencher `is_partial` / `missing_inputs` quando houver omiss\u00e3o de m\u00e9tricas/medidas.\n\n## Contrato de transi\u00e7\u00e3o (`CalculatedCharacteristic.release` legado)\n- Ao persistir novas `CalculatedCharacteristic` no fluxo da Action, preencher **apenas `analysis=quality_analysis`**, mantendo o campo legado `CalculatedCharacteristic.release = None`.\n- A release associada deve ser sempre acessada via `analysis.release`.\n- Isso evita que, durante o per\u00edodo de transi\u00e7\u00e3o (antes da remo\u00e7\u00e3o da coluna na #104), apagar uma `Release` preserve a `QualityAnalysis` (`SET_NULL`) mas apague a `CalculatedCharacteristic` pelo `on_delete=CASCADE` legado.\n\n## Crit\u00e9rios t\u00e9cnicos (o que esperar ao final)\n- `POST .../calculate/math-model/` com release ativa grava `QualityAnalysis` e as 5 camadas com o mesmo `analysis_id` e `release_id`.\n- Novas `CalculatedCharacteristic` gravam apenas `analysis`, mantendo o campo legado `release=None`.\n- M\u00faltiplos POSTs na mesma release preservam o hist\u00f3rico completo sem erro de unicidade.\n- `POST` fora de release ativa retorna `201` com `release=None` e aviso claro.\n- Valor `null` no payload n\u00e3o gera HTTP `500` e marca `is_partial=True`.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "luciano-freitas-melo",
+            "id": 88516249,
+            "node_id": "MDQ6VXNlcjg4NTE2MjQ5",
+            "avatar_url": "https://avatars.githubusercontent.com/u/88516249?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/luciano-freitas-melo",
+            "html_url": "https://github.com/luciano-freitas-melo",
+            "followers_url": "https://api.github.com/users/luciano-freitas-melo/followers",
+            "following_url": "https://api.github.com/users/luciano-freitas-melo/following{/other_user}",
+            "gists_url": "https://api.github.com/users/luciano-freitas-melo/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/luciano-freitas-melo/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/luciano-freitas-melo/subscriptions",
+            "organizations_url": "https://api.github.com/users/luciano-freitas-melo/orgs",
+            "repos_url": "https://api.github.com/users/luciano-freitas-melo/repos",
+            "events_url": "https://api.github.com/users/luciano-freitas-melo/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/luciano-freitas-melo/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/101/reactions",
             "total_count": 0,
@@ -2144,7 +2255,7 @@
         },
         "timeline_url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Service/issues/101/timeline",
         "performed_via_github_app": null,
-        "state_reason": null,
+        "state_reason": "completed",
         "pinned_comment": null
     },
     {
@@ -2235,11 +2346,11 @@
                 "user_view_type": "public",
                 "site_admin": false
             },
-            "open_issues": 6,
-            "closed_issues": 2,
+            "open_issues": 3,
+            "closed_issues": 5,
             "state": "open",
             "created_at": "2026-11-17T19:59:19Z",
-            "updated_at": "2026-11-20T11:29:52Z",
+            "updated_at": "2026-11-27T18:39:00Z",
             "due_on": "2026-11-30T00:00:00Z",
             "closed_at": null
         },
@@ -2280,6 +2391,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -2873,7 +2985,7 @@
         "milestone": null,
         "comments": 1,
         "created_at": "2026-11-12T02:27:33Z",
-        "updated_at": "2026-11-12T02:59:38Z",
+        "updated_at": "2026-11-24T11:46:05Z",
         "closed_at": "2026-11-12T02:59:38Z",
         "assignee": null,
         "author_association": "COLLABORATOR",
@@ -2888,7 +3000,7 @@
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/94.patch",
             "merged_at": "2026-11-12T02:59:38Z"
         },
-        "body": "## Descri\u00e7\u00e3o\n\nResolve 7 das 8 viola\u00e7\u00f5es critical listadas na QA-10b. A oitava (`config/urls.py`) fica para depois do #91, que altera o mesmo arquivo.\n\n[[TASK33.03.02] QA-10b \u00b7 Service: demais arquivos](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/264), parte da [US33.03](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/251) e do \u00e9pico [MSG33] Execu\u00e7\u00e3o do Plano de Qualidade (fga-eps-mds/2026.2-MeasureSoftGram-DOC#248).\n\n**Complexidade cognitiva (`python:S3776`)**\n- `releases/analysis_distribution.py`: `get_analysis_distribution` (17) delega a escolha da entidade e dos filhos a `_resolve_entity_and_children` e a serializa\u00e7\u00e3o dos filhos a `_serialize_children`.\n- `releases/service.py`: `calculate_norm_diff` (20) delega a montagem do vetor realizado a `_accomplished_vector`, que indexa as caracter\u00edsticas realizadas por nome em vez de fazer uma busca linear para cada planejada. Com nomes repetidos continua valendo o \u00faltimo, como antes.\n- `math_model/services.py`: `build_collected_metrics` (16) monta as m\u00e9tricas do GitHub e do SonarQube por compreens\u00e3o, sem os la\u00e7os aninhados.\n\n**Literais repetidos (`python:S1192`)**\n- `goals/models.py` e `release_configuration/models.py`: constantes para a mensagem de imutabilidade.\n- `organizations/utils.py`: `_github_headers` e `_gitlab_headers` montam os cabe\u00e7alhos repetidos nas quatro sincroniza\u00e7\u00f5es.\n\n**Atribui\u00e7\u00e3o sobrescrita (`python:S8512`)**\n- `math_model/serializer.py`: sai o primeiro `tsqmi = TSQMISerializer` de `CalculateResponseSerializer`, que o campo real logo abaixo sobrescrevia.\n\n### Pontos de aten\u00e7\u00e3o\n- **Fica para depois do #91**, que altera os mesmos arquivos: `config/urls.py:88` (S1192, `\"api/v1/\"`) e `organizations/serializers.py:525` (S1192), esta surgida depois da coleta de 08/11. Por isso este PR **n\u00e3o fecha** a DOC#264.\n- O comportamento n\u00e3o muda; as fun\u00e7\u00f5es refatoradas mant\u00eam assinatura e retorno.\n\n## Porque este Pull Request \u00e9 necess\u00e1rio?\n\nAs viola\u00e7\u00f5es critical contam contra a M6 e o port\u00e3o de zero viola\u00e7\u00f5es blocker/critical do plano de qualidade.\n\n## Como foi testado\n\n- `pytest src` completo: 582 testes passando (Postgres 18 local, `config.settings.test`).\n- Cobertura dos arquivos refatorados: `analysis_distribution.py` 100%, `releases/service.py` 98%, `math_model/services.py` 99%.\n- `flake8==7.1.1 src/` sem erros.\n\n## Crit\u00e9rios de aceita\u00e7\u00e3o\n\n1. [ ] `critical_violations = 0` nos 7 arquivos deste PR no SonarCloud, sem regra desativada\n2. [ ] CI passando\n\nParte de fga-eps-mds/2026.2-MeasureSoftGram-DOC#264\n",
+        "body": "## Descri\u00e7\u00e3o\n\nResolve 7 das 8 viola\u00e7\u00f5es critical listadas na QA-10b. A oitava (`config/urls.py`) fica para depois do #91, que altera o mesmo arquivo.\n\n[[TASK33.03.02] QA-10b \u00b7 Service: demais arquivos](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/264), parte da [US33.03](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/251) e do \u00e9pico [MSG33] Execu\u00e7\u00e3o do Plano de Qualidade (fga-eps-mds/2026.2-MeasureSoftGram-DOC#248).\n\n**Complexidade cognitiva (`python:S3776`)**\n- `releases/analysis_distribution.py`: `get_analysis_distribution` (17) delega a escolha da entidade e dos filhos a `_resolve_entity_and_children` e a serializa\u00e7\u00e3o dos filhos a `_serialize_children`.\n- `releases/service.py`: `calculate_norm_diff` (20) delega a montagem do vetor realizado a `_accomplished_vector`, que indexa as caracter\u00edsticas realizadas por nome em vez de fazer uma busca linear para cada planejada. Com nomes repetidos continua valendo o \u00faltimo, como antes.\n- `math_model/services.py`: `build_collected_metrics` (16) monta as m\u00e9tricas do GitHub e do SonarQube por compreens\u00e3o, sem os la\u00e7os aninhados.\n\n**Literais repetidos (`python:S1192`)**\n- `goals/models.py` e `release_configuration/models.py`: constantes para a mensagem de imutabilidade.\n- `organizations/utils.py`: `_github_headers` e `_gitlab_headers` montam os cabe\u00e7alhos repetidos nas quatro sincroniza\u00e7\u00f5es.\n\n**Atribui\u00e7\u00e3o sobrescrita (`python:S8512`)**\n- `math_model/serializer.py`: sai o primeiro `tsqmi = TSQMISerializer` de `CalculateResponseSerializer`, que o campo real logo abaixo sobrescrevia.\n\n### Pontos de aten\u00e7\u00e3o\n- **Fica para depois do #91**, que altera os mesmos arquivos: `config/urls.py:88` (S1192, `\"api/v1/\"`) e `organizations/serializers.py:525` (S1192), esta surgida depois da coleta de 08/11. Por isso este PR **n\u00e3o fecha** a DOC#264.\n- O comportamento n\u00e3o muda; as fun\u00e7\u00f5es refatoradas mant\u00eam assinatura e retorno.\n\n## Porque este Pull Request \u00e9 necess\u00e1rio?\n\nAs viola\u00e7\u00f5es critical contam contra a M6 e o port\u00e3o de zero viola\u00e7\u00f5es blocker/critical do plano de qualidade.\n\n## Como foi testado\n\n- `pytest src` completo: 582 testes passando (Postgres 18 local, `config.settings.test`).\n- Cobertura dos arquivos refatorados: `analysis_distribution.py` 100%, `releases/service.py` 98%, `math_model/services.py` 99%.\n- `flake8==7.1.1 src/` sem erros.\n\n## Crit\u00e9rios de aceita\u00e7\u00e3o\n\n1. [x] `critical_violations = 0` nos 7 arquivos deste PR no SonarCloud, sem regra desativada\n2. [x] CI passando\n\nParte de fga-eps-mds/2026.2-MeasureSoftGram-DOC#264\n",
         "closed_by": {
             "login": "henriquecq",
             "id": 110349110,
@@ -2965,7 +3077,7 @@
         "milestone": null,
         "comments": 0,
         "created_at": "2026-11-12T02:27:28Z",
-        "updated_at": "2026-11-12T02:55:55Z",
+        "updated_at": "2026-11-24T11:46:02Z",
         "closed_at": "2026-11-12T02:55:55Z",
         "assignee": null,
         "author_association": "COLLABORATOR",
@@ -2980,7 +3092,7 @@
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Service/pull/93.patch",
             "merged_at": "2026-11-12T02:55:55Z"
         },
-        "body": "## Descri\u00e7\u00e3o\n\nResolve as 5 viola\u00e7\u00f5es critical do SonarCloud nos management commands do Service.\n\n[[TASK33.03.01] QA-10a \u00b7 Service: management commands (2 arquivos, 5 critical)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/263), parte da [US33.03](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/251) e do \u00e9pico [MSG33] Execu\u00e7\u00e3o do Plano de Qualidade (fga-eps-mds/2026.2-MeasureSoftGram-DOC#248).\n\n| Arquivo : linha | Regra | Corre\u00e7\u00e3o |\n| --- | --- | --- |\n| `organizations/management/commands/utils.py:77, 97, 126` | `python:S5655` tipo de argumento | `force_the_sum_to_equal_100` estava anotada como `dict`, mas sempre recebe uma lista de pesos. A anota\u00e7\u00e3o passa a `list[dict]`, e o c\u00f3digo n\u00e3o muda. |\n| `organizations/management/commands/seed_demo_data.py:204` | `python:S3776` complexidade 16 | A montagem de cada `CollectedMetric` (valor na escala da m\u00e9trica e `qualifier`, com os dois tern\u00e1rios) sai de `_seed_collected_metrics` para `_collected_file_metric`. Os caminhos e os limites (8 m\u00e9tricas, 30 dias) viram constantes do m\u00f3dulo. |\n| `organizations/management/commands/seed_demo_data.py:438` | `pythonenterprise:S8440` query em loop | `_seed_goals_and_releases` busca os produtos com `prefetch_related(\"release_configuration\")`. Como `ReleaseConfiguration` \u00e9 ordenado por `-created_at`, o `.first()` l\u00ea o cache e devolve a mesma pr\u00e9-configura\u00e7\u00e3o, sem uma query por produto. |\n\n### Pontos de aten\u00e7\u00e3o\n- A linha `for path in random.sample(FILE_PATHS, ...)` ficou com o mesmo texto de prop\u00f3sito. Ela j\u00e1 tem uma S2245 (gerador pseudoaleat\u00f3rio) aberta na `develop`; se o texto mudasse, o SonarCloud a contaria como vulnerabilidade nova e o Quality Gate reprovaria em `new_security_rating`. Foi o que aconteceu na primeira vers\u00e3o deste PR. As S2245 do seed ficam fora desta task, que trata s\u00f3 das critical.\n\n## Porque este Pull Request \u00e9 necess\u00e1rio?\n\nNa coleta de 08/11, esses 2 arquivos somavam 5 das viola\u00e7\u00f5es critical do Service, que contam contra a M6 e o port\u00e3o de zero viola\u00e7\u00f5es blocker/critical do plano de qualidade.\n\n## Como foi testado\n\n- `pytest src` completo: 582 testes passando (Postgres 18 local, `config.settings.test`), incluindo os 7 de `test_seed_demo_data.py`.\n- `flake8==7.1.1 src/` sem erros.\n\n## Crit\u00e9rios de aceita\u00e7\u00e3o\n\n1. [ ] `critical_violations = 0` nos 2 arquivos no SonarCloud, sem regra desativada\n2. [ ] `make seed` continua populando o banco de demonstra\u00e7\u00e3o\n3. [ ] CI passando\n\nCloses fga-eps-mds/2026.2-MeasureSoftGram-DOC#263\n",
+        "body": "## Descri\u00e7\u00e3o\n\nResolve as 5 viola\u00e7\u00f5es critical do SonarCloud nos management commands do Service.\n\n[[TASK33.03.01] QA-10a \u00b7 Service: management commands (2 arquivos, 5 critical)](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/263), parte da [US33.03](https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-DOC/issues/251) e do \u00e9pico [MSG33] Execu\u00e7\u00e3o do Plano de Qualidade (fga-eps-mds/2026.2-MeasureSoftGram-DOC#248).\n\n| Arquivo : linha | Regra | Corre\u00e7\u00e3o |\n| --- | --- | --- |\n| `organizations/management/commands/utils.py:77, 97, 126` | `python:S5655` tipo de argumento | `force_the_sum_to_equal_100` estava anotada como `dict`, mas sempre recebe uma lista de pesos. A anota\u00e7\u00e3o passa a `list[dict]`, e o c\u00f3digo n\u00e3o muda. |\n| `organizations/management/commands/seed_demo_data.py:204` | `python:S3776` complexidade 16 | A montagem de cada `CollectedMetric` (valor na escala da m\u00e9trica e `qualifier`, com os dois tern\u00e1rios) sai de `_seed_collected_metrics` para `_collected_file_metric`. Os caminhos e os limites (8 m\u00e9tricas, 30 dias) viram constantes do m\u00f3dulo. |\n| `organizations/management/commands/seed_demo_data.py:438` | `pythonenterprise:S8440` query em loop | `_seed_goals_and_releases` busca os produtos com `prefetch_related(\"release_configuration\")`. Como `ReleaseConfiguration` \u00e9 ordenado por `-created_at`, o `.first()` l\u00ea o cache e devolve a mesma pr\u00e9-configura\u00e7\u00e3o, sem uma query por produto. |\n\n### Pontos de aten\u00e7\u00e3o\n- A linha `for path in random.sample(FILE_PATHS, ...)` ficou com o mesmo texto de prop\u00f3sito. Ela j\u00e1 tem uma S2245 (gerador pseudoaleat\u00f3rio) aberta na `develop`; se o texto mudasse, o SonarCloud a contaria como vulnerabilidade nova e o Quality Gate reprovaria em `new_security_rating`. Foi o que aconteceu na primeira vers\u00e3o deste PR. As S2245 do seed ficam fora desta task, que trata s\u00f3 das critical.\n\n## Porque este Pull Request \u00e9 necess\u00e1rio?\n\nNa coleta de 08/11, esses 2 arquivos somavam 5 das viola\u00e7\u00f5es critical do Service, que contam contra a M6 e o port\u00e3o de zero viola\u00e7\u00f5es blocker/critical do plano de qualidade.\n\n## Como foi testado\n\n- `pytest src` completo: 582 testes passando (Postgres 18 local, `config.settings.test`), incluindo os 7 de `test_seed_demo_data.py`.\n- `flake8==7.1.1 src/` sem erros.\n\n## Crit\u00e9rios de aceita\u00e7\u00e3o\n\n1. [x] `critical_violations = 0` nos 2 arquivos no SonarCloud, sem regra desativada\n2. [x] `make seed` continua populando o banco de demonstra\u00e7\u00e3o\n3. [x] CI passando\n\nCloses fga-eps-mds/2026.2-MeasureSoftGram-DOC#263\n",
         "closed_by": {
             "login": "henriquecq",
             "id": 110349110,
@@ -3469,6 +3581,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -4203,11 +4316,11 @@
                 "user_view_type": "public",
                 "site_admin": false
             },
-            "open_issues": 6,
-            "closed_issues": 2,
+            "open_issues": 3,
+            "closed_issues": 5,
             "state": "open",
             "created_at": "2026-11-17T19:59:19Z",
-            "updated_at": "2026-11-20T11:29:52Z",
+            "updated_at": "2026-11-27T18:39:00Z",
             "due_on": "2026-11-30T00:00:00Z",
             "closed_at": null
         },
@@ -4248,6 +4361,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -4514,6 +4628,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -4781,6 +4896,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -5048,6 +5164,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -6271,6 +6388,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -7571,6 +7689,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -8093,6 +8212,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -8255,6 +8375,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -8671,6 +8792,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -8924,6 +9046,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -9085,6 +9208,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -9247,6 +9371,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -9409,6 +9534,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -9571,6 +9697,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -9733,6 +9860,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -9895,6 +10023,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -10719,6 +10848,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -11396,6 +11526,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -12412,6 +12543,7 @@
         "author_association": "COLLABORATOR",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -12789,6 +12921,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -12959,6 +13092,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -13121,6 +13255,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -13283,6 +13418,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -13535,6 +13671,7 @@
             "updated_at": "2024-07-26T10:44:55Z",
             "is_enabled": true
         },
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
