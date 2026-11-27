@@ -104,7 +104,7 @@
             "site_admin": false
         },
         "labels": [],
-        "state": "open",
+        "state": "closed",
         "locked": false,
         "assignees": [
             {
@@ -130,10 +130,10 @@
             }
         ],
         "milestone": null,
-        "comments": 1,
+        "comments": 0,
         "created_at": "2026-11-21T02:09:29Z",
-        "updated_at": "2026-11-21T02:10:56Z",
-        "closed_at": null,
+        "updated_at": "2026-11-27T15:04:02Z",
+        "closed_at": "2026-11-27T15:03:59Z",
         "assignee": {
             "login": "storch7",
             "id": 90935577,
@@ -165,10 +165,30 @@
             "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/27",
             "diff_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/27.diff",
             "patch_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Action/pull/27.patch",
-            "merged_at": null
+            "merged_at": "2026-11-27T15:03:59Z"
         },
         "body": "## Issue\n\nCloses fga-eps-mds/2026.2-MeasureSoftGram-DOC#236\nRefs fga-eps-mds/2026.2-MeasureSoftGram-DOC#136\n\n## Etapa do fluxo\n\n- [x] 1. Branch de trabalho \u2192 `develop` do fork `2026.2-*`\n- [ ] 2. `develop` do fork \u2192 `develop` do reposit\u00f3rio central (liste as issues inclu\u00eddas abaixo)\n- [ ] 3. `develop` \u2192 `main` do reposit\u00f3rio central (release `vX.Y.Z`)\n\n## O que muda e por qu\u00ea\n\nDisponibiliza o componente reutiliz\u00e1vel do MeasureSoftGram para pipelines do GitLab CI/CD (`templates/measure.yml`), permitindo que projetos no GitLab configurem a coleta de m\u00e9tricas do SonarQube e da API do GitLab via `include` com `inputs`, de forma an\u00e1loga \u00e0 GitHub Action.\n\n- Adiciona `templates/measure.yml` com especifica\u00e7\u00e3o `spec: inputs`, resolu\u00e7\u00e3o segura de segredos via vari\u00e1veis de CI/CD (`export` no `script` para evitar exposi\u00e7\u00e3o no YAML e refer\u00eancia circular), execu\u00e7\u00e3o do coletor (`node /opt/msgram/index.js`) na imagem `measuresoftgram/action-gitlab:latest` e `rules` para pipelines de Merge Request (`merge_request_event`) e da branch padr\u00e3o (`$CI_DEFAULT_BRANCH`).\n- Atualiza `.github/workflows/docker-publish.yml` para construir e publicar a imagem `action-gitlab:latest` a partir do `Dockerfile.gitlab`.\n- Adiciona `templates/README.md` com guia de configura\u00e7\u00e3o das vari\u00e1veis de CI/CD, exemplo de `.gitlab-ci.yml`, tabela de inputs e preven\u00e7\u00e3o de pipelines duplicados.\n\n## Tipo de mudan\u00e7a\n\n- [x] `feat` nova funcionalidade\n- [ ] `fix` corre\u00e7\u00e3o de defeito\n- [ ] `refactor` sem mudan\u00e7a de comportamento\n- [x] `test` \u00b7 `docs` \u00b7 `ci` \u00b7 `build` \u00b7 `chore`\n- [ ] Muda comportamento vis\u00edvel para o usu\u00e1rio (exige valida\u00e7\u00e3o do PO)\n\n## Como testar\n\n1. Fazer checkout da branch `feat/236-component-ci-cd` e conferir a estrutura de `templates/measure.yml`, `templates/README.md` e `.github/workflows/docker-publish.yml`.\n2. Validar a sintaxe do componente `templates/measure.yml` no **CI Lint** de um projeto no GitLab (`Build > Pipeline editor > Validate`) ou incluindo o template via `include: remote` apontando para o arquivo raw da branch.\n3. Verificar que todas as vari\u00e1veis passadas pelo job (`PRODUCT_NAME`, `MSGRAM_SERVICE_HOST`, `SONAR_HOST`, `SONAR_PROJECT_KEY`, `US_LABEL`, `WORKFLOW_NAME`, `COLLECT_SONARQUBE_METRICS`, `COLLECT_GITLAB_METRICS`, `MSGRAM_SERVICE_TOKEN`, `GITLAB_TOKEN`, `SONAR_TOKEN`) correspondem \u00e0s vari\u00e1veis lidas por `src/gitlab.ts` e `src/service/request-service.ts`.\n4. Rodar a su\u00edte de testes do reposit\u00f3rio (`yarn test --runInBand`) para confirmar que o coletor continua passando sem regress\u00f5es.\n\n## Evid\u00eancias\n\n- `templates/measure.yml`: defini\u00e7\u00e3o de `spec: inputs` e job `measuresoftgram` para `merge_request_event` e `$CI_DEFAULT_BRANCH`.\n- `templates/README.md`: documenta\u00e7\u00e3o de uso via `include: remote`, vari\u00e1veis de CI/CD e tabela de par\u00e2metros.\n- `.github/workflows/docker-publish.yml`: step de build e push da imagem `action-gitlab:latest` usando `./Dockerfile.gitlab`.\n\n## Impacto na qualidade\n\n- Testes adicionados ou alterados: nenhum (os testes unit\u00e1rios do coletor `src/gitlab.ts` j\u00e1 foram integrados na `TASK15.01.01` / PR #24; este PR adiciona o template YAML do componente, documenta\u00e7\u00e3o e step de publica\u00e7\u00e3o da imagem).\n- Quality gate do SonarCloud: aprovado\n- Problemas novos apontados pelo SonarCloud: nenhum\n\n## Checklist do autor\n\n- [x] Branch e commits seguem o padr\u00e3o (`tipo/CODIGO-descricao`, Conventional Commits).\n- [x] A CI est\u00e1 verde (lint, build, testes, SonarCloud).\n- [x] Os crit\u00e9rios de aceita\u00e7\u00e3o da issue est\u00e3o atendidos.\n- [x] A documenta\u00e7\u00e3o afetada foi atualizada.\n- [x] Sei explicar qualquer trecho deste PR em revis\u00e3o s\u00edncrona.\n- [x] Uso relevante de IA registrado no meu `MD_Template.md` (ou n\u00e3o houve).\n\n## Checklist do revisor\n\n- [ ] Li a issue e os crit\u00e9rios de aceita\u00e7\u00e3o antes do c\u00f3digo.\n- [ ] Testei seguindo o \"Como testar\" (ou na homologa\u00e7\u00e3o).\n- [ ] O c\u00f3digo \u00e9 compreens\u00edvel e segue os padr\u00f5es do reposit\u00f3rio.\n- [ ] H\u00e1 testes para a mudan\u00e7a.\n- [ ] A revis\u00e3o foi feita por mim, n\u00e3o por uma ferramenta de IA.",
-        "closed_by": null,
+        "closed_by": {
+            "login": "MilenaFRocha",
+            "id": 104432227,
+            "node_id": "U_kgDOBjmCYw",
+            "avatar_url": "https://avatars.githubusercontent.com/u/104432227?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/MilenaFRocha",
+            "html_url": "https://github.com/MilenaFRocha",
+            "followers_url": "https://api.github.com/users/MilenaFRocha/followers",
+            "following_url": "https://api.github.com/users/MilenaFRocha/following{/other_user}",
+            "gists_url": "https://api.github.com/users/MilenaFRocha/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/MilenaFRocha/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/MilenaFRocha/subscriptions",
+            "organizations_url": "https://api.github.com/users/MilenaFRocha/orgs",
+            "repos_url": "https://api.github.com/users/MilenaFRocha/repos",
+            "events_url": "https://api.github.com/users/MilenaFRocha/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/MilenaFRocha/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
         "reactions": {
             "url": "https://api.github.com/repos/fga-eps-mds/2026.2-MeasureSoftGram-Action/issues/27/reactions",
             "total_count": 0,
@@ -1295,6 +1315,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 1,
@@ -3062,6 +3083,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
@@ -3159,6 +3181,7 @@
         "author_association": "NONE",
         "issue_field_values": [],
         "type": null,
+        "status": null,
         "active_lock_reason": null,
         "sub_issues_summary": {
             "total": 0,
