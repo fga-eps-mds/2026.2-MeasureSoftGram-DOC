@@ -40,7 +40,8 @@ METRICAS_HISTORICO = [
     "test_errors", "test_failures", "test_execution_time", "complexity", "functions", "comment_lines_density",
     "blocker_violations", "critical_violations", "line_coverage", "branch_coverage",
 ]
-# Medidas por arquivo (api/measures/component_tree). FIL = código; UTS = arquivo de teste.
+# Medidas por arquivo (api/measures/component_tree). FIL = código; UTS = arquivo de teste; DIR = pasta
+# (o "testes passando" do notebook usa a pasta com mais testes, como o parser.py dos repositórios fazia).
 # São os dados brutos do modelo Q-Rapids: arquivos não complexos, comentados, sem duplicação, com
 # cobertura e sem violação bloqueante/crítica; testes que passam e testes rápidos.
 METRICAS_ARQUIVO = [
@@ -191,14 +192,14 @@ class SonarClient:
 
 
     def arquivos(self, projeto: str, branch: str | None, max_paginas: int = 20) -> dict:
-        """Medidas de cada arquivo (código e teste), compactas: ``{"metricas": [...], "linhas": [[path,
+        """Medidas de cada arquivo (código e teste) e pasta, compactas: ``{"metricas": [...], "linhas": [[path,
         qualifier, language, v1, v2, ...]]}``. Valor ausente = None (o Sonar não mede aquilo naquele arquivo)."""
         componentes, medidas = {}, {}
         for i in range(0, len(METRICAS_ARQUIVO), MAX_METRICAS_POR_CHAMADA):
             lote, pagina = METRICAS_ARQUIVO[i:i + MAX_METRICAS_POR_CHAMADA], 1
             while pagina <= max_paginas:
-                p = {"component": projeto, "qualifiers": "FIL,UTS", "metricKeys": ",".join(lote),
-                     "ps": 500, "p": pagina, "strategy": "leaves"}
+                p = {"component": projeto, "qualifiers": "DIR,FIL,UTS", "metricKeys": ",".join(lote),
+                     "ps": 500, "p": pagina, "strategy": "all"}   # ``leaves`` não devolve pastas
                 if branch:
                     p["branch"] = branch
                 d = self.get("api/measures/component_tree", p)

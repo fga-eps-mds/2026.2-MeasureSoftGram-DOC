@@ -96,7 +96,7 @@ def _resultado(chave, valor, num, den, itens=None, falta=None):
 
 
 def avaliar(comp: pd.DataFrame, repo: str) -> dict:
-    """Avaliação de UMA coleta de UM repositório (componentes do .json do pipeline).
+    """Avaliação de UMA coleta de UM repositório (componentes do .json do pipeline ou da API).
 
     Devolve ``{"metricas": {chave: resultado}, "fatores": {...}, "aspectos": {...}, "total": float,
     "arquivos_base": int, "arquivos_codigo": int, "linguagem": str}``.
@@ -129,7 +129,16 @@ def avaliar(comp: pd.DataFrame, repo: str) -> dict:
 
     # testes que passam: pasta com mais testes (get_dir_df)
     dirs = w[(w["tipo"] == "DIR") & w["tests"].notna()]
-    if dirs.empty:
+    suites = w[(w["tipo"] == "UTS") & (w["tests"] > 0)]
+    if dirs.empty and not suites.empty:
+        # coleta da API sem pastas (component_tree até 25/11): soma das suítes = testes do repositório
+        t = suites["tests"].sum()
+        e, fl = suites["test_errors"].fillna(0).sum(), suites["test_failures"].fillna(0).sum()
+        itens = pd.DataFrame([{"componente": f"{len(suites)} suítes (UTS)", "testes": t, "erros": e,
+                               "falhas": fl}])
+        res["testes_passando"] = _resultado("testes_passando", (t - (e + fl)) / t, t - (e + fl), t, itens)
+        res["testes_passando"]["observacao"] = "sem pastas (DIR) na coleta: soma das suítes de teste"
+    elif dirs.empty:
         res["testes_passando"] = _resultado("testes_passando", 0.0, None, None, None,
                                             "nenhuma pasta com testes no .json (o repositório não publica o "
                                             "relatório de testes no SonarCloud)")

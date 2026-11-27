@@ -102,6 +102,10 @@ APELIDOS_REPO = {"2026.2-MeasureSoftGram-docs-eps": "2026.2-MeasureSoftGram-DOC"
 RELEASES = {"R1": "2026-09-28", "R2": "2026-10-26", "R3": "2026-11-30"}
 INICIO_SEMESTRE = "2026-08-24"
 RELEASE_FINAL = "2026-12-07"   # Release Final (aceitação e defesas orais): nenhum prazo passa daqui
+# A partir desta data a avaliação por arquivo do plano de qualidade usa também a árvore da API do SonarCloud
+# (coleta central), porque o metrics.yml/parser.py sai dos repositórios. Antes dela vale só o pipeline, como
+# quando o metas.mdx foi escrito: os números publicados (ex.: coluna "Atual" de 07/11) continuam reproduzíveis.
+SONAR_API_POR_ARQUIVO_DESDE = "2026-11-28"
 
 # Metas de qualidade por release (critérios enviados pelo professor, ver
 # docs/disciplina/avaliacao.mdx). Metas de gestão: SPI e CPI >= 0,95.

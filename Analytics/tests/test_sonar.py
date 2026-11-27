@@ -115,6 +115,18 @@ class ClienteTest(unittest.TestCase):
         self.assertEqual(len(arq["linhas"]), 1)
         self.assertEqual(arq["linhas"][0][3:], [1.0] * len(api.METRICAS_ARQUIVO))
 
+    def test_medidas_por_arquivo_trazem_pastas_como_o_parser_antigo(self):
+        # "testes passando" (notebook) usa a pasta com mais testes: a árvore precisa trazer DIR, além de
+        # FIL e UTS. ``leaves`` só devolve folhas (sem pastas); ``all`` é o padrão que o parser.py usava.
+        t = Transporte({"api/measures/component_tree": api.Resposta(200, {"paging": {"total": 1}, "components": [
+            {"key": "org_Core:tests", "path": "tests", "qualifier": "DIR",
+             "measures": [{"metric": "tests", "value": "10"}]}]})})
+        arq = api.SonarClient(transporte=t, dormir=lambda s: None).arquivos("org_Core", "develop")
+        for _, params, _ in t.chamadas:
+            self.assertEqual(set(params["qualifiers"].split(",")), {"DIR", "FIL", "UTS"})
+            self.assertEqual(params["strategy"], "all")
+        self.assertEqual(arq["linhas"][0][:3], ["tests", "DIR", None])
+
     def test_issues_abertas_sem_organization(self):
         # com ``organization`` + ``componentKeys`` o SonarCloud devolve total 0 (bug da #254)
         t = Transporte({"api/issues/search": api.Resposta(200, {"total": 70, "facets": []})})
