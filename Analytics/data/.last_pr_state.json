@@ -42,9 +42,9 @@
     "author": "thegm445"
   },
   "2026.2-MeasureSoftGram-Service": {
-    "number": 110,
-    "last_merged_at": "2026-11-23T03:14:53Z",
-    "title": "test: tira os arquivos do Service da faixa de cobertura ≤ 60% (QA-09)",
-    "author": "thegm445"
+    "number": 114,
+    "last_merged_at": "2026-11-27T18:38:52Z",
+    "title": "feat(MSG36): vincula análises às releases e remove o cron de fechamento",
+    "author": "Marcosatc147"
   }
 }

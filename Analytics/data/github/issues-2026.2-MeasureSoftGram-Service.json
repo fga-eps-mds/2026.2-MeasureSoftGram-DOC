@@ -1,6 +1,6 @@
 {
  "fonte": "API do GitHub (issues)",
- "coletado_em": "2026-11-27T18:09:38+00:00",
+ "coletado_em": "2026-11-28T03:12:24+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
@@ -63,11 +63,11 @@
   {
    "number": 114,
    "title": "feat(MSG36): vincula análises às releases e remove o cron de fechamento",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": true,
    "created_at": "2026-11-21T01:06:12Z",
-   "closed_at": null,
-   "updated_at": "2026-11-27T17:27:41Z",
+   "closed_at": "2026-11-27T18:38:52Z",
+   "updated_at": "2026-11-27T18:39:00Z",
    "labels": [],
    "type": null,
    "assignees": [],
@@ -263,11 +263,11 @@
   {
    "number": 103,
    "title": "Task 36.04 - Remover completamente o Cron Job (releases/jobs.py e django-apscheduler)",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-14T23:49:13Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:15:46Z",
+   "closed_at": "2026-11-27T18:38:59Z",
+   "updated_at": "2026-11-27T18:38:59Z",
    "labels": [],
    "type": "Task",
    "assignees": [
@@ -282,11 +282,11 @@
   {
    "number": 102,
    "title": "Task 36.03 - Consultas da Release: AQ mais recente, histórico para gráficos e adaptação dos consumidores",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-14T23:49:03Z",
-   "closed_at": null,
-   "updated_at": "2026-11-17T20:15:44Z",
+   "closed_at": "2026-11-27T18:38:56Z",
+   "updated_at": "2026-11-27T18:38:57Z",
    "labels": [],
    "type": "Task",
    "assignees": [
@@ -301,11 +301,11 @@
   {
    "number": 101,
    "title": "Task 36.02 - Fluxo da Action: resolver Release ativa e persistir QualityAnalysis",
-   "state": "open",
+   "state": "closed",
    "is_pull_request": false,
    "created_at": "2026-11-14T23:48:15Z",
-   "closed_at": null,
-   "updated_at": "2026-11-18T23:53:25Z",
+   "closed_at": "2026-11-27T18:38:54Z",
+   "updated_at": "2026-11-27T18:38:54Z",
    "labels": [],
    "type": "Task",
    "assignees": [

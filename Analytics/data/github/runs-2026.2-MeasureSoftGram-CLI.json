@@ -1,24 +1,38 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-11-27T18:09:38+00:00",
+ "coletado_em": "2026-11-28T03:12:24+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-CLI",
  "desde": "2026-08-24",
- "total_count": 273,
+ "total_count": 275,
  "workflow_runs": [
   {
-   "id": 46037555432,
-   "name": "Rodar Testes",
-   "status": "in_progress",
-   "conclusion": null,
-   "head_branch": "fix/weights-enter-vazio",
+   "id": 46081760851,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "task/TASK37.01.06-configuracao-remota-weblate",
    "event": "pull_request",
-   "created_at": "2026-11-27T16:54:49Z",
-   "run_started_at": "2026-11-27T16:54:49Z",
-   "updated_at": "2026-11-27T16:54:53Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/46037555432",
-   "run_number": 113,
-   "workflow_id": 346797058
+   "created_at": "2026-11-27T23:18:37Z",
+   "run_started_at": "2026-11-27T23:18:37Z",
+   "updated_at": "2026-11-27T23:18:38Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/46081760851",
+   "run_number": 69,
+   "workflow_id": 368530720
+  },
+  {
+   "id": 46050508180,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "task/TASK37.01.06-configuracao-remota-weblate",
+   "event": "pull_request",
+   "created_at": "2026-11-27T18:34:40Z",
+   "run_started_at": "2026-11-27T18:34:40Z",
+   "updated_at": "2026-11-27T18:34:41Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/46050508180",
+   "run_number": 68,
+   "workflow_id": 368530720
   },
   {
    "id": 46037555501,
@@ -33,6 +47,20 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/46037555501",
    "run_number": 67,
    "workflow_id": 368530720
+  },
+  {
+   "id": 46037555432,
+   "name": "Rodar Testes",
+   "status": "completed",
+   "conclusion": "failure",
+   "head_branch": "fix/weights-enter-vazio",
+   "event": "pull_request",
+   "created_at": "2026-11-27T16:54:49Z",
+   "run_started_at": "2026-11-27T16:54:49Z",
+   "updated_at": "2026-11-27T21:52:22Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-CLI/actions/runs/46037555432",
+   "run_number": 113,
+   "workflow_id": 346797058
   },
   {
    "id": 45844662207,

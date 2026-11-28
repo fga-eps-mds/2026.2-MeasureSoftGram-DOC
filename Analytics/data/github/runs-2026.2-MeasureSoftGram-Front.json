@@ -1,11 +1,39 @@
 {
  "fonte": "API do GitHub (actions/runs)",
- "coletado_em": "2026-11-27T18:09:38+00:00",
+ "coletado_em": "2026-11-28T03:12:24+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Front",
  "desde": "2026-08-24",
  "total_count": 0,
  "workflow_runs": [
+  {
+   "id": 46081755761,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "task/TASK37.01.06-configuracao-remota-weblate",
+   "event": "pull_request",
+   "created_at": "2026-11-27T23:18:33Z",
+   "run_started_at": "2026-11-27T23:18:33Z",
+   "updated_at": "2026-11-27T23:18:34Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/46081755761",
+   "run_number": 366,
+   "workflow_id": 368685720
+  },
+  {
+   "id": 46050500331,
+   "name": "Dependabot Auto-merge",
+   "status": "completed",
+   "conclusion": "skipped",
+   "head_branch": "task/TASK37.01.06-configuracao-remota-weblate",
+   "event": "pull_request",
+   "created_at": "2026-11-27T18:34:36Z",
+   "run_started_at": "2026-11-27T18:34:36Z",
+   "updated_at": "2026-11-27T18:34:37Z",
+   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/46050500331",
+   "run_number": 365,
+   "workflow_id": 368685720
+  },
   {
    "id": 45923489234,
    "name": "Dependabot Auto-merge",
@@ -13977,34 +14005,6 @@
    "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40007640575",
    "run_number": 185,
    "workflow_id": 347831686
-  },
-  {
-   "id": 40006891470,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "feat/35-pulso-caracteristicas-repositorio",
-   "event": "pull_request",
-   "created_at": "2026-10-23T18:52:37Z",
-   "run_started_at": "2026-10-23T18:52:37Z",
-   "updated_at": "2026-10-23T18:52:38Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40006891470",
-   "run_number": 109,
-   "workflow_id": 368685720
-  },
-  {
-   "id": 40006879531,
-   "name": "Dependabot Auto-merge",
-   "status": "completed",
-   "conclusion": "skipped",
-   "head_branch": "feat/34-evolucao-temporal-filtros",
-   "event": "pull_request",
-   "created_at": "2026-10-23T18:52:31Z",
-   "run_started_at": "2026-10-23T18:52:31Z",
-   "updated_at": "2026-10-23T18:52:32Z",
-   "html_url": "https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-Front/actions/runs/40006879531",
-   "run_number": 108,
-   "workflow_id": 368685720
   }
  ]
 }

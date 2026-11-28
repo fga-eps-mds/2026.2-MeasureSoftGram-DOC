@@ -1,11 +1,362 @@
 {
  "fonte": "API do GitHub (commits)",
- "coletado_em": "2026-11-23T03:14:13+00:00",
+ "coletado_em": "2026-11-28T03:12:24+00:00",
  "organizacao": "fga-eps-mds",
  "repositorio": "2026.2-MeasureSoftGram-Service",
  "desde": "2026-08-24",
  "branch": "develop",
  "commits": [
+  {
+   "sha": "17a7c93cf67b4314eae3a6cf04c8d229a8e31a13",
+   "date": "2026-11-27T18:38:51Z",
+   "author": "Marcosatc147",
+   "message": "feat(MSG36): vincula análises às releases e remove o cron de fechamento (#114)",
+   "parents": 1,
+   "files": [
+    {
+     "filename": "pyproject.toml",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 1
+    },
+    {
+     "filename": "src/characteristics/migrations/0008_remove_calculatedcharacteristic_release_and_more.py",
+     "status": "added",
+     "additions": 25,
+     "deletions": 0
+    },
+    {
+     "filename": "src/characteristics/models.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 9
+    },
+    {
+     "filename": "src/characteristics/test_models_coverage.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 0
+    },
+    {
+     "filename": "src/characteristics/tests.py",
+     "status": "modified",
+     "additions": 204,
+     "deletions": 202
+    },
+    {
+     "filename": "src/config/settings/base.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 15
+    },
+    {
+     "filename": "src/config/settings/test.py",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 4
+    },
+    {
+     "filename": "src/entity_trees/services.py",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 0
+    },
+    {
+     "filename": "src/math_model/migrations/0002_backfill_legacy_analyses.py",
+     "status": "added",
+     "additions": 45,
+     "deletions": 0
+    },
+    {
+     "filename": "src/math_model/services.py",
+     "status": "modified",
+     "additions": 89,
+     "deletions": 34
+    },
+    {
+     "filename": "src/math_model/tests/test_analysis_flow.py",
+     "status": "added",
+     "additions": 106,
+     "deletions": 0
+    },
+    {
+     "filename": "src/math_model/tests/test_atomicity_smoke.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 0
+    },
+    {
+     "filename": "src/math_model/tests/test_legacy_migration.py",
+     "status": "added",
+     "additions": 73,
+     "deletions": 0
+    },
+    {
+     "filename": "src/math_model/tests/test_quality_analysis_model.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 3
+    },
+    {
+     "filename": "src/math_model/views.py",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 1
+    },
+    {
+     "filename": "src/measures/migrations/0004_alter_calculatedmeasure_analysis.py",
+     "status": "added",
+     "additions": 21,
+     "deletions": 0
+    },
+    {
+     "filename": "src/measures/models.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": "src/measures/test_models_coverage.py",
+     "status": "modified",
+     "additions": 6,
+     "deletions": 0
+    },
+    {
+     "filename": "src/metrics/migrations/0005_alter_collectedmetric_analysis.py",
+     "status": "added",
+     "additions": 21,
+     "deletions": 0
+    },
+    {
+     "filename": "src/metrics/models.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": "src/metrics/test_models_coverage.py",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 0
+    },
+    {
+     "filename": "src/organizations/management/commands/load_initial_data.py",
+     "status": "modified",
+     "additions": 47,
+     "deletions": 209
+    },
+    {
+     "filename": "src/organizations/management/commands/seed_demo_data.py",
+     "status": "modified",
+     "additions": 49,
+     "deletions": 468
+    },
+    {
+     "filename": "src/organizations/management/commands/seed_e2e.py",
+     "status": "modified",
+     "additions": 24,
+     "deletions": 16
+    },
+    {
+     "filename": "src/organizations/tests/test_historical_values.py",
+     "status": "modified",
+     "additions": 110,
+     "deletions": 17
+    },
+    {
+     "filename": "src/organizations/tests/test_load_initial_data.py",
+     "status": "modified",
+     "additions": 40,
+     "deletions": 23
+    },
+    {
+     "filename": "src/organizations/tests/test_release_dashboards.py",
+     "status": "modified",
+     "additions": 12,
+     "deletions": 3
+    },
+    {
+     "filename": "src/organizations/tests/test_repositories_endpoints.py",
+     "status": "modified",
+     "additions": 7,
+     "deletions": 2
+    },
+    {
+     "filename": "src/organizations/tests/test_seed_demo_data.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 0
+    },
+    {
+     "filename": "src/releases/analyses.py",
+     "status": "added",
+     "additions": 42,
+     "deletions": 0
+    },
+    {
+     "filename": "src/releases/analysis_distribution.py",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 13
+    },
+    {
+     "filename": "src/releases/apps.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 7
+    },
+    {
+     "filename": "src/releases/correlation.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 4
+    },
+    {
+     "filename": "src/releases/dashboard.py",
+     "status": "modified",
+     "additions": 5,
+     "deletions": 9
+    },
+    {
+     "filename": "src/releases/entity_analysis.py",
+     "status": "modified",
+     "additions": 3,
+     "deletions": 2
+    },
+    {
+     "filename": "src/releases/jobs.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 211
+    },
+    {
+     "filename": "src/releases/service.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 62
+    },
+    {
+     "filename": "src/releases/tests/test_analysis_distribution.py",
+     "status": "modified",
+     "additions": 18,
+     "deletions": 4
+    },
+    {
+     "filename": "src/releases/tests/test_correlation.py",
+     "status": "modified",
+     "additions": 13,
+     "deletions": 2
+    },
+    {
+     "filename": "src/releases/tests/test_entity_analysis.py",
+     "status": "modified",
+     "additions": 8,
+     "deletions": 3
+    },
+    {
+     "filename": "src/releases/tests/test_entity_matrix.py",
+     "status": "modified",
+     "additions": 10,
+     "deletions": 1
+    },
+    {
+     "filename": "src/releases/tests/test_jobs.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 31
+    },
+    {
+     "filename": "src/releases/tests/test_quality_analyses.py",
+     "status": "added",
+     "additions": 56,
+     "deletions": 0
+    },
+    {
+     "filename": "src/releases/tests/test_release_results_job.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 198
+    },
+    {
+     "filename": "src/releases/tests/test_releases_endpoints.py",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 8
+    },
+    {
+     "filename": "src/releases/tests/test_scheduler_lock.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 53
+    },
+    {
+     "filename": "src/releases/tests/test_window.py",
+     "status": "removed",
+     "additions": 0,
+     "deletions": 64
+    },
+    {
+     "filename": "src/releases/views.py",
+     "status": "modified",
+     "additions": 9,
+     "deletions": 18
+    },
+    {
+     "filename": "src/start_service.sh",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 5
+    },
+    {
+     "filename": "src/subcharacteristics/migrations/0004_alter_calculatedsubcharacteristic_analysis.py",
+     "status": "added",
+     "additions": 21,
+     "deletions": 0
+    },
+    {
+     "filename": "src/subcharacteristics/models.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": "src/tsqmi/migrations/0005_alter_tsqmi_analysis.py",
+     "status": "added",
+     "additions": 21,
+     "deletions": 0
+    },
+    {
+     "filename": "src/tsqmi/models.py",
+     "status": "modified",
+     "additions": 0,
+     "deletions": 2
+    },
+    {
+     "filename": "src/tsqmi/tests.py",
+     "status": "modified",
+     "additions": 2,
+     "deletions": 0
+    },
+    {
+     "filename": "src/utils/demo_payload.py",
+     "status": "added",
+     "additions": 88,
+     "deletions": 0
+    },
+    {
+     "filename": "src/utils/tests.py",
+     "status": "modified",
+     "additions": 21,
+     "deletions": 0
+    },
+    {
+     "filename": "uv.lock",
+     "status": "modified",
+     "additions": 1,
+     "deletions": 40
+    }
+   ]
+  },
   {
    "sha": "df1de7b466111ae9e6903a717f6312eea4222ca0",
    "date": "2026-11-23T03:14:53Z",
@@ -4533,5 +4884,5 @@
    ]
   }
  ],
- "detalhes_novos": 4
+ "detalhes_novos": 1
 }
